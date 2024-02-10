@@ -7,6 +7,7 @@ namespace Laventure\Psr4\Loader;
 use Laventure\Contract\Loader\LoaderInterface;
 
 
+
 /**
  * ClassLoader
  *
@@ -14,7 +15,7 @@ use Laventure\Contract\Loader\LoaderInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Psr4\Loader
+ * @package  Laventure\Component\Filesystem\File\Loader
 */
 class ClassLoader implements LoaderInterface
 {
@@ -88,6 +89,7 @@ class ClassLoader implements LoaderInterface
     */
     public function load(): bool
     {
+        $path = sprintf('%s.php', $this->normalizePath());
         $path = sprintf('%s.php', $this->normalizePath());
 
         if (!file_exists($path)) {
