@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PHPUnitTest\Component\Filesystem\File\Loader;
@@ -14,15 +15,15 @@ use PHPUnit\Framework\TestCase;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  PHPUnitTest\Component\Filesystem\File\Loader
+ * @package  PHPUnitTest\Component\Config\File\Loader
  */
 class ClassLoaderTest extends TestCase
 {
-       public function testItLoadClass(): void
-       {
-           $loader = new ClassLoader(Filesystem::class);
-           $loader->basePath(SRC);
+    public function testItLoadClass(): void
+    {
+        $loader = new ClassLoader(Filesystem::class);
+        $loader->basePath(SRC);
 
-           $this->assertTrue(boolval($loader->load()));
-       }
+        $this->assertTrue(boolval($loader->load()));
+    }
 }

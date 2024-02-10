@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Container\Service\Providers;
@@ -10,8 +11,7 @@ use Laventure\Component\Container\Service\Provider\ServiceProvider;
 use Laventure\Component\Filesystem\Filesystem;
 use Laventure\Dotenv\Contract\DotenvInterface;
 use Laventure\Dotenv\Dotenv;
-use Laventure\Foundation\Filesystem\File\Loader\ConfigLoader;
-
+use Laventure\Foundation\Config\Loader\ConfigLoader;
 
 /**
  * ConfigurationServiceProvider

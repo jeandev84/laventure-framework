@@ -11,7 +11,7 @@ namespace Laventure\Component\Filesystem\Directory\Traits;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Filesystem\Directory\Traits
+ * @package  Laventure\Component\Config\Directory\Traits
 */
 trait HasDirectoryTrait
 {

@@ -16,13 +16,13 @@ use Laventure\Component\Filesystem\Stream\Factory\StreamFactory;
 use Laventure\Component\Filesystem\Stream\Stream;
 
 /**
- * Filesystem
+ * Config
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Filesystem
+ * @package  Laventure\Component\Config
 */
 class Filesystem implements FilesystemInterface
 {

@@ -13,7 +13,7 @@ use Laventure\Component\Filesystem\Directory\Directory;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Filesystem\Directory\Factory
+ * @package  Laventure\Component\Config\Directory\Factory
  */
 class DirectoryFactory
 {

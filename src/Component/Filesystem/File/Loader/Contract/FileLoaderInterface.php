@@ -14,7 +14,7 @@ use Laventure\Contract\Loader\LoaderInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Filesystem\File\Loader\Writer
+ * @package  Laventure\Component\Config\File\Loader\Writer
 */
 interface FileLoaderInterface extends LoaderInterface, HasFileInterface
 {

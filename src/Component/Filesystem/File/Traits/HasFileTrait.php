@@ -11,7 +11,7 @@ namespace Laventure\Component\Filesystem\File\Traits;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Filesystem\File\Traits
+ * @package  Laventure\Component\Config\File\Traits
  */
 trait HasFileTrait
 {

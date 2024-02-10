@@ -1,11 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Filesystem\File\Loader;
 
-
 use Laventure\Contract\Loader\LoaderInterface;
-
 
 /**
  * ClassLoader
@@ -14,11 +13,10 @@ use Laventure\Contract\Loader\LoaderInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Filesystem\File\Loader
+ * @package  Laventure\Component\Config\File\Loader
  */
 class ClassLoader implements LoaderInterface
 {
-
     /**
      * @var string
      */

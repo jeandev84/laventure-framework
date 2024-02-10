@@ -14,7 +14,7 @@ use Laventure\Component\Filesystem\File\Traits\HasFileTrait;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Filesystem\File\Loader
+ * @package  Laventure\Component\Config\File\Loader
  */
 class FileLoader implements FileLoaderInterface
 {

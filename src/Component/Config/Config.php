@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Laventure\Component\Config;
 
 /**
- * Filesystem
+ * Config
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Filesystem
+ * @package  Laventure\Component\Config
 */
 class Config implements ConfigInterface
 {

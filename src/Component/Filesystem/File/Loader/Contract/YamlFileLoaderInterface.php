@@ -14,7 +14,7 @@ use Laventure\Contract\Matcher\MatcherInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Filesystem\File\Loader\Writer
+ * @package  Laventure\Component\Config\File\Loader\Writer
 */
 interface YamlFileLoaderInterface extends FileLoaderInterface, MatcherInterface, HasFileInterface
 {

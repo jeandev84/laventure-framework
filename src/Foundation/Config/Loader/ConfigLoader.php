@@ -1,7 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
-namespace Laventure\Foundation\Filesystem\File\Loader;
+namespace Laventure\Foundation\Config\Loader;
 
 use Laventure\Component\Filesystem\File\Collection\FileCollection;
 use Laventure\Component\Filesystem\File\Loader\ArrayLoader;
@@ -16,7 +17,7 @@ use Laventure\Contract\Loader\LoaderInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Foundation\Filesystem\File\Loader
+ * @package  Laventure\Foundation\Config\Loader
 */
 class ConfigLoader extends FileLoader
 {

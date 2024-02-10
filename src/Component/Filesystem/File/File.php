@@ -20,7 +20,7 @@ use Laventure\Component\Filesystem\File\Writer\FileWriter;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Filesystem
+ * @package  Laventure\Component\Config
 */
 class File implements FileInterface
 {

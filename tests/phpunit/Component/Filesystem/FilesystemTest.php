@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  PHPUnitTest\Component\Filesystem
+ * @package  PHPUnitTest\Component\Config
 */
 class FilesystemTest extends TestCase
 {

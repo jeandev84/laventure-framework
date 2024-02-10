@@ -11,7 +11,7 @@ namespace Laventure\Component\Filesystem\File\Exception;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Filesystem\File\Exception
+ * @package  Laventure\Component\Config\File\Exception
  */
 class FileException extends \RuntimeException
 {

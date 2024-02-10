@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Container\Service\Providers;
@@ -20,8 +21,6 @@ use ReflectionException;
  */
 class ApplicationServiceProvider extends ServiceProvider implements BootableServiceProvider
 {
-
-
     /**
      * @var array|array[]
     */

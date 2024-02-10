@@ -14,7 +14,7 @@ use Laventure\Component\Filesystem\File\Writer\Contract\FileWriterInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Filesystem\File\Writer
+ * @package  Laventure\Component\Config\File\Writer
 */
 class FileWriter implements FileWriterInterface
 {

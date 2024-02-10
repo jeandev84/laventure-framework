@@ -13,7 +13,7 @@ use Laventure\Component\Filesystem\Stream\DTO\StreamParams;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Filesystem
+ * @package  Laventure\Component\Config
  */
 interface FilesystemInterface
 {

@@ -17,7 +17,7 @@ use SplFileInfo;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Filesystem\Directory
+ * @package  Laventure\Component\Config\Directory
 */
 class Directory implements DirectoryInterface
 {

@@ -14,7 +14,7 @@ use Laventure\Contract\Uploader\UploaderInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Filesystem\File\Uploader\Writer
+ * @package  Laventure\Component\Config\File\Uploader\Writer
  */
 interface Base64FileUploaderInterface extends UploaderInterface, HasBase64FileInterface
 {

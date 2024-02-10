@@ -15,7 +15,7 @@ use SeekableIterator;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Filesystem\Directory\Iterator\Decorator
+ * @package  Laventure\Component\Config\Directory\Iterator\Decorator
 */
 class DirectoryIteratorDecorator implements DirectoryIteratorDecoratorInterface
 {

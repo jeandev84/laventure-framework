@@ -14,7 +14,7 @@ use Laventure\Component\Filesystem\Directory\Traits\HasDirectoryTrait;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Filesystem\Writer
+ * @package  Laventure\Component\Config\Writer
  */
 class DirectoryReader implements DirectoryReaderInterface
 {

@@ -14,7 +14,7 @@ use Laventure\Contract\Loader\LoaderInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Filesystem\File\Loader
+ * @package  Laventure\Component\Config\File\Loader
  */
 class ArrayLoader implements LoaderInterface
 {

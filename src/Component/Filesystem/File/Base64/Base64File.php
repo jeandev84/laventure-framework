@@ -14,7 +14,7 @@ use Laventure\Component\Filesystem\File\Base64\Utils\Encoder\Base64Encoder;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Filesystem\File\Base64FileFile
+ * @package  Laventure\Component\Config\File\Base64FileFile
  */
 class Base64File implements Base64FileInterface
 {

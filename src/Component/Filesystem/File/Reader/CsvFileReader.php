@@ -13,7 +13,7 @@ use Laventure\Contract\Reader\ReaderInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Filesystem\File\Reader
+ * @package  Laventure\Component\Config\File\Reader
  */
 class CsvFileReader implements ReaderInterface
 {

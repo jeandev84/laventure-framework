@@ -11,7 +11,7 @@ namespace Laventure\Component\Filesystem\Stream\DTO;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Filesystem\Stream\DTO
+ * @package  Laventure\Component\Config\Stream\DTO
 */
 class StreamParams
 {

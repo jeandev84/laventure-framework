@@ -13,7 +13,7 @@ use Laventure\Component\Filesystem\Stream\Stream;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Filesystem\Stream\Factory
+ * @package  Laventure\Component\Config\Stream\Factory
 */
 class StreamFactory
 {

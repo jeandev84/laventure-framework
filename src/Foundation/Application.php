@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation;
@@ -12,7 +13,6 @@ use Laventure\Foundation\Container\Service\Providers\FilesystemServiceProvider;
 use Laventure\Traits\Application\ApplicationTrait;
 use Psr\Container\ContainerInterface;
 use ReflectionException;
-
 
 /**
  * Application
@@ -87,10 +87,10 @@ final class Application extends Container implements ApplicationInterface
     */
     private function registerBaseProviders(): void
     {
-       $this->addProviders([
-           ApplicationServiceProvider::class,
-           FilesystemServiceProvider::class,
-           ConfigurationServiceProvider::class,
-       ]);
+        $this->addProviders([
+            ApplicationServiceProvider::class,
+            FilesystemServiceProvider::class,
+            ConfigurationServiceProvider::class,
+        ]);
     }
 }

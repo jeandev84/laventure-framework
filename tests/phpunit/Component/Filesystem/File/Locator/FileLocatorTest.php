@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PHPUnitTest\Component\Filesystem\File\Locator;
@@ -13,7 +14,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  PHPUnitTest\Component\Filesystem\File\Locator
+ * @package  PHPUnitTest\Component\Config\File\Locator
 */
 class FileLocatorTest extends TestCase
 {

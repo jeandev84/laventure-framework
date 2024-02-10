@@ -13,7 +13,7 @@ use SplFileInfo;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Filesystem\Directory\Info
+ * @package  Laventure\Component\Config\Directory\Info
  */
 class DirectoryInfo extends SplFileInfo
 {

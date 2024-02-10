@@ -14,7 +14,7 @@ use Laventure\Component\Filesystem\File\File;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Filesystem\File\Factory
+ * @package  Laventure\Component\Config\File\Factory
  */
 class FileCollectionFactory
 {

@@ -11,7 +11,7 @@ namespace Laventure\Component\Filesystem\File\Locator;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Filesystem\Locator
+ * @package  Laventure\Component\Config\Locator
 */
 interface FileLocatorInterface
 {
