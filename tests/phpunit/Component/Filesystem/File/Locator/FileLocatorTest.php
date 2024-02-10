@@ -1,8 +1,7 @@
 <?php
-
 declare(strict_types=1);
 
-namespace PHPUnitTest\Component\Filesystem\Locator;
+namespace PHPUnitTest\Component\Filesystem\File\Locator;
 
 use Laventure\Component\Filesystem\File\Locator\FileLocator;
 use PHPUnit\Framework\TestCase;
@@ -14,8 +13,8 @@ use PHPUnit\Framework\TestCase;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  PHPUnitTest\Component\Filesystem\Locator
- */
+ * @package  PHPUnitTest\Component\Filesystem\File\Locator
+*/
 class FileLocatorTest extends TestCase
 {
     public function testIfLocateCorrectlyPath(): void
