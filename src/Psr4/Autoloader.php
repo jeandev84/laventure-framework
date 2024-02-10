@@ -88,13 +88,13 @@ class Autoloader
 
 
     /**
-     * @param string $namespace
+     * @param string $prefix
      *
      * @return bool
      */
-    public function hasPrefix(string $namespace): bool
+    public function prefixed(string $prefix): bool
     {
-        return array_key_exists($namespace, $this->prefixes);
+        return array_key_exists($prefix, $this->prefixes);
     }
 
 
@@ -155,7 +155,7 @@ class Autoloader
 
         $prefix = array_shift($fragments);
 
-        if (! $this->hasPrefix($prefix)) {
+        if (! $this->prefixed($prefix)) {
             return false;
         }
 
