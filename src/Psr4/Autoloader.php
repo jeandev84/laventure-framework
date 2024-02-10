@@ -159,7 +159,7 @@ class Autoloader
 
         array_unshift($fragments, $this->prefixes[$prefix]);
 
-        $path = $this->buildPath($fragments);
+        $path = $this->loadClassPath($fragments);
 
         if (! file_exists($path)) {
             return false;
@@ -208,7 +208,7 @@ class Autoloader
      *
      * @return string
     */
-    private function buildPath(array $fragments): string
+    private function loadClassPath(array $fragments): string
     {
         return join(DIRECTORY_SEPARATOR, $fragments) . '.php';
     }
