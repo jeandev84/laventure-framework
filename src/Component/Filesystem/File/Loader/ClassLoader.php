@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Laventure\Component\Filesystem\File\Loader;
 
 
-
 use Laventure\Contract\Loader\LoaderInterface;
 
 
@@ -16,20 +15,20 @@ use Laventure\Contract\Loader\LoaderInterface;
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
  * @package  Laventure\Component\Filesystem\File\Loader
-*/
+ */
 class ClassLoader implements LoaderInterface
 {
 
     /**
      * @var string
-    */
+     */
     protected string $basePath;
 
 
 
     /**
      * @var string
-    */
+     */
     protected string $classname;
 
 
@@ -37,7 +36,7 @@ class ClassLoader implements LoaderInterface
 
     /**
      * @param string $classname
-    */
+     */
     public function __construct(string $classname)
     {
         $this->classname = $classname;
@@ -49,7 +48,7 @@ class ClassLoader implements LoaderInterface
     /**
      * @param string $path
      * @return $this
-    */
+     */
     public function basePath(string $path): static
     {
         $this->basePath  = rtrim($path, DIRECTORY_SEPARATOR);
@@ -62,10 +61,10 @@ class ClassLoader implements LoaderInterface
 
     /**
      * @return array
-    */
+     */
     public function getFragments(): array
     {
-       return explode("\\", $this->classname);
+        return explode("\\", $this->classname);
     }
 
 
@@ -73,7 +72,7 @@ class ClassLoader implements LoaderInterface
 
     /**
      * @return string|null
-    */
+     */
     public function getPrefix(): ?string
     {
         $fragments = $this->getFragments();
@@ -86,7 +85,7 @@ class ClassLoader implements LoaderInterface
 
     /**
      * @inheritDoc
-    */
+     */
     public function load(): bool
     {
         if(!$path = realpath(sprintf('%s.php', $this->normalizePath()))) {
@@ -103,7 +102,7 @@ class ClassLoader implements LoaderInterface
 
     /**
      * @return string
-    */
+     */
     private function normalizePath(): string
     {
         return str_replace([
