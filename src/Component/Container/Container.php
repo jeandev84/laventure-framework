@@ -352,17 +352,17 @@ class Container implements ContainerInterface, ArrayAccess
      * Resolve service
      *
      * @param string $id
-     * @return mixed
+     * @return object
      * @throws ContainerException
      * @throws ReflectionException
     */
-    public function resolve(string $id): mixed
+    public function resolve(string $id): object
     {
-        if (!$this->hasInstance($id)) {
-            $this->instances[$id] = $this->make($id);
+        if ($this->hasInstance($id)) {
+            return $this->instances[$id];
         }
 
-        return $this->instances[$id];
+        return $this->resolved[$id] = $this->make($id);
     }
 
 
@@ -422,7 +422,7 @@ class Container implements ContainerInterface, ArrayAccess
 
         $dependencies = $this->resolveDependencies($constructor, $with);
 
-        return $this->resolved[$id] = $reflection->newInstanceArgs($dependencies);
+        return $reflection->newInstanceArgs($dependencies);
     }
 
 
