@@ -394,7 +394,7 @@ class Container implements ContainerInterface, ArrayAccess
      *
      * @param string $id
      * @param array $with
-     * @return mixed
+     * @return object
      * @throws ContainerException
      * @throws ReflectionException
     */
@@ -433,7 +433,7 @@ class Container implements ContainerInterface, ArrayAccess
      * Create service
      *
      * @param string $id
-     * @return mixed
+     * @return object
      * @throws ContainerException
      * @throws ReflectionException
     */
