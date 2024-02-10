@@ -12,26 +12,26 @@ namespace Laventure\Psr4;
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
  * @package  Laventure\Psr4
-*/
+ */
 class Autoloader
 {
     /**
      * @var string
-    */
+     */
     protected string $root;
 
 
 
     /**
      * @var array
-    */
+     */
     protected array $prefixes = [];
 
 
 
     /**
      * @param string $root
-    */
+     */
     public function __construct(string $root)
     {
         $this->root = realpath(rtrim($root, DIRECTORY_SEPARATOR));
@@ -146,7 +146,7 @@ class Autoloader
      * @param string $class
      *
      * @return bool
-    */
+     */
     public function loadClass(string $class): bool
     {
         $fragments = explode('\\', $class);
@@ -157,7 +157,9 @@ class Autoloader
             return false;
         }
 
-        $path = $this->buildPath($prefix, $fragments);
+        array_unshift($fragments, $this->prefixes[$prefix]);
+
+        $path = $this->buildPath($fragments);
 
         if (! file_exists($path)) {
             return false;
@@ -175,7 +177,7 @@ class Autoloader
      * @param string $path
      *
      * @return string
-    */
+     */
     private function normalizePath(string $path): string
     {
         $trimmed = trim($path, '\\/');
@@ -202,17 +204,13 @@ class Autoloader
 
 
     /**
-     * @param string $prefix
-     *
      * @param array $fragments
      *
      * @return string
-     */
-    private function buildPath(string $prefix, array $fragments): string
+    */
+    private function buildPath(array $fragments): string
     {
-        $path = join(DIRECTORY_SEPARATOR, $fragments) . '.php';
-
-        return join(DIRECTORY_SEPARATOR, [$this->prefixes[$prefix], $path]);
+        return join(DIRECTORY_SEPARATOR, $fragments) . '.php';
     }
 
 
@@ -221,7 +219,7 @@ class Autoloader
 
     /**
      * @return array
-    */
+     */
     private function loadParams(): array
     {
         $path = $this->path('laventure.json');
