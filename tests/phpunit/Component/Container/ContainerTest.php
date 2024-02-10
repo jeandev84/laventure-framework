@@ -134,18 +134,18 @@ class ContainerTest extends TestCase
 
     public function testSingleton(): void
     {
-         $this->container->aliases(Envelop::class, ['envelop']);
-         $this->container->singleton(Envelop::class, Envelop::class);
+        $this->container->aliases(Envelop::class, ['envelop']);
+        $this->container->singleton(Envelop::class, Envelop::class);
 
-         $envelop1 = $this->container[Envelop::class];
-         $envelop2 = $this->container[Envelop::class];
-         $envelop3 = $this->container['envelop'];
+        $envelop1 = $this->container[Envelop::class];
+        $envelop2 = $this->container[Envelop::class];
+        $envelop3 = $this->container['envelop'];
 
-         $this->assertSame(Container::getInstance(), $this->container);
-         $this->assertSame($envelop1, $envelop2);
-         $this->assertSame($envelop1, $envelop3);
-         $this->assertSame($envelop2, $envelop1);
-         $this->assertSame($envelop2, $envelop3);
+        $this->assertSame(Container::getInstance(), $this->container);
+        $this->assertSame($envelop1, $envelop2);
+        $this->assertSame($envelop1, $envelop3);
+        $this->assertSame($envelop2, $envelop1);
+        $this->assertSame($envelop2, $envelop3);
     }
 
 
@@ -154,22 +154,22 @@ class ContainerTest extends TestCase
 
     public function testProviders(): void
     {
-         $providers = [
-             ConfigServiceProvider::class,
-             TestServiceProvider::class
-         ];
+        $providers = [
+            ConfigServiceProvider::class,
+            TestServiceProvider::class
+        ];
 
-         $this->container->addProviders($providers);
+        $this->container->addProviders($providers);
 
 
-         foreach ($providers as $provider) {
-             $this->assertArrayHasKey($provider, $this->container->getProviders());
-         }
+        foreach ($providers as $provider) {
+            $this->assertArrayHasKey($provider, $this->container->getProviders());
+        }
 
-         $this->assertSame($this->container['app.config'], $this->container[Config::class]);
-         $this->assertSame($this->container[ConfigInterface::class], $this->container[Config::class]);
-         $this->assertSame($this->container['test'], $this->container[TestService::class]);
-         $this->assertSame('BootedConfig', $this->container['config.booted']);
+        $this->assertSame($this->container['app.config'], $this->container[Config::class]);
+        $this->assertSame($this->container[ConfigInterface::class], $this->container[Config::class]);
+        $this->assertSame($this->container['test'], $this->container[TestService::class]);
+        $this->assertSame('BootedConfig', $this->container['config.booted']);
     }
 
 
@@ -177,15 +177,15 @@ class ContainerTest extends TestCase
 
     public function testFacadeItWorks(): void
     {
-         $this->container->singleton('test.service', TestService::class);
+        $this->container->singleton('test.service', TestService::class);
 
-         $this->container->addFacades([
-             TestFacade::class
-         ]);
+        $this->container->addFacades([
+            TestFacade::class
+        ]);
 
-         $this->assertArrayHasKey(TestFacade::class, $this->container->getFacades());
-         $this->assertSame(TestService::class, TestFacade::getServiceName());
-         $this->assertSame('foo.service', TestFacade::fooService());
+        $this->assertArrayHasKey(TestFacade::class, $this->container->getFacades());
+        $this->assertSame(TestService::class, TestFacade::getServiceName());
+        $this->assertSame('foo.service', TestFacade::fooService());
     }
 
 

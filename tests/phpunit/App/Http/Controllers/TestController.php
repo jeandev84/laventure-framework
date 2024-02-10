@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PHPUnitTest\App\Http\Controllers;
@@ -19,63 +20,62 @@ use PHPUnitTest\App\Service\TestService;
  */
 class TestController implements ContainerAwareInterface
 {
-
-      /**
-       * @var MailServiceInterface
-      */
-      protected MailServiceInterface $mailService;
-
-
-      /**
-       * @var Container
-      */
-      protected Container $container;
+    /**
+     * @var MailServiceInterface
+    */
+    protected MailServiceInterface $mailService;
 
 
-
-      /**
-       * @param MailServiceInterface $mailService
-      */
-      public function __construct(MailServiceInterface $mailService)
-      {
-          $this->mailService = $mailService;
-      }
+    /**
+     * @var Container
+    */
+    protected Container $container;
 
 
 
-
-
-      /**
-       * @inheritDoc
-      */
-      public function setContainer(Container $container): void
-      {
-          $this->container = $container;
-      }
-
-
-
-
-      /**
-       * @inheritDoc
-      */
-      public function getContainer(): Container
-      {
-          return $this->container;
-      }
+    /**
+     * @param MailServiceInterface $mailService
+    */
+    public function __construct(MailServiceInterface $mailService)
+    {
+        $this->mailService = $mailService;
+    }
 
 
 
 
 
+    /**
+     * @inheritDoc
+    */
+    public function setContainer(Container $container): void
+    {
+        $this->container = $container;
+    }
 
-      /**
-       * @param TestService $service
-       * @param int $id
-       * @return string
-      */
-      public function index(TestService $service, int $id): string
-      {
-          return $service->fooService() . "#$id#{$this->container['host']}";
-      }
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getContainer(): Container
+    {
+        return $this->container;
+    }
+
+
+
+
+
+
+    /**
+     * @param TestService $service
+     * @param int $id
+     * @return string
+    */
+    public function index(TestService $service, int $id): string
+    {
+        return $service->fooService() . "#$id#{$this->container['host']}";
+    }
 }

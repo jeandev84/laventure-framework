@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Container;
@@ -19,8 +20,6 @@ use ReflectionException;
 use ReflectionFunction;
 use ReflectionFunctionAbstract;
 use ReflectionMethod;
-
-
 
 /**
  * Container
@@ -927,18 +926,18 @@ class Container implements ContainerInterface, ArrayAccess
     */
     private function resolveService(ServiceInterface $service): ServiceInterface
     {
-         return (function () use ($service) {
+        return (function () use ($service) {
 
-             $value = $service->value();
+            $value = $service->value();
 
-             if ($service->resolvable()) {
-                 $service->withValue($this->resolve($value));
-             } elseif ($service->callable()) {
-                 $service->withValue($this->callAnonymous($value));
-             }
+            if ($service->resolvable()) {
+                $service->withValue($this->resolve($value));
+            } elseif ($service->callable()) {
+                $service->withValue($this->callAnonymous($value));
+            }
 
-             return $service;
-         })();
+            return $service;
+        })();
     }
 
 

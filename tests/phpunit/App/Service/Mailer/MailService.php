@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PHPUnitTest\App\Service\Mailer;
-
 
 /**
  * PHPUnitTest\App\Service\Mailer
@@ -15,8 +15,6 @@ namespace PHPUnitTest\App\Service\Mailer;
 */
 class MailService implements MailServiceInterface
 {
-
-
     /**
      * @param string $from
      * @param string $root
@@ -24,8 +22,7 @@ class MailService implements MailServiceInterface
     public function __construct(
         protected string $from,
         protected string $root = ''
-    )
-    {
+    ) {
     }
 
 

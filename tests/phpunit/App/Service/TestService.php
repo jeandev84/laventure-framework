@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PHPUnitTest\App\Service;
@@ -14,15 +15,15 @@ namespace PHPUnitTest\App\Service;
  */
 class TestService
 {
-      public static function getServiceName(): string
-      {
-          return get_called_class();
-      }
+    public static function getServiceName(): string
+    {
+        return get_called_class();
+    }
 
 
 
-      public function fooService(): string
-      {
-          return 'foo.service';
-      }
+    public function fooService(): string
+    {
+        return 'foo.service';
+    }
 }

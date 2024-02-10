@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PHPUnitTest\App\Providers;
@@ -19,7 +20,6 @@ use Laventure\Component\Container\Service\Provider\ServiceProvider;
  */
 class ConfigServiceProvider extends ServiceProvider implements BootableServiceProvider
 {
-
     protected array $provides = [
         Config::class => [
             'app.config',
@@ -34,7 +34,7 @@ class ConfigServiceProvider extends ServiceProvider implements BootableServicePr
      */
     public function boot(): void
     {
-       $this->app->bind('config.booted', 'BootedConfig');
+        $this->app->bind('config.booted', 'BootedConfig');
     }
 
 
