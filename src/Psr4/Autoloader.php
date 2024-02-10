@@ -117,8 +117,10 @@ class Autoloader
      */
     public function unregister(): void
     {
-        spl_autoload_unregister(function ($class) { });
+        spl_autoload_unregister([$this, 'loadClass']);
     }
+
+
 
 
 
