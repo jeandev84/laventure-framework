@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PHPUnitTest\Component\Config;
@@ -17,12 +18,12 @@ use PHPUnit\Framework\TestCase;
  */
 class ConfigTest extends TestCase
 {
-      public function testItRetrieveValue(): void
-      {
-           $config = new Config(require __DIR__.'/config/database.php');
+    public function testItRetrieveValue(): void
+    {
+        $config = new Config(require __DIR__.'/config/database.php');
 
-           $this->assertSame('root', $config->get('connections.pdo.username'));
-           $this->assertSame('secret', $config->get('connections.pdo.password'));
-           $this->assertNotEmpty($config->get('connections.pdo.options'));
-      }
+        $this->assertSame('root', $config->get('connections.pdo.username'));
+        $this->assertSame('secret', $config->get('connections.pdo.password'));
+        $this->assertNotEmpty($config->get('connections.pdo.options'));
+    }
 }
