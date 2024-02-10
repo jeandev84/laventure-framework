@@ -501,10 +501,8 @@ class Container implements ContainerInterface, ArrayAccess
     */
     public function add(ServiceInterface $service): ServiceInterface
     {
-        return (function () use ($service) {
-            $service  = $this->resolveService($service);
-            return $this->services[$service->id()] = $service;
-        })();
+        $service  = $this->resolveService($service);
+        return $this->services[$service->id()] = $service;
     }
 
 
@@ -907,21 +905,22 @@ class Container implements ContainerInterface, ArrayAccess
 
     /**
      * @param ServiceInterface $service
-     * @return mixed
-     * @throws ContainerException
-     * @throws ReflectionException
-     */
+     * @return ServiceInterface
+    */
     private function resolveService(ServiceInterface $service): ServiceInterface
     {
-        $value = $service->value();
+         return (function () use ($service) {
 
-        if ($service->resolvable()) {
-            $service->withValue($this->resolve($value));
-        } elseif ($service->callable()) {
-            $service->withValue($this->callAnonymous($value));
-        }
+             $value = $service->value();
 
-        return $service;
+             if ($service->resolvable()) {
+                 $service->withValue($this->resolve($value));
+             } elseif ($service->callable()) {
+                 $service->withValue($this->callAnonymous($value));
+             }
+
+             return $service;
+         })();
     }
 
 
