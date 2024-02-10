@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Psr4\Loader;
+namespace Laventure\Component\Filesystem\File\Loader;
+
 
 
 use Laventure\Contract\Loader\LoaderInterface;
-
 
 
 /**
@@ -89,10 +89,7 @@ class ClassLoader implements LoaderInterface
     */
     public function load(): bool
     {
-        $path = sprintf('%s.php', $this->normalizePath());
-        $path = sprintf('%s.php', $this->normalizePath());
-
-        if (!file_exists($path)) {
+        if(!$path = realpath(sprintf('%s.php', $this->normalizePath()))) {
             return false;
         }
 

@@ -1,15 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Psr4;
-
-use Laventure\Psr4\Loader\ClassLoader;
-
-
-require_once __DIR__.'/../../src/Contract/Loader/LoaderInterface.php';
-require_once __DIR__.'/Loader/ClassLoader.php';
-require_once __DIR__.'/Locator/ClassLocator.php';
-
 
 /**
  * Autoloader
@@ -19,26 +12,26 @@ require_once __DIR__.'/Locator/ClassLocator.php';
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
  * @package  Laventure\Psr4
-*/
+ */
 class Autoloader
 {
     /**
      * @var string
-    */
+     */
     protected string $root;
 
 
 
     /**
      * @var array
-    */
+     */
     protected array $prefixes = [];
 
 
 
     /**
      * @param string $root
-    */
+     */
     public function __construct(string $root)
     {
         $this->root = realpath(rtrim($root, DIRECTORY_SEPARATOR));
@@ -153,20 +146,27 @@ class Autoloader
      * @param string $class
      *
      * @return bool
-    */
+     */
     public function loadClass(string $class): bool
     {
-        $loader = new ClassLoader($class);
+        $fragments = explode('\\', $class);
 
-        $prefix = $loader->getPrefix();
+        $prefix = array_shift($fragments);
 
         if (! $this->hasPrefix($prefix)) {
             return false;
         }
 
-        $loader->basePath($this->prefixes[$prefix]);
+        array_unshift($fragments, $this->prefixes[$prefix]);
 
-        return $loader->load();
+        $path = $this->buildPath($fragments);
+
+        if (! file_exists($path)) {
+            return false;
+        }
+
+        require_once $path;
+        return true;
     }
 
 
@@ -177,7 +177,7 @@ class Autoloader
      * @param string $path
      *
      * @return string
-    */
+     */
     private function normalizePath(string $path): string
     {
         $trimmed = trim($path, '\\/');
@@ -192,7 +192,7 @@ class Autoloader
      * @param string $path
      *
      * @return string
-    */
+     */
     private function path(string $path): string
     {
         return  join(DIRECTORY_SEPARATOR, [$this->root, $this->normalizePath($path)]);
@@ -201,9 +201,25 @@ class Autoloader
 
 
 
+
+
+    /**
+     * @param array $fragments
+     *
+     * @return string
+    */
+    private function buildPath(array $fragments): string
+    {
+        return join(DIRECTORY_SEPARATOR, $fragments) . '.php';
+    }
+
+
+
+
+
     /**
      * @return array
-    */
+     */
     private function loadParams(): array
     {
         $path = $this->path('laventure.json');
