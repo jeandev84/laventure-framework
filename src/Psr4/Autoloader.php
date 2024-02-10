@@ -1,8 +1,15 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Psr4;
+
+use Laventure\Psr4\Loader\ClassLoader;
+
+
+require_once __DIR__.'/../../src/Contract/Loader/LoaderInterface.php';
+require_once __DIR__.'/Loader/ClassLoader.php';
+require_once __DIR__.'/Locator/ClassLocator.php';
+
 
 /**
  * Autoloader
@@ -149,22 +156,17 @@ class Autoloader
     */
     public function loadClass(string $class): bool
     {
-        $fragments = explode('\\', $class);
+        $loader = new ClassLoader($class);
 
-        $prefix = array_shift($fragments);
+        $prefix = $loader->getPrefix();
 
         if (! $this->hasPrefix($prefix)) {
             return false;
         }
 
-        $path = $this->buildPath($prefix, $fragments);
+        $loader->basePath($this->prefixes[$prefix]);
 
-        if (! file_exists($path)) {
-            return false;
-        }
-
-        require_once $path;
-        return true;
+        return $loader->load();
     }
 
 
@@ -190,31 +192,11 @@ class Autoloader
      * @param string $path
      *
      * @return string
-     */
+    */
     private function path(string $path): string
     {
         return  join(DIRECTORY_SEPARATOR, [$this->root, $this->normalizePath($path)]);
     }
-
-
-
-
-
-
-    /**
-     * @param string $prefix
-     *
-     * @param array $fragments
-     *
-     * @return string
-     */
-    private function buildPath(string $prefix, array $fragments): string
-    {
-        $path = join(DIRECTORY_SEPARATOR, $fragments) . '.php';
-
-        return join(DIRECTORY_SEPARATOR, [$this->prefixes[$prefix], $path]);
-    }
-
 
 
 
