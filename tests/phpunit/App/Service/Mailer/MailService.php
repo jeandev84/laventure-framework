@@ -1,8 +1,8 @@
 <?php
-
 declare(strict_types=1);
 
 namespace PHPUnitTest\App\Service\Mailer;
+
 
 /**
  * PHPUnitTest\App\Service\Mailer
@@ -15,9 +15,33 @@ namespace PHPUnitTest\App\Service\Mailer;
 */
 class MailService implements MailServiceInterface
 {
-    public function __construct(protected string $from)
+
+
+    /**
+     * @param string $from
+     * @param string $root
+    */
+    public function __construct(
+        protected string $from,
+        protected string $root = ''
+    )
     {
     }
+
+
+
+
+
+    /**
+     * @return string
+    */
+    public function getRoot(): string
+    {
+        return $this->root;
+    }
+
+
+
 
 
     /**

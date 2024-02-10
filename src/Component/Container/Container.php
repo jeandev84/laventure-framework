@@ -291,6 +291,21 @@ class Container implements ContainerInterface, ArrayAccess
 
 
     /**
+     * @param string $id
+     * @return bool
+    */
+    public function shared(string $id): bool
+    {
+        return isset($this->shared[$id]);
+    }
+
+
+
+
+
+
+
+    /**
      * Remove service
      *
      * @param string $id
@@ -359,10 +374,12 @@ class Container implements ContainerInterface, ArrayAccess
     public function resolve(string $id): object
     {
         if ($this->hasInstance($id)) {
-            return $this->instances[$id];
+            $instance = $this->instances[$id];
+        } else {
+            $instance = $this->make($id);
         }
 
-        return $this->resolved[$id] = $this->make($id);
+        return $this->resolved[$id] = $instance;
     }
 
 
@@ -728,6 +745,7 @@ class Container implements ContainerInterface, ArrayAccess
         $this->instances = [];
         $this->aliases   = [];
         $this->resolved  = [];
+        $this->shared    = [];
         $this->providers = [];
         $this->provides  = [];
         $this->facades   = [];

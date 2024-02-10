@@ -207,6 +207,20 @@ class ContainerTest extends TestCase
 
 
 
+    public function testValueAlreadyResolved(): void
+    {
+        $this->container->bind('from', 'no-reply@site.ru');
+        $this->container->singleton(MailServiceInterface::class, MailService::class);
+        $mailService = $this->container->get(MailServiceInterface::class);
+
+        $this->assertTrue($this->container->shared(MailServiceInterface::class));
+        $this->assertTrue($this->container->resolved(MailService::class));
+        $this->assertSame($mailService, $this->container->get(MailServiceInterface::class));
+    }
+
+
+
+
 
 
     /**
