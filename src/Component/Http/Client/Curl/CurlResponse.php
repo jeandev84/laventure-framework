@@ -36,19 +36,10 @@ class CurlResponse
 
      /**
       * @return string
-      * @throws CurlException
      */
      public function getBody(): string
      {
-         // returns response body
-         $body = $this->request->exec();
-
-         // check curl error
-         if ($errno = $this->request->errno()) {
-             throw new CurlException($this->request->error(), $errno);
-         }
-
-         return strval($body);
+         return strval($this->request->exec());
      }
 
 

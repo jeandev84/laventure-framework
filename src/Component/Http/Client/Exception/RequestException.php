@@ -25,13 +25,12 @@ class RequestException extends ClientException implements RequestExceptionInterf
     protected RequestInterface $request;
 
 
-
     /**
-     * @param RequestInterface $request
      * @param string $message
+     * @param RequestInterface $request
      * @param int $code
-     */
-    public function __construct(RequestInterface $request, string $message, int $code = 0)
+    */
+    public function __construct(string $message, RequestInterface $request, int $code = 0)
     {
         parent::__construct($message, $code);
         $this->request = $request;
