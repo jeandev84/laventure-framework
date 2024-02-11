@@ -12,6 +12,7 @@ use Laventure\Foundation\Container\Service\Providers\ConfigurationServiceProvide
 use Laventure\Foundation\Container\Service\Providers\EventServiceProvider;
 use Laventure\Foundation\Container\Service\Providers\FilesystemServiceProvider;
 use Laventure\Foundation\Container\Service\Providers\RouterServiceProvider;
+use Laventure\Foundation\Container\Service\Providers\ViewServiceProvider;
 use Laventure\Traits\Application\ApplicationTrait;
 use Psr\Container\ContainerInterface;
 use ReflectionException;
@@ -95,6 +96,7 @@ final class Application extends Container implements ApplicationInterface
             ConfigurationServiceProvider::class,
             RouterServiceProvider::class,
             EventServiceProvider::class,
+            ViewServiceProvider::class
         ]);
     }
 }
