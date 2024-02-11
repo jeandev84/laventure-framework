@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Dotenv;
 
+use Laventure\Component\Filesystem\File\Locator\FileLocator;
 use Laventure\Dotenv\Contract\DotenvInterface;
 use Laventure\Dotenv\Contract\EnvironmentInterface;
 use Laventure\Dotenv\Contract\HasEnvironments;
@@ -24,9 +25,9 @@ use Laventure\Dotenv\Loader\DotenvLoaderInterface;
 class Dotenv implements DotenvInterface
 {
     /**
-     * @var DotenvLoader
+     * @var FileLocator
     */
-    private DotenvLoader $loader;
+    protected FileLocator $locator;
 
 
     /**
@@ -36,20 +37,14 @@ class Dotenv implements DotenvInterface
 
 
 
-    /**
-     * @var string
-    */
-    private string $basePath;
-
-
 
     /**
      * @param string $basePath
     */
     public function __construct(string $basePath)
     {
-        $this->basePath    = $basePath;
-        $this->environment = Environment::getInstance();
+        $this->locator      = new FileLocator($basePath);
+        $this->environment  = new Environment();
     }
 
 
@@ -61,7 +56,8 @@ class Dotenv implements DotenvInterface
     public function load(): bool
     {
         $loader = new DotenvLoader(
-            $this->locateFile('.env')
+            $this->locator->locate('.env'),
+            $this->environment
         );
 
         return $loader->load();
@@ -76,39 +72,11 @@ class Dotenv implements DotenvInterface
     */
     public function export(string $destination): bool
     {
-        $export = new DotenvExporter($destination);
+        $export = new DotenvExporter(
+            $destination,
+            $this->environment
+        );
 
         return $export->export();
-    }
-
-
-
-
-    /**
-     * @return EnvironmentInterface
-    */
-    public function getEnvironment(): EnvironmentInterface
-    {
-        return $this->environment;
-    }
-
-
-    /**
-     * @return string
-    */
-    public function getBasePath(): string
-    {
-        return $this->basePath;
-    }
-
-
-
-    /**
-     * @param string $file
-     * @return string
-     */
-    public function locateFile(string $file): string
-    {
-        return $this->basePath . DIRECTORY_SEPARATOR . $file;
     }
 }

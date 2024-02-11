@@ -10,7 +10,7 @@ use Laventure\Dotenv\Contract\EnvironmentInterface;
 use Laventure\Dotenv\Environment;
 use Laventure\Dotenv\Exception\DotenvException;
 use Laventure\Dotenv\Exception\WrongProcessException;
-use Laventure\Dotenv\Traits\HasEnvironmentsTrait;
+use Laventure\Dotenv\Traits\HasEnvironmentTrait;
 
 /**
  * DotenvExporter
@@ -24,7 +24,7 @@ use Laventure\Dotenv\Traits\HasEnvironmentsTrait;
 class DotenvExporter implements DotenvExporterInterface
 {
     use HasFileTrait;
-    use HasEnvironmentsTrait;
+    use HasEnvironmentTrait;
 
     /**
      * @var string
@@ -32,16 +32,14 @@ class DotenvExporter implements DotenvExporterInterface
     protected string $file;
 
 
-
-
     /**
      * @param string $file
-     * @param EnvironmentInterface|null $environment
+     * @param EnvironmentInterface $environment
     */
-    public function __construct(string $file, EnvironmentInterface $environment = null)
+    public function __construct(string $file, EnvironmentInterface $environment)
     {
         $this->setFile($file);
-        $this->withEnvironments($environment ?: Environment::getInstance());
+        $this->withEnvironments($environment);
     }
 
 

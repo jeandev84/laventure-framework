@@ -7,7 +7,7 @@ namespace Laventure\Dotenv\Traits;
 use Laventure\Dotenv\Contract\EnvironmentInterface;
 
 /**
- * HasEnvironmentsTrait
+ * HasEnvironmentTrait
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -15,7 +15,7 @@ use Laventure\Dotenv\Contract\EnvironmentInterface;
  *
  * @package  Laventure\Dotenv\Traits
  */
-trait HasEnvironmentsTrait
+trait HasEnvironmentTrait
 {
     /**
      * @var EnvironmentInterface
@@ -35,10 +35,9 @@ trait HasEnvironmentsTrait
     }
 
 
-
     /**
-     * @inheritDoc
-     */
+     * @return EnvironmentInterface
+    */
     public function getEnvironments(): EnvironmentInterface
     {
         return $this->environment;

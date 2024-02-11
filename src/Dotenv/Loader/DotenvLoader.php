@@ -12,7 +12,7 @@ use Laventure\Dotenv\Contract\HasEnvironments;
 use Laventure\Dotenv\Environment;
 use Laventure\Dotenv\Exception\DotenvException;
 use Laventure\Dotenv\Exception\WrongProcessException;
-use Laventure\Dotenv\Traits\HasEnvironmentsTrait;
+use Laventure\Dotenv\Traits\HasEnvironmentTrait;
 
 /**
  * DotenvLoader
@@ -25,17 +25,18 @@ use Laventure\Dotenv\Traits\HasEnvironmentsTrait;
 */
 class DotenvLoader extends FileLoader implements DotenvLoaderInterface
 {
-    use HasEnvironmentsTrait;
+    use HasEnvironmentTrait;
+
 
 
     /**
      * @param string $file
-     * @param EnvironmentInterface|null $environment
+     * @param EnvironmentInterface $environment
     */
-    public function __construct(string $file, EnvironmentInterface $environment = null)
+    public function __construct(string $file, EnvironmentInterface $environment)
     {
         parent::__construct($file);
-        $this->withEnvironments($environment ?: Environment::getInstance());
+        $this->withEnvironments($environment);
     }
 
 
