@@ -18,6 +18,6 @@ use Laventure\Dotenv\Contract\HasEnvironments;
  *
  * @package  Laventure\Dotenv\Export
  */
-interface DotenvExporterInterface extends ExportInterface, HasFileInterface, HasEnvironments
+interface DotenvExporterInterface extends ExportInterface, HasFileInterface
 {
 }

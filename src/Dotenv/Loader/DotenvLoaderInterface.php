@@ -21,7 +21,6 @@ use Laventure\Dotenv\Contract\HasExportInterface;
  *
  * @package  Laventure\Dotenv\Loader
 */
-interface DotenvLoaderInterface extends LoaderInterface, HasFileInterface, HasEnvironments
+interface DotenvLoaderInterface extends LoaderInterface
 {
-    public const EXTENSION = '.env';
 }
