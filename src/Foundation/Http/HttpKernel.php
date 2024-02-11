@@ -97,7 +97,7 @@ class HttpKernel implements HttpKernelInterface
     */
     private function dispatchRoute(Request $request): Response
     {
-        $this->app->instances([Request::class => $request]);
+        $this->app->instance(Request::class, $request);
 
         return (new Pipeline($this->app))
                ->pipe($this->middlewares())
@@ -129,7 +129,7 @@ class HttpKernel implements HttpKernelInterface
     */
     public function terminate($request, $response): void
     {
-        $this->app->terminate($request, $response);
+          //TODO terminate application
     }
 
 
