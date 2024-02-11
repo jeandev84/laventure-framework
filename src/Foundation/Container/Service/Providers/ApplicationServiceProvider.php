@@ -1,14 +1,13 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Container\Service\Providers;
 
-use Laventure\Component\Container\Exception\ContainerException;
 use Laventure\Component\Container\Service\Provider\Contract\BootableServiceProvider;
 use Laventure\Component\Container\Service\Provider\ServiceProvider;
+use Laventure\Component\Http\Message\Response\Factory\ResponseFactory;
+use Laventure\Foundation\Container\Facade\Route\Route;
 use Psr\Http\Message\ResponseFactoryInterface;
-use ReflectionException;
 
 /**
  * ApplicationServiceProvider
@@ -17,21 +16,25 @@ use ReflectionException;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Foundation\Container\Service\Providers
+ * @package  Laventure\Foundation\Providers
  */
 class ApplicationServiceProvider extends ServiceProvider implements BootableServiceProvider
 {
     /**
-     * @var array|array[]
-    */
+     * @var array
+     */
     protected array $provides = [
-        ResponseFactoryInterface::class => []
+        ResponseFactoryInterface::class => [
+            ResponseFactory::class
+        ]
     ];
+
+
 
 
     /**
      * @inheritDoc
-    */
+     */
     public function boot(): void
     {
         $this->loadHelpers();
@@ -40,23 +43,19 @@ class ApplicationServiceProvider extends ServiceProvider implements BootableServ
 
 
 
-
-
-
     /**
      * @inheritDoc
-    */
+     */
     public function register(): void
     {
-
+        $this->app->singletons([
+            ResponseFactoryInterface::class => ResponseFactory::class
+        ]);
     }
 
 
 
 
-    /**
-     * @return void
-    */
     private function loadHelpers(): void
     {
         require_once realpath(__DIR__.'/../helpers.php');
@@ -64,16 +63,10 @@ class ApplicationServiceProvider extends ServiceProvider implements BootableServ
 
 
 
-
-    /**
-     * @return void
-     * @throws ContainerException
-     * @throws ReflectionException
-    */
     private function loadFacades(): void
     {
         $this->app->addFacades([
-            //TODO add some facades here
+            Route::class,
         ]);
     }
 }
