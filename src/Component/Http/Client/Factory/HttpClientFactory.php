@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Http\Client\Factory;
 
-use Laventure\Component\Http\Client\Service\CurlClient;
+use Laventure\Component\Http\Client\Curl\CurlClient;
 use Psr\Http\Client\ClientInterface;
 
 /**

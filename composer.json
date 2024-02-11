@@ -9,7 +9,8 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "PHPUnitTest\\": "tests/phpunit"
+      "PHPUnitTest\\": "tests/phpunit/unit",
+      "PHPUnitFunctionalTest\\": "tests/phpunit/functional"
     }
   },
   "authors": [

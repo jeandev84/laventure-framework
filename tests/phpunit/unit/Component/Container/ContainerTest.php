@@ -19,7 +19,6 @@ use PHPUnitTest\App\Service\Mailer\MailServiceInterface;
 use PHPUnitTest\App\Service\TestService;
 use PHPUnitTest\App\Service\User\UserService;
 use PHPUnitTest\Component\Container\Utils\FakeContainer;
-use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Throwable;
 
