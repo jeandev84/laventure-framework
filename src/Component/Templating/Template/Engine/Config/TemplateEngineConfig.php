@@ -181,13 +181,13 @@ class TemplateEngineConfig implements TemplateEngineConfigInterface
     */
     public function getCompiler(): TemplateCompilerInterface
     {
-        if ($this->compiler) {
-            return $this->compiler;
+        if (! $this->compiler) {
+            $this->compiler = new TemplateCompiler(
+                $this->reader,
+                $this->templateFactory
+            );
         }
 
-        return new TemplateCompiler(
-            $this->reader,
-            $this->templateFactory
-        );
+        return $this->compiler;
     }
 }

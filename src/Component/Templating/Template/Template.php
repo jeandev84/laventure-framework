@@ -1,10 +1,8 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Templating\Template;
 
-use Laventure\Component\Templating\Template\Exception\NotFoundTemplateException;
 
 /**
  * @inheritdoc
@@ -18,16 +16,26 @@ class Template implements TemplateInterface
 
 
     /**
+     * @var string
+    */
+    protected string $cacheKey;
+
+
+    /**
      * @var array
     */
     protected array $parameters = [];
 
 
-
+    /**
+     * @param string $path
+     * @param array $parameters
+    */
     public function __construct(string $path, array $parameters = [])
     {
         $this->path       = $path;
         $this->parameters = $parameters;
+        $this->cacheKey   = md5($path);
     }
 
 
@@ -58,6 +66,18 @@ class Template implements TemplateInterface
     */
     public function getCacheKey(): string
     {
-        return md5($this->path);
+        return $this->cacheKey;
+    }
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function withCacheKey(string $cacheKey): static
+    {
+        $this->cacheKey = $cacheKey;
+
+        return $this;
     }
 }

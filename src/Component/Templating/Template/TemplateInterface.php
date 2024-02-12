@@ -15,7 +15,7 @@ use Stringable;
  *
  * @package  Laventure\Component\Templating\Template
 */
-interface TemplateInterface extends Stringable
+interface TemplateInterface
 {
     /**
      * Returns path of template
@@ -27,16 +27,6 @@ interface TemplateInterface extends Stringable
 
 
 
-    /**
-     * Generate unique key
-     *
-     * @return string
-    */
-    public function getCacheKey(): string;
-
-
-
-
 
     /**
      * Returns template parameters
@@ -44,4 +34,24 @@ interface TemplateInterface extends Stringable
      * @return array
     */
     public function getParameters(): array;
+
+
+
+
+    /**
+     * @param string $cacheKey
+     *
+     * @return $this
+    */
+    public function withCacheKey(string $cacheKey): static;
+
+
+
+
+    /**
+     * Generate unique key
+     *
+     * @return string
+    */
+    public function getCacheKey(): string;
 }
