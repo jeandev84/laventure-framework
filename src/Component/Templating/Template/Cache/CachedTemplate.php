@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Templating\Template\Cache;
 
 use Laventure\Component\Templating\Template\Contract\TemplateInterface;
+use Laventure\Component\Templating\Template\Template;
 use Laventure\Component\Templating\Template\Traits\HasTemplateTrait;
 
 /**
@@ -15,10 +16,8 @@ use Laventure\Component\Templating\Template\Traits\HasTemplateTrait;
  *
  * @package  Laventure\Component\Templating\Template\Cache
 */
-class CachedTemplate implements CachedTemplateInterface
+class CachedTemplate extends Template implements CachedTemplateInterface
 {
-      use HasTemplateTrait;
-
 
       /**
        * @var string
@@ -27,14 +26,17 @@ class CachedTemplate implements CachedTemplateInterface
 
 
       /**
-       * @param TemplateInterface $template
-       * @param string $cachePath
+       * @param string $path
+       * @param array $parameters
       */
-      public function __construct(TemplateInterface $template, string $cachePath)
+      public function __construct(
+          string $path,
+          array $parameters = [],
+      )
       {
-          $this->withTemplate($template)
-               ->withCachePath($cachePath);
+          parent::__construct($path, $parameters);
       }
+
 
 
       /**

@@ -5,6 +5,7 @@ namespace Laventure\Component\Templating\Template\Cache;
 
 
 use Laventure\Component\Templating\Template\Contract\HasTemplateInterface;
+use Laventure\Component\Templating\Template\Contract\TemplateInterface;
 
 /**
  * CachedTemplateInterface
@@ -15,7 +16,7 @@ use Laventure\Component\Templating\Template\Contract\HasTemplateInterface;
  *
  * @package  Laventure\Component\Templating\Template\Cache
  */
-interface CachedTemplateInterface extends HasTemplateInterface
+interface CachedTemplateInterface extends TemplateInterface
 {
        /**
         * @param string $cachePath

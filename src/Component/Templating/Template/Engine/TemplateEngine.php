@@ -49,12 +49,7 @@ class TemplateEngine implements TemplateEngineInterface
     public function transform(TemplateInterface $template): string
     {
         $compiledTemplate = $this->compile($template);
-        $cachedTemplate   = $this->cache($compiledTemplate);
-        $template         = new Template(
-            $cachedTemplate->getCachePath(),
-            $template->getParameters()
-        );
-
+        $template         = $this->cache($compiledTemplate);
         return $this->config->getLoader()->withTemplate($template)->load();
     }
 
