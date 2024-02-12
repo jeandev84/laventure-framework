@@ -28,43 +28,20 @@ interface TemplateInterface extends Stringable
 
 
     /**
+     * Generate unique key
+     *
+     * @return string
+    */
+    public function getCacheKey(): string;
+
+
+
+
+
+    /**
      * Returns template parameters
      *
      * @return array
     */
     public function getParameters(): array;
-
-
-
-
-
-    /**
-     * @return string
-    */
-    public function getContent(): string;
-
-
-
-
-
-    /**
-     * Determine if template path exists
-     *
-     * @return bool
-    */
-    public function exists(): bool;
-
-
-
-
-
-
-
-
-    /**
-     * Returns template content
-     *
-     * @return string
-    */
-    public function __toString(): string;
 }

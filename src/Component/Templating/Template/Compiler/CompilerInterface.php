@@ -16,7 +16,7 @@ namespace Laventure\Component\Templating\Template\Compiler;
 interface CompilerInterface
 {
     /**
-     * Compile and return content
+     * Convert tags to php code
      *
      * @param string $content
      * @return string

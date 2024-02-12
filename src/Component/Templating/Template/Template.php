@@ -17,7 +17,6 @@ class Template implements TemplateInterface
     protected string $path;
 
 
-
     /**
      * @var array
     */
@@ -53,45 +52,12 @@ class Template implements TemplateInterface
 
 
 
-    /**
-     * @inheritDoc
-    */
-    public function exists(): bool
-    {
-        return file_exists($this->path);
-    }
-
-
-
-
 
     /**
      * @inheritDoc
-     * @throws NotFoundTemplateException
     */
-    public function getContent(): string
+    public function getCacheKey(): string
     {
-        if (!$this->exists()) {
-            throw new NotFoundTemplateException($this->path);
-        }
-
-        extract($this->parameters, EXTR_SKIP);
-        ob_start();
-        require $this->path;
-        return ob_get_clean();
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-     * @return string
-     * @throws NotFoundTemplateException
-    */
-    public function __toString(): string
-    {
-        return $this->getContent();
+        return md5($this->path);
     }
 }

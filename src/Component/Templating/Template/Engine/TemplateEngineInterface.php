@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace Laventure\Component\Templating\Template\Engine;
 
 use Laventure\Component\Templating\Template\Compiler\CompilerInterface;
+use Laventure\Component\Templating\Template\Compiler\TemplateCompilerInterface;
+use Laventure\Component\Templating\Template\Engine\Config\TemplateEngineConfigInterface;
 use Laventure\Component\Templating\Template\Factory\TemplateFactoryInterface;
 use Laventure\Component\Templating\Template\Loader\TemplateLoaderInterface;
 use Laventure\Component\Templating\Template\TemplateInterface;
+use Laventure\Component\Templating\Template\Transformer\TemplateTransformerInterface;
 
 /**
  * TemplateEngineInterface
@@ -18,54 +21,10 @@ use Laventure\Component\Templating\Template\TemplateInterface;
  *
  * @package  Laventure\Component\Templating\Template\Engine
  */
-interface TemplateEngineInterface
+interface TemplateEngineInterface extends TemplateTransformerInterface
 {
-    /**
-     * @param TemplateLoaderInterface $loader
-     * @return $this
-    */
-    public function setLoader(TemplateLoaderInterface $loader): static;
-
-
-
-
-
-
-
-    /**
-     * @return TemplateLoaderInterface
-    */
-    public function getLoader(): TemplateLoaderInterface;
-
-
-
-
-    /**
-     * @param CompilerInterface[] $compilers
-     * @return $this
-    */
-    public function addCompilers(array $compilers): static;
-
-
-
-
-
-
-    /**
-     * @param TemplateInterface $template
-     *
-     * @return string
-    */
-    public function compile(TemplateInterface $template): string;
-
-
-
-
-
-
-
-    /**
-     * @return TemplateFactoryInterface
-    */
-    public function getTemplateFactory(): TemplateFactoryInterface;
+     /**
+      * @return TemplateEngineConfigInterface
+     */
+     public function config(): TemplateEngineConfigInterface;
 }

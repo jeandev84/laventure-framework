@@ -18,7 +18,7 @@ use Laventure\Component\Templating\Template\TemplateInterface;
  *
  * @package  Laventure\Foundation\Templating\Cache
  */
-class TemplateCache implements TemplateCacheInterface
+class TemplateCacheOLD implements TemplateCacheInterface
 {
     /**
      * @param Filesystem $filesystem
@@ -44,7 +44,7 @@ class TemplateCache implements TemplateCacheInterface
     /**
      * @inheritDoc
      */
-    public function cache(string $key, string|TemplateInterface $template): string
+    public function cacheTemplate(string $key, string|TemplateInterface $template): string
     {
         try {
             return $this->filesystem->dump(md5($key) .'.php', strval($template));

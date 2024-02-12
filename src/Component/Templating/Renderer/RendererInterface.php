@@ -21,7 +21,7 @@ interface RendererInterface
      * @param string $path
      * @return mixed
     */
-    public function resourcePath(string $path): mixed;
+    public function resource(string $path): mixed;
 
 
 

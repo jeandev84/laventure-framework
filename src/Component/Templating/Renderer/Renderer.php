@@ -69,11 +69,10 @@ class Renderer implements RendererInterface
      *
      * @return $this
     */
-    public function resourcePath(string $path): static
+    public function resource(string $path): static
     {
         $loader = $this->engine->getLoader();
-        $loader->setResourcePath($path);
-
+        $loader->resourcePath($path);
         $this->engine->setLoader($loader);
 
         return $this;
@@ -148,7 +147,7 @@ class Renderer implements RendererInterface
     */
     public function render(string $path, array $data = []): string
     {
-        return $this->engine->compile($this->createTemplate($path, $data));
+        return $this->engine->transform($this->createTemplate($path, $data));
     }
 
 

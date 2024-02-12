@@ -20,7 +20,7 @@ class BladeRendererAdapter implements RendererInterface
     /**
      * @inheritdoc
     */
-    public function resourcePath(string $path): static
+    public function resource(string $path): static
     {
         return $this;
     }

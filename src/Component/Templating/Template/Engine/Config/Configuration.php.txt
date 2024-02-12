@@ -1,0 +1,128 @@
+<?php
+declare(strict_types=1);
+
+namespace Laventure\Component\Templating\Template\Engine\Config;
+
+
+use Laventure\Component\Templating\Template\Cache\CompiledTemplateCacheInterface;
+use Laventure\Component\Templating\Template\Compiler\TemplateCompiler;
+use Laventure\Component\Templating\Template\Compiler\TemplateCompilerInterface;
+use Laventure\Component\Templating\Template\Factory\TemplateFactory;
+use Laventure\Component\Templating\Template\Factory\TemplateFactoryInterface;
+use Laventure\Component\Templating\Template\Loader\TemplateLoaderInterface;
+
+/**
+ * Configuration
+ *
+ * @author Jean-Claude <jeanyao@ymail.com>
+ *
+ * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
+ *
+ * @package  Laventure\Component\Templating\Template\Engine\Config
+*/
+class Configuration implements EngineConfigurationInterface
+{
+    /**
+     * @var TemplateLoaderInterface
+     */
+    protected TemplateLoaderInterface $loader;
+
+
+    /**
+     * @var TemplateCompilerInterface
+    */
+    protected TemplateCompilerInterface $compiler;
+
+
+
+    /**
+     * @var CompiledTemplateCacheInterface
+     */
+    protected CompiledTemplateCacheInterface $cache;
+
+
+
+
+    /**
+     * @var TemplateFactoryInterface
+    */
+    protected TemplateFactoryInterface $templateFactory;
+
+
+
+
+    /**
+     * @param TemplateLoaderInterface $loader
+     *
+     * @param CompiledTemplateCacheInterface $cache
+    */
+    public function __construct(
+        TemplateLoaderInterface $loader,
+        CompiledTemplateCacheInterface $cache
+    ) {
+        $this->templateFactory = new TemplateFactory();
+        $this->compiler        = new TemplateCompiler($loader, $this->templateFactory);
+        $this->loader          = $loader;
+        $this->cache           = $cache;
+    }
+
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function withLoader(TemplateLoaderInterface $loader): static
+    {
+        $this->loader = $loader;
+
+        return $this;
+    }
+
+
+
+
+    /**
+     * @inheritdoc
+   */
+    public function getLoader(): TemplateLoaderInterface
+    {
+        return $this->loader;
+    }
+
+
+
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function getCache(): CompiledTemplateCacheInterface
+    {
+        return $this->cache;
+    }
+
+
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function getTemplateFactory(): TemplateFactoryInterface
+    {
+        return $this->templateFactory;
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getCompiler(): TemplateCompilerInterface
+    {
+        return $this->compiler;
+    }
+}
