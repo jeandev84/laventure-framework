@@ -105,7 +105,6 @@ class TemplateCompiler implements TemplateCompilerInterface
             $content = $compiler->compile($content);
         }
 
-
         return new CompiledTemplate($template, $content);
     }
 
