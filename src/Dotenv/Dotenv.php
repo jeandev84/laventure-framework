@@ -30,7 +30,7 @@ class Dotenv implements DotenvInterface
     /**
      * @var EnvironmentCollectionInterface
     */
-    protected EnvironmentCollectionInterface $environment;
+    protected EnvironmentCollectionInterface $collection;
 
 
     /**
@@ -50,10 +50,10 @@ class Dotenv implements DotenvInterface
     */
     public function __construct(string $basePath)
     {
-        $this->environment  = new EnvironmentCollection();
+        $this->collection   = new EnvironmentCollection();
         $this->locator      = new FileLocator($basePath);
-        $this->loader       = new DotenvLoader($this->environment);
-        $this->exporter     = new DotenvExporter($this->environment);
+        $this->loader       = new DotenvLoader($this->collection);
+        $this->exporter     = new DotenvExporter($this->collection);
     }
 
 
@@ -99,8 +99,8 @@ class Dotenv implements DotenvInterface
     /**
      * @inheritdoc
     */
-    public function getEnvironment(): EnvironmentCollectionInterface
+    public function getCollection(): EnvironmentCollectionInterface
     {
-        return $this->environment;
+        return $this->collection;
     }
 }

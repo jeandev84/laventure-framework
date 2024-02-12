@@ -15,21 +15,21 @@ use Laventure\Dotenv\Collection\EnvironmentCollectionInterface;
  *
  * @package  Laventure\Dotenv\Traits
  */
-trait HasEnvironmentTrait
+trait HasCollectionTrait
 {
     /**
      * @var EnvironmentCollectionInterface
      */
-    protected EnvironmentCollectionInterface $environment;
+    protected EnvironmentCollectionInterface $collection;
 
 
     /**
-     * @param EnvironmentCollectionInterface $environment
+     * @param EnvironmentCollectionInterface $collection
      * @return $this
     */
-    public function withEnvironments(EnvironmentCollectionInterface $environment): static
+    public function withCollection(EnvironmentCollectionInterface $collection): static
     {
-        $this->environment = $environment;
+        $this->collection = $collection;
 
         return $this;
     }
@@ -38,8 +38,8 @@ trait HasEnvironmentTrait
     /**
      * @return EnvironmentCollectionInterface
     */
-    public function getEnvironments(): EnvironmentCollectionInterface
+    public function getCollection(): EnvironmentCollectionInterface
     {
-        return $this->environment;
+        return $this->collection;
     }
 }

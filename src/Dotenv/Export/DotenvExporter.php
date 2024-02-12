@@ -9,7 +9,7 @@ use Laventure\Component\Filesystem\File\Traits\HasFileTrait;
 use Laventure\Dotenv\Collection\EnvironmentCollectionInterface;
 use Laventure\Dotenv\Exception\DotenvException;
 use Laventure\Dotenv\Exception\WrongProcessException;
-use Laventure\Dotenv\Traits\HasEnvironmentTrait;
+use Laventure\Dotenv\Traits\HasCollectionTrait;
 
 /**
  * DotenvExporter
@@ -23,12 +23,7 @@ use Laventure\Dotenv\Traits\HasEnvironmentTrait;
 class DotenvExporter implements DotenvExporterInterface
 {
     use HasFileTrait;
-    use HasEnvironmentTrait;
-
-    /**
-     * @var string
-    */
-    protected string $file;
+    use HasCollectionTrait;
 
 
     /**
@@ -36,7 +31,7 @@ class DotenvExporter implements DotenvExporterInterface
     */
     public function __construct(EnvironmentCollectionInterface $environment)
     {
-        $this->withEnvironments($environment);
+        $this->withCollection($environment);
     }
 
 
@@ -48,7 +43,7 @@ class DotenvExporter implements DotenvExporterInterface
     {
         $file = new File($this->file);
 
-        if ($this->environment->empty()) {
+        if ($this->collection->empty()) {
             throw new DotenvException("no data to export");
         }
 
@@ -60,11 +55,11 @@ class DotenvExporter implements DotenvExporterInterface
             $file->write("");
         }
 
-        foreach ($this->environment->all() as $name => $value) {
+        foreach ($this->collection->all() as $name => $value) {
             $file->append("$name=$value");
         }
 
-        return !$this->environment->empty();
+        return !$this->collection->empty();
     }
 
 }

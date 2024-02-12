@@ -33,5 +33,5 @@ interface DotenvInterface extends LoaderInterface, ExportInterface
     /**
      * @return EnvironmentCollectionInterface
     */
-    public function getEnvironment(): EnvironmentCollectionInterface;
+    public function getCollection(): EnvironmentCollectionInterface;
 }
