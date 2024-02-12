@@ -6,6 +6,7 @@ namespace Laventure\Component\Database\Connection\Extensions\PDO\Factory;
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Connection\Exception\ConnectionException;
+use Laventure\Component\Database\Connection\Extensions\PDO\Drivers\Mysql\MysqlConnection;
 use PDO;
 use PDOException;
 
@@ -39,10 +40,10 @@ class PdoConnectionFactory implements PdoConnectionFactoryInterface
     /**
      * @inheritDoc
     */
-    public function make(string $driver, ConfigurationInterface $config): ConnectionInterface
+    public function make(string $name, ConfigurationInterface $config): ConnectionInterface
     {
-          return match ($driver) {
-              'mysql' => ''
+          return match ($name) {
+              'mysql' => new MysqlConnection($this)
           };
     }
 

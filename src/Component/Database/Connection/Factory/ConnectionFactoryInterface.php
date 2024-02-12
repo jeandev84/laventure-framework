@@ -20,12 +20,12 @@ interface ConnectionFactoryInterface
 {
 
       /**
-       * @param string $driver
+       * @param string $name
        * @param ConfigurationInterface $config
        * @return ConnectionInterface
       */
       public function make(
-          string $driver,
+          string                 $name,
           ConfigurationInterface $config
       ): ConnectionInterface;
 

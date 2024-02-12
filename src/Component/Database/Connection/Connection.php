@@ -37,7 +37,7 @@ abstract class Connection implements ConnectionInterface
 
     public function __construct()
     {
-        $this->config  = new NullConfiguration();
+        $this->withConfiguration(new NullConfiguration());
     }
 
 

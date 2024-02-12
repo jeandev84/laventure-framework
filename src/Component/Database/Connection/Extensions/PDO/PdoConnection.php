@@ -6,11 +6,12 @@ namespace Laventure\Component\Database\Connection\Extensions\PDO;
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Configuration\NullConfiguration;
 use Laventure\Component\Database\Connection\Connection;
+use Laventure\Component\Database\Connection\Extensions\PDO\Config\Resolver\PdoConfigurationResolver;
 use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnectionFactoryInterface;
-use Laventure\Component\Database\DatabaseInterface;
-use Laventure\Component\Database\Query\Builder\QueryBuilderInterface;
+use Laventure\Component\Database\Connection\Extensions\PDO\Query\Query;
 use Laventure\Component\Database\Query\QueryInterface;
 use PDO;
+use PDOException;
 
 /**
  * PdoConnection
@@ -21,21 +22,28 @@ use PDO;
  *
  * @package  Laventure\Component\Database\Connection\Extensions\PDO
 */
-class PdoConnection extends Connection implements PdoConnectionInterface
+abstract class PdoConnection extends Connection implements PdoConnectionInterface
 {
      /**
       * @var PdoConnectionFactoryInterface
      */
-     protected PdoConnectionFactoryInterface $connectionFactory;
+     protected PdoConnectionFactoryInterface $factory;
 
 
      /**
-      * @param PdoConnectionFactoryInterface $connectionFactory
+      * @var PdoConfigurationResolver
      */
-     public function __construct(PdoConnectionFactoryInterface $connectionFactory)
+     protected PdoConfigurationResolver $resolver;
+
+
+     /**
+      * @param PdoConnectionFactoryInterface $factory
+     */
+     public function __construct(PdoConnectionFactoryInterface $factory)
      {
          parent::__construct();
-         $this->connectionFactory = $connectionFactory;
+         $this->factory  = $factory;
+         $this->resolver = new PdoConfigurationResolver($this->getName());
      }
 
 
@@ -45,8 +53,8 @@ class PdoConnection extends Connection implements PdoConnectionInterface
      */
      public function connect(ConfigurationInterface $config): void
      {
-         $pdo = $this->connectionFactory->makeConnection($config);
-         $this->withConnection($pdo)
+         $config = $this->resolver->resolve($config);
+         $this->withConnection($this->makeConnection($config))
               ->withConfiguration($config);
      }
 
@@ -73,13 +81,14 @@ class PdoConnection extends Connection implements PdoConnectionInterface
 
 
 
+
      /**
       * @inheritDoc
      */
      public function purge(): void
      {
-         $this->config = new NullConfiguration();
-         $this->disconnect();
+         $this->withConfiguration(new NullConfiguration())
+              ->disconnect();
      }
 
 
@@ -100,60 +109,82 @@ class PdoConnection extends Connection implements PdoConnectionInterface
     */
     public function createQuery(): QueryInterface
     {
-
+       return new Query($this->getPdo());
     }
+
+
 
 
 
     /**
      * @inheritDoc
-     */
+    */
     public function statement(string $sql): QueryInterface
     {
-        // TODO: Implement statement() method.
+        return $this->createQuery()->prepare($sql);
     }
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function executeQuery(string $sql): bool
     {
-        // TODO: Implement executeQuery() method.
+        return $this->createQuery()->exec($sql);
     }
+
+
 
 
 
     /**
      * @inheritDoc
-     */
+    */
     public function beginTransaction(): bool
     {
-        // TODO: Implement beginTransaction() method.
+        return $this->getPdo()->beginTransaction();
     }
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function hasActiveTransaction(): bool
     {
-        // TODO: Implement hasActiveTransaction() method.
+        return $this->getPdo()->inTransaction();
     }
+
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function commit(): bool
     {
-        // TODO: Implement commit() method.
+       return $this->getPdo()->commit();
     }
+
+
+
+
+
 
     /**
      * @inheritDoc
     */
     public function rollback(): bool
     {
-        // TODO: Implement rollback() method.
+        return $this->getPdo()->rollBack();
     }
+
+
 
 
 
@@ -161,9 +192,22 @@ class PdoConnection extends Connection implements PdoConnectionInterface
     /**
      * @inheritDoc
     */
-    public function transaction(callable $func): mixed
+    public function transaction(callable $func): bool
     {
+        try {
 
+            $this->beginTransaction();
+            $func($this);
+            return $this->commit();
+
+        } catch (PDOException $e) {
+
+            if ($this->hasActiveTransaction()) {
+                $this->rollBack();
+            }
+
+            throw new PDOException($e->getMessage(), $e->getCode());
+        }
     }
 
 
@@ -176,5 +220,16 @@ class PdoConnection extends Connection implements PdoConnectionInterface
     public function getPdo(): PDO
     {
         return $this->getConnection();
+    }
+
+
+
+    /**
+     * @param ConfigurationInterface $config
+     * @return PDO
+    */
+    public function makeConnection(ConfigurationInterface $config): PDO
+    {
+        return $this->factory->makeConnection($config);
     }
 }
