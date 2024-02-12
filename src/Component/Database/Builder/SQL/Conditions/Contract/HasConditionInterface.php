@@ -1,0 +1,24 @@
+<?php
+declare(strict_types=1);
+
+namespace Laventure\Component\Database\Builder\SQL\Conditions\Contract;
+
+
+/**
+ * HasConditionInterface
+ *
+ * @author Jean-Claude <jeanyao@ymail.com>
+ *
+ * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
+ *
+ * @package  Laventure\Component\Database\Builder\SQL\Conditions\Contract
+*/
+interface HasConditionInterface
+{
+    /**
+     * Returns conditions
+     *
+     * @return array
+    */
+    public function getConditions(): array;
+}

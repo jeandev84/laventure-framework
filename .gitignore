@@ -6,5 +6,6 @@ tools
 .phpunit.result.cache
 console.php
 storage
+config
 .env
 

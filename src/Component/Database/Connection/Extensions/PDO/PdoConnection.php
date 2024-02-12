@@ -6,6 +6,7 @@ namespace Laventure\Component\Database\Connection\Extensions\PDO;
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Configuration\NullConfiguration;
 use Laventure\Component\Database\Connection\Connection;
+use Laventure\Component\Database\Connection\Drivers\DriverException;
 use Laventure\Component\Database\Connection\Extensions\PDO\Config\Resolver\PdoConfigurationResolver;
 use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnectionFactoryInterface;
 use Laventure\Component\Database\Connection\Extensions\PDO\Query\Query;
@@ -45,6 +46,8 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
          $this->factory  = $factory;
          $this->resolver = new PdoConfigurationResolver($this->getName());
      }
+
+
 
 
 
@@ -175,7 +178,6 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
 
 
 
-
     /**
      * @inheritDoc
     */
@@ -224,6 +226,7 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
 
 
 
+
     /**
      * @param ConfigurationInterface $config
      * @return PDO
@@ -231,5 +234,37 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
     public function makeConnection(ConfigurationInterface $config): PDO
     {
         return $this->factory->makeConnection($config);
+    }
+
+
+
+
+    /**
+     * @param string $driver
+     * @return bool
+    */
+    public function hasAvailableDriver(string $driver): bool
+    {
+        return in_array($driver, $this->getAvailableDrivers());
+    }
+
+
+
+
+    /**
+     * @return array
+    */
+    public function getAvailableDrivers(): array
+    {
+        return PDO::getAvailableDrivers();
+    }
+
+
+    private function makeSure(ConfigurationInterface $config): void
+    {
+        if (! $this->hasAvailableDriver($config['driver'])) {
+            throw new DriverException('Unavailable driver connection : '. $config['driver']);
+        }
+
     }
 }

@@ -7,6 +7,7 @@ use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Connection\Exception\ConnectionException;
 use Laventure\Component\Database\Connection\Extensions\PDO\Drivers\Mysql\MysqlConnection;
+use Laventure\Component\Database\Connection\Types\ConnectionType;
 use PDO;
 use PDOException;
 
@@ -42,9 +43,13 @@ class PdoConnectionFactory implements PdoConnectionFactoryInterface
     */
     public function make(string $name, ConfigurationInterface $config): ConnectionInterface
     {
-          return match ($name) {
-              'mysql' => new MysqlConnection($this)
+          $connection = match ($name) {
+              ConnectionType::Mysql => new MysqlConnection($this)
           };
+
+          $connection->connect($config);
+
+          return $connection;
     }
 
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Connection\Extensions\PDO\Drivers\Mysql;
 
 use Laventure\Component\Database\Connection\Drivers\Mysql\MysqlConnectionInterface;
+use Laventure\Component\Database\Connection\Drivers\Mysql\MysqlDatabase;
 use Laventure\Component\Database\Connection\Extensions\PDO\PdoConnection;
 use Laventure\Component\Database\DatabaseInterface;
 use Laventure\Component\Database\Query\Builder\QueryBuilderInterface;
@@ -25,22 +26,26 @@ class MysqlConnection extends PdoConnection implements MysqlConnectionInterface
     */
     public function getName(): string
     {
-        // TODO: Implement getName() method.
+        return 'mysql';
     }
+
+
 
     /**
      * @inheritDoc
     */
     public function createQueryBuilder(): QueryBuilderInterface
     {
-        // TODO: Implement createQueryBuilder() method.
+        return new MysqlQueryBuilder($this);
     }
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function getDatabase(): DatabaseInterface
     {
-        // TODO: Implement getDatabase() method.
+        return new MysqlDatabase($this, $this->getName());
     }
 }
