@@ -53,17 +53,6 @@ interface RendererInterface
 
 
 
-    /**
-     * @param string $path
-     * @param array $data
-     * @return string
-    */
-    public function render(string $path, array $data = []): string;
-
-
-
-
-
 
     /**
      * Returns all globals data
@@ -95,4 +84,15 @@ interface RendererInterface
      * @return array
     */
     public function getPaths(): array;
+
+
+
+
+
+    /**
+     * @param string $path
+     * @param array $data
+     * @return string
+    */
+    public function render(string $path, array $data = []): string;
 }
