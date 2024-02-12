@@ -26,7 +26,7 @@ class InsertBuilder implements InsertBuilderInterface
     */
     public function insert(string $table): static
     {
-        $this->criteria->table = $table;
+        $this->criteria->table($table);
 
         return $this;
     }
