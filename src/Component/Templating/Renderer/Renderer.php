@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Templating\Renderer;
 
+use Laventure\Component\Templating\Template\Contract\TemplateInterface;
 use Laventure\Component\Templating\Template\Engine\TemplateEngineInterface;
-use Laventure\Component\Templating\Template\TemplateInterface;
 
 /**
  * Renderer
@@ -65,16 +65,15 @@ class Renderer implements RendererInterface
 
 
     /**
-     * @param string $path
-     *
-     * @return $this
+     * @inheritdoc
     */
-    public function resourcePath(string $path): static
+    public function resource(string $path): static
     {
+        /*
         $loader = $this->engine->getLoader();
-        $loader->setResourcePath($path);
-
+        $loader->resourcePath($path);
         $this->engine->setLoader($loader);
+        */
 
         return $this;
     }
@@ -98,11 +97,9 @@ class Renderer implements RendererInterface
 
 
 
-
-
     /**
      * @inheritDoc
-     */
+    */
     public function addPath(string $id, string $path): static
     {
         $this->paths[$id] = $path;
@@ -143,15 +140,6 @@ class Renderer implements RendererInterface
 
 
 
-    /**
-     * @inheritDoc
-    */
-    public function render(string $path, array $data = []): string
-    {
-        return $this->engine->compile($this->createTemplate($path, $data));
-    }
-
-
 
 
     /**
@@ -163,10 +151,24 @@ class Renderer implements RendererInterface
     */
     public function createTemplate(string $template, array $data = []): TemplateInterface
     {
-        $templateFactory = $this->engine->getTemplateFactory();
+        $templateFactory = $this->engine->config()->getTemplateFactory();
 
         return $templateFactory->createTemplate($template, array_merge($this->data, $data));
     }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function render(string $path, array $data = []): string
+    {
+        return $this->engine->transform($this->createTemplate($path, $data));
+    }
+
 
 
 

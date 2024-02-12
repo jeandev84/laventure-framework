@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Config;
 
 /**
- * ConfigurationInterface
+ * TemplateEngineConfigInterface
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *

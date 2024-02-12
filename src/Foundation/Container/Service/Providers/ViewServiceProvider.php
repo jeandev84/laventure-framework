@@ -3,13 +3,17 @@ declare(strict_types=1);
 
 namespace Laventure\Foundation\Container\Service\Providers;
 
+use Laventure\Component\Container\Service\Provider\Contract\BootableServiceProvider;
 use Laventure\Component\Container\Service\Provider\ServiceProvider;
-use Laventure\Component\Filesystem\Filesystem;
 use Laventure\Component\Templating\Renderer\Renderer;
 use Laventure\Component\Templating\Renderer\RendererInterface;
+use Laventure\Component\Templating\Template\Engine\Config\TemplateEngineConfig;
+use Laventure\Component\Templating\Template\Engine\Config\TemplateEngineConfigInterface;
 use Laventure\Component\Templating\Template\Engine\TemplateEngine;
-use Laventure\Foundation\Templating\Cache\TemplateCache;
-use Laventure\Foundation\Templating\Loader\TemplateLoader;
+use Laventure\Foundation\Templating\Template\Cache\CompiledTemplateCache;
+use Laventure\Foundation\Templating\Template\Factory\TemplateFactory;
+use Laventure\Foundation\Templating\Template\Loader\TemplateLoader;
+use Laventure\Foundation\Templating\Template\Reader\TemplateReader;
 
 /**
  * ViewServiceProvider
@@ -20,14 +24,19 @@ use Laventure\Foundation\Templating\Loader\TemplateLoader;
  *
  * @package  Laventure\Foundation\Providers
 */
-class ViewServiceProvider extends ServiceProvider
+class ViewServiceProvider extends ServiceProvider implements BootableServiceProvider
 {
     /**
      * @var array
     */
     protected array $provides = [
+        TemplateEngineConfigInterface::class => [
+            TemplateEngineConfig::class,
+            'template.engine.config'
+        ],
         RendererInterface::class => [
-            Renderer::class, 'view'
+            Renderer::class,
+            'view'
         ]
     ];
 
@@ -36,18 +45,33 @@ class ViewServiceProvider extends ServiceProvider
     /**
      * @inheritDoc
     */
+    public function boot(): void
+    {
+        $this->app->singleton(TemplateEngineConfigInterface::class, function () {
+
+             $config    = new TemplateEngineConfig();
+             $viewPath  = $this->app['basePath'] . '/resources/views';
+             $cachePath = $this->app['basePath'] . '/storage/cache/views';
+
+             $config->withTemplateFactory(new TemplateFactory($viewPath))
+                    ->withReader(new TemplateReader())
+                    ->withLoader(new TemplateLoader())
+                    ->withCache(new CompiledTemplateCache($cachePath));
+
+             return $config;
+        });
+
+    }
+
+
+
+    /**
+     * @inheritDoc
+    */
     public function register(): void
     {
-        // TODO refactoring more better
-        $this->app->singleton(RendererInterface::class, function () {
-            $filesystem = new Filesystem($this->app['basePath'] . '/resources/views');
-            $loader     = new TemplateLoader($filesystem);
-            $cacheFs    = $this->app[Filesystem::class];
-            $cacheFs->setBasePath($this->app['basePath'] . '/storage/cache/views');
-            $cache      = new TemplateCache($this->app[Filesystem::class]);
-            $engine     = new TemplateEngine($loader, $cache);
-
-            return new Renderer($engine);
+        $this->app->singleton(RendererInterface::class, function (TemplateEngineConfig $config) {
+            return new Renderer(new TemplateEngine($config));
         });
     }
 }

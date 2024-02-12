@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Templating\Template\Cache;
 
-use Laventure\Component\Templating\Template\TemplateInterface;
+use Laventure\Component\Templating\Template\Contract\TemplateInterface;
 
 /**
  * TemplateCacheInterface
@@ -18,9 +18,10 @@ use Laventure\Component\Templating\Template\TemplateInterface;
 interface TemplateCacheInterface
 {
     /**
-     * @param string $key
-     * @param string|TemplateInterface $template
-     * @return string
+     * Cache template
+     *
+     * @param TemplateInterface $template
+     * @return CachedTemplateInterface
     */
-    public function cache(string $key, string|TemplateInterface $template): string;
+    public function cache(TemplateInterface $template): CachedTemplateInterface;
 }

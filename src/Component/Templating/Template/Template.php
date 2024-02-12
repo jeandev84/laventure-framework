@@ -1,10 +1,10 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Templating\Template;
 
-use Laventure\Component\Templating\Template\Exception\NotFoundTemplateException;
+
+use Laventure\Component\Templating\Template\Contract\TemplateInterface;
 
 /**
  * @inheritdoc
@@ -17,6 +17,11 @@ class Template implements TemplateInterface
     protected string $path;
 
 
+    /**
+     * @var string
+    */
+    protected string $cacheKey;
+
 
     /**
      * @var array
@@ -24,11 +29,15 @@ class Template implements TemplateInterface
     protected array $parameters = [];
 
 
-
+    /**
+     * @param string $path
+     * @param array $parameters
+    */
     public function __construct(string $path, array $parameters = [])
     {
         $this->path       = $path;
         $this->parameters = $parameters;
+        $this->cacheKey   = md5($path);
     }
 
 
@@ -53,45 +62,24 @@ class Template implements TemplateInterface
 
 
 
+
     /**
      * @inheritDoc
     */
-    public function exists(): bool
+    public function getCacheKey(): string
     {
-        return file_exists($this->path);
+        return $this->cacheKey;
     }
 
 
 
-
-
     /**
      * @inheritDoc
-     * @throws NotFoundTemplateException
     */
-    public function getContent(): string
+    public function withCacheKey(string $cacheKey): static
     {
-        if (!$this->exists()) {
-            throw new NotFoundTemplateException($this->path);
-        }
+        $this->cacheKey = $cacheKey;
 
-        extract($this->parameters, EXTR_SKIP);
-        ob_start();
-        require $this->path;
-        return ob_get_clean();
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-     * @return string
-     * @throws NotFoundTemplateException
-    */
-    public function __toString(): string
-    {
-        return $this->getContent();
+        return $this;
     }
 }

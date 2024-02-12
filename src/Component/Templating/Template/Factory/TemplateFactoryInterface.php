@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Templating\Template\Factory;
 
-use Laventure\Component\Templating\Template\TemplateInterface;
+use Laventure\Component\Templating\Template\Contract\TemplateInterface;
 
 /**
  * TemplateFactoryInterface
@@ -14,9 +14,10 @@ use Laventure\Component\Templating\Template\TemplateInterface;
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
  * @package  Laventure\Component\Templating\Template\Factory
- */
+*/
 interface TemplateFactoryInterface
 {
+
     /**
      * @param string $path
      * @param array $parameters

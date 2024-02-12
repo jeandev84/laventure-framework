@@ -1,10 +1,7 @@
 <?php
-
 declare(strict_types=1);
 
-namespace Laventure\Component\Templating\Template;
-
-use Stringable;
+namespace Laventure\Component\Templating\Template\Contract;
 
 /**
  * TemplateInterface
@@ -13,9 +10,9 @@ use Stringable;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Templating\Template
+ * @package  Laventure\Component\Templating\Template\Contract
 */
-interface TemplateInterface extends Stringable
+interface TemplateInterface
 {
     /**
      * Returns path of template
@@ -23,6 +20,7 @@ interface TemplateInterface extends Stringable
      * @return string
     */
     public function getPath(): string;
+
 
 
 
@@ -37,34 +35,20 @@ interface TemplateInterface extends Stringable
 
 
 
-
     /**
-     * @return string
-    */
-    public function getContent(): string;
-
-
-
-
-
-    /**
-     * Determine if template path exists
+     * @param string $cacheKey
      *
-     * @return bool
+     * @return $this
     */
-    public function exists(): bool;
-
-
-
-
+    public function withCacheKey(string $cacheKey): static;
 
 
 
 
     /**
-     * Returns template content
+     * Generate unique key
      *
      * @return string
     */
-    public function __toString(): string;
+    public function getCacheKey(): string;
 }
