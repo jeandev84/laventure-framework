@@ -285,7 +285,7 @@ class SelectBuilder  implements SelectBuilderInterface
             new Select($this->criteria->selects),
             new From($this->criteria->from),
             new Join($this->criteria->joins),
-            new Where($this->criteria->wheres),
+            $this->getWhere(),
             new GroupBy($this->criteria->groupBy),
             new Having($this->criteria->having),
             new OrderBy($this->criteria->orderBy),

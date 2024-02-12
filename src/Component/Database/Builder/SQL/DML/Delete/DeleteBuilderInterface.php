@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Builder\SQL\DML\Delete;
 
 
+use Laventure\Component\Database\Builder\SQL\Conditions\Contract\BuilderConditionInterface;
+
 /**
  * DeleteBuilderInterface
  *
@@ -13,7 +15,7 @@ namespace Laventure\Component\Database\Builder\SQL\DML\Delete;
  *
  * @package  Laventure\Component\Database\Builder\SQL\DML\Delete
  */
-interface DeleteBuilderInterface
+interface DeleteBuilderInterface extends BuilderConditionInterface
 {
     /**
      * @param string $table

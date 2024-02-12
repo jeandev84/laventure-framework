@@ -80,6 +80,10 @@ class Criteria
 
 
 
+    /**
+     * @var array
+    */
+    public array $insert = [];
 
 
     /**

@@ -59,7 +59,7 @@ class UpdateBuilder implements UpdateBuilderInterface
          return $this->formatter->addFormats([
              new Update($this->criteria->table),
              new Set($this->criteria->set),
-             new Where($this->criteria->wheres)
+             $this->getWhere()
          ])->format();
      }
 }
