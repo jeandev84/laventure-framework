@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL;
 
+
 use Laventure\Component\Database\Builder\SQL\Criteria\Criteria;
 use Laventure\Component\Database\Builder\SQL\Expr\Expr;
-use Laventure\Component\Database\Builder\SQL\Expr\Where;
 use Laventure\Component\Database\Builder\SQL\Formatter\SQlFormatter;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Query\QueryInterface;
 
 /**
- * Builder
+ * BuilderTrait
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -19,11 +19,11 @@ use Laventure\Component\Database\Query\QueryInterface;
  *
  * @package  Laventure\Component\Database\Builder\SQL
  */
-abstract class Builder implements BuilderInterface
+trait BuilderTrait
 {
     /**
      * @var ConnectionInterface
-    */
+     */
     protected ConnectionInterface $connection;
 
 
@@ -58,74 +58,6 @@ abstract class Builder implements BuilderInterface
         $this->expr       = new Expr();
         $this->formatter  = new SQlFormatter();
     }
-
-
-
-
-
-    /**
-     * @param string $condition
-     * @return $this
-     */
-    public function where(string $condition): static
-    {
-        return $this->andWhere($condition);
-    }
-
-
-
-
-
-    /**
-     * @param string $condition
-     * @return $this
-     */
-    public function andWhere(string $condition): static
-    {
-        $this->criteria->wheres['AND'][] = $condition;
-
-        return $this;
-    }
-
-
-
-
-
-
-    /**
-     * @param string $condition
-     * @return $this
-     */
-    public function orWhere(string $condition): static
-    {
-        $this->criteria->wheres['OR'][] = $condition;
-
-        return $this;
-    }
-
-
-
-
-
-    /**
-     * @return array
-     */
-    public function getConditions(): array
-    {
-        return $this->criteria->wheres;
-    }
-
-
-
-
-    /**
-     * @return Where
-     */
-    public function getWhere(): Where
-    {
-        return new Where($this->getConditions());
-    }
-
 
 
 
@@ -178,8 +110,6 @@ abstract class Builder implements BuilderInterface
 
         return $this;
     }
-
-
 
 
 
@@ -260,6 +190,14 @@ abstract class Builder implements BuilderInterface
 
 
     /**
+     * @return string
+    */
+    abstract public function getSQL(): string;
+
+
+
+
+    /**
      * @return Expr
      */
     public function expr(): ExpressionInterface
@@ -272,7 +210,7 @@ abstract class Builder implements BuilderInterface
 
     /**
      * @return Criteria
-     */
+    */
     public function getCriteria(): Criteria
     {
         return $this->criteria;
@@ -284,7 +222,7 @@ abstract class Builder implements BuilderInterface
 
     /**
      * @return array
-     */
+    */
     public function getBindingParams(): array
     {
         return $this->criteria->bindingParams;
@@ -296,7 +234,7 @@ abstract class Builder implements BuilderInterface
 
     /**
      * @return array
-     */
+    */
     public function getBindingValues(): array
     {
         return $this->criteria->bindingValues;

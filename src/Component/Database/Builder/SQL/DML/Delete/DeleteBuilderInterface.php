@@ -17,8 +17,8 @@ interface DeleteBuilderInterface
 {
     /**
      * @param string $table
-     *
+     * @param string $alias
      * @return $this
     */
-    public function delete(string $table): static;
+    public function delete(string $table, string $alias = ''): static;
 }

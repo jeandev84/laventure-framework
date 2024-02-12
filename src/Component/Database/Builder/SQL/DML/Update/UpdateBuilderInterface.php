@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Builder\SQL\DML\Update;
 
 
+use Laventure\Component\Database\Builder\SQL\BuilderInterface;
+use Laventure\Component\Database\Builder\SQL\Conditions\Contract\BuilderConditionInterface;
 use Laventure\Component\Database\Builder\SQL\SettableInterface;
 
 
@@ -16,12 +18,12 @@ use Laventure\Component\Database\Builder\SQL\SettableInterface;
  *
  * @package  Laventure\Component\Database\Builder\SQL\DML\Update
 */
-interface UpdateBuilderInterface extends SettableInterface
+interface UpdateBuilderInterface extends BuilderInterface, SettableInterface
 {
     /**
      * @param string $table
-     *
+     * @param string $alias
      * @return $this
     */
-    public function update(string $table): static;
+    public function update(string $table, string $alias = ''): static;
 }
