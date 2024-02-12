@@ -8,7 +8,7 @@ use Laventure\Component\Filesystem\File\File;
 use Laventure\Component\Filesystem\File\Traits\HasFileTrait;
 use Laventure\Dotenv\Collection\EnvironmentCollectionInterface;
 use Laventure\Dotenv\Exception\DotenvException;
-use Laventure\Dotenv\Traits\HasEnvironmentTrait;
+use Laventure\Dotenv\Traits\HasCollectionTrait;
 
 /**
  * DotenvLoader
@@ -21,7 +21,7 @@ use Laventure\Dotenv\Traits\HasEnvironmentTrait;
 */
 class DotenvLoader implements DotenvLoaderInterface
 {
-    use HasEnvironmentTrait, HasFileTrait;
+    use HasCollectionTrait, HasFileTrait;
 
 
     /**
@@ -29,7 +29,7 @@ class DotenvLoader implements DotenvLoaderInterface
     */
     public function __construct(EnvironmentCollectionInterface $environment)
     {
-        $this->withEnvironments($environment);
+        $this->withCollection($environment);
     }
 
 
@@ -42,7 +42,7 @@ class DotenvLoader implements DotenvLoaderInterface
     {
         $this->loadFromArray($this->process());
 
-        return !$this->environment->empty();
+        return !$this->collection->empty();
     }
 
 
@@ -58,7 +58,7 @@ class DotenvLoader implements DotenvLoaderInterface
             if (stripos($env, '#') !== false) {
                 continue;
             }
-            $this->environment->put($env);
+            $this->collection->put($env);
         }
     }
 
