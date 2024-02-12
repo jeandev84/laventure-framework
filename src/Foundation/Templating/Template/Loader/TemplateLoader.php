@@ -35,7 +35,7 @@ class TemplateLoader implements TemplateLoaderInterface
 
          extract($this->template->getParameters(), EXTR_SKIP);
          ob_start();
-         $file->load();
+         require $file->getPath();
          return ob_get_clean();
      }
 }
