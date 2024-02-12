@@ -173,7 +173,7 @@ interface ConnectionInterface extends TransactionInterface
      *
      * @return ConfigurationInterface
     */
-    public function configs(): ConfigurationInterface;
+    public function getConfiguration(): ConfigurationInterface;
 
 
 

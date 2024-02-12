@@ -15,13 +15,14 @@ namespace Laventure\Component\Database\Query\Result;
 */
 interface QueryResultInterface
 {
+
+
     /**
      * Fetch all result
      *
      * @return mixed
     */
-    public function all(): array;
-
+    public function all($fetchMode = null): array;
 
 
 
@@ -29,9 +30,10 @@ interface QueryResultInterface
     /**
      * Fetch one result
      *
+     * @param null $fetchMode
      * @return mixed
     */
-    public function one(): mixed;
+    public function one($fetchMode = null): mixed;
 
 
 
