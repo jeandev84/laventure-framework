@@ -12,6 +12,7 @@ use Laventure\Component\Database\Builder\SQL\Expr\Join;
 use Laventure\Component\Database\Builder\SQL\Expr\Limit;
 use Laventure\Component\Database\Builder\SQL\Expr\Select;
 use Laventure\Component\Database\Builder\SQL\Expr\Where;
+use Laventure\Component\Database\Connection\ConnectionInterface;
 
 /**
  * SelectBuilder

@@ -42,16 +42,4 @@ interface BuilderConditionInterface extends BuilderInterface, HasConditionInterf
      * @return $this
     */
     public function orWhere(string $condition): static;
-
-
-
-
-
-
-    /**
-     * @param array $criteria
-     *
-     * @return $this
-    */
-    public function criteria(array $criteria): static;
 }

@@ -19,17 +19,7 @@ use Laventure\Component\Database\Connection\ConnectionInterface;
 */
 trait BuilderConditionTrait
 {
-   use BuilderTrait;
-
-
-   /**
-     * @param ConnectionInterface $connection
-   */
-   public function __construct(ConnectionInterface $connection)
-   {
-       parent::__construct($connection);
-   }
-
+    use BuilderTrait;
 
 
 

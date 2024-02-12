@@ -118,13 +118,4 @@ interface BuilderInterface extends CriteriaInterface
      * @return ExpressionInterface
     */
     public function expr(): ExpressionInterface;
-
-
-
-
-
-    /**
-     * @return void
-    */
-    public function clear(): void;
 }
