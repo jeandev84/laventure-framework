@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Laventure\Foundation\Templating\Template\Factory;
 
+use Laventure\Component\Filesystem\File\Locator\FileLocator;
 use Laventure\Component\Filesystem\File\Locator\FileLocatorInterface;
 use Laventure\Component\Templating\Template\Contract\TemplateInterface;
 use Laventure\Component\Templating\Template\Factory\TemplateFactoryInterface;
@@ -21,10 +22,17 @@ class TemplateFactory implements TemplateFactoryInterface
 {
 
     /**
-     * @param FileLocatorInterface $fileLocator
+     * @var FileLocator
     */
-    public function __construct(protected FileLocatorInterface $fileLocator)
+    protected FileLocator $fileLocator;
+
+
+    /**
+     * @param string $viewPath
+    */
+    public function __construct(string $viewPath)
     {
+        $this->fileLocator = new FileLocator($viewPath);
     }
 
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Templating\Template\Engine\Config;
 
 use Laventure\Component\Templating\Template\Cache\CompiledTemplateCacheInterface;
+use Laventure\Component\Templating\Template\Cache\NullCompiledTemplateCache;
 use Laventure\Component\Templating\Template\Compiler\TemplateCompiler;
 use Laventure\Component\Templating\Template\Compiler\TemplateCompilerInterface;
 use Laventure\Component\Templating\Template\Factory\NullTemplateFactory;
@@ -14,7 +15,7 @@ use Laventure\Component\Templating\Template\Reader\NullTemplateReader;
 use Laventure\Component\Templating\Template\Reader\TemplateReaderInterface;
 
 /**
- * TemplateEngineConfig
+ * TemplateConfig
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -27,9 +28,23 @@ class TemplateEngineConfig implements TemplateEngineConfigInterface
 
 
     /**
+     * @var TemplateFactoryInterface
+    */
+    protected TemplateFactoryInterface $templateFactory;
+
+
+
+    /**
      * @var TemplateLoaderInterface
     */
     protected TemplateLoaderInterface $loader;
+
+
+
+    /**
+     * @var TemplateReaderInterface
+    */
+    protected TemplateReaderInterface $reader;
 
 
 
@@ -38,17 +53,6 @@ class TemplateEngineConfig implements TemplateEngineConfigInterface
     */
     protected CompiledTemplateCacheInterface $cache;
 
-
-    /**
-     * @var TemplateFactoryInterface
-    */
-    protected TemplateFactoryInterface $templateFactory;
-
-
-    /**
-     * @var TemplateReaderInterface
-    */
-    protected TemplateReaderInterface $reader;
 
 
     /**
@@ -63,6 +67,7 @@ class TemplateEngineConfig implements TemplateEngineConfigInterface
     {
         $this->loader          = new NullTemplateLoader();
         $this->reader          = new NullTemplateReader();
+        $this->cache           = new NullCompiledTemplateCache();
         $this->templateFactory = new NullTemplateFactory();
     }
 
@@ -166,7 +171,7 @@ class TemplateEngineConfig implements TemplateEngineConfigInterface
 
     /**
      * @inheritDoc
-     */
+    */
     public function withCompiler(TemplateCompilerInterface $compiler): static
     {
         $this->compiler = $compiler;

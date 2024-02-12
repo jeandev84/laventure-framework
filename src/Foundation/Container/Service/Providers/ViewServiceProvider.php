@@ -5,11 +5,12 @@ namespace Laventure\Foundation\Container\Service\Providers;
 
 use Laventure\Component\Container\Service\Provider\Contract\BootableServiceProvider;
 use Laventure\Component\Container\Service\Provider\ServiceProvider;
-use Laventure\Component\Filesystem\File\Locator\FileLocator;
 use Laventure\Component\Templating\Renderer\Renderer;
 use Laventure\Component\Templating\Renderer\RendererInterface;
 use Laventure\Component\Templating\Template\Engine\Config\TemplateEngineConfig;
 use Laventure\Component\Templating\Template\Engine\Config\TemplateEngineConfigInterface;
+use Laventure\Component\Templating\Template\Engine\TemplateEngine;
+use Laventure\Foundation\Templating\Template\Cache\CompiledTemplateCache;
 use Laventure\Foundation\Templating\Template\Factory\TemplateFactory;
 use Laventure\Foundation\Templating\Template\Loader\TemplateLoader;
 use Laventure\Foundation\Templating\Template\Reader\TemplateReader;
@@ -30,10 +31,12 @@ class ViewServiceProvider extends ServiceProvider implements BootableServiceProv
     */
     protected array $provides = [
         TemplateEngineConfigInterface::class => [
-            TemplateEngineConfig::class
+            TemplateEngineConfig::class,
+            'template.engine.config'
         ],
         RendererInterface::class => [
-            Renderer::class, 'view'
+            Renderer::class,
+            'view'
         ]
     ];
 
@@ -45,11 +48,15 @@ class ViewServiceProvider extends ServiceProvider implements BootableServiceProv
     public function boot(): void
     {
         $this->app->singleton(TemplateEngineConfigInterface::class, function () {
-             $config  = new TemplateEngineConfig();
-             $locator = new FileLocator($this->app['basePath'] . '/resources/views');
-             $config->withTemplateFactory(new TemplateFactory($locator))
+
+             $config    = new TemplateEngineConfig();
+             $viewPath  = $this->app['basePath'] . '/resources/views';
+             $cachePath = $this->app['basePath'] . '/storage/cache/views';
+
+             $config->withTemplateFactory(new TemplateFactory($viewPath))
                     ->withReader(new TemplateReader())
-                    ->withLoader(new TemplateLoader());
+                    ->withLoader(new TemplateLoader())
+                    ->withCache(new CompiledTemplateCache($cachePath));
 
              return $config;
         });
@@ -63,20 +70,8 @@ class ViewServiceProvider extends ServiceProvider implements BootableServiceProv
     */
     public function register(): void
     {
-        $this->app->singleton(RendererInterface::class, function () {
-
-            /*
-            $filesystem = new Filesystem($this->app['basePath'] . '/resources/views');
-            $loader     = new TemplateLoader($filesystem);
-            $cacheFs    = $this->app[Filesystem::class];
-            $cacheFs->setBasePath($this->app['basePath'] . '/storage/cache/views');
-            $cache      = new CompiledTemplateCache($this->app[Filesystem::class]);
-            $engine     = new TemplateEngine($loader, $cache);
-
-            return new Renderer($engine);
-            */
-
-            return false;
+        $this->app->singleton(RendererInterface::class, function (TemplateEngineConfig $config) {
+            return new Renderer(new TemplateEngine($config));
         });
     }
 }

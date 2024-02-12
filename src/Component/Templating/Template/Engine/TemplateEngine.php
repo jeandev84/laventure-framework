@@ -19,7 +19,7 @@ use Laventure\Component\Templating\Template\Template;
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
  * @package  Laventure\Component\Templating\Template\Engine
- */
+*/
 class TemplateEngine implements TemplateEngineInterface
 {
 
