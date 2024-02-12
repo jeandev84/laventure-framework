@@ -145,7 +145,7 @@ class SessionFlash implements SessionFlashInterface
     */
     public function offsetGet(mixed $offset): mixed
     {
-        return false;
+        return $offset;
     }
 
 
@@ -169,19 +169,45 @@ class SessionFlash implements SessionFlashInterface
 
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function add(array $params): mixed
-    {
-        // TODO: Implement add() method.
-    }
+
+
 
     /**
      * @inheritDoc
-     */
+    */
+    public function add(array $params): mixed
+    {
+        return $this;
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
     public function count(): int
     {
-        // TODO: Implement count() method.
+        return 0;
+    }
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function required($key): mixed
+    {
+        return $key;
+    }
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function isEmpty($key): bool
+    {
+        return false;
     }
 }
