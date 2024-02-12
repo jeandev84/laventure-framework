@@ -118,4 +118,36 @@ interface BuilderInterface extends CriteriaInterface
      * @return ExpressionInterface
     */
     public function expr(): ExpressionInterface;
+
+
+
+
+
+    /**
+     * @param string $condition
+     *
+     * @return $this
+    */
+    public function where(string $condition): static;
+
+
+
+
+
+    /**
+     * @param string $condition
+     * @return $this
+    */
+    public function andWhere(string $condition): static;
+
+
+
+
+
+
+    /**
+     * @param string $condition
+     * @return $this
+    */
+    public function orWhere(string $condition): static;
 }

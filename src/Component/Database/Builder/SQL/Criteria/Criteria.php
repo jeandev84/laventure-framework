@@ -73,11 +73,18 @@ class Criteria
 
 
 
+    /**
+     * @var string|null
+    */
+    public ?string $table = null;
+
+
 
     /**
-     * @var array
+     * @var string|null
     */
-    public array $insert = [];
+    public ?string $alias = null;
+
 
 
 
@@ -85,13 +92,6 @@ class Criteria
      * @var array
     */
     public array $values = [];
-
-
-
-    /**
-     * @var array
-    */
-    public array $update = [];
 
 
 
@@ -106,7 +106,8 @@ class Criteria
     /**
      * @var array
     */
-    public array $delete = [];
+    public array $wheres = [];
+
 
 
 
@@ -114,7 +115,7 @@ class Criteria
     /**
      * @var array
     */
-    public array $wheres = [];
+    public array $criteria = [];
 
 
 

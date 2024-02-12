@@ -5,13 +5,13 @@ namespace Laventure\Component\Database\Builder\SQL;
 
 use Laventure\Component\Database\Builder\SQL\Criteria\Criteria;
 use Laventure\Component\Database\Builder\SQL\Expr\Expr;
+use Laventure\Component\Database\Builder\SQL\Expr\Where;
 use Laventure\Component\Database\Builder\SQL\Formatter\SQlFormatter;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Query\QueryInterface;
 
-
 /**
- * BuilderTrait
+ * Builder
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -19,9 +19,8 @@ use Laventure\Component\Database\Query\QueryInterface;
  *
  * @package  Laventure\Component\Database\Builder\SQL
  */
-trait BuilderTrait
+abstract class Builder implements BuilderInterface
 {
-
     /**
      * @var ConnectionInterface
     */
@@ -30,13 +29,13 @@ trait BuilderTrait
 
     /**
      * @var SQlFormatter
-    */
+     */
     protected SQlFormatter $formatter;
 
 
     /**
      * @var ExpressionInterface
-    */
+     */
     protected ExpressionInterface $expr;
 
 
@@ -44,20 +43,87 @@ trait BuilderTrait
 
     /**
      * @var Criteria
-    */
+     */
     protected Criteria $criteria;
 
 
 
     /**
      * @param ConnectionInterface $connection
-    */
+     */
     public function __construct(ConnectionInterface $connection)
     {
         $this->connection = $connection;
         $this->criteria   = new Criteria();
         $this->expr       = new Expr();
         $this->formatter  = new SQlFormatter();
+    }
+
+
+
+
+
+    /**
+     * @param string $condition
+     * @return $this
+     */
+    public function where(string $condition): static
+    {
+        return $this->andWhere($condition);
+    }
+
+
+
+
+
+    /**
+     * @param string $condition
+     * @return $this
+     */
+    public function andWhere(string $condition): static
+    {
+        $this->criteria->wheres['AND'][] = $condition;
+
+        return $this;
+    }
+
+
+
+
+
+
+    /**
+     * @param string $condition
+     * @return $this
+     */
+    public function orWhere(string $condition): static
+    {
+        $this->criteria->wheres['OR'][] = $condition;
+
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @return array
+     */
+    public function getConditions(): array
+    {
+        return $this->criteria->wheres;
+    }
+
+
+
+
+    /**
+     * @return Where
+     */
+    public function getWhere(): Where
+    {
+        return new Where($this->getConditions());
     }
 
 
@@ -153,7 +219,7 @@ trait BuilderTrait
 
     /**
      * @return array
-    */
+     */
     public function getParameters(): array
     {
         return $this->criteria->parameters;
@@ -167,7 +233,7 @@ trait BuilderTrait
 
     /**
      * @return QueryInterface
-    */
+     */
     public function getQuery(): QueryInterface
     {
         $statement = $this->connection->statement($this->getSQL());
@@ -195,7 +261,7 @@ trait BuilderTrait
 
     /**
      * @return Expr
-    */
+     */
     public function expr(): ExpressionInterface
     {
         return $this->expr;
@@ -206,16 +272,19 @@ trait BuilderTrait
 
     /**
      * @return Criteria
-    */
+     */
     public function getCriteria(): Criteria
     {
         return $this->criteria;
     }
 
 
+
+
+
     /**
      * @return array
-    */
+     */
     public function getBindingParams(): array
     {
         return $this->criteria->bindingParams;
@@ -227,7 +296,7 @@ trait BuilderTrait
 
     /**
      * @return array
-    */
+     */
     public function getBindingValues(): array
     {
         return $this->criteria->bindingValues;
@@ -243,12 +312,4 @@ trait BuilderTrait
     {
         return $this->connection;
     }
-
-
-
-
-    /**
-     * @return string
-    */
-    abstract public function getSQL(): string;
 }

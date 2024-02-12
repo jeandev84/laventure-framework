@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Builder\SQL\DQL\Select;
 
 
-use Laventure\Component\Database\Builder\SQL\Conditions\Traits\BuilderConditionTrait;
+use Laventure\Component\Database\Builder\SQL\Builder;
 use Laventure\Component\Database\Builder\SQL\Expr\From;
 use Laventure\Component\Database\Builder\SQL\Expr\GroupBy;
 use Laventure\Component\Database\Builder\SQL\Expr\Having;
@@ -12,7 +12,7 @@ use Laventure\Component\Database\Builder\SQL\Expr\Join;
 use Laventure\Component\Database\Builder\SQL\Expr\Limit;
 use Laventure\Component\Database\Builder\SQL\Expr\Select;
 use Laventure\Component\Database\Builder\SQL\Expr\Where;
-use Laventure\Component\Database\Connection\ConnectionInterface;
+
 
 /**
  * SelectBuilder
@@ -23,12 +23,8 @@ use Laventure\Component\Database\Connection\ConnectionInterface;
  *
  * @package  Laventure\Component\Database\Builder\SQL\DQL\Select
 */
-class SelectBuilder implements SelectBuilderInterface
+class SelectBuilder extends Builder implements SelectBuilderInterface
 {
-
-    use BuilderConditionTrait;
-
-
 
     /**
      * @inheritdoc
