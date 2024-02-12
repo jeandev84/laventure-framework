@@ -5,7 +5,6 @@ namespace Laventure\Component\Database\Builder\SQL\DQL\Select;
 
 
 use Laventure\Component\Database\Builder\SQL\BuilderInterface;
-use Laventure\Component\Database\Builder\SQL\Conditions\Contract\BuilderConditionInterface;
 
 /**
  * SelectBuilderInterface
@@ -15,7 +14,7 @@ use Laventure\Component\Database\Builder\SQL\Conditions\Contract\BuilderConditio
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
  * @package  Laventure\Component\Database\Builder\SQL\DQL\Select
- */
+*/
 interface SelectBuilderInterface extends BuilderInterface
 {
     /**

@@ -10,6 +10,7 @@ use Laventure\Component\Database\Builder\SQL\Expr\GroupBy;
 use Laventure\Component\Database\Builder\SQL\Expr\Having;
 use Laventure\Component\Database\Builder\SQL\Expr\Join;
 use Laventure\Component\Database\Builder\SQL\Expr\Limit;
+use Laventure\Component\Database\Builder\SQL\Expr\OrderBy;
 use Laventure\Component\Database\Builder\SQL\Expr\Select;
 use Laventure\Component\Database\Builder\SQL\Expr\Where;
 
@@ -282,6 +283,7 @@ class SelectBuilder extends Builder implements SelectBuilderInterface
             new Where($this->criteria->wheres),
             new GroupBy($this->criteria->groupBy),
             new Having($this->criteria->having),
+            new OrderBy($this->criteria->orderBy),
             new Limit($this->criteria->limit, $this->criteria->offset)
         ])->format();
     }
