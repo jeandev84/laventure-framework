@@ -6,8 +6,7 @@ namespace Laventure\Dotenv\Export;
 
 use Laventure\Component\Filesystem\File\File;
 use Laventure\Component\Filesystem\File\Traits\HasFileTrait;
-use Laventure\Dotenv\Contract\EnvironmentInterface;
-use Laventure\Dotenv\Environment;
+use Laventure\Dotenv\Collection\EnvironmentCollectionInterface;
 use Laventure\Dotenv\Exception\DotenvException;
 use Laventure\Dotenv\Exception\WrongProcessException;
 use Laventure\Dotenv\Traits\HasEnvironmentTrait;
@@ -33,9 +32,9 @@ class DotenvExporter implements DotenvExporterInterface
 
 
     /**
-     * @param EnvironmentInterface $environment
+     * @param EnvironmentCollectionInterface $environment
     */
-    public function __construct(EnvironmentInterface $environment)
+    public function __construct(EnvironmentCollectionInterface $environment)
     {
         $this->withEnvironments($environment);
     }

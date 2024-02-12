@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Dotenv\Traits;
 
-use Laventure\Dotenv\Contract\EnvironmentInterface;
+use Laventure\Dotenv\Collection\EnvironmentCollectionInterface;
 
 /**
  * HasEnvironmentTrait
@@ -18,16 +18,16 @@ use Laventure\Dotenv\Contract\EnvironmentInterface;
 trait HasEnvironmentTrait
 {
     /**
-     * @var EnvironmentInterface
+     * @var EnvironmentCollectionInterface
      */
-    protected EnvironmentInterface $environment;
+    protected EnvironmentCollectionInterface $environment;
 
 
     /**
-     * @param EnvironmentInterface $environment
+     * @param EnvironmentCollectionInterface $environment
      * @return $this
     */
-    public function withEnvironments(EnvironmentInterface $environment): static
+    public function withEnvironments(EnvironmentCollectionInterface $environment): static
     {
         $this->environment = $environment;
 
@@ -36,9 +36,9 @@ trait HasEnvironmentTrait
 
 
     /**
-     * @return EnvironmentInterface
+     * @return EnvironmentCollectionInterface
     */
-    public function getEnvironments(): EnvironmentInterface
+    public function getEnvironments(): EnvironmentCollectionInterface
     {
         return $this->environment;
     }

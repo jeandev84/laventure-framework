@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laventure\Dotenv\Contract;
 
+use Laventure\Dotenv\Collection\EnvironmentCollectionInterface;
+
 /**
  * HasEnvironments
  *
@@ -16,7 +18,7 @@ namespace Laventure\Dotenv\Contract;
 interface HasEnvironments
 {
     /**
-     * @return EnvironmentInterface
+     * @return EnvironmentCollectionInterface
     */
-    public function getEnvironments(): EnvironmentInterface;
+    public function getEnvironments(): EnvironmentCollectionInterface;
 }

@@ -5,13 +5,10 @@ declare(strict_types=1);
 namespace Laventure\Dotenv;
 
 use Laventure\Component\Filesystem\File\Locator\FileLocator;
-use Laventure\Dotenv\Contract\DotenvInterface;
-use Laventure\Dotenv\Contract\EnvironmentInterface;
-use Laventure\Dotenv\Contract\HasEnvironments;
+use Laventure\Dotenv\Collection\EnvironmentCollection;
+use Laventure\Dotenv\Collection\EnvironmentCollectionInterface;
 use Laventure\Dotenv\Export\DotenvExporter;
-use Laventure\Dotenv\Export\DotenvExporterInterface;
 use Laventure\Dotenv\Loader\DotenvLoader;
-use Laventure\Dotenv\Loader\DotenvLoaderInterface;
 
 /**
  * Dotenv
@@ -31,9 +28,9 @@ class Dotenv implements DotenvInterface
 
 
     /**
-     * @var EnvironmentInterface
+     * @var EnvironmentCollectionInterface
     */
-    protected EnvironmentInterface $environment;
+    protected EnvironmentCollectionInterface $environment;
 
 
     /**
@@ -53,7 +50,7 @@ class Dotenv implements DotenvInterface
     */
     public function __construct(string $basePath)
     {
-        $this->environment  = new Environment();
+        $this->environment  = new EnvironmentCollection();
         $this->locator      = new FileLocator($basePath);
         $this->loader       = new DotenvLoader($this->environment);
         $this->exporter     = new DotenvExporter($this->environment);
@@ -102,7 +99,7 @@ class Dotenv implements DotenvInterface
     /**
      * @inheritdoc
     */
-    public function getEnvironment(): EnvironmentInterface
+    public function getEnvironment(): EnvironmentCollectionInterface
     {
         return $this->environment;
     }

@@ -5,13 +5,9 @@ declare(strict_types=1);
 namespace Laventure\Dotenv\Loader;
 
 use Laventure\Component\Filesystem\File\File;
-use Laventure\Component\Filesystem\File\Loader\FileLoader;
 use Laventure\Component\Filesystem\File\Traits\HasFileTrait;
-use Laventure\Dotenv\Contract\EnvironmentInterface;
-use Laventure\Dotenv\Contract\HasEnvironments;
-use Laventure\Dotenv\Environment;
+use Laventure\Dotenv\Collection\EnvironmentCollectionInterface;
 use Laventure\Dotenv\Exception\DotenvException;
-use Laventure\Dotenv\Exception\WrongProcessException;
 use Laventure\Dotenv\Traits\HasEnvironmentTrait;
 
 /**
@@ -29,9 +25,9 @@ class DotenvLoader implements DotenvLoaderInterface
 
 
     /**
-     * @param EnvironmentInterface $environment
+     * @param EnvironmentCollectionInterface $environment
     */
-    public function __construct(EnvironmentInterface $environment)
+    public function __construct(EnvironmentCollectionInterface $environment)
     {
         $this->withEnvironments($environment);
     }
