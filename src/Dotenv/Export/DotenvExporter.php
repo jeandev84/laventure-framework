@@ -33,12 +33,10 @@ class DotenvExporter implements DotenvExporterInterface
 
 
     /**
-     * @param string $file
      * @param EnvironmentInterface $environment
     */
-    public function __construct(string $file, EnvironmentInterface $environment)
+    public function __construct(EnvironmentInterface $environment)
     {
-        $this->setFile($file);
         $this->withEnvironments($environment);
     }
 

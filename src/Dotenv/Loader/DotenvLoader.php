@@ -23,22 +23,18 @@ use Laventure\Dotenv\Traits\HasEnvironmentTrait;
  *
  * @package Laventure\Dotenv\Loader
 */
-class DotenvLoader extends FileLoader implements DotenvLoaderInterface
+class DotenvLoader implements DotenvLoaderInterface
 {
-    use HasEnvironmentTrait;
-
+    use HasEnvironmentTrait, HasFileTrait;
 
 
     /**
-     * @param string $file
      * @param EnvironmentInterface $environment
     */
-    public function __construct(string $file, EnvironmentInterface $environment)
+    public function __construct(EnvironmentInterface $environment)
     {
-        parent::__construct($file);
         $this->withEnvironments($environment);
     }
-
 
 
 

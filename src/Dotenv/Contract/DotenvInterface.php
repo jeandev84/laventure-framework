@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Laventure\Dotenv\Contract;
 
+use Laventure\Contract\Export\ExportInterface;
 use Laventure\Contract\Loader\LoaderInterface;
-use Laventure\Dotenv\Export\DotenvExporterInterface;
-use Laventure\Dotenv\Loader\DotenvLoaderInterface;
+
 
 /**
  * DotenvInterface
@@ -17,7 +17,21 @@ use Laventure\Dotenv\Loader\DotenvLoaderInterface;
  *
  * @package  Laventure\Dotenv\Writer
  */
-interface DotenvInterface extends LoaderInterface
+interface DotenvInterface extends LoaderInterface, ExportInterface
 {
     public const FILENAME = '.env';
+
+
+    /**
+     * @param string $destination
+     * @return $this
+    */
+    public function withExportPath(string $destination): static;
+
+
+
+    /**
+     * @return EnvironmentInterface
+    */
+    public function getEnvironment(): EnvironmentInterface;
 }

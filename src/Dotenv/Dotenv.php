@@ -33,9 +33,19 @@ class Dotenv implements DotenvInterface
     /**
      * @var EnvironmentInterface
     */
-    private EnvironmentInterface $environment;
+    protected EnvironmentInterface $environment;
 
 
+    /**
+     * @var DotenvLoader
+    */
+    protected DotenvLoader $loader;
+
+
+    /**
+     * @var DotenvExporter
+    */
+    protected DotenvExporter $exporter;
 
 
     /**
@@ -43,8 +53,10 @@ class Dotenv implements DotenvInterface
     */
     public function __construct(string $basePath)
     {
-        $this->locator      = new FileLocator($basePath);
         $this->environment  = new Environment();
+        $this->locator      = new FileLocator($basePath);
+        $this->loader       = new DotenvLoader($this->environment);
+        $this->exporter     = new DotenvExporter($this->environment);
     }
 
 
@@ -55,28 +67,43 @@ class Dotenv implements DotenvInterface
     */
     public function load(): bool
     {
-        $loader = new DotenvLoader(
-            $this->locator->locate('.env'),
-            $this->environment
-        );
+        $this->loader->setFile($this->locator->locate(self::FILENAME));
 
-        return $loader->load();
+        return $this->loader->load();
     }
 
 
 
 
     /**
-     * @param string $destination
-     * @return mixed
+     * @inheritDoc
     */
-    public function export(string $destination): bool
+    public function withExportPath(string $destination): static
     {
-        $export = new DotenvExporter(
-            $destination,
-            $this->environment
-        );
+        $this->exporter->setFile($destination);
 
-        return $export->export();
+        return $this;
+    }
+
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function export(): bool
+    {
+        return $this->exporter->export();
+    }
+
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function getEnvironment(): EnvironmentInterface
+    {
+        return $this->environment;
     }
 }
