@@ -15,17 +15,6 @@ namespace Laventure\Component\Templating\Renderer;
  */
 interface RendererInterface
 {
-    /**
-     * Set storage path
-     *
-     * @param string $path
-     * @return mixed
-    */
-    public function resource(string $path): mixed;
-
-
-
-
 
     /**
     * add global data using in template

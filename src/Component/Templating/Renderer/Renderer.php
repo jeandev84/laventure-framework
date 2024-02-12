@@ -65,25 +65,6 @@ class Renderer implements RendererInterface
 
 
     /**
-     * @inheritdoc
-    */
-    public function resource(string $path): static
-    {
-        /*
-        $loader = $this->engine->getLoader();
-        $loader->resourcePath($path);
-        $this->engine->setLoader($loader);
-        */
-
-        return $this;
-    }
-
-
-
-
-
-
-    /**
      * @inheritDoc
     */
     public function addGlobals(array $data): static
@@ -121,6 +102,8 @@ class Renderer implements RendererInterface
 
         return $this;
     }
+
+
 
 
 
@@ -189,7 +172,7 @@ class Renderer implements RendererInterface
      */
     public function getExtensions(): array
     {
-        return [];
+        return $this->extensions;
     }
 
 
@@ -201,7 +184,7 @@ class Renderer implements RendererInterface
     */
     public function getPaths(): array
     {
-        return [];
+        return $this->paths;
     }
 
 
