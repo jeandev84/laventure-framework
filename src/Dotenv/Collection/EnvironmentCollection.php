@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Dotenv\Collection;
@@ -16,8 +17,6 @@ use Laventure\Utils\Parameter\Parameter;
  */
 class EnvironmentCollection extends Parameter implements EnvironmentCollectionInterface
 {
-
-
     /**
      * @param array $params
     */

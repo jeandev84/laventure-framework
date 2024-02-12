@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Laventure\Dotenv\Adapters;
 
-use Laventure\Dotenv\Contract\DotenvInterface;
+use Laventure\Dotenv\Collection\EnvironmentCollection;
+use Laventure\Dotenv\Collection\EnvironmentCollectionInterface;
+use Laventure\Dotenv\DotenvInterface;
 
 /**
  * LucasDotenvAdapter
@@ -19,8 +21,38 @@ class LucasDotenvAdapter implements DotenvInterface
 {
     /**
      * @inheritDoc
-     */
+    */
     public function load(): bool
+    {
+        return false;
+    }
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function withExportPath(string $destination): static
+    {
+        return $this;
+    }
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getCollection(): EnvironmentCollectionInterface
+    {
+        return new EnvironmentCollection();
+    }
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function export(): bool
     {
         return false;
     }

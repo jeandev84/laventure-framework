@@ -9,7 +9,7 @@ use Laventure\Component\Config\ConfigInterface;
 use Laventure\Component\Container\Service\Provider\Contract\BootableServiceProvider;
 use Laventure\Component\Container\Service\Provider\ServiceProvider;
 use Laventure\Component\Filesystem\Filesystem;
-use Laventure\Dotenv\Contract\DotenvInterface;
+use Laventure\Dotenv\DotenvInterface;
 use Laventure\Dotenv\Dotenv;
 use Laventure\Foundation\Config\Loader\ConfigLoader;
 

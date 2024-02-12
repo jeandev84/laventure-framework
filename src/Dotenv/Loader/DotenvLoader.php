@@ -21,7 +21,8 @@ use Laventure\Dotenv\Traits\HasCollectionTrait;
 */
 class DotenvLoader implements DotenvLoaderInterface
 {
-    use HasCollectionTrait, HasFileTrait;
+    use HasCollectionTrait;
+    use HasFileTrait;
 
 
     /**

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Dotenv;
@@ -6,7 +7,6 @@ namespace Laventure\Dotenv;
 use Laventure\Contract\Export\ExportInterface;
 use Laventure\Contract\Loader\LoaderInterface;
 use Laventure\Dotenv\Collection\EnvironmentCollectionInterface;
-
 
 /**
  * DotenvInterface
