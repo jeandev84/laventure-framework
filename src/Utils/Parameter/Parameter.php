@@ -166,7 +166,7 @@ class Parameter implements ParameterInterface
     /**
      * @return void
     */
-    public function removeAll(): void
+    public function clear(): void
     {
         foreach ($this->keys() as $name) {
             $this->remove($name);

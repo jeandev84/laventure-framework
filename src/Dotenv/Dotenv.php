@@ -5,13 +5,10 @@ declare(strict_types=1);
 namespace Laventure\Dotenv;
 
 use Laventure\Component\Filesystem\File\Locator\FileLocator;
-use Laventure\Dotenv\Contract\DotenvInterface;
-use Laventure\Dotenv\Contract\EnvironmentInterface;
-use Laventure\Dotenv\Contract\HasEnvironments;
+use Laventure\Dotenv\Collection\EnvironmentCollection;
+use Laventure\Dotenv\Collection\EnvironmentCollectionInterface;
 use Laventure\Dotenv\Export\DotenvExporter;
-use Laventure\Dotenv\Export\DotenvExporterInterface;
 use Laventure\Dotenv\Loader\DotenvLoader;
-use Laventure\Dotenv\Loader\DotenvLoaderInterface;
 
 /**
  * Dotenv
@@ -31,11 +28,21 @@ class Dotenv implements DotenvInterface
 
 
     /**
-     * @var EnvironmentInterface
+     * @var EnvironmentCollectionInterface
     */
-    private EnvironmentInterface $environment;
+    protected EnvironmentCollectionInterface $environment;
 
 
+    /**
+     * @var DotenvLoader
+    */
+    protected DotenvLoader $loader;
+
+
+    /**
+     * @var DotenvExporter
+    */
+    protected DotenvExporter $exporter;
 
 
     /**
@@ -43,8 +50,10 @@ class Dotenv implements DotenvInterface
     */
     public function __construct(string $basePath)
     {
+        $this->environment  = new EnvironmentCollection();
         $this->locator      = new FileLocator($basePath);
-        $this->environment  = new Environment();
+        $this->loader       = new DotenvLoader($this->environment);
+        $this->exporter     = new DotenvExporter($this->environment);
     }
 
 
@@ -55,28 +64,43 @@ class Dotenv implements DotenvInterface
     */
     public function load(): bool
     {
-        $loader = new DotenvLoader(
-            $this->locator->locate('.env'),
-            $this->environment
-        );
+        $this->loader->setFile($this->locator->locate(self::FILENAME));
 
-        return $loader->load();
+        return $this->loader->load();
     }
 
 
 
 
     /**
-     * @param string $destination
-     * @return mixed
+     * @inheritDoc
     */
-    public function export(string $destination): bool
+    public function withExportPath(string $destination): static
     {
-        $export = new DotenvExporter(
-            $destination,
-            $this->environment
-        );
+        $this->exporter->setFile($destination);
 
-        return $export->export();
+        return $this;
+    }
+
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function export(): bool
+    {
+        return $this->exporter->export();
+    }
+
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function getEnvironment(): EnvironmentCollectionInterface
+    {
+        return $this->environment;
     }
 }
