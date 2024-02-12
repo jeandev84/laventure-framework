@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Templating\Template\Compiler;
@@ -17,7 +18,6 @@ use Laventure\Component\Templating\Template\Traits\HasTemplateTrait;
  */
 class CompiledTemplate implements CompiledTemplateInterface
 {
-
     use HasTemplateTrait;
 
     protected string $compiled;

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Templating\Template\Loader;
@@ -19,23 +20,23 @@ use Laventure\Component\Templating\Template\Traits\HasTemplateTrait;
 */
 class TemplateLoader implements TemplateLoaderInterface
 {
-     use HasTemplateTrait;
+    use HasTemplateTrait;
 
 
-     /**
-      * @inheritDoc
-     */
-     public function load(): string
-     {
-         $file = new File($this->template->getPath());
+    /**
+     * @inheritDoc
+    */
+    public function load(): string
+    {
+        $file = new File($this->template->getPath());
 
-         if (!$file->exists()) {
-             throw new NotFoundTemplateException($file->getPath());
-         }
+        if (!$file->exists()) {
+            throw new NotFoundTemplateException($file->getPath());
+        }
 
-         extract($this->template->getParameters(), EXTR_SKIP);
-         ob_start();
-         require $file->getPath();
-         return ob_get_clean();
-     }
+        extract($this->template->getParameters(), EXTR_SKIP);
+        ob_start();
+        require $file->getPath();
+        return ob_get_clean();
+    }
 }

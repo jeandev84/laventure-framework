@@ -18,8 +18,8 @@ use Laventure\Component\Templating\Template\Transformer\TemplateTransformerInter
  */
 interface TemplateEngineInterface extends TemplateTransformerInterface
 {
-     /**
-      * @return TemplateEngineConfigInterface
-     */
-     public function config(): TemplateEngineConfigInterface;
+    /**
+     * @return TemplateEngineConfigInterface
+    */
+    public function config(): TemplateEngineConfigInterface;
 }

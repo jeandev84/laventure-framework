@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Templating\Template\Compiler;
@@ -16,13 +17,12 @@ use Laventure\Component\Templating\Template\Contract\TemplateInterface;
  */
 class NullTemplateCompiler implements TemplateCompilerInterface
 {
-
     /**
      * @inheritDoc
     */
     public function compile(TemplateInterface $template): CompiledTemplateInterface
     {
-         return new CompiledTemplate($template, '');
+        return new CompiledTemplate($template, '');
     }
 
 

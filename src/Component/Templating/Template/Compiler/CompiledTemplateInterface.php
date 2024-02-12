@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Templating\Template\Compiler;
-
 
 use Laventure\Component\Templating\Template\Contract\HasTemplateInterface;
 
@@ -17,20 +17,19 @@ use Laventure\Component\Templating\Template\Contract\HasTemplateInterface;
 */
 interface CompiledTemplateInterface extends HasTemplateInterface
 {
-
-     /**
-      * @param string $compiled
-      *
-      * @return $this
-     */
-     public function withCompiled(string $compiled): static;
-
+    /**
+     * @param string $compiled
+     *
+     * @return $this
+    */
+    public function withCompiled(string $compiled): static;
 
 
-     /**
-      * Returns compiled content
-      *
-      * @return string
-     */
-     public function getCompiled(): string;
+
+    /**
+     * Returns compiled content
+     *
+     * @return string
+    */
+    public function getCompiled(): string;
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Http\Client\Curl;
@@ -28,7 +29,6 @@ use Laventure\Component\Http\Client\Options\UserAgent;
  */
 class CurlRequest
 {
-
     /**
      * @var CurlHandle|false
     */

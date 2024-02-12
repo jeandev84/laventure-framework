@@ -17,7 +17,6 @@ use Laventure\Component\Templating\Template\Contract\TemplateInterface;
 */
 interface TemplateFactoryInterface
 {
-
     /**
      * @param string $path
      * @param array $parameters

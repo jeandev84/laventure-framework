@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Templating\Template\Engine\Config;
-
 
 use Laventure\Component\Templating\Template\Cache\CompiledTemplateCacheInterface;
 use Laventure\Component\Templating\Template\Compiler\TemplateCompilerInterface;

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Templating\Template\Cache;
@@ -18,44 +19,42 @@ use Laventure\Component\Templating\Template\Traits\HasTemplateTrait;
 */
 class CachedTemplate extends Template implements CachedTemplateInterface
 {
+    /**
+     * @var string
+    */
+    protected string $cachePath;
 
-      /**
-       * @var string
-      */
-      protected string $cachePath;
 
-
-      /**
-       * @param string $path
-       * @param array $parameters
-      */
-      public function __construct(
-          string $path,
-          array $parameters = [],
-      )
-      {
-          parent::__construct($path, $parameters);
-      }
+    /**
+     * @param string $path
+     * @param array $parameters
+    */
+    public function __construct(
+        string $path,
+        array $parameters = [],
+    ) {
+        parent::__construct($path, $parameters);
+    }
 
 
 
-      /**
-       * @inheritDoc
-      */
-      public function withCachePath(string $cachePath): static
-      {
-           $this->cachePath = $cachePath;
+    /**
+     * @inheritDoc
+    */
+    public function withCachePath(string $cachePath): static
+    {
+        $this->cachePath = $cachePath;
 
-           return $this;
-      }
+        return $this;
+    }
 
 
 
-      /**
-       * @inheritDoc
-      */
-      public function getCachePath(): string
-      {
-           return $this->cachePath;
-      }
+    /**
+     * @inheritDoc
+    */
+    public function getCachePath(): string
+    {
+        return $this->cachePath;
+    }
 }

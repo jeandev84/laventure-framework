@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Templating\Template\Traits;
-
 
 use Laventure\Component\Templating\Template\Contract\TemplateInterface;
 
@@ -17,24 +17,23 @@ use Laventure\Component\Templating\Template\Contract\TemplateInterface;
 */
 trait HasTemplateTrait
 {
-
-     /**
-      * @var TemplateInterface
-     */
-     protected TemplateInterface $template;
-
+    /**
+     * @var TemplateInterface
+    */
+    protected TemplateInterface $template;
 
 
-     /**
-      * @param TemplateInterface $template
-      * @return $this
-     */
-     public function withTemplate(TemplateInterface $template): static
-     {
-         $this->template = $template;
 
-         return $this;
-     }
+    /**
+     * @param TemplateInterface $template
+     * @return $this
+    */
+    public function withTemplate(TemplateInterface $template): static
+    {
+        $this->template = $template;
+
+        return $this;
+    }
 
 
 
@@ -47,6 +46,6 @@ trait HasTemplateTrait
     */
     public function getTemplate(): TemplateInterface
     {
-         return $this->template;
+        return $this->template;
     }
 }

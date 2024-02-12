@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Templating\Template\Compiler;
@@ -17,7 +18,6 @@ use Laventure\Component\Templating\Template\Loader\TemplateLoaderInterface;
 */
 class TemplateCompilerFactory implements TemplateCompilerFactoryInterface
 {
-
     /**
      * @param TemplateLoaderInterface $loader
      * @param TemplateFactoryInterface $factory
@@ -25,8 +25,7 @@ class TemplateCompilerFactory implements TemplateCompilerFactoryInterface
     public function __construct(
         protected TemplateLoaderInterface $loader,
         protected TemplateFactoryInterface $factory
-    )
-    {
+    ) {
 
     }
 

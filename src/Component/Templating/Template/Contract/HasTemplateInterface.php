@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Templating\Template\Contract;
-
 
 /**
  * HasTemplateInterface
@@ -15,23 +15,22 @@ namespace Laventure\Component\Templating\Template\Contract;
  */
 interface HasTemplateInterface
 {
-
-     /**
-      * Set template
-      *
-      * @param TemplateInterface $template
-      *
-      * @return $this
-     */
-     public function withTemplate(TemplateInterface $template): static;
-
+    /**
+     * Set template
+     *
+     * @param TemplateInterface $template
+     *
+     * @return $this
+    */
+    public function withTemplate(TemplateInterface $template): static;
 
 
 
-     /**
-      * Returns template
-      *
-      * @return TemplateInterface
-     */
-     public function getTemplate(): TemplateInterface;
+
+    /**
+     * Returns template
+     *
+     * @return TemplateInterface
+    */
+    public function getTemplate(): TemplateInterface;
 }

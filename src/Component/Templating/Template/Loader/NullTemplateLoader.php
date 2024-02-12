@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Templating\Template\Loader;
@@ -17,14 +18,14 @@ use RuntimeException;
 */
 class NullTemplateLoader implements TemplateLoaderInterface
 {
-     use HasTemplateTrait;
+    use HasTemplateTrait;
 
 
-     /**
-      * @inheritDoc
-     */
-     public function load(): mixed
-     {
-         throw new RuntimeException("Could not load template from : ". __METHOD__);
-     }
+    /**
+     * @inheritDoc
+    */
+    public function load(): mixed
+    {
+        throw new RuntimeException("Could not load template from : ". __METHOD__);
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Templating\Template\Engine\Config;
@@ -25,8 +26,6 @@ use Laventure\Component\Templating\Template\Reader\TemplateReaderInterface;
 */
 class TemplateEngineConfig implements TemplateEngineConfigInterface
 {
-
-
     /**
      * @var TemplateFactoryInterface
     */
@@ -102,9 +101,9 @@ class TemplateEngineConfig implements TemplateEngineConfigInterface
     */
     public function withTemplateFactory(TemplateFactoryInterface $factory): static
     {
-       $this->templateFactory = $factory;
+        $this->templateFactory = $factory;
 
-       return $this;
+        return $this;
     }
 
 

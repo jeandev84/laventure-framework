@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Templating\Template\Compiler;
-
 
 /**
  * TemplateCompilerFactoryInterface
@@ -15,11 +15,10 @@ namespace Laventure\Component\Templating\Template\Compiler;
 */
 interface TemplateCompilerFactoryInterface
 {
-
-     /**
-      * @param CompilerInterface[] $compilers
-      *
-      * @return TemplateCompilerInterface
-     */
-     public function create(array $compilers = []): TemplateCompilerInterface;
+    /**
+     * @param CompilerInterface[] $compilers
+     *
+     * @return TemplateCompilerInterface
+    */
+    public function create(array $compilers = []): TemplateCompilerInterface;
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Container\Service\Providers;
@@ -49,16 +50,16 @@ class ViewServiceProvider extends ServiceProvider implements BootableServiceProv
     {
         $this->app->singleton(TemplateEngineConfigInterface::class, function () {
 
-             $config    = new TemplateEngineConfig();
-             $viewPath  = $this->app['basePath'] . '/resources/views';
-             $cachePath = $this->app['basePath'] . '/storage/cache/views';
+            $config    = new TemplateEngineConfig();
+            $viewPath  = $this->app['basePath'] . '/resources/views';
+            $cachePath = $this->app['basePath'] . '/storage/cache/views';
 
-             $config->withTemplateFactory(new TemplateFactory($viewPath))
-                    ->withReader(new TemplateReader())
-                    ->withLoader(new TemplateLoader())
-                    ->withCache(new CompiledTemplateCache($cachePath));
+            $config->withTemplateFactory(new TemplateFactory($viewPath))
+                   ->withReader(new TemplateReader())
+                   ->withLoader(new TemplateLoader())
+                   ->withCache(new CompiledTemplateCache($cachePath));
 
-             return $config;
+            return $config;
         });
 
     }

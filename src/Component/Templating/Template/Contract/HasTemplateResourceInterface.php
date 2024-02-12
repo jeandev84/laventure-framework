@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Templating\Template\Contract;
-
 
 /**
  * HasTemplateResourceInterface
@@ -15,20 +15,20 @@ namespace Laventure\Component\Templating\Template\Contract;
  */
 interface HasTemplateResourceInterface
 {
-     /**
-      * @param string $resourcePath
-      *
-      * @return $this
-     */
-     public function withResource(string $resourcePath): static;
+    /**
+     * @param string $resourcePath
+     *
+     * @return $this
+    */
+    public function withResource(string $resourcePath): static;
 
 
 
 
-     /**
-      * Returns template resource path
-      *
-      * @return string
-     */
-     public function getResource(): string;
+    /**
+     * Returns template resource path
+     *
+     * @return string
+    */
+    public function getResource(): string;
 }

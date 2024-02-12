@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PHPUnitTest\Component\Templating\Template\Engine\Config;
@@ -21,15 +22,15 @@ use PHPUnit\Framework\TestCase;
 */
 class TemplateEngineConfigTest extends TestCase
 {
-      public function testItMapParameters(): void
-      {
-           $config = new TemplateEngineConfig();
+    public function testItMapParameters(): void
+    {
+        $config = new TemplateEngineConfig();
 
 
-           $this->assertInstanceOf(TemplateCompiler::class, $config->getCompiler());
-           $this->assertInstanceOf(TemplateCompilerInterface::class, $config->getCompiler());
+        $this->assertInstanceOf(TemplateCompiler::class, $config->getCompiler());
+        $this->assertInstanceOf(TemplateCompilerInterface::class, $config->getCompiler());
 
-           $this->assertInstanceOf(TemplateReaderInterface::class, $config->getReader());
-           $this->assertInstanceOf(TemplateLoaderInterface::class, $config->getLoader());
-      }
+        $this->assertInstanceOf(TemplateReaderInterface::class, $config->getReader());
+        $this->assertInstanceOf(TemplateLoaderInterface::class, $config->getLoader());
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Http;
@@ -129,7 +130,7 @@ class HttpKernel implements HttpKernelInterface
     */
     public function terminate($request, $response): void
     {
-          //TODO terminate application
+        //TODO terminate application
     }
 
 

@@ -22,7 +22,6 @@ use Psr\Http\Message\ResponseInterface;
 */
 class CurlClient extends Client
 {
-
     /**
      * @inheritDoc
     */
@@ -65,8 +64,7 @@ class CurlClient extends Client
         RequestInterface $request,
         int $errno,
         string $error
-    ): void
-    {
+    ): void {
         // Check for any request errors
         switch ($errno) {
             case CURLE_OK: break;

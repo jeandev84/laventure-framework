@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Templating\Template\Reader;
@@ -20,20 +21,20 @@ use Laventure\Component\Templating\Template\Traits\HasTemplateTrait;
 */
 class TemplateReader implements TemplateReaderInterface
 {
-      use HasTemplateTrait;
+    use HasTemplateTrait;
 
 
-      /**
-       * @inheritDoc
-      */
-      public function read(): string
-      {
-          $file = new File($this->template->getPath());
+    /**
+     * @inheritDoc
+    */
+    public function read(): string
+    {
+        $file = new File($this->template->getPath());
 
-          if (!$file->exists()) {
-              throw new NotFoundTemplateException($file->getPath());
-          }
+        if (!$file->exists()) {
+            throw new NotFoundTemplateException($file->getPath());
+        }
 
-          return $file->read();
-      }
+        return $file->read();
+    }
 }

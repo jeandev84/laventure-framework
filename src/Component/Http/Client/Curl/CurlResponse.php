@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Http\Client\Curl;
@@ -14,46 +15,45 @@ namespace Laventure\Component\Http\Client\Curl;
 */
 class CurlResponse
 {
-
-     /**
-      * @var CurlRequest
-     */
-     protected CurlRequest $request;
-
-
-
-     /**
-      * @param CurlRequest $request
-     */
-     public function __construct(CurlRequest $request)
-     {
-         $this->request = $request;
-     }
+    /**
+     * @var CurlRequest
+    */
+    protected CurlRequest $request;
 
 
 
-
-
-     /**
-      * @return string
-     */
-     public function getBody(): string
-     {
-         return strval($this->request->exec());
-     }
+    /**
+     * @param CurlRequest $request
+    */
+    public function __construct(CurlRequest $request)
+    {
+        $this->request = $request;
+    }
 
 
 
 
 
+    /**
+     * @return string
+    */
+    public function getBody(): string
+    {
+        return strval($this->request->exec());
+    }
 
-     /**
-      * @return int
-     */
-     public function getStatusCode(): int
-     {
-         return intval($this->request->info(CURLINFO_HTTP_CODE));
-     }
+
+
+
+
+
+    /**
+     * @return int
+    */
+    public function getStatusCode(): int
+    {
+        return intval($this->request->info(CURLINFO_HTTP_CODE));
+    }
 
 
 

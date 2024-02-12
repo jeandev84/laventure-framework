@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Templating\Template\Compiler;
@@ -22,7 +23,6 @@ use Laventure\Component\Templating\Template\Reader\TemplateReaderInterface;
 */
 class TemplateCompiler implements TemplateCompilerInterface
 {
-
     /**
      * @var CompilerInterface[]
     */
@@ -36,14 +36,13 @@ class TemplateCompiler implements TemplateCompilerInterface
     public function __construct(
         protected TemplateReaderInterface $reader,
         protected TemplateFactoryInterface $factory
-    )
-    {
-         $this->addCompilers([
-             new BlocksCompiler(),
-             new EscapedEchoCompiler(),
-             new EchosCompiler(),
-             new PhpCompiler()
-         ]);
+    ) {
+        $this->addCompilers([
+            new BlocksCompiler(),
+            new EscapedEchoCompiler(),
+            new EchosCompiler(),
+            new PhpCompiler()
+        ]);
     }
 
 

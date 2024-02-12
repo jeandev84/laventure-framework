@@ -24,7 +24,6 @@ use Laventure\Component\Templating\Template\Compiler\CompiledTemplateInterface;
  */
 class CompiledTemplateCache implements CompiledTemplateCacheInterface
 {
-
     /**
      * @var FileLocator
     */

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Http\Client;
@@ -21,7 +22,6 @@ use Psr\Http\Message\ResponseInterface;
  */
 abstract class Client implements ClientInterface
 {
-
     /**
      * @var array
     */

@@ -1,9 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Templating\Template\Loader;
-
-
 
 use Laventure\Component\Templating\Template\Contract\HasTemplateInterface;
 use Laventure\Contract\Loader\LoaderInterface;

@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Templating\Template\Reader;
-
 
 use Laventure\Component\Templating\Template\Contract\HasTemplateInterface;
 use Laventure\Contract\Reader\ReaderInterface;

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Templating\Template\Engine;
 
-
 use Laventure\Component\Templating\Template\Cache\CachedTemplateInterface;
 use Laventure\Component\Templating\Template\Compiler\CompiledTemplateInterface;
 use Laventure\Component\Templating\Template\Contract\TemplateInterface;
@@ -22,7 +21,6 @@ use Laventure\Component\Templating\Template\Template;
 */
 class TemplateEngine implements TemplateEngineInterface
 {
-
     /**
      * @param TemplateEngineConfigInterface $config
     */

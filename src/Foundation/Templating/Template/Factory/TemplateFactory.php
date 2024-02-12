@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Templating\Template\Factory;
@@ -20,7 +21,6 @@ use Laventure\Component\Templating\Template\Template;
  */
 class TemplateFactory implements TemplateFactoryInterface
 {
-
     /**
      * @var FileLocator
     */

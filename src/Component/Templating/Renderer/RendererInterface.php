@@ -15,7 +15,6 @@ namespace Laventure\Component\Templating\Renderer;
  */
 interface RendererInterface
 {
-
     /**
     * add global data using in template
     *
