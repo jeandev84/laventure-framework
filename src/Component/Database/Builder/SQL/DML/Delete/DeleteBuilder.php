@@ -40,7 +40,7 @@ class DeleteBuilder implements DeleteBuilderInterface
      {
          return $this->formatter->addFormats([
              new Delete($this->criteria->table),
-             $this->getWhere()
+             new Where($this->criteria->wheres)
          ])->format();
      }
 }

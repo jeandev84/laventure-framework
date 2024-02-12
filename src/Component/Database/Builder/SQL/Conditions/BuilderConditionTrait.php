@@ -72,15 +72,4 @@ trait BuilderConditionTrait
     {
         return $this->criteria->wheres;
     }
-
-
-
-
-    /**
-     * @return Where
-    */
-    public function getWhere(): Where
-    {
-        return new Where($this->getConditions());
-    }
 }
