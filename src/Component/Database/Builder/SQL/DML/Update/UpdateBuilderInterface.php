@@ -18,7 +18,7 @@ use Laventure\Component\Database\Builder\SQL\SettableInterface;
  *
  * @package  Laventure\Component\Database\Builder\SQL\DML\Update
 */
-interface UpdateBuilderInterface extends BuilderInterface, SettableInterface
+interface UpdateBuilderInterface extends BuilderConditionInterface, SettableInterface
 {
     /**
      * @param string $table

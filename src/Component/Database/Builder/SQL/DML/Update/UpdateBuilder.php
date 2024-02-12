@@ -3,6 +3,11 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL\DML\Update;
 
+use Laventure\Component\Database\Builder\SQL\Conditions\BuilderConditionTrait;
+use Laventure\Component\Database\Builder\SQL\Expr\Set;
+use Laventure\Component\Database\Builder\SQL\Expr\Update;
+use Laventure\Component\Database\Builder\SQL\Expr\Where;
+
 /**
  * UpdateBuilder
  *
@@ -15,4 +20,46 @@ namespace Laventure\Component\Database\Builder\SQL\DML\Update;
 class UpdateBuilder implements UpdateBuilderInterface
 {
 
+      use BuilderConditionTrait;
+
+
+     /**
+      * @inheritDoc
+     */
+     public function update(string $table, string $alias = ''): static
+     {
+         $this->criteria->table($table, $alias);
+
+         return $this;
+     }
+
+
+
+
+     /**
+      * @inheritDoc
+     */
+     public function set($column, $value): static
+     {
+         $this->criteria->set[$column] = "$column = $value";
+
+         return $this;
+     }
+
+
+
+
+
+
+     /**
+      * @inheritDoc
+     */
+     public function getSQL(): string
+     {
+         return $this->formatter->addFormats([
+             new Update($this->criteria->table),
+             new Set($this->criteria->set),
+             new Where($this->criteria->wheres)
+         ])->format();
+     }
 }

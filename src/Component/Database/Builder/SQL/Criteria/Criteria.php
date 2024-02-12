@@ -80,12 +80,6 @@ class Criteria
 
 
 
-    /**
-     * @var string|null
-    */
-    public ?string $alias = null;
-
-
 
 
     /**
@@ -139,5 +133,19 @@ class Criteria
      * @var array
     */
     public array $bindingValues = [];
+
+
+
+
+
+    /**
+     * @param string $table
+     * @param string $alias
+     * @return void
+    */
+    public function table(string $table, string $alias = ''): void
+    {
+        $this->table = ($alias ? "$table $alias" : $table);
+    }
 
 }
