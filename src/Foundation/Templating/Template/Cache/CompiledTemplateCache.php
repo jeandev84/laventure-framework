@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laventure\Foundation\Templating\Template\Cache;
 
+use Laventure\Component\Filesystem\File\File;
+use Laventure\Component\Filesystem\File\Locator\FileLocator;
 use Laventure\Component\Filesystem\Filesystem;
 use Laventure\Component\Templating\Template\Cache\CachedTemplate;
 use Laventure\Component\Templating\Template\Cache\CachedTemplateInterface;
@@ -24,14 +26,18 @@ class CompiledTemplateCache implements CompiledTemplateCacheInterface
 {
 
     /**
-     * @param Filesystem $filesystem
+     * @var FileLocator
     */
-    public function __construct(
-        protected Filesystem $filesystem
-    )
-    {
-    }
+    protected FileLocator $fileLocator;
 
+
+    /**
+     * @param string $cachePath
+    */
+    public function __construct(string $cachePath)
+    {
+        $this->fileLocator = new FileLocator($cachePath);
+    }
 
 
 
@@ -44,7 +50,8 @@ class CompiledTemplateCache implements CompiledTemplateCacheInterface
 
             $template  = $compiledTemplate->getTemplate();
             $cacheKey  = $template->getCacheKey();
-            $cachePath = $this->filesystem->dump($cacheKey .'.php', strval($compiledTemplate));
+            $cacheFile = new File($this->fileLocator->locate($cacheKey .'.php'));
+            $cachePath = $cacheFile->dump(strval($compiledTemplate));
             return new CachedTemplate($template, $cachePath);
 
         } catch (\Throwable $e) {

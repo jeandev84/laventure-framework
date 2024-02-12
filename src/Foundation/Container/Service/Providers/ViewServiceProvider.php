@@ -5,11 +5,14 @@ namespace Laventure\Foundation\Container\Service\Providers;
 
 use Laventure\Component\Container\Service\Provider\Contract\BootableServiceProvider;
 use Laventure\Component\Container\Service\Provider\ServiceProvider;
+use Laventure\Component\Filesystem\File\Locator\FileLocator;
 use Laventure\Component\Templating\Renderer\Renderer;
 use Laventure\Component\Templating\Renderer\RendererInterface;
 use Laventure\Component\Templating\Template\Engine\Config\TemplateEngineConfig;
 use Laventure\Component\Templating\Template\Engine\Config\TemplateEngineConfigInterface;
+use Laventure\Foundation\Templating\Template\Factory\TemplateFactory;
 use Laventure\Foundation\Templating\Template\Loader\TemplateLoader;
+use Laventure\Foundation\Templating\Template\Reader\TemplateReader;
 
 /**
  * ViewServiceProvider
@@ -26,6 +29,9 @@ class ViewServiceProvider extends ServiceProvider implements BootableServiceProv
      * @var array
     */
     protected array $provides = [
+        TemplateEngineConfigInterface::class => [
+            TemplateEngineConfig::class
+        ],
         RendererInterface::class => [
             Renderer::class, 'view'
         ]
@@ -39,8 +45,11 @@ class ViewServiceProvider extends ServiceProvider implements BootableServiceProv
     public function boot(): void
     {
         $this->app->singleton(TemplateEngineConfigInterface::class, function () {
-             $config = new TemplateEngineConfig();
-             $config->withLoader(new TemplateLoader());
+             $config  = new TemplateEngineConfig();
+             $locator = new FileLocator($this->app['basePath'] . '/resources/views');
+             $config->withTemplateFactory(new TemplateFactory($locator))
+                    ->withReader(new TemplateReader())
+                    ->withLoader(new TemplateLoader());
 
              return $config;
         });

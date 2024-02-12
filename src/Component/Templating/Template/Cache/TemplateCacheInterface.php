@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Templating\Template\Cache;
 
-use Laventure\Component\Templating\Template\Compiler\CompiledTemplateInterface;
-use Laventure\Component\Templating\Template\TemplateInterface;
+use Laventure\Component\Templating\Template\Contract\TemplateInterface;
 
 /**
  * TemplateCacheInterface

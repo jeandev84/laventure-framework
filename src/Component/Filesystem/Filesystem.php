@@ -134,14 +134,11 @@ class Filesystem implements FilesystemInterface
     /**
      * @param string $filename
      * @param string $content
-     * @return mixed
+     * @return string
     */
-    public function dump(string $filename, string $content): mixed
+    public function dump(string $filename, string $content): string
     {
-        $file = $this->file($filename);
-        $file->make();
-        $file->write($content);
-        return $this->locate($filename);
+        return $this->file($filename)->dump($content);
     }
 
 

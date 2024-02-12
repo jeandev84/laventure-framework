@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Templating\Template;
+namespace Laventure\Component\Templating\Template\Contract;
 
 
 /**
@@ -11,7 +11,7 @@ namespace Laventure\Component\Templating\Template;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Templating\Template
+ * @package  Laventure\Component\Templating\Template\Contract
  */
 interface HasTemplateInterface
 {

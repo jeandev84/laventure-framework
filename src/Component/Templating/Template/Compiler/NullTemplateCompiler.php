@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Templating\Template\Compiler;
 
-use Laventure\Component\Templating\Template\TemplateInterface;
+use Laventure\Component\Templating\Template\Contract\TemplateInterface;
 
 /**
  * NullTemplateCompiler

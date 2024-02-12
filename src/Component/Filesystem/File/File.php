@@ -264,9 +264,11 @@ class File implements FileInterface
     /**
      * @inheritDoc
     */
-    public function dump(): mixed
+    public function dump(string $content): string
     {
-        return false;
+        $this->make();
+        $this->write($content);
+        return $this->path;
     }
 
 

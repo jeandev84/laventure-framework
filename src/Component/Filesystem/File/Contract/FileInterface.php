@@ -146,13 +146,11 @@ interface FileInterface
 
 
 
-
-
-
     /**
+     * @param string $content
      * @return mixed
     */
-    public function dump(): mixed;
+    public function dump(string $content): mixed;
 
 
 

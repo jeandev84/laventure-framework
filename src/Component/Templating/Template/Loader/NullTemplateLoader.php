@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Templating\Template\Loader;
 
-use Laventure\Component\Templating\Template\HasTemplateTrait;
+use Laventure\Component\Templating\Template\Traits\HasTemplateTrait;
 use RuntimeException;
 
 /**

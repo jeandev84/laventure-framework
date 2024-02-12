@@ -4,10 +4,10 @@ declare(strict_types=1);
 namespace Laventure\Foundation\Templating\Template\Reader;
 
 use Laventure\Component\Filesystem\File\File;
-use Laventure\Component\Filesystem\Filesystem;
+use Laventure\Component\Filesystem\File\Locator\FileLocatorInterface;
 use Laventure\Component\Templating\Template\Exception\NotFoundTemplateException;
-use Laventure\Component\Templating\Template\HasTemplateTrait;
 use Laventure\Component\Templating\Template\Reader\TemplateReaderInterface;
+use Laventure\Component\Templating\Template\Traits\HasTemplateTrait;
 
 /**
  * TemplateReader
@@ -21,15 +21,6 @@ use Laventure\Component\Templating\Template\Reader\TemplateReaderInterface;
 class TemplateReader implements TemplateReaderInterface
 {
       use HasTemplateTrait;
-
-
-      /**
-       * @param Filesystem $filesystem
-      */
-      public function __construct(Filesystem $filesystem)
-      {
-      }
-
 
 
       /**

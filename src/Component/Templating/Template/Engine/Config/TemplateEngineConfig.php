@@ -6,7 +6,7 @@ namespace Laventure\Component\Templating\Template\Engine\Config;
 use Laventure\Component\Templating\Template\Cache\CompiledTemplateCacheInterface;
 use Laventure\Component\Templating\Template\Compiler\TemplateCompiler;
 use Laventure\Component\Templating\Template\Compiler\TemplateCompilerInterface;
-use Laventure\Component\Templating\Template\Factory\TemplateFactory;
+use Laventure\Component\Templating\Template\Factory\NullTemplateFactory;
 use Laventure\Component\Templating\Template\Factory\TemplateFactoryInterface;
 use Laventure\Component\Templating\Template\Loader\NullTemplateLoader;
 use Laventure\Component\Templating\Template\Loader\TemplateLoaderInterface;
@@ -63,7 +63,7 @@ class TemplateEngineConfig implements TemplateEngineConfigInterface
     {
         $this->loader          = new NullTemplateLoader();
         $this->reader          = new NullTemplateReader();
-        $this->templateFactory = new TemplateFactory();
+        $this->templateFactory = new NullTemplateFactory();
     }
 
 

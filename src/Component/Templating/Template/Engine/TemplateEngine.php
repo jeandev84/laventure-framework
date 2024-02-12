@@ -7,8 +7,9 @@ namespace Laventure\Component\Templating\Template\Engine;
 
 use Laventure\Component\Templating\Template\Cache\CachedTemplateInterface;
 use Laventure\Component\Templating\Template\Compiler\CompiledTemplateInterface;
+use Laventure\Component\Templating\Template\Contract\TemplateInterface;
 use Laventure\Component\Templating\Template\Engine\Config\TemplateEngineConfigInterface;
-use Laventure\Component\Templating\Template\TemplateInterface;
+use Laventure\Component\Templating\Template\Template;
 
 /**
  * TemplateEngine
@@ -49,7 +50,7 @@ class TemplateEngine implements TemplateEngineInterface
     {
         $compiledTemplate = $this->compile($template);
         $cachedTemplate   = $this->cache($compiledTemplate);
-        $template         = $this->createTemplate(
+        $template         = new Template(
             $cachedTemplate->getCachePath(),
             $template->getParameters()
         );
@@ -79,19 +80,5 @@ class TemplateEngine implements TemplateEngineInterface
     public function cache(CompiledTemplateInterface $template): CachedTemplateInterface
     {
         return $this->config->getCache()->cache($template);
-    }
-
-
-
-
-
-    /**
-     * @param string $path
-     * @param array $parameters
-     * @return TemplateInterface
-    */
-    public function createTemplate(string $path, array $parameters = []): TemplateInterface
-    {
-        return $this->config->getTemplateFactory()->createTemplate($path, $parameters);
     }
 }

@@ -5,9 +5,8 @@ namespace Laventure\Foundation\Templating\Template\Loader;
 
 use Laventure\Component\Filesystem\File\File;
 use Laventure\Component\Templating\Template\Exception\NotFoundTemplateException;
-use Laventure\Component\Templating\Template\HasTemplateTrait;
 use Laventure\Component\Templating\Template\Loader\TemplateLoaderInterface;
-use Laventure\Component\Templating\Template\TemplateInterface;
+use Laventure\Component\Templating\Template\Traits\HasTemplateTrait;
 
 /**
  * TemplateLoader

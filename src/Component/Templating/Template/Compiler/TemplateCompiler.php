@@ -7,10 +7,9 @@ use Laventure\Component\Templating\Template\Compiler\Blocks\BlocksCompiler;
 use Laventure\Component\Templating\Template\Compiler\Echos\EchosCompiler;
 use Laventure\Component\Templating\Template\Compiler\Echos\EscapedEchoCompiler;
 use Laventure\Component\Templating\Template\Compiler\Php\PhpCompiler;
+use Laventure\Component\Templating\Template\Contract\TemplateInterface;
 use Laventure\Component\Templating\Template\Factory\TemplateFactoryInterface;
-use Laventure\Component\Templating\Template\Loader\TemplateLoaderInterface;
 use Laventure\Component\Templating\Template\Reader\TemplateReaderInterface;
-use Laventure\Component\Templating\Template\TemplateInterface;
 
 /**
  * TemplateCompiler
