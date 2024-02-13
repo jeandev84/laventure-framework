@@ -258,13 +258,4 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
     {
         return PDO::getAvailableDrivers();
     }
-
-
-    private function makeSure(ConfigurationInterface $config): void
-    {
-        if (! $this->hasAvailableDriver($config['driver'])) {
-            throw new DriverException('Unavailable driver connection : '. $config['driver']);
-        }
-
-    }
 }
