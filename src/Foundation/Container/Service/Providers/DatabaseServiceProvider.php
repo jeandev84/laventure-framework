@@ -34,14 +34,25 @@ class DatabaseServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(DatabaseManagerInterface::class, function () {
-            $config        = $this->app['config'];
-            $connection    = $config->get('database.connection');
-            $extension     = $config->get('database.extension');
-            $credentialKey = "database.connections.$extension.$connection";
-            $credentials   = $config->get($credentialKey);
+            [$connection, $credentials] = $this->credentials();
             $database      = new DatabaseManager();
             $database->open($connection, $credentials);
             return $database;
         });
+    }
+
+
+    /**
+     * @return array
+    */
+    private function credentials(): array
+    {
+        $config        = $this->app['config'];
+        $connection    = $config->get('database.connection');
+        $extension     = $config->get('database.extension');
+        $credentialKey = "database.connections.$extension.$connection";
+        $credentials   = $config->get($credentialKey);
+
+        return [$connection, $credentials];
     }
 }
