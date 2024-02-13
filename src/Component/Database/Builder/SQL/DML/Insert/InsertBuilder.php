@@ -52,6 +52,8 @@ class InsertBuilder implements InsertBuilderInterface
     */
     public function setValue(string $column, $value, int $index = 0): static
     {
+        if ($index < 0) { $index = 0; }
+
         if (!isset($this->criteria->values[$index])) {
             $this->criteria->values[$index] = [];
         }
