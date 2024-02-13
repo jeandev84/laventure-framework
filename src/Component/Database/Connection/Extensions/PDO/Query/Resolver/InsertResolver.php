@@ -13,7 +13,7 @@ use Laventure\Component\Database\Builder\SQL\DML\Insert\Resolver\InsertResolverI
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Extensions\PDO\Resolver
+ * @package  Laventure\Component\Database\Connection\Extensions\PDO\Query\Resolver
  */
 class InsertResolver implements InsertResolverInterface
 {
