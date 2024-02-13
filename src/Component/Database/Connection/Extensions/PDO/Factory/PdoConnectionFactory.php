@@ -4,10 +4,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Connection\Extensions\PDO\Factory;
 
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
-use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Connection\Exception\ConnectionException;
-use Laventure\Component\Database\Connection\Extensions\PDO\Drivers\Mysql\MysqlConnection;
-use Laventure\Component\Database\Connection\Types\ConnectionType;
 use PDO;
 use PDOException;
 
@@ -34,23 +31,6 @@ class PdoConnectionFactory implements PdoConnectionFactoryInterface
         PDO::ATTR_ERRMODE             => PDO::ERRMODE_EXCEPTION
     ];
 
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function make(string $name, ConfigurationInterface $config): ConnectionInterface
-    {
-          $connection = match ($name) {
-              ConnectionType::Mysql => new MysqlConnection($this)
-          };
-
-          $connection->connect($config);
-
-          return $connection;
-    }
 
 
 

@@ -18,20 +18,6 @@ use Laventure\Component\Database\Connection\ConnectionInterface;
 */
 interface ConnectionFactoryInterface
 {
-
-      /**
-       * @param string $name
-       * @param ConfigurationInterface $config
-       * @return ConnectionInterface
-      */
-      public function make(
-          string                 $name,
-          ConfigurationInterface $config
-      ): ConnectionInterface;
-
-
-
-
       /**
        * @param ConfigurationInterface $config
        *

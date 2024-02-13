@@ -9,6 +9,7 @@ use Laventure\Component\Container\Exception\ContainerException;
 use Laventure\Contract\Application\ApplicationInterface;
 use Laventure\Foundation\Container\Service\Providers\ApplicationServiceProvider;
 use Laventure\Foundation\Container\Service\Providers\ConfigurationServiceProvider;
+use Laventure\Foundation\Container\Service\Providers\DatabaseServiceProvider;
 use Laventure\Foundation\Container\Service\Providers\EventServiceProvider;
 use Laventure\Foundation\Container\Service\Providers\FilesystemServiceProvider;
 use Laventure\Foundation\Container\Service\Providers\RouterServiceProvider;
@@ -94,6 +95,7 @@ final class Application extends Container implements ApplicationInterface
             ApplicationServiceProvider::class,
             FilesystemServiceProvider::class,
             ConfigurationServiceProvider::class,
+            DatabaseServiceProvider::class,
             RouterServiceProvider::class,
             EventServiceProvider::class,
             ViewServiceProvider::class
