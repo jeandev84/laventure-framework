@@ -188,7 +188,7 @@ class DatabaseManager implements DatabaseManagerInterface
     public function configuration(string $name): mixed
     {
         if (empty($this->config[$name])) {
-            throw new DatabaseException("Empty params for connection ($name)");
+            $this->abortIf("Empty params for connection ($name)");
         }
 
         return $this->config[$name];
@@ -266,7 +266,7 @@ class DatabaseManager implements DatabaseManagerInterface
     */
     public function getConnections(): array
     {
-
+       return $this->connections;
     }
 
 
