@@ -7,11 +7,10 @@ use Laventure\Component\Database\Builder\SQL\DML\Delete\DeleteBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\DML\Insert\InsertBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\DML\Update\UpdateBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\DQL\Select\SelectBuilderInterface;
-use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Connection\Extensions\PDO\PdoConnection;
-use Laventure\Component\Database\Connection\Extensions\PDO\Resolver\ConditionResolver;
-use Laventure\Component\Database\Connection\Extensions\PDO\Resolver\InsertResolver;
-use Laventure\Component\Database\Connection\Extensions\PDO\Resolver\UpdateResolver;
+use Laventure\Component\Database\Connection\Extensions\PDO\Query\Resolver\ConditionResolver;
+use Laventure\Component\Database\Connection\Extensions\PDO\Query\Resolver\InsertResolver;
+use Laventure\Component\Database\Connection\Extensions\PDO\Query\Resolver\UpdateResolver;
 use Laventure\Component\Database\Query\Builder\Builder;
 
 
@@ -40,10 +39,10 @@ class QueryBuilder extends Builder
 
     /**
      * @inheritDoc
-     */
-    public function select($selects = null, array $criteria = []): SelectBuilderInterface
+    */
+    public function select(array $criteria = []): SelectBuilderInterface
     {
-        $conditionResolver = new ConditionResolver($this->builder->select($selects));
+        $conditionResolver = new ConditionResolver($this->builder->select());
         return $conditionResolver->resolve($criteria);
     }
 

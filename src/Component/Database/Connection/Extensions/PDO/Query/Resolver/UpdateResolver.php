@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Connection\Extensions\PDO\Resolver;
+namespace Laventure\Component\Database\Connection\Extensions\PDO\Query\Resolver;
 
 use Laventure\Component\Database\Builder\SQL\DML\Update\Resolver\UpdateResolverInterface;
 use Laventure\Component\Database\Builder\SQL\DML\Update\UpdateBuilderInterface;

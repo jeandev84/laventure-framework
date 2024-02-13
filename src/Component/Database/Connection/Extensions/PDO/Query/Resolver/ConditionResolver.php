@@ -1,10 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Connection\Extensions\PDO\Resolver;
+namespace Laventure\Component\Database\Connection\Extensions\PDO\Query\Resolver;
 
 use Laventure\Component\Database\Builder\SQL\Conditions\Contract\BuilderConditionInterface;
-use Laventure\Component\Database\Builder\SQL\Conditions\Resolver\ConditionResolved;
 use Laventure\Component\Database\Builder\SQL\Conditions\Resolver\ConditionResolverInterface;
 
 /**
@@ -14,7 +13,7 @@ use Laventure\Component\Database\Builder\SQL\Conditions\Resolver\ConditionResolv
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Extensions\PDO\Resolver
+ * @package  Laventure\Component\Database\Connection\Extensions\PDO\Query\Resolver
  */
 class ConditionResolver implements ConditionResolverInterface
 {

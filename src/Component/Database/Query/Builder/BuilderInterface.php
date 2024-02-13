@@ -37,12 +37,10 @@ interface BuilderInterface
 
     /**
      * Select query
-     *
-     * @param $selects
      * @param array $criteria
      * @return SelectBuilderInterface
     */
-    public function select($selects = null, array $criteria = []): SelectBuilderInterface;
+    public function select(array $criteria = []): SelectBuilderInterface;
 
 
 
