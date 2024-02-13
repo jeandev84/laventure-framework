@@ -1,8 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Schema\Contract;
+namespace Laventure\Component\Database\Schema;
 
+
+use Closure;
 
 /**
  * SchemaInterface
@@ -11,7 +13,7 @@ namespace Laventure\Component\Database\Schema\Contract;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Schema\Contract
+ * @package  Laventure\Component\Database\Schema
  */
 interface SchemaInterface
 {
@@ -23,7 +25,7 @@ interface SchemaInterface
      * @param Closure $closure
      *
      * @return mixed
-     */
+    */
     public function create(string $table, Closure $closure): mixed;
 
 

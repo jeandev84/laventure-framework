@@ -40,9 +40,9 @@ class QueryBuilder extends Builder
     /**
      * @inheritDoc
     */
-    public function select(array $criteria = []): SelectBuilderInterface
+    public function select(string $columns = null, array $criteria = []): SelectBuilderInterface
     {
-        $conditionResolver = new ConditionResolver($this->builder->select());
+        $conditionResolver = new ConditionResolver($this->builder->select($columns));
         return $conditionResolver->resolve($criteria);
     }
 

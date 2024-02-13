@@ -1,8 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Migration\Contract;
+namespace Laventure\Component\Database\Migrator;
 
+
+use Laventure\Component\Database\Migration\Migration;
 
 /**
  * MigratorInterface
@@ -11,7 +13,7 @@ namespace Laventure\Component\Database\Migration\Contract;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Migration\Contract
+ * @package  Laventure\Component\Database\Migrator
 */
 interface MigratorInterface
 {
@@ -84,7 +86,7 @@ interface MigratorInterface
     /**
      * Get all migrations
      *
-     * @return array
+     * @return Migration[]
     */
     public function getMigrations(): array;
 
@@ -97,9 +99,9 @@ interface MigratorInterface
     /**
      * Get migrations to apply
      *
-     * @return array
+     * @return Migration[]
     */
-    public function getMigrationsToApply(): array;
+    public function getNewMigrations(): array;
 
 
 
@@ -111,9 +113,9 @@ interface MigratorInterface
     /**
      * Get applied migrations
      *
-     * @return array
+     * @return string[]
     */
-    public function getAppliedMigrations(): array;
+    public function getOldMigrations(): array;
 
 
 
