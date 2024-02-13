@@ -77,4 +77,14 @@ class InsertBuilder implements InsertBuilderInterface
             )
         ])->format();
     }
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getName(): string
+    {
+        return 'insert';
+    }
 }

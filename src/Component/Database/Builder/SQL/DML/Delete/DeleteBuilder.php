@@ -43,4 +43,15 @@ class DeleteBuilder implements DeleteBuilderInterface
              new Where($this->criteria->wheres)
          ])->format();
      }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getName(): string
+    {
+        return 'delete';
+    }
 }

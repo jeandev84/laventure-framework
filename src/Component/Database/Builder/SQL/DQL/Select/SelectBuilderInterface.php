@@ -184,34 +184,13 @@ interface SelectBuilderInterface extends BuilderConditionInterface
 
 
 
-
-    /**
-     * @param string $condition
-     * @return $this
-    */
-    public function andHaving(string $condition): static;
-
-
-
-
-
-
-    /**
-     * @param string $condition
-     * @return $this
-    */
-    public function orHaving(string $condition): static;
-
-
-
-
-
     /**
      * @param string $column
      * @param string|null $direction
      * @return $this
     */
     public function orderBy(string $column, string $direction = null): static;
+
 
 
 

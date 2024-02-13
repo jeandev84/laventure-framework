@@ -62,4 +62,14 @@ class UpdateBuilder implements UpdateBuilderInterface
              new Where($this->criteria->wheres)
          ])->format();
      }
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getName(): string
+    {
+        return 'update';
+    }
 }

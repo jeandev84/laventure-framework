@@ -118,4 +118,12 @@ interface BuilderInterface extends CriteriaInterface
      * @return ExpressionInterface
     */
     public function expr(): ExpressionInterface;
+
+
+
+
+    /**
+     * @return string
+    */
+    public function getName(): string;
 }

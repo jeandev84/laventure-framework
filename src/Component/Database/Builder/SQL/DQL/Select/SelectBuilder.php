@@ -197,26 +197,6 @@ class SelectBuilder  implements SelectBuilderInterface
 
 
 
-    /**
-     * @inheritDoc
-    */
-    public function andHaving(string $condition): static
-    {
-        return $this;
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function orHaving(string $condition): static
-    {
-        return $this;
-    }
-
-
 
 
 
@@ -291,5 +271,16 @@ class SelectBuilder  implements SelectBuilderInterface
             new OrderBy($this->criteria->orderBy),
             new Limit($this->criteria->limit, $this->criteria->offset)
         ])->format();
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getName(): string
+    {
+        return 'select';
     }
 }

@@ -24,25 +24,4 @@ interface BuilderConditionInterface extends BuilderInterface
      * @return $this
     */
     public function where(string $condition): static;
-
-
-
-
-
-    /**
-     * @param string $condition
-     * @return $this
-    */
-    public function andWhere(string $condition): static;
-
-
-
-
-
-
-    /**
-     * @param string $condition
-     * @return $this
-    */
-    public function orWhere(string $condition): static;
 }
