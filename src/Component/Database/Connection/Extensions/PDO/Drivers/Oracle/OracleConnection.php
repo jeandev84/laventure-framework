@@ -1,23 +1,23 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Connection\Extensions\PDO\Drivers\Mysql;
+namespace Laventure\Component\Database\Connection\Extensions\PDO\Drivers\Oracle;
 
-use Laventure\Component\Database\Connection\Drivers\Mysql\MysqlDatabase;
+use Laventure\Component\Database\Connection\Drivers\Oracle\OracleDatabase;
 use Laventure\Component\Database\Connection\Extensions\PDO\PdoConnection;
 use Laventure\Component\Database\Connection\Types\ConnectionType;
 use Laventure\Component\Database\DatabaseInterface;
 
 /**
- * MysqlConnection
+ * OracleConnection
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Extensions\PDO\Drivers\Mysql
+ * @package  Laventure\Component\Database\Connection\Extensions\PDO\Drivers\Oracle
 */
-class MysqlConnection extends PdoConnection
+class OracleConnection extends PdoConnection
 {
 
     /**
@@ -25,9 +25,8 @@ class MysqlConnection extends PdoConnection
     */
     public function getName(): string
     {
-        return ConnectionType::Mysql;
+        return ConnectionType::Oracle;
     }
-
 
 
 
@@ -36,6 +35,6 @@ class MysqlConnection extends PdoConnection
     */
     public function getDatabase(): DatabaseInterface
     {
-        return new MysqlDatabase($this, $this->getDatabaseName());
+        return new OracleDatabase($this, $this->getDatabaseName());
     }
 }

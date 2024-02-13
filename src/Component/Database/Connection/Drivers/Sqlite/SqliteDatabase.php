@@ -42,4 +42,12 @@ class SqliteDatabase extends Database
     {
         // TODO: Implement getSchemas() method.
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function list(): array
+    {
+        // TODO: Implement list() method.
+    }
 }

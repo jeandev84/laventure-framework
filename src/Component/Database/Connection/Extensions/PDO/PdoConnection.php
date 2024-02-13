@@ -6,16 +6,15 @@ namespace Laventure\Component\Database\Connection\Extensions\PDO;
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Configuration\NullConfiguration;
 use Laventure\Component\Database\Connection\Connection;
-use Laventure\Component\Database\Connection\Drivers\DriverException;
 use Laventure\Component\Database\Connection\Extensions\PDO\Config\Resolver\PdoConfigurationResolver;
 use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnectionFactoryInterface;
-use Laventure\Component\Database\Connection\Extensions\PDO\Query\QueryBuilder;
 use Laventure\Component\Database\Connection\Extensions\PDO\Query\Query;
+use Laventure\Component\Database\Connection\Extensions\PDO\Query\QueryBuilder;
 use Laventure\Component\Database\Query\Builder\BuilderInterface;
 use Laventure\Component\Database\Query\QueryInterface;
 use PDO;
 use PDOException;
-use function _PHPStan_3d4486d07\React\Promise\resolve;
+use RuntimeException;
 
 /**
  * PdoConnection
@@ -26,7 +25,7 @@ use function _PHPStan_3d4486d07\React\Promise\resolve;
  *
  * @package  Laventure\Component\Database\Connection\Extensions\PDO
 */
-abstract class PdoConnection extends Connection implements PdoConnectionInterface
+abstract class PdoConnection extends Connection
 {
      /**
       * @var PdoConnectionFactoryInterface
@@ -272,5 +271,54 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
     public function getAvailableDrivers(): array
     {
         return PDO::getAvailableDrivers();
+    }
+
+
+
+
+
+
+
+
+    /**
+     * Returns name of database
+     *
+     * @return string
+     */
+    protected function getDatabaseName(): string
+    {
+        if ($database = $this->config->database()) {
+            return $database;
+        }
+
+        if (!$database = $this->retrieveDatabaseNameFromDsn()) {
+            throw new RuntimeException(
+                "Could not retrieve database name from (". $this->config('dsn') . ")"
+            );
+        }
+
+        return $database;
+    }
+
+
+
+
+    /**
+     * @return string|false
+    */
+    private function retrieveDatabaseNameFromDsn(): string|false
+    {
+        $dsn    = $this->config('dsn');
+        $params = explode(':', $dsn, 2)[1];
+        $params = explode(';', $params);
+
+        foreach ($params as $param) {
+            [$search, $value] = explode('=', $param, 2);
+            if ($search === 'dbname') {
+                return $value;
+            }
+        }
+
+        return false;
     }
 }
