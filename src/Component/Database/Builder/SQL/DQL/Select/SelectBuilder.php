@@ -65,7 +65,7 @@ class SelectBuilder  implements SelectBuilderInterface
     */
     public function from(string $from, string $alias = ''): static
     {
-        $this->criteria->from[$from] = ($alias ? "$from $alias": $from);
+        $this->criteria->from($from, $alias);
 
         return $this;
     }

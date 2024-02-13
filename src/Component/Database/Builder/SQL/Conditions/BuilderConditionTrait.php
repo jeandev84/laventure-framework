@@ -27,7 +27,34 @@ trait BuilderConditionTrait
      */
     public function where(string $condition): static
     {
-        $this->criteria->wheres[] = $condition;
+        return $this->andWhere($condition);
+    }
+
+
+
+
+
+    /**
+     * @param string $condition
+     * @return $this
+    */
+    public function andWhere(string $condition): static
+    {
+        $this->criteria->wheres['AND'][] = $condition;
+
+        return $this;
+    }
+
+
+
+
+    /**
+     * @param string $condition
+     * @return $this
+    */
+    public function orWhere(string $condition): static
+    {
+        $this->criteria->wheres['OR'][] = $condition;
 
         return $this;
     }

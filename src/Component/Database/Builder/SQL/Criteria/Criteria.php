@@ -152,4 +152,15 @@ class Criteria
         $this->table = ($alias ? "$table $alias" : $table);
     }
 
+
+    /**
+     * @param string $from
+     * @param string $alias
+     * @return void
+    */
+    public function from(string $from, string $alias = ''): void
+    {
+        $this->from[$from] = ($alias ? "$from $alias": $from);
+    }
+
 }
