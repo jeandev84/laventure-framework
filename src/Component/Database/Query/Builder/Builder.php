@@ -16,7 +16,7 @@ use Laventure\Component\Database\Connection\Extensions\PDO\Resolver\InsertResolv
 use Laventure\Component\Database\Connection\Extensions\PDO\Resolver\UpdateResolver;
 
 /**
- * QueryBuilder
+ * Builder
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -24,7 +24,7 @@ use Laventure\Component\Database\Connection\Extensions\PDO\Resolver\UpdateResolv
  *
  * @package  Laventure\Component\Database\Query\Builder
  */
-abstract class QueryBuilder implements QueryBuilderInterface
+abstract class Builder implements BuilderInterface
 {
 
 

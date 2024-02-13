@@ -15,7 +15,7 @@ use Laventure\Component\Database\Query\QueryInterface;
 
 
 /**
- * QueryBuilderInterface
+ * BuilderInterface
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -23,7 +23,7 @@ use Laventure\Component\Database\Query\QueryInterface;
  *
  * @package  Laventure\Component\Database\Query\Builder
 */
-interface QueryBuilderInterface
+interface BuilderInterface
 {
 
     /**

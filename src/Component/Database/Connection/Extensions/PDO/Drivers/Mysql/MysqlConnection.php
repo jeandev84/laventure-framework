@@ -7,7 +7,7 @@ use Laventure\Component\Database\Connection\Drivers\Mysql\MysqlConnectionInterfa
 use Laventure\Component\Database\Connection\Drivers\Mysql\MysqlDatabase;
 use Laventure\Component\Database\Connection\Extensions\PDO\PdoConnection;
 use Laventure\Component\Database\DatabaseInterface;
-use Laventure\Component\Database\Query\Builder\QueryBuilderInterface;
+use Laventure\Component\Database\Query\Builder\BuilderInterface;
 
 /**
  * MysqlConnection
@@ -29,15 +29,6 @@ class MysqlConnection extends PdoConnection implements MysqlConnectionInterface
         return 'mysql';
     }
 
-
-
-    /**
-     * @inheritDoc
-    */
-    public function createQueryBuilder(): QueryBuilderInterface
-    {
-        return new MysqlQueryBuilder($this);
-    }
 
 
 

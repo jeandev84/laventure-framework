@@ -12,11 +12,11 @@ use Laventure\Component\Database\Connection\Extensions\PDO\PdoConnection;
 use Laventure\Component\Database\Connection\Extensions\PDO\Resolver\ConditionResolver;
 use Laventure\Component\Database\Connection\Extensions\PDO\Resolver\InsertResolver;
 use Laventure\Component\Database\Connection\Extensions\PDO\Resolver\UpdateResolver;
-use Laventure\Component\Database\Query\Builder\QueryBuilder;
+use Laventure\Component\Database\Query\Builder\Builder;
 
 
 /**
- * PdoQueryBuilder
+ * PdoBuilder
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -24,7 +24,7 @@ use Laventure\Component\Database\Query\Builder\QueryBuilder;
  *
  * @package  Laventure\Component\Database\Connection\Extensions\PDO\Query
 */
-class PdoQueryBuilder extends QueryBuilder
+class QueryBuilder extends Builder
 {
 
 
@@ -52,7 +52,7 @@ class PdoQueryBuilder extends QueryBuilder
 
     /**
      * @inheritDoc
-     */
+    */
     public function insert(string $table, array $attributes): InsertBuilderInterface
     {
         $resolver = new InsertResolver($this->builder->insert($table));
@@ -66,7 +66,7 @@ class PdoQueryBuilder extends QueryBuilder
 
     /**
      * @inheritDoc
-     */
+    */
     public function update(string $table, array $attributes, array $criteria = []): UpdateBuilderInterface
     {
         $resolver          = new UpdateResolver($this->builder->update($table));

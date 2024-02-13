@@ -9,10 +9,13 @@ use Laventure\Component\Database\Connection\Connection;
 use Laventure\Component\Database\Connection\Drivers\DriverException;
 use Laventure\Component\Database\Connection\Extensions\PDO\Config\Resolver\PdoConfigurationResolver;
 use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnectionFactoryInterface;
+use Laventure\Component\Database\Connection\Extensions\PDO\Query\QueryBuilder;
 use Laventure\Component\Database\Connection\Extensions\PDO\Query\Query;
+use Laventure\Component\Database\Query\Builder\BuilderInterface;
 use Laventure\Component\Database\Query\QueryInterface;
 use PDO;
 use PDOException;
+use function _PHPStan_3d4486d07\React\Promise\resolve;
 
 /**
  * PdoConnection
@@ -113,6 +116,18 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
     public function createQuery(): QueryInterface
     {
        return new Query($this->getPdo());
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function createQueryBuilder(): BuilderInterface
+    {
+        return new QueryBuilder($this);
     }
 
 

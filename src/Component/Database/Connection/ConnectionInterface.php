@@ -7,7 +7,7 @@ namespace Laventure\Component\Database\Connection;
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Connection\Transaction\TransactionInterface;
 use Laventure\Component\Database\DatabaseInterface;
-use Laventure\Component\Database\Query\Builder\QueryBuilderInterface;
+use Laventure\Component\Database\Query\Builder\BuilderInterface;
 use Laventure\Component\Database\Query\QueryInterface;
 
 /**
@@ -129,9 +129,9 @@ interface ConnectionInterface extends TransactionInterface
     /**
      * Returns instance of query builder
      *
-     * @return QueryBuilderInterface
+     * @return BuilderInterface
     */
-    public function createQueryBuilder(): QueryBuilderInterface;
+    public function createQueryBuilder(): BuilderInterface;
 
 
 
