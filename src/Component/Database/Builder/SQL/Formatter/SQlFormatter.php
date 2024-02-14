@@ -1,11 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL\Formatter;
 
 use Laventure\Contract\Formatter\FormatterInterface;
 use Stringable;
-
 
 /**
  * SQlFormatter
@@ -18,7 +18,6 @@ use Stringable;
  */
 class SQlFormatter implements FormatterInterface
 {
-
     /**
      * @var string[]
     */
@@ -32,11 +31,11 @@ class SQlFormatter implements FormatterInterface
     */
     public function addFormats(array $formats): static
     {
-         foreach ($formats as $format) {
-             $this->addFormat($format);
-         }
+        foreach ($formats as $format) {
+            $this->addFormat($format);
+        }
 
-         return $this;
+        return $this;
     }
 
 
@@ -49,9 +48,9 @@ class SQlFormatter implements FormatterInterface
     */
     public function addFormat(Stringable $format): static
     {
-         $this->formats[] = strval($format);
+        $this->formats[] = strval($format);
 
-         return $this;
+        return $this;
     }
 
 

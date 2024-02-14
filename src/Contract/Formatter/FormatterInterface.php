@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Contract\Formatter;
-
 
 /**
  * FormatterInterface
@@ -15,11 +15,10 @@ namespace Laventure\Contract\Formatter;
  */
 interface FormatterInterface
 {
-
-     /**
-      * Format something
-      *
-      * @return mixed
-     */
-     public function format(): mixed;
+    /**
+     * Format something
+     *
+     * @return mixed
+    */
+    public function format(): mixed;
 }

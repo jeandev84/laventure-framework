@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\PDO;
@@ -27,74 +28,74 @@ use RuntimeException;
 */
 abstract class PdoConnection extends Connection
 {
-     /**
-      * @var PdoConnectionFactoryInterface
-     */
-     protected PdoConnectionFactoryInterface $factory;
+    /**
+     * @var PdoConnectionFactoryInterface
+    */
+    protected PdoConnectionFactoryInterface $factory;
 
 
-     /**
-      * @var PdoConfigurationResolver
-     */
-     protected PdoConfigurationResolver $resolver;
+    /**
+     * @var PdoConfigurationResolver
+    */
+    protected PdoConfigurationResolver $resolver;
 
 
-     /**
-      * @param PdoConnectionFactoryInterface $factory
-     */
-     public function __construct(PdoConnectionFactoryInterface $factory)
-     {
-         parent::__construct();
-         $this->factory  = $factory;
-         $this->resolver = new PdoConfigurationResolver($this->getName());
-     }
-
-
-
-
-
-     /**
-      * @inheritDoc
-     */
-     public function connect(ConfigurationInterface $config): void
-     {
-         $config = $this->resolver->resolve($config);
-         $this->withConnection($this->makeConnection($config))
-              ->withConfiguration($config);
-     }
+    /**
+     * @param PdoConnectionFactoryInterface $factory
+    */
+    public function __construct(PdoConnectionFactoryInterface $factory)
+    {
+        parent::__construct();
+        $this->factory  = $factory;
+        $this->resolver = new PdoConfigurationResolver($this->getName());
+    }
 
 
 
-     /**
-      * @inheritDoc
-     */
-     public function connected(): bool
-     {
-         return $this->connection instanceof PDO;
-     }
+
+
+    /**
+     * @inheritDoc
+    */
+    public function connect(ConfigurationInterface $config): void
+    {
+        $config = $this->resolver->resolve($config);
+        $this->withConnection($this->makeConnection($config))
+             ->withConfiguration($config);
+    }
 
 
 
-     /**
-      * @inheritDoc
-     */
-     public function disconnect(): void
-     {
+    /**
+     * @inheritDoc
+    */
+    public function connected(): bool
+    {
+        return $this->connection instanceof PDO;
+    }
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function disconnect(): void
+    {
         $this->connection = null;
-     }
+    }
 
 
 
 
 
-     /**
-      * @inheritDoc
-     */
-     public function purge(): void
-     {
-         $this->withConfiguration(new NullConfiguration())
-              ->disconnect();
-     }
+    /**
+     * @inheritDoc
+    */
+    public function purge(): void
+    {
+        $this->withConfiguration(new NullConfiguration())
+             ->disconnect();
+    }
 
 
 
@@ -114,7 +115,7 @@ abstract class PdoConnection extends Connection
     */
     public function createQuery(): QueryInterface
     {
-       return new Query($this->getPdo());
+        return new Query($this->getPdo());
     }
 
 
@@ -185,7 +186,7 @@ abstract class PdoConnection extends Connection
     */
     public function commit(): bool
     {
-       return $this->getPdo()->commit();
+        return $this->getPdo()->commit();
     }
 
 

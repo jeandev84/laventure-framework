@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Migration;
-
 
 use Laventure\Component\Database\Schema\SchemaInterface;
 
@@ -17,7 +17,6 @@ use Laventure\Component\Database\Schema\SchemaInterface;
 */
 interface MigrationInterface
 {
-
     /**
      * Create or modify schema table
      *
@@ -39,4 +38,28 @@ interface MigrationInterface
      * @return void
     */
     public function down(SchemaInterface $schema): void;
+
+
+
+
+
+
+    /**
+     * Returns migration version
+     *
+     * @return string
+    */
+    public function getVersion(): string;
+
+
+
+
+
+
+    /**
+     * Returns the migration path
+     *
+     * @return string
+    */
+    public function getPath(): string;
 }

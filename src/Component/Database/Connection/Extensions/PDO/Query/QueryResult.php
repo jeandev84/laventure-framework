@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\PDO\Query;
@@ -18,7 +19,6 @@ use PDOStatement;
  */
 class QueryResult implements QueryResultInterface
 {
-
     /**
      * @var PDOStatement
     */

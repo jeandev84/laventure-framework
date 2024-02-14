@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection;
@@ -8,7 +9,6 @@ use Laventure\Component\Database\Connection\Extensions\PDO\Drivers\Oracle\Oracle
 use Laventure\Component\Database\Connection\Extensions\PDO\Drivers\Pgsql\PgsqlConnection;
 use Laventure\Component\Database\Connection\Extensions\PDO\Drivers\Sqlite\SqliteConnection;
 use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnectionFactory;
-
 
 /**
  * ConnectionStack
@@ -21,19 +21,18 @@ use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnection
 */
 class ConnectionStack
 {
+    /**
+     * @return array
+    */
+    public static function getDefaults(): array
+    {
+        $pdoFactory = new PdoConnectionFactory();
 
-      /**
-       * @return array
-      */
-      public static function getDefaults(): array
-      {
-          $pdoFactory = new PdoConnectionFactory();
-
-          return [
-              new MysqlConnection($pdoFactory),
-              new PgsqlConnection($pdoFactory),
-              new SqliteConnection($pdoFactory),
-              new OracleConnection($pdoFactory)
-          ];
-      }
+        return [
+            new MysqlConnection($pdoFactory),
+            new PgsqlConnection($pdoFactory),
+            new SqliteConnection($pdoFactory),
+            new OracleConnection($pdoFactory)
+        ];
+    }
 }

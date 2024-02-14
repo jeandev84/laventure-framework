@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL;
-
 
 use Laventure\Component\Database\Builder\SQL\Expr\Comparison\ComparisonInterface;
 use Laventure\Component\Database\Builder\SQL\Expr\Conditions\Contract\andXInterface;
@@ -24,41 +24,40 @@ use Laventure\Component\Database\Query\Builder\SQL\Expr\Utils\Math;
 */
 interface ExpressionInterface
 {
-
-     /**
-      * Example: $condition1 AND $condition2 AND $condition3 ...
-      *
-      * @param string[] $conditions
-      *
-      * @return andXInterface
-     */
-     public function andX(string ...$conditions): andXInterface;
-
+    /**
+     * Example: $condition1 AND $condition2 AND $condition3 ...
+     *
+     * @param string[] $conditions
+     *
+     * @return andXInterface
+    */
+    public function andX(string ...$conditions): andXInterface;
 
 
-     /**
-      *  Example: $condition1 OR $condition2 OR $condition3 ...
-      *
-      * @param string[] $conditions
-      *
-      * @return orXInterface
-     */
-     public function orX(string  ...$conditions): orXInterface;
 
+    /**
+     *  Example: $condition1 OR $condition2 OR $condition3 ...
+     *
+     * @param string[] $conditions
+     *
+     * @return orXInterface
+    */
+    public function orX(string  ...$conditions): orXInterface;
 
 
 
 
-     /**
-      * Example: $column = $value
-      *
-      * @param string $column
-      *
-      * @param $value
-      *
-      * @return ComparisonInterface
-     */
-     public function eq(string $column, $value): ComparisonInterface;
+
+    /**
+     * Example: $column = $value
+     *
+     * @param string $column
+     *
+     * @param $value
+     *
+     * @return ComparisonInterface
+    */
+    public function eq(string $column, $value): ComparisonInterface;
 
 
 
@@ -76,26 +75,26 @@ interface ExpressionInterface
 
 
 
-     /**
-      * Example: $column IS NULL
-      *
-      * @param string $column
-      *
-      * @return string
-     */
-     public function isNull(string $column): string;
+    /**
+     * Example: $column IS NULL
+     *
+     * @param string $column
+     *
+     * @return string
+    */
+    public function isNull(string $column): string;
 
 
 
 
-     /**
-      * Example: $column IS NOT NULL
-      *
-      * @param string $column
-      *
-      * @return string
-     */
-     public function isNotNull(string $column): string;
+    /**
+     * Example: $column IS NOT NULL
+     *
+     * @param string $column
+     *
+     * @return string
+    */
+    public function isNotNull(string $column): string;
 
 
 

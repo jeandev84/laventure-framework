@@ -1,11 +1,12 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Migrator;
 
+use Laventure\Component\Database\Builder\SqlQueryBuilder;
 use Laventure\Component\Database\Connection\ConnectionInterface;
-use Laventure\Component\Database\Migration\Migration;
-use Laventure\Component\Database\Query\Builder\Builder;
+use Laventure\Component\Database\Migration\MigrationInterface;
 use Laventure\Component\Database\Schema\Blueprint\Blueprint;
 use Laventure\Component\Database\Schema\Schema;
 
@@ -20,8 +21,6 @@ use Laventure\Component\Database\Schema\Schema;
 */
 class Migrator implements MigratorInterface
 {
-
-
     /**
      * Connection
      *
@@ -45,9 +44,9 @@ class Migrator implements MigratorInterface
     /**
      * Query builder
      *
-     * @var Builder
+     * @var SqlQueryBuilder
     */
-    protected Builder $builder;
+    protected SqlQueryBuilder $builder;
 
 
 
@@ -65,7 +64,7 @@ class Migrator implements MigratorInterface
     /**
      * Collect migrations
      *
-     * @var Migration[]
+     * @var MigrationInterface[]
     */
     protected array $migrations = [];
 
@@ -83,13 +82,14 @@ class Migrator implements MigratorInterface
 
     /**
      * @param ConnectionInterface $connection
+     *
      * @param string $table
     */
-    public function __construct(ConnectionInterface $connection, string $table)
+    public function __construct(ConnectionInterface $connection, string $table = 'migrations')
     {
         $this->connection = $connection;
         $this->table      = $table;
-        $this->builder    = $connection->createQueryBuilder();
+        $this->builder    = new SqlQueryBuilder($connection);
         $this->schema     = new Schema($connection);
     }
 
@@ -97,12 +97,28 @@ class Migrator implements MigratorInterface
 
 
     /**
-     * @param Migration $migration
+     * @param string $table
      * @return $this
     */
-    public function addMigration(Migration $migration): static
+    public function table(string $table): static
     {
-        $this->migrations[$migration->getName()] = $migration;
+        $this->table = $table;
+
+        return $this;
+    }
+
+
+
+
+
+
+    /**
+     * @param MigrationInterface $migration
+     * @return $this
+    */
+    public function addMigration(MigrationInterface $migration): static
+    {
+        $this->migrations[$migration->getVersion()] = $migration;
 
         return $this;
     }
@@ -111,7 +127,7 @@ class Migrator implements MigratorInterface
 
 
     /**
-     * @param Migration[] $migrations
+     * @param MigrationInterface[] $migrations
      *
      * @return $this
     */
@@ -148,17 +164,17 @@ class Migrator implements MigratorInterface
     */
     public function migrate(): bool
     {
-         $this->install();
+        $this->install();
 
-         foreach ($this->getNewMigrations() as $migration) {
-             $migration->up($this->schema);
-             $this->builder->insert($this->table, [
-                'version'     => $migration->getName(),
-                'executed_at' => date('Y-m-d H:i:s')
-             ])->getQuery()->execute();
-         }
+        foreach ($this->getNewMigrations() as $migration) {
+            $migration->up($this->schema);
+            $this->builder->insert($this->table, [
+               'version'     => $migration->getVersion(),
+               'executed_at' => date('Y-m-d H:i:s')
+            ])->getQuery()->execute();
+        }
 
-         return true;
+        return true;
     }
 
 
@@ -188,9 +204,9 @@ class Migrator implements MigratorInterface
     */
     public function reset(): bool
     {
-       $this->rollback();
+        $this->rollback();
 
-       return $this->schema->drop($this->table);
+        return $this->schema->drop($this->table);
     }
 
 
@@ -215,7 +231,7 @@ class Migrator implements MigratorInterface
     */
     public function getMigrations(): array
     {
-         return $this->migrations;
+        return $this->migrations;
     }
 
 
@@ -227,8 +243,8 @@ class Migrator implements MigratorInterface
     */
     public function getNewMigrations(): array
     {
-        return array_filter($this->getMigrations(), function (Migration $migration) {
-            return !in_array($migration->getName(), $this->getOldMigrations());
+        return array_filter($this->getMigrations(), function (MigrationInterface $migration) {
+            return !in_array($migration->getVersion(), $this->getOldMigrations());
         });
     }
 
@@ -240,11 +256,11 @@ class Migrator implements MigratorInterface
     */
     public function getOldMigrations(): array
     {
-         return $this->builder->select('version')
-                              ->from($this->table)
-                              ->getQuery()
-                              ->fetch()
-                              ->columns();
+        return $this->builder->select('version')
+                             ->from($this->table)
+                             ->getQuery()
+                             ->fetch()
+                             ->columns();
     }
 
 

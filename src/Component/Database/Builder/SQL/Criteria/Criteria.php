@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL\Criteria;
@@ -14,7 +15,6 @@ namespace Laventure\Component\Database\Builder\SQL\Criteria;
 */
 class Criteria
 {
-
     /**
      * @var string[]
     */
@@ -160,7 +160,7 @@ class Criteria
     */
     public function from(string $from, string $alias = ''): void
     {
-        $this->from[$from] = ($alias ? "$from $alias": $from);
+        $this->from[$from] = ($alias ? "$from $alias" : $from);
     }
 
 }

@@ -1,9 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\Mysqli;
-
-
 
 /**
  * MysqliConnection
@@ -16,5 +15,4 @@ namespace Laventure\Component\Database\Connection\Extensions\Mysqli;
  */
 class MysqliConnection
 {
-
 }

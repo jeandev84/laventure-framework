@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL\Expr;
@@ -16,7 +17,6 @@ use Stringable;
 */
 class Update implements Stringable
 {
-
     /**
      * @param string $table
     */

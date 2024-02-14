@@ -15,8 +15,6 @@ namespace Laventure\Component\Database\Query\Result;
 */
 interface QueryResultInterface
 {
-
-
     /**
      * Fetch all result
      *

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\PDO\Factory;
@@ -19,8 +20,6 @@ use PDOException;
 */
 class PdoConnectionFactory implements PdoConnectionFactoryInterface
 {
-
-
     /**
      * @var array
     */
@@ -42,8 +41,7 @@ class PdoConnectionFactory implements PdoConnectionFactoryInterface
         string $username = null,
         string $password = null,
         array $options = []
-    ): PDO
-    {
+    ): PDO {
         try {
             $pdo = new PDO($dsn, $username, $password, $this->options);
             foreach ($options as $key => $value) {

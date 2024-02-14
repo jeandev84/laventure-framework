@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Factory;
-
 
 use Laventure\Component\Database\Query\QueryInterface;
 
@@ -17,8 +17,8 @@ use Laventure\Component\Database\Query\QueryInterface;
 */
 interface QueryFactoryInterface
 {
-     /**
-      * @return QueryInterface
-     */
-     public function createQuery(): QueryInterface;
+    /**
+     * @return QueryInterface
+    */
+    public function createQuery(): QueryInterface;
 }

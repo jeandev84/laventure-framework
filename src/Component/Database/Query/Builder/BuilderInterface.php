@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder;
@@ -13,7 +14,6 @@ use Laventure\Component\Database\Builder\SQL\ExpressionInterface;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Query\QueryInterface;
 
-
 /**
  * BuilderInterface
  *
@@ -25,7 +25,6 @@ use Laventure\Component\Database\Query\QueryInterface;
 */
 interface BuilderInterface
 {
-
     /**
      * @return ExpressionInterface
     */

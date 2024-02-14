@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Factory;
-
 
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Connection\ConnectionInterface;
@@ -18,10 +18,10 @@ use Laventure\Component\Database\Connection\ConnectionInterface;
 */
 interface ConnectionFactoryInterface
 {
-      /**
-       * @param ConfigurationInterface $config
-       *
-       * @return mixed
-      */
-      public function makeConnection(ConfigurationInterface $config): mixed;
+    /**
+     * @param ConfigurationInterface $config
+     *
+     * @return mixed
+    */
+    public function makeConnection(ConfigurationInterface $config): mixed;
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Migration;
@@ -16,17 +17,12 @@ use ReflectionClass;
 */
 abstract class Migration implements MigrationInterface
 {
-
-
     /**
-     * Returns migration name
-     * that's may be used as the version of migration
-     *
-     * @return string
+     * @inheritdoc
     */
-    public function getName(): string
+    public function getVersion(): string
     {
-       return $this->getReflector()->getShortName();
+        return $this->getReflector()->getShortName();
     }
 
 
@@ -34,13 +30,11 @@ abstract class Migration implements MigrationInterface
 
 
     /**
-     * Returns the migration path
-     *
-     * @return string
+     * @inheritdoc
     */
     public function getPath(): string
     {
-       return $this->getReflector()->getFileName();
+        return $this->getReflector()->getFileName();
     }
 
 

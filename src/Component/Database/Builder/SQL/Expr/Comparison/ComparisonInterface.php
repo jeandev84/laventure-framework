@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL\Expr\Comparison;
-
 
 use Stringable;
 
@@ -17,21 +17,21 @@ use Stringable;
  */
 interface ComparisonInterface extends Stringable
 {
-      /**
-       * @return string
-      */
-      public function getColumn(): string;
+    /**
+     * @return string
+    */
+    public function getColumn(): string;
 
 
-      /**
-       * @return string
-      */
-      public function getOperator(): string;
+    /**
+     * @return string
+    */
+    public function getOperator(): string;
 
 
 
-      /**
-       * @return mixed
-      */
-      public function getValue(): mixed;
+    /**
+     * @return mixed
+    */
+    public function getValue(): mixed;
 }

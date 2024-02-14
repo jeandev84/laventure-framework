@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL\DML\Insert;
-
 
 use Laventure\Component\Database\Builder\SQL\BuilderInterface;
 
@@ -17,7 +17,6 @@ use Laventure\Component\Database\Builder\SQL\BuilderInterface;
  */
 interface InsertBuilderInterface extends BuilderInterface
 {
-
     /**
      * @param string $table
      *

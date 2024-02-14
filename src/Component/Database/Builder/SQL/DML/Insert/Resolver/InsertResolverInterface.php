@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL\DML\Insert\Resolver;
-
 
 use Laventure\Component\Database\Builder\SQL\DML\Insert\InsertBuilderInterface;
 
@@ -17,11 +17,10 @@ use Laventure\Component\Database\Builder\SQL\DML\Insert\InsertBuilderInterface;
  */
 interface InsertResolverInterface
 {
-
-       /**
-        * @param array $attributes
-        *
-        * @return InsertBuilderInterface
-       */
-       public function resolve(array $attributes): InsertBuilderInterface;
+    /**
+     * @param array $attributes
+     *
+     * @return InsertBuilderInterface
+    */
+    public function resolve(array $attributes): InsertBuilderInterface;
 }

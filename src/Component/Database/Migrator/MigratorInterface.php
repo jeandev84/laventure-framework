@@ -1,10 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Migrator;
 
-
 use Laventure\Component\Database\Migration\Migration;
+use Laventure\Component\Database\Migration\MigrationInterface;
 
 /**
  * MigratorInterface
@@ -17,7 +18,6 @@ use Laventure\Component\Database\Migration\Migration;
 */
 interface MigratorInterface
 {
-
     /**
      * Create a migration version table
      *
@@ -86,7 +86,7 @@ interface MigratorInterface
     /**
      * Get all migrations
      *
-     * @return Migration[]
+     * @return MigrationInterface[]
     */
     public function getMigrations(): array;
 
@@ -99,7 +99,7 @@ interface MigratorInterface
     /**
      * Get migrations to apply
      *
-     * @return Migration[]
+     * @return MigrationInterface[]
     */
     public function getNewMigrations(): array;
 

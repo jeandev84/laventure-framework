@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL\DML\Delete;
@@ -18,31 +19,31 @@ use Laventure\Component\Routing\Route\Attributes\Delete;
  */
 class DeleteBuilder implements DeleteBuilderInterface
 {
-     use BuilderConditionTrait;
+    use BuilderConditionTrait;
 
 
-     /**
-      * @inheritDoc
-     */
-     public function delete(string $table, string $alias = ''): static
-     {
-         $this->criteria->table($table, $alias);
+    /**
+     * @inheritDoc
+    */
+    public function delete(string $table, string $alias = ''): static
+    {
+        $this->criteria->table($table, $alias);
 
-         return $this;
-     }
+        return $this;
+    }
 
 
 
-     /**
-      * @inheritDoc
-     */
-     public function getSQL(): string
-     {
-         return $this->formatter->addFormats([
-             new Delete($this->criteria->table),
-             new Where($this->criteria->wheres)
-         ])->format();
-     }
+    /**
+     * @inheritDoc
+    */
+    public function getSQL(): string
+    {
+        return $this->formatter->addFormats([
+            new Delete($this->criteria->table),
+            new Where($this->criteria->wheres)
+        ])->format();
+    }
 
 
 

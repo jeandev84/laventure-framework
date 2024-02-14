@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL\DML\Delete;
-
 
 use Laventure\Component\Database\Builder\SQL\Conditions\Contract\BuilderConditionInterface;
 

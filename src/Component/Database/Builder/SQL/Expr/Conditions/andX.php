@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL\Expr\Conditions;
-
 
 use Laventure\Component\Database\Builder\SQL\Conditions\Traits\HasConditionTrait;
 use Laventure\Component\Database\Builder\SQL\Expr\Conditions\Contract\andXInterface;
@@ -18,7 +18,6 @@ use Laventure\Component\Database\Builder\SQL\Expr\Conditions\Contract\andXInterf
 */
 class andX implements andXInterface
 {
-
     use HasConditionTrait;
 
 

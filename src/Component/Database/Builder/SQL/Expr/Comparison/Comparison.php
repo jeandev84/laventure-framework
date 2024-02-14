@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL\Expr\Comparison;
@@ -14,7 +15,6 @@ namespace Laventure\Component\Database\Builder\SQL\Expr\Comparison;
  */
 class Comparison implements ComparisonInterface
 {
-
     /**
      * @var string
     */

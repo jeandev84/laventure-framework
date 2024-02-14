@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL\Expr\Math;
@@ -16,7 +17,6 @@ use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionInterface;
 */
 class Math implements MathInterface
 {
-
     /**
      * @param string $x
      *
@@ -28,8 +28,7 @@ class Math implements MathInterface
         protected string $x,
         protected string $operator,
         protected string $y
-    )
-    {
+    ) {
     }
 
 

@@ -1,12 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL\Conditions;
 
-
 use Laventure\Component\Database\Builder\SQL\BuilderTrait;
 use Laventure\Component\Database\Builder\SQL\Expr\Where;
-
 
 /**
  * BuilderConditionTrait
@@ -19,7 +18,7 @@ use Laventure\Component\Database\Builder\SQL\Expr\Where;
  */
 trait BuilderConditionTrait
 {
-     use BuilderTrait;
+    use BuilderTrait;
 
     /**
      * @param string $condition

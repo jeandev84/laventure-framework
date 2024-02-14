@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection;
-
 
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Configuration\NullConfiguration;
@@ -21,7 +21,6 @@ use Laventure\Component\Database\Query\QueryInterface;
  */
 abstract class Connection implements ConnectionInterface
 {
-
     /**
      * @var ConfigurationInterface
     */

@@ -1,10 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\PDO\Query\Resolver;
 
 use Laventure\Component\Database\Builder\SQL\Conditions\Contract\BuilderConditionInterface;
-use Laventure\Component\Database\Builder\SQL\Conditions\Resolver\ConditionResolverInterface;
+use Laventure\Component\Database\Builder\SQL\Conditions\Resolver\CriteriaResolverInterface;
 
 /**
  * ConditionResolver
@@ -15,17 +16,15 @@ use Laventure\Component\Database\Builder\SQL\Conditions\Resolver\ConditionResolv
  *
  * @package  Laventure\Component\Database\Connection\Extensions\PDO\Query\Resolver
  */
-class ConditionResolver implements ConditionResolverInterface
+class CriteriaResolver implements CriteriaResolverInterface
 {
-
-     /**
-      * @param BuilderConditionInterface $qb
-     */
-     public function __construct(
-         protected BuilderConditionInterface $qb
-     )
-     {
-     }
+    /**
+     * @param BuilderConditionInterface $qb
+    */
+    public function __construct(
+        protected BuilderConditionInterface $qb
+    ) {
+    }
 
 
 

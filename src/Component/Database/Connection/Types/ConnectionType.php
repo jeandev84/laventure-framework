@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Types;
@@ -14,8 +15,8 @@ namespace Laventure\Component\Database\Connection\Types;
 */
 enum ConnectionType
 {
-   const Mysql  = 'mysql';
-   const Pgsql  = 'pgsql';
-   const Oracle = 'oci';
-   const Sqlite = 'sqlite';
+    public const Mysql  = 'mysql';
+    public const Pgsql  = 'pgsql';
+    public const Oracle = 'oci';
+    public const Sqlite = 'sqlite';
 }

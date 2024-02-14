@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL;
-
 
 use Laventure\Component\Database\Builder\SQL\Criteria\CriteriaInterface;
 use Laventure\Component\Database\Connection\ConnectionInterface;
@@ -19,12 +19,11 @@ use Laventure\Component\Database\Query\QueryInterface;
 */
 interface BuilderInterface extends CriteriaInterface
 {
-
-//    /**
-//     * @param string $sql
-//     * @return $this
-//    */
-//    public function addSQL(string $sql): static;
+    //    /**
+    //     * @param string $sql
+    //     * @return $this
+    //    */
+    //    public function addSQL(string $sql): static;
 
 
 

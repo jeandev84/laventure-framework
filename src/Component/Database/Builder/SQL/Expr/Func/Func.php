@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL\Expr\Func;
@@ -16,7 +17,6 @@ use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionInterface;
 */
 class Func implements FuncInterface
 {
-
     /**
      * @param string $expression
     */

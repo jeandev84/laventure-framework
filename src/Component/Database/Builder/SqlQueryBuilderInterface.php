@@ -1,15 +1,14 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder;
-
 
 use Laventure\Component\Database\Builder\SQL\DML\Delete\DeleteBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\DML\Insert\InsertBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\DML\Update\UpdateBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\DQL\Select\SelectBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\ExpressionInterface;
-
 
 /**
  * SQlQueryBuilderInterface
@@ -22,7 +21,6 @@ use Laventure\Component\Database\Builder\SQL\ExpressionInterface;
 */
 interface SqlQueryBuilderInterface
 {
-
     /**
      * @return ExpressionInterface
     */

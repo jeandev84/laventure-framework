@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\PDO\Query\Resolver;
@@ -17,8 +18,6 @@ use Laventure\Component\Database\Builder\SQL\DML\Insert\Resolver\InsertResolverI
  */
 class InsertResolver implements InsertResolverInterface
 {
-
-
     /**
      * @param InsertBuilderInterface $qb
     */

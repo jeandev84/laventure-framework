@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Crud;
-
 
 /**
  * CrudInterface
@@ -15,7 +15,6 @@ namespace Laventure\Component\Database\Query\Crud;
  */
 interface CrudInterface
 {
-
     /**
      * @param array $attributes
      * @return mixed

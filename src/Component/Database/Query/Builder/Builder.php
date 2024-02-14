@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder;
-
 
 use Laventure\Component\Database\Builder\SQL\ExpressionInterface;
 use Laventure\Component\Database\Builder\SqlQueryBuilder;
@@ -19,8 +19,6 @@ use Laventure\Component\Database\Connection\ConnectionInterface;
  */
 abstract class Builder implements BuilderInterface
 {
-
-
     /**
      * @var SqlQueryBuilder
     */

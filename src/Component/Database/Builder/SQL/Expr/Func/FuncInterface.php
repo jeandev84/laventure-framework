@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL\Expr\Func;
-
 
 use Stringable;
 
@@ -17,8 +17,8 @@ use Stringable;
  */
 interface FuncInterface extends Stringable
 {
-     /**
-      * @return string
-     */
-     public function getExpression(): string;
+    /**
+     * @return string
+    */
+    public function getExpression(): string;
 }

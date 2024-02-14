@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL\DML\Update\Resolver;
-
 
 use Laventure\Component\Database\Builder\SQL\DML\Update\UpdateBuilderInterface;
 
@@ -17,9 +17,9 @@ use Laventure\Component\Database\Builder\SQL\DML\Update\UpdateBuilderInterface;
  */
 interface UpdateResolverInterface
 {
-       /**
-        * @param array $attributes
-        * @return UpdateBuilderInterface
-       */
-       public function resolve(array $attributes): UpdateBuilderInterface;
+    /**
+     * @param array $attributes
+     * @return UpdateBuilderInterface
+    */
+    public function resolve(array $attributes): UpdateBuilderInterface;
 }

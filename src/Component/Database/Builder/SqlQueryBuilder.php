@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder;
@@ -26,8 +27,6 @@ use Laventure\Component\Database\Connection\ConnectionInterface;
 */
 class SqlQueryBuilder implements SqlQueryBuilderInterface
 {
-
-
     /**
      * @var ConnectionInterface
     */
@@ -65,8 +64,8 @@ class SqlQueryBuilder implements SqlQueryBuilderInterface
     */
     public function select(string ...$selects): SelectBuilderInterface
     {
-         $qb = new SelectBuilder($this->connection);
-         return $qb->select(...$selects);
+        $qb = new SelectBuilder($this->connection);
+        return $qb->select(...$selects);
     }
 
 

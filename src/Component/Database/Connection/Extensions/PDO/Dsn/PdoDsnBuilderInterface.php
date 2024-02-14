@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\PDO\Dsn;
@@ -17,7 +18,6 @@ use Stringable;
 */
 interface PdoDsnBuilderInterface extends BuilderInterface, Stringable
 {
-
     /**
      * @return string
     */

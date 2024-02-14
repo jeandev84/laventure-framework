@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Manager;
@@ -19,8 +20,6 @@ use Laventure\Component\Database\DatabaseException;
 */
 class DatabaseManager implements DatabaseManagerInterface
 {
-
-
     /**
      * Default connection driver
      *
@@ -206,7 +205,7 @@ class DatabaseManager implements DatabaseManagerInterface
         $credentials = $this->configuration($name);
 
         if (!$this->hasConnection($name)) {
-             $this->abortIf("unavailable connection named '$name'");
+            $this->abortIf("unavailable connection named '$name'");
         }
 
         return $this->connect($name, $credentials);
@@ -266,7 +265,7 @@ class DatabaseManager implements DatabaseManagerInterface
     */
     public function getConnections(): array
     {
-       return $this->connections;
+        return $this->connections;
     }
 
 

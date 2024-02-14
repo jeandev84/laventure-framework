@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema;
@@ -17,15 +18,12 @@ use Laventure\Component\Database\Connection\ConnectionInterface;
 */
 class Schema implements SchemaInterface
 {
-
-
     /**
      * @param ConnectionInterface $connection
     */
     public function __construct(
         protected ConnectionInterface $connection
-    )
-    {
+    ) {
     }
 
 
@@ -141,7 +139,7 @@ class Schema implements SchemaInterface
     */
     public function hasColumn(string $table, string $column): bool
     {
-         return false;
+        return false;
     }
 
 

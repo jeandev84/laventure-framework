@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\PDO\Query;
@@ -8,11 +9,10 @@ use Laventure\Component\Database\Builder\SQL\DML\Insert\InsertBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\DML\Update\UpdateBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\DQL\Select\SelectBuilderInterface;
 use Laventure\Component\Database\Connection\Extensions\PDO\PdoConnection;
-use Laventure\Component\Database\Connection\Extensions\PDO\Query\Resolver\ConditionResolver;
+use Laventure\Component\Database\Connection\Extensions\PDO\Query\Resolver\CriteriaResolver;
 use Laventure\Component\Database\Connection\Extensions\PDO\Query\Resolver\InsertResolver;
 use Laventure\Component\Database\Connection\Extensions\PDO\Query\Resolver\UpdateResolver;
 use Laventure\Component\Database\Query\Builder\Builder;
-
 
 /**
  * PdoBuilder
@@ -25,8 +25,6 @@ use Laventure\Component\Database\Query\Builder\Builder;
 */
 class QueryBuilder extends Builder
 {
-
-
     /**
      * @param PdoConnection $connection
     */
@@ -42,7 +40,7 @@ class QueryBuilder extends Builder
     */
     public function select(string $columns = null, array $criteria = []): SelectBuilderInterface
     {
-        $conditionResolver = new ConditionResolver($this->builder->select($columns));
+        $conditionResolver = new CriteriaResolver($this->builder->select($columns));
         return $conditionResolver->resolve($criteria);
     }
 
@@ -69,7 +67,7 @@ class QueryBuilder extends Builder
     public function update(string $table, array $attributes, array $criteria = []): UpdateBuilderInterface
     {
         $resolver          = new UpdateResolver($this->builder->update($table));
-        $conditionResolver = new ConditionResolver($resolver->resolve($attributes));
+        $conditionResolver = new CriteriaResolver($resolver->resolve($attributes));
         return $conditionResolver->resolve($criteria);
     }
 
@@ -81,7 +79,7 @@ class QueryBuilder extends Builder
      */
     public function delete(string $table, array $criteria = []): DeleteBuilderInterface
     {
-        $conditionResolver = new ConditionResolver($this->builder->delete($table));
+        $conditionResolver = new CriteriaResolver($this->builder->delete($table));
         return $conditionResolver->resolve($criteria);
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\PDO\Config\Resolver;
@@ -6,7 +7,6 @@ namespace Laventure\Component\Database\Connection\Extensions\PDO\Config\Resolver
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Configuration\Resolver\ConfigurationResolverInterface;
 use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\PdoDsnBuilder;
-
 
 /**
  * PdoConfigurationResolver
@@ -19,48 +19,46 @@ use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\PdoDsnBuilder;
  */
 class PdoConfigurationResolver implements ConfigurationResolverInterface
 {
-
-
-     /**
-      * @var string|null
-     */
-     protected ?string $driver;
-
-
-
-     /**
-      * @param string|null $driver
-     */
-     public function __construct(?string $driver = null)
-     {
-         $this->withDefaultDriver($driver);
-     }
+    /**
+     * @var string|null
+    */
+    protected ?string $driver;
 
 
 
-     /**
-      * @param string $driver
-      * @return $this
-     */
-     public function withDefaultDriver(string $driver): static
-     {
-         $this->driver = $driver;
+    /**
+     * @param string|null $driver
+    */
+    public function __construct(?string $driver = null)
+    {
+        $this->withDefaultDriver($driver);
+    }
 
-         return $this;
-     }
+
+
+    /**
+     * @param string $driver
+     * @return $this
+    */
+    public function withDefaultDriver(string $driver): static
+    {
+        $this->driver = $driver;
+
+        return $this;
+    }
 
 
 
 
-     /**
-      * @inheritDoc
-     */
-     public function resolve(ConfigurationInterface $config): ConfigurationInterface
-     {
-          $config['dsn'] = $this->resolveDsn($config);
+    /**
+     * @inheritDoc
+    */
+    public function resolve(ConfigurationInterface $config): ConfigurationInterface
+    {
+        $config['dsn'] = $this->resolveDsn($config);
 
-          return $config;
-     }
+        return $config;
+    }
 
 
 

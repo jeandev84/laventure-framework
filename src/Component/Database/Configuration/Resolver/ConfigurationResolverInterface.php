@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Configuration\Resolver;
-
 
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 
@@ -17,10 +17,10 @@ use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 */
 interface ConfigurationResolverInterface
 {
-     /**
-      * @param ConfigurationInterface $config
-      *
-      * @return ConfigurationInterface
-     */
-     public function resolve(ConfigurationInterface $config): ConfigurationInterface;
+    /**
+     * @param ConfigurationInterface $config
+     *
+     * @return ConfigurationInterface
+    */
+    public function resolve(ConfigurationInterface $config): ConfigurationInterface;
 }

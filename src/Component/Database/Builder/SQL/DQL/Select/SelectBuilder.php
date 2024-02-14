@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL\DQL\Select;
-
 
 use Laventure\Component\Database\Builder\SQL\BuilderTrait;
 use Laventure\Component\Database\Builder\SQL\Conditions\BuilderConditionTrait;
@@ -16,7 +16,6 @@ use Laventure\Component\Database\Builder\SQL\Expr\OrderBy;
 use Laventure\Component\Database\Builder\SQL\Expr\Select;
 use Laventure\Component\Database\Builder\SQL\Expr\Where;
 
-
 /**
  * SelectBuilder
  *
@@ -26,9 +25,8 @@ use Laventure\Component\Database\Builder\SQL\Expr\Where;
  *
  * @package  Laventure\Component\Database\Builder\SQL\DQL\Select
 */
-class SelectBuilder  implements SelectBuilderInterface
+class SelectBuilder implements SelectBuilderInterface
 {
-
     use BuilderConditionTrait;
 
 
@@ -79,7 +77,7 @@ class SelectBuilder  implements SelectBuilderInterface
     */
     public function addFrom(string $from): static
     {
-         return $this->from($from);
+        return $this->from($from);
     }
 
 

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL\Expr;
@@ -25,8 +26,7 @@ class Insert implements Stringable
         public string $table,
         public array $columns,
         public array $values
-    )
-    {
+    ) {
     }
 
 

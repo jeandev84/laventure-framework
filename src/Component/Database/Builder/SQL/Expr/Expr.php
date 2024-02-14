@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL\Expr;
@@ -26,7 +27,6 @@ use Laventure\Component\Database\Builder\SQL\ExpressionInterface;
 */
 class Expr implements ExpressionInterface
 {
-
     /**
      * @inheritDoc
     */
@@ -100,7 +100,7 @@ class Expr implements ExpressionInterface
     */
     public function isMemberOf(string $instance, string $column): ComparisonInterface
     {
-        return new Comparison($instance,  "MEMBER OF", $column);
+        return new Comparison($instance, "MEMBER OF", $column);
     }
 
 
@@ -123,7 +123,7 @@ class Expr implements ExpressionInterface
     */
     public function sum(string $x, string $y): MathInterface
     {
-         return new Math($x, "+", $y);
+        return new Math($x, "+", $y);
     }
 
 
@@ -411,7 +411,7 @@ class Expr implements ExpressionInterface
     */
     public function trim($value): FuncInterface
     {
-       return new Func("TRIM($value)");
+        return new Func("TRIM($value)");
     }
 
 

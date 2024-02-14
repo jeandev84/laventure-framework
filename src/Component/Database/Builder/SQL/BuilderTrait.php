@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL;
-
 
 use Laventure\Component\Database\Builder\SQL\Criteria\Criteria;
 use Laventure\Component\Database\Builder\SQL\Expr\Expr;
@@ -136,7 +136,8 @@ trait BuilderTrait
     public function setParameters(array $parameters): static
     {
         $this->criteria->parameters = array_merge(
-            $this->criteria->parameters, $parameters
+            $this->criteria->parameters,
+            $parameters
         );
 
         return $this;
