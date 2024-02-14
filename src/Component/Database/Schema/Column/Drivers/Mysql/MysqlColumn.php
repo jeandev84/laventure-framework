@@ -17,7 +17,6 @@ use Laventure\Component\Database\Schema\Column\Column;
  */
 class MysqlColumn extends Column
 {
-
     /**
      * @param string $name
      * @param string $type
@@ -34,7 +33,7 @@ class MysqlColumn extends Column
     */
     public function increment(): static
     {
-       return $this->type("AUTO_INCREMENT");
+        return $this->type("AUTO_INCREMENT");
     }
 
 

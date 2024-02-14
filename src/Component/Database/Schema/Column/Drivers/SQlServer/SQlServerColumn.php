@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Column\Drivers\SQlServer;
@@ -16,7 +17,6 @@ use Laventure\Component\Database\Schema\Column\Column;
 */
 class SQlServerColumn extends Column
 {
-
     /**
      * @inheritDoc
     */
@@ -32,6 +32,6 @@ class SQlServerColumn extends Column
     */
     public function modify(): static
     {
-       return $this->name("ALTER COLUMN $this->name");
+        return $this->name("ALTER COLUMN $this->name");
     }
 }

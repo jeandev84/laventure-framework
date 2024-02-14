@@ -22,7 +22,8 @@ class Blueprint
     /**
      * @param TableInterface $table
     */
-    public function __construct(protected TableInterface $table) {
+    public function __construct(protected TableInterface $table)
+    {
 
     }
 
@@ -64,14 +65,12 @@ class Blueprint
 
 
 
-
     /**
-     * @param $name
-     * @param $type
-     * @param $default
+     * @param string $name
+     * @param string $type
      * @return ColumnInterface
     */
-    public function addColumn($name, $type, $default = null): ColumnInterface
+    public function addColumn(string $name, string $type): ColumnInterface
     {
         return $this->table->addColumn($name, $type);
     }
@@ -83,10 +82,10 @@ class Blueprint
 
 
     /**
-     * @param $name
+     * @param string $name
      * @return TableInterface
     */
-    public function dropColumn($name): TableInterface
+    public function dropColumn(string $name): TableInterface
     {
         return $this->table->dropColumn($name);
     }
@@ -94,10 +93,13 @@ class Blueprint
 
 
 
+
     /**
-     * @inheritDoc
+     * @param string $name
+     * @param string $to
+     * @return TableInterface
     */
-    public function renameColumn($name, $to): mixed
+    public function renameColumn(string $name, string $to): TableInterface
     {
         return $this->table->renameColumn($name, $to);
     }
@@ -106,10 +108,10 @@ class Blueprint
 
 
     /**
-     * @param $name
+     * @param string $name
      * @return ColumnInterface
     */
-    public function increments($name): ColumnInterface
+    public function increments(string $name): ColumnInterface
     {
         return $this->table->increments($name)->primary();
     }
@@ -129,14 +131,26 @@ class Blueprint
 
 
 
-
     /**
-     * @param $name
+     * @param string $name
+     * @param int $length
      * @return ColumnInterface
     */
-    public function string($name): ColumnInterface
+    public function string(string $name, int $length = 255): ColumnInterface
     {
+        return $this->table->string($name, $length);
+    }
 
+
+
+
+
+    /**
+     * @return ColumnInterface
+    */
+    public function rememberToken(): ColumnInterface
+    {
+        return $this->string('remember_token', 100)->nullable();
     }
 
 
@@ -161,6 +175,6 @@ class Blueprint
     */
     public function primary(array|string $primary): TableInterface
     {
-        return $this->table->addConstraint();
+        #return $this->table->addConstraint();
     }
 }

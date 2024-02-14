@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Migrator;
-
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Migration\MigrationInterface;
@@ -134,9 +134,9 @@ class Migrator implements MigratorInterface
     */
     public function builder(QueryBuilderInterface $builder): static
     {
-         $this->builder = $builder;
+        $this->builder = $builder;
 
-         return $this;
+        return $this;
     }
 
 
@@ -150,9 +150,9 @@ class Migrator implements MigratorInterface
     */
     public function schema(SchemaInterface $schema): static
     {
-         $this->schema = $schema;
+        $this->schema = $schema;
 
-         return $this;
+        return $this;
     }
 
 

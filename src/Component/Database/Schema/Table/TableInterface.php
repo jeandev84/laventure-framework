@@ -146,6 +146,7 @@ interface TableInterface
 
 
 
+
     /**
      * Add integer
      *
@@ -161,7 +162,7 @@ interface TableInterface
 
 
     /**
-     * Add small integer
+     * Add column type small integer
      *
      * @param string $name
      * @return ColumnInterface
@@ -173,14 +174,336 @@ interface TableInterface
 
 
     /**
-     * Add small integer
+     * Add column type big integer
+     *
+     * @param string $name
+     *
+     * @return ColumnInterface
+    */
+    public function bigInteger(string $name): ColumnInterface;
+
+
+
+
+
+    /**
+     * Add column type big integer
+     *
+     * @param string $name
+     *
+     * @return ColumnInterface
+    */
+    public function mediumInteger(string $name): ColumnInterface;
+
+
+
+
+
+
+    /**
+     * Add column type tiny integer
+     *
+     * @param string $name
+     *
+     * @return ColumnInterface
+    */
+    public function tinyInteger(string $name): ColumnInterface;
+
+
+
+
+
+
+
+
+    /**
+     * Add column type string
      *
      * @param string $name
      * @param int $length
      * @return ColumnInterface
     */
-    public function varchar(string $name, int $length = 255): ColumnInterface;
+    public function string(string $name, int $length = 255): ColumnInterface;
 
+
+
+
+
+
+
+    /**
+     * Add column type char
+     *
+     * @param string $name
+     * @param $value
+     * @return ColumnInterface
+    */
+    public function char(string $name, $value): ColumnInterface;
+
+
+
+
+
+
+    /**
+     * Add column type boolean
+     *
+     * @param string $name
+     *
+     * @return ColumnInterface
+    */
+    public function boolean(string $name): ColumnInterface;
+
+
+
+
+
+
+
+    /**
+     * Add column type datetime
+     *
+     * @param string $name
+     *
+     * @return ColumnInterface
+    */
+    public function datetime(string $name): ColumnInterface;
+
+
+
+
+
+
+
+    /**
+     * Add column type time
+     *
+     * @param string $name
+     *
+     * @return ColumnInterface
+    */
+    public function time(string $name): ColumnInterface;
+
+
+
+
+
+
+
+    /**
+     * Add column type timestamp
+     *
+     * @param string $name
+     *
+     * @return ColumnInterface
+    */
+    public function timestamp(string $name): ColumnInterface;
+
+
+
+
+
+
+
+    /**
+     * Add column type binary
+     *
+     * @param string $name
+     *
+     * @return ColumnInterface
+    */
+    public function binary(string $name): ColumnInterface;
+
+
+
+
+
+
+
+    /**
+     * Add column type date
+     *
+     * @param string $name
+     *
+     * @return ColumnInterface
+    */
+    public function date(string $name): ColumnInterface;
+
+
+
+
+
+
+
+
+    /**
+     * Add column type decimal
+     *
+     * @param string $name
+     *
+     * @param int $precision
+     *
+     * @param int $scale
+     *
+     * @return ColumnInterface
+    */
+    public function decimal(string $name, int $precision, int $scale): ColumnInterface;
+
+
+
+
+
+
+
+
+
+     /**
+      * Add column type double
+      *
+      * @param string $name
+      *
+      * @param int $precision
+      *
+      * @param int $scale
+      *
+      * @return ColumnInterface
+     */
+     public function double(string $name, int $precision, int $scale): ColumnInterface;
+
+
+
+
+
+
+
+
+    /**
+     * Add column type enum
+     *
+     * @param string $name
+     * @param array $values
+     * @return ColumnInterface
+    */
+    public function enum(string $name, array $values): ColumnInterface;
+
+
+
+
+
+
+    /**
+     * Add column type float
+     *
+     * @param string $name
+     * @return ColumnInterface
+    */
+    public function float(string $name): ColumnInterface;
+
+
+
+
+
+
+
+    /**
+     * Add column type json
+     *
+     * @param string $name
+     * @return ColumnInterface
+    */
+    public function json(string $name): ColumnInterface;
+
+
+
+
+
+
+
+
+    /**
+     * Add column type text
+     *
+     * @param string $name
+     *
+     * @return ColumnInterface
+    */
+    public function text(string $name): ColumnInterface;
+
+
+
+
+
+
+    /**
+     * Add column type long text
+     *
+     * @param string $name
+     *
+     * @return ColumnInterface
+    */
+    public function longText(string $name): ColumnInterface;
+
+
+
+
+
+
+    /**
+     * Add column type medium text
+     *
+     * @param string $name
+     *
+     * @return ColumnInterface
+    */
+    public function mediumText(string $name): ColumnInterface;
+
+
+
+
+
+
+
+
+
+    /**
+     * Add column type morphs
+     *
+     * @param string $name
+     *
+     * @return ColumnInterface
+    */
+    public function morphs(string $name): ColumnInterface;
+
+
+
+
+
+
+
+
+    /**
+     * Add column type default
+     *
+     * @param $value
+     *
+     * @return mixed
+    */
+    public function default($value): mixed;
+
+
+
+
+
+
+
+    /**
+     * Add column type timestamp
+     *
+     * @param string $name
+     *
+     * @return mixed
+    */
+    public function unsigned(string $name): mixed;
 
 
 
@@ -225,6 +548,8 @@ interface TableInterface
      * @return $this
     */
     public function dropColumn(string $name): static;
+
+
 
 
 

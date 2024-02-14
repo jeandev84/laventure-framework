@@ -150,8 +150,8 @@ abstract class Column implements ColumnInterface
     */
     public function signed(): static
     {
-       return $this->setOption('signed', true)
-                   ->type('SIGNED');
+        return $this->setOption('signed', true)
+                    ->type('SIGNED');
     }
 
 
@@ -289,7 +289,7 @@ abstract class Column implements ColumnInterface
     */
     public function isSigned(): bool
     {
-       return $this->getOption('signed');
+        return $this->getOption('signed');
     }
 
 
@@ -417,13 +417,13 @@ abstract class Column implements ColumnInterface
     */
     public function getConstraintAsString(): string
     {
-         $func = function (ConstraintInterface $constraint) {
-             return $constraint->getSQL();
-         };
+        $func = function (ConstraintInterface $constraint) {
+            return $constraint->getSQL();
+        };
 
-         $constraints = array_filter($this->getConstraints(), $func);
+        $constraints = array_filter($this->getConstraints(), $func);
 
-         return join(' ', $constraints);
+        return join(' ', $constraints);
     }
 
 

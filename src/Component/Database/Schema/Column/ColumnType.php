@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Column;
@@ -16,23 +17,22 @@ use Stringable;
 */
 class ColumnType implements Stringable
 {
-     /**
-      * @param string $name
-      * @param int $length
-     */
-     public function __construct(
-         protected string $name,
-         protected int $length = 0
-     )
-     {
-     }
+    /**
+     * @param string $name
+     * @param int $length
+    */
+    public function __construct(
+        protected string $name,
+        protected int $length = 0
+    ) {
+    }
 
 
-     /**
-      * @inheritDoc
-     */
-     public function __toString(): string
-     {
-         return ($this->length ? "$this->name($this->length)": $this->name);
-     }
+    /**
+     * @inheritDoc
+    */
+    public function __toString(): string
+    {
+        return ($this->length ? "$this->name($this->length)" : $this->name);
+    }
 }

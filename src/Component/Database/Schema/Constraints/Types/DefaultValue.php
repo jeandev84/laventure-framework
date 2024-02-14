@@ -17,7 +17,6 @@ use Laventure\Component\Database\Schema\Constraints\Constraint;
 */
 class DefaultValue extends Constraint
 {
-
     /**
      * @param $value
      * @param bool $notNull

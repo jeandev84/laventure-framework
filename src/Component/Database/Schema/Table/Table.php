@@ -258,7 +258,7 @@ abstract class Table implements TableInterface
     */
     public function update(): bool
     {
-
+        return false;
     }
 
 
@@ -275,6 +275,7 @@ abstract class Table implements TableInterface
 
         return $this->exists();
     }
+
 
 
 
@@ -347,6 +348,69 @@ abstract class Table implements TableInterface
     }
 
 
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function string(string $name, int $length = 255): ColumnInterface
+    {
+        return $this->addColumn($name, "VARCHAR($length)");
+    }
+
+
+
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function boolean(string $name): ColumnInterface
+    {
+        return $this->addColumn($name, 'BOOLEAN');
+    }
+
+
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function text(string $name): ColumnInterface
+    {
+        return $this->addColumn($name, 'TEXT');
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function default($value): static
+    {
+        foreach ($this->getColumns() as $column) {
+            $this->add($column->default($value));
+        }
+
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function unsigned(string $name): mixed
+    {
+        // TODO: Implement unsigned() method.
+    }
 
 
 
