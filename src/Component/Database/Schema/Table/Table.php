@@ -50,43 +50,6 @@ abstract class Table implements TableInterface
 
 
 
-    /**
-     * @var PrimaryKeyInterface[]
-    */
-    protected array $primaryKeys = [];
-
-
-
-
-
-    /**
-     * @var ForeignKeyInterface[]
-    */
-    protected array $foreignKeys = [];
-
-
-
-
-
-
-    /**
-     * @var UniqueInterface[]
-    */
-    protected array $uniques = [];
-
-
-
-
-
-    /**
-     * @var IndexInterface[]
-    */
-    protected array $indexes = [];
-
-
-
-
-
 
     /**
      * @var ConstraintInterface[]
@@ -166,6 +129,7 @@ abstract class Table implements TableInterface
 
 
 
+
     /**
      * @inheritdoc
     */
@@ -224,7 +188,9 @@ abstract class Table implements TableInterface
     */
     public function addPrimaryKey(PrimaryKeyInterface $primaryKey): PrimaryKeyInterface
     {
-        return $this->primaryKeys[] = $primaryKey;
+        $this->addConstraint($primaryKey);
+
+        return $primaryKey;
     }
 
 
@@ -237,7 +203,9 @@ abstract class Table implements TableInterface
     */
     public function addForeignKey(ForeignKeyInterface $foreignKey): ForeignKeyInterface
     {
-        return $this->foreignKeys[] = $foreignKey;
+        $this->addConstraint($foreignKey);
+
+        return $foreignKey;
     }
 
 
@@ -250,7 +218,9 @@ abstract class Table implements TableInterface
     */
     public function addIndex(IndexInterface $index): IndexInterface
     {
-        return $this->indexes[] = $index;
+        $this->addConstraint($index);
+
+        return $index;
     }
 
 
@@ -262,7 +232,9 @@ abstract class Table implements TableInterface
     */
     public function addUnique(UniqueInterface $unique): UniqueInterface
     {
-        return $this->uniques[] = $unique;
+        $this->addConstraint($unique);
+
+        return $unique;
     }
 
 
@@ -513,10 +485,7 @@ abstract class Table implements TableInterface
     {
         return join(', ', array_filter([
             join(', ', array_values($this->addColumns)),
-            join(', ', array_values($this->foreignKeys)),
-            join(', ', array_values($this->primaryKeys)),
-            join(', ', array_values($this->uniques)),
-            join(', ', array_values($this->indexes)),
+            join(', ', array_values($this->constraints))
         ]));
     }
 
