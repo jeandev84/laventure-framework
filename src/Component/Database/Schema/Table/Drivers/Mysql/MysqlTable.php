@@ -432,7 +432,7 @@ class MysqlTable extends Table
     */
     public function getIndexes(): array
     {
-        return $this->statement("SHOW INDEXES FROM $this->name")
+        return $this->statement("SHOW INDEXES FROM $this->name;")
                     ->fetch()
                     ->all();
     }
@@ -445,7 +445,7 @@ class MysqlTable extends Table
     public function create(): bool
     {
         $this->exec(
-           sprintf('CREATE TABLE IF NOT EXISTS `%s` (%s)', $this->name, $this->createCriteria())
+           sprintf('CREATE TABLE IF NOT EXISTS `%s` (%s);', $this->name, $this->createCriteria())
         );
 
         return $this->exists();
@@ -460,7 +460,7 @@ class MysqlTable extends Table
     */
     private function queryFetchColumns(): QueryResultInterface
     {
-        return $this->statement(sprintf('SHOW FULL COLUMNS FROM %s', $this->name))
+        return $this->statement(sprintf('SHOW FULL COLUMNS FROM %s;', $this->name))
                     ->fetch();
     }
 }

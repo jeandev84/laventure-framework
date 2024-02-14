@@ -112,17 +112,14 @@ abstract class Constraint implements ConstraintInterface
 
 
 
+
     /**
-     * @param string $sql
-     * @return string
+     * @inheritdoc
     */
-    public function constraint(string $sql): string
+    public function getSQL(): string
     {
-        return sprintf('CONSTRAINT %s %s', $this->key, $sql);
+        return sprintf('CONSTRAINT %s', $this->key);
     }
-
-
-
 
 
 

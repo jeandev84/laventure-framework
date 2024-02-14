@@ -104,6 +104,6 @@ class ForeignKey extends Constraint implements ForeignKeyInterface
             return $constraints;
         }
 
-        return $this->constraint($constraints);
+        return sprintf('%s %s', parent::getSQL(), $constraints);
     }
 }

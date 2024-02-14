@@ -339,7 +339,9 @@ abstract class Table implements TableInterface
     */
     public function foreignKeyName(string $table): string
     {
-        return sprintf('fk_%s_%s', $this->name, $table);
+        $key  = md5(uniqid("{$this->name}_{$table}"));
+
+        return sprintf('fk_%s', substr($key, 0, 12));
     }
 
 
@@ -425,7 +427,9 @@ abstract class Table implements TableInterface
     */
     public function update(): bool
     {
-        return false;
+        return $this->exec(
+            sprintf('ALTER TABLE %s %s;', $this->name, $this->updateCriteria())
+        );
     }
 
 
