@@ -6,6 +6,11 @@ namespace Laventure\Component\Database\Schema\Table;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Schema\Column\ColumnInterface;
+use Laventure\Component\Database\Schema\Constraints\ConstraintInterface;
+use Laventure\Component\Database\Schema\Constraints\Types\Index;
+use Laventure\Component\Database\Schema\Constraints\Types\Keys\Foreign\ForeignKey;
+use Laventure\Component\Database\Schema\Constraints\Types\Keys\Primary\PrimaryKey;
+use Laventure\Component\Database\Schema\Constraints\Types\Unique;
 
 /**
  * Table
@@ -41,6 +46,15 @@ abstract class Table implements TableInterface
 
 
 
+
+    /**
+     * @var ConstraintInterface[]
+    */
+    protected array $constraints = [];
+
+
+
+
     /**
      * @param ConnectionInterface $connection
      * @param string $name
@@ -49,103 +63,6 @@ abstract class Table implements TableInterface
         protected ConnectionInterface $connection,
         protected string $name
     ) {
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function create(): mixed
-    {
-
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function update(): mixed
-    {
-
-    }
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function drop(): mixed
-    {
-
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function dropIfExists(): mixed
-    {
-
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function truncate(): mixed
-    {
-
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function truncateCascade(): mixed
-    {
-
-    }
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function exists(): bool
-    {
-
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function list(): array
-    {
-
     }
 
 
@@ -191,45 +108,103 @@ abstract class Table implements TableInterface
 
 
 
+
+
+
+    /**
+     * @param ColumnInterface $column
+     * @return ColumnInterface
+    */
+    public function add(ColumnInterface $column): ColumnInterface
+    {
+        return $this->addColumns[$column->getName()] = $column;
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function addConstraint(ConstraintInterface $constraint): ConstraintInterface
+    {
+        return $this->constraints[$constraint->getName()] = $constraint;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function addPrimaryKey(PrimaryKey $primaryKey): PrimaryKey
+    {
+        $this->addConstraint($primaryKey);
+
+        return $primaryKey;
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function addForeignKey(ForeignKey $foreignKey): ForeignKey
+    {
+        $this->addConstraint($foreignKey);
+
+        return $foreignKey;
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function addIndex(Index $index): Index
+    {
+        $this->addConstraint($index);
+
+        return $index;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function addUnique(Unique $unique): Unique
+    {
+        $this->addConstraint($unique);
+
+        return $unique;
+    }
+
+
+
+
+
+
     /**
      * @inheritDoc
     */
     public function addTimestamps(): static
     {
-
+        return $this;
     }
 
 
-
-    /**
-     * @inheritDoc
-    */
-    public function addForeignKey($foreignKey): static
-    {
-
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function addIndex($index): static
-    {
-
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function addConstraint($constraint): static
-    {
-
-    }
 
 
 
@@ -241,10 +216,14 @@ abstract class Table implements TableInterface
     */
     public function getColumnNames(): array
     {
-        return array_filter($this->getColumns(), function (ColumnInterface $column) {
+        $func = function (ColumnInterface $column) {
             return $column->getName();
-        });
+        };
+
+        return array_filter($this->getColumns(), $func);
     }
+
+
 
 
 
@@ -260,14 +239,114 @@ abstract class Table implements TableInterface
 
 
 
+
     /**
-     * @param ColumnInterface $column
-     * @return ColumnInterface
+     * @inheritDoc
     */
-    public function add(ColumnInterface $column): ColumnInterface
+    public function getName(): string
     {
-        return $this->addColumns[$column->getName()] = $column;
+        return $this->name;
     }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function update(): bool
+    {
+
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function drop(): bool
+    {
+        $this->exec(sprintf('DROP TABLE %s', $this->getName()));
+
+        return $this->exists();
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function dropIfExists(): bool
+    {
+        $this->exec(sprintf('DROP TABLE IF EXISTS %s;', $this->getName()));
+
+        return $this->exists();
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function truncate(): bool
+    {
+        return $this->exec(sprintf('TRUNCATE TABLE %s;', $this->getName()));
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function truncateCascade(): bool
+    {
+        return $this->exec(sprintf('TRUNCATE TABLE CASCADE %s;', $this->getName()));
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function exec(string $sql): bool
+    {
+        return $this->connection->executeQuery($sql);
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function exists(): bool
+    {
+        return in_array($this->getName(), $this->list());
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function list(): array
+    {
+        return $this->connection->getDatabase()->getSchemas();
+    }
+
+
 
 
 

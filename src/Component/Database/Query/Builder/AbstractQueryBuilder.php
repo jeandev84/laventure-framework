@@ -9,7 +9,7 @@ use Laventure\Component\Database\Builder\SqlQueryBuilder;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 
 /**
- * Builder
+ * AbstractQueryBuilder
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -17,7 +17,7 @@ use Laventure\Component\Database\Connection\ConnectionInterface;
  *
  * @package  Laventure\Component\Database\Query\Builder
  */
-abstract class Builder implements BuilderInterface
+abstract class AbstractQueryBuilder implements QueryBuilderInterface
 {
     /**
      * @var SqlQueryBuilder

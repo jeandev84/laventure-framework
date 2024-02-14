@@ -1,14 +1,15 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Migrator;
 
-use Laventure\Component\Database\Builder\SqlQueryBuilder;
+
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Migration\MigrationInterface;
+use Laventure\Component\Database\Query\Builder\QueryBuilderInterface;
 use Laventure\Component\Database\Schema\Blueprint\Blueprint;
 use Laventure\Component\Database\Schema\Schema;
+use Laventure\Component\Database\Schema\SchemaInterface;
 
 /**
  * Migrator
@@ -44,9 +45,9 @@ class Migrator implements MigratorInterface
     /**
      * Query builder
      *
-     * @var SqlQueryBuilder
+     * @var QueryBuilderInterface
     */
-    protected SqlQueryBuilder $builder;
+    protected QueryBuilderInterface $builder;
 
 
 
@@ -87,11 +88,27 @@ class Migrator implements MigratorInterface
     */
     public function __construct(ConnectionInterface $connection, string $table = 'migrations')
     {
-        $this->connection = $connection;
-        $this->table      = $table;
-        $this->builder    = new SqlQueryBuilder($connection);
-        $this->schema     = new Schema($connection);
+        $this->connection($connection)
+             ->builder($connection->createQueryBuilder())
+             ->schema(new Schema($connection))
+             ->table($table);
     }
+
+
+
+
+
+    /**
+     * @param ConnectionInterface $connection
+     * @return $this
+    */
+    public function connection(ConnectionInterface $connection): static
+    {
+        $this->connection = $connection;
+
+        return $this;
+    }
+
 
 
 
@@ -105,6 +122,37 @@ class Migrator implements MigratorInterface
         $this->table = $table;
 
         return $this;
+    }
+
+
+
+
+
+    /**
+     * @param QueryBuilderInterface $builder
+     * @return $this
+    */
+    public function builder(QueryBuilderInterface $builder): static
+    {
+         $this->builder = $builder;
+
+         return $this;
+    }
+
+
+
+
+
+
+    /**
+     * @param SchemaInterface $schema
+     * @return $this
+    */
+    public function schema(SchemaInterface $schema): static
+    {
+         $this->schema = $schema;
+
+         return $this;
     }
 
 
@@ -149,12 +197,17 @@ class Migrator implements MigratorInterface
     */
     public function install(): bool
     {
-        return $this->schema->create($this->table, function (Blueprint $table) {
+        $func = function (Blueprint $table) {
             $table->id();
             $table->string('version');
             $table->datetime('executed_at');
-        });
+        };
+
+        return $this->schema->create($this->table, $func);
     }
+
+
+
 
 
 
@@ -164,17 +217,18 @@ class Migrator implements MigratorInterface
     */
     public function migrate(): bool
     {
-        $this->install();
+        return $this->connection->transaction(function () {
 
-        foreach ($this->getNewMigrations() as $migration) {
-            $migration->up($this->schema);
-            $this->builder->insert($this->table, [
-               'version'     => $migration->getVersion(),
-               'executed_at' => date('Y-m-d H:i:s')
-            ])->getQuery()->execute();
-        }
+            $this->install();
 
-        return true;
+            foreach ($this->getNewMigrations() as $migration) {
+                $migration->up($this->schema);
+                $this->builder->insert($this->table, [
+                    'version'     => $migration->getVersion(),
+                    'executed_at' => date('Y-m-d H:i:s')
+                ])->getQuery()->execute();
+            }
+        });
     }
 
 
@@ -186,11 +240,14 @@ class Migrator implements MigratorInterface
     */
     public function rollback(): bool
     {
-        foreach ($this->getMigrations() as $migration) {
-            $migration->down($this->schema);
-        }
+        return $this->connection->transaction(function () {
 
-        return $this->schema->truncate($this->table);
+            foreach ($this->getMigrations() as $migration) {
+                $migration->down($this->schema);
+            }
+
+            return $this->schema->truncate($this->table);
+        });
     }
 
 
@@ -237,15 +294,28 @@ class Migrator implements MigratorInterface
 
 
 
+    /**
+     * @param string $name
+     * @return bool
+    */
+    public function hasVersion(string $name): bool
+    {
+        return in_array($name, $this->getOldMigrations());
+    }
+
+
+
 
     /**
      * @inheritDoc
     */
     public function getNewMigrations(): array
     {
-        return array_filter($this->getMigrations(), function (MigrationInterface $migration) {
-            return !in_array($migration->getVersion(), $this->getOldMigrations());
-        });
+        $func = function (MigrationInterface $migration) {
+            return !$this->hasVersion($migration->getVersion());
+        };
+
+        return array_filter($this->getMigrations(), $func);
     }
 
 

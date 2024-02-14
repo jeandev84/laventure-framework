@@ -10,8 +10,8 @@ use Laventure\Component\Database\Connection\Connection;
 use Laventure\Component\Database\Connection\Extensions\PDO\Config\Resolver\PdoConfigurationResolver;
 use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnectionFactoryInterface;
 use Laventure\Component\Database\Connection\Extensions\PDO\Query\Query;
-use Laventure\Component\Database\Connection\Extensions\PDO\Query\QueryBuilder;
-use Laventure\Component\Database\Query\Builder\BuilderInterface;
+use Laventure\Component\Database\Connection\Extensions\PDO\Query\QueryAbstractQueryBuilder;
+use Laventure\Component\Database\Query\Builder\QueryBuilderInterface;
 use Laventure\Component\Database\Query\QueryInterface;
 use PDO;
 use PDOException;
@@ -125,9 +125,9 @@ abstract class PdoConnection extends Connection
     /**
      * @inheritDoc
     */
-    public function createQueryBuilder(): BuilderInterface
+    public function createQueryBuilder(): QueryBuilderInterface
     {
-        return new QueryBuilder($this);
+        return new QueryAbstractQueryBuilder($this);
     }
 
 

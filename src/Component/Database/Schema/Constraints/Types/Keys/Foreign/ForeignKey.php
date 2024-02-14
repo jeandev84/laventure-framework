@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Constraints\Types\Keys\Foreign;
 
+use Laventure\Component\Database\Schema\Constraints\Constraint;
+
 /**
  * ForeignKey
  *
@@ -13,6 +15,13 @@ namespace Laventure\Component\Database\Schema\Constraints\Types\Keys\Foreign;
  *
  * @package  Laventure\Component\Database\Schema\Constraints\Types\Keys\Foreign
 */
-class ForeignKey
+class ForeignKey extends Constraint
 {
+    /**
+     * @inheritDoc
+    */
+    public function getSQL(): string
+    {
+
+    }
 }

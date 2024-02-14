@@ -12,7 +12,7 @@ use Laventure\Component\Database\Connection\Extensions\PDO\PdoConnection;
 use Laventure\Component\Database\Connection\Extensions\PDO\Query\Resolver\CriteriaResolver;
 use Laventure\Component\Database\Connection\Extensions\PDO\Query\Resolver\InsertResolver;
 use Laventure\Component\Database\Connection\Extensions\PDO\Query\Resolver\UpdateResolver;
-use Laventure\Component\Database\Query\Builder\Builder;
+use Laventure\Component\Database\Query\Builder\AbstractQueryBuilder;
 
 /**
  * PdoBuilder
@@ -23,7 +23,7 @@ use Laventure\Component\Database\Query\Builder\Builder;
  *
  * @package  Laventure\Component\Database\Connection\Extensions\PDO\Query
 */
-class QueryBuilder extends Builder
+class QueryBuilder extends AbstractQueryBuilder
 {
     /**
      * @param PdoConnection $connection

@@ -90,6 +90,18 @@ interface BlueprintInterface
 
 
 
+
+    /**
+     * @param string|array $primary
+     * @return $this
+    */
+    public function primary(string|array $primary): static;
+
+
+
+
+
+
     /**
      * @return mixed
     */

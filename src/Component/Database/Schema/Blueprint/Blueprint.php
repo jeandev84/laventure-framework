@@ -17,14 +17,12 @@ use Laventure\Component\Database\Schema\Table\TableInterface;
  *
  * @package  Laventure\Component\Database\Schema\Blueprint
 */
-class Blueprint implements BlueprintInterface
+class Blueprint
 {
     /**
      * @param TableInterface $table
     */
-    public function __construct(
-        protected TableInterface $table
-    ) {
+    public function __construct(protected TableInterface $table) {
 
     }
 
@@ -32,7 +30,7 @@ class Blueprint implements BlueprintInterface
 
 
     /**
-     * @inheritDoc
+     * @return mixed
     */
     public function create(): mixed
     {
@@ -43,7 +41,7 @@ class Blueprint implements BlueprintInterface
 
 
     /**
-     * @inheritDoc
+     * @return mixed
     */
     public function update(): mixed
     {
@@ -53,9 +51,8 @@ class Blueprint implements BlueprintInterface
 
 
 
-
     /**
-     * @inheritDoc
+     * @return mixed
     */
     public function drop(): mixed
     {
@@ -65,23 +62,31 @@ class Blueprint implements BlueprintInterface
 
 
 
+
+
+
     /**
-     * @inheritDoc
+     * @param $name
+     * @param $type
+     * @param $default
+     * @return ColumnInterface
     */
     public function addColumn($name, $type, $default = null): ColumnInterface
     {
-        return $this->table->addColumn($name, $type, [
-
-        ]);
+        return $this->table->addColumn($name, $type);
     }
 
 
 
 
+
+
+
     /**
-     * @inheritDoc
+     * @param $name
+     * @return TableInterface
     */
-    public function dropColumn($name): mixed
+    public function dropColumn($name): TableInterface
     {
         return $this->table->dropColumn($name);
     }
@@ -100,9 +105,9 @@ class Blueprint implements BlueprintInterface
 
 
 
-
     /**
-     * @inheritDoc
+     * @param $name
+     * @return ColumnInterface
     */
     public function increments($name): ColumnInterface
     {
@@ -112,18 +117,22 @@ class Blueprint implements BlueprintInterface
 
 
 
+
     /**
-     * @inheritDoc
+     * @return ColumnInterface
     */
-    public function id(): mixed
+    public function id(): ColumnInterface
     {
         return $this->increments('id');
     }
 
 
 
+
+
     /**
-     * @inheritDoc
+     * @param $name
+     * @return ColumnInterface
     */
     public function string($name): ColumnInterface
     {
@@ -133,11 +142,25 @@ class Blueprint implements BlueprintInterface
 
 
 
+
     /**
-     * @inheritDoc
+     * @param $name
+     * @return TableInterface
     */
-    public function datetime($name): mixed
+    public function datetime($name): TableInterface
     {
-        // TODO: Implement datetime() method.
+
+    }
+
+
+
+
+    /**
+     * @param array|string $primary
+     * @return TableInterface
+    */
+    public function primary(array|string $primary): TableInterface
+    {
+        return $this->table->addConstraint();
     }
 }

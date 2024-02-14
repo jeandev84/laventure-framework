@@ -5,6 +5,11 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Schema\Table;
 
 use Laventure\Component\Database\Schema\Column\ColumnInterface;
+use Laventure\Component\Database\Schema\Constraints\ConstraintInterface;
+use Laventure\Component\Database\Schema\Constraints\Types\Index;
+use Laventure\Component\Database\Schema\Constraints\Types\Keys\Foreign\ForeignKey;
+use Laventure\Component\Database\Schema\Constraints\Types\Keys\Primary\PrimaryKey;
+use Laventure\Component\Database\Schema\Constraints\Types\Unique;
 
 /**
  * TableInterface
@@ -211,6 +216,9 @@ interface TableInterface
 
 
 
+
+
+
     /**
      * @param string $name
      *
@@ -234,12 +242,25 @@ interface TableInterface
 
 
     /**
+     * Add primary key
+     *
+     * @param PrimaryKey $primaryKey
+     * @return PrimaryKey
+    */
+    public function addPrimaryKey(PrimaryKey $primaryKey): PrimaryKey;
+
+
+
+
+
+
+    /**
      * Add foreign keys
      *
-     * @param $foreignKey
-     * @return $this
+     * @param ForeignKey $foreignKey
+     * @return ForeignKey
     */
-    public function addForeignKey($foreignKey): static;
+    public function addForeignKey(ForeignKey $foreignKey): ForeignKey;
 
 
 
@@ -249,10 +270,10 @@ interface TableInterface
     /**
      * Add indexes
      *
-     * @param $index
-     * @return $this
+     * @param Index $index
+     * @return Index
     */
-    public function addIndex($index): static;
+    public function addIndex(Index $index): Index;
 
 
 
@@ -261,10 +282,22 @@ interface TableInterface
 
 
     /**
-     * @param $constraint
-     * @return $this
+     * @param Unique $unique
+     * @return Unique
     */
-    public function addConstraint($constraint): static;
+    public function addUnique(Unique $unique): Unique;
+
+
+
+
+
+
+
+    /**
+     * @param ConstraintInterface $constraint
+     * @return ConstraintInterface
+    */
+    public function addConstraint(ConstraintInterface $constraint): ConstraintInterface;
 
 
 
@@ -301,4 +334,16 @@ interface TableInterface
      * @return bool
     */
     public function hasColumn(string $name): bool;
+
+
+
+
+
+    /**
+     * Execute SQL
+     *
+     * @param string $sql
+     * @return mixed
+    */
+    public function exec(string $sql): mixed;
 }

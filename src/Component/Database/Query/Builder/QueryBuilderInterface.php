@@ -23,7 +23,7 @@ use Laventure\Component\Database\Query\QueryInterface;
  *
  * @package  Laventure\Component\Database\Query\Builder
 */
-interface BuilderInterface
+interface QueryBuilderInterface
 {
     /**
      * @return ExpressionInterface
