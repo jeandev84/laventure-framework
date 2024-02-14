@@ -34,8 +34,17 @@ class MysqlColumn extends Column
     */
     public function increment(): static
     {
-       $this->type .= " AUTO_INCREMENT";
+       return $this->type("AUTO_INCREMENT");
+    }
 
-       return $this;
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function modify(): static
+    {
+        return $this->name("MODIFY COLUMN $this->name");
     }
 }

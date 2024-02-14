@@ -1,22 +1,22 @@
 <?php
-
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Schema\Column\Drivers\Oracle;
+namespace Laventure\Component\Database\Schema\Column\Drivers\SQlServer;
 
 use Laventure\Component\Database\Schema\Column\Column;
 
 /**
- * OracleColumn
+ * SQlServerColumn
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Schema\Column\Drivers\Oracle
+ * @package  Laventure\Component\Database\Schema\Column\Drivers\SQlServer
 */
-class OracleColumn extends Column
+class SQlServerColumn extends Column
 {
+
     /**
      * @inheritDoc
     */
@@ -32,6 +32,6 @@ class OracleColumn extends Column
     */
     public function modify(): static
     {
-        return $this->name("MODIFY $this->name");
+       return $this->name("ALTER COLUMN $this->name");
     }
 }

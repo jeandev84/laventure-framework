@@ -127,6 +127,62 @@ interface TableInterface
 
 
 
+
+    /**
+     * Add big increment
+     *
+     * @param string $name
+     * @return ColumnInterface
+    */
+    public function bigIncrements(string $name): ColumnInterface;
+
+
+
+
+
+
+    /**
+     * Add integer
+     *
+     * @param string $name
+     * @param int $length
+     * @return ColumnInterface
+    */
+    public function integer(string $name, int $length = 11): ColumnInterface;
+
+
+
+
+
+
+    /**
+     * Add small integer
+     *
+     * @param string $name
+     * @return ColumnInterface
+    */
+    public function smallInteger(string $name): ColumnInterface;
+
+
+
+
+
+    /**
+     * Add small integer
+     *
+     * @param string $name
+     * @param int $length
+     * @return ColumnInterface
+    */
+    public function varchar(string $name, int $length = 255): ColumnInterface;
+
+
+
+
+
+
+
+
     /**
      * Add column
      *

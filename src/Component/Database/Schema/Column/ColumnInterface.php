@@ -246,6 +246,7 @@ interface ColumnInterface extends Stringable
 
 
 
+
     /**
      * Determine if column is signed or not
      *

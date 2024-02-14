@@ -17,4 +17,21 @@ use Laventure\Component\Database\Schema\Column\Column;
 */
 class SqliteColumn extends Column
 {
+    /**
+     * @inheritDoc
+    */
+    public function increment(): static
+    {
+        return $this->type();
+    }
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function modify(): static
+    {
+        return $this->name("MODIFY COLUMN $this->name");
+    }
 }

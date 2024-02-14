@@ -35,9 +35,9 @@ abstract class Column implements ColumnInterface
     /**
      * Column data type
      *
-     * @var string
+     * @var array
     */
-    protected string $type;
+    protected array $type = [];
 
 
 
@@ -100,7 +100,7 @@ abstract class Column implements ColumnInterface
     */
     public function type(string $type): static
     {
-        $this->type = $type;
+        $this->type[] = $type;
 
         return $this;
     }
@@ -216,19 +216,10 @@ abstract class Column implements ColumnInterface
     */
     public function add(): static
     {
-
+        return $this->name("ADD COLUMN $this->name");
     }
 
 
-
-
-    /**
-     * @inheritDoc
-    */
-    public function modify(): static
-    {
-
-    }
 
 
 
@@ -238,8 +229,10 @@ abstract class Column implements ColumnInterface
     */
     public function rename(string $to): static
     {
-
+        return $this->name("RENAME COLUMN $this->name TO $to");
     }
+
+
 
 
 
@@ -249,8 +242,11 @@ abstract class Column implements ColumnInterface
     */
     public function drop(): static
     {
-
+        return $this->name("DROP COLUMN $this->name");
     }
+
+
+
 
 
     /**
@@ -269,7 +265,10 @@ abstract class Column implements ColumnInterface
     */
     public function getType(): string
     {
-        return $this->type;
+        return join(' ', [
+            join(' ', $this->type),
+            $this->getSigned()
+        ]);
     }
 
 
@@ -338,7 +337,6 @@ abstract class Column implements ColumnInterface
     {
         return isset($this->constraints[$name]);
     }
-
 
 
 
@@ -450,6 +448,18 @@ abstract class Column implements ColumnInterface
         }
 
         return $this->getConstraintAsString();
+    }
+
+
+
+
+
+    /**
+     * @return string
+    */
+    public function getSigned(): string
+    {
+        return $this->isSigned() ? 'SIGNED' : 'UNSIGNED';
     }
 
 
