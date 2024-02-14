@@ -30,7 +30,7 @@ class MysqlTable extends Table
     /**
      * @inheritDoc
     */
-    public function createColumn(
+    public function column(
         string $name,
         string $type = '',
         string $constraints = ''
@@ -44,9 +44,11 @@ class MysqlTable extends Table
     /**
      * @inheritDoc
     */
-    public function increments(string $name): ColumnInterface
+    public function increments(string $name): static
     {
-        return $this->bigIncrements($name)->primary();
+         $this->bigIncrements($name)->primary();
+
+         return $this;
     }
 
 
@@ -439,7 +441,13 @@ class MysqlTable extends Table
     */
     public function create(): bool
     {
+        if (!$criteria = $this->getCreateCriteria()) {
+             return false;
+        }
 
+        $this->exec("CREATE TABLE IF NOT EXISTS `$this->name` ($criteria)");
+
+        return $this->exists();
     }
 
 

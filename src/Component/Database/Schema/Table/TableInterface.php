@@ -128,9 +128,9 @@ interface TableInterface
      * Add incremental column
      *
      * @param string $name
-     * @return ColumnInterface
+     * @return $this
     */
-    public function increments(string $name): ColumnInterface;
+    public function increments(string $name): static;
 
 
 
@@ -748,6 +748,33 @@ interface TableInterface
      * @return array
     */
     public function getIndexes(): array;
+
+
+
+
+
+
+    /**
+     * Returns create criteria
+     *
+     * @return mixed
+    */
+    public function getCreateCriteria(): mixed;
+
+
+
+
+
+
+    /**
+     * Returns update criteria
+     *
+     * @return mixed
+    */
+    public function getUpdateCriteria(): mixed;
+
+
+
 
 
 

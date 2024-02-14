@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\PDO\Query;
@@ -321,6 +320,6 @@ class Query implements QueryInterface
     */
     private function abort(Throwable $e): void
     {
-        throw new QueryException("SQL: {$this->getSQL()}". $e->getMessage(), [], 409);
+        throw new QueryException($e->getMessage(), [], 409);
     }
 }

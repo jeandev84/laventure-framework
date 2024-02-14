@@ -76,15 +76,13 @@ class Blueprint
 
 
 
-
-
     /**
      * @param string $name
-     * @return ColumnInterface
+     * @return TableInterface
     */
-    public function increments(string $name): ColumnInterface
+    public function increments(string $name): TableInterface
     {
-        return $this->table->increments($name)->primary();
+        return $this->table->increments($name);
     }
 
 
@@ -92,9 +90,9 @@ class Blueprint
 
 
     /**
-     * @return ColumnInterface
+     * @return TableInterface
     */
-    public function id(): ColumnInterface
+    public function id(): TableInterface
     {
         return $this->increments('id');
     }

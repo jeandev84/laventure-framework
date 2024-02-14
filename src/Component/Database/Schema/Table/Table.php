@@ -79,7 +79,7 @@ abstract class Table implements TableInterface
     */
     public function addColumn(string $name, string $type, string $constraints = ''): ColumnInterface
     {
-        return $this->add($this->createColumn($name, $type, $constraints));
+        return $this->add($this->column($name, $type, $constraints));
     }
 
 
@@ -91,7 +91,7 @@ abstract class Table implements TableInterface
     */
     public function renameColumn(string $name, string $to): static
     {
-        $this->removeColumns[$name] = $this->createColumn($name)->rename($to);
+        $this->removeColumns[$name] = $this->column($name)->rename($to);
 
         return $this;
     }
@@ -105,7 +105,7 @@ abstract class Table implements TableInterface
     */
     public function dropColumn(string $name): static
     {
-        $this->dropColumns[$name] = $this->createColumn($name)->drop();
+        $this->dropColumns[$name] = $this->column($name)->drop();
 
         return $this;
     }
@@ -391,7 +391,7 @@ abstract class Table implements TableInterface
     /**
      * @inheritDoc
     */
-    public function exec(string $sql): bool
+    public function exec(string $sql): mixed
     {
         return $this->connection->executeQuery($sql);
     }
@@ -467,11 +467,40 @@ abstract class Table implements TableInterface
 
     /**
      * @inheritDoc
-     */
+    */
     public function truncateCascade(): bool
     {
         return $this->exec(sprintf('TRUNCATE TABLE CASCADE %s;', $this->getName()));
     }
+
+
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function getCreateCriteria(): string
+    {
+        return join(array_filter([
+            join(', ', array_values($this->addColumns)),
+            join(', ', array_values($this->constraints))
+        ]));
+    }
+
+
+
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function getUpdateCriteria(): string
+    {
+
+    }
+
 
 
 
@@ -494,5 +523,5 @@ abstract class Table implements TableInterface
      * @param string $constraints
      * @return ColumnInterface
     */
-    abstract public function createColumn(string $name, string $type = '', string $constraints = ''): ColumnInterface;
+    abstract public function column(string $name, string $type = '', string $constraints = ''): ColumnInterface;
 }

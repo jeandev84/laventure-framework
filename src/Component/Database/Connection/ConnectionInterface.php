@@ -159,9 +159,9 @@ interface ConnectionInterface extends TransactionInterface
      *
      * @param string $sql
      *
-     * @return bool
+     * @return int|bool
     */
-    public function executeQuery(string $sql): bool;
+    public function executeQuery(string $sql): mixed;
 
 
 
