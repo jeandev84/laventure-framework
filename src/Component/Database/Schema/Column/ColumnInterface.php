@@ -146,6 +146,8 @@ interface ColumnInterface extends Stringable
 
 
 
+
+
     /**
      * Add options
      *
@@ -238,17 +240,6 @@ interface ColumnInterface extends Stringable
      * @return bool
     */
     public function isPrimary(): bool;
-
-
-
-
-
-    /**
-     * Determine if column is unique
-     *
-     * @return bool
-    */
-    public function isUnique(): bool;
 
 
 

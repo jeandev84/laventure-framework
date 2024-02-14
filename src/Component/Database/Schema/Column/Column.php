@@ -42,6 +42,7 @@ abstract class Column implements ColumnInterface
 
 
 
+
     /**
      * @var ConstraintInterface[]
     */
@@ -72,9 +73,10 @@ abstract class Column implements ColumnInterface
     public function __construct(string $name, string $type)
     {
         $this->name($name)
-             ->type($type)
-             ->addConstraint(new NotNull());
+             ->type($type);
     }
+
+
 
 
 
@@ -287,19 +289,6 @@ abstract class Column implements ColumnInterface
 
 
     /**
-     * @inheritdoc
-    */
-    public function isUnique(): bool
-    {
-        return $this->hasConstraint('unique');
-    }
-
-
-
-
-
-
-    /**
      * @inheritDoc
     */
     public function isSigned(): bool
@@ -315,7 +304,7 @@ abstract class Column implements ColumnInterface
 
     /**
      * @inheritDoc
-     */
+    */
     public function addConstraints(array $constraints): static
     {
         foreach ($constraints as $constraint) {
@@ -330,12 +319,12 @@ abstract class Column implements ColumnInterface
 
     /**
      * @inheritdoc
-     */
+    */
     public function addConstraint(ConstraintInterface $constraint): static
     {
         $this->constraints[$constraint->getName()] = $constraint;
 
-        return $this->setOption('constraint', $constraint->getSQL());
+        return $this->setOption($constraint->getName(), true);
     }
 
 
@@ -344,7 +333,7 @@ abstract class Column implements ColumnInterface
 
     /**
      * @inheritDoc
-     */
+    */
     public function hasConstraint(string $name): bool
     {
         return isset($this->constraints[$name]);
@@ -452,7 +441,15 @@ abstract class Column implements ColumnInterface
     */
     public function getConstraint(): string
     {
-        return $this->getOption('constraint');
+        if ($constraint = $this->getOption('constraint')) {
+            return $constraint;
+        }
+
+        if (empty($this->constraints)) {
+            $this->addConstraint(new NotNull());
+        }
+
+        return $this->getConstraintAsString();
     }
 
 
