@@ -10,7 +10,9 @@ use Laventure\Component\Database\Schema\Column\Drivers\Mysql\MysqlColumn;
 use Laventure\Component\Database\Schema\Column\Info\ColumnInfo;
 use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
 use Laventure\Component\Database\Schema\Constraints\Types\Keys\Foreign\ForeignKey;
+use Laventure\Component\Database\Schema\Table\Exceptions\TableException;
 use Laventure\Component\Database\Schema\Table\Table;
+use RuntimeException;
 
 /**
  * MysqlTable
@@ -381,6 +383,9 @@ class MysqlTable extends Table
 
 
 
+
+
+
     /**
      * @inheritdoc
     */
@@ -434,18 +439,14 @@ class MysqlTable extends Table
 
 
 
-
-
     /**
      * @inheritDoc
     */
     public function create(): bool
     {
-        if (!$criteria = $this->getCreateCriteria()) {
-             return false;
-        }
-
-        $this->exec("CREATE TABLE IF NOT EXISTS `$this->name` ($criteria)");
+        $this->exec(
+           sprintf('CREATE TABLE IF NOT EXISTS `%s` (%s)', $this->name, $this->getCreateCriteria())
+        );
 
         return $this->exists();
     }

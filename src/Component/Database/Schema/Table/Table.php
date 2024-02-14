@@ -15,6 +15,7 @@ use Laventure\Component\Database\Schema\Constraints\Types\Index;
 use Laventure\Component\Database\Schema\Constraints\Types\Keys\Primary\PrimaryKey;
 use Laventure\Component\Database\Schema\Constraints\Types\Unique;
 use Laventure\Component\Database\Query\QueryInterface;
+use Laventure\Component\Database\Schema\Table\Exceptions\TableException;
 
 /**
  * Table
@@ -30,14 +31,14 @@ abstract class Table implements TableInterface
     /**
      * @var ColumnInterface[]
     */
-    protected array $addColumns = [];
+    protected array $columns = [];
 
 
 
     /**
      * @var ColumnInterface[]
     */
-    protected array $removeColumns = [];
+    protected array $renameColumns = [];
 
 
 
@@ -91,7 +92,9 @@ abstract class Table implements TableInterface
     */
     public function renameColumn(string $name, string $to): static
     {
-        $this->removeColumns[$name] = $this->column($name)->rename($to);
+        $this->renameColumns[$name] = $this->column($name)
+                                           ->rename($to)
+                                           ->getSQL();
 
         return $this;
     }
@@ -105,7 +108,9 @@ abstract class Table implements TableInterface
     */
     public function dropColumn(string $name): static
     {
-        $this->dropColumns[$name] = $this->column($name)->drop();
+        $this->dropColumns[$name] = $this->column($name)
+                                         ->drop()
+                                         ->getSQL();
 
         return $this;
     }
@@ -163,7 +168,7 @@ abstract class Table implements TableInterface
     */
     public function add(ColumnInterface $column): ColumnInterface
     {
-        return $this->addColumns[$column->getName()] = $column;
+        return $this->columns[$column->getName()] = $column;
     }
 
 
@@ -355,7 +360,7 @@ abstract class Table implements TableInterface
 
     /**
      * @inheritDoc
-     */
+    */
     public function getName(): string
     {
         return $this->name;
@@ -483,10 +488,16 @@ abstract class Table implements TableInterface
     */
     public function getCreateCriteria(): string
     {
-        return join(', ', array_filter([
-            join(', ', array_values($this->addColumns)),
+        $criteria = join(', ', array_filter([
+            join(', ', array_values($this->columns)),
             join(', ', array_values($this->constraints))
         ]));
+
+        if (!$criteria) {
+            throw new TableException("empty criteria from (". __METHOD__ . ")");
+        }
+
+        return $criteria;
     }
 
 
@@ -499,7 +510,35 @@ abstract class Table implements TableInterface
     */
     public function getUpdateCriteria(): string
     {
+        $criteria = join(', ', array_filter([
+            join(', ', $this->getUpdateColumns()),
+            join(', ', array_values($this->dropColumns)),
+            join(', ', array_values($this->renameColumns))
+        ]));
 
+        if (!$criteria) {
+            throw new TableException("empty criteria from : (". __METHOD__ . ")");
+        }
+
+        return $criteria;
+    }
+
+
+
+
+
+    /**
+     * @return array
+    */
+    protected function getUpdateColumns(): array
+    {
+        $resolved = [];
+
+        foreach ($this->columns as $column) {
+           $resolved[] = $column->add()->getSQL();
+        }
+
+        return $resolved;
     }
 
 
