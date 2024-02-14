@@ -50,6 +50,43 @@ abstract class Table implements TableInterface
 
 
 
+    /**
+     * @var PrimaryKeyInterface[]
+    */
+    protected array $primaryKeys = [];
+
+
+
+
+
+    /**
+     * @var ForeignKeyInterface[]
+    */
+    protected array $foreignKeys = [];
+
+
+
+
+
+
+    /**
+     * @var UniqueInterface[]
+    */
+    protected array $uniques = [];
+
+
+
+
+
+    /**
+     * @var IndexInterface[]
+    */
+    protected array $indexes = [];
+
+
+
+
+
 
     /**
      * @var ConstraintInterface[]
@@ -175,7 +212,7 @@ abstract class Table implements TableInterface
     */
     public function addConstraint(ConstraintInterface $constraint): ConstraintInterface
     {
-        return $this->constraints[$constraint->getName()] = $constraint;
+        return $this->constraints[] = $constraint;
     }
 
 
@@ -187,9 +224,7 @@ abstract class Table implements TableInterface
     */
     public function addPrimaryKey(PrimaryKeyInterface $primaryKey): PrimaryKeyInterface
     {
-        $this->addConstraint($primaryKey);
-
-        return $primaryKey;
+        return $this->primaryKeys[] = $primaryKey;
     }
 
 
@@ -202,9 +237,7 @@ abstract class Table implements TableInterface
     */
     public function addForeignKey(ForeignKeyInterface $foreignKey): ForeignKeyInterface
     {
-        $this->addConstraint($foreignKey);
-
-        return $foreignKey;
+        return $this->foreignKeys[] = $foreignKey;
     }
 
 
@@ -217,9 +250,7 @@ abstract class Table implements TableInterface
     */
     public function addIndex(IndexInterface $index): IndexInterface
     {
-        $this->addConstraint($index);
-
-        return $index;
+        return $this->indexes[] = $index;
     }
 
 
@@ -231,9 +262,7 @@ abstract class Table implements TableInterface
     */
     public function addUnique(UniqueInterface $unique): UniqueInterface
     {
-        $this->addConstraint($unique);
-
-        return $unique;
+        return $this->uniques[] = $unique;
     }
 
 
@@ -482,9 +511,12 @@ abstract class Table implements TableInterface
     */
     public function getCreateCriteria(): string
     {
-        return join(array_filter([
+        return join(', ', array_filter([
             join(', ', array_values($this->addColumns)),
-            join(', ', array_values($this->constraints))
+            join(', ', array_values($this->foreignKeys)),
+            join(', ', array_values($this->primaryKeys)),
+            join(', ', array_values($this->uniques)),
+            join(', ', array_values($this->indexes)),
         ]));
     }
 
