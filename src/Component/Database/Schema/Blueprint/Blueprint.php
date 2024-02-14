@@ -5,7 +5,11 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Schema\Blueprint;
 
 use Laventure\Component\Database\Schema\Column\ColumnInterface;
+use Laventure\Component\Database\Schema\Constraints\ConstraintInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
+use Laventure\Component\Database\Schema\Constraints\Contract\IndexInterface;
+use Laventure\Component\Database\Schema\Constraints\Contract\PrimaryKeyInterface;
+use Laventure\Component\Database\Schema\Constraints\Contract\UniqueInterface;
 use Laventure\Component\Database\Schema\Table\TableInterface;
 
 /**
@@ -26,39 +30,6 @@ class Blueprint
     public function __construct(protected TableInterface $table)
     {
 
-    }
-
-
-
-
-    /**
-     * @return mixed
-    */
-    public function create(): mixed
-    {
-        return $this->table->create();
-    }
-
-
-
-
-    /**
-     * @return mixed
-    */
-    public function update(): mixed
-    {
-        return $this->table->update();
-    }
-
-
-
-
-    /**
-     * @return mixed
-    */
-    public function drop(): mixed
-    {
-        return $this->table->drop();
     }
 
 
@@ -108,6 +79,9 @@ class Blueprint
 
 
 
+
+
+
     /**
      * @param string $name
      * @return ColumnInterface
@@ -128,6 +102,8 @@ class Blueprint
     {
         return $this->increments('id');
     }
+
+
 
 
 
@@ -153,7 +129,7 @@ class Blueprint
     */
     public function datetime($name): ColumnInterface
     {
-       return $this->table->datetime($name);
+        return $this->table->datetime($name);
     }
 
 
@@ -179,15 +155,64 @@ class Blueprint
 
 
 
+
+
     /**
      * Add column type timestamp
      *
-     * @return mixed
+     * @return $this
     */
-    public function unsigned(): mixed
+    public function unsigned(): static
     {
+        foreach ($this->table->getColumns() as $column) {
+            $this->table->add($column->unsigned());
+        }
 
+        return $this;
     }
+
+
+
+
+
+    /**
+     * @return $this
+    */
+    public function timestamps(): static
+    {
+        $this->table->addTimestamps();
+
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * Add Nullable timestamps
+    */
+    public function nullableTimestamps(): static
+    {
+        $this->table->addTimestampsNullable();
+
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @return $this
+    */
+    public function softDeletes(): static
+    {
+        $this->table->addSoftDeletesTimestamps();
+
+        return $this;
+    }
+
 
 
 
@@ -234,9 +259,478 @@ class Blueprint
 
 
 
+    /**
+     * @param array$columns
+     * @return $this
+    */
+    public function index(array $columns): static
+    {
 
+    }
+
+
+
+
+
+
+    /**
+     * @param string $name
+     * @return ForeignKeyInterface
+    */
     public function foreign(string $name): ForeignKeyInterface
     {
         return $this->table->foreign($name);
+    }
+
+
+
+
+    /**
+     * @return mixed
+    */
+    public function dropIfExists(): bool
+    {
+        return $this->table->dropIfExists();
+    }
+
+
+
+
+
+    /**
+     * @return mixed
+    */
+    public function truncate(): bool
+    {
+        return $this->table->truncate();
+    }
+
+
+
+
+
+    /**
+     * @return bool
+    */
+    public function truncateCascade(): mixed
+    {
+        return $this->table->truncateCascade();
+    }
+
+
+
+
+    /**
+     * @return bool
+    */
+    public function existTable(): bool
+    {
+        return $this->table->exists();
+    }
+
+
+
+
+    /**
+     * @return array
+    */
+    public function getTables(): array
+    {
+        return $this->table->list();
+    }
+
+
+
+
+    /**
+     * @return string
+    */
+    public function getTableName(): string
+    {
+        return $this->table->getName();
+    }
+
+
+
+
+    /**
+     * @param string $name
+     * @return ColumnInterface
+    */
+    public function bigIncrements(string $name): ColumnInterface
+    {
+        return $this->table->bigIncrements($name);
+    }
+
+
+
+
+    /**
+     * @param string $name
+     * @param int $length
+     * @return ColumnInterface
+    */
+    public function integer(string $name, int $length = 11): ColumnInterface
+    {
+        return $this->table->integer($name, $length);
+    }
+
+
+
+
+
+    /**
+     * @param string $name
+     * @return ColumnInterface
+    */
+    public function smallInteger(string $name): ColumnInterface
+    {
+        return $this->table->smallInteger($name);
+    }
+
+
+
+
+    /**
+     * @param string $name
+     * @return ColumnInterface
+    */
+    public function bigInteger(string $name): ColumnInterface
+    {
+        return $this->table->bigInteger($name);
+    }
+
+
+
+
+
+    /**
+     * @param string $name
+     * @return ColumnInterface
+    */
+    public function mediumInteger(string $name): ColumnInterface
+    {
+        return $this->table->mediumInteger($name);
+    }
+
+
+
+
+
+    /**
+     * @param string $name
+     * @return ColumnInterface
+    */
+    public function tinyInteger(string $name): ColumnInterface
+    {
+        return $this->tinyInteger($name);
+    }
+
+
+
+
+    /**
+     * @param string $name
+     * @param $value
+     * @return ColumnInterface
+    */
+    public function char(string $name, $value): ColumnInterface
+    {
+        return $this->table->char($name, $value);
+    }
+
+
+
+
+
+    /**
+     * @param string $name
+     * @return ColumnInterface
+    */
+    public function boolean(string $name): ColumnInterface
+    {
+        return $this->table->boolean($name);
+    }
+
+
+
+
+    /**
+     * @param string $name
+     * @return ColumnInterface
+    */
+    public function time(string $name): ColumnInterface
+    {
+        return $this->table->time($name);
+    }
+
+
+
+
+
+
+
+    /**
+     * @param string $name
+     * @return ColumnInterface
+    */
+    public function timestamp(string $name): ColumnInterface
+    {
+        return $this->table->timestamp($name);
+    }
+
+
+
+
+
+
+    /**
+     * @param string $name
+     * @return ColumnInterface
+    */
+    public function binary(string $name): ColumnInterface
+    {
+        return $this->table->binary($name);
+    }
+
+
+
+
+    /**
+     * @param string $name
+     * @return ColumnInterface
+    */
+    public function date(string $name): ColumnInterface
+    {
+        return $this->table->date($name);
+    }
+
+
+
+
+    /**
+     * @param string $name
+     * @param int $precision
+     * @param int $scale
+     * @return ColumnInterface
+    */
+    public function decimal(string $name, int $precision, int $scale): ColumnInterface
+    {
+        return $this->decimal($name, $precision, $scale);
+    }
+
+
+
+
+
+
+
+
+    /**
+     * @param string $name
+     * @param int $precision
+     * @param int $scale
+     * @return ColumnInterface
+    */
+    public function double(string $name, int $precision, int $scale): ColumnInterface
+    {
+        return $this->double($name, $precision, $scale);
+    }
+
+
+
+
+
+    /**
+     * @param string $name
+     * @param array $values
+     * @return ColumnInterface
+    */
+    public function enum(string $name, array $values): ColumnInterface
+    {
+        return $this->enum($name, $values);
+    }
+
+
+
+
+
+    /**
+     * @param string $name
+     * @return ColumnInterface
+    */
+    public function float(string $name): ColumnInterface
+    {
+        return $this->float($name);
+    }
+
+
+
+
+
+
+    /**
+     * @param string $name
+     * @return ColumnInterface
+    */
+    public function json(string $name): ColumnInterface
+    {
+        return $this->json($name);
+    }
+
+
+
+
+
+
+
+    /**
+     * @param string $name
+     * @return ColumnInterface
+    */
+    public function text(string $name): ColumnInterface
+    {
+        return $this->table->text($name);
+    }
+
+
+
+
+    /**
+     * @param string $name
+     * @return ColumnInterface
+    */
+    public function longText(string $name): ColumnInterface
+    {
+        return $this->table->longText($name);
+    }
+
+
+
+
+    /**
+     * @param string $name
+     * @return ColumnInterface
+    */
+    public function mediumText(string $name): ColumnInterface
+    {
+        return $this->table->mediumText($name);
+    }
+
+
+
+
+
+
+    /**
+     * @param string $name
+     * @return ColumnInterface
+    */
+    public function morphs(string $name): ColumnInterface
+    {
+        return $this->table->morphs($name);
+    }
+
+
+
+
+
+    /**
+     * @param string $sql
+     * @return mixed
+    */
+    public function exec(string $sql): bool
+    {
+        return $this->table->exec($sql);
+    }
+
+
+
+
+    /**
+     * @return array
+    */
+    public function listColumns(): array
+    {
+        return $this->table->listColumns();
+    }
+
+
+
+
+    /**
+     * @param string $name
+     * @return bool
+    */
+    public function hasColumn(string $name): bool
+    {
+        return $this->table->hasColumn($name);
+    }
+
+
+
+
+
+    /**
+     * @return ColumnInterface[]
+    */
+    public function getColumns(): array
+    {
+        return $this->table->getColumns();
+    }
+
+
+
+
+
+
+    /**
+     * @return bool
+    */
+    public function create(): bool
+    {
+        return $this->table->create();
+    }
+
+
+
+
+
+
+    /**
+     * @return bool
+    */
+    public function update(): bool
+    {
+        return $this->table->update();
+    }
+
+
+
+
+
+
+    /**
+     * @return mixed
+    */
+    public function drop(): mixed
+    {
+        return $this->table->drop();
+    }
+
+
+
+
+
+
+
+
+
+    /**
+     * @return TableInterface
+    */
+    public function getTable(): TableInterface
+    {
+        return $this->table;
     }
 }

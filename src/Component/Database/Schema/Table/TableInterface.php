@@ -279,6 +279,8 @@ interface TableInterface
 
 
 
+
+
     /**
      * Add column type time
      *
@@ -554,6 +556,18 @@ interface TableInterface
 
 
 
+
+    /**
+     * Add indexes
+     *
+     * @param array $columns
+     * @return static
+    */
+    public function index(array $columns): static;
+
+
+
+
     /**
      * Add foreign key
      *
@@ -575,6 +589,29 @@ interface TableInterface
     */
     public function addTimestamps(): static;
 
+
+
+
+
+
+    /**
+     * Add Nullable timestamps
+     *
+     * @return $this
+    */
+    public function addTimestampsNullable(): static;
+
+
+
+
+
+
+    /**
+     * Add soft deletes timestamps
+     *
+     * @return $this
+    */
+    public function addSoftDeletesTimestamps(): static;
 
 
 
@@ -674,7 +711,7 @@ interface TableInterface
      *
      * @return array
     */
-    public function getColumnNames(): array;
+    public function listColumns(): array;
 
 
 

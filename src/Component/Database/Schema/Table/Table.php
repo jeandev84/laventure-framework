@@ -59,6 +59,7 @@ abstract class Table implements TableInterface
 
 
 
+
     /**
      * @param ConnectionInterface $connection
      * @param string $name
@@ -125,6 +126,37 @@ abstract class Table implements TableInterface
     }
 
 
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function unique(array $columns): static
+    {
+        return $this;
+    }
+
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function index(array $columns): static
+    {
+
+    }
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function foreign(string $name): ForeignKeyInterface
+    {
+
+    }
 
 
 
@@ -226,6 +258,37 @@ abstract class Table implements TableInterface
 
 
 
+    /**
+     * @inheritDoc
+    */
+    public function addTimestampsNullable(): static
+    {
+        $this->datetime('created_at')->nullable();
+        $this->datetime('updated_at')->nullable();
+
+        return $this;
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function addSoftDeletesTimestamps(): static
+    {
+        $this->datetime('deleted_at')->nullable();
+
+        return $this;
+    }
+
+
+
+
+
+
 
 
 
@@ -234,7 +297,7 @@ abstract class Table implements TableInterface
      *
      * @return string[]
     */
-    public function getColumnNames(): array
+    public function listColumns(): array
     {
         $func = function (ColumnInterface $column) {
             return $column->getName();
@@ -253,7 +316,7 @@ abstract class Table implements TableInterface
     */
     public function hasColumn(string $name): bool
     {
-        return in_array($name, $this->getColumnNames());
+        return in_array($name, $this->listColumns());
     }
 
 

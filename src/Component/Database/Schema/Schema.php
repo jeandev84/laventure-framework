@@ -6,6 +6,10 @@ namespace Laventure\Component\Database\Schema;
 
 use Closure;
 use Laventure\Component\Database\Connection\ConnectionInterface;
+use Laventure\Component\Database\Schema\Blueprint\Blueprint;
+use Laventure\Component\Database\Schema\Table\Factory\TableFactory;
+use Laventure\Component\Database\Schema\Table\Factory\TableFactoryInterface;
+use Laventure\Component\Database\Schema\Table\TableInterface;
 
 /**
  * Schema
@@ -18,12 +22,43 @@ use Laventure\Component\Database\Connection\ConnectionInterface;
 */
 class Schema implements SchemaInterface
 {
+
+
+    /**
+     * @var ConnectionInterface
+    */
+    protected ConnectionInterface $connection;
+
+
+
+
+    /**
+     * @var TableFactoryInterface
+    */
+    protected TableFactoryInterface $factory;
+
+
+
+
     /**
      * @param ConnectionInterface $connection
     */
-    public function __construct(
-        protected ConnectionInterface $connection
-    ) {
+    public function __construct(ConnectionInterface $connection) {
+
+        $this->connection = $connection;
+        $this->factory    = new TableFactory($connection);
+    }
+
+
+
+
+    /**
+     * @param string $name
+     * @return TableInterface
+    */
+    public function table(string $name): TableInterface
+    {
+         return $this->factory->createTable($name);
     }
 
 
@@ -34,9 +69,13 @@ class Schema implements SchemaInterface
     /**
      * @inheritDoc
     */
-    public function create(string $table, Closure $closure): mixed
+    public function create(string $table, Closure $closure): bool
     {
-        return false;
+         $blueprint = new Blueprint($this->table($table));
+
+         call_user_func($closure, $blueprint);
+
+         return $blueprint->create();
     }
 
 
@@ -46,34 +85,13 @@ class Schema implements SchemaInterface
     /**
      * @inheritDoc
     */
-    public function update(string $table, Closure $closure): mixed
+    public function update(string $table, Closure $closure): bool
     {
-        return false;
-    }
+        $blueprint = new Blueprint($this->table($table));
 
+        call_user_func($closure, $blueprint);
 
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function drop(string $table): mixed
-    {
-        return false;
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function dropIfExists(string $table): mixed
-    {
-        return false;
+        return $blueprint->update();
     }
 
 
@@ -84,9 +102,21 @@ class Schema implements SchemaInterface
     /**
      * @inheritDoc
     */
-    public function truncate(string $table): mixed
+    public function drop(string $table): bool
     {
-        return false;
+        return $this->table($table)->drop();
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function dropIfExists(string $table): bool
+    {
+        return $this->table($table)->dropIfExists();
     }
 
 
@@ -97,9 +127,22 @@ class Schema implements SchemaInterface
     /**
      * @inheritDoc
     */
-    public function truncateCascade(string $table): mixed
+    public function truncate(string $table): bool
     {
-        return false;
+        return $this->table($table)->truncate();
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function truncateCascade(string $table): bool
+    {
+        return $this->table($table)->truncateCascade();
     }
 
 
@@ -113,7 +156,7 @@ class Schema implements SchemaInterface
     */
     public function getColumns(string $table): array
     {
-        return [];
+        return $this->table($table)->getColumns();
     }
 
 
@@ -127,7 +170,7 @@ class Schema implements SchemaInterface
     */
     public function exists(string $table): bool
     {
-        return false;
+        return $this->table($table)->exists();
     }
 
 
@@ -139,7 +182,7 @@ class Schema implements SchemaInterface
     */
     public function hasColumn(string $table, string $column): bool
     {
-        return false;
+        return $this->table($table)->hasColumn($column);
     }
 
 
@@ -149,10 +192,11 @@ class Schema implements SchemaInterface
     /**
      * @inheritDoc
     */
-    public function exec(string $sql): static
+    public function exec(string $sql): bool
     {
-        return $this;
+        return $this->connection->executeQuery($sql);
     }
+
 
 
 
@@ -162,6 +206,6 @@ class Schema implements SchemaInterface
     */
     public function getTables(): array
     {
-        return [];
+        return $this->connection->getDatabase()->getSchemas();
     }
 }
