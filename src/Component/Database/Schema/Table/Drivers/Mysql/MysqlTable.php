@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Table\Drivers\Mysql;
 
+use Laventure\Component\Database\Query\Result\QueryResultInterface;
 use Laventure\Component\Database\Schema\Column\ColumnInterface;
 use Laventure\Component\Database\Schema\Column\Drivers\Mysql\MysqlColumn;
+use Laventure\Component\Database\Schema\Column\Info\ColumnInfo;
 use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
 use Laventure\Component\Database\Schema\Constraints\Types\Keys\Foreign\ForeignKey;
 use Laventure\Component\Database\Schema\Table\Table;
@@ -223,7 +225,7 @@ class MysqlTable extends Table
     */
     public function morphs(string $name): ColumnInterface
     {
-        // TODO: Implement morphs() method.
+
     }
 
 
@@ -244,6 +246,38 @@ class MysqlTable extends Table
     */
     public function getColumns(): array
     {
+       return $this->queryFetchColumns()->columns();
+    }
 
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getColumnsInfo(): array
+    {
+        $columns = [];
+
+        foreach ($this->queryFetchColumns()->all() as $info) {
+            if (is_array($info)) {
+                $columns[] = new ColumnInfo($info);
+            }
+        }
+
+        return $columns;
+    }
+
+
+
+
+
+    /**
+     * @return QueryResultInterface
+    */
+    private function queryFetchColumns(): QueryResultInterface
+    {
+        return $this->statement(sprintf('SHOW FULL COLUMNS FROM %s', $this->name))
+                    ->fetch();
     }
 }

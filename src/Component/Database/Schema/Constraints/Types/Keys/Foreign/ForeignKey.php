@@ -86,6 +86,6 @@ class ForeignKey extends Constraint implements ForeignKeyInterface
     */
     public function getSQL(): string
     {
-
+        return json_encode(get_object_vars($this));
     }
 }

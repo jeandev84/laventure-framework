@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Table;
 
+use Laventure\Component\Database\Query\QueryInterface;
 use Laventure\Component\Database\Schema\Column\ColumnInterface;
+use Laventure\Component\Database\Schema\Column\Info\ColumnInfo;
 use Laventure\Component\Database\Schema\Constraints\ConstraintInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\IndexInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\PrimaryKeyInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\UniqueInterface;
-use Laventure\Component\Database\Schema\Constraints\Types\Index;
-use Laventure\Component\Database\Schema\Constraints\Types\Keys\Foreign\ForeignKey;
-use Laventure\Component\Database\Schema\Constraints\Types\Keys\Primary\PrimaryKey;
-use Laventure\Component\Database\Schema\Constraints\Types\Unique;
+
 
 /**
  * TableInterface
@@ -702,7 +701,7 @@ interface TableInterface
     /**
      * Returns table columns
      *
-     * @return ColumnInterface[]
+     * @return mixed
     */
     public function getColumns(): array;
 
@@ -711,11 +710,11 @@ interface TableInterface
 
 
     /**
-     * Returns columns name
+     * Returns infos existent columns
      *
-     * @return array
+     * @return ColumnInfo[]
     */
-    public function listColumns(): array;
+    public function getColumnsInfo(): array;
 
 
 
@@ -740,4 +739,16 @@ interface TableInterface
      * @return mixed
     */
     public function exec(string $sql): mixed;
+
+
+
+
+
+    /**
+     * Create statement
+     *
+     * @param string $sql
+     * @return QueryInterface
+    */
+    public function statement(string $sql): QueryInterface;
 }

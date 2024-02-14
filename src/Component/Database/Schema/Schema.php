@@ -208,4 +208,16 @@ class Schema implements SchemaInterface
     {
         return $this->connection->getDatabase()->getSchemas();
     }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getName(): string
+    {
+        return $this->connection->getDatabase()->getName();
+    }
 }

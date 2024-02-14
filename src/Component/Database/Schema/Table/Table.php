@@ -12,9 +12,10 @@ use Laventure\Component\Database\Schema\Constraints\Contract\IndexInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\PrimaryKeyInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\UniqueInterface;
 use Laventure\Component\Database\Schema\Constraints\Types\Index;
-use Laventure\Component\Database\Schema\Constraints\Types\Keys\Foreign\ForeignKey;
 use Laventure\Component\Database\Schema\Constraints\Types\Keys\Primary\PrimaryKey;
 use Laventure\Component\Database\Schema\Constraints\Types\Unique;
+use Laventure\Component\Database\Query\QueryInterface;
+
 
 /**
  * Table
@@ -289,35 +290,12 @@ abstract class Table implements TableInterface
 
 
 
-
-
-
-
-    /**
-     * Returns column names
-     *
-     * @return string[]
-    */
-    public function listColumns(): array
-    {
-        $func = function (ColumnInterface $column) {
-            return $column->getName();
-        };
-
-        return array_filter($this->getColumns(), $func);
-    }
-
-
-
-
-
-
     /**
      * @inheritDoc
     */
     public function hasColumn(string $name): bool
     {
-        return in_array($name, $this->listColumns());
+        return in_array($name, $this->getColumns());
     }
 
 
@@ -402,18 +380,6 @@ abstract class Table implements TableInterface
     /**
      * @inheritDoc
     */
-    public function exec(string $sql): bool
-    {
-        return $this->connection->executeQuery($sql);
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
     public function exists(): bool
     {
         return in_array($this->getName(), $this->list());
@@ -478,6 +444,29 @@ abstract class Table implements TableInterface
     public function foreignKeyName(string $table): string
     {
         return sprintf('fk_%s_%s', $this->name, $table);
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function exec(string $sql): bool
+    {
+        return $this->connection->executeQuery($sql);
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function statement(string $sql): QueryInterface
+    {
+        return $this->connection->statement($sql);
     }
 
 

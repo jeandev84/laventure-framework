@@ -26,7 +26,7 @@ class PdoConnectionFactory implements PdoConnectionFactoryInterface
     protected array $options = [
         PDO::ATTR_PERSISTENT          => true,
         PDO::ATTR_EMULATE_PREPARES    => 0,
-        PDO::ATTR_DEFAULT_FETCH_MODE  => PDO::FETCH_OBJ,
+        PDO::ATTR_DEFAULT_FETCH_MODE  => PDO::FETCH_ASSOC,
         PDO::ATTR_ERRMODE             => PDO::ERRMODE_EXCEPTION
     ];
 

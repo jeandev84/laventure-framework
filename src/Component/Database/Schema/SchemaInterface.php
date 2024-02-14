@@ -165,13 +165,23 @@ interface SchemaInterface
 
 
 
-
-
-
     /**
      * Return database tables
      *
      * @return array
     */
     public function getTables(): array;
+
+
+
+
+
+
+
+    /**
+     * Returns schema name by default
+     *
+     * @return string
+    */
+    public function getName(): string;
 }

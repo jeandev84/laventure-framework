@@ -41,7 +41,7 @@ class QueryResult implements QueryResultInterface
     /**
      * @inheritDoc
     */
-    public function all($fetchMode = null): array
+    public function all(int $fetchMode = 0): array
     {
         return $this->statement->fetchAll($fetchMode);
     }
@@ -52,7 +52,7 @@ class QueryResult implements QueryResultInterface
     /**
      * @inheritDoc
     */
-    public function one($fetchMode = null): mixed
+    public function one(int $fetchMode = 0): mixed
     {
         return $this->statement->fetch($fetchMode);
     }

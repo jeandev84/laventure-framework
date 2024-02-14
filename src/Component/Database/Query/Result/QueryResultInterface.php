@@ -18,9 +18,10 @@ interface QueryResultInterface
     /**
      * Fetch all result
      *
-     * @return mixed
+     * @param int $fetchMode
+     * @return array
     */
-    public function all($fetchMode = null): array;
+    public function all(int $fetchMode = 0): array;
 
 
 
@@ -28,10 +29,10 @@ interface QueryResultInterface
     /**
      * Fetch one result
      *
-     * @param null $fetchMode
+     * @param int $fetchMode
      * @return mixed
     */
-    public function one($fetchMode = null): mixed;
+    public function one(int $fetchMode = 0): mixed;
 
 
 

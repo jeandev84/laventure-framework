@@ -665,7 +665,7 @@ class Blueprint
     */
     public function listColumns(): array
     {
-        return $this->table->listColumns();
+        return $this->table->getColumnsInfo();
     }
 
 
