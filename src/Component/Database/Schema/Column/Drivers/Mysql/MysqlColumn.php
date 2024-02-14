@@ -22,7 +22,7 @@ class MysqlColumn extends Column
      * @param string $name
      * @param string $type
     */
-    public function __construct(string $name, string $type)
+    public function __construct(string $name, string $type = '')
     {
         parent::__construct("`$name`", $type);
     }

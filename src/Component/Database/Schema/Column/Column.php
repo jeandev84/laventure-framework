@@ -70,7 +70,7 @@ abstract class Column implements ColumnInterface
      * @param string $name
      * @param string $type
     */
-    public function __construct(string $name, string $type)
+    public function __construct(string $name, string $type = '')
     {
         $this->name($name)
              ->type($type);
@@ -145,14 +145,13 @@ abstract class Column implements ColumnInterface
 
 
 
-
-
     /**
      * @inheritDoc
     */
     public function signed(): static
     {
-       return $this->setOption('signed', true);
+       return $this->setOption('signed', true)
+                   ->type('SIGNED');
     }
 
 
@@ -165,7 +164,8 @@ abstract class Column implements ColumnInterface
     */
     public function unsigned(): static
     {
-        return $this->setOption('signed', false);
+        return $this->setOption('signed', false)
+                    ->type('UNSIGNED');
     }
 
 
@@ -265,10 +265,7 @@ abstract class Column implements ColumnInterface
     */
     public function getType(): string
     {
-        return join(' ', [
-            join(' ', $this->type),
-            $this->getSigned()
-        ]);
+        return join(' ', $this->type);
     }
 
 
@@ -455,27 +452,15 @@ abstract class Column implements ColumnInterface
 
 
     /**
-     * @return string
-    */
-    public function getSigned(): string
-    {
-        return $this->isSigned() ? 'SIGNED' : 'UNSIGNED';
-    }
-
-
-
-
-
-    /**
      * @inheritDoc
     */
     public function getSQL(): string
     {
-        return join(' ', [
-           $this->getName(),
-           $this->getType(),
-           $this->getConstraint()
-        ]);
+        return join(' ', array_filter([
+            $this->getName(),
+            $this->getType(),
+            $this->getConstraint()
+        ]));
     }
 
 
