@@ -5,11 +5,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Schema\Blueprint;
 
 use Laventure\Component\Database\Schema\Column\ColumnInterface;
-use Laventure\Component\Database\Schema\Constraints\ConstraintInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
-use Laventure\Component\Database\Schema\Constraints\Contract\IndexInterface;
-use Laventure\Component\Database\Schema\Constraints\Contract\PrimaryKeyInterface;
-use Laventure\Component\Database\Schema\Constraints\Contract\UniqueInterface;
 use Laventure\Component\Database\Schema\Table\TableInterface;
 
 /**
@@ -663,7 +659,7 @@ class Blueprint
     /**
      * @return array
     */
-    public function listColumns(): array
+    public function getColumnsInfo(): array
     {
         return $this->table->getColumnsInfo();
     }

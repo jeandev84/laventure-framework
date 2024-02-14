@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Constraints\Contract;
-
 
 use Laventure\Component\Database\Schema\Constraints\ConstraintInterface;
 

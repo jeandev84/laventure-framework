@@ -16,7 +16,6 @@ use Laventure\Component\Database\Schema\Constraints\Types\Keys\Primary\PrimaryKe
 use Laventure\Component\Database\Schema\Constraints\Types\Unique;
 use Laventure\Component\Database\Query\QueryInterface;
 
-
 /**
  * Table
  *
@@ -121,9 +120,9 @@ abstract class Table implements TableInterface
     */
     public function primary(array $columns): static
     {
-         $this->addPrimaryKey(new PrimaryKey($columns));
+        $this->addPrimaryKey(new PrimaryKey($columns));
 
-         return $this;
+        return $this;
     }
 
 
@@ -148,9 +147,9 @@ abstract class Table implements TableInterface
     */
     public function index(array $columns): static
     {
-         $this->addIndex(new Index($columns));
+        $this->addIndex(new Index($columns));
 
-         return $this;
+        return $this;
     }
 
 
@@ -290,116 +289,6 @@ abstract class Table implements TableInterface
 
 
 
-    /**
-     * @inheritDoc
-    */
-    public function hasColumn(string $name): bool
-    {
-        return in_array($name, $this->getColumns());
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function update(): bool
-    {
-        return false;
-    }
-
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function drop(): bool
-    {
-        $this->exec(sprintf('DROP TABLE %s', $this->getName()));
-
-        return $this->exists();
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function dropIfExists(): bool
-    {
-        $this->exec(sprintf('DROP TABLE IF EXISTS %s;', $this->getName()));
-
-        return $this->exists();
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function truncate(): bool
-    {
-        return $this->exec(sprintf('TRUNCATE TABLE %s;', $this->getName()));
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function truncateCascade(): bool
-    {
-        return $this->exec(sprintf('TRUNCATE TABLE CASCADE %s;', $this->getName()));
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function exists(): bool
-    {
-        return in_array($this->getName(), $this->list());
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function list(): array
-    {
-        return $this->connection->getDatabase()->getSchemas();
-    }
-
-
-
-
 
     /**
      * @inheritDoc
@@ -408,7 +297,6 @@ abstract class Table implements TableInterface
     {
         return $this->addColumn($name, "VARCHAR($length)");
     }
-
 
 
 
@@ -427,6 +315,8 @@ abstract class Table implements TableInterface
 
 
     /**
+     * Support text to 65 kb
+     *
      * @inheritdoc
     */
     public function text(string $name): ColumnInterface
@@ -445,6 +335,55 @@ abstract class Table implements TableInterface
     {
         return sprintf('fk_%s_%s', $this->name, $table);
     }
+
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function hasColumn(string $name): bool
+    {
+        return in_array($name, $this->getColumns());
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function exists(): bool
+    {
+        return in_array($this->getName(), $this->list());
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function list(): array
+    {
+        return $this->connection->getDatabase()->getSchemas();
+    }
+
 
 
 
@@ -468,6 +407,72 @@ abstract class Table implements TableInterface
     {
         return $this->connection->statement($sql);
     }
+
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function update(): bool
+    {
+        return false;
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function drop(): bool
+    {
+        $this->exec(sprintf('DROP TABLE %s', $this->getName()));
+
+        return $this->exists();
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function dropIfExists(): bool
+    {
+        $this->exec(sprintf('DROP TABLE IF EXISTS %s;', $this->getName()));
+
+        return $this->exists();
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function truncate(): bool
+    {
+        return $this->exec(sprintf('TRUNCATE TABLE %s;', $this->getName()));
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function truncateCascade(): bool
+    {
+        return $this->exec(sprintf('TRUNCATE TABLE CASCADE %s;', $this->getName()));
+    }
+
 
 
 

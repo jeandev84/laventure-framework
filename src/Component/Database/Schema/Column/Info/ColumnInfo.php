@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Column\Info;
@@ -14,23 +15,23 @@ namespace Laventure\Component\Database\Schema\Column\Info;
 */
 class ColumnInfo
 {
-     /**
-      * @param array $data
-     */
-     public function __construct(protected array $data)
-     {
-     }
+    /**
+     * @param array $data
+    */
+    public function __construct(protected array $data)
+    {
+    }
 
 
 
 
-     /**
-      * @param $id
-      * @param $default
-      * @return mixed
-     */
-     public function get($id, $default = null): mixed
-     {
-         return $this->data[$id] ?? $default;
-     }
+    /**
+     * @param $id
+     * @param $default
+     * @return mixed
+    */
+    public function get($id, $default = null): mixed
+    {
+        return $this->data[$id] ?? $default;
+    }
 }

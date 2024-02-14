@@ -13,7 +13,6 @@ use Laventure\Component\Database\Schema\Constraints\Contract\IndexInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\PrimaryKeyInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\UniqueInterface;
 
-
 /**
  * TableInterface
  *
@@ -363,18 +362,18 @@ interface TableInterface
 
 
 
-     /**
-      * Add column type double
-      *
-      * @param string $name
-      *
-      * @param int $precision
-      *
-      * @param int $scale
-      *
-      * @return ColumnInterface
-     */
-     public function double(string $name, int $precision, int $scale): ColumnInterface;
+    /**
+     * Add column type double
+     *
+     * @param string $name
+     *
+     * @param int $precision
+     *
+     * @param int $scale
+     *
+     * @return ColumnInterface
+    */
+    public function double(string $name, int $precision, int $scale): ColumnInterface;
 
 
 
@@ -465,6 +464,17 @@ interface TableInterface
 
 
 
+
+
+
+    /**
+     * Add column type tiny text
+     *
+     * @param string $name
+     *
+     * @return ColumnInterface
+    */
+    public function tinyText(string $name): ColumnInterface;
 
 
 
@@ -728,6 +738,16 @@ interface TableInterface
     */
     public function hasColumn(string $name): bool;
 
+
+
+
+
+    /**
+     * Returns indexes
+     *
+     * @return array
+    */
+    public function getIndexes(): array;
 
 
 

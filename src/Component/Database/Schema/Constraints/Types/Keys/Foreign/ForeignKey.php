@@ -19,8 +19,6 @@ use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface
 */
 class ForeignKey extends Constraint implements ForeignKeyInterface
 {
-
-
     /**
      * @var ConstrainedInterface
     */
@@ -43,9 +41,9 @@ class ForeignKey extends Constraint implements ForeignKeyInterface
     */
     public function references(string $column): static
     {
-         $this->columns[0] = $column;
+        $this->columns[0] = $column;
 
-         return $this;
+        return $this;
     }
 
 

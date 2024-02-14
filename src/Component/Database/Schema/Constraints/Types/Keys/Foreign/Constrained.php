@@ -17,7 +17,6 @@ use Laventure\Component\Database\Schema\Constraints\Contract\ConstrainedInterfac
 */
 class Constrained implements ConstrainedInterface
 {
-
     /**
      * @var array
     */

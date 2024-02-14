@@ -20,6 +20,10 @@ use Laventure\Component\Database\Schema\Table\Table;
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
  * @package  Laventure\Component\Database\Schema\Table\Drivers\Mysql
+ *
+ * @see https://www.w3schools.com/sql/sql_datatypes.asp
+ * @see https://www.w3schools.com/sql/sql_ref_mysql.asp
+ * @see https://metanit.com/sql/mysql/2.3.php
 */
 class MysqlTable extends Table
 {
@@ -30,20 +34,8 @@ class MysqlTable extends Table
         string $name,
         string $type = '',
         string $constraints = ''
-    ): ColumnInterface
-    {
+    ): ColumnInterface {
         return new MysqlColumn($name, $type, $constraints);
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function create(): bool
-    {
-
     }
 
 
@@ -54,7 +46,7 @@ class MysqlTable extends Table
     */
     public function increments(string $name): ColumnInterface
     {
-
+        return $this->bigIncrements($name)->primary();
     }
 
 
@@ -65,7 +57,8 @@ class MysqlTable extends Table
     */
     public function bigIncrements(string $name): ColumnInterface
     {
-
+         return $this->addColumn($name, 'BIGINT')
+                    ->increment();
     }
 
 
@@ -76,7 +69,7 @@ class MysqlTable extends Table
     */
     public function integer(string $name, int $length = 11): ColumnInterface
     {
-
+         return $this->addColumn($name, "INT($length)");
     }
 
 
@@ -86,136 +79,277 @@ class MysqlTable extends Table
     */
     public function smallInteger(string $name): ColumnInterface
     {
-        // TODO: Implement smallInteger() method.
+        return $this->addColumn($name, 'SMALLINT');
     }
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function bigInteger(string $name): ColumnInterface
     {
-        // TODO: Implement bigInteger() method.
+        return $this->addColumn($name, 'BIGINT');
     }
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function mediumInteger(string $name): ColumnInterface
     {
-        // TODO: Implement mediumInteger() method.
+        return $this->addColumn($name, 'MEDIUMINT');
     }
 
+
+
+
+
+
     /**
+     * from -128 to 127 bytes
+     *
      * @inheritDoc
-     */
+    */
     public function tinyInteger(string $name): ColumnInterface
     {
-        // TODO: Implement tinyInteger() method.
+        return $this->addColumn($name, 'TINYINT');
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function char(string $name, $value): ColumnInterface
-    {
-        // TODO: Implement char() method.
-    }
+
+
+
+
 
     /**
-     * @inheritDoc
-     */
-    public function datetime(string $name): ColumnInterface
-    {
-        // TODO: Implement datetime() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function time(string $name): ColumnInterface
-    {
-        // TODO: Implement time() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function timestamp(string $name): ColumnInterface
-    {
-        // TODO: Implement timestamp() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function binary(string $name): ColumnInterface
-    {
-        // TODO: Implement binary() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function date(string $name): ColumnInterface
-    {
-        // TODO: Implement date() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function decimal(string $name, int $precision, int $scale): ColumnInterface
-    {
-        // TODO: Implement decimal() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function double(string $name, int $precision, int $scale): ColumnInterface
-    {
-        // TODO: Implement double() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function enum(string $name, array $values): ColumnInterface
-    {
-        // TODO: Implement enum() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function float(string $name): ColumnInterface
-    {
-        // TODO: Implement float() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function json(string $name): ColumnInterface
-    {
-        // TODO: Implement json() method.
-    }
-
-    /**
+     * Support length to 4 гб
+     *
      * @inheritDoc
      */
     public function longText(string $name): ColumnInterface
     {
-        // TODO: Implement longText() method.
+        return $this->addColumn($name, 'LONGTEXT');
     }
+
+
+
+
+    /**
+     * Support length to 16 гб
+     *
+     * @inheritDoc
+    */
+    public function mediumText(string $name): ColumnInterface
+    {
+        return $this->addColumn($name, 'MEDIUMTEXT');
+    }
+
+
+
 
     /**
      * @inheritDoc
-     */
-    public function mediumText(string $name): ColumnInterface
+    */
+    public function tinyText(string $name): ColumnInterface
     {
-        // TODO: Implement mediumText() method.
+        return $this->addColumn($name, 'TINYTEXT');
     }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function char(string $name, $value): ColumnInterface
+    {
+        return $this->addColumn($name, "CHAR($value)");
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function date(string $name): ColumnInterface
+    {
+        return $this->addColumn($name, 'DATE');
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function time(string $name): ColumnInterface
+    {
+        return $this->addColumn($name, 'TIME');
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function datetime(string $name): ColumnInterface
+    {
+        return $this->addColumn($name, 'DATETIME');
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function timestamp(string $name): ColumnInterface
+    {
+        return $this->addColumn($name, 'TIMESTAMP');
+    }
+
+
+
+
+    /**
+     * @param string $name
+     * @return ColumnInterface
+    */
+    public function year(string $name): ColumnInterface
+    {
+        return $this->addColumn($name, "YEAR");
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function binary(string $name): ColumnInterface
+    {
+        return $this->addColumn($name, 'BINARY');
+    }
+
+
+
+
+
+    /**
+     * to 4 bytes
+     *
+     * @inheritDoc
+    */
+    public function float(string $name): ColumnInterface
+    {
+        return $this->addColumn($name, 'FLOAT');
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function decimal(string $name, int $precision, int $scale): ColumnInterface
+    {
+        return $this->addColumn($name, "DECIMAL($precision, $scale)");
+    }
+
+
+
+
+    /**
+     * Pseudonym of DECIMAL
+     *
+     * @param string $name
+     * @return ColumnInterface
+    */
+    public function numeric(string $name): ColumnInterface
+    {
+        return $this->addColumn($name, "NUMERIC");
+    }
+
+
+
+
+    /**
+     * Pseudonym of DECIMAL
+     *
+     * @param string $name
+     * @return ColumnInterface
+    */
+    public function dec(string $name): ColumnInterface
+    {
+        return $this->addColumn($name, "DEC");
+    }
+
+
+
+
+    /**
+     * Pseudonym of DECIMAL
+     *
+     * @param string $name
+     * @return ColumnInterface
+    */
+    public function fixed(string $name): ColumnInterface
+    {
+        return $this->addColumn($name, "FIXED");
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function double(string $name, int $precision, int $scale): ColumnInterface
+    {
+        // DOUBLE PRECISION OR REAL
+        return $this->addColumn($name, "DOUBLE($precision, $scale)");
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function enum(string $name, array $values): ColumnInterface
+    {
+        return $this->addColumn($name, "ENUM(". join(', ', $values) . ")");
+    }
+
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function json(string $name): ColumnInterface
+    {
+        return $this->addColumn($name, 'JSON');
+    }
+
+
 
 
 
@@ -225,7 +359,22 @@ class MysqlTable extends Table
     */
     public function morphs(string $name): ColumnInterface
     {
+        return $this->addColumn($name, 'TODO');
+    }
 
+
+
+
+
+    /**
+     * Returns 0 or 1
+     *
+     * @param string $name
+     * @return ColumnInterface
+    */
+    public function boolInt(string $name): ColumnInterface
+    {
+        return $this->addColumn($name, 'BOOL');
     }
 
 
@@ -246,7 +395,7 @@ class MysqlTable extends Table
     */
     public function getColumns(): array
     {
-       return $this->queryFetchColumns()->columns();
+        return $this->queryFetchColumns()->columns();
     }
 
 
@@ -266,6 +415,31 @@ class MysqlTable extends Table
         }
 
         return $columns;
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getIndexes(): array
+    {
+        return $this->statement("SHOW INDEXES FROM $this->name")
+                    ->fetch()
+                    ->all();
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function create(): bool
+    {
+
     }
 
 

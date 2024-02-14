@@ -22,8 +22,6 @@ use Laventure\Component\Database\Schema\Table\TableInterface;
 */
 class Schema implements SchemaInterface
 {
-
-
     /**
      * @var ConnectionInterface
     */
@@ -43,7 +41,8 @@ class Schema implements SchemaInterface
     /**
      * @param ConnectionInterface $connection
     */
-    public function __construct(ConnectionInterface $connection) {
+    public function __construct(ConnectionInterface $connection)
+    {
 
         $this->connection = $connection;
         $this->factory    = new TableFactory($connection);
@@ -58,7 +57,7 @@ class Schema implements SchemaInterface
     */
     public function table(string $name): TableInterface
     {
-         return $this->factory->createTable($name);
+        return $this->factory->createTable($name);
     }
 
 
@@ -71,11 +70,11 @@ class Schema implements SchemaInterface
     */
     public function create(string $table, Closure $closure): bool
     {
-         $blueprint = new Blueprint($this->table($table));
+        $blueprint = new Blueprint($this->table($table));
 
-         call_user_func($closure, $blueprint);
+        call_user_func($closure, $blueprint);
 
-         return $blueprint->create();
+        return $blueprint->create();
     }
 
 
