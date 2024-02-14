@@ -6,6 +6,10 @@ namespace Laventure\Component\Database\Schema\Table;
 
 use Laventure\Component\Database\Schema\Column\ColumnInterface;
 use Laventure\Component\Database\Schema\Constraints\ConstraintInterface;
+use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
+use Laventure\Component\Database\Schema\Constraints\Contract\IndexInterface;
+use Laventure\Component\Database\Schema\Constraints\Contract\PrimaryKeyInterface;
+use Laventure\Component\Database\Schema\Constraints\Contract\UniqueInterface;
 use Laventure\Component\Database\Schema\Constraints\Types\Index;
 use Laventure\Component\Database\Schema\Constraints\Types\Keys\Foreign\ForeignKey;
 use Laventure\Component\Database\Schema\Constraints\Types\Keys\Primary\PrimaryKey;
@@ -479,38 +483,6 @@ interface TableInterface
 
 
 
-
-
-    /**
-     * Add column type default
-     *
-     * @param $value
-     *
-     * @return mixed
-    */
-    public function default($value): mixed;
-
-
-
-
-
-
-
-    /**
-     * Add column type timestamp
-     *
-     * @param string $name
-     *
-     * @return mixed
-    */
-    public function unsigned(string $name): mixed;
-
-
-
-
-
-
-
     /**
      * Add column
      *
@@ -556,6 +528,47 @@ interface TableInterface
 
 
     /**
+     * Add primary
+     *
+     * @param array $columns
+     * @return static
+    */
+    public function primary(array $columns): static;
+
+
+
+
+
+
+
+    /**
+     * Add unique
+     *
+     * @param array $columns
+     * @return static
+    */
+    public function unique(array $columns): static;
+
+
+
+
+
+
+    /**
+     * Add foreign key
+     *
+     * @param string $name
+     * @return ForeignKeyInterface
+    */
+    public function foreign(string $name): ForeignKeyInterface;
+
+
+
+
+
+
+
+    /**
      * Add timestamps
      *
      * @return $this
@@ -566,13 +579,28 @@ interface TableInterface
 
 
 
+
+    /**
+     * Add column
+     *
+     * @param ColumnInterface $column
+     * @return ColumnInterface
+    */
+    public function add(ColumnInterface $column): ColumnInterface;
+
+
+
+
+
+
+
     /**
      * Add primary key
      *
-     * @param PrimaryKey $primaryKey
+     * @param PrimaryKeyInterface $primaryKey
      * @return PrimaryKey
     */
-    public function addPrimaryKey(PrimaryKey $primaryKey): PrimaryKey;
+    public function addPrimaryKey(PrimaryKeyInterface $primaryKey): PrimaryKey;
 
 
 
@@ -582,10 +610,10 @@ interface TableInterface
     /**
      * Add foreign keys
      *
-     * @param ForeignKey $foreignKey
-     * @return ForeignKey
+     * @param ForeignKeyInterface $foreignKey
+     * @return ForeignKeyInterface
     */
-    public function addForeignKey(ForeignKey $foreignKey): ForeignKey;
+    public function addForeignKey(ForeignKeyInterface $foreignKey): ForeignKeyInterface;
 
 
 
@@ -595,10 +623,10 @@ interface TableInterface
     /**
      * Add indexes
      *
-     * @param Index $index
-     * @return Index
+     * @param IndexInterface $index
+     * @return IndexInterface
     */
-    public function addIndex(Index $index): Index;
+    public function addIndex(IndexInterface $index): IndexInterface;
 
 
 
@@ -607,10 +635,10 @@ interface TableInterface
 
 
     /**
-     * @param Unique $unique
-     * @return Unique
+     * @param UniqueInterface $unique
+     * @return UniqueInterface
     */
-    public function addUnique(Unique $unique): Unique;
+    public function addUnique(UniqueInterface $unique): UniqueInterface;
 
 
 

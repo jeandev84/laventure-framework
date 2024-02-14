@@ -110,10 +110,23 @@ abstract class Table implements TableInterface
 
 
 
+    /**
+     * @inheritdoc
+    */
+    public function primary(array $columns): static
+    {
+         $this->addPrimaryKey(new PrimaryKey($columns));
+
+         return $this;
+    }
+
+
+
+
+
 
     /**
-     * @param ColumnInterface $column
-     * @return ColumnInterface
+     * @inheritdoc
     */
     public function add(ColumnInterface $column): ColumnInterface
     {
@@ -387,30 +400,15 @@ abstract class Table implements TableInterface
 
 
 
-
     /**
-     * @inheritDoc
+     * @param string|array $value
+     * @return array
     */
-    public function default($value): static
+    protected function forceToArray(string|array$value): array
     {
-        foreach ($this->getColumns() as $column) {
-            $this->add($column->default($value));
-        }
-
-        return $this;
+        return (array)$value;
     }
 
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function unsigned(string $name): mixed
-    {
-        // TODO: Implement unsigned() method.
-    }
 
 
 

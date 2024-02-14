@@ -1,0 +1,45 @@
+<?php
+declare(strict_types=1);
+
+namespace Laventure\Component\Database\Schema\Constraints\Contract;
+
+
+use Laventure\Component\Database\Schema\Constraints\ConstraintInterface;
+
+/**
+ * ForeignKeyInterface
+ *
+ * @author Jean-Claude <jeanyao@ymail.com>
+ *
+ * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
+ *
+ * @package  Laventure\Component\Database\Schema\Constraints\Contract
+ */
+interface ForeignKeyInterface extends ConstraintInterface
+{
+    /**
+     * @param string $column
+     * @return $this
+    */
+    public function references(string $column): static;
+
+
+
+
+
+    /**
+     * @param string $table
+     * @return ConstrainedInterface
+    */
+    public function on(string $table): ConstrainedInterface;
+
+
+
+
+
+
+    /**
+     * @return ConstrainedInterface
+    */
+    public function constrained(): ConstrainedInterface;
+}

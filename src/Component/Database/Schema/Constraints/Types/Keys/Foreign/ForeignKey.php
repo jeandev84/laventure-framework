@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Schema\Constraints\Types\Keys\Foreign;
 
 use Laventure\Component\Database\Schema\Constraints\Constraint;
+use Laventure\Component\Database\Schema\Constraints\Contract\ConstrainedInterface;
+use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
 
 /**
  * ForeignKey
@@ -15,8 +17,81 @@ use Laventure\Component\Database\Schema\Constraints\Constraint;
  *
  * @package  Laventure\Component\Database\Schema\Constraints\Types\Keys\Foreign
 */
-class ForeignKey extends Constraint
+class ForeignKey extends Constraint implements ForeignKeyInterface
 {
+
+
+    /**
+     * @var ConstrainedInterface
+    */
+    protected ConstrainedInterface $constrained;
+
+
+
+
+    /**
+     * @var string
+    */
+    protected string $table;
+
+
+
+    /**
+     * @param string $name
+     * @param string $key
+    */
+    public function __construct(string $name, string $key)
+    {
+        parent::__construct($name, $key);
+    }
+
+
+
+
+    /**
+     * @param string $column
+     * @return $this
+    */
+    public function references(string $column): static
+    {
+         $this->columns[0] = $column;
+
+         return $this;
+    }
+
+
+
+
+
+
+    /**
+     * @param string $table
+     * @return ConstrainedInterface
+    */
+    public function on(string $table): ConstrainedInterface
+    {
+        $this->table = $table;
+
+        return $this->constrained();
+    }
+
+
+
+
+
+
+
+    /**
+     * @return ConstrainedInterface
+    */
+    public function constrained(): ConstrainedInterface
+    {
+        return $this->constrained = new Constrained();
+    }
+
+
+
+
     /**
      * @inheritDoc
     */

@@ -20,10 +20,12 @@ class PrimaryKey extends Constraint
     /**
      * @param string|null $key
     */
-    public function __construct(string $key = null)
+    public function __construct(array $columns = [], string $key = null)
     {
         parent::__construct('primaryKey', $key);
+        $this->withColumns($columns);
     }
+
 
 
     /**

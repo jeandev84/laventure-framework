@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Schema\Blueprint;
 
 use Laventure\Component\Database\Schema\Column\ColumnInterface;
+use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
 use Laventure\Component\Database\Schema\Table\TableInterface;
 
 /**
@@ -145,6 +146,53 @@ class Blueprint
 
 
 
+
+    /**
+     * @param $name
+     * @return ColumnInterface
+    */
+    public function datetime($name): ColumnInterface
+    {
+       return $this->table->datetime($name);
+    }
+
+
+
+
+    /**
+     * Add column type default
+     *
+     * @param $value
+     *
+     * @return mixed
+    */
+    public function default($value): static
+    {
+        foreach ($this->table->getColumns() as $column) {
+            $this->table->add($column->default($value));
+        }
+
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * Add column type timestamp
+     *
+     * @return mixed
+    */
+    public function unsigned(): mixed
+    {
+
+    }
+
+
+
+
+
     /**
      * @return ColumnInterface
     */
@@ -158,23 +206,37 @@ class Blueprint
 
 
     /**
-     * @param $name
-     * @return TableInterface
+     * @param array $columns
+     * @return static
     */
-    public function datetime($name): TableInterface
+    public function primary(array $columns): static
     {
+        $this->table->primary($columns);
 
+        return $this;
     }
 
 
 
 
+
     /**
-     * @param array|string $primary
-     * @return TableInterface
+     * @param array $columns
+     * @return $this
     */
-    public function primary(array|string $primary): TableInterface
+    public function unique(array $columns): static
     {
-        #return $this->table->addConstraint();
+        $this->table->unique($columns);
+
+        return $this;
+    }
+
+
+
+
+
+    public function foreign(string $name): ForeignKeyInterface
+    {
+        return $this->table->foreign($name);
     }
 }
