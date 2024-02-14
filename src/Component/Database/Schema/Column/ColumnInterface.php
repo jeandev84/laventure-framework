@@ -271,9 +271,11 @@ interface ColumnInterface extends Stringable
     /**
      * Returns constraints of column
      *
-     * @return array
+     * @return ConstraintInterface[]
     */
     public function getConstraints(): array;
+
+
 
 
 

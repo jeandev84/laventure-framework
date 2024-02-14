@@ -207,44 +207,6 @@ abstract class Column implements ColumnInterface
 
 
 
-    /**
-     * @inheritDoc
-    */
-    public function addConstraints(array $constraints): static
-    {
-        foreach ($constraints as $constraint) {
-            $this->addConstraint($constraint);
-        }
-
-        return $this;
-    }
-
-
-
-
-    /**
-     * @inheritdoc
-    */
-    public function addConstraint(ConstraintInterface $constraint): static
-    {
-        $this->constraints[$constraint->getName()] = $constraint;
-
-        return $this;
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function hasConstraint(string $name): bool
-    {
-        return isset($this->constraints[$name]);
-    }
-
-
 
 
     /**
@@ -294,7 +256,7 @@ abstract class Column implements ColumnInterface
     */
     public function getName(): string
     {
-
+        return $this->name;
     }
 
 
@@ -305,7 +267,7 @@ abstract class Column implements ColumnInterface
     */
     public function getType(): string
     {
-
+        return $this->type;
     }
 
 
@@ -350,13 +312,60 @@ abstract class Column implements ColumnInterface
 
 
 
+
+    /**
+     * @inheritDoc
+     */
+    public function addConstraints(array $constraints): static
+    {
+        foreach ($constraints as $constraint) {
+            $this->addConstraint($constraint);
+        }
+
+        return $this;
+    }
+
+
+
+
+    /**
+     * @inheritdoc
+     */
+    public function addConstraint(ConstraintInterface $constraint): static
+    {
+        $this->constraints[$constraint->getName()] = $constraint;
+
+        return $this->setOption('constraint', $constraint->getSQL());
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function hasConstraint(string $name): bool
+    {
+        return isset($this->constraints[$name]);
+    }
+
+
+
+
+
+
+
     /**
      * @inheritDoc
     */
     public function getConstraints(): array
     {
-        return $this->getOption('constraints');
+        return $this->constraints;
     }
+
+
+
 
 
 
@@ -367,6 +376,8 @@ abstract class Column implements ColumnInterface
     {
         return $this->getOption('comments');
     }
+
+
 
 
 
@@ -416,10 +427,35 @@ abstract class Column implements ColumnInterface
 
 
 
+
+    /**
+     * @return string
+    */
+    public function getConstraintAsString(): string
+    {
+         $func = function (ConstraintInterface $constraint) {
+             return $constraint->getSQL();
+         };
+
+         $constraints = array_filter($this->getConstraints(), $func);
+
+         return join(' ', $constraints);
+    }
+
+
+
+
+
+
+    /**
+     * @return string
+    */
     public function getConstraint(): string
     {
-
+        return $this->getOption('constraint');
     }
+
+
 
 
 
@@ -428,7 +464,11 @@ abstract class Column implements ColumnInterface
     */
     public function getSQL(): string
     {
-
+        return join(' ', [
+           $this->getName(),
+           $this->getType(),
+           $this->getConstraint()
+        ]);
     }
 
 

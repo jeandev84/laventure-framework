@@ -17,4 +17,25 @@ use Laventure\Component\Database\Schema\Column\Column;
  */
 class MysqlColumn extends Column
 {
+
+    /**
+     * @param string $name
+     * @param string $type
+    */
+    public function __construct(string $name, string $type)
+    {
+        parent::__construct("`$name`", $type);
+    }
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function increment(): static
+    {
+       $this->type .= " AUTO_INCREMENT";
+
+       return $this;
+    }
 }
