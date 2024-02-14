@@ -34,6 +34,7 @@ interface TableInterface
     public function create(): mixed;
 
 
+
     /**
      * Update table
      *
@@ -612,6 +613,9 @@ interface TableInterface
      * @return $this
     */
     public function addSoftDeletesTimestamps(): static;
+
+
+
 
 
 

@@ -285,6 +285,19 @@ class Blueprint
 
 
 
+
+    /**
+     * @return ForeignKeyInterface
+    */
+    public function foreignId(): ForeignKeyInterface
+    {
+        return $this->foreign('id');
+    }
+
+
+
+
+
     /**
      * @return mixed
     */

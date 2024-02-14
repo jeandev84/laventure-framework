@@ -20,10 +20,11 @@ class MysqlColumn extends Column
     /**
      * @param string $name
      * @param string $type
+     * @param string|null $constraint
     */
-    public function __construct(string $name, string $type = '')
+    public function __construct(string $name, string $type = '', string $constraint = null)
     {
-        parent::__construct("`$name`", $type);
+        parent::__construct("`$name`", $type, $constraint);
     }
 
 

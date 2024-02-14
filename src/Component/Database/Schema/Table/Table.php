@@ -134,6 +134,8 @@ abstract class Table implements TableInterface
     */
     public function unique(array $columns): static
     {
+        $this->addUnique(new Unique($columns));
+
         return $this;
     }
 
@@ -145,18 +147,12 @@ abstract class Table implements TableInterface
     */
     public function index(array $columns): static
     {
+         $this->addIndex(new Index($columns));
 
+         return $this;
     }
 
 
-
-    /**
-     * @inheritdoc
-    */
-    public function foreign(string $name): ForeignKeyInterface
-    {
-
-    }
 
 
 
@@ -255,6 +251,11 @@ abstract class Table implements TableInterface
 
         return $this;
     }
+
+
+
+
+
 
 
 
@@ -471,15 +472,22 @@ abstract class Table implements TableInterface
 
 
     /**
-     * @param string|array $value
-     * @return array
+     * @param string $table
+     * @return string
     */
-    protected function forceToArray(string|array$value): array
+    public function foreignKeyName(string $table): string
     {
-        return (array)$value;
+        return sprintf('fk_%s_%s', $this->name, $table);
     }
 
 
+
+
+
+    /**
+     * @inheritdoc
+    */
+    abstract public function create(): bool;
 
 
 

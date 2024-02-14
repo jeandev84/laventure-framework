@@ -65,15 +65,16 @@ abstract class Column implements ColumnInterface
 
 
 
-
     /**
      * @param string $name
      * @param string $type
+     * @param string|null $constraint
     */
-    public function __construct(string $name, string $type = '')
+    public function __construct(string $name, string $type = '', string $constraint = null)
     {
         $this->name($name)
-             ->type($type);
+             ->type($type)
+             ->constraint($constraint);
     }
 
 
@@ -112,7 +113,7 @@ abstract class Column implements ColumnInterface
     /**
      * @inheritDoc
     */
-    public function constraint(string $constraints): static
+    public function constraint($constraints): static
     {
         return $this->setOption('constraint', $constraints);
     }

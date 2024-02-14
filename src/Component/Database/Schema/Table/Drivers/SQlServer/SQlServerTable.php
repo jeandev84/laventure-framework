@@ -1,83 +1,68 @@
 <?php
-
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Schema\Table\Drivers\Mysql;
+namespace Laventure\Component\Database\Schema\Table\Drivers\SQlServer;
 
 use Laventure\Component\Database\Schema\Column\ColumnInterface;
-use Laventure\Component\Database\Schema\Column\Drivers\Mysql\MysqlColumn;
 use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
 use Laventure\Component\Database\Schema\Constraints\Types\Keys\Foreign\ForeignKey;
 use Laventure\Component\Database\Schema\Table\Table;
 
 /**
- * MysqlTable
+ * SQlServerTable
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Schema\Table\Drivers\Mysql
-*/
-class MysqlTable extends Table
+ * @package  Laventure\Component\Database\Schema\Table\Drivers\SQlServer
+ */
+class SQlServerTable extends Table
 {
+
     /**
      * @inheritDoc
-    */
+     */
     public function createColumn(string $name, string $type = '', string $constraints = ''): ColumnInterface
     {
-        return new MysqlColumn($name, $type, $constraints);
+        // TODO: Implement createColumn() method.
     }
-
-
-
 
     /**
      * @inheritDoc
-    */
-    public function create(): bool
+     */
+    public function create(): mixed
     {
-
+        // TODO: Implement create() method.
     }
-
-
-
 
     /**
      * @inheritDoc
-    */
+     */
     public function increments(string $name): ColumnInterface
     {
-
+        // TODO: Implement increments() method.
     }
-
-
-
 
     /**
      * @inheritDoc
-    */
+     */
     public function bigIncrements(string $name): ColumnInterface
     {
-
+        // TODO: Implement bigIncrements() method.
     }
-
-
-
 
     /**
      * @inheritDoc
-    */
+     */
     public function integer(string $name, int $length = 11): ColumnInterface
     {
-
+        // TODO: Implement integer() method.
     }
-
-
 
     /**
      * @inheritDoc
-    */
+     */
     public function smallInteger(string $name): ColumnInterface
     {
         // TODO: Implement smallInteger() method.
@@ -203,9 +188,12 @@ class MysqlTable extends Table
         // TODO: Implement longText() method.
     }
 
+
+
+
     /**
      * @inheritDoc
-     */
+    */
     public function mediumText(string $name): ColumnInterface
     {
         // TODO: Implement mediumText() method.
@@ -224,12 +212,14 @@ class MysqlTable extends Table
 
 
 
+
+
     /**
      * @inheritdoc
     */
     public function foreign(string $name): ForeignKeyInterface
     {
-        return $this->addForeignKey(new ForeignKey($name, "(". $this->foreignKeyName($name) . ")"));
+        return $this->addForeignKey(new ForeignKey($name));
     }
 
 
@@ -237,7 +227,7 @@ class MysqlTable extends Table
 
     /**
      * @inheritDoc
-     */
+    */
     public function getColumns(): array
     {
         // TODO: Implement getColumns() method.

@@ -102,10 +102,10 @@ interface ColumnInterface extends Stringable
 
 
     /**
-     * @param string $constraints
+     * @param $constraints
      * @return $this
     */
-    public function constraint(string $constraints): static;
+    public function constraint($constraints): static;
 
 
 

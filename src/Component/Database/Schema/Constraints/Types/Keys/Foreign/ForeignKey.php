@@ -36,17 +36,6 @@ class ForeignKey extends Constraint implements ForeignKeyInterface
 
 
 
-    /**
-     * @param string $name
-     * @param string $key
-    */
-    public function __construct(string $name, string $key)
-    {
-        parent::__construct($name, $key);
-    }
-
-
-
 
     /**
      * @param string $column
