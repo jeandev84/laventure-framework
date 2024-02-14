@@ -12,6 +12,7 @@ use Laventure\Component\Database\Schema\Constraints\Contract\IndexInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\PrimaryKeyInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\UniqueInterface;
 use Laventure\Component\Database\Schema\Constraints\Types\Index;
+use Laventure\Component\Database\Schema\Constraints\Types\Keys\Foreign\ForeignKeyGenerator;
 use Laventure\Component\Database\Schema\Constraints\Types\Keys\Primary\PrimaryKey;
 use Laventure\Component\Database\Schema\Constraints\Types\Unique;
 use Laventure\Component\Database\Query\QueryInterface;
@@ -334,14 +335,14 @@ abstract class Table implements TableInterface
 
 
     /**
-     * @param string $table
+     * @param string $column
      * @return string
     */
-    public function foreignKeyName(string $table): string
+    public function foreignKeyName(string $column): string
     {
-        $key  = md5(uniqid("{$this->name}_{$table}"));
+        $key = new ForeignKeyGenerator($this->name, $column);
 
-        return sprintf('fk_%s', substr($key, 0, 12));
+        return $key->generate();
     }
 
 
