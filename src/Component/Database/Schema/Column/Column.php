@@ -444,7 +444,7 @@ abstract class Column implements ColumnInterface
             $this->addConstraint(new NotNull());
         }
 
-        return $this->getConstraintAsString();
+        return $this->options['constraint'] = $this->getConstraintAsString();
     }
 
 
