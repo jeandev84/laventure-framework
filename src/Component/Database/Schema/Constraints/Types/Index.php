@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Schema\Constraints\Types;
 
 use Laventure\Component\Database\Schema\Constraints\Constraint;
+use Laventure\Component\Database\Schema\Constraints\Contract\IndexInterface;
 
 /**
  * Index
@@ -15,7 +16,7 @@ use Laventure\Component\Database\Schema\Constraints\Constraint;
  *
  * @package  Laventure\Component\Database\Schema\Constraints\Types
 */
-class Index extends Constraint
+class Index extends Constraint implements IndexInterface
 {
     /**
      * @param string|null $key

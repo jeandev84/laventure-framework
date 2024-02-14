@@ -598,9 +598,9 @@ interface TableInterface
      * Add primary key
      *
      * @param PrimaryKeyInterface $primaryKey
-     * @return PrimaryKey
+     * @return PrimaryKeyInterface
     */
-    public function addPrimaryKey(PrimaryKeyInterface $primaryKey): PrimaryKey;
+    public function addPrimaryKey(PrimaryKeyInterface $primaryKey): PrimaryKeyInterface;
 
 
 

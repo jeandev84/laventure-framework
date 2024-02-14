@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Schema\Constraints\Types\Keys\Primary;
 
 use Laventure\Component\Database\Schema\Constraints\Constraint;
+use Laventure\Component\Database\Schema\Constraints\Contract\PrimaryKeyInterface;
 
 /**
  * PrimaryKey
@@ -15,7 +16,7 @@ use Laventure\Component\Database\Schema\Constraints\Constraint;
  *
  * @package  Laventure\Component\Database\Schema\Constraints\Types\Keys\Primary
 */
-class PrimaryKey extends Constraint
+class PrimaryKey extends Constraint implements PrimaryKeyInterface
 {
     /**
      * @param string|null $key

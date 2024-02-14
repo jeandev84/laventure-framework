@@ -7,6 +7,10 @@ namespace Laventure\Component\Database\Schema\Table;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Schema\Column\ColumnInterface;
 use Laventure\Component\Database\Schema\Constraints\ConstraintInterface;
+use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
+use Laventure\Component\Database\Schema\Constraints\Contract\IndexInterface;
+use Laventure\Component\Database\Schema\Constraints\Contract\PrimaryKeyInterface;
+use Laventure\Component\Database\Schema\Constraints\Contract\UniqueInterface;
 use Laventure\Component\Database\Schema\Constraints\Types\Index;
 use Laventure\Component\Database\Schema\Constraints\Types\Keys\Foreign\ForeignKey;
 use Laventure\Component\Database\Schema\Constraints\Types\Keys\Primary\PrimaryKey;
@@ -153,7 +157,7 @@ abstract class Table implements TableInterface
     /**
      * @inheritDoc
     */
-    public function addPrimaryKey(PrimaryKey $primaryKey): PrimaryKey
+    public function addPrimaryKey(PrimaryKeyInterface $primaryKey): PrimaryKeyInterface
     {
         $this->addConstraint($primaryKey);
 
@@ -168,7 +172,7 @@ abstract class Table implements TableInterface
     /**
      * @inheritDoc
     */
-    public function addForeignKey(ForeignKey $foreignKey): ForeignKey
+    public function addForeignKey(ForeignKeyInterface $foreignKey): ForeignKeyInterface
     {
         $this->addConstraint($foreignKey);
 
@@ -183,7 +187,7 @@ abstract class Table implements TableInterface
     /**
      * @inheritDoc
     */
-    public function addIndex(Index $index): Index
+    public function addIndex(IndexInterface $index): IndexInterface
     {
         $this->addConstraint($index);
 
@@ -197,7 +201,7 @@ abstract class Table implements TableInterface
     /**
      * @inheritDoc
     */
-    public function addUnique(Unique $unique): Unique
+    public function addUnique(UniqueInterface $unique): UniqueInterface
     {
         $this->addConstraint($unique);
 
@@ -214,6 +218,9 @@ abstract class Table implements TableInterface
     */
     public function addTimestamps(): static
     {
+        $this->datetime('created_at');
+        $this->datetime('updated_at');
+
         return $this;
     }
 
