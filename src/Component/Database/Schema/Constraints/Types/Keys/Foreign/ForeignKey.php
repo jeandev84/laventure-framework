@@ -34,6 +34,16 @@ class ForeignKey extends Constraint implements ForeignKeyInterface
 
 
 
+    /**
+     * @param string $name
+     * @param string|null $key
+    */
+    public function __construct(string $name, ?string $key = null)
+    {
+        parent::__construct($name, $key);
+        $this->constrained = new Constrained();
+    }
+
 
     /**
      * @param string $column
@@ -73,7 +83,7 @@ class ForeignKey extends Constraint implements ForeignKeyInterface
     */
     public function constrained(): ConstrainedInterface
     {
-        return $this->constrained = new Constrained();
+        return $this->constrained;
     }
 
 
@@ -81,9 +91,19 @@ class ForeignKey extends Constraint implements ForeignKeyInterface
 
     /**
      * @inheritDoc
+     *
+     * Example: CONSTRAINT fk_products_user_id FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE cascade
     */
     public function getSQL(): string
     {
-        return json_encode(get_object_vars($this));
+        $criteria[] = sprintf('FOREIGN KEY (%s) REFERENCES %s(%s)', $this->name, $this->table, $this->columns[0]);
+        $criteria[] = $this->constrained;
+        $constraints = join(' ', array_filter($criteria));
+
+        if (!$this->key) {
+            return $constraints;
+        }
+
+        return $this->constraint($constraints);
     }
 }

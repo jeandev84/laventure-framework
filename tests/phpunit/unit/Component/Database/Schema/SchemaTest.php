@@ -82,5 +82,18 @@ class SchemaTest extends TestCase
             # 6. Determine if table is recreated
             $this->assertTrue($schema->exists('users'));
 
+
+            # 7. Create new tables "products" table
+            $schema->create('products', function (Blueprint $table) {
+               $table->increments('id');
+               $table->string('title', 200);
+               $table->string('slug', 300);
+               $table->string('image', 350);
+               $table->text('description');
+               $table->float('price');
+               $table->boolean('in_stock');
+               $table->timestamps();
+               $table->softDeletes();
+            });
        }
 }

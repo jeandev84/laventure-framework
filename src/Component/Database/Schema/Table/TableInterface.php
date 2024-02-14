@@ -759,7 +759,7 @@ interface TableInterface
      *
      * @return mixed
     */
-    public function getCreateCriteria(): mixed;
+    public function createCriteria(): mixed;
 
 
 
@@ -771,7 +771,7 @@ interface TableInterface
      *
      * @return mixed
     */
-    public function getUpdateCriteria(): mixed;
+    public function updateCriteria(): mixed;
 
 
 

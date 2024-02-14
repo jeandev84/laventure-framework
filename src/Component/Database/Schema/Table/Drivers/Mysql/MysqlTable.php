@@ -445,7 +445,7 @@ class MysqlTable extends Table
     public function create(): bool
     {
         $this->exec(
-           sprintf('CREATE TABLE IF NOT EXISTS `%s` (%s)', $this->name, $this->getCreateCriteria())
+           sprintf('CREATE TABLE IF NOT EXISTS `%s` (%s)', $this->name, $this->createCriteria())
         );
 
         return $this->exists();

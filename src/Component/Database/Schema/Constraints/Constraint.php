@@ -116,10 +116,12 @@ abstract class Constraint implements ConstraintInterface
      * @param string $sql
      * @return string
     */
-    public function wrap(string $sql): string
+    public function constraint(string $sql): string
     {
-        return sprintf('CONSTRAINT %s %s', $this->key, $this->getSQL());
+        return sprintf('CONSTRAINT %s %s', $this->key, $sql);
     }
+
+
 
 
 

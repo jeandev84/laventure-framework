@@ -486,7 +486,7 @@ abstract class Table implements TableInterface
     /**
      * @inheritdoc
     */
-    public function getCreateCriteria(): string
+    public function createCriteria(): string
     {
         $criteria = join(', ', array_filter([
             join(', ', array_values($this->columns)),
@@ -508,7 +508,7 @@ abstract class Table implements TableInterface
     /**
      * @inheritdoc
     */
-    public function getUpdateCriteria(): string
+    public function updateCriteria(): string
     {
         $criteria = join(', ', array_filter([
             join(', ', $this->getUpdateColumns()),
