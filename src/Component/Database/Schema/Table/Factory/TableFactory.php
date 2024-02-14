@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Schema\Table\Factory;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
-use Laventure\Component\Database\Connection\Types\ConnectionType;
+use Laventure\Component\Database\Connection\ConnectionType;
 use Laventure\Component\Database\Schema\Table\Drivers\Mysql\MysqlTable;
 use Laventure\Component\Database\Schema\Table\TableInterface;
 

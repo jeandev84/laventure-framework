@@ -172,9 +172,12 @@ class SQlServerTable extends Table
         // TODO: Implement float() method.
     }
 
+
+
+
     /**
      * @inheritDoc
-     */
+    */
     public function json(string $name): ColumnInterface
     {
         // TODO: Implement json() method.

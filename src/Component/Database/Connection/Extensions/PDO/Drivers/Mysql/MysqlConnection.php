@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\PDO\Drivers\Mysql;
 
+use Laventure\Component\Database\Connection\ConnectionType;
 use Laventure\Component\Database\Connection\Drivers\Mysql\MysqlDatabase;
 use Laventure\Component\Database\Connection\Extensions\PDO\PdoConnection;
-use Laventure\Component\Database\Connection\Types\ConnectionType;
 use Laventure\Component\Database\DatabaseInterface;
 
 /**

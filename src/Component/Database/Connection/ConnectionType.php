@@ -1,8 +1,7 @@
 <?php
-
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Connection\Types;
+namespace Laventure\Component\Database\Connection;
 
 /**
  * ConnectionType
@@ -11,7 +10,7 @@ namespace Laventure\Component\Database\Connection\Types;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Types
+ * @package  Laventure\Component\Database\Connection
 */
 enum ConnectionType
 {
