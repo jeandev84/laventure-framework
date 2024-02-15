@@ -6,7 +6,7 @@ use Laventure\Component\Database\Migration\Migration;
 use Laventure\Component\Database\Schema\Blueprint\Blueprint;
 use Laventure\Component\Database\Schema\SchemaInterface;
 
-class Version202302281734 extends Migration
+class Version202302281721 extends Migration
 {
 
     /**

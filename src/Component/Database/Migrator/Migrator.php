@@ -217,18 +217,17 @@ class Migrator implements MigratorInterface
     */
     public function migrate(): bool
     {
-        return $this->connection->transaction(function () {
+        $this->install();
 
-            $this->install();
+        foreach ($this->getNewMigrations() as $migration) {
+            $migration->up($this->schema);
+            $this->builder->insert($this->table, [
+                'version'     => $migration->getVersion(),
+                'executed_at' => date('Y-m-d H:i:s')
+            ])->getQuery()->execute();
+        }
 
-            foreach ($this->getNewMigrations() as $migration) {
-                $migration->up($this->schema);
-                $this->builder->insert($this->table, [
-                    'version'     => $migration->getVersion(),
-                    'executed_at' => date('Y-m-d H:i:s')
-                ])->getQuery()->execute();
-            }
-        });
+        return empty($this->getNewMigrations());
     }
 
 
@@ -290,6 +289,8 @@ class Migrator implements MigratorInterface
     {
         return $this->migrations;
     }
+
+
 
 
 

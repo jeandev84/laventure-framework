@@ -5,6 +5,11 @@ namespace PHPUnitTest\Component\Database\Migrator;
 
 use Laventure\Component\Database\Migrator\Migrator;
 use PHPUnit\Framework\TestCase;
+use PHPUnitTest\App\Migration\Version202302281534;
+use PHPUnitTest\App\Migration\Version202302281676;
+use PHPUnitTest\App\Migration\Version202302281678;
+use PHPUnitTest\App\Migration\Version202302281689;
+use PHPUnitTest\App\Migration\Version202302281721;
 use PHPUnitTest\App\Service\Connection\Connection;
 
 /**
@@ -44,7 +49,25 @@ class MigratorTest extends TestCase
 
      public function testMigrate(): void
      {
-         $this->assertTrue(true);
+         $this->migrator->addMigrations([
+            new Version202302281534(),
+            new Version202302281676(),
+            new Version202302281678(),
+            new Version202302281689(),
+            new Version202302281721()
+         ]);
+
+
+         $this->migrator->migrate();
+
+         $schema = $this->migrator->getSchema();
+
+         $this->assertTrue($schema->exists($this->migrator->getTable()));
+         $this->assertTrue($schema->exists('cart'));
+         $this->assertTrue($schema->exists('categories'));
+         $this->assertTrue($schema->exists('products'));
+         $this->assertTrue($schema->exists('goods'));
+         $this->assertTrue($schema->exists('users'));
      }
 
 
