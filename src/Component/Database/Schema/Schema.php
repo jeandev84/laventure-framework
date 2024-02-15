@@ -43,7 +43,6 @@ class Schema implements SchemaInterface
     */
     public function __construct(ConnectionInterface $connection)
     {
-
         $this->connection = $connection;
         $this->factory    = new TableFactory($connection);
     }
@@ -218,5 +217,25 @@ class Schema implements SchemaInterface
     public function getName(): string
     {
         return $this->connection->getDatabase()->getName();
+    }
+
+
+
+
+    /**
+     * @return ConnectionInterface
+    */
+    public function getConnection(): ConnectionInterface
+    {
+        return $this->connection;
+    }
+
+
+    /**
+     * @return TableFactoryInterface
+    */
+    public function getFactory(): TableFactoryInterface
+    {
+        return $this->factory;
     }
 }

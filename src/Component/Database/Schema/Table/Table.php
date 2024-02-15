@@ -12,6 +12,7 @@ use Laventure\Component\Database\Schema\Constraints\Contract\IndexInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\PrimaryKeyInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\UniqueInterface;
 use Laventure\Component\Database\Schema\Constraints\Types\Index;
+use Laventure\Component\Database\Schema\Constraints\Types\Keys\Foreign\ForeignKey;
 use Laventure\Component\Database\Schema\Constraints\Types\Keys\Foreign\ForeignKeyGenerator;
 use Laventure\Component\Database\Schema\Constraints\Types\Keys\Primary\PrimaryKey;
 use Laventure\Component\Database\Schema\Constraints\Types\Unique;
@@ -254,7 +255,8 @@ abstract class Table implements TableInterface
     public function addTimestamps(): static
     {
         $this->datetime('created_at');
-        $this->datetime('updated_at');
+        $this->datetime('updated_at')
+              ->nullable();
 
         return $this;
     }
@@ -329,6 +331,18 @@ abstract class Table implements TableInterface
     public function text(string $name): ColumnInterface
     {
         return $this->addColumn($name, 'TEXT');
+    }
+
+
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function foreign(string $name): ForeignKeyInterface
+    {
+        return $this->addForeignKey(new ForeignKey($name));
     }
 
 
@@ -493,18 +507,11 @@ abstract class Table implements TableInterface
     */
     public function createCriteria(): string
     {
-        $criteria = join(', ', array_filter([
+        return join(', ', array_filter([
             join(', ', array_values($this->columns)),
             join(', ', array_values($this->constraints))
         ]));
-
-        if (!$criteria) {
-            throw new TableException("empty criteria from (". __METHOD__ . ")");
-        }
-
-        return $criteria;
     }
-
 
 
 
@@ -515,17 +522,11 @@ abstract class Table implements TableInterface
     */
     public function updateCriteria(): string
     {
-        $criteria = join(', ', array_filter([
+        return join(', ', array_filter([
             join(', ', $this->getUpdateColumns()),
             join(', ', array_values($this->dropColumns)),
             join(', ', array_values($this->renameColumns))
         ]));
-
-        if (!$criteria) {
-            throw new TableException("empty criteria from : (". __METHOD__ . ")");
-        }
-
-        return $criteria;
     }
 
 

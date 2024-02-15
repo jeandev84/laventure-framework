@@ -28,14 +28,19 @@ class ForeignKeyGenerator
 
 
 
-
     /**
+     * @param bool $hash
      * @return string
     */
-    public function generate(): string
+    public function generate(bool $hash = false): string
     {
-        $key  = md5("{$this->table}_{$this->column}");
+        $key  = "{$this->table}_{$this->column}";
 
-        return sprintf('fk_%s', substr($key, 0, 12));
+        if ($hash === true) {
+            $key  = md5("{$this->table}_{$this->column}");
+            $key  = substr($key, 0, 12);
+        }
+
+        return sprintf('fk_%s', $key);
     }
 }

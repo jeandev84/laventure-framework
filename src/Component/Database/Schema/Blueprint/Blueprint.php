@@ -523,7 +523,7 @@ class Blueprint
     */
     public function decimal(string $name, int $precision, int $scale): ColumnInterface
     {
-        return $this->decimal($name, $precision, $scale);
+        return $this->table->decimal($name, $precision, $scale);
     }
 
 
@@ -541,7 +541,7 @@ class Blueprint
     */
     public function double(string $name, int $precision, int $scale): ColumnInterface
     {
-        return $this->double($name, $precision, $scale);
+        return $this->table->double($name, $precision, $scale);
     }
 
 
@@ -555,7 +555,7 @@ class Blueprint
     */
     public function enum(string $name, array $values): ColumnInterface
     {
-        return $this->enum($name, $values);
+        return $this->table->enum($name, $values);
     }
 
 
@@ -568,7 +568,7 @@ class Blueprint
     */
     public function float(string $name): ColumnInterface
     {
-        return $this->float($name);
+        return $this->table->float($name);
     }
 
 
@@ -582,7 +582,7 @@ class Blueprint
     */
     public function json(string $name): ColumnInterface
     {
-        return $this->json($name);
+        return $this->table->json($name);
     }
 
 
@@ -687,6 +687,27 @@ class Blueprint
     }
 
 
+
+
+    /**
+     * @return string
+    */
+    public function createCriteria(): string
+    {
+        return $this->table->createCriteria();
+    }
+
+
+
+
+
+    /**
+     * @return string
+    */
+    public function updateCriteria(): string
+    {
+        return $this->table->updateCriteria();
+    }
 
 
 

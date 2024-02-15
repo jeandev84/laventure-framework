@@ -65,35 +65,58 @@ class SchemaTest extends TestCase
 
             # 4. Determine if table "users" is dropped
             $this->assertFalse($table->exists());
+       }
 
 
-            # 5. Recreate "users" table
-            $schema->create('users', function (Blueprint $table) {
-                $table->increments('id');
-                $table->string('username', 150);
-                $table->string('email', 180);
-                $table->string('password', 230);
-                $table->boolean('active');
-                $table->timestamps();
-                $table->softDeletes();
-                $table->unique(['email']);
-            });
-
-            # 6. Determine if table is recreated
-            $this->assertTrue($schema->exists('users'));
 
 
-            # 7. Create new tables "products" table
-            $schema->create('products', function (Blueprint $table) {
-               $table->increments('id');
-               $table->string('title', 200);
-               $table->string('slug', 300);
-               $table->string('image', 350);
-               $table->text('description');
-               $table->float('price');
-               $table->boolean('in_stock');
-               $table->timestamps();
-               $table->softDeletes();
+       public function testItWillCreatedWithBlueprint(): void
+       {
+            $this->connection->transaction(function () {
+
+                $schema = new Schema($this->connection);
+                $schema->dropIfExists('users');
+
+                # 5. Recreate "users" table
+                $schema->create('users', function (Blueprint $table) {
+                    $table->increments('id');
+                    $table->string('username', 150);
+                    $table->string('email', 180);
+                    $table->string('password', 230);
+                    $table->boolean('active')->default(0);
+                    $table->timestamps();
+                    $table->softDeletes();
+                    $table->unique(['email']);
+                });
+
+                # 6. Determine if table is recreated
+                $this->assertTrue($schema->exists('users'));
+
+
+                # 7. Create new tables "products" table
+                $schema->create('goods', function (Blueprint $table) {
+                    $table->increments('id');
+                    $table->string('title', 200);
+                    $table->string('slug', 300);
+                    $table->text('description');
+                    $table->float('price');
+                    $table->string('image', 200);
+                    $table->boolean('in_stock')->default(0);
+                    $table->nullableTimestamps();
+                    $table->softDeletes();
+                    $table->bigInteger('user_id');
+                    $table->foreign('user_id')
+                          ->references('id')
+                          ->on('users')
+                          ->onDelete('cascade');
+                    $table->unique(['slug']);
+                    $table->index(['title']);
+                });
+
+
+                # 8. Determine if table "products" created
+                $this->assertTrue($schema->exists('products'));
+
             });
        }
 }

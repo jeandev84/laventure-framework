@@ -385,18 +385,6 @@ class MysqlTable extends Table
 
 
 
-
-    /**
-     * @inheritdoc
-    */
-    public function foreign(string $name): ForeignKeyInterface
-    {
-        return $this->addForeignKey(new ForeignKey($name, "(". $this->foreignKeyName($name) . ")"));
-    }
-
-
-
-
     /**
      * @inheritDoc
     */

@@ -58,7 +58,7 @@ class Constrained implements ConstrainedInterface
     */
     private function resolveValue($value): string
     {
-        return $value ?: 'SET NULL';
+        return $value ? strtoupper($value): 'SET NULL';
     }
 
 
