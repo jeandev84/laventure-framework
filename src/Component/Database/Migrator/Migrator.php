@@ -88,71 +88,10 @@ class Migrator implements MigratorInterface
     */
     public function __construct(ConnectionInterface $connection, string $table = 'migrations')
     {
-        $this->connection($connection)
-             ->builder($connection->createQueryBuilder())
-             ->schema(new Schema($connection))
-             ->table($table);
-    }
-
-
-
-
-
-    /**
-     * @param ConnectionInterface $connection
-     * @return $this
-    */
-    public function connection(ConnectionInterface $connection): static
-    {
         $this->connection = $connection;
-
-        return $this;
-    }
-
-
-
-
-
-    /**
-     * @param string $table
-     * @return $this
-    */
-    public function table(string $table): static
-    {
-        $this->table = $table;
-
-        return $this;
-    }
-
-
-
-
-
-    /**
-     * @param QueryBuilderInterface $builder
-     * @return $this
-    */
-    public function builder(QueryBuilderInterface $builder): static
-    {
-        $this->builder = $builder;
-
-        return $this;
-    }
-
-
-
-
-
-
-    /**
-     * @param SchemaInterface $schema
-     * @return $this
-    */
-    public function schema(SchemaInterface $schema): static
-    {
-        $this->schema = $schema;
-
-        return $this;
+        $this->table      = $table;
+        $this->builder    = $connection->createQueryBuilder();
+        $this->schema     = new Schema($connection);
     }
 
 
