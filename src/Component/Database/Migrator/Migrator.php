@@ -349,6 +349,29 @@ class Migrator implements MigratorInterface
 
 
     /**
+     * @return SchemaInterface
+    */
+    public function getSchema(): SchemaInterface
+    {
+        return $this->schema;
+    }
+
+
+
+
+
+    /**
+     * @return ConnectionInterface
+    */
+    public function getConnection(): ConnectionInterface
+    {
+        return $this->connection;
+    }
+
+
+
+
+    /**
      * Log process migration
      *
      * @param string $message

@@ -6,22 +6,19 @@ use Laventure\Component\Database\Migration\Migration;
 use Laventure\Component\Database\Schema\Blueprint\Blueprint;
 use Laventure\Component\Database\Schema\SchemaInterface;
 
-class Version202302281678 extends Migration
+class Version202302281534 extends Migration
 {
 
     /**
      * @inheritDoc
-    */
+   */
     public function up(SchemaInterface $schema): void
     {
-        $schema->create('products', function (Blueprint $table) {
+        $schema->create('cart', function (Blueprint $table) {
             $table->integer('id')->primary()->increment();
-            $table->string('name');
-            $table->boolean('test')->default(0);
-            $table->float('price');
+            $table->string('title');
         });
     }
-
 
 
 
@@ -30,6 +27,6 @@ class Version202302281678 extends Migration
     */
     public function down(SchemaInterface $schema): void
     {
-        $schema->dropIfExists('products');
+        $schema->dropIfExists('cart');
     }
 }
