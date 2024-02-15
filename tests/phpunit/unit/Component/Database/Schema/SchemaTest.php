@@ -74,8 +74,10 @@ class SchemaTest extends TestCase
        {
            $schema = new Schema($this->connection);
 
+           /*
            $schema->dropIfExists('goods');
            $schema->dropIfExists('users');
+           */
 
            # 5. Recreate "users" table
            $schema->create('users', function (Blueprint $table) {
