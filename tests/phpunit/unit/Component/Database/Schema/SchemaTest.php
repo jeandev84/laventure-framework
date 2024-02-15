@@ -108,9 +108,9 @@ class SchemaTest extends TestCase
                $table->softDeletes();
                $table->bigInteger('user_id');
                $table->foreign('user_id')
-                   ->references('id')
-                   ->on('users')
-                   ->onDelete('cascade');
+                     ->references('id')
+                     ->on('users')
+                     ->onDelete('cascade');
                $table->unique(['slug']);
                $table->index(['title']);
            });

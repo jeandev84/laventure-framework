@@ -115,7 +115,7 @@ abstract class Column implements ColumnInterface
     */
     public function constraint($constraints): static
     {
-        return $this->setOption('constraint', $constraints);
+        return $this->option('constraint', $constraints);
     }
 
 
@@ -151,7 +151,7 @@ abstract class Column implements ColumnInterface
     */
     public function signed(): static
     {
-        return $this->setOption('signed', true)
+        return $this->option('signed', true)
                     ->type('SIGNED');
     }
 
@@ -165,7 +165,7 @@ abstract class Column implements ColumnInterface
     */
     public function unsigned(): static
     {
-        return $this->setOption('signed', false)
+        return $this->option('signed', false)
                     ->type('UNSIGNED');
     }
 
@@ -321,7 +321,7 @@ abstract class Column implements ColumnInterface
     {
         $this->constraints[$constraint->getName()] = $constraint;
 
-        return $this->setOption($constraint->getName(), true);
+        return $this->option($constraint->getName(), true);
     }
 
 
@@ -393,7 +393,7 @@ abstract class Column implements ColumnInterface
      * @param $value
      * @return $this
     */
-    public function setOption($id, $value): static
+    public function option($id, $value): static
     {
         $this->options[$id] = $value;
 
