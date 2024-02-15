@@ -259,7 +259,9 @@ class Blueprint
     */
     public function index(array $columns): static
     {
+         $this->table->index($columns);
 
+         return $this;
     }
 
 
