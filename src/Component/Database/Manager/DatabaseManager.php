@@ -69,7 +69,7 @@ class DatabaseManager implements DatabaseManagerInterface
     */
     public function open(string $name, array $credentials): static
     {
-        $this->setCurrentConnection($name);
+        $this->setCurrent($name);
         $this->setConfiguration($name, $credentials);
 
         return $this;
@@ -83,7 +83,7 @@ class DatabaseManager implements DatabaseManagerInterface
      * @param string $connection
      * @return void
     */
-    public function setCurrentConnection(string $connection): void
+    public function setCurrent(string $connection): void
     {
         $this->connection = $connection;
     }
@@ -95,7 +95,7 @@ class DatabaseManager implements DatabaseManagerInterface
     /**
      * @return string|null
     */
-    public function getCurrentConnection(): ?string
+    public function getCurrent(): ?string
     {
         return $this->connection;
     }
@@ -201,7 +201,7 @@ class DatabaseManager implements DatabaseManagerInterface
     */
     public function connection(string $name = ''): ConnectionInterface
     {
-        $name        = $name ?: $this->getCurrentConnection();
+        $name        = $name ?: $this->getCurrent();
         $credentials = $this->configuration($name);
 
         if (!$this->hasConnection($name)) {
@@ -228,7 +228,7 @@ class DatabaseManager implements DatabaseManagerInterface
             $this->abortIf("no connection detected for '$name'.");
         }
 
-        $this->setCurrentConnection($name);
+        $this->setCurrent($name);
 
         return $this->connected[$name] = $this->connections[$name];
     }
