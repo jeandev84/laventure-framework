@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Schema;
 
 use Closure;
+use Laventure\Component\Database\Connection\ConnectionInterface;
 
 /**
  * SchemaInterface
@@ -184,4 +185,17 @@ interface SchemaInterface
      * @return string
     */
     public function getName(): string;
+
+
+
+
+
+
+
+    /**
+     * Returns connection
+     *
+     * @return ConnectionInterface
+    */
+    public function getConnection(): ConnectionInterface;
 }

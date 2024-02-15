@@ -36,7 +36,7 @@ class PgsqlDatabase extends Database
     /**
      * @inheritDoc
      */
-    public function getSchemas(): array
+    public function getTables(): array
     {
         // TODO: Implement getSchemas() method.
     }

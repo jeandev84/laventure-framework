@@ -34,6 +34,6 @@ class Version202302281689 extends Migration
     */
     public function down(SchemaInterface $schema): void
     {
-        $schema->drop('users');
+        $schema->dropIfExists('users');
     }
 }

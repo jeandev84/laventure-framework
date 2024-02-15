@@ -174,6 +174,8 @@ class Migrator implements MigratorInterface
 
 
 
+
+
     /**
      * @param MigrationInterface[] $migrations
      *
@@ -237,16 +239,13 @@ class Migrator implements MigratorInterface
     /**
      * @inheritDoc
     */
-    public function rollback(): bool
+    public function rollback(): mixed
     {
-        return $this->connection->transaction(function () {
+        foreach ($this->getMigrations() as $migration) {
+            $migration->down($this->schema);
+        }
 
-            foreach ($this->getMigrations() as $migration) {
-                $migration->down($this->schema);
-            }
-
-            return $this->schema->truncate($this->table);
-        });
+        return $this->schema->truncate($this->table);
     }
 
 
@@ -258,7 +257,7 @@ class Migrator implements MigratorInterface
     /**
      * @inheritDoc
     */
-    public function reset(): bool
+    public function reset(): mixed
     {
         $this->rollback();
 
@@ -272,7 +271,7 @@ class Migrator implements MigratorInterface
     /**
      * @inheritDoc
     */
-    public function refresh(): bool
+    public function refresh(): mixed
     {
         $this->reset();
 
@@ -327,6 +326,10 @@ class Migrator implements MigratorInterface
     */
     public function getOldMigrations(): array
     {
+        if (! $this->schema->exists($this->table)) {
+            return [];
+        }
+
         return $this->builder->select('version')
                              ->from($this->table)
                              ->getQuery()

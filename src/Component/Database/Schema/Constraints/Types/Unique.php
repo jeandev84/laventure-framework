@@ -34,6 +34,6 @@ class Unique extends Constraint implements UniqueInterface
     */
     public function getSQL(): string
     {
-        return "UNIQUE" . ($this->hasColumns() ? "(". $this->getColumnsAsString() . ")" : '');
+        return "UNIQUE " . ($this->hasColumns() ? "(". $this->getColumnsAsString() . ")" : '');
     }
 }

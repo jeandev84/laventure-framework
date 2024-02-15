@@ -68,7 +68,8 @@ interface DatabaseInterface
      *
      * @return array
     */
-    public function getSchemas(): array;
+    public function getTables(): array;
+
 
 
 

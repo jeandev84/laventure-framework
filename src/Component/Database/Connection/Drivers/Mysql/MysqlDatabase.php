@@ -50,7 +50,7 @@ class MysqlDatabase extends Database
     /**
      * @inheritDoc
     */
-    public function getSchemas(): array
+    public function getTables(): array
     {
         return $this->connection
                     ->statement("SHOW FULL TABLES FROM {$this->name};")

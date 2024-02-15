@@ -85,6 +85,10 @@ class Schema implements SchemaInterface
     */
     public function update(string $table, Closure $closure): bool
     {
+        if (!$this->exists($table)) {
+            return false;
+        }
+
         $blueprint = new Blueprint($this->table($table));
 
         call_user_func($closure, $blueprint);
@@ -100,10 +104,17 @@ class Schema implements SchemaInterface
     /**
      * @inheritDoc
     */
-    public function drop(string $table): bool
+    public function drop(string $table): mixed
     {
+        if (!$this->exists($table)) {
+            return false;
+        }
+
         return $this->table($table)->drop();
     }
+
+
+
 
 
 
@@ -112,7 +123,7 @@ class Schema implements SchemaInterface
     /**
      * @inheritDoc
     */
-    public function dropIfExists(string $table): bool
+    public function dropIfExists(string $table): mixed
     {
         return $this->table($table)->dropIfExists();
     }
@@ -125,8 +136,12 @@ class Schema implements SchemaInterface
     /**
      * @inheritDoc
     */
-    public function truncate(string $table): bool
+    public function truncate(string $table): mixed
     {
+        if (!$this->exists($table)) {
+            return false;
+        }
+
         return $this->table($table)->truncate();
     }
 
@@ -138,8 +153,12 @@ class Schema implements SchemaInterface
     /**
      * @inheritDoc
     */
-    public function truncateCascade(string $table): bool
+    public function truncateCascade(string $table): mixed
     {
+        if (!$this->exists($table)) {
+            return false;
+        }
+
         return $this->table($table)->truncateCascade();
     }
 
@@ -168,7 +187,7 @@ class Schema implements SchemaInterface
     */
     public function exists(string $table): bool
     {
-        return $this->table($table)->exists();
+        return in_array($table, $this->getTables());
     }
 
 
@@ -204,7 +223,7 @@ class Schema implements SchemaInterface
     */
     public function getTables(): array
     {
-        return $this->connection->getDatabase()->getSchemas();
+        return $this->connection->getDatabase()->getTables();
     }
 
 
@@ -222,13 +241,17 @@ class Schema implements SchemaInterface
 
 
 
+
     /**
-     * @return ConnectionInterface
+     * @inheritdoc
     */
     public function getConnection(): ConnectionInterface
     {
         return $this->connection;
     }
+
+
+
 
 
     /**

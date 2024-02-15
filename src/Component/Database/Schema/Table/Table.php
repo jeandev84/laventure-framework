@@ -404,7 +404,7 @@ abstract class Table implements TableInterface
      */
     public function list(): array
     {
-        return $this->connection->getDatabase()->getSchemas();
+        return $this->connection->getDatabase()->getTables();
     }
 
 
@@ -455,11 +455,9 @@ abstract class Table implements TableInterface
     /**
      * @inheritDoc
      */
-    public function drop(): bool
+    public function drop(): mixed
     {
-        $this->exec(sprintf('DROP TABLE %s', $this->getName()));
-
-        return $this->exists();
+        return $this->exec(sprintf('DROP TABLE %s CASCADE', $this->getName()));
     }
 
 
@@ -468,12 +466,10 @@ abstract class Table implements TableInterface
 
     /**
      * @inheritDoc
-     */
-    public function dropIfExists(): bool
+    */
+    public function dropIfExists(): mixed
     {
-        $this->exec(sprintf('DROP TABLE IF EXISTS %s;', $this->getName()));
-
-        return $this->exists();
+        return $this->exec(sprintf('DROP TABLE IF EXISTS %s CASCADE;', $this->getName()));
     }
 
 
@@ -482,7 +478,7 @@ abstract class Table implements TableInterface
     /**
      * @inheritDoc
      */
-    public function truncate(): bool
+    public function truncate(): mixed
     {
         return $this->exec(sprintf('TRUNCATE TABLE %s;', $this->getName()));
     }
@@ -493,7 +489,7 @@ abstract class Table implements TableInterface
     /**
      * @inheritDoc
     */
-    public function truncateCascade(): bool
+    public function truncateCascade(): mixed
     {
         return $this->exec(sprintf('TRUNCATE TABLE CASCADE %s;', $this->getName()));
     }

@@ -11,6 +11,7 @@ use PHPUnitTest\App\Migration\Version202302281678;
 use PHPUnitTest\App\Migration\Version202302281689;
 use PHPUnitTest\App\Migration\Version202302281721;
 use PHPUnitTest\App\Service\Connection\Connection;
+use PHPUnitTest\App\Service\Migration\MigrationStack;
 
 /**
  * MigratorTest
@@ -31,6 +32,8 @@ class MigratorTest extends TestCase
      protected function setUp(): void
      {
         $this->migrator = new Migrator(Connection::make());
+
+        $this->migrator->addMigrations(MigrationStack::getMigrations());
      }
 
 
@@ -49,15 +52,6 @@ class MigratorTest extends TestCase
 
      public function testMigrate(): void
      {
-         $this->migrator->addMigrations([
-            new Version202302281534(),
-            new Version202302281676(),
-            new Version202302281678(),
-            new Version202302281689(),
-            new Version202302281721()
-         ]);
-
-
          $this->migrator->migrate();
 
          $schema = $this->migrator->getSchema();
@@ -74,14 +68,31 @@ class MigratorTest extends TestCase
 
      public function testRollback(): void
      {
-         $this->assertTrue(true);
+
+         $this->migrator->rollback();
+
+         $schema = $this->migrator->getSchema();
+
+         $this->assertTrue($schema->exists($this->migrator->getTable()));
+         $this->assertFalse($schema->exists('cart'));
+         $this->assertFalse($schema->exists('categories'));
+         $this->assertFalse($schema->exists('products'));
+         $this->assertFalse($schema->exists('goods'));
+         $this->assertFalse($schema->exists('users'));
      }
+
+
+
 
 
 
      public function testReset(): void
      {
-         $this->assertTrue(true);
+         $this->migrator->reset();
+
+         $schema = $this->migrator->getSchema();
+
+         $this->assertFalse($schema->exists($this->migrator->getTable()));
      }
 
 
@@ -89,6 +100,16 @@ class MigratorTest extends TestCase
 
      public function testRefresh(): void
      {
-         $this->assertTrue(true);
+         $this->migrator->refresh();
+
+         $schema = $this->migrator->getSchema();
+
+         $this->assertTrue($schema->exists($this->migrator->getTable()));
+         $this->assertTrue($schema->exists('cart'));
+         $this->assertTrue($schema->exists('categories'));
+         $this->assertTrue($schema->exists('products'));
+         $this->assertTrue($schema->exists('goods'));
+         $this->assertTrue($schema->exists('users'));
      }
+
 }

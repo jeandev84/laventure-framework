@@ -96,7 +96,7 @@ class ForeignKey extends Constraint implements ForeignKeyInterface
     */
     public function getSQL(): string
     {
-        $criteria[] = sprintf('FOREIGN KEY (%s) REFERENCES %s(%s)', $this->name, $this->table, $this->columns[0]);
+        $criteria[] = sprintf('FOREIGN KEY (%s) REFERENCES %s (%s)', $this->name, $this->table, $this->columns[0]);
         $criteria[] = $this->constrained;
         $constraints = join(' ', array_filter($criteria));
 
