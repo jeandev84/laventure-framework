@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder;
@@ -7,14 +6,16 @@ namespace Laventure\Component\Database\Builder;
 use Laventure\Component\Database\Builder\SQL\DML\Delete\DeleteBuilder;
 use Laventure\Component\Database\Builder\SQL\DML\Delete\DeleteBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\DML\Insert\InsertBuilder;
-use Laventure\Component\Database\Builder\SQL\DML\Insert\InsertBuilderInterface;
+use Laventure\Component\Database\Builder\SQL\DML\Insert\InsertSQlBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\DML\Update\UpdateBuilder;
 use Laventure\Component\Database\Builder\SQL\DML\Update\UpdateBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\DQL\Select\SelectBuilder;
 use Laventure\Component\Database\Builder\SQL\DQL\Select\SelectBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\Expr\Expr;
 use Laventure\Component\Database\Builder\SQL\ExpressionInterface;
+use Laventure\Component\Database\Builder\SQL\SQlBuilderInterface;
 use Laventure\Component\Database\Connection\ConnectionInterface;
+
 
 /**
  * SqlQueryBuilder
@@ -32,6 +33,11 @@ class SqlQueryBuilder implements SqlQueryBuilderInterface
     */
     protected ConnectionInterface $connection;
 
+
+    /**
+     * @var SQlBuilderInterface
+    */
+    protected SQlBuilderInterface $current;
 
 
     /**
@@ -75,7 +81,7 @@ class SqlQueryBuilder implements SqlQueryBuilderInterface
     public function select(string ...$selects): SelectBuilderInterface
     {
         $qb = new SelectBuilder($this->connection);
-        return $qb->select(...$selects);
+        return $this->current = $qb->select(...$selects);
     }
 
 
@@ -85,10 +91,10 @@ class SqlQueryBuilder implements SqlQueryBuilderInterface
     /**
      * @inheritDoc
     */
-    public function insert(string $table): InsertBuilderInterface
+    public function insert(string $table): InsertSQlBuilderInterface
     {
         $qb = new InsertBuilder($this->connection);
-        return $qb->insert($table);
+        return $this->current = $qb->insert($table);
     }
 
 
@@ -101,7 +107,7 @@ class SqlQueryBuilder implements SqlQueryBuilderInterface
     public function update(string $table): UpdateBuilderInterface
     {
         $qb = new UpdateBuilder($this->connection);
-        return $qb->update($table);
+        return $this->current = $qb->update($table);
     }
 
 
@@ -114,6 +120,17 @@ class SqlQueryBuilder implements SqlQueryBuilderInterface
     public function delete(string $table): DeleteBuilderInterface
     {
         $qb = new DeleteBuilder($this->connection);
-        return $qb->delete($table);
+        return $this->current = $qb->delete($table);
+    }
+
+    
+    
+    
+    /**
+     * @return SQlBuilderInterface
+    */
+    public function getCurrent(): SQlBuilderInterface
+    {
+        return $this->current;
     }
 }

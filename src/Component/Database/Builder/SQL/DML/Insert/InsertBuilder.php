@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL\DML\Insert;
 
-use Laventure\Component\Database\Builder\SQL\BuilderTrait;
+use Laventure\Component\Database\Builder\SQL\SQlBuilderTrait;
 use Laventure\Component\Database\Builder\SQL\Expr\Insert;
 
 /**
@@ -16,9 +16,9 @@ use Laventure\Component\Database\Builder\SQL\Expr\Insert;
  *
  * @package  Laventure\Component\Database\Builder\SQL\DML\Insert
  */
-class InsertBuilder implements InsertBuilderInterface
+class InsertBuilder implements InsertSQlBuilderInterface
 {
-    use BuilderTrait;
+    use SQlBuilderTrait;
 
 
 
@@ -81,15 +81,5 @@ class InsertBuilder implements InsertBuilderInterface
                 $this->criteria->values
             )
         ])->format();
-    }
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function getName(): string
-    {
-        return 'insert';
     }
 }

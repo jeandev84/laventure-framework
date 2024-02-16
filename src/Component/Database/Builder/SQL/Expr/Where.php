@@ -44,29 +44,6 @@ class Where implements Stringable
             return '';
         }
 
-        return sprintf('WHERE %s', $this->build());
-    }
-
-
-
-
-    /**
-     * @return string
-    */
-    private function build(): string
-    {
-        $criteria = [];
-        $key = key($this->wheres);
-
-        foreach ($this->wheres as $operator => $conditions) {
-
-            if ($key !== $operator) {
-                $criteria[] = $operator;
-            }
-
-            $criteria[] = implode(" $operator ", $conditions);
-        }
-
-        return  join(' ', $criteria);
+        return sprintf('WHERE %s', join(' ', $this->wheres));
     }
 }

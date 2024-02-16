@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Connection\Extensions\PDO;
 
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
-use Laventure\Component\Database\Configuration\NullConfiguration;
+use Laventure\Component\Database\Configuration\Null\NullConfiguration;
 use Laventure\Component\Database\Connection\Connection;
 use Laventure\Component\Database\Connection\Extensions\PDO\Config\Resolver\PdoConfigurationResolver;
 use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnectionFactoryInterface;

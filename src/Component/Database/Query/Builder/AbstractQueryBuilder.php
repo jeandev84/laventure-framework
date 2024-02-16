@@ -4,8 +4,9 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Query\Builder;
 
 
+use Laventure\Component\Database\Builder\SQL\Criteria\Criteria;
 use Laventure\Component\Database\Builder\SQL\DML\Delete\DeleteBuilderInterface;
-use Laventure\Component\Database\Builder\SQL\DML\Insert\InsertBuilderInterface;
+use Laventure\Component\Database\Builder\SQL\DML\Insert\InsertSQlBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\DML\Update\UpdateBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\DQL\Select\SelectBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\ExpressionInterface;
@@ -13,6 +14,7 @@ use Laventure\Component\Database\Builder\SqlQueryBuilder;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Query\QueryInterface;
 use Laventure\Component\Database\Query\Result\QueryResultInterface;
+use Laventure\Contract\Builder\BuilderInterface;
 
 /**
  * AbstractQueryBuilder
@@ -30,9 +32,11 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     protected SqlQueryBuilder $builder;
     protected SelectBuilderInterface $select;
-    protected InsertBuilderInterface $insert;
+    protected InsertSQlBuilderInterface $insert;
     protected UpdateBuilderInterface $update;
     protected DeleteBuilderInterface $delete;
+    protected Criteria $criteria;
+    protected ExpressionInterface $expr;
 
 
 
@@ -41,9 +45,11 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function __construct(ConnectionInterface $connection)
     {
-        $builder       = new SqlQueryBuilder($connection);
-        $this->select  = $builder->select();
-        $this->builder = $builder;
+        $builder        = new SqlQueryBuilder($connection);
+        $this->criteria = new Criteria();
+        $this->expr     = $builder->expr();
+        $this->select   = $builder->select()->criteria($this->criteria);
+        $this->builder  = $builder;
     }
 
 
@@ -54,7 +60,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function expr(): ExpressionInterface
     {
-        return $this->builder->expr();
+        return $this->expr;
     }
 
 
@@ -101,6 +107,22 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
 
         return $this;
     }
+
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function map(string $classname): static
+    {
+        $this->classname = $classname;
+
+        return $this;
+    }
+
+
+
 
 
 
@@ -223,6 +245,28 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
 
 
 
+    /**
+     * @inheritDoc
+    */
+    public function andHaving(string $condition): static
+    {
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function orHaving(string $condition): static
+    {
+        return $this;
+    }
+
+
+
 
 
     /**
@@ -230,79 +274,137 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function orderBy(string $column, string $direction = null): static
     {
-        // TODO: Implement orderBy() method.
+         $this->select->orderBy($column, $direction);
+
+         return $this;
     }
+
+
 
     /**
      * @inheritDoc
-     */
-    public function addOrderBy(string $orders): static
+    */
+    public function addOrderBy(string ...$orders): static
     {
-        // TODO: Implement addOrderBy() method.
+        $this->select->addOrderBy(join(', ', $orders));
+
+        return $this;
     }
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function limit(int $limit): static
     {
-        // TODO: Implement limit() method.
+        $this->select->limit($limit);
+
+        return $this;
     }
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function offset($offset): static
     {
-        // TODO: Implement offset() method.
+        $this->select->offset($offset);
+
+        return $this;
     }
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function insert(string $table): static
     {
-        // TODO: Implement insert() method.
+        $this->insert->insert($table)
+                     ->criteria($this->criteria);
+
+        return $this;
     }
+
+
+
 
     /**
      * @inheritDoc
      */
     public function values(array $values): static
     {
-        // TODO: Implement values() method.
+        if (isset($values[0])) {
+            foreach ($values as $position => $attributes) {
+                $this->resolveMultipleInsert($position, $attributes);
+            }
+        } else {
+            $this->resolveInsert($values);
+        }
+
+        return $this;
     }
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function setValue(string $column, $value, int $index = 0): static
     {
-        // TODO: Implement setValue() method.
+        $this->insert->setValue($column, $value, $index);
+
+        return $this;
     }
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function update(string $table, string $alias = ''): static
     {
-        // TODO: Implement update() method.
+        $this->update->update($table ? "$table $alias": $table)
+                     ->criteria($this->criteria);
+
+        return $this;
     }
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function set(string $column, $value): static
     {
-        // TODO: Implement set() method.
+        $this->update->set($column, $value);
+
+        return $this;
     }
+
+
+
+
 
     /**
      * @inheritDoc
     */
     public function delete(string $table, string $alias = ''): static
     {
+        $this->delete->delete($table ? "$table $alias": $table)
+                     ->criteria($this->criteria);
 
+        return $this;
     }
 
 
@@ -313,8 +415,11 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function where(string $condition): static
     {
+        $this->criteria->wheres[] = $condition;
 
+        return $this;
     }
+
 
 
 
@@ -323,8 +428,11 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function andWhere(string $condition): static
     {
+        $this->criteria->wheres['AND'][] = $condition;
 
+        return $this;
     }
+
 
 
 
@@ -333,74 +441,110 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function orWhere(string $condition): static
     {
+        $this->criteria->wheres['OR'][] = $condition;
 
+        return $this;
     }
 
 
 
 
-    /**
-     * @inheritDoc
-    */
-    public function criteria(array $criteria): static
-    {
-
-    }
-
-
-
 
     /**
-     * @inheritDoc
-    */
-    public function bindParam($id, $value, $type = null): static
-    {
-
-    }
-
-
-
-
-    /**
-     * @inheritDoc
+     * @param $id
+     * @param $value
+     * @return $this
     */
     public function setParameter($id, $value): static
     {
+        $this->criteria->parameters[$id] = $value;
 
+        return $this;
     }
 
 
 
 
+
+
     /**
-     * @inheritDoc
+     * @param $id
+     * @param $value
+     * @param $type
+     * @return $this
+    */
+    public function bindParam($id, $value, $type = null): static
+    {
+        $this->criteria->bindingParams[$id] = [$id, $value, intval($type)];
+
+        return $this;
+    }
+
+
+
+
+
+
+    /**
+     * @param $id
+     * @param $value
+     * @param $type
+     * @return $this
+    */
+    public function bindValue($id, $value, $type = null): static
+    {
+        $this->criteria->bindingValues[$id] = [$id, $value, intval($type)];
+
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @param $id
+     * @return mixed
     */
     public function getParameter($id): mixed
     {
-        return $this;
+        return $this->criteria->parameters[$id] ?? null;
     }
 
 
 
 
+
+
     /**
-     * @inheritDoc
+     * @param array $parameters
+     * @return $this
     */
     public function setParameters(array $parameters): static
     {
+        $this->criteria->parameters = array_merge(
+            $this->criteria->parameters,
+            $parameters
+        );
+
         return $this;
     }
 
 
 
 
+
+
     /**
-     * @inheritDoc
+     * @return array
     */
     public function getParameters(): array
     {
-
+        return $this->criteria->parameters;
     }
+
+
+
 
 
 
@@ -416,12 +560,14 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
 
 
 
+
+
     /**
      * @inheritDoc
     */
     public function getSQL(): string
     {
-
+         return $this->builder->getCurrent()->getSQL();
     }
 
 
@@ -433,20 +579,13 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function getQuery(): QueryInterface
     {
-
+        $statement = $this->builder->getCurrent()->getQuery();
+        $statement->setParameters($this->criteria->parameters);
+        $statement->bindValues($this->criteria->bindingValues);
+        $statement->bindParams($this->criteria->bindingParams);
+        return $statement;
     }
 
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function fetch(): QueryResultInterface
-    {
-        return $this->select->fetch();
-    }
 
 
 
@@ -457,18 +596,18 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function getSelect(): SelectBuilderInterface
     {
-
+       return $this->select;
     }
 
 
 
 
     /**
-     * @return InsertBuilderInterface
+     * @return InsertSQlBuilderInterface
     */
-    public function getInsert(): InsertBuilderInterface
+    public function getInsert(): InsertSQlBuilderInterface
     {
-
+       return $this->insert;
     }
 
 
@@ -480,7 +619,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function getUpdate(): UpdateBuilderInterface
     {
-
+        return $this->update;
     }
 
 
@@ -493,6 +632,36 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function getDelete(): DeleteBuilderInterface
     {
-
+        return $this->delete;
     }
+
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function getCriteria(): Criteria
+    {
+        return $this->criteria;
+    }
+
+
+
+
+    /**
+     * @param array $attributes
+     * @param int $position
+     * @return $this
+    */
+    abstract protected function resolveMultipleInsert(int $position, array $attributes): static;
+
+
+
+
+    /**
+     * @param array $attributes
+     * @return $this
+    */
+    abstract protected function resolveInsert(array $attributes): static;
 }

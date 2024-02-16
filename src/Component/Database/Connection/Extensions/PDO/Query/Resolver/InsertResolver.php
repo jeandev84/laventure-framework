@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\PDO\Query\Resolver;
 
-use Laventure\Component\Database\Builder\SQL\DML\Insert\InsertBuilderInterface;
+use Laventure\Component\Database\Builder\SQL\DML\Insert\InsertSQlBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\DML\Insert\Resolver\InsertResolverInterface;
 
 /**
@@ -19,9 +19,9 @@ use Laventure\Component\Database\Builder\SQL\DML\Insert\Resolver\InsertResolverI
 class InsertResolver implements InsertResolverInterface
 {
     /**
-     * @param InsertBuilderInterface $qb
+     * @param InsertSQlBuilderInterface $qb
     */
-    public function __construct(protected InsertBuilderInterface $qb)
+    public function __construct(protected InsertSQlBuilderInterface $qb)
     {
     }
 
@@ -31,7 +31,7 @@ class InsertResolver implements InsertResolverInterface
     /**
      * @inheritDoc
     */
-    public function resolve(array $attributes): InsertBuilderInterface
+    public function resolve(array $attributes): InsertSQlBuilderInterface
     {
         if (isset($attributes[0])) {
             foreach ($attributes as $position => $values) {

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL\Conditions\Contract;
 
-use Laventure\Component\Database\Builder\SQL\BuilderInterface;
+use Laventure\Component\Database\Builder\SQL\SQlBuilderInterface;
 
 /**
  * BuilderConditionInterface
@@ -15,7 +15,7 @@ use Laventure\Component\Database\Builder\SQL\BuilderInterface;
  *
  * @package  Laventure\Component\Database\Builder\SQL\Conditions\Contract
  */
-interface BuilderConditionInterface extends BuilderInterface
+interface SQlBuilderConditionInterface extends SQlBuilderInterface
 {
     /**
      * @param string $condition
@@ -23,25 +23,4 @@ interface BuilderConditionInterface extends BuilderInterface
      * @return $this
     */
     public function where(string $condition): static;
-
-
-
-
-
-    /**
-     * @param string $condition
-     * @return $this
-    */
-    public function andWhere(string $condition): static;
-
-
-
-
-
-
-    /**
-     * @param string $condition
-     * @return $this
-    */
-    public function orWhere(string $condition): static;
 }

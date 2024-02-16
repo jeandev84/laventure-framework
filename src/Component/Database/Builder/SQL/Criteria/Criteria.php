@@ -79,6 +79,12 @@ class Criteria
     public ?string $table = null;
 
 
+    /**
+     * @var string|null
+    */
+    public ?string $alias = null;
+
+
 
     /**
      * @var array
@@ -150,17 +156,18 @@ class Criteria
     public function table(string $table, string $alias = ''): void
     {
         $this->table = ($alias ? "$table $alias" : $table);
+        $this->alias = $alias;
     }
+
+
+
 
 
     /**
-     * @param string $from
-     * @param string $alias
-     * @return void
+     * @return array
     */
-    public function from(string $from, string $alias = ''): void
+    public function toArray(): array
     {
-        $this->from[$from] = ($alias ? "$from $alias" : $from);
+        return get_object_vars($this);
     }
-
 }

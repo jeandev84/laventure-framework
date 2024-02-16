@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Builder\SQL\Criteria;
 
 /**
- * CriteriaInterface
+ * HasCriteriaInterface
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -13,7 +13,7 @@ namespace Laventure\Component\Database\Builder\SQL\Criteria;
  *
  * @package  Laventure\Component\Database\Builder\SQL\Criteria
 */
-interface CriteriaInterface
+interface HasCriteriaInterface
 {
     /**
      * @return mixed

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\PDO\Query\Resolver;
 
-use Laventure\Component\Database\Builder\SQL\Conditions\Contract\BuilderConditionInterface;
+use Laventure\Component\Database\Builder\SQL\Conditions\Contract\SQlBuilderConditionInterface;
 use Laventure\Component\Database\Builder\SQL\Conditions\Resolver\CriteriaResolverInterface;
 
 /**
@@ -19,10 +19,10 @@ use Laventure\Component\Database\Builder\SQL\Conditions\Resolver\CriteriaResolve
 class CriteriaResolver implements CriteriaResolverInterface
 {
     /**
-     * @param BuilderConditionInterface $qb
+     * @param SQlBuilderConditionInterface $qb
     */
     public function __construct(
-        protected BuilderConditionInterface $qb
+        protected SQlBuilderConditionInterface $qb
     ) {
     }
 

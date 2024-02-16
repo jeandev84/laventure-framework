@@ -11,7 +11,7 @@ use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Query\QueryInterface;
 
 /**
- * BuilderTrait
+ * SQlBuilderTrait
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -19,7 +19,7 @@ use Laventure\Component\Database\Query\QueryInterface;
  *
  * @package  Laventure\Component\Database\Builder\SQL
  */
-trait BuilderTrait
+trait SQlBuilderTrait
 {
     /**
      * @var ConnectionInterface
@@ -62,101 +62,16 @@ trait BuilderTrait
 
 
 
-
     /**
-     * @param $id
-     * @param $value
+     * @param Criteria $criteria
      * @return $this
     */
-    public function setParameter($id, $value): static
+    public function criteria(Criteria $criteria): static
     {
-        $this->criteria->parameters[$id] = $value;
+        $this->criteria = $criteria;
 
         return $this;
     }
-
-
-
-
-
-
-    /**
-     * @param $id
-     * @param $value
-     * @param $type
-     * @return $this
-     */
-    public function bindParam($id, $value, $type = null): static
-    {
-        $this->criteria->bindingParams[$id] = [$id, $value, intval($type)];
-
-        return $this;
-    }
-
-
-
-
-
-
-    /**
-     * @param $id
-     * @param $value
-     * @param $type
-     * @return $this
-     */
-    public function bindValue($id, $value, $type = null): static
-    {
-        $this->criteria->bindingValues[$id] = [$id, $value, intval($type)];
-
-        return $this;
-    }
-
-
-
-
-
-    /**
-     * @param $id
-     * @return mixed
-     */
-    public function getParameter($id): mixed
-    {
-        return $this->criteria->parameters[$id] ?? null;
-    }
-
-
-
-
-
-
-    /**
-     * @param array $parameters
-     * @return $this
-     */
-    public function setParameters(array $parameters): static
-    {
-        $this->criteria->parameters = array_merge(
-            $this->criteria->parameters,
-            $parameters
-        );
-
-        return $this;
-    }
-
-
-
-
-
-
-    /**
-     * @return array
-     */
-    public function getParameters(): array
-    {
-        return $this->criteria->parameters;
-    }
-
-
 
 
 
@@ -164,13 +79,16 @@ trait BuilderTrait
 
     /**
      * @return QueryInterface
-     */
+    */
     public function getQuery(): QueryInterface
     {
-        $statement = $this->connection->statement($this->getSQL());
+        return $this->connection->statement($this->getSQL());
+
+        /*
         $statement->bindParams($this->getBindingParams());
         $statement->bindValues($this->getBindingValues());
         return $statement->setParameters($this->getParameters());
+        */
     }
 
 
@@ -186,14 +104,6 @@ trait BuilderTrait
         return $this->getSQL();
     }
 
-
-
-
-
-    /**
-     * @return string
-    */
-    abstract public function getSQL(): string;
 
 
 
@@ -220,30 +130,6 @@ trait BuilderTrait
 
 
 
-
-    /**
-     * @return array
-    */
-    public function getBindingParams(): array
-    {
-        return $this->criteria->bindingParams;
-    }
-
-
-
-
-
-    /**
-     * @return array
-    */
-    public function getBindingValues(): array
-    {
-        return $this->criteria->bindingValues;
-    }
-
-
-
-
     /**
      * @return ConnectionInterface
     */
@@ -251,4 +137,12 @@ trait BuilderTrait
     {
         return $this->connection;
     }
+
+
+
+
+    /**
+     * @return string
+    */
+    abstract public function getSQL(): string;
 }

@@ -1,23 +1,16 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder;
 
-use Laventure\Component\Database\Builder\SQL\Conditions\Contract\HasConditionInterface;
-use Laventure\Component\Database\Builder\SQL\DML\Delete\DeleteBuilder;
-use Laventure\Component\Database\Builder\SQL\DML\Delete\DeleteBuilderInterface;
-use Laventure\Component\Database\Builder\SQL\DML\Insert\InsertBuilderInterface;
-use Laventure\Component\Database\Builder\SQL\DML\Update\UpdateBuilderInterface;
-use Laventure\Component\Database\Builder\SQL\DQL\Select\SelectBuilderInterface;
+use Laventure\Component\Database\Builder\SQL\Criteria\HasCriteriaInterface;
 use Laventure\Component\Database\Builder\SQL\ExpressionInterface;
 use Laventure\Component\Database\Connection\ConnectionInterface;
-use Laventure\Component\Database\Query\Builder\Decorator\Query;
 use Laventure\Component\Database\Query\QueryInterface;
 use Laventure\Component\Database\Query\Result\QueryResultInterface;
 
 /**
- * BuilderInterface
+ * BuilderInterfaceHas
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -25,7 +18,7 @@ use Laventure\Component\Database\Query\Result\QueryResultInterface;
  *
  * @package  Laventure\Component\Database\Query\Builder
 */
-interface QueryBuilderInterface
+interface QueryBuilderInterface extends HasCriteriaInterface
 {
     /**
      * @return ExpressionInterface
@@ -66,6 +59,16 @@ interface QueryBuilderInterface
     public function from(string $from, string $alias = ''): static;
 
 
+
+
+
+
+    /**
+     * @param string $classname
+     *
+     * @return $this
+    */
+    public function map(string $classname): static;
 
 
 
@@ -234,14 +237,11 @@ interface QueryBuilderInterface
 
 
 
-
-
-
     /**
-     * @param string $orders
+     * @param string ...$orders
      * @return $this
     */
-    public function addOrderBy(string $orders): static;
+    public function addOrderBy(string ...$orders): static;
 
 
 
@@ -287,7 +287,7 @@ interface QueryBuilderInterface
 
 
     /**
-     * Set insert values
+     * Set insert many values
      *
      * @param array $values
      * @return $this
@@ -480,17 +480,6 @@ interface QueryBuilderInterface
 
 
     /**
-     * @param string $sql
-     * @return $this
-    */
-    public function addSQL(string $sql): static;
-
-
-
-
-
-
-    /**
      * Returns query string
      *
      * @return string
@@ -508,17 +497,4 @@ interface QueryBuilderInterface
      * @return QueryInterface
     */
     public function getQuery(): QueryInterface;
-
-
-
-
-
-
-
-    /**
-     * Returns query result
-     *
-     * @return QueryResultInterface
-    */
-    public function fetch(): QueryResultInterface;
 }

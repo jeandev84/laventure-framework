@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Builder\SQL\DQL\Select;
 
 
-use Laventure\Component\Database\Builder\SQL\Conditions\BuilderConditionTrait;
+use Laventure\Component\Database\Builder\SQL\Conditions\SQlBuilderConditionTrait;
 use Laventure\Component\Database\Builder\SQL\Expr\From;
 use Laventure\Component\Database\Builder\SQL\Expr\GroupBy;
 use Laventure\Component\Database\Builder\SQL\Expr\Having;
@@ -26,7 +26,7 @@ use Laventure\Component\Database\Query\Result\QueryResultInterface;
 */
 class SelectBuilder implements SelectBuilderInterface
 {
-    use BuilderConditionTrait;
+    use SQlBuilderConditionTrait;
 
 
     /**
@@ -59,7 +59,8 @@ class SelectBuilder implements SelectBuilderInterface
     */
     public function from(string $table, string $alias = ''): static
     {
-        $this->criteria->from($table, $alias);
+        $this->criteria->from[$table] = ($alias ? "$table $alias" : $table);
+        $this->criteria->alias        = $alias;
 
         return $this;
     }
@@ -259,27 +260,5 @@ class SelectBuilder implements SelectBuilderInterface
             new OrderBy($this->criteria->orderBy),
             new Limit($this->criteria->limit, $this->criteria->offset)
         ])->format();
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function getName(): string
-    {
-        return 'select';
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function fetch(): QueryResultInterface
-    {
-        return $this->getQuery()->fetch();
     }
 }

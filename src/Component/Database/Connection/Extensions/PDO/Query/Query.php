@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\PDO\Query;
 
-use Laventure\Component\Database\Query\QueryException;
+use Laventure\Component\Database\Query\Exception\QueryException;
 use Laventure\Component\Database\Query\QueryInterface;
 use Laventure\Component\Database\Query\Result\QueryResultInterface;
 use PDO;
@@ -273,7 +273,7 @@ class Query implements QueryInterface
 
     /**
      * @inheritDoc
-     */
+    */
     public function map(string $classname): static
     {
         $this->statement->setFetchMode(PDO::FETCH_CLASS, $classname);
@@ -289,7 +289,7 @@ class Query implements QueryInterface
 
     /**
      * @inheritDoc
-     */
+    */
     public function fetch(): QueryResultInterface
     {
         $this->execute();
@@ -303,7 +303,7 @@ class Query implements QueryInterface
 
     /**
      * @inheritDoc
-     */
+    */
     public function getSQL(): string
     {
         return $this->statement->queryString;

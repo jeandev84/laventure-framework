@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Connection\Extensions\PDO\Query;
 
 use Laventure\Component\Database\Builder\SQL\DML\Delete\DeleteBuilderInterface;
-use Laventure\Component\Database\Builder\SQL\DML\Insert\InsertBuilderInterface;
+use Laventure\Component\Database\Builder\SQL\DML\Insert\InsertSQlBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\DML\Update\UpdateBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\DQL\Select\SelectBuilderInterface;
 use Laventure\Component\Database\Connection\Extensions\PDO\PdoConnection;
@@ -25,23 +25,13 @@ use Laventure\Component\Database\Query\Builder\AbstractQueryBuilder;
 */
 class QueryBuilder extends AbstractQueryBuilder
 {
-    /**
-     * @param PdoConnection $connection
-    */
-    public function __construct(PdoConnection $connection)
-    {
-        parent::__construct($connection);
-    }
-
-
 
     /**
      * @inheritDoc
     */
-    public function select(string $columns = null, array $criteria = []): SelectBuilderInterface
+    public function criteria(array $criteria): static
     {
-        $conditionResolver = new CriteriaResolver($this->builder->select($columns));
-        return $conditionResolver->resolve($criteria);
+
     }
 
 
@@ -50,13 +40,15 @@ class QueryBuilder extends AbstractQueryBuilder
     /**
      * @inheritDoc
     */
-    public function insert(string $table, array $attributes): InsertBuilderInterface
+    protected function resolveMultipleInsert(int $position, array $attributes): static
     {
-        $resolver = new InsertResolver($this->builder->insert($table));
-        return $resolver->resolve($attributes);
+        foreach ($attributes as $column => $value) {
+            $this->setValue($column, ":{$column}_{$position}", $position);
+            $this->setParameter("{$column}_{$position}", $value);
+        }
+
+        return $this;
     }
-
-
 
 
 
@@ -64,22 +56,13 @@ class QueryBuilder extends AbstractQueryBuilder
     /**
      * @inheritDoc
     */
-    public function update(string $table, array $attributes, array $criteria = []): UpdateBuilderInterface
+    protected function resolveInsert(array $attributes): static
     {
-        $resolver          = new UpdateResolver($this->builder->update($table));
-        $conditionResolver = new CriteriaResolver($resolver->resolve($attributes));
-        return $conditionResolver->resolve($criteria);
-    }
+        foreach ($attributes as $column => $value) {
+            $this->setValue($column, ":$column");
+            $this->setParameter($column, $value);
+        }
 
-
-
-
-    /**
-     * @inheritDoc
-     */
-    public function delete(string $table, array $criteria = []): DeleteBuilderInterface
-    {
-        $conditionResolver = new CriteriaResolver($this->builder->delete($table));
-        return $conditionResolver->resolve($criteria);
+        return $this;
     }
 }

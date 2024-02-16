@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Builder;
 
 use Laventure\Component\Database\Builder\SQL\DML\Delete\DeleteBuilderInterface;
-use Laventure\Component\Database\Builder\SQL\DML\Insert\InsertBuilderInterface;
+use Laventure\Component\Database\Builder\SQL\DML\Insert\InsertSQlBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\DML\Update\UpdateBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\DQL\Select\SelectBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\ExpressionInterface;
@@ -40,9 +40,9 @@ interface SqlQueryBuilderInterface
 
     /**
      * @param string $table
-     * @return InsertBuilderInterface
+     * @return InsertSQlBuilderInterface
     */
-    public function insert(string $table): InsertBuilderInterface;
+    public function insert(string $table): InsertSQlBuilderInterface;
 
 
 

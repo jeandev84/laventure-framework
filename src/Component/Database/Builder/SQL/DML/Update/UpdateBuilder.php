@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL\DML\Update;
 
-use Laventure\Component\Database\Builder\SQL\Conditions\BuilderConditionTrait;
+use Laventure\Component\Database\Builder\SQL\Conditions\SQlBuilderConditionTrait;
 use Laventure\Component\Database\Builder\SQL\Expr\Set;
 use Laventure\Component\Database\Builder\SQL\Expr\Update;
 use Laventure\Component\Database\Builder\SQL\Expr\Where;
@@ -20,7 +20,7 @@ use Laventure\Component\Database\Builder\SQL\Expr\Where;
 */
 class UpdateBuilder implements UpdateBuilderInterface
 {
-    use BuilderConditionTrait;
+    use SQlBuilderConditionTrait;
 
 
     /**
@@ -61,15 +61,5 @@ class UpdateBuilder implements UpdateBuilderInterface
             new Set($this->criteria->set),
             new Where($this->criteria->wheres)
         ])->format();
-    }
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function getName(): string
-    {
-        return 'update';
     }
 }

@@ -1,11 +1,10 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Contract\Builder;
 
 /**
- * BuilderInterface
+ * BuilderInterfaceHas
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *

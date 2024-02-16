@@ -1,8 +1,9 @@
 <?php
-
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Configuration;
+namespace Laventure\Component\Database\Configuration\Null;
+
+use Laventure\Component\Database\Configuration\Configuration;
 
 /**
  * NullConfiguration
@@ -11,7 +12,7 @@ namespace Laventure\Component\Database\Configuration;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Configuration
+ * @package  Laventure\Component\Database\Configuration\Null
 */
 class NullConfiguration extends Configuration
 {

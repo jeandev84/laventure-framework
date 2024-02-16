@@ -17,7 +17,11 @@ use Stringable;
  */
 class From implements Stringable
 {
-    public function __construct(public array $from)
+
+    /**
+     * @param array $table
+    */
+    public function __construct(public array $table)
     {
     }
 
@@ -28,6 +32,6 @@ class From implements Stringable
     */
     public function __toString(): string
     {
-        return "FROM ". join(', ', array_values($this->from));
+        return "FROM ". join(', ', array_values($this->table));
     }
 }
