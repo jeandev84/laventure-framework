@@ -27,17 +27,6 @@ class QueryBuilder extends AbstractQueryBuilder
 {
 
     /**
-     * @inheritDoc
-    */
-    public function criteria(array $criteria): static
-    {
-       return $this;
-    }
-
-
-
-
-    /**
      * @param string $column
      * @param $value
      * @return $this
@@ -78,5 +67,22 @@ class QueryBuilder extends AbstractQueryBuilder
         }
 
         return $this;
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    protected function resolveCriteria(string $column, $value): string
+    {
+         $expr = $this->expr();
+
+         if (is_array($value)) {
+             return strval($expr->in($column, ":$column"));
+         }
+
+         return strval($expr->eq($column, ":$column"));
     }
 }

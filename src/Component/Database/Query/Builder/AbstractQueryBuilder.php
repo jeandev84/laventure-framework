@@ -478,6 +478,25 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
 
 
     /**
+     * @inheritDoc
+    */
+    public function criteria(array $criteria): static
+    {
+        foreach ($criteria as $column => $value) {
+            $this->andWhere($this->resolveCriteria($column, $value));
+            $this->setParameter($column, $value);
+        }
+
+        return $this;
+    }
+
+
+
+
+
+
+
+    /**
      * @param $id
      * @param $value
      * @return $this
@@ -784,4 +803,15 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
      * @return $this
     */
     abstract protected function resolveInsert(array $attributes): static;
+
+
+
+
+
+    /**
+     * @param string $column
+     * @param $value
+     * @return string
+    */
+    abstract protected function resolveCriteria(string $column, $value): string;
 }
