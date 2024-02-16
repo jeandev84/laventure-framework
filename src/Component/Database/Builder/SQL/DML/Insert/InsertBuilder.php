@@ -16,7 +16,7 @@ use Laventure\Component\Database\Builder\SQL\Expr\Insert;
  *
  * @package  Laventure\Component\Database\Builder\SQL\DML\Insert
  */
-class InsertBuilder implements InsertSQlBuilderInterface
+class InsertBuilder implements InsertBuilderInterface
 {
     use SQlBuilderTrait;
 

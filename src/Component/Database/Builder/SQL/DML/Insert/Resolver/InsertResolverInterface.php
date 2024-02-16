@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL\DML\Insert\Resolver;
 
-use Laventure\Component\Database\Builder\SQL\DML\Insert\InsertSQlBuilderInterface;
+use Laventure\Component\Database\Builder\SQL\DML\Insert\InsertBuilderInterface;
 
 /**
  * InsertResolverInterface
@@ -20,7 +20,7 @@ interface InsertResolverInterface
     /**
      * @param array $attributes
      *
-     * @return InsertSQlBuilderInterface
+     * @return InsertBuilderInterface
     */
-    public function resolve(array $attributes): InsertSQlBuilderInterface;
+    public function resolve(array $attributes): InsertBuilderInterface;
 }

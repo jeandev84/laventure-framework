@@ -6,7 +6,7 @@ namespace Laventure\Component\Database\Builder\SQL\DML\Delete;
 
 use Laventure\Component\Database\Builder\SQL\Conditions\SQlBuilderConditionTrait;
 use Laventure\Component\Database\Builder\SQL\Expr\Where;
-use Laventure\Component\Routing\Route\Attributes\Delete;
+use Laventure\Component\Database\Builder\SQL\Expr\Delete;
 
 /**
  * DeleteBuilder

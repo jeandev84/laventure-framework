@@ -7,14 +7,13 @@ namespace Laventure\Component\Database\Query\Builder;
 use Laventure\Component\Database\Builder\SQL\Conditions\Contract\SQlBuilderConditionInterface;
 use Laventure\Component\Database\Builder\SQL\Criteria\Criteria;
 use Laventure\Component\Database\Builder\SQL\DML\Delete\DeleteBuilderInterface;
-use Laventure\Component\Database\Builder\SQL\DML\Insert\InsertSQlBuilderInterface;
+use Laventure\Component\Database\Builder\SQL\DML\Insert\InsertBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\DML\Update\UpdateBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\DQL\Select\SelectBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\Expr\Conditions\andX;
 use Laventure\Component\Database\Builder\SQL\Expr\Conditions\orX;
 use Laventure\Component\Database\Builder\SQL\ExpressionInterface;
 use Laventure\Component\Database\Builder\SQL\SQlBuilderInterface;
-use Laventure\Component\Database\Builder\SqlQueryBuilder;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Query\QueryInterface;
 
@@ -30,16 +29,8 @@ use Laventure\Component\Database\Query\QueryInterface;
  */
 abstract class AbstractQueryBuilder implements QueryBuilderInterface
 {
-    /**
-     * @var SqlQueryBuilder
-    */
-    protected SqlQueryBuilder $builder;
-    protected SelectBuilderInterface $select;
-    protected InsertSQlBuilderInterface $insert;
-    protected UpdateBuilderInterface $update;
-    protected DeleteBuilderInterface $delete;
+    protected Builder $builder;
     protected Criteria $criteria;
-    protected ExpressionInterface $expr;
     protected string $class;
 
 
@@ -70,11 +61,8 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function __construct(ConnectionInterface $connection)
     {
-        $builder        = new SqlQueryBuilder($connection);
-        $this->criteria = new Criteria();
-        $this->expr     = $builder->expr();
-        $this->select   = $builder->select()->criteria($this->criteria);
-        $this->builder  = $builder;
+        $this->builder  = new Builder($connection);
+        $this->criteria = $this->builder->getCriteria();
     }
 
 
@@ -85,7 +73,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function expr(): ExpressionInterface
     {
-        return $this->expr;
+        return $this->builder->expr();
     }
 
 
@@ -99,9 +87,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
         $columns = $columns ?: "*";
         $selects = ($distinct ? "DISTINCT $columns" : $columns);
 
-        $this->select->select($selects);
-
-        return $this;
+        return $this->addSelect($selects);
     }
 
 
@@ -113,7 +99,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function addSelect(string $columns): static
     {
-        $this->select->addSelect($columns);
+        $this->builder->select()->addSelect($columns);
 
         return $this;
     }
@@ -128,7 +114,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function from(string $from, string $alias = ''): static
     {
-        $this->select->from($from, $alias);
+        $this->builder->select()->from($from, $alias);
 
         return $this;
     }
@@ -157,7 +143,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function join(string $table, string $condition): static
     {
-        $this->select->join($table, $condition);
+        $this->builder->select()->join($table, $condition);
 
         return $this;
     }
@@ -170,7 +156,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function leftJoin(string $table, string $condition): static
     {
-        $this->select->leftJoin($table, $condition);
+        $this->builder->select()->leftJoin($table, $condition);
 
         return $this;
     }
@@ -183,7 +169,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function rightJoin(string $table, string $condition): static
     {
-        $this->select->rightJoin($table, $condition);
+        $this->builder->select()->rightJoin($table, $condition);
 
         return $this;
     }
@@ -196,7 +182,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function innerJoin(string $table, string $condition): static
     {
-        $this->select->innerJoin($table, $condition);
+        $this->builder->select()->innerJoin($table, $condition);
 
         return $this;
     }
@@ -209,7 +195,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function fullJoin(string $table, string $condition): static
     {
-        $this->select->fullJoin($table, $condition);
+        $this->builder->select()->fullJoin($table, $condition);
 
         return $this;
     }
@@ -222,7 +208,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function addJoin(string $join): static
     {
-        $this->select->addJoin($join);
+        $this->builder->select()->addJoin($join);
 
         return $this;
     }
@@ -235,7 +221,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function groupBy(string $columns): static
     {
-        $this->select->groupBy($columns);
+        $this->builder->select()->groupBy($columns);
 
         return $this;
     }
@@ -249,7 +235,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function addGroupBy(string $columns): static
     {
-        $this->select->addGroupBy($columns);
+        $this->builder->select()->addGroupBy($columns);
 
         return $this;
     }
@@ -303,10 +289,13 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function orderBy(string $column, string $direction = null): static
     {
-         $this->select->orderBy($column, $direction);
+         $this->builder->select()->orderBy($column, $direction);
 
          return $this;
     }
+
+
+
 
 
 
@@ -315,7 +304,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function addOrderBy(string ...$orders): static
     {
-        $this->select->addOrderBy(join(', ', $orders));
+        $this->builder->select()->addOrderBy(join(', ', $orders));
 
         return $this;
     }
@@ -328,7 +317,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function limit(int $limit): static
     {
-        $this->select->limit($limit);
+        $this->builder->select()->limit($limit);
 
         return $this;
     }
@@ -341,7 +330,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function offset($offset): static
     {
-        $this->select->offset($offset);
+        $this->builder->select()->offset($offset);
 
         return $this;
     }
@@ -354,8 +343,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function insert(string $table): static
     {
-        $this->insert->insert($table)
-                     ->criteria($this->criteria);
+        $this->builder->insert()->insert($table);
 
         return $this;
     }
@@ -388,7 +376,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function setValue(string $column, $value, int $index = 0): static
     {
-        $this->insert->setValue($column, $value, $index);
+        $this->builder->insert()->setValue($column, $value, $index);
 
         return $this;
     }
@@ -401,8 +389,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function update(string $table, string $alias = ''): static
     {
-        $this->update->update($table ? "$table $alias": $table)
-                     ->criteria($this->criteria);
+        $this->builder->update()->update($table ? "$table $alias": $table);
 
         return $this;
     }
@@ -416,7 +403,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function set(string $column, $value): static
     {
-        $this->update->set($column, $value);
+        $this->builder->update()->set($column, $value);
 
         return $this;
     }
@@ -430,8 +417,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function delete(string $table, string $alias = ''): static
     {
-        $this->delete->delete($table ? "$table $alias": $table)
-                     ->criteria($this->criteria);
+        $this->builder->delete()->delete($table ? "$table $alias": $table);
 
         return $this;
     }
@@ -640,54 +626,6 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
 
 
 
-
-    /**
-     * @return SelectBuilderInterface
-    */
-    public function getSelect(): SelectBuilderInterface
-    {
-       return $this->select;
-    }
-
-
-
-
-    /**
-     * @return InsertSQlBuilderInterface
-    */
-    public function getInsert(): InsertSQlBuilderInterface
-    {
-       return $this->insert;
-    }
-
-
-
-
-
-    /**
-     * @return UpdateBuilderInterface
-    */
-    public function getUpdate(): UpdateBuilderInterface
-    {
-        return $this->update;
-    }
-
-
-
-
-
-
-    /**
-     * @return DeleteBuilderInterface
-    */
-    public function getDelete(): DeleteBuilderInterface
-    {
-        return $this->delete;
-    }
-
-
-
-
     /**
      * @inheritdoc
     */
@@ -706,7 +644,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     protected function getSQLBuilder(): SQlBuilderInterface
     {
-        $builder = $this->builder->getCurrent();
+        $builder = $this->builder->getSQLBuilder();
 
         if ($builder instanceof SelectBuilderInterface) {
             $builder = $this->resolveHaving($builder);
@@ -729,14 +667,16 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     private function resolveHaving(SelectBuilderInterface $builder): SQlBuilderInterface
     {
-        $criteria = $this->resolveConditions($this->having);
+        $having = $this->resolveConditions($this->having);
 
-        if (!empty($criteria)) {
-            $builder->having(join(' ', $criteria));
+        if (!empty($having)) {
+            $builder->having(join(' ', $having));
         }
 
         return $builder;
     }
+
+
 
 
 
@@ -746,10 +686,10 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     private function resolveWheres(SQlBuilderConditionInterface $builder): SQlBuilderInterface
     {
-         $criteria = $this->resolveConditions($this->wheres);
+         $wheres = $this->resolveConditions($this->wheres);
 
-         if (!empty($criteria)) {
-             $builder->where(join(' ', $criteria));
+         if (!empty($wheres)) {
+             $builder->where(join(' ', $wheres));
          }
 
          return $builder;
@@ -782,8 +722,6 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
 
         return $criteria;
     }
-
-
 
 
 

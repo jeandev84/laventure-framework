@@ -15,7 +15,7 @@ use Laventure\Component\Database\Builder\SQL\SQlBuilderInterface;
  *
  * @package  Laventure\Component\Database\Builder\SQL\DML\Insert
  */
-interface InsertSQlBuilderInterface extends SQlBuilderInterface
+interface InsertBuilderInterface extends SQlBuilderInterface
 {
     /**
      * @param string $table

@@ -3,17 +3,12 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder;
 
-use Laventure\Component\Database\Builder\SQL\DML\Delete\DeleteBuilder;
 use Laventure\Component\Database\Builder\SQL\DML\Delete\DeleteBuilderInterface;
-use Laventure\Component\Database\Builder\SQL\DML\Insert\InsertBuilder;
-use Laventure\Component\Database\Builder\SQL\DML\Insert\InsertSQlBuilderInterface;
-use Laventure\Component\Database\Builder\SQL\DML\Update\UpdateBuilder;
+use Laventure\Component\Database\Builder\SQL\DML\Insert\InsertBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\DML\Update\UpdateBuilderInterface;
-use Laventure\Component\Database\Builder\SQL\DQL\Select\SelectBuilder;
 use Laventure\Component\Database\Builder\SQL\DQL\Select\SelectBuilderInterface;
-use Laventure\Component\Database\Builder\SQL\Expr\Expr;
 use Laventure\Component\Database\Builder\SQL\ExpressionInterface;
-use Laventure\Component\Database\Builder\SQL\SQlBuilderInterface;
+use Laventure\Component\Database\Builder\SQL\SqlBuilderFactory;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 
 
@@ -28,16 +23,8 @@ use Laventure\Component\Database\Connection\ConnectionInterface;
 */
 class SqlQueryBuilder implements SqlQueryBuilderInterface
 {
-    /**
-     * @var ConnectionInterface
-    */
-    protected ConnectionInterface $connection;
 
-
-    /**
-     * @var SQlBuilderInterface
-    */
-    protected SQlBuilderInterface $current;
+    protected SqlBuilderFactory $factory;
 
 
     /**
@@ -45,7 +32,7 @@ class SqlQueryBuilder implements SqlQueryBuilderInterface
     */
     public function __construct(ConnectionInterface $connection)
     {
-        $this->connection = $connection;
+        $this->factory = new SqlBuilderFactory($connection);
     }
 
 
@@ -56,7 +43,7 @@ class SqlQueryBuilder implements SqlQueryBuilderInterface
     */
     public function getConnection(): ConnectionInterface
     {
-        return $this->connection;
+        return $this->factory->getConnection();
     }
 
 
@@ -67,7 +54,7 @@ class SqlQueryBuilder implements SqlQueryBuilderInterface
     */
     public function expr(): ExpressionInterface
     {
-        return new Expr();
+        return $this->factory->createExpr();
     }
 
 
@@ -80,8 +67,8 @@ class SqlQueryBuilder implements SqlQueryBuilderInterface
     */
     public function select(string $selects = null): SelectBuilderInterface
     {
-        $qb = new SelectBuilder($this->connection);
-        return $this->current = $qb->select($selects ?: "*");
+        return $this->factory->createSelect()
+                             ->select($selects ?: "*");
     }
 
 
@@ -91,10 +78,10 @@ class SqlQueryBuilder implements SqlQueryBuilderInterface
     /**
      * @inheritDoc
     */
-    public function insert(string $table): InsertSQlBuilderInterface
+    public function insert(string $table): InsertBuilderInterface
     {
-        $qb = new InsertBuilder($this->connection);
-        return $this->current = $qb->insert($table);
+        return $this->factory->createInsert()
+                             ->insert($table);
     }
 
 
@@ -106,8 +93,8 @@ class SqlQueryBuilder implements SqlQueryBuilderInterface
     */
     public function update(string $table): UpdateBuilderInterface
     {
-        $qb = new UpdateBuilder($this->connection);
-        return $this->current = $qb->update($table);
+        return $this->factory->createUpdate()
+                             ->update($table);
     }
 
 
@@ -119,18 +106,7 @@ class SqlQueryBuilder implements SqlQueryBuilderInterface
     */
     public function delete(string $table): DeleteBuilderInterface
     {
-        $qb = new DeleteBuilder($this->connection);
-        return $this->current = $qb->delete($table);
-    }
-
-    
-    
-    
-    /**
-     * @return SQlBuilderInterface
-    */
-    public function getCurrent(): SQlBuilderInterface
-    {
-        return $this->current;
+        return $this->factory->createDelete()
+                             ->delete($table);
     }
 }
