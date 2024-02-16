@@ -589,33 +589,11 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
 
 
     /**
-     * @return SQlBuilderInterface
-    */
-    public function getCurrentBuilder(): SQlBuilderInterface
-    {
-        $builder = $this->builder->current();
-
-        if ($builder instanceof SelectBuilderInterface) {
-            $builder = $this->resolveCurrentSelect($builder);
-        }
-
-        if ($builder instanceof SQlBuilderConditionInterface) {
-            $builder = $this->resolveWheres($builder);
-        }
-
-        return $builder;
-    }
-
-
-
-
-
-    /**
      * @inheritDoc
     */
     public function getSQL(): string
     {
-         return $this->getCurrentBuilder()->getSQL();
+         return $this->getSQLBuilder()->getSQL();
     }
 
 
@@ -627,7 +605,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function getQuery(): QueryInterface
     {
-        $statement = $this->getCurrentBuilder()->getQuery();
+        $statement = $this->getSQLBuilder()->getQuery();
         $statement->setParameters($this->criteria->parameters);
         $statement->bindValues($this->criteria->bindingValues);
         $statement->bindParams($this->criteria->bindingParams);
@@ -698,12 +676,33 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
 
 
 
+    /**
+     * @return SQlBuilderInterface
+    */
+    protected function getSQLBuilder(): SQlBuilderInterface
+    {
+        $builder = $this->builder->getCurrent();
+
+        if ($builder instanceof SelectBuilderInterface) {
+            $builder = $this->resolveHaving($builder);
+        }
+
+        if ($builder instanceof SQlBuilderConditionInterface) {
+            $builder = $this->resolveWheres($builder);
+        }
+
+        return $builder;
+    }
+
+
+
+
 
     /**
      * @param SelectBuilderInterface $builder
      * @return SQlBuilderInterface
     */
-    private function resolveCurrentSelect(SelectBuilderInterface $builder): SQlBuilderInterface
+    private function resolveHaving(SelectBuilderInterface $builder): SQlBuilderInterface
     {
         $criteria = $this->resolveConditions($this->having);
 
