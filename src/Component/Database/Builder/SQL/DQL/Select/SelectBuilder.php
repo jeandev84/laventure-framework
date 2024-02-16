@@ -1,12 +1,10 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL\DQL\Select;
 
-use Laventure\Component\Database\Builder\SQL\BuilderTrait;
+
 use Laventure\Component\Database\Builder\SQL\Conditions\BuilderConditionTrait;
-use Laventure\Component\Database\Builder\SQL\Conditions\ConditionBuilder;
 use Laventure\Component\Database\Builder\SQL\Expr\From;
 use Laventure\Component\Database\Builder\SQL\Expr\GroupBy;
 use Laventure\Component\Database\Builder\SQL\Expr\Having;
@@ -15,6 +13,7 @@ use Laventure\Component\Database\Builder\SQL\Expr\Limit;
 use Laventure\Component\Database\Builder\SQL\Expr\OrderBy;
 use Laventure\Component\Database\Builder\SQL\Expr\Select;
 use Laventure\Component\Database\Builder\SQL\Expr\Where;
+use Laventure\Component\Database\Query\Result\QueryResultInterface;
 
 /**
  * SelectBuilder
@@ -33,9 +32,9 @@ class SelectBuilder implements SelectBuilderInterface
     /**
      * @inheritdoc
     */
-    public function select(string ...$columns): static
+    public function select(string $columns): static
     {
-        return $this->addSelect(...$columns);
+        return $this->addSelect($columns);
     }
 
 
@@ -44,12 +43,9 @@ class SelectBuilder implements SelectBuilderInterface
     /**
      * @inheritdoc
     */
-    public function addSelect(string ...$columns): static
+    public function addSelect(string $columns): static
     {
-        $this->criteria->selects = array_merge(
-            $this->criteria->selects,
-            $columns
-        );
+        $this->criteria->selects[] = $columns;
 
         return $this;
     }
@@ -61,9 +57,9 @@ class SelectBuilder implements SelectBuilderInterface
     /**
      * @inheritdoc
     */
-    public function from(string $from, string $alias = ''): static
+    public function from(string $table, string $alias = ''): static
     {
-        $this->criteria->from($from, $alias);
+        $this->criteria->from($table, $alias);
 
         return $this;
     }
@@ -157,9 +153,9 @@ class SelectBuilder implements SelectBuilderInterface
     /**
      * @inheritdoc
     */
-    public function groupBy(string ...$columns): static
+    public function groupBy(string $columns): static
     {
-        return $this->addGroupBy(...$columns);
+        return $this->addGroupBy($columns);
     }
 
 
@@ -168,12 +164,9 @@ class SelectBuilder implements SelectBuilderInterface
     /**
      * @inheritdoc
     */
-    public function addGroupBy(string ...$columns): static
+    public function addGroupBy(string $columns): static
     {
-        $this->criteria->groupBy = array_merge(
-            $this->criteria->groupBy,
-            $columns
-        );
+        $this->criteria->groupBy[] = $columns;
 
         return $this;
     }
@@ -214,12 +207,9 @@ class SelectBuilder implements SelectBuilderInterface
     /**
      * @inheritdoc
     */
-    public function addOrderBy(string ...$orders): static
+    public function addOrderBy(string $orders): static
     {
-        $this->criteria->orderBy = array_merge(
-            $this->criteria->orderBy,
-            $orders
-        );
+        $this->criteria->orderBy[] = $orders;
 
         return $this;
     }
@@ -280,5 +270,16 @@ class SelectBuilder implements SelectBuilderInterface
     public function getName(): string
     {
         return 'select';
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function fetch(): QueryResultInterface
+    {
+        return $this->getQuery()->fetch();
     }
 }

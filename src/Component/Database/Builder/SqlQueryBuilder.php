@@ -45,6 +45,16 @@ class SqlQueryBuilder implements SqlQueryBuilderInterface
 
 
 
+    /**
+     * @return ConnectionInterface
+    */
+    public function getConnection(): ConnectionInterface
+    {
+        return $this->connection;
+    }
+
+
+
 
     /**
      * @inheritDoc

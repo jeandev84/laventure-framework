@@ -40,9 +40,11 @@ class ForeignKey extends Constraint implements ForeignKeyInterface
     */
     public function __construct(string $name, ?string $key = null)
     {
-        parent::__construct($name, $key);
+        parent::__construct($name, [], $key);
         $this->constrained = new Constrained();
     }
+
+
 
 
     /**
@@ -96,7 +98,7 @@ class ForeignKey extends Constraint implements ForeignKeyInterface
     */
     public function getSQL(): string
     {
-        $criteria[] = sprintf('FOREIGN KEY (%s) REFERENCES %s (%s)', $this->name, $this->table, $this->columns[0]);
+        $criteria[] = sprintf('FOREIGN KEY (%s) REFERENCES %s (%s)', $this->type, $this->table, $this->getFirstColumn());
         $criteria[] = $this->constrained;
         $constraints = join(' ', array_filter($criteria));
 

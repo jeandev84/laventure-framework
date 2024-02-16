@@ -24,8 +24,7 @@ class Unique extends Constraint implements UniqueInterface
     */
     public function __construct(array $columns = [], string $key = null)
     {
-        parent::__construct('unique', $key);
-        $this->withColumns($columns);
+        parent::__construct('unique', $columns, $key);
     }
 
 

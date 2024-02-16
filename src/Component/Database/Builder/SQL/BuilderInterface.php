@@ -19,15 +19,6 @@ use Laventure\Component\Database\Query\QueryInterface;
 */
 interface BuilderInterface extends CriteriaInterface
 {
-    //    /**
-    //     * @param string $sql
-    //     * @return $this
-    //    */
-    //    public function addSQL(string $sql): static;
-
-
-
-
 
 
     /**

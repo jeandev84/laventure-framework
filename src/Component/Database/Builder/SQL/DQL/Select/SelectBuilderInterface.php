@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Builder\SQL\DQL\Select;
 
 use Laventure\Component\Database\Builder\SQL\Conditions\Contract\BuilderConditionInterface;
+use Laventure\Component\Database\Query\Result\QueryResultInterface;
 
 /**
  * SelectBuilderInterface
@@ -20,10 +21,10 @@ interface SelectBuilderInterface extends BuilderConditionInterface
     /**
      * Select columns
      *
-     * @param string ...$columns
+     * @param string $columns
      * @return $this
     */
-    public function select(string ...$columns): static;
+    public function select(string $columns): static;
 
 
 
@@ -32,10 +33,10 @@ interface SelectBuilderInterface extends BuilderConditionInterface
     /**
      * Select columns
      *
-     * @param string ...$columns
+     * @param string $columns
      * @return $this
     */
-    public function addSelect(string ...$columns): static;
+    public function addSelect(string $columns): static;
 
 
 
@@ -43,11 +44,11 @@ interface SelectBuilderInterface extends BuilderConditionInterface
     /**
      * Selected the table
      *
-     * @param string $from
+     * @param string $table
      * @param string $alias
      * @return $this
     */
-    public function from(string $from, string $alias = ''): static;
+    public function from(string $table, string $alias = ''): static;
 
 
 
@@ -150,10 +151,10 @@ interface SelectBuilderInterface extends BuilderConditionInterface
 
 
     /**
-     * @param string ...$columns
+     * @param string $columns
      * @return $this
     */
-    public function groupBy(string ...$columns): static;
+    public function groupBy(string $columns): static;
 
 
 
@@ -162,10 +163,10 @@ interface SelectBuilderInterface extends BuilderConditionInterface
 
 
     /**
-     * @param string ...$columns
+     * @param string $columns
      * @return $this
     */
-    public function addGroupBy(string ...$columns): static;
+    public function addGroupBy(string $columns): static;
 
 
 
@@ -197,10 +198,10 @@ interface SelectBuilderInterface extends BuilderConditionInterface
 
 
     /**
-     * @param string ...$orders
+     * @param string $orders
      * @return $this
     */
-    public function addOrderBy(string ...$orders): static;
+    public function addOrderBy(string $orders): static;
 
 
 
@@ -226,4 +227,14 @@ interface SelectBuilderInterface extends BuilderConditionInterface
      * @return $this
     */
     public function offset($offset): static;
+
+
+
+
+
+
+    /**
+     * @return QueryResultInterface
+    */
+    public function fetch(): QueryResultInterface;
 }

@@ -39,11 +39,21 @@ class Schema implements SchemaInterface
 
 
     /**
-     * @param ConnectionInterface $connection
+     * @var string|null
     */
-    public function __construct(ConnectionInterface $connection)
+    protected ?string $name;
+
+
+
+
+    /**
+     * @param ConnectionInterface $connection
+     * @param string|null $name
+    */
+    public function __construct(ConnectionInterface $connection, string $name = null)
     {
         $this->connection = $connection;
+        $this->name       = $name;
         $this->factory    = new TableFactory($connection);
     }
 
@@ -51,12 +61,14 @@ class Schema implements SchemaInterface
 
 
     /**
-     * @param string $name
-     * @return TableInterface
+     * @inheritdoc
     */
     public function table(string $name): TableInterface
     {
-        return $this->factory->createTable($name);
+        return $this->factory->createTable(
+            $name,
+            $this->getName()
+        );
     }
 
 
@@ -69,6 +81,10 @@ class Schema implements SchemaInterface
     */
     public function create(string $table, Closure $closure): bool
     {
+        if ($this->exists($table)) {
+            return false;
+        }
+
         $blueprint = new Blueprint($this->table($table));
 
         call_user_func($closure, $blueprint);
@@ -235,7 +251,11 @@ class Schema implements SchemaInterface
     */
     public function getName(): string
     {
-        return $this->connection->getDatabase()->getName();
+        if (!$this->name) {
+            $this->name = $this->connection->getDatabaseName();
+        }
+
+        return $this->name;
     }
 
 

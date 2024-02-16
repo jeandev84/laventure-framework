@@ -10,9 +10,11 @@ use Laventure\Component\Database\Schema\Column\Drivers\Mysql\MysqlColumn;
 use Laventure\Component\Database\Schema\Column\Info\ColumnInfo;
 use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
 use Laventure\Component\Database\Schema\Constraints\Types\Keys\Foreign\ForeignKey;
+use Laventure\Component\Database\Schema\Table\Criteria\TableCriteriaInterface;
 use Laventure\Component\Database\Schema\Table\Exceptions\TableException;
 use Laventure\Component\Database\Schema\Table\Table;
 use RuntimeException;
+use function _PHPStan_3d4486d07\RingCentral\Psr7\str;
 
 /**
  * MysqlTable
@@ -39,6 +41,29 @@ class MysqlTable extends Table
     ): ColumnInterface {
         return new MysqlColumn($name, $type, $constraints);
     }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function create(): bool
+    {
+        $this->exec(
+            sprintf('CREATE TABLE IF NOT EXISTS `%s` (%s);',
+                $this->name,
+                $this->createCriteria()
+            )
+        );
+
+        return $this->exists();
+    }
+
+
+
 
 
 
@@ -376,7 +401,7 @@ class MysqlTable extends Table
      * @param string $name
      * @return ColumnInterface
     */
-    public function boolInt(string $name): ColumnInterface
+    public function bool(string $name): ColumnInterface
     {
         return $this->addColumn($name, 'BOOL');
     }
@@ -390,7 +415,7 @@ class MysqlTable extends Table
     */
     public function getColumns(): array
     {
-        return $this->queryFetchColumns()->columns();
+        return $this->fetchColumnsQuery()->columns();
     }
 
 
@@ -403,7 +428,7 @@ class MysqlTable extends Table
     {
         $columns = [];
 
-        foreach ($this->queryFetchColumns()->all() as $info) {
+        foreach ($this->fetchColumnsQuery()->all() as $info) {
             if (is_array($info)) {
                 $columns[] = new ColumnInfo($info);
             }
@@ -427,19 +452,82 @@ class MysqlTable extends Table
 
 
 
+
+
     /**
      * @inheritDoc
     */
-    public function create(): bool
+    public function getPrimaryKeys(): array
     {
-        $this->exec(
-           sprintf('CREATE TABLE IF NOT EXISTS `%s` (%s);',
-             $this->name,
-             $this->createCriteria()
-           )
-        );
+         return [];
+    }
 
-        return $this->exists();
+
+
+
+
+    /**
+     * @return array
+    */
+    public function getAllForeignKeysOfSystem(): array
+    {
+        $qb = $this->connection->createQueryBuilder();
+
+        return $qb->select("*")
+                  ->from('information_schema.table_constraints')
+                  ->fetch()
+                  ->all();
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getForeignKeys(): array
+    {
+        $qb = $this->connection->createQueryBuilder();
+
+        return $qb->select("*")
+                  ->from('information_schema.table_constraints')
+                  ->andWhere('information_schema.table_constraints.CONSTRAINT_TYPE = :foreignKey')
+                  ->andWhere('information_schema.table_constraints.TABLE_SCHEMA = :tableSchema')
+                  ->andWhere('information_schema.table_constraints.TABLE_NAME = :tableName')
+                  ->setParameters([
+                      'foreignKey'  => 'FOREIGN KEY',
+                      'tableSchema' => $this->getSchemaName(),
+                      'tableName'   => $this->getName()
+                  ])
+                  ->fetch()
+                  ->all();
+    }
+
+
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getUniques(): array
+    {
+        return [];
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getConstraints(): array
+    {
+        return [];
     }
 
 
@@ -449,9 +537,70 @@ class MysqlTable extends Table
     /**
      * @return QueryResultInterface
     */
-    private function queryFetchColumns(): QueryResultInterface
+    protected function fetchColumnsQuery(): QueryResultInterface
     {
         return $this->statement(sprintf('SHOW FULL COLUMNS FROM %s;', $this->name))
                     ->fetch();
+    }
+
+
+
+    protected function references(): array
+    {
+         /*
+          all using constraints
+          $this->statement("select * from information_schema.table_constraints")
+               ->fetch()
+               ->all();
+          [
+              0 => array:7 [
+                "CONSTRAINT_CATALOG" => "def"
+                "CONSTRAINT_SCHEMA" => "dlc"
+                "CONSTRAINT_NAME" => "Produits_ibfk_1"
+                "TABLE_SCHEMA" => "dlc"
+                "TABLE_NAME" => "Produits"
+                "CONSTRAINT_TYPE" => "FOREIGN KEY"
+                "ENFORCED" => "YES"
+              ]
+              1 => array:7 [
+                "CONSTRAINT_CATALOG" => "def"
+                "CONSTRAINT_SCHEMA" => "dlc"
+                "CONSTRAINT_NAME" => "Ventes_ibfk_1"
+                "TABLE_SCHEMA" => "dlc"
+                "TABLE_NAME" => "Ventes"
+                "CONSTRAINT_TYPE" => "FOREIGN KEY"
+                "ENFORCED" => "YES"
+              ]
+              2 => array:7 [
+                "CONSTRAINT_CATALOG" => "def"
+                "CONSTRAINT_SCHEMA" => "dlc"
+                "CONSTRAINT_NAME" => "Ventes_ibfk_2"
+                "TABLE_SCHEMA" => "dlc"
+                "TABLE_NAME" => "Ventes"
+                "CONSTRAINT_TYPE" => "FOREIGN KEY"
+                "ENFORCED" => "YES"
+              ]
+              3 => array:7 [
+                "CONSTRAINT_CATALOG" => "def"
+                "CONSTRAINT_SCHEMA" => "dlc"
+                "CONSTRAINT_NAME" => "Ventes_ibfk_3"
+                "TABLE_SCHEMA" => "dlc"
+                "TABLE_NAME" => "Ventes"
+                "CONSTRAINT_TYPE" => "FOREIGN KEY"
+                "ENFORCED" => "YES"
+              ]
+              4 => array:7 [
+                "CONSTRAINT_CATALOG" => "def"
+                "CONSTRAINT_SCHEMA" => "laventure_test"
+                "CONSTRAINT_NAME" => "goods_ibfk_1"
+                "TABLE_SCHEMA" => "laventure_test"
+                "TABLE_NAME" => "goods"
+                "CONSTRAINT_TYPE" => "FOREIGN KEY"
+                "ENFORCED" => "YES"
+              ]
+          ]
+         */
+
+         return [];
     }
 }

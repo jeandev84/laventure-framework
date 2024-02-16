@@ -12,6 +12,7 @@ use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface
 use Laventure\Component\Database\Schema\Constraints\Contract\IndexInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\PrimaryKeyInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\UniqueInterface;
+use Laventure\Component\Database\Schema\Table\Criteria\TableCriteriaInterface;
 
 /**
  * TableInterface
@@ -495,48 +496,6 @@ interface TableInterface
 
 
 
-    /**
-     * Add column
-     *
-     * @param string $name
-     * @param string $type
-     * @param string $constraints
-     * @return ColumnInterface
-    */
-    public function addColumn(string $name, string $type, string $constraints = ''): ColumnInterface;
-
-
-
-
-
-
-    /**
-     * Rename column
-     *
-     * @param string $name
-     * @param string $to
-     * @return mixed
-    */
-    public function renameColumn(string $name, string $to): mixed;
-
-
-
-
-
-
-
-
-    /**
-     * @param string $name
-     *
-     * @return $this
-    */
-    public function dropColumn(string $name): static;
-
-
-
-
-
 
 
     /**
@@ -645,12 +604,14 @@ interface TableInterface
 
 
     /**
-     * Add primary key
+     * Add column
      *
-     * @param PrimaryKeyInterface $primaryKey
-     * @return PrimaryKeyInterface
-    */
-    public function addPrimaryKey(PrimaryKeyInterface $primaryKey): PrimaryKeyInterface;
+     * @param string $name
+     * @param string $type
+     * @param string $constraints
+     * @return ColumnInterface
+     */
+    public function addColumn(string $name, string $type, string $constraints = ''): ColumnInterface;
 
 
 
@@ -658,12 +619,15 @@ interface TableInterface
 
 
     /**
-     * Add foreign keys
+     * Rename column
      *
-     * @param ForeignKeyInterface $foreignKey
-     * @return ForeignKeyInterface
+     * @param string $name
+     * @param string $to
+     * @return mixed
     */
-    public function addForeignKey(ForeignKeyInterface $foreignKey): ForeignKeyInterface;
+    public function renameColumn(string $name, string $to): mixed;
+
+
 
 
 
@@ -671,37 +635,11 @@ interface TableInterface
 
 
     /**
-     * Add indexes
+     * @param string $name
      *
-     * @param IndexInterface $index
-     * @return IndexInterface
+     * @return $this
     */
-    public function addIndex(IndexInterface $index): IndexInterface;
-
-
-
-
-
-
-
-    /**
-     * @param UniqueInterface $unique
-     * @return UniqueInterface
-    */
-    public function addUnique(UniqueInterface $unique): UniqueInterface;
-
-
-
-
-
-
-
-    /**
-     * @param ConstraintInterface $constraint
-     * @return ConstraintInterface
-    */
-    public function addConstraint(ConstraintInterface $constraint): ConstraintInterface;
-
+    public function dropColumn(string $name): static;
 
 
 
@@ -742,12 +680,205 @@ interface TableInterface
 
 
 
+
+
     /**
-     * Returns indexes
+     * Add primary key
+     *
+     * @param PrimaryKeyInterface $primaryKey
+     * @return PrimaryKeyInterface
+    */
+    public function addPrimaryKey(PrimaryKeyInterface $primaryKey): PrimaryKeyInterface;
+
+
+
+
+
+
+    /**
+     * Determine if the given primary key exist
+     *
+     * @param string $key
+     * @return bool
+    */
+    public function hasPrimaryKey(string $key): bool;
+
+
+
+
+
+
+    /**
+     * Returns all primary keys
+     *
+     * @return array
+    */
+    public function getPrimaryKeys(): array;
+
+
+
+
+
+
+
+
+
+    /**
+     * Add foreign keys
+     *
+     * @param ForeignKeyInterface $foreignKey
+     * @return ForeignKeyInterface
+    */
+    public function addForeignKey(ForeignKeyInterface $foreignKey): ForeignKeyInterface;
+
+
+
+
+
+
+
+    /**
+     * Determine if the given foreign key exist
+     *
+     * @param string $key
+     * @return bool
+    */
+    public function hasForeignKey(string $key): bool;
+
+
+
+
+
+
+
+
+    /**
+     * Returns all foreign keys
+     *
+     * @return array
+    */
+    public function getForeignKeys(): array;
+
+
+
+
+
+
+
+    /**
+     * Add indexes
+     *
+     * @param IndexInterface $index
+     * @return IndexInterface
+    */
+    public function addIndex(IndexInterface $index): IndexInterface;
+
+
+
+
+
+
+
+    /**
+     * Determine if the given index exist
+     *
+     * @param string $index
+     * @return bool
+    */
+    public function hasIndex(string $index): bool;
+
+
+
+
+
+
+    /**
+     * Returns all indexes
      *
      * @return array
     */
     public function getIndexes(): array;
+
+
+
+
+
+
+
+
+    /**
+     * @param UniqueInterface $unique
+     * @return UniqueInterface
+    */
+    public function addUnique(UniqueInterface $unique): UniqueInterface;
+
+
+
+
+
+
+    /**
+     * Determine if has unique column
+     *
+     * @param string $name
+     * @return bool
+    */
+    public function hasUnique(string $name): bool;
+
+
+
+
+
+
+    /**
+     * Returns all uniques columns
+     *
+     * @return array
+    */
+    public function getUniques(): array;
+
+
+
+
+
+
+
+
+    /**
+     * Add constraint
+     *
+     * @param ConstraintInterface $constraint
+     * @return ConstraintInterface
+    */
+    public function addConstraint(ConstraintInterface $constraint): ConstraintInterface;
+
+
+
+
+
+
+    /**
+     * Determine if given constraint exist
+     *
+     * @param string $key
+     * @return bool
+    */
+    public function hasConstraint(string $key): bool;
+
+
+
+
+
+
+
+
+    /**
+     * Returns all constraints
+     *
+     * @return array
+    */
+    public function getConstraints(): array;
+
 
 
 
@@ -791,6 +922,8 @@ interface TableInterface
 
 
 
+
+
     /**
      * Create statement
      *
@@ -798,4 +931,26 @@ interface TableInterface
      * @return QueryInterface
     */
     public function statement(string $sql): QueryInterface;
+
+
+
+
+
+
+    /**
+     * @return TableCriteriaInterface
+    */
+    public function getCriteria(): TableCriteriaInterface;
+
+
+
+
+
+
+    /**
+     * Returns schema name
+     *
+     * @return string
+    */
+    public function getSchemaName(): string;
 }

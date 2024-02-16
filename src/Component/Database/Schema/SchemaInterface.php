@@ -6,6 +6,7 @@ namespace Laventure\Component\Database\Schema;
 
 use Closure;
 use Laventure\Component\Database\Connection\ConnectionInterface;
+use Laventure\Component\Database\Schema\Table\TableInterface;
 
 /**
  * SchemaInterface
@@ -198,4 +199,19 @@ interface SchemaInterface
      * @return ConnectionInterface
     */
     public function getConnection(): ConnectionInterface;
+
+
+
+
+
+
+
+
+    /**
+     * Returns instance of table
+     *
+     * @param string $name
+     * @return TableInterface
+    */
+    public function table(string $name): TableInterface;
 }

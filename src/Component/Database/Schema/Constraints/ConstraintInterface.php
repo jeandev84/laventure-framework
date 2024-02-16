@@ -22,7 +22,7 @@ interface ConstraintInterface extends Stringable
      *
      * @return string
     */
-    public function getName(): string;
+    public function getType(): string;
 
 
 
@@ -33,29 +33,6 @@ interface ConstraintInterface extends Stringable
      * @return string|null
     */
     public function getKey(): ?string;
-
-
-
-
-    /**
-     * Add columns names
-     *
-     * @param array $columns
-     * @return $this
-    */
-    public function withColumns(array $columns): static;
-
-
-
-
-    /**
-     * Add column name
-     *
-     * @param string $column
-     * @return $this
-    */
-    public function withColumn(string $column): static;
-
 
 
 

@@ -17,6 +17,8 @@ use Laventure\Component\Database\Schema\Constraints\Types\Keys\Foreign\ForeignKe
 use Laventure\Component\Database\Schema\Constraints\Types\Keys\Primary\PrimaryKey;
 use Laventure\Component\Database\Schema\Constraints\Types\Unique;
 use Laventure\Component\Database\Query\QueryInterface;
+use Laventure\Component\Database\Schema\Table\Criteria\TableCriteria;
+use Laventure\Component\Database\Schema\Table\Criteria\TableCriteriaInterface;
 use Laventure\Component\Database\Schema\Table\Exceptions\TableException;
 
 /**
@@ -30,6 +32,7 @@ use Laventure\Component\Database\Schema\Table\Exceptions\TableException;
 */
 abstract class Table implements TableInterface
 {
+
     /**
      * @var ColumnInterface[]
     */
@@ -66,10 +69,12 @@ abstract class Table implements TableInterface
     /**
      * @param ConnectionInterface $connection
      * @param string $name
+     * @param string $schemaName
     */
     public function __construct(
         protected ConnectionInterface $connection,
-        protected string $name
+        protected string $name,
+        protected string $schemaName = ''
     ) {
     }
 
@@ -498,6 +503,92 @@ abstract class Table implements TableInterface
 
 
 
+
+
+    /**
+     * @inheritDoc
+    */
+    public function hasPrimaryKey(string $key): bool
+    {
+        return in_array($key, $this->getPrimaryKeys());
+    }
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function hasForeignKey(string $key): bool
+    {
+        return in_array($key, $this->getForeignKeys());
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function hasIndex(string $index): bool
+    {
+        return in_array($index, $this->getIndexes());
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function hasUnique(string $name): bool
+    {
+        return in_array($name, $this->getUniques());
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function hasConstraint(string $key): bool
+    {
+        return in_array($key, $this->getConstraints());
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getSchemaName(): string
+    {
+        if (!$this->schemaName) {
+            throw new TableException("Could not determine schema name.");
+        }
+
+        return $this->schemaName;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getCriteria(): TableCriteriaInterface
+    {
+        return new TableCriteria($this);
+    }
+
+
+
+
+
     /**
      * @inheritdoc
     */
@@ -553,6 +644,9 @@ abstract class Table implements TableInterface
      * @inheritdoc
     */
     abstract public function create(): bool;
+
+
+
 
 
 

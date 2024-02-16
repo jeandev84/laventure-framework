@@ -23,8 +23,7 @@ class PrimaryKey extends Constraint implements PrimaryKeyInterface
     */
     public function __construct(array $columns = [], string $key = null)
     {
-        parent::__construct('primaryKey', $key);
-        $this->withColumns($columns);
+        parent::__construct('primaryKey', $columns, $key);
     }
 
 

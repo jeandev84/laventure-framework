@@ -319,9 +319,9 @@ abstract class Column implements ColumnInterface
     */
     public function addConstraint(ConstraintInterface $constraint): static
     {
-        $this->constraints[$constraint->getName()] = $constraint;
+        $this->constraints[$constraint->getType()] = $constraint;
 
-        return $this->option($constraint->getName(), true);
+        return $this->option($constraint->getType(), true);
     }
 
 

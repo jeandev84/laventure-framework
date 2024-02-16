@@ -282,11 +282,9 @@ abstract class PdoConnection extends Connection
 
 
     /**
-     * Returns name of database
-     *
-     * @return string
-     */
-    protected function getDatabaseName(): string
+     * @inheritdoc
+    */
+    public function getDatabaseName(): string
     {
         if ($database = $this->config->database()) {
             return $database;

@@ -23,8 +23,7 @@ class Index extends Constraint implements IndexInterface
     */
     public function __construct(array $columns, string $key = null)
     {
-        parent::__construct('index', $key);
-        $this->withColumns($columns);
+        parent::__construct('index', $columns, $key);
     }
 
 

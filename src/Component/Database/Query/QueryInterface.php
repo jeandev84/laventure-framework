@@ -108,13 +108,15 @@ interface QueryInterface
 
 
 
+
+
     /**
      * Set query params
      *
      * @param array $params
      * @return $this
      */
-    public function withParams(array $params): static;
+    public function setParameters(array $params): static;
 
 
 

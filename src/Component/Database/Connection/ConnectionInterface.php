@@ -167,6 +167,17 @@ interface ConnectionInterface extends TransactionInterface
 
 
 
+    /**
+     * Returns database name
+     *
+     * @return string
+    */
+    public function getDatabaseName(): string;
+
+
+
+
+
 
     /**
      * Returns configuration credentials

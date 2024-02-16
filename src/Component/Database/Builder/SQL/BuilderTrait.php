@@ -50,7 +50,7 @@ trait BuilderTrait
 
     /**
      * @param ConnectionInterface $connection
-     */
+    */
     public function __construct(ConnectionInterface $connection)
     {
         $this->connection = $connection;
@@ -67,7 +67,7 @@ trait BuilderTrait
      * @param $id
      * @param $value
      * @return $this
-     */
+    */
     public function setParameter($id, $value): static
     {
         $this->criteria->parameters[$id] = $value;
@@ -170,7 +170,7 @@ trait BuilderTrait
         $statement = $this->connection->statement($this->getSQL());
         $statement->bindParams($this->getBindingParams());
         $statement->bindValues($this->getBindingValues());
-        return $statement->withParams($this->getParameters());
+        return $statement->setParameters($this->getParameters());
     }
 
 

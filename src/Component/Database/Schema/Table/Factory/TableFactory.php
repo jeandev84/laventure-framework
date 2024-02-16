@@ -33,10 +33,13 @@ class TableFactory implements TableFactoryInterface
     /**
      * @inheritDoc
     */
-    public function createTable(string $name): TableInterface
+    public function createTable(
+        string $name,
+        string $schemaName = null
+    ): TableInterface
     {
         return match ($this->connection->getName()) {
-            ConnectionType::Mysql => new MysqlTable($this->connection, $name)
+            ConnectionType::Mysql => new MysqlTable($this->connection, $name, $schemaName)
         };
     }
 }

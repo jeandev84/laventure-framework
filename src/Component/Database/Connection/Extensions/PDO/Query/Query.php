@@ -217,7 +217,7 @@ class Query implements QueryInterface
     /**
      * @inheritDoc
      */
-    public function withParams(array $params): static
+    public function setParameters(array $params): static
     {
         $this->params = $params;
 

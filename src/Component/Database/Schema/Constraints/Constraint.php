@@ -15,18 +15,15 @@ namespace Laventure\Component\Database\Schema\Constraints;
 */
 abstract class Constraint implements ConstraintInterface
 {
-    /**
-     * @var array
-    */
-    protected array $columns = [];
-
 
     /**
-     * @param string $name
+     * @param string $type
+     * @param array $columns
      * @param string|null $key
     */
     public function __construct(
-        protected string $name,
+        protected string  $type,
+        protected array $columns = [],
         protected ?string $key = null
     ) {
     }
@@ -36,9 +33,9 @@ abstract class Constraint implements ConstraintInterface
     /**
      * @inheritDoc
     */
-    public function getName(): string
+    public function getType(): string
     {
-        return $this->name;
+        return $this->type;
     }
 
 
@@ -49,31 +46,6 @@ abstract class Constraint implements ConstraintInterface
     public function getKey(): ?string
     {
         return $this->key;
-    }
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function withColumns(array $columns): static
-    {
-        $this->columns = array_merge($this->columns, $columns);
-
-        return $this;
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function withColumn(string $column): static
-    {
-        $this->columns[] = $column;
-
-        return $this;
     }
 
 
@@ -95,6 +67,18 @@ abstract class Constraint implements ConstraintInterface
     public function hasColumns(): bool
     {
         return !empty($this->columns);
+    }
+
+
+
+
+
+    /**
+     * @return string
+    */
+    public function getFirstColumn(): string
+    {
+        return $this->columns[0] ?? '';
     }
 
 
