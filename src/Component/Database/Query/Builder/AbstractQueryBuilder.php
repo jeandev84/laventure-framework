@@ -591,7 +591,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     /**
      * @return SQlBuilderInterface
     */
-    public function getCurrent(): SQlBuilderInterface
+    public function getCurrentBuilder(): SQlBuilderInterface
     {
         $builder = $this->builder->current();
 
@@ -615,7 +615,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function getSQL(): string
     {
-         return $this->getCurrent()->getSQL();
+         return $this->getCurrentBuilder()->getSQL();
     }
 
 
@@ -627,7 +627,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function getQuery(): QueryInterface
     {
-        $statement = $this->getCurrent()->getQuery();
+        $statement = $this->getCurrentBuilder()->getQuery();
         $statement->setParameters($this->criteria->parameters);
         $statement->bindValues($this->criteria->bindingValues);
         $statement->bindParams($this->criteria->bindingParams);
