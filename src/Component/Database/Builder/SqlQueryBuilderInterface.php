@@ -30,10 +30,10 @@ interface SqlQueryBuilderInterface
 
 
     /**
-     * @param string ...$selects
+     * @param string|null $selects
      * @return SelectBuilderInterface
     */
-    public function select(string ...$selects): SelectBuilderInterface;
+    public function select(string $selects = null): SelectBuilderInterface;
 
 
 

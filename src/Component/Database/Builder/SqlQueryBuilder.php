@@ -78,10 +78,10 @@ class SqlQueryBuilder implements SqlQueryBuilderInterface
     /**
      * @inheritDoc
     */
-    public function select(string ...$selects): SelectBuilderInterface
+    public function select(string $selects = null): SelectBuilderInterface
     {
         $qb = new SelectBuilder($this->connection);
-        return $this->current = $qb->select(...$selects);
+        return $this->current = $qb->select($selects ?: "*");
     }
 
 

@@ -31,7 +31,7 @@ class QueryBuilder extends AbstractQueryBuilder
     */
     public function criteria(array $criteria): static
     {
-
+       return $this;
     }
 
 
