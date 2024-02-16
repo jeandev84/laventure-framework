@@ -1,17 +1,10 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\PDO\Query;
 
-use Laventure\Component\Database\Builder\SQL\DML\Delete\DeleteBuilderInterface;
-use Laventure\Component\Database\Builder\SQL\DML\Insert\InsertSQlBuilderInterface;
-use Laventure\Component\Database\Builder\SQL\DML\Update\UpdateBuilderInterface;
-use Laventure\Component\Database\Builder\SQL\DQL\Select\SelectBuilderInterface;
-use Laventure\Component\Database\Connection\Extensions\PDO\PdoConnection;
-use Laventure\Component\Database\Connection\Extensions\PDO\Query\Resolver\CriteriaResolver;
-use Laventure\Component\Database\Connection\Extensions\PDO\Query\Resolver\InsertResolver;
-use Laventure\Component\Database\Connection\Extensions\PDO\Query\Resolver\UpdateResolver;
+
+use Laventure\Component\Database\Connection\Extensions\PDO\PdoConnectionInterface;
 use Laventure\Component\Database\Query\Builder\AbstractQueryBuilder;
 
 /**
@@ -25,6 +18,7 @@ use Laventure\Component\Database\Query\Builder\AbstractQueryBuilder;
 */
 class QueryBuilder extends AbstractQueryBuilder
 {
+
 
     /**
      * @param string $column

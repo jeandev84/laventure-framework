@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\PDO;
@@ -26,7 +25,7 @@ use RuntimeException;
  *
  * @package  Laventure\Component\Database\Connection\Extensions\PDO
 */
-abstract class PdoConnection extends Connection
+abstract class PdoConnection extends Connection implements PdoConnectionInterface
 {
     /**
      * @var PdoConnectionFactoryInterface
@@ -232,7 +231,7 @@ abstract class PdoConnection extends Connection
 
 
     /**
-     * @return PDO
+     * @inheritdoc
     */
     public function getPdo(): PDO
     {
