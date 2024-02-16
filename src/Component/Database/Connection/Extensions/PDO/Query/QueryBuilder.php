@@ -38,6 +38,20 @@ class QueryBuilder extends AbstractQueryBuilder
 
 
     /**
+     * @param string $column
+     * @param $value
+     * @return $this
+    */
+    public function set(string $column, $value): static
+    {
+         parent::set($column, ":$column");
+         return $this->setParameter($column, $value);
+    }
+
+
+
+
+    /**
      * @inheritDoc
     */
     protected function resolveMultipleInsert(int $position, array $attributes): static

@@ -676,6 +676,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
 
 
 
+
     /**
      * @return SQlBuilderInterface
     */
