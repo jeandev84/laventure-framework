@@ -64,11 +64,11 @@ interface QueryBuilderInterface extends HasCriteriaInterface
 
 
     /**
-     * @param string $classname
+     * @param string $class
      *
      * @return $this
     */
-    public function map(string $classname): static;
+    public function map(string $class): static;
 
 
 

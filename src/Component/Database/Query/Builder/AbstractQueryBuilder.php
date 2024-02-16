@@ -139,9 +139,9 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     /**
      * @inheritdoc
     */
-    public function map(string $classname): static
+    public function map(string $class): static
     {
-        $this->class = $classname;
+        $this->class = $class;
 
         return $this;
     }
@@ -606,6 +606,11 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     public function getQuery(): QueryInterface
     {
         $statement = $this->getSQLBuilder()->getQuery();
+
+        if ($this->class) {
+            $statement->map($this->class);
+        }
+
         $statement->setParameters($this->criteria->parameters);
         $statement->bindValues($this->criteria->bindingValues);
         $statement->bindParams($this->criteria->bindingParams);
