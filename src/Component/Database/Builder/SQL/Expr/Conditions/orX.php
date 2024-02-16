@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL\Expr\Conditions;
@@ -24,9 +23,9 @@ class orX implements orXInterface
     /**
      * @param string ...$conditions
     */
-    public function __construct(array $conditions)
+    public function __construct(array $conditions = [])
     {
-        $this->addConditions($conditions);
+        $this->withConditions($conditions);
     }
 
 

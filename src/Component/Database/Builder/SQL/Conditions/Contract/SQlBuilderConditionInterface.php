@@ -23,4 +23,12 @@ interface SQlBuilderConditionInterface extends SQlBuilderInterface
      * @return $this
     */
     public function where(string $condition): static;
+
+
+
+
+    /**
+     * @return array
+    */
+    public function getConditions(): array;
 }

@@ -26,9 +26,9 @@ trait HasConditionTrait
      * @param array $conditions
      * @return $this
     */
-    public function addConditions(array $conditions): static
+    public function withConditions(array $conditions): static
     {
-        $this->conditions = $conditions;
+        $this->conditions = array_merge($this->conditions, $conditions);
 
         return $this;
     }

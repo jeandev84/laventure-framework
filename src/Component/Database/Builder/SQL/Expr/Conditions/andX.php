@@ -24,9 +24,9 @@ class andX implements andXInterface
     /**
      * @param array $conditions
     */
-    public function __construct(array $conditions)
+    public function __construct(array $conditions = [])
     {
-        $this->addConditions($conditions);
+        $this->withConditions($conditions);
     }
 
 

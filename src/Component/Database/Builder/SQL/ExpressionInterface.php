@@ -9,9 +9,7 @@ use Laventure\Component\Database\Builder\SQL\Expr\Conditions\Contract\andXInterf
 use Laventure\Component\Database\Builder\SQL\Expr\Conditions\Contract\orXInterface;
 use Laventure\Component\Database\Builder\SQL\Expr\Func\FuncInterface;
 use Laventure\Component\Database\Builder\SQL\Expr\Math\MathInterface;
-use Laventure\Component\Database\Query\Builder\SQL\Expr\Utils\Comparison;
-use Laventure\Component\Database\Query\Builder\SQL\Expr\Utils\Func;
-use Laventure\Component\Database\Query\Builder\SQL\Expr\Utils\Math;
+use Stringable;
 
 /**
  * ExpressionInterface
@@ -27,22 +25,22 @@ interface ExpressionInterface
     /**
      * Example: $condition1 AND $condition2 AND $condition3 ...
      *
-     * @param string[] $conditions
+     * @param ...$conditions
      *
      * @return andXInterface
     */
-    public function andX(string ...$conditions): andXInterface;
+    public function andX(...$conditions): andXInterface;
 
 
 
     /**
      *  Example: $condition1 OR $condition2 OR $condition3 ...
      *
-     * @param string[] $conditions
+     * @param ...$conditions
      *
      * @return orXInterface
     */
-    public function orX(string  ...$conditions): orXInterface;
+    public function orX(...$conditions): orXInterface;
 
 
 

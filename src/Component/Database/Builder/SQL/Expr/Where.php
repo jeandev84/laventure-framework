@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL\Expr;
 
+use Laventure\Component\Database\Builder\SQL\Expr\Conditions\andX;
 use Stringable;
 
 /**
@@ -31,7 +32,6 @@ class Where implements Stringable
     {
         $this->wheres = $wheres;
     }
-
 
 
 

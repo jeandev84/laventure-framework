@@ -15,6 +15,17 @@ namespace Laventure\Component\Database\Builder\SQL\Conditions\Contract;
 */
 interface HasConditionInterface
 {
+
+
+    /**
+     * @param array $conditions
+     * @return $this
+    */
+    public function withConditions(array $conditions): static;
+
+
+
+
     /**
      * Returns conditions
      *

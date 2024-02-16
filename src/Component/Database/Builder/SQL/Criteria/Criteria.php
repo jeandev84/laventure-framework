@@ -116,18 +116,14 @@ class Criteria
 
 
 
-    /**
-     * @var array
-    */
-    public array $criteria = [];
-
-
 
 
     /**
      * @var array
     */
     public array $parameters = [];
+
+
 
 
 
@@ -151,12 +147,14 @@ class Criteria
     /**
      * @param string $table
      * @param string $alias
-     * @return void
+     * @return $this
     */
-    public function table(string $table, string $alias = ''): void
+    public function table(string $table, string $alias = ''): static
     {
         $this->table = ($alias ? "$table $alias" : $table);
         $this->alias = $alias;
+
+        return $this;
     }
 
 

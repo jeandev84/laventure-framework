@@ -129,7 +129,7 @@ class SqlQueryBuilder implements SqlQueryBuilderInterface
     /**
      * @return SQlBuilderInterface
     */
-    public function getCurrent(): SQlBuilderInterface
+    public function current(): SQlBuilderInterface
     {
         return $this->current;
     }

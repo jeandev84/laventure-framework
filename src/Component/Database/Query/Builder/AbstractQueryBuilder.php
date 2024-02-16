@@ -4,17 +4,20 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Query\Builder;
 
 
+use Laventure\Component\Database\Builder\SQL\Conditions\Contract\SQlBuilderConditionInterface;
 use Laventure\Component\Database\Builder\SQL\Criteria\Criteria;
 use Laventure\Component\Database\Builder\SQL\DML\Delete\DeleteBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\DML\Insert\InsertSQlBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\DML\Update\UpdateBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\DQL\Select\SelectBuilderInterface;
+use Laventure\Component\Database\Builder\SQL\Expr\Conditions\andX;
+use Laventure\Component\Database\Builder\SQL\Expr\Conditions\orX;
 use Laventure\Component\Database\Builder\SQL\ExpressionInterface;
+use Laventure\Component\Database\Builder\SQL\SQlBuilderInterface;
 use Laventure\Component\Database\Builder\SqlQueryBuilder;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Query\QueryInterface;
-use Laventure\Component\Database\Query\Result\QueryResultInterface;
-use Laventure\Contract\Builder\BuilderInterface;
+
 
 /**
  * AbstractQueryBuilder
@@ -37,6 +40,28 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     protected DeleteBuilderInterface $delete;
     protected Criteria $criteria;
     protected ExpressionInterface $expr;
+    protected string $class;
+
+
+
+
+    /**
+     * @var array
+    */
+    protected array $wheres = [
+        'AND' => [],
+        'OR'  => []
+    ];
+
+
+
+    /**
+     * @var array
+    */
+    protected array $having = [
+        'AND' => [],
+        'OR'  => []
+    ];
 
 
 
@@ -116,7 +141,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function map(string $classname): static
     {
-        $this->classname = $classname;
+        $this->class = $classname;
 
         return $this;
     }
@@ -237,7 +262,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function having(string $condition): static
     {
-        $this->select->having($condition);
+        $this->andHaving($condition);
 
         return $this;
     }
@@ -250,6 +275,8 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function andHaving(string $condition): static
     {
+        $this->having['AND'][] = $condition;
+
         return $this;
     }
 
@@ -262,6 +289,8 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function orHaving(string $condition): static
     {
+        $this->having['OR'][] = $condition;
+
         return $this;
     }
 
@@ -415,9 +444,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function where(string $condition): static
     {
-        $this->criteria->wheres[] = $condition;
-
-        return $this;
+        return $this->andWhere($condition);
     }
 
 
@@ -428,7 +455,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function andWhere(string $condition): static
     {
-        $this->criteria->wheres['AND'][] = $condition;
+        $this->wheres['AND'][] = $condition;
 
         return $this;
     }
@@ -441,7 +468,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function orWhere(string $condition): static
     {
-        $this->criteria->wheres['OR'][] = $condition;
+        $this->wheres['OR'][] = $condition;
 
         return $this;
     }
@@ -561,13 +588,34 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
 
 
 
+    /**
+     * @return SQlBuilderInterface
+    */
+    public function getCurrent(): SQlBuilderInterface
+    {
+        $builder = $this->builder->current();
+
+        if ($builder instanceof SelectBuilderInterface) {
+            $builder = $this->resolveCurrentSelect($builder);
+        }
+
+        if ($builder instanceof SQlBuilderConditionInterface) {
+            $builder = $this->resolveWheres($builder);
+        }
+
+        return $builder;
+    }
+
+
+
+
 
     /**
      * @inheritDoc
     */
     public function getSQL(): string
     {
-         return $this->builder->getCurrent()->getSQL();
+         return $this->getCurrent()->getSQL();
     }
 
 
@@ -579,7 +627,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function getQuery(): QueryInterface
     {
-        $statement = $this->builder->getCurrent()->getQuery();
+        $statement = $this->getCurrent()->getQuery();
         $statement->setParameters($this->criteria->parameters);
         $statement->bindValues($this->criteria->bindingValues);
         $statement->bindParams($this->criteria->bindingParams);
@@ -645,6 +693,73 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     {
         return $this->criteria;
     }
+
+
+
+
+
+
+    /**
+     * @param SelectBuilderInterface $builder
+     * @return SQlBuilderInterface
+    */
+    private function resolveCurrentSelect(SelectBuilderInterface $builder): SQlBuilderInterface
+    {
+        $criteria = $this->resolveConditions($this->having);
+
+        if (!empty($criteria)) {
+            $builder->having(join(' ', $criteria));
+        }
+
+        return $builder;
+    }
+
+
+
+    /**
+     * @param SQlBuilderConditionInterface $builder
+     * @return SQlBuilderInterface
+    */
+    private function resolveWheres(SQlBuilderConditionInterface $builder): SQlBuilderInterface
+    {
+         $criteria = $this->resolveConditions($this->wheres);
+
+         if (!empty($criteria)) {
+             $builder->where(join(' ', $criteria));
+         }
+
+         return $builder;
+    }
+
+
+
+
+    /**
+     * @param array $parses
+     * @return array
+    */
+    private function resolveConditions(array $parses): array
+    {
+        $criteria = [];
+        $key = key($parses);
+
+        foreach ($parses as $type => $conditions) {
+            if (!empty($conditions)) {
+                $having = match($type) {
+                    'AND' => new andX($conditions),
+                    'OR'  => new orX($conditions),
+                };
+                if ($key !== $type) {
+                    $criteria[] = $type;
+                }
+                $criteria[] = $having->__toString();
+            }
+        }
+
+        return $criteria;
+    }
+
+
 
 
 

@@ -30,7 +30,7 @@ class Expr implements ExpressionInterface
     /**
      * @inheritDoc
     */
-    public function andX(string ...$conditions): andXInterface
+    public function andX(...$conditions): andXInterface
     {
         return new andX($conditions);
     }
@@ -41,7 +41,7 @@ class Expr implements ExpressionInterface
     /**
      * @inheritDoc
     */
-    public function orX(string ...$conditions): orXInterface
+    public function orX(...$conditions): orXInterface
     {
         return new orX($conditions);
     }
