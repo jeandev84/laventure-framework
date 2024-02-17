@@ -46,13 +46,6 @@ class Query implements QueryInterface
 
 
 
-    /**
-     * @var array
-    */
-    protected array $bindings = [];
-
-
-
 
     /**
      * @var array
@@ -68,6 +61,19 @@ class Query implements QueryInterface
     */
     protected array $cache = [];
 
+
+
+
+    /**
+     * @var array
+    */
+    protected array $log = [
+        'sql'          => '',
+        'bindParams'   => [],
+        'bindValues'   => [],
+        'bindColumns'  => [],
+        'params'       => []
+    ];
 
 
 
@@ -103,7 +109,7 @@ class Query implements QueryInterface
     {
         $this->statement = $this->pdo->prepare($sql);
 
-        return $this;
+        return $this->log(compact('sql'));
     }
 
 
@@ -116,7 +122,7 @@ class Query implements QueryInterface
     {
         $this->statement = $this->pdo->query($sql);
 
-        return $this;
+        return $this->log(compact('sql'));
     }
 
 
@@ -128,6 +134,8 @@ class Query implements QueryInterface
     public function bindParam($param, $value, int $type = 0): static
     {
         $this->statement->bindParam($param, $value, $type);
+
+        $this->log['bindParam'][] = compact('param', 'value', 'type');
 
         return $this;
     }
@@ -142,6 +150,8 @@ class Query implements QueryInterface
     public function bindValue($param, $value, int $type = 0): static
     {
         $this->statement->bindValue($param, $value, $type);
+
+        $this->log['bindValue'][] = compact('param', 'value', 'type');
 
         return $this;
     }
@@ -202,10 +212,12 @@ class Query implements QueryInterface
 
     /**
      * @inheritDoc
-     */
+    */
     public function bindColumn($column, $value, int $type = 0): static
     {
         $this->statement->bindColumn($column, $value, $type);
+
+        $this->log['bindParam'][] = compact('column', 'value', 'type');
 
         return $this;
     }
@@ -221,7 +233,7 @@ class Query implements QueryInterface
     {
         $this->params = $params;
 
-        return $this;
+        return $this->log(compact('params'));
     }
 
 
@@ -314,12 +326,30 @@ class Query implements QueryInterface
 
 
     /**
+     * @param array $params
+     * @return $this
+    */
+    private function log(array $params): static
+    {
+        $this->log = array_merge($this->log, $params);
+
+        return $this;
+    }
+
+
+
+
+
+
+    /**
      * @param Throwable $e
      * @return void
      * @throws QueryException
     */
     private function abort(Throwable $e): void
     {
-        throw new QueryException($e->getMessage(), [], 409);
+        $sql = $this->log['sql'];
+
+        throw new QueryException("SQL: $sql". $e->getMessage(), $this->log, 409);
     }
 }

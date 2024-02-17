@@ -3,7 +3,8 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Table\Criteria;
 
-use Laventure\Component\Database\Schema\Table\TableInterface;
+
+use Laventure\Component\Database\Schema\Table\Table;
 
 /**
  * TableCriteria
@@ -19,9 +20,9 @@ class TableCriteria implements TableCriteriaInterface
 
 
     /**
-     * @param TableInterface $table
+     * @param Table $table
     */
-    public function __construct(protected TableInterface $table)
+    public function __construct(protected Table $table)
     {
     }
 
@@ -32,14 +33,40 @@ class TableCriteria implements TableCriteriaInterface
     */
     public function create(): string
     {
-
+        return join(', ', array_filter([
+            join(', ', array_values($this->table->columns)),
+            join(', ', array_values($this->table->constraints))
+        ]));
     }
+
+
 
     /**
      * @inheritDoc
     */
     public function update(): string
     {
+        return join(', ', array_filter([
+            join(', ', $this->getUpdateColumns()),
+            join(', ', array_values($this->table->dropColumns)),
+            join(', ', array_values($this->table->renameColumns))
+        ]));
+    }
 
+
+
+
+    /**
+     * @return array
+    */
+    protected function getUpdateColumns(): array
+    {
+        $resolved = [];
+
+        foreach ($this->table->columns as $column) {
+            $resolved[] = $column->add()->getSQL();
+        }
+
+        return $resolved;
     }
 }

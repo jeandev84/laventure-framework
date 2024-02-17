@@ -103,7 +103,9 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function select(string $columns = "*"): static
     {
-        return $this->addSelect($columns);
+        $this->builder->select()->select($columns);
+
+        return $this;
     }
 
 

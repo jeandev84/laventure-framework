@@ -60,7 +60,7 @@ abstract class Table implements TableInterface
     /**
      * @var ConstraintInterface[]
     */
-    protected array $constraints = [];
+    public array $constraints = [];
 
 
 
@@ -445,7 +445,7 @@ abstract class Table implements TableInterface
     public function update(): bool
     {
         return $this->exec(
-            sprintf('ALTER TABLE %s %s;', $this->name, $this->updateCriteria())
+            sprintf('ALTER TABLE %s %s;', $this->name, $this->getCriteria()->update())
         );
     }
 
@@ -459,7 +459,9 @@ abstract class Table implements TableInterface
      */
     public function drop(): mixed
     {
-        return $this->exec(sprintf('DROP TABLE %s CASCADE', $this->getName()));
+        return $this->dropForce(function () {
+            return $this->exec(sprintf('DROP TABLE %s CASCADE', $this->getName()));
+        });
     }
 
 
@@ -471,7 +473,9 @@ abstract class Table implements TableInterface
     */
     public function dropIfExists(): mixed
     {
-        return $this->exec(sprintf('DROP TABLE IF EXISTS %s CASCADE;', $this->getName()));
+        return $this->dropForce(function () {
+            return $this->exec(sprintf('DROP TABLE IF EXISTS %s CASCADE;', $this->getName()));
+        });
     }
 
 
@@ -632,6 +636,14 @@ abstract class Table implements TableInterface
     }
 
 
+
+
+
+    /**
+     * @param callable $func
+     * @return mixed
+    */
+    abstract public function dropForce(callable $func): mixed;
 
 
 

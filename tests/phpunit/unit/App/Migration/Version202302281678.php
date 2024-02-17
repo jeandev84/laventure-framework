@@ -24,16 +24,18 @@ class Version202302281678 extends Migration
 
         $qb = $schema->getConnection()->createQueryBuilder();
 
-        $qb->insert('products', [
-            [
-                'name'  => 'Tourelle de Defense',
-                'price' => 150.20
-            ],
-            [
-                'name'  => 'Tourelle de niveau 3',
-                'price' => 125
-            ]
-        ])->getQuery()->execute();
+        $qb->insert('products')
+            ->values([
+                [
+                    'name'  => 'Tourelle de Defense',
+                    'price' => 150.20
+                ],
+                [
+                    'name'  => 'Tourelle de niveau 3',
+                    'price' => 125
+                ]
+            ])
+            ->getQuery()->execute();
     }
 
 

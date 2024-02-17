@@ -5,7 +5,6 @@ namespace Laventure\Component\Database\Migrator;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Migration\MigrationInterface;
-use Laventure\Component\Database\Query\Builder\QueryBuilderInterface;
 use Laventure\Component\Database\Schema\Blueprint\Blueprint;
 use Laventure\Component\Database\Schema\Schema;
 use Laventure\Component\Database\Schema\SchemaInterface;
@@ -38,15 +37,6 @@ class Migrator implements MigratorInterface
     */
     protected Schema $schema;
 
-
-
-
-    /**
-     * Query builder
-     *
-     * @var QueryBuilderInterface
-    */
-    protected QueryBuilderInterface $builder;
 
 
 
@@ -89,7 +79,6 @@ class Migrator implements MigratorInterface
     {
         $this->connection = $connection;
         $this->table      = $table;
-        $this->builder    = $connection->createQueryBuilder();
         $this->schema     = new Schema($connection);
     }
 
@@ -161,10 +150,14 @@ class Migrator implements MigratorInterface
 
         foreach ($this->getNewMigrations() as $migration) {
             $migration->up($this->schema);
-            $this->builder->insert($this->table, [
-                'version'     => $migration->getVersion(),
-                'executed_at' => date('Y-m-d H:i:s')
-            ])->getQuery()->execute();
+            $qb = $this->connection->createQueryBuilder();
+            $qb->insert($this->table)
+               ->values([
+                  'version'     => $migration->getVersion(),
+                  'executed_at' => date('Y-m-d H:i:s')
+               ])
+               ->getQuery()
+               ->execute();
         }
 
         return empty($this->getNewMigrations());
@@ -268,11 +261,13 @@ class Migrator implements MigratorInterface
             return [];
         }
 
-        return $this->builder->select('version')
-                             ->from($this->table)
-                             ->getQuery()
-                             ->fetch()
-                             ->columns();
+        $qb = $this->connection->createQueryBuilder();
+
+        return $qb->select('version')
+                  ->from($this->table)
+                  ->getQuery()
+                  ->fetch()
+                  ->columns();
     }
 
 

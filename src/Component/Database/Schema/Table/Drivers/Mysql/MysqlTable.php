@@ -54,7 +54,7 @@ class MysqlTable extends Table
         $this->exec(
             sprintf('CREATE TABLE IF NOT EXISTS `%s` (%s);',
                 $this->name,
-                $this->createCriteria()
+                $this->getCriteria()->create()
             )
         );
 
@@ -490,22 +490,13 @@ class MysqlTable extends Table
     {
         $qb = $this->connection->createQueryBuilder();
 
-        return $qb->select("*")
+        return $qb->select()
                   ->from('information_schema.table_constraints')
                   ->criteria([
                       'information_schema.table_constraints.CONSTRAINT_TYPE' => 'FOREIGN KEY',
                       'information_schema.table_constraints.TABLE_SCHEMA'    => $this->getSchemaName(),
                       'information_schema.table_constraints.TABLE_NAME'      => $this->getName()
                   ])
-                  /*
-                  ->andWhere('information_schema.table_constraints.CONSTRAINT_TYPE = :foreignKey')
-                  ->andWhere('information_schema.table_constraints.TABLE_SCHEMA = :tableSchema')
-                  ->andWhere('information_schema.table_constraints.TABLE_NAME = :tableName')
-                  ->setParameters([
-                      'foreignKey'  => 'FOREIGN KEY',
-                      'tableSchema' => $this->getSchemaName(),
-                      'tableName'   => $this->getName()
-                  ])*/
                   ->getQuery()
                   ->fetch()
                   ->all();
@@ -518,10 +509,50 @@ class MysqlTable extends Table
     /**
      * @inheritDoc
     */
-    public function dropForeignKeys(): mixed
+    public function dropForeignKeys(): static
     {
+        foreach ($this->getForeignKeys() as $foreignKey) {
+            if (!empty($foreignKey['CONSTRAINT_NAME'])) {
+                $this->exec("ALTER TABLE $this->name DROP FOREIGN KEY ". $foreignKey['CONSTRAINT_NAME']);
+            }
+        }
 
+        return $this;
     }
+
+
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function dropIfExists(): mixed
+    {
+        #$this->dropForeignKeys();
+        $this->exec("SET foreign_key_checks = 0;");
+        parent::dropIfExists();
+        return $this->exec("SET foreign_key_checks = 1;");
+    }
+
+
+
+
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function drop(): mixed
+    {
+        #$this->dropForeignKeys();
+        $this->exec("SET foreign_key_checks = 0;");
+        parent::drop();
+        return $this->exec("SET foreign_key_checks = 1;");
+    }
+
+
 
 
 
@@ -616,5 +647,13 @@ class MysqlTable extends Table
          */
 
          return [];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function dropForce(callable $func): mixed
+    {
+        // TODO: Implement dropForce() method.
     }
 }
