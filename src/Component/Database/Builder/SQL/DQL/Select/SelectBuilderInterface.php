@@ -211,10 +211,10 @@ interface SelectBuilderInterface extends SQlBuilderConditionInterface
 
 
     /**
-     * @param string $orders
+     * @param array $orders
      * @return $this
     */
-    public function addOrderBy(string $orders): static;
+    public function addOrderBy(array $orders): static;
 
 
 

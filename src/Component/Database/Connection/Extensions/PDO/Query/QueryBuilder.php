@@ -68,14 +68,27 @@ class QueryBuilder extends AbstractQueryBuilder
     /**
      * @inheritDoc
     */
-    protected function resolveCriteria(string $column, $value): string
+    protected function resolveCriteria(string $column, $value): array
     {
-         $expr = $this->expr();
+         $expr            = $this->expr();
+         $bindParam       = $this->resolveBindingColumn($column);
 
          if (is_array($value)) {
-             return strval($expr->in($column, ":$column"));
+             return [$bindParam, $value, $expr->in($column, ":$bindParam")->__toString()];
          }
 
-         return strval($expr->eq($column, ":$column"));
+         return [$bindParam, $value, $expr->eq($column, ":$bindParam")->__toString()];
+    }
+
+
+
+
+    /**
+     * @param string $column
+     * @return string
+    */
+    private function resolveBindingColumn(string $column): string
+    {
+        return str_replace(['.'], ['_'], $column);
     }
 }

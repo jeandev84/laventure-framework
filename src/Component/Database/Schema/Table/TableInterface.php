@@ -766,6 +766,19 @@ interface TableInterface
 
 
     /**
+     * Drop foreignKeys
+     *
+     * @return mixed
+    */
+    public function dropForeignKeys(): mixed;
+
+
+
+
+
+
+
+    /**
      * Add indexes
      *
      * @param IndexInterface $index

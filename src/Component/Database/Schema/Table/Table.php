@@ -36,22 +36,22 @@ abstract class Table implements TableInterface
     /**
      * @var ColumnInterface[]
     */
-    protected array $columns = [];
+    public array $columns = [];
 
 
 
     /**
-     * @var ColumnInterface[]
+     * @var string[]
     */
-    protected array $renameColumns = [];
+    public array $renameColumns = [];
 
 
 
 
     /**
-     * @var ColumnInterface[]
+     * @var string[]
     */
-    protected array $dropColumns = [];
+    public array $dropColumns = [];
 
 
 
@@ -102,7 +102,6 @@ abstract class Table implements TableInterface
         $this->renameColumns[$name] = $this->column($name)
                                            ->rename($to)
                                            ->getSQL();
-
         return $this;
     }
 
@@ -118,7 +117,6 @@ abstract class Table implements TableInterface
         $this->dropColumns[$name] = $this->column($name)
                                          ->drop()
                                          ->getSQL();
-
         return $this;
     }
 
@@ -260,8 +258,7 @@ abstract class Table implements TableInterface
     public function addTimestamps(): static
     {
         $this->datetime('created_at');
-        $this->datetime('updated_at')
-              ->nullable();
+        $this->datetime('updated_at')->nullable();
 
         return $this;
     }

@@ -76,16 +76,6 @@ interface QueryBuilderInterface
 
 
 
-    /**
-     * @param string $class
-     *
-     * @return $this
-    */
-    public function map(string $class): static;
-
-
-
-
 
 
     /**
@@ -251,10 +241,10 @@ interface QueryBuilderInterface
 
 
     /**
-     * @param string ...$orders
+     * @param string[] $orders
      * @return $this
     */
-    public function addOrderBy(string ...$orders): static;
+    public function addOrderBy(array $orders): static;
 
 
 

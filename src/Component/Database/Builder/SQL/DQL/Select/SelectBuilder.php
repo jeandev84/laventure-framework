@@ -277,7 +277,7 @@ class SelectBuilder implements SelectBuilderInterface
     */
     public function orderBy(string $column, string $direction = null): static
     {
-        return $this->addOrderBy("$column ". $direction ?: 'ASC');
+        return $this->addOrderBy([$column => $direction ?: 'ASC']);
     }
 
 
@@ -288,9 +288,11 @@ class SelectBuilder implements SelectBuilderInterface
     /**
      * @inheritdoc
     */
-    public function addOrderBy(string $orders): static
+    public function addOrderBy(array $orders): static
     {
-        $this->orderBy[] = $orders;
+        foreach ($orders as $column => $direction) {
+            $this->orderBy[] = "$column $direction";
+        }
 
         return $this;
     }

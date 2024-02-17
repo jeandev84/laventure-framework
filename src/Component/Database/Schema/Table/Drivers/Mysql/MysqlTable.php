@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Table\Drivers\Mysql;
@@ -475,6 +474,7 @@ class MysqlTable extends Table
 
         return $qb->select("*")
                   ->from('information_schema.table_constraints')
+                  ->getQuery()
                   ->fetch()
                   ->all();
     }
@@ -492,6 +492,12 @@ class MysqlTable extends Table
 
         return $qb->select("*")
                   ->from('information_schema.table_constraints')
+                  ->criteria([
+                      'information_schema.table_constraints.CONSTRAINT_TYPE' => 'FOREIGN KEY',
+                      'information_schema.table_constraints.TABLE_SCHEMA'    => $this->getSchemaName(),
+                      'information_schema.table_constraints.TABLE_NAME'      => $this->getName()
+                  ])
+                  /*
                   ->andWhere('information_schema.table_constraints.CONSTRAINT_TYPE = :foreignKey')
                   ->andWhere('information_schema.table_constraints.TABLE_SCHEMA = :tableSchema')
                   ->andWhere('information_schema.table_constraints.TABLE_NAME = :tableName')
@@ -499,7 +505,8 @@ class MysqlTable extends Table
                       'foreignKey'  => 'FOREIGN KEY',
                       'tableSchema' => $this->getSchemaName(),
                       'tableName'   => $this->getName()
-                  ])
+                  ])*/
+                  ->getQuery()
                   ->fetch()
                   ->all();
     }
@@ -508,6 +515,13 @@ class MysqlTable extends Table
 
 
 
+    /**
+     * @inheritDoc
+    */
+    public function dropForeignKeys(): mixed
+    {
+
+    }
 
 
 

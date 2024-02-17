@@ -26,7 +26,7 @@ use Laventure\Component\Database\Query\QueryInterface;
 abstract class AbstractQueryBuilder implements QueryBuilderInterface
 {
     protected Builder $builder;
-    protected string $class;
+
 
     /**
      * @var array
@@ -144,19 +144,6 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     public function from(string $from, string $alias = ''): static
     {
         $this->builder->select()->from($from, $alias);
-
-        return $this;
-    }
-
-
-
-
-    /**
-     * @inheritdoc
-    */
-    public function map(string $class): static
-    {
-        $this->class = $class;
 
         return $this;
     }
@@ -318,7 +305,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function orderBy(string $column, string $direction = null): static
     {
-         $this->builder->select()->orderBy($column, $direction);
+         $this->builder->select()->orderBy($column, $direction ?: 'ASC');
 
          return $this;
     }
@@ -331,9 +318,9 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     /**
      * @inheritDoc
     */
-    public function addOrderBy(string ...$orders): static
+    public function addOrderBy(array $orders): static
     {
-        $this->builder->select()->addOrderBy(join(', ', $orders));
+        $this->builder->select()->addOrderBy($orders);
 
         return $this;
     }
@@ -344,7 +331,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     /**
      * @inheritDoc
     */
-    public function limit(int $limit): static
+    public function limit($limit): static
     {
         $this->builder->select()->limit($limit);
 
@@ -498,8 +485,9 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     public function criteria(array $criteria): static
     {
         foreach ($criteria as $column => $value) {
-            $this->andWhere($this->resolveCriteria($column, $value));
-            $this->setParameter($column, $value);
+            [$param, $value, $condition] = $this->resolveCriteria($column, $value);
+            $this->andWhere($condition);
+            $this->setParameter($param, $value);
         }
 
         return $this;
@@ -640,11 +628,6 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     public function getQuery(): QueryInterface
     {
         $statement = $this->getSQLBuilder()->getQuery();
-
-        if ($this->class) {
-            $statement->map($this->class);
-        }
-
         $statement->setParameters($this->parameters);
         $statement->bindValues($this->bindingValues);
         $statement->bindParams($this->bindingParams);
@@ -780,7 +763,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     /**
      * @param string $column
      * @param $value
-     * @return string
+     * @return array
     */
-    abstract protected function resolveCriteria(string $column, $value): string;
+    abstract protected function resolveCriteria(string $column, $value): array;
 }
