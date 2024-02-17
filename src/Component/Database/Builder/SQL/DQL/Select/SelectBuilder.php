@@ -29,6 +29,14 @@ class SelectBuilder implements SelectBuilderInterface
 {
     use SQlBuilderConditionTrait;
 
+
+    /**
+     * @var bool
+    */
+    protected bool $distinct = false;
+
+
+
     /**
      * @var string[]
     */
@@ -95,6 +103,19 @@ class SelectBuilder implements SelectBuilderInterface
     public function select(string $columns): static
     {
         return $this->addSelect($columns);
+    }
+
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function distinct(bool $distinct): static
+    {
+        $this->distinct = $distinct;
+
+        return $this;
     }
 
 
@@ -310,7 +331,7 @@ class SelectBuilder implements SelectBuilderInterface
     public function getSQL(): string
     {
         return (new SQlFormatter())->addFormats([
-            new Select($this->selects),
+            new Select($this->resolveSelects()),
             new From($this->from),
             new Join($this->joins),
             new Where($this->wheres),
@@ -319,5 +340,20 @@ class SelectBuilder implements SelectBuilderInterface
             new OrderBy($this->orderBy),
             new Limit($this->limit, $this->offset)
         ])->format();
+    }
+
+
+
+
+
+    /**
+     * @return string
+    */
+    private function resolveSelects(): string
+    {
+        $columns  =  join(', ', array_filter($this->selects));
+        $columns  =  !empty($this->selects) ? $columns : "*";
+
+        return $this->distinct ? "DISTINCT $columns" : $columns;
     }
 }

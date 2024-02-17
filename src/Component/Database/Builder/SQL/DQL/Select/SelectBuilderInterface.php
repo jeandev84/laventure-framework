@@ -30,6 +30,19 @@ interface SelectBuilderInterface extends SQlBuilderConditionInterface
 
 
 
+
+    /**
+     * Select distinct values
+     *
+     * @param bool $distinct
+     * @return $this
+    */
+    public function distinct(bool $distinct): static;
+
+
+
+
+
     /**
      * Select columns
      *

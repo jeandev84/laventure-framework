@@ -33,11 +33,21 @@ interface QueryBuilderInterface
     /**
      * Select query
      * @param string $columns
-     * @param bool $distinct
      * @return QueryBuilderInterface
     */
-    public function select(string $columns = "*", bool $distinct = false): static;
+    public function select(string $columns = "*"): static;
 
+
+
+
+
+    /**
+     * Select distinct values
+     *
+     * @param bool $distinct
+     * @return $this
+    */
+    public function distinct(bool $distinct): static;
 
 
 

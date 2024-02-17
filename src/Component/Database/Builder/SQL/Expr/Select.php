@@ -17,10 +17,14 @@ use Stringable;
 */
 class Select implements Stringable
 {
+
+    protected bool $distinct = false;
+
+
     /**
-     * @param array $columns
+     * @param string $columns
     */
-    public function __construct(public array $columns)
+    public function __construct(public string $columns)
     {
 
     }
@@ -32,9 +36,6 @@ class Select implements Stringable
     */
     public function __toString(): string
     {
-        $selected =  join(', ', array_filter($this->columns));
-        $selects  =  !empty($this->columns) ? $selected : "*";
-
-        return "SELECT $selects";
+        return "SELECT $this->columns";
     }
 }
