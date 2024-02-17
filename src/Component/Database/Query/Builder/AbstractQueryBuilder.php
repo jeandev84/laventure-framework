@@ -81,7 +81,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function __construct(ConnectionInterface $connection)
     {
-        $this->builder  = new Builder($connection);
+        $this->builder = new Builder($connection);
     }
 
 

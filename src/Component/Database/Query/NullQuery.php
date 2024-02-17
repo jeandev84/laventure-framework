@@ -1,9 +1,8 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Query\Null;
+namespace Laventure\Component\Database\Query;
 
-use Laventure\Component\Database\Query\QueryInterface;
 use Laventure\Component\Database\Query\Result\NullQueryResult;
 use Laventure\Component\Database\Query\Result\QueryResultInterface;
 
@@ -14,7 +13,7 @@ use Laventure\Component\Database\Query\Result\QueryResultInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Query\Null
+ * @package  Laventure\Component\Database\Query
 */
 class NullQuery implements QueryInterface
 {

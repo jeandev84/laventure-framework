@@ -1,9 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Configuration\Null;
-
-use Laventure\Component\Database\Configuration\Configuration;
+namespace Laventure\Component\Database\Configuration;
 
 /**
  * NullConfiguration

@@ -5,8 +5,8 @@ namespace Laventure\Component\Database\Query\Builder;
 
 use Laventure\Component\Database\Builder\SQL\ExpressionInterface;
 use Laventure\Component\Database\Connection\ConnectionInterface;
-use Laventure\Component\Database\Connection\Null\NullConnection;
-use Laventure\Component\Database\Query\Null\NullQuery;
+use Laventure\Component\Database\Connection\NullConnection;
+use Laventure\Component\Database\Query\NullQuery;
 use Laventure\Component\Database\Query\QueryInterface;
 
 /**
@@ -20,15 +20,6 @@ use Laventure\Component\Database\Query\QueryInterface;
 */
 class NullQueryBuilder implements QueryBuilderInterface
 {
-
-    /**
-     * @inheritDoc
-    */
-    public function getCriteria(): mixed
-    {
-        return null;
-    }
-
 
 
     /**

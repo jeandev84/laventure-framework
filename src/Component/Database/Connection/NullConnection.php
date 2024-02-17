@@ -1,16 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Connection\Null;
+namespace Laventure\Component\Database\Connection;
 
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
-use Laventure\Component\Database\Configuration\Null\NullConfiguration;
-use Laventure\Component\Database\Connection\ConnectionInterface;
+use Laventure\Component\Database\Configuration\NullConfiguration;
 use Laventure\Component\Database\DatabaseInterface;
-use Laventure\Component\Database\Null\NullDatabase;
+use Laventure\Component\Database\NullDatabase;
 use Laventure\Component\Database\Query\Builder\NullQueryBuilder;
 use Laventure\Component\Database\Query\Builder\QueryBuilderInterface;
-use Laventure\Component\Database\Query\Null\NullQuery;
+use Laventure\Component\Database\Query\NullQuery;
 use Laventure\Component\Database\Query\QueryInterface;
 
 /**
@@ -20,7 +19,7 @@ use Laventure\Component\Database\Query\QueryInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Null
+ * @package  Laventure\Component\Database\Connection
 */
 class NullConnection implements ConnectionInterface
 {

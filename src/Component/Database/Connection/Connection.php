@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Connection;
 
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
-use Laventure\Component\Database\Configuration\Null\NullConfiguration;
+use Laventure\Component\Database\Configuration\NullConfiguration;
 
 /**
  * Connection
