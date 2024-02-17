@@ -524,37 +524,6 @@ class MysqlTable extends Table
 
 
 
-    /**
-     * @inheritdoc
-    */
-    public function dropIfExists(): mixed
-    {
-        #$this->dropForeignKeys();
-        $this->exec("SET foreign_key_checks = 0;");
-        parent::dropIfExists();
-        return $this->exec("SET foreign_key_checks = 1;");
-    }
-
-
-
-
-
-
-
-    /**
-     * @inheritdoc
-    */
-    public function drop(): mixed
-    {
-        #$this->dropForeignKeys();
-        $this->exec("SET foreign_key_checks = 0;");
-        parent::drop();
-        return $this->exec("SET foreign_key_checks = 1;");
-    }
-
-
-
-
 
     /**
      * @inheritDoc
@@ -649,11 +618,16 @@ class MysqlTable extends Table
          return [];
     }
 
+
+
+
     /**
      * @inheritDoc
-     */
-    public function dropForce(callable $func): mixed
+    */
+    public function foreignKeyChecks(callable $func): mixed
     {
-        // TODO: Implement dropForce() method.
+        $this->exec("SET foreign_key_checks = 0;");
+        $func();
+        return $this->exec("SET foreign_key_checks = 1;");
     }
 }

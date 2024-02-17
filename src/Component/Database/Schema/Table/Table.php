@@ -459,7 +459,7 @@ abstract class Table implements TableInterface
      */
     public function drop(): mixed
     {
-        return $this->dropForce(function () {
+        return $this->foreignKeyChecks(function () {
             return $this->exec(sprintf('DROP TABLE %s CASCADE', $this->getName()));
         });
     }
@@ -473,7 +473,7 @@ abstract class Table implements TableInterface
     */
     public function dropIfExists(): mixed
     {
-        return $this->dropForce(function () {
+        return $this->foreignKeyChecks(function () {
             return $this->exec(sprintf('DROP TABLE IF EXISTS %s CASCADE;', $this->getName()));
         });
     }
@@ -643,7 +643,7 @@ abstract class Table implements TableInterface
      * @param callable $func
      * @return mixed
     */
-    abstract public function dropForce(callable $func): mixed;
+    abstract public function foreignKeyChecks(callable $func): mixed;
 
 
 
