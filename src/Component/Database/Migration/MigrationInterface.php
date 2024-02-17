@@ -18,7 +18,7 @@ use Laventure\Component\Database\Schema\SchemaInterface;
 interface MigrationInterface
 {
     /**
-     * Create or modify schema table
+     * Create schema table (migrate)
      *
      * @param SchemaInterface $schema
      *
@@ -32,7 +32,7 @@ interface MigrationInterface
 
 
     /**
-     * Drop schema table or others modification
+     * Drop schema table or others modification (rollback)
      *
      * @param SchemaInterface $schema
      * @return void
