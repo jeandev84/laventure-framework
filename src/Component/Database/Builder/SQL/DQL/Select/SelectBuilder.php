@@ -88,12 +88,6 @@ class SelectBuilder implements SelectBuilderInterface
 
 
 
-    /**
-     * @var string
-    */
-    public $alias = null;
-
-
 
     /**
      * @inheritdoc
@@ -126,7 +120,6 @@ class SelectBuilder implements SelectBuilderInterface
     public function from(string $table, string $alias = ''): static
     {
         $this->from[$table] = ($alias ? "$table $alias" : $table);
-        $this->alias        = $alias;
 
         return $this;
     }
