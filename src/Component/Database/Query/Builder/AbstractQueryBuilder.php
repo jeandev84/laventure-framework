@@ -673,7 +673,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     /**
      * @return void
     */
-    protected function reset(): void
+    private function reset(): void
     {
         $this->wheres = [];
         $this->having = [];
