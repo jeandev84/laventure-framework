@@ -309,7 +309,6 @@ class SelectBuilder implements SelectBuilderInterface
     */
     public function getSQL(): string
     {
-
         return (new SQlFormatter())->addFormats([
             new Select($this->selects),
             new From($this->from),
