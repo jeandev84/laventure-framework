@@ -16,7 +16,7 @@ namespace Laventure\Component\Database\Builder\SQL\Criteria;
 interface HasCriteriaInterface
 {
     /**
-     * @return mixed
+     * @return Criteria
     */
-    public function getCriteria(): mixed;
+    public function getCriteria(): Criteria;
 }

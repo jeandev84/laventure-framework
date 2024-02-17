@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL;
 
-use Laventure\Component\Database\Builder\SQL\Criteria\Criteria;
+
 use Laventure\Component\Database\Builder\SQL\Expr\Expr;
 use Laventure\Component\Database\Builder\SQL\Formatter\SQlFormatter;
 use Laventure\Component\Database\Connection\ConnectionInterface;
@@ -23,28 +23,10 @@ trait SQlBuilderTrait
 {
     /**
      * @var ConnectionInterface
-     */
+    */
     protected ConnectionInterface $connection;
 
 
-    /**
-     * @var SQlFormatter
-     */
-    protected SQlFormatter $formatter;
-
-
-    /**
-     * @var ExpressionInterface
-     */
-    protected ExpressionInterface $expr;
-
-
-
-
-    /**
-     * @var Criteria
-     */
-    protected Criteria $criteria;
 
 
 
@@ -54,23 +36,6 @@ trait SQlBuilderTrait
     public function __construct(ConnectionInterface $connection)
     {
         $this->connection = $connection;
-        $this->criteria   = new Criteria();
-        $this->expr       = new Expr();
-        $this->formatter  = new SQlFormatter();
-    }
-
-
-
-
-    /**
-     * @param Criteria $criteria
-     * @return $this
-    */
-    public function criteria(Criteria $criteria): static
-    {
-        $this->criteria = $criteria;
-
-        return $this;
     }
 
 
@@ -110,22 +75,12 @@ trait SQlBuilderTrait
 
     /**
      * @return Expr
-     */
+    */
     public function expr(): ExpressionInterface
     {
-        return $this->expr;
+        return new Expr();
     }
 
-
-
-
-    /**
-     * @return Criteria
-    */
-    public function getCriteria(): Criteria
-    {
-        return $this->criteria;
-    }
 
 
 

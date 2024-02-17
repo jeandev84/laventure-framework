@@ -21,8 +21,7 @@ interface UpdateBuilderInterface extends SQlBuilderConditionInterface, SettableI
 {
     /**
      * @param string $table
-     * @param string $alias
      * @return $this
     */
-    public function update(string $table, string $alias = ''): static;
+    public function update(string $table): static;
 }

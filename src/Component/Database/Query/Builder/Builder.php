@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder;
 
-use Laventure\Component\Database\Builder\SQL\Criteria\Criteria;
+
 use Laventure\Component\Database\Builder\SQL\DML\Delete\DeleteBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\DML\Insert\InsertBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\DML\Update\UpdateBuilderInterface;
@@ -37,8 +37,9 @@ class Builder
       protected InsertBuilderInterface $insert;
       protected UpdateBuilderInterface $update;
       protected DeleteBuilderInterface $delete;
-      protected Criteria $criteria;
       protected ExpressionInterface $expr;
+
+
 
 
       /**
@@ -47,11 +48,10 @@ class Builder
       public function __construct(ConnectionInterface $connection)
       {
           $this->factory    = new SqlBuilderFactory($connection);
-          $this->criteria   = new Criteria();
-          $this->select     = $this->factory->createSelect()->criteria($this->criteria);
-          $this->insert     = $this->factory->createInsert()->criteria($this->criteria);
-          $this->update     = $this->factory->createUpdate()->criteria($this->criteria);
-          $this->delete     = $this->factory->createDelete()->criteria($this->criteria);
+          $this->select     = $this->factory->createSelect();
+          $this->insert     = $this->factory->createInsert();
+          $this->update     = $this->factory->createUpdate();
+          $this->delete     = $this->factory->createDelete();
           $this->expr       = $this->factory->createExpr();
           $this->connection = $connection;
       }
@@ -137,17 +137,6 @@ class Builder
       }
 
 
-
-
-
-
-      /**
-       * @return Criteria
-      */
-      public function getCriteria(): Criteria
-      {
-          return $this->criteria;
-      }
 
 
 

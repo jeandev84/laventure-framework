@@ -13,6 +13,7 @@ use Laventure\Component\Database\Builder\SQL\Expr\Limit;
 use Laventure\Component\Database\Builder\SQL\Expr\OrderBy;
 use Laventure\Component\Database\Builder\SQL\Expr\Select;
 use Laventure\Component\Database\Builder\SQL\Expr\Where;
+use Laventure\Component\Database\Builder\SQL\Formatter\SQlFormatter;
 use Laventure\Component\Database\Query\Result\QueryResultInterface;
 
 /**
@@ -27,6 +28,71 @@ use Laventure\Component\Database\Query\Result\QueryResultInterface;
 class SelectBuilder implements SelectBuilderInterface
 {
     use SQlBuilderConditionTrait;
+
+    /**
+     * @var string[]
+    */
+    public array $selects = [];
+
+
+    /**
+     * @var string[]
+    */
+    public array $from = [];
+
+
+
+    /**
+     * @var string[]
+    */
+    public array $joins = [];
+
+
+
+    /**
+     * @var string[]
+    */
+    public array $groupBy = [];
+
+
+
+
+    /**
+     * @var string[]
+    */
+    public array $having = [];
+
+
+
+
+    /**
+     * @var string[]
+    */
+    public array $orderBy = [];
+
+
+
+    /**
+     * @var null
+    */
+    public $offset = null;
+
+
+
+
+    /**
+     * @var null
+    */
+    public $limit = null;
+
+
+
+
+    /**
+     * @var string
+    */
+    public $alias = null;
+
 
 
     /**
@@ -45,7 +111,7 @@ class SelectBuilder implements SelectBuilderInterface
     */
     public function addSelect(string $columns): static
     {
-        $this->criteria->selects[] = $columns;
+        $this->selects[] = $columns;
 
         return $this;
     }
@@ -59,8 +125,8 @@ class SelectBuilder implements SelectBuilderInterface
     */
     public function from(string $table, string $alias = ''): static
     {
-        $this->criteria->from[$table] = ($alias ? "$table $alias" : $table);
-        $this->criteria->alias        = $alias;
+        $this->from[$table] = ($alias ? "$table $alias" : $table);
+        $this->alias        = $alias;
 
         return $this;
     }
@@ -143,7 +209,7 @@ class SelectBuilder implements SelectBuilderInterface
     */
     public function addJoin(string $join): static
     {
-        $this->criteria->joins[] = $join;
+        $this->joins[] = $join;
 
         return $this;
     }
@@ -167,7 +233,7 @@ class SelectBuilder implements SelectBuilderInterface
     */
     public function addGroupBy(string $columns): static
     {
-        $this->criteria->groupBy[] = $columns;
+        $this->groupBy[] = $columns;
 
         return $this;
     }
@@ -181,7 +247,7 @@ class SelectBuilder implements SelectBuilderInterface
     */
     public function having(string $condition): static
     {
-        $this->criteria->having[] = $condition;
+        $this->having[] = $condition;
 
         return $this;
     }
@@ -210,7 +276,7 @@ class SelectBuilder implements SelectBuilderInterface
     */
     public function addOrderBy(string $orders): static
     {
-        $this->criteria->orderBy[] = $orders;
+        $this->orderBy[] = $orders;
 
         return $this;
     }
@@ -223,7 +289,7 @@ class SelectBuilder implements SelectBuilderInterface
     */
     public function limit($limit): static
     {
-        $this->criteria->limit = $limit;
+        $this->limit = $limit;
 
         return $this;
     }
@@ -237,7 +303,7 @@ class SelectBuilder implements SelectBuilderInterface
     */
     public function offset($offset): static
     {
-        $this->criteria->offset = $offset;
+        $this->offset = $offset;
 
         return $this;
     }
@@ -250,15 +316,16 @@ class SelectBuilder implements SelectBuilderInterface
     */
     public function getSQL(): string
     {
-        return $this->formatter->addFormats([
-            new Select($this->criteria->selects),
-            new From($this->criteria->from),
-            new Join($this->criteria->joins),
-            new Where($this->criteria->wheres),
-            new GroupBy($this->criteria->groupBy),
-            new Having($this->criteria->having),
-            new OrderBy($this->criteria->orderBy),
-            new Limit($this->criteria->limit, $this->criteria->offset)
+
+        return (new SQlFormatter())->addFormats([
+            new Select($this->selects),
+            new From($this->from),
+            new Join($this->joins),
+            new Where($this->wheres),
+            new GroupBy($this->groupBy),
+            new Having($this->having),
+            new OrderBy($this->orderBy),
+            new Limit($this->limit, $this->offset)
         ])->format();
     }
 }

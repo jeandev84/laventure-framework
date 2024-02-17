@@ -19,8 +19,7 @@ interface DeleteBuilderInterface extends SQlBuilderConditionInterface
 {
     /**
      * @param string $table
-     * @param string $alias
      * @return $this
     */
-    public function delete(string $table, string $alias = ''): static;
+    public function delete(string $table): static;
 }

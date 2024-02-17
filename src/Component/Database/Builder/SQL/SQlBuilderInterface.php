@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL;
 
-use Laventure\Component\Database\Builder\SQL\Criteria\Criteria;
-use Laventure\Component\Database\Builder\SQL\Criteria\HasCriteriaInterface;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Query\QueryInterface;
 
@@ -18,7 +16,7 @@ use Laventure\Component\Database\Query\QueryInterface;
  *
  * @package  Laventure\Component\Database\Builder\SQL
 */
-interface SQlBuilderInterface extends HasCriteriaInterface
+interface SQlBuilderInterface
 {
 
 
@@ -53,14 +51,4 @@ interface SQlBuilderInterface extends HasCriteriaInterface
      * @return ExpressionInterface
     */
     public function expr(): ExpressionInterface;
-
-
-
-
-
-    /**
-     * @param Criteria $criteria
-     * @return $this
-    */
-    public function criteria(Criteria $criteria): static;
 }

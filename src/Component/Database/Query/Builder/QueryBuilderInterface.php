@@ -18,7 +18,7 @@ use Laventure\Component\Database\Query\Result\QueryResultInterface;
  *
  * @package  Laventure\Component\Database\Query\Builder
 */
-interface QueryBuilderInterface extends HasCriteriaInterface
+interface QueryBuilderInterface
 {
     /**
      * @return ExpressionInterface

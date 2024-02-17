@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Connection\Extensions\PDO\Query;
 
 
-use Laventure\Component\Database\Connection\Extensions\PDO\PdoConnectionInterface;
 use Laventure\Component\Database\Query\Builder\AbstractQueryBuilder;
 
 /**

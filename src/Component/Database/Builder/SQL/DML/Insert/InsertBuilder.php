@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL\DML\Insert;
 
+use Laventure\Component\Database\Builder\SQL\Formatter\SQlFormatter;
 use Laventure\Component\Database\Builder\SQL\SQlBuilderTrait;
 use Laventure\Component\Database\Builder\SQL\Expr\Insert;
 
@@ -21,13 +22,34 @@ class InsertBuilder implements InsertBuilderInterface
     use SQlBuilderTrait;
 
 
+    /**
+     * @var string|null
+    */
+    public ?string $table = null;
+
+
+
+    /**
+     * @var array
+    */
+    public array $insert = [];
+
+
+
+    /**
+     * @var array
+    */
+    public array $values = [];
+
+
+
 
     /**
      * @inheritDoc
     */
     public function insert(string $table): static
     {
-        $this->criteria->table($table);
+        $this->table = $table;
 
         return $this;
     }
@@ -39,8 +61,8 @@ class InsertBuilder implements InsertBuilderInterface
     */
     public function values(array $values): static
     {
-        $this->criteria->insert = array_keys($values);
-        $this->criteria->values[] = $values;
+        $this->insert = array_keys($values);
+        $this->values[] = $values;
 
         return $this;
     }
@@ -57,12 +79,12 @@ class InsertBuilder implements InsertBuilderInterface
             $index = 0;
         }
 
-        if (!isset($this->criteria->values[$index])) {
-            $this->criteria->values[$index] = [];
+        if (!isset($this->values[$index])) {
+            $this->values[$index] = [];
         }
 
-        $this->criteria->insert[$column] = $column;
-        $this->criteria->values[$index][$column] = $value;
+        $this->insert[$column] = $column;
+        $this->values[$index][$column] = $value;
 
         return $this;
     }
@@ -74,11 +96,11 @@ class InsertBuilder implements InsertBuilderInterface
     */
     public function getSQL(): string
     {
-        return $this->formatter->addFormats([
+        return (new SQlFormatter())->addFormats([
             new Insert(
-                $this->criteria->table,
-                $this->criteria->insert,
-                $this->criteria->values
+                $this->table,
+                $this->insert,
+                $this->values
             )
         ])->format();
     }

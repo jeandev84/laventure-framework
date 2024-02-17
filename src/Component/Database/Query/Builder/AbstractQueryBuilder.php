@@ -5,10 +5,6 @@ namespace Laventure\Component\Database\Query\Builder;
 
 
 use Laventure\Component\Database\Builder\SQL\Conditions\Contract\SQlBuilderConditionInterface;
-use Laventure\Component\Database\Builder\SQL\Criteria\Criteria;
-use Laventure\Component\Database\Builder\SQL\DML\Delete\DeleteBuilderInterface;
-use Laventure\Component\Database\Builder\SQL\DML\Insert\InsertBuilderInterface;
-use Laventure\Component\Database\Builder\SQL\DML\Update\UpdateBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\DQL\Select\SelectBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\Expr\Conditions\andX;
 use Laventure\Component\Database\Builder\SQL\Expr\Conditions\orX;
@@ -30,16 +26,12 @@ use Laventure\Component\Database\Query\QueryInterface;
 abstract class AbstractQueryBuilder implements QueryBuilderInterface
 {
     protected Builder $builder;
-    protected Criteria $criteria;
     protected string $class;
 
-
-
-
     /**
      * @var array
     */
-    protected array $wheres = [
+    public array $wheres = [
         'AND' => [],
         'OR'  => []
     ];
@@ -49,10 +41,38 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     /**
      * @var array
     */
-    protected array $having = [
+    public array $having = [
         'AND' => [],
         'OR'  => []
     ];
+
+
+
+
+
+    /**
+     * @var array
+    */
+    protected array $parameters = [];
+
+
+
+
+
+    /**
+     * @var array
+    */
+    protected array $bindingParams = [];
+
+
+
+
+    /**
+     * @var array
+    */
+    protected array $bindingValues = [];
+
+
 
 
 
@@ -62,7 +82,6 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     public function __construct(ConnectionInterface $connection)
     {
         $this->builder  = new Builder($connection);
-        $this->criteria = $this->builder->getCriteria();
     }
 
 
@@ -99,6 +118,8 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function addSelect(string $columns): static
     {
+        $this->reset();
+
         $this->builder->select()->addSelect($columns);
 
         return $this;
@@ -343,6 +364,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function insert(string $table): static
     {
+        $this->reset();
         $this->builder->insert()->insert($table);
 
         return $this;
@@ -389,6 +411,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function update(string $table, string $alias = ''): static
     {
+        $this->reset();
         $this->builder->update()->update($table ? "$table $alias": $table);
 
         return $this;
@@ -417,6 +440,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function delete(string $table, string $alias = ''): static
     {
+        $this->reset();
         $this->builder->delete()->delete($table ? "$table $alias": $table);
 
         return $this;
@@ -489,7 +513,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function setParameter($id, $value): static
     {
-        $this->criteria->parameters[$id] = $value;
+        $this->parameters[$id] = $value;
 
         return $this;
     }
@@ -507,7 +531,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function bindParam($id, $value, $type = null): static
     {
-        $this->criteria->bindingParams[$id] = [$id, $value, intval($type)];
+        $this->bindingParams[$id] = [$id, $value, intval($type)];
 
         return $this;
     }
@@ -525,7 +549,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function bindValue($id, $value, $type = null): static
     {
-        $this->criteria->bindingValues[$id] = [$id, $value, intval($type)];
+        $this->bindingValues[$id] = [$id, $value, intval($type)];
 
         return $this;
     }
@@ -540,7 +564,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function getParameter($id): mixed
     {
-        return $this->criteria->parameters[$id] ?? null;
+        return $this->parameters[$id] ?? null;
     }
 
 
@@ -554,8 +578,8 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function setParameters(array $parameters): static
     {
-        $this->criteria->parameters = array_merge(
-            $this->criteria->parameters,
+        $this->parameters = array_merge(
+            $this->parameters,
             $parameters
         );
 
@@ -572,7 +596,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function getParameters(): array
     {
-        return $this->criteria->parameters;
+        return $this->parameters;
     }
 
 
@@ -616,22 +640,10 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
             $statement->map($this->class);
         }
 
-        $statement->setParameters($this->criteria->parameters);
-        $statement->bindValues($this->criteria->bindingValues);
-        $statement->bindParams($this->criteria->bindingParams);
+        $statement->setParameters($this->parameters);
+        $statement->bindValues($this->bindingValues);
+        $statement->bindParams($this->bindingParams);
         return $statement;
-    }
-
-
-
-
-
-    /**
-     * @inheritdoc
-    */
-    public function getCriteria(): Criteria
-    {
-        return $this->criteria;
     }
 
 
@@ -642,9 +654,9 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     /**
      * @return SQlBuilderInterface
     */
-    protected function getSQLBuilder(): SQlBuilderInterface
+    public function getSQLBuilder(): SQlBuilderInterface
     {
-        $builder = $this->builder->getSQLBuilder();
+        $builder  = $this->builder->getSQLBuilder();
 
         if ($builder instanceof SelectBuilderInterface) {
             $builder = $this->resolveHaving($builder);
@@ -657,6 +669,18 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
         return $builder;
     }
 
+
+
+
+
+    /**
+     * @return void
+    */
+    protected function reset(): void
+    {
+        $this->wheres = [];
+        $this->having = [];
+    }
 
 
 

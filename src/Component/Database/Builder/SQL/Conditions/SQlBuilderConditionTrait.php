@@ -20,13 +20,22 @@ trait SQlBuilderConditionTrait
 {
     use SQlBuilderTrait;
 
+
+    /**
+     * @var array
+    */
+    public array $wheres = [];
+
+
+
+
     /**
      * @param string $condition
      * @return $this
     */
     public function where(string $condition): static
     {
-        $this->criteria->wheres[] = $condition;
+        $this->wheres[] = $condition;
 
         return $this;
     }
@@ -38,6 +47,6 @@ trait SQlBuilderConditionTrait
     */
     public function getConditions(): array
     {
-        return $this->criteria->wheres;
+        return $this->wheres;
     }
 }

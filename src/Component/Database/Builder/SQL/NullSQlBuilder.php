@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL;
 
-use Laventure\Component\Database\Builder\SQL\Criteria\Criteria;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Connection\Null\NullConnection;
 use Laventure\Component\Database\Query\Null\NullQuery;
@@ -20,15 +19,6 @@ use Laventure\Component\Database\Query\QueryInterface;
 */
 class NullSQlBuilder implements SQlBuilderInterface
 {
-
-    /**
-     * @inheritDoc
-    */
-    public function getCriteria(): mixed
-    {
-        return  [];
-    }
-
 
     /**
      * @inheritDoc
@@ -68,16 +58,5 @@ class NullSQlBuilder implements SQlBuilderInterface
     public function expr(): ExpressionInterface
     {
          throw new \RuntimeException("Could not found expression for null sql builder.");
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function criteria(Criteria $criteria): static
-    {
-        return $this;
     }
 }

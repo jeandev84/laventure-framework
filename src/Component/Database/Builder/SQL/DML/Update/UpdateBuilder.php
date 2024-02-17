@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL\DML\Update;
@@ -8,6 +7,7 @@ use Laventure\Component\Database\Builder\SQL\Conditions\SQlBuilderConditionTrait
 use Laventure\Component\Database\Builder\SQL\Expr\Set;
 use Laventure\Component\Database\Builder\SQL\Expr\Update;
 use Laventure\Component\Database\Builder\SQL\Expr\Where;
+use Laventure\Component\Database\Builder\SQL\Formatter\SQlFormatter;
 
 /**
  * UpdateBuilder
@@ -24,11 +24,25 @@ class UpdateBuilder implements UpdateBuilderInterface
 
 
     /**
+     * @var string|null
+    */
+    public ?string $table = null;
+
+
+
+    /**
+     * @var array
+    */
+    public array $set = [];
+
+
+
+    /**
      * @inheritDoc
     */
-    public function update(string $table, string $alias = ''): static
+    public function update(string $table): static
     {
-        $this->criteria->table($table, $alias);
+        $this->table = $table;
 
         return $this;
     }
@@ -41,7 +55,7 @@ class UpdateBuilder implements UpdateBuilderInterface
     */
     public function set($column, $value): static
     {
-        $this->criteria->set[$column] = "$column = $value";
+        $this->set[$column] = "$column = $value";
 
         return $this;
     }
@@ -56,10 +70,10 @@ class UpdateBuilder implements UpdateBuilderInterface
     */
     public function getSQL(): string
     {
-        return $this->formatter->addFormats([
-            new Update($this->criteria->table),
-            new Set($this->criteria->set),
-            new Where($this->criteria->wheres)
+        return (new SQlFormatter())->addFormats([
+            new Update($this->table),
+            new Set($this->set),
+            new Where($this->wheres)
         ])->format();
     }
 }
