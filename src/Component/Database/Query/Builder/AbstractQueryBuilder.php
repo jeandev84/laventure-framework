@@ -101,12 +101,9 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     /**
      * @inheritDoc
     */
-    public function select(string $columns = null, bool $distinct = false): static
+    public function select(string $columns = "*", bool $distinct = false): static
     {
-        $columns = $columns ?: "*";
-        $selects = ($distinct ? "DISTINCT $columns" : $columns);
-
-        return $this->addSelect($selects);
+        return $this->addSelect($distinct ? "DISTINCT $columns" : $columns);
     }
 
 

@@ -32,9 +32,11 @@ interface QueryBuilderInterface
 
     /**
      * Select query
-     * @param string|null $columns
+     * @param string $columns
+     * @param bool $distinct
+     * @return QueryBuilderInterface
     */
-    public function select(string $columns = null, bool $distinct = false): static;
+    public function select(string $columns = "*", bool $distinct = false): static;
 
 
 
