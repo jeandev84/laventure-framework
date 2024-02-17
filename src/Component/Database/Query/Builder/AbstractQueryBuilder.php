@@ -118,8 +118,6 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function addSelect(string $columns): static
     {
-        $this->reset();
-
         $this->builder->select()->addSelect($columns);
 
         return $this;
@@ -364,7 +362,6 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function insert(string $table): static
     {
-        $this->reset();
         $this->builder->insert()->insert($table);
 
         return $this;
@@ -411,7 +408,6 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function update(string $table, string $alias = ''): static
     {
-        $this->reset();
         $this->builder->update()->update($table ? "$table $alias": $table);
 
         return $this;
@@ -440,7 +436,6 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function delete(string $table, string $alias = ''): static
     {
-        $this->reset();
         $this->builder->delete()->delete($table ? "$table $alias": $table);
 
         return $this;
@@ -665,6 +660,8 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
         if ($builder instanceof SQlBuilderConditionInterface) {
             $builder = $this->resolveWheres($builder);
         }
+
+        $this->reset();
 
         return $builder;
     }
