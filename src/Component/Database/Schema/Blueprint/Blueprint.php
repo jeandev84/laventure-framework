@@ -6,6 +6,7 @@ namespace Laventure\Component\Database\Schema\Blueprint;
 
 use Laventure\Component\Database\Schema\Column\ColumnInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
+use Laventure\Component\Database\Schema\Table\Criteria\TableCriteriaInterface;
 use Laventure\Component\Database\Schema\Table\TableInterface;
 
 /**
@@ -174,7 +175,8 @@ class Blueprint
     */
     public function timestamps(): static
     {
-        $this->table->addTimestamps();
+        $this->datetime('created_at');
+        $this->datetime('updated_at')->nullable();;
 
         return $this;
     }
@@ -188,7 +190,8 @@ class Blueprint
     */
     public function nullableTimestamps(): static
     {
-        $this->table->addTimestampsNullable();
+        $this->datetime('created_at')->nullable();
+        $this->datetime('updated_at')->nullable();
 
         return $this;
     }
@@ -202,7 +205,8 @@ class Blueprint
     */
     public function softDeletes(): static
     {
-        $this->table->addSoftDeletesTimestamps();
+        $this->table->datetime('deleted_at')
+                    ->nullable();
 
         return $this;
     }
@@ -217,8 +221,10 @@ class Blueprint
     */
     public function rememberToken(): ColumnInterface
     {
-        return $this->string('remember_token', 100)->nullable();
+        return $this->string('remember_token', 100)
+                    ->nullable();
     }
+
 
 
 
@@ -692,24 +698,13 @@ class Blueprint
 
 
     /**
-     * @return string
+     * @return TableCriteriaInterface
     */
-    public function createCriteria(): string
+    public function getCriteria(): TableCriteriaInterface
     {
-        return $this->table->createCriteria();
+        return $this->table->getCriteria();
     }
 
-
-
-
-
-    /**
-     * @return string
-    */
-    public function updateCriteria(): string
-    {
-        return $this->table->updateCriteria();
-    }
 
 
 

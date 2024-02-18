@@ -47,7 +47,7 @@ class TableCriteria implements TableCriteriaInterface
     public function update(): string
     {
         return join(', ', array_filter([
-            join(', ', $this->getUpdateColumns()),
+            join(', ', $this->getNewColumns()),
             join(', ', array_values($this->table->dropColumns)),
             join(', ', array_values($this->table->renameColumns))
         ]));
@@ -59,7 +59,7 @@ class TableCriteria implements TableCriteriaInterface
     /**
      * @return array
     */
-    protected function getUpdateColumns(): array
+    protected function getNewColumns(): array
     {
         $resolved = [];
 

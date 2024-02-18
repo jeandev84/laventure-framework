@@ -252,54 +252,6 @@ abstract class Table implements TableInterface
 
 
 
-    /**
-     * @inheritDoc
-    */
-    public function addTimestamps(): static
-    {
-        $this->datetime('created_at');
-        $this->datetime('updated_at')->nullable();
-
-        return $this;
-    }
-
-
-
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function addTimestampsNullable(): static
-    {
-        $this->datetime('created_at')->nullable();
-        $this->datetime('updated_at')->nullable();
-
-        return $this;
-    }
-
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function addSoftDeletesTimestamps(): static
-    {
-        $this->datetime('deleted_at')->nullable();
-
-        return $this;
-    }
-
-
-
-
-
 
     /**
      * @inheritDoc
@@ -586,54 +538,6 @@ abstract class Table implements TableInterface
         return new TableCriteria($this);
     }
 
-
-
-
-
-    /**
-     * @inheritdoc
-    */
-    public function createCriteria(): string
-    {
-        return join(', ', array_filter([
-            join(', ', array_values($this->columns)),
-            join(', ', array_values($this->constraints))
-        ]));
-    }
-
-
-
-
-
-    /**
-     * @inheritdoc
-    */
-    public function updateCriteria(): string
-    {
-        return join(', ', array_filter([
-            join(', ', $this->getUpdateColumns()),
-            join(', ', array_values($this->dropColumns)),
-            join(', ', array_values($this->renameColumns))
-        ]));
-    }
-
-
-
-
-
-    /**
-     * @return array
-    */
-    protected function getUpdateColumns(): array
-    {
-        $resolved = [];
-
-        foreach ($this->columns as $column) {
-           $resolved[] = $column->add()->getSQL();
-        }
-
-        return $resolved;
-    }
 
 
 

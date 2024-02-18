@@ -7,13 +7,7 @@ use Laventure\Component\Database\Query\Result\QueryResultInterface;
 use Laventure\Component\Database\Schema\Column\ColumnInterface;
 use Laventure\Component\Database\Schema\Column\Drivers\Mysql\MysqlColumn;
 use Laventure\Component\Database\Schema\Column\Info\ColumnInfo;
-use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
-use Laventure\Component\Database\Schema\Constraints\Types\Keys\Foreign\ForeignKey;
-use Laventure\Component\Database\Schema\Table\Criteria\TableCriteriaInterface;
-use Laventure\Component\Database\Schema\Table\Exceptions\TableException;
 use Laventure\Component\Database\Schema\Table\Table;
-use RuntimeException;
-use function _PHPStan_3d4486d07\RingCentral\Psr7\str;
 
 /**
  * MysqlTable
@@ -51,12 +45,12 @@ class MysqlTable extends Table
     */
     public function create(): bool
     {
-        $this->exec(
-            sprintf('CREATE TABLE IF NOT EXISTS `%s` (%s);',
-                $this->name,
-                $this->getCriteria()->create()
-            )
+        $sql = sprintf('CREATE TABLE IF NOT EXISTS `%s` (%s);',
+            $this->name,
+            $this->getCriteria()->create()
         );
+
+        $this->exec($sql);
 
         return $this->exists();
     }
@@ -557,66 +551,6 @@ class MysqlTable extends Table
                     ->fetch();
     }
 
-
-
-    protected function references(): array
-    {
-         /*
-          all using constraints
-          $this->statement("select * from information_schema.table_constraints")
-               ->fetch()
-               ->all();
-          [
-              0 => array:7 [
-                "CONSTRAINT_CATALOG" => "def"
-                "CONSTRAINT_SCHEMA" => "dlc"
-                "CONSTRAINT_NAME" => "Produits_ibfk_1"
-                "TABLE_SCHEMA" => "dlc"
-                "TABLE_NAME" => "Produits"
-                "CONSTRAINT_TYPE" => "FOREIGN KEY"
-                "ENFORCED" => "YES"
-              ]
-              1 => array:7 [
-                "CONSTRAINT_CATALOG" => "def"
-                "CONSTRAINT_SCHEMA" => "dlc"
-                "CONSTRAINT_NAME" => "Ventes_ibfk_1"
-                "TABLE_SCHEMA" => "dlc"
-                "TABLE_NAME" => "Ventes"
-                "CONSTRAINT_TYPE" => "FOREIGN KEY"
-                "ENFORCED" => "YES"
-              ]
-              2 => array:7 [
-                "CONSTRAINT_CATALOG" => "def"
-                "CONSTRAINT_SCHEMA" => "dlc"
-                "CONSTRAINT_NAME" => "Ventes_ibfk_2"
-                "TABLE_SCHEMA" => "dlc"
-                "TABLE_NAME" => "Ventes"
-                "CONSTRAINT_TYPE" => "FOREIGN KEY"
-                "ENFORCED" => "YES"
-              ]
-              3 => array:7 [
-                "CONSTRAINT_CATALOG" => "def"
-                "CONSTRAINT_SCHEMA" => "dlc"
-                "CONSTRAINT_NAME" => "Ventes_ibfk_3"
-                "TABLE_SCHEMA" => "dlc"
-                "TABLE_NAME" => "Ventes"
-                "CONSTRAINT_TYPE" => "FOREIGN KEY"
-                "ENFORCED" => "YES"
-              ]
-              4 => array:7 [
-                "CONSTRAINT_CATALOG" => "def"
-                "CONSTRAINT_SCHEMA" => "laventure_test"
-                "CONSTRAINT_NAME" => "goods_ibfk_1"
-                "TABLE_SCHEMA" => "laventure_test"
-                "TABLE_NAME" => "goods"
-                "CONSTRAINT_TYPE" => "FOREIGN KEY"
-                "ENFORCED" => "YES"
-              ]
-          ]
-         */
-
-         return [];
-    }
 
 
 

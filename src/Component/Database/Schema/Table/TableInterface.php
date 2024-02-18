@@ -551,43 +551,6 @@ interface TableInterface
 
 
 
-    /**
-     * Add timestamps
-     *
-     * @return $this
-    */
-    public function addTimestamps(): static;
-
-
-
-
-
-
-    /**
-     * Add Nullable timestamps
-     *
-     * @return $this
-    */
-    public function addTimestampsNullable(): static;
-
-
-
-
-
-
-    /**
-     * Add soft deletes timestamps
-     *
-     * @return $this
-    */
-    public function addSoftDeletesTimestamps(): static;
-
-
-
-
-
-
-
 
     /**
      * Add column
@@ -892,30 +855,6 @@ interface TableInterface
     */
     public function getConstraints(): array;
 
-
-
-
-
-
-
-    /**
-     * Returns create criteria
-     *
-     * @return mixed
-    */
-    public function createCriteria(): mixed;
-
-
-
-
-
-
-    /**
-     * Returns update criteria
-     *
-     * @return mixed
-    */
-    public function updateCriteria(): mixed;
 
 
 
