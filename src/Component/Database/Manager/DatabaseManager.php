@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Manager;
 
 use Laventure\Component\Database\Configuration\Configuration;
+use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Connection\ConnectionStack;
 use Laventure\Component\Database\DatabaseException;
@@ -55,9 +56,13 @@ class DatabaseManager implements DatabaseManagerInterface
 
 
 
-    public function __construct()
+
+    /**
+     * @param ConnectionInterface[] $connections
+    */
+    public function __construct(array $connections = [])
     {
-        $this->connections(ConnectionStack::getDefaults());
+        $this->connections($connections);
     }
 
 
@@ -67,10 +72,10 @@ class DatabaseManager implements DatabaseManagerInterface
     /**
      * @inheritDoc
     */
-    public function open(string $name, array $credentials): static
+    public function open(string $name, ConfigurationInterface $config): static
     {
         $this->setCurrent($name);
-        $this->setConfiguration($name, $credentials);
+        $this->setConfiguration($name, $config);
 
         return $this;
     }
@@ -106,12 +111,12 @@ class DatabaseManager implements DatabaseManagerInterface
 
     /**
      * @param string $name
-     * @param array $credentials
+     * @param ConfigurationInterface $config
      * @return $this
     */
-    public function setConfiguration(string $name, array $credentials): static
+    public function setConfiguration(string $name, ConfigurationInterface $config): static
     {
-        $this->config[$name] = $credentials;
+        $this->config[$name] = $config;
 
         return $this;
     }
@@ -181,17 +186,21 @@ class DatabaseManager implements DatabaseManagerInterface
 
 
 
+
     /**
      * @inheritDoc
     */
-    public function configuration(string $name): mixed
+    public function configuration(string $name): ConfigurationInterface
     {
         if (empty($this->config[$name])) {
-            $this->abortIf("Empty params for connection ($name)");
+            $this->abortIf("empty params for connection ($name)");
         }
 
         return $this->config[$name];
     }
+
+
+
 
 
 
@@ -201,14 +210,14 @@ class DatabaseManager implements DatabaseManagerInterface
     */
     public function connection(string $name = ''): ConnectionInterface
     {
-        $name        = $name ?: $this->getCurrent();
-        $credentials = $this->configuration($name);
+        $name   = $name ?: $this->getCurrent();
+        $config = $this->configuration($name);
 
         if (!$this->hasConnection($name)) {
             $this->abortIf("unavailable connection named '$name'");
         }
 
-        return $this->connect($name, $credentials);
+        return $this->connect($name, $config);
     }
 
 
@@ -217,12 +226,12 @@ class DatabaseManager implements DatabaseManagerInterface
 
     /**
      * @param string $name
-     * @param array $credentials
+     * @param ConfigurationInterface $config
      * @return ConnectionInterface
     */
-    public function connect(string $name, array $credentials): ConnectionInterface
+    public function connect(string $name, ConfigurationInterface $config): ConnectionInterface
     {
-        $this->connections[$name]->connect(new Configuration($credentials));
+        $this->connections[$name]->connect($config);
 
         if (! $this->connections[$name]->connected()) {
             $this->abortIf("no connection detected for '$name'.");
@@ -252,7 +261,7 @@ class DatabaseManager implements DatabaseManagerInterface
     /**
      * @inheritDoc
     */
-    public function configs(): mixed
+    public function configs(): array
     {
         return $this->config;
     }

@@ -343,14 +343,13 @@ class Container implements ContainerInterface, ArrayAccess
 
         if ($this->has($id)) {
 
-            $service = $this->services[$id];
-            $value   = $service->value();
+            $service = $this->resolveService($this->services[$id]);
 
             if ($service->shared()) {
-                return $this->share($id, $value);
+                return $this->share($id, $service->value());
             }
 
-            return $value;
+            return $service->value();
         }
 
         return $this->resolve($id);
@@ -517,7 +516,6 @@ class Container implements ContainerInterface, ArrayAccess
     */
     public function add(ServiceInterface $service): ServiceInterface
     {
-        $service  = $this->resolveService($service);
         return $this->services[$service->id()] = $service;
     }
 

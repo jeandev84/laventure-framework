@@ -5,8 +5,8 @@ namespace Laventure\Component\Database\Connection\Extensions\PDO;
 
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Configuration\NullConfiguration;
-use Laventure\Component\Database\Connection\Extensions\PDO\Config\Resolver\PdoConfigurationResolver;
 use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\PdoDsn;
+use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\PdoDsnBuilder;
 use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnectionFactoryInterface;
 use Laventure\Component\Database\Connection\Extensions\PDO\Query\Query;
 use Laventure\Component\Database\Connection\Extensions\PDO\Query\QueryBuilder;
@@ -41,17 +41,11 @@ abstract class PdoConnection implements PdoConnectionInterface
 
 
     /**
-     * @var PdoConfigurationResolver
-    */
-    protected PdoConfigurationResolver $resolver;
-
-
-
-
-    /**
      * @var mixed
     */
     protected mixed $func;
+
+
 
 
 
@@ -61,7 +55,6 @@ abstract class PdoConnection implements PdoConnectionInterface
     public function __construct(PdoConnectionFactoryInterface $factory)
     {
         $this->factory  = $factory;
-        $this->resolver = new PdoConfigurationResolver($this->getName());
         $this->withConfiguration(new NullConfiguration());
     }
 
@@ -74,9 +67,7 @@ abstract class PdoConnection implements PdoConnectionInterface
     */
     public function connect(ConfigurationInterface $config): void
     {
-        $config = $this->resolver->resolve($config);
-        $this->withConnection($this->makeConnection($config))
-             ->withConfiguration($config);
+        $this->withConnection($this->makeConnection($config));
     }
 
 
@@ -271,31 +262,11 @@ abstract class PdoConnection implements PdoConnectionInterface
     */
     public function makeConnection(ConfigurationInterface $config): PDO
     {
-        return $this->factory->makeConnection($config);
+        $this->withConfiguration($config);
+
+        return $this->factory->make($this->getName(), $config);
     }
 
-
-
-
-    /**
-     * @param string $driver
-     * @return bool
-    */
-    public function hasAvailableDriver(string $driver): bool
-    {
-        return in_array($driver, $this->getAvailableDrivers());
-    }
-
-
-
-
-    /**
-     * @return array
-    */
-    public function getAvailableDrivers(): array
-    {
-        return PDO::getAvailableDrivers();
-    }
 
 
 

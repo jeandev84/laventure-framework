@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Manager;
 
+use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 
 /**
@@ -21,10 +22,10 @@ interface DatabaseManagerInterface
      * Open connection by given name
      *
      * @param string $name
-     * @param array $credentials
+     * @param ConfigurationInterface $config
      * @return mixed
      */
-    public function open(string $name, array $credentials): mixed;
+    public function open(string $name, ConfigurationInterface $config): mixed;
 
 
 
@@ -33,7 +34,7 @@ interface DatabaseManagerInterface
     /**
      * Add all configurations
      *
-     * @param array $configs
+     * @param ConfigurationInterface[] $configs
      *
      * @return $this
      */
@@ -62,9 +63,9 @@ interface DatabaseManagerInterface
     /**
      * @param string $name
      *
-     * @return mixed
-     */
-    public function configuration(string $name): mixed;
+     * @return ConfigurationInterface
+    */
+    public function configuration(string $name): ConfigurationInterface;
 
 
 
@@ -76,6 +77,7 @@ interface DatabaseManagerInterface
      * @return ConnectionInterface
     */
     public function connection(string $name = ''): ConnectionInterface;
+
 
 
 
@@ -97,12 +99,14 @@ interface DatabaseManagerInterface
 
 
 
+
     /**
      * Returns all configuration
      *
-     * @return mixed
+     * @return ConfigurationInterface[]
     */
-    public function configs(): mixed;
+    public function configs(): array;
+
 
 
 
