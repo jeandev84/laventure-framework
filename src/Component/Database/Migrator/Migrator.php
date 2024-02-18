@@ -238,10 +238,12 @@ class Migrator implements MigratorInterface
      * @param string $name
      * @return bool
     */
-    public function hasVersion(string $name): bool
+    public function migrated(string $name): bool
     {
         return in_array($name, $this->getOldMigrations());
     }
+
+
 
 
 
@@ -252,7 +254,7 @@ class Migrator implements MigratorInterface
     public function getNewMigrations(): array
     {
         $func = function (MigrationInterface $migration) {
-            return !$this->hasVersion($migration->getVersion());
+            return !$this->migrated($migration->getVersion());
         };
 
         return array_filter($this->getMigrations(), $func);
