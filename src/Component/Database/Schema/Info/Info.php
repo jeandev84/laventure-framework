@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Schema;
+namespace Laventure\Component\Database\Schema\Info;
 
 /**
  * Info
@@ -10,7 +10,7 @@ namespace Laventure\Component\Database\Schema;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Schema
+ * @package  Laventure\Component\Database\Schema\Info
 */
 class Info
 {

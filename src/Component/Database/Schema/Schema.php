@@ -7,6 +7,7 @@ namespace Laventure\Component\Database\Schema;
 use Closure;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Schema\Blueprint\Blueprint;
+use Laventure\Component\Database\Schema\Info\Info;
 use Laventure\Component\Database\Schema\Table\Factory\TableFactory;
 use Laventure\Component\Database\Schema\Table\Factory\TableFactoryInterface;
 use Laventure\Component\Database\Schema\Table\TableInterface;
@@ -239,7 +240,9 @@ class Schema implements SchemaInterface
     */
     public function getTables(): array
     {
-        return $this->connection->getDatabase()->getTables();
+        return $this->connection
+                    ->getDatabase()
+                    ->getTables();
     }
 
 
@@ -252,7 +255,8 @@ class Schema implements SchemaInterface
     public function getName(): string
     {
         if (!$this->name) {
-            $this->name = $this->connection->getDatabaseName();
+            $this->name = $this->connection
+                               ->getDatabaseName();
         }
 
         return $this->name;
@@ -280,5 +284,20 @@ class Schema implements SchemaInterface
     public function getFactory(): TableFactoryInterface
     {
         return $this->factory;
+    }
+
+
+
+
+
+    /**
+     * @return Info
+    */
+    public function getInfo(): Info
+    {
+        return new Info([
+            'name'    => $this->getName(),
+            'tables'  => $this->getTables()
+        ]);
     }
 }
