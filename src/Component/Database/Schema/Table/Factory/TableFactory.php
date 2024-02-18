@@ -5,11 +5,9 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Schema\Table\Factory;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
-use Laventure\Component\Database\Connection\ConnectionType;
-use Laventure\Component\Database\Schema\Column\Types\Mysql\MysqlColumnFactory;
-use Laventure\Component\Database\Schema\Table\Types\Mysql\MysqlTable;
-use Laventure\Component\Database\Schema\Table\Types\Mysql\MysqlTableFactory;
+use Laventure\Component\Database\Connection\ConnectionName;
 use Laventure\Component\Database\Schema\Table\TableInterface;
+use Laventure\Component\Database\Schema\Table\Types\Mysql\MysqlTableFactory;
 
 /**
  * TableFactory
@@ -41,7 +39,7 @@ class TableFactory implements TableFactoryInterface
     ): TableInterface
     {
         $factory = match ($this->connection->getName()) {
-            ConnectionType::Mysql => new MysqlTableFactory($this->connection)
+            ConnectionName::Mysql => new MysqlTableFactory($this->connection)
         };
 
         return $factory->createTable($name, $schemaName);

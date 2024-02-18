@@ -2,30 +2,28 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Connection\Drivers\Sqlite;
+namespace Laventure\Component\Database\Drivers\Oracle;
 
 use Laventure\Component\Database\Database;
 
 /**
- * SqliteDatabase
+ * OracleDatabase
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Types\Sqlite
+ * @package  Laventure\Component\Database\Drivers\Oracle
  */
-class SqliteDatabase extends Database
+class OracleDatabase extends Database
 {
     /**
      * @inheritDoc
-    */
+     */
     public function create(): mixed
     {
-
+        // TODO: Implement create() method.
     }
-
-
 
     /**
      * @inheritDoc

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\PDO\Drivers\Pgsql;
 
-use Laventure\Component\Database\Connection\ConnectionType;
-use Laventure\Component\Database\Connection\Drivers\Pgsql\PgsqlDatabase;
+use Laventure\Component\Database\Connection\ConnectionName;
 use Laventure\Component\Database\Connection\Extensions\PDO\PdoConnection;
 use Laventure\Component\Database\DatabaseInterface;
+use Laventure\Component\Database\Drivers\Pgsql\PgsqlDatabase;
 
 /**
  * PgsqlConnection
@@ -25,7 +25,7 @@ class PgsqlConnection extends PdoConnection
     */
     public function getName(): string
     {
-        return ConnectionType::Pgsql;
+        return ConnectionName::Pgsql;
     }
 
 

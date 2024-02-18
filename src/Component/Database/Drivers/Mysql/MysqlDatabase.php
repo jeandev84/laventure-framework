@@ -1,8 +1,7 @@
 <?php
-
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Connection\Drivers\Mysql;
+namespace Laventure\Component\Database\Drivers\Mysql;
 
 use Laventure\Component\Database\Database;
 
@@ -13,7 +12,7 @@ use Laventure\Component\Database\Database;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Types\Mysql
+ * @package  Laventure\Component\Database\Drivers\Mysql
 */
 class MysqlDatabase extends Database
 {

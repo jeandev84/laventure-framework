@@ -23,5 +23,5 @@ interface PdoConnectionInterface extends ConnectionInterface
      *
      * @return PDO
     */
-    public function getPdo(): PDO;
+    public function getConnection(): PDO;
 }

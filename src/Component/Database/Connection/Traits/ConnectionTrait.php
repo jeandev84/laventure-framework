@@ -1,26 +1,26 @@
 <?php
-
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Connection;
+namespace Laventure\Component\Database\Connection\Traits;
+
 
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Configuration\NullConfiguration;
 
 /**
- * Connection
+ * ConnectionTrait
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection
+ * @package  Laventure\Component\Database\Connection\Traits
  */
-abstract class Connection implements ConnectionInterface
+trait ConnectionTrait
 {
     /**
      * @var ConfigurationInterface
-    */
+     */
     protected ConfigurationInterface $config;
 
 
@@ -28,13 +28,6 @@ abstract class Connection implements ConnectionInterface
      * @var mixed
     */
     protected mixed $connection;
-
-
-
-    public function __construct()
-    {
-        $this->withConfiguration(new NullConfiguration());
-    }
 
 
 
@@ -79,8 +72,9 @@ abstract class Connection implements ConnectionInterface
 
 
 
+
     /**
-     * @inheritDoc
+     * @return ConfigurationInterface
     */
     public function getConfiguration(): ConfigurationInterface
     {
@@ -90,8 +84,23 @@ abstract class Connection implements ConnectionInterface
 
 
 
+
     /**
-     * @inheritDoc
+     * @return string
+    */
+    public function getDatabaseName(): string
+    {
+        return $this->config->database();
+    }
+
+
+
+
+
+    /**
+     * @param $key
+     * @param $default
+     * @return mixed
     */
     public function config($key, $default = null): mixed
     {

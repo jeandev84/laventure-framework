@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\PDO\Drivers\Sqlite;
 
-use Laventure\Component\Database\Connection\ConnectionType;
-use Laventure\Component\Database\Connection\Drivers\Sqlite\SqliteDatabase;
+use Laventure\Component\Database\Connection\ConnectionName;
 use Laventure\Component\Database\Connection\Extensions\PDO\PdoConnection;
 use Laventure\Component\Database\DatabaseInterface;
+use Laventure\Component\Database\Drivers\Sqlite\SqliteDatabase;
 
 /**
  * SqliteConnection
@@ -25,7 +25,7 @@ class SqliteConnection extends PdoConnection
     */
     public function getName(): string
     {
-        return ConnectionType::Sqlite;
+        return ConnectionName::Sqlite;
     }
 
 

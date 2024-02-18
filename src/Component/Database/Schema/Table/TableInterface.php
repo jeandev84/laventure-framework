@@ -689,7 +689,7 @@ interface TableInterface
      *
      * @return array
     */
-    public function getAllSystemConstraints(): array;
+    public function listConstraints(): array;
 
 
 

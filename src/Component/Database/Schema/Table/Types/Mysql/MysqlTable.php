@@ -570,7 +570,7 @@ class MysqlTable extends Table
     /**
      * @inheritdoc
     */
-    public function getAllSystemConstraints(): array
+    public function listConstraints(): array
     {
         $qb = $this->connection->createQueryBuilder();
 

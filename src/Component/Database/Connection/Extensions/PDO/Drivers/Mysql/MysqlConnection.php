@@ -1,13 +1,13 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\PDO\Drivers\Mysql;
 
-use Laventure\Component\Database\Connection\ConnectionType;
-use Laventure\Component\Database\Connection\Drivers\Mysql\MysqlDatabase;
+use Laventure\Component\Database\Connection\ConnectionName;
+use Laventure\Component\Database\Connection\Drivers\Mysql\MysqlConnectionTrait;
 use Laventure\Component\Database\Connection\Extensions\PDO\PdoConnection;
 use Laventure\Component\Database\DatabaseInterface;
+use Laventure\Component\Database\Drivers\Mysql\MysqlDatabase;
 
 /**
  * MysqlConnection
@@ -21,21 +21,41 @@ use Laventure\Component\Database\DatabaseInterface;
 class MysqlConnection extends PdoConnection
 {
     /**
-     * @inheritDoc
+     * @return string
     */
     public function getName(): string
     {
-        return ConnectionType::Mysql;
+        return ConnectionName::Mysql;
+    }
+
+
+
+    /**
+     * @return DatabaseInterface
+    */
+    public function getDatabase(): DatabaseInterface
+    {
+        return new MysqlDatabase($this, $this->getDatabaseName());
     }
 
 
 
 
     /**
-     * @inheritDoc
+     * @return void
     */
-    public function getDatabase(): DatabaseInterface
+    public function activateTransaction(): void
     {
-        return new MysqlDatabase($this, $this->getDatabaseName());
+        $this->executeQuery('SET autocommit = 1');
+    }
+
+
+
+    /**
+     * @return void
+    */
+    public function disableTransaction(): void
+    {
+        $this->executeQuery('SET autocommit = 0');
     }
 }

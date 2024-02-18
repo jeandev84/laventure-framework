@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Connection\Drivers\Oracle;
+namespace Laventure\Component\Database\Drivers\Pgsql;
 
 use Laventure\Component\Database\Database;
 
 /**
- * OracleDatabase
+ * PgsqlDatabase
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Types\Oracle
- */
-class OracleDatabase extends Database
+ * @package  Laventure\Component\Database\Drivers\Pgsql
+*/
+class PgsqlDatabase extends Database
 {
     /**
      * @inheritDoc

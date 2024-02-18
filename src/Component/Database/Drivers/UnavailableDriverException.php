@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Connection\Drivers;
+namespace Laventure\Component\Database\Drivers;
 
 /**
  * UnavailableDriverException
@@ -11,7 +11,7 @@ namespace Laventure\Component\Database\Connection\Drivers;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Types
+ * @package  Laventure\Component\Database\Drivers
  */
 class UnavailableDriverException extends DriverException
 {

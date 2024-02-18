@@ -5,11 +5,11 @@ namespace Laventure\Component\Database\Connection\Extensions\PDO;
 
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Configuration\NullConfiguration;
-use Laventure\Component\Database\Connection\Connection;
 use Laventure\Component\Database\Connection\Extensions\PDO\Config\Resolver\PdoConfigurationResolver;
 use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnectionFactoryInterface;
 use Laventure\Component\Database\Connection\Extensions\PDO\Query\Query;
 use Laventure\Component\Database\Connection\Extensions\PDO\Query\QueryBuilder;
+use Laventure\Component\Database\Connection\Traits\ConnectionTrait;
 use Laventure\Component\Database\Query\Builder\QueryBuilderInterface;
 use Laventure\Component\Database\Query\QueryInterface;
 use PDO;
@@ -25,12 +25,18 @@ use RuntimeException;
  *
  * @package  Laventure\Component\Database\Connection\Extensions\PDO
 */
-abstract class PdoConnection extends Connection implements PdoConnectionInterface
+abstract class PdoConnection implements PdoConnectionInterface
 {
+
+    use ConnectionTrait;
+
+
     /**
      * @var PdoConnectionFactoryInterface
     */
     protected PdoConnectionFactoryInterface $factory;
+
+
 
 
     /**
@@ -44,7 +50,7 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
     /**
      * @var mixed
     */
-    protected $func;
+    protected mixed $func;
 
 
 
@@ -53,9 +59,9 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
     */
     public function __construct(PdoConnectionFactoryInterface $factory)
     {
-        parent::__construct();
         $this->factory  = $factory;
         $this->resolver = new PdoConfigurationResolver($this->getName());
+        $this->withConfiguration(new NullConfiguration());
     }
 
 
@@ -123,7 +129,7 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
     */
     public function createQuery(): QueryInterface
     {
-        return new Query($this->getPdo());
+        return new Query($this->getConnection());
     }
 
 
@@ -165,12 +171,13 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
 
 
 
+
     /**
      * @inheritDoc
     */
     public function beginTransaction(): bool
     {
-        return $this->getPdo()->beginTransaction();
+        return $this->getConnection()->beginTransaction();
     }
 
 
@@ -181,7 +188,7 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
     */
     public function hasActiveTransaction(): bool
     {
-        return $this->getPdo()->inTransaction();
+        return $this->getConnection()->inTransaction();
     }
 
 
@@ -194,7 +201,7 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
     */
     public function commit(): bool
     {
-        return $this->getPdo()->commit();
+        return $this->getConnection()->commit();
     }
 
 
@@ -206,7 +213,7 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
     */
     public function rollback(): bool
     {
-        return $this->getPdo()->rollBack();
+        return $this->getConnection()->rollBack();
     }
 
 
@@ -258,17 +265,6 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
 
 
     /**
-     * @inheritdoc
-    */
-    public function getPdo(): PDO
-    {
-        return $this->getConnection();
-    }
-
-
-
-
-    /**
      * @param ConfigurationInterface $config
      * @return PDO
     */
@@ -301,6 +297,16 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
     }
 
 
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function getConnection(): PDO
+    {
+        return $this->connection;
+    }
 
 
 

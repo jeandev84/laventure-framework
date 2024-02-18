@@ -1,11 +1,10 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection;
 
 /**
- * ConnectionType
+ * ConnectionName
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -13,10 +12,11 @@ namespace Laventure\Component\Database\Connection;
  *
  * @package  Laventure\Component\Database\Connection
 */
-enum ConnectionType
+enum ConnectionName
 {
-    public const Mysql  = 'mysql';
-    public const Pgsql  = 'pgsql';
-    public const Oracle = 'oci';
-    public const Sqlite = 'sqlite';
+    public const Mysql   = 'mysql';
+    public const Pgsql   = 'pgsql';
+    public const Oracle  = 'oci';
+    public const Sqlite  = 'sqlite';
+    public const Mysqli  = 'mysqli';
 }
