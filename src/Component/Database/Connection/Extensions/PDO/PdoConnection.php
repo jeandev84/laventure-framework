@@ -323,9 +323,9 @@ abstract class PdoConnection implements PdoConnectionInterface
             return $database;
         }
 
-        $dsn = $this->getPdoDsn();
+        $dsn = $this->getDsn();
 
-        if (!$database = $dsn->get('dbname')) {
+        if (!$database = $dsn['dbname']) {
             throw new RuntimeException(
                 "Could not retrieve database name from (". $dsn . ")"
             );
@@ -341,7 +341,7 @@ abstract class PdoConnection implements PdoConnectionInterface
     /**
      * @return PdoDsn
     */
-    public function getPdoDsn(): PdoDsn
+    public function getDsn(): PdoDsn
     {
         return new PdoDsn($this->config('dsn'));
     }
