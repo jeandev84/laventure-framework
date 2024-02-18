@@ -69,4 +69,16 @@ interface TransactionInterface
      * @return mixed
     */
     public function transaction(callable $func): mixed;
+
+
+
+
+
+
+    /**
+     * @param callable $func
+     * @param bool $condition
+     * @return bool
+    */
+    public function transactionIf(callable $func, bool $condition = false): mixed;
 }

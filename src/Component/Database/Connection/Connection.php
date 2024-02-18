@@ -97,4 +97,18 @@ abstract class Connection implements ConnectionInterface
     {
         return $this->config->get($key, $default);
     }
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function transactionIf(callable $func, bool $condition = false): mixed
+    {
+        if ($condition) {
+            return $this->transaction($func);
+        }
+
+        return $condition;
+    }
 }
