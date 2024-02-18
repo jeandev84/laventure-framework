@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL;
 
-
 use Laventure\Component\Database\Builder\SQL\Expr\Expr;
 use Laventure\Component\Database\Builder\SQL\Formatter\SQlFormatter;
 use Laventure\Component\Database\Connection\ConnectionInterface;

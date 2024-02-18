@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Table\Types\Mysql;
@@ -18,8 +19,6 @@ use Laventure\Component\Database\Schema\Table\TableInterface;
 */
 class MysqlTableFactory implements TableFactoryInterface
 {
-
-
     /**
      * @param ConnectionInterface $connection
     */

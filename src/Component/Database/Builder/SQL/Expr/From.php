@@ -17,7 +17,6 @@ use Stringable;
  */
 class From implements Stringable
 {
-
     /**
      * @param array $table
     */

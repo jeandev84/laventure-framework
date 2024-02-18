@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Column\Types\Sqlite;
@@ -18,7 +19,6 @@ use Laventure\Component\Database\Schema\Column\Info\ColumnInfoInterface;
 */
 class SqliteColumnFactory implements ColumnFactoryInterface
 {
-
     /**
      * @inheritDoc
     */

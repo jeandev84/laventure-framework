@@ -36,8 +36,7 @@ class TableFactory implements TableFactoryInterface
     public function createTable(
         string $name,
         string $schemaName = ''
-    ): TableInterface
-    {
+    ): TableInterface {
         $factory = match ($this->connection->getName()) {
             ConnectionName::Mysql => new MysqlTableFactory($this->connection)
         };

@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Constraints\Contract;
-
 
 use Laventure\Component\Database\Schema\Constraints\ConstraintInterface;
 
@@ -17,25 +17,24 @@ use Laventure\Component\Database\Schema\Constraints\ConstraintInterface;
  */
 interface HasConstraintInterface
 {
-
-      /**
-       * Add constraint
-       *
-       * @param ConstraintInterface $constraint
-       * @return $this
-      */
-      public function withConstraint(ConstraintInterface $constraint): static;
-
+    /**
+     * Add constraint
+     *
+     * @param ConstraintInterface $constraint
+     * @return $this
+    */
+    public function withConstraint(ConstraintInterface $constraint): static;
 
 
 
-     /**
-      * Add constraints
-      *
-      * @param ConstraintInterface[] $constraints
-      * @return $this
-     */
-     public function withConstraints(array $constraints): static;
+
+    /**
+     * Add constraints
+     *
+     * @param ConstraintInterface[] $constraints
+     * @return $this
+    */
+    public function withConstraints(array $constraints): static;
 
 
 
@@ -58,10 +57,10 @@ interface HasConstraintInterface
 
 
 
-     /**
-      * Returns constraints
-      *
-      * @return ConstraintInterface[]
-     */
-     public function getConstraints(): array;
+    /**
+     * Returns constraints
+     *
+     * @return ConstraintInterface[]
+    */
+    public function getConstraints(): array;
 }

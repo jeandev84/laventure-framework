@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder;
@@ -11,7 +12,6 @@ use Laventure\Component\Database\Builder\SQL\ExpressionInterface;
 use Laventure\Component\Database\Builder\SQL\SqlBuilderFactory;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 
-
 /**
  * SqlQueryBuilder
  *
@@ -23,7 +23,6 @@ use Laventure\Component\Database\Connection\ConnectionInterface;
 */
 class SqlQueryBuilder implements SqlQueryBuilderInterface
 {
-
     protected SqlBuilderFactory $factory;
 
 

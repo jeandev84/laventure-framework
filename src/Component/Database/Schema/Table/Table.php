@@ -31,7 +31,6 @@ use Laventure\Component\Database\Schema\Table\Criteria\TableCriteriaInterface;
 */
 abstract class Table implements TableInterface
 {
-
     /**
      * @var ColumnInterface[]
     */

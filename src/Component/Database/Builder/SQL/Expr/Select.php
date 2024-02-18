@@ -17,7 +17,6 @@ use Stringable;
 */
 class Select implements Stringable
 {
-
     protected bool $distinct = false;
 
 

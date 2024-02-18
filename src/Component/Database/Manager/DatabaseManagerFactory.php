@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Manager;
@@ -17,15 +18,12 @@ use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnection
 */
 class DatabaseManagerFactory implements DatabaseManagerFactoryInterface
 {
-
-
     /**
      * @param ConnectionStackInterface $connectionStack
     */
     public function __construct(
         protected ConnectionStackInterface $connectionStack
-    )
-    {
+    ) {
     }
 
 

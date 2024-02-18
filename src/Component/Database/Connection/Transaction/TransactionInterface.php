@@ -17,8 +17,6 @@ use Closure;
  */
 interface TransactionInterface
 {
-
-
     /**
      * @return void
     */

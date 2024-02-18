@@ -20,7 +20,6 @@ use Laventure\Component\Database\Schema\Constraints\Contract\IndexInterface;
 */
 class Index extends ConstraintHasColumns implements IndexInterface
 {
-
     /**
      * @param string|null $key
     */

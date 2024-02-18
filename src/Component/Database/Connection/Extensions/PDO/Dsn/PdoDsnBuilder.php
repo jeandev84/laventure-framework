@@ -117,9 +117,10 @@ class PdoDsnBuilder implements PdoDsnBuilderInterface
      * @param array $params
      * @return static
     */
-    public static function create(string $driver, array $params): static
+    public static function create(string $driver, array $params): string
     {
-        return new self($driver, $params);
+        $dsn = new self($driver, $params);
+        return $dsn->__toString();
     }
 
 

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\Mysqli\Query;
@@ -6,7 +7,6 @@ namespace Laventure\Component\Database\Connection\Extensions\Mysqli\Query;
 use Laventure\Component\Database\Query\QueryInterface;
 use Laventure\Component\Database\Query\Result\QueryResultInterface;
 use mysqli;
-
 
 /**
  * Query
@@ -19,8 +19,6 @@ use mysqli;
 */
 class Query implements QueryInterface
 {
-
-
     /**
      * @var mysqli
     */
@@ -109,7 +107,7 @@ class Query implements QueryInterface
     */
     public function bindColumn($column, $value, int $type = 0): static
     {
-         return $this;
+        return $this;
     }
 
 

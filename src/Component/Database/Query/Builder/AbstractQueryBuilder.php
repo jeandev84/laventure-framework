@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder;
-
 
 use Laventure\Component\Database\Builder\SQL\Conditions\Contract\SQlBuilderConditionInterface;
 use Laventure\Component\Database\Builder\SQL\DQL\Select\SelectBuilderInterface;
@@ -12,7 +12,6 @@ use Laventure\Component\Database\Builder\SQL\ExpressionInterface;
 use Laventure\Component\Database\Builder\SQL\SQlBuilderInterface;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Query\QueryInterface;
-
 
 /**
  * AbstractQueryBuilder
@@ -116,9 +115,9 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function distinct(bool $distinct): static
     {
-         $this->builder->select()->distinct($distinct);
+        $this->builder->select()->distinct($distinct);
 
-         return $this;
+        return $this;
     }
 
 
@@ -307,9 +306,9 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function orderBy(string $column, string $direction = null): static
     {
-         $this->builder->select()->orderBy($column, $direction ?: 'ASC');
+        $this->builder->select()->orderBy($column, $direction ?: 'ASC');
 
-         return $this;
+        return $this;
     }
 
 
@@ -407,7 +406,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function update(string $table, string $alias = ''): static
     {
-        $this->builder->update()->update($table ? "$table $alias": $table);
+        $this->builder->update()->update($table ? "$table $alias" : $table);
 
         return $this;
     }
@@ -435,7 +434,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function delete(string $table, string $alias = ''): static
     {
-        $this->builder->delete()->delete($table ? "$table $alias": $table);
+        $this->builder->delete()->delete($table ? "$table $alias" : $table);
 
         return $this;
     }
@@ -617,7 +616,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function getSQL(): string
     {
-         return $this->getSQLBuilder()->getSQL();
+        return $this->getSQLBuilder()->getSQL();
     }
 
 
@@ -702,13 +701,13 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     private function resolveWheres(SQlBuilderConditionInterface $builder): SQlBuilderInterface
     {
-         $wheres = $this->resolveConditions($this->wheres);
+        $wheres = $this->resolveConditions($this->wheres);
 
-         if (!empty($wheres)) {
-             $builder->where(join(' ', $wheres));
-         }
+        if (!empty($wheres)) {
+            $builder->where(join(' ', $wheres));
+        }
 
-         return $builder;
+        return $builder;
     }
 
 

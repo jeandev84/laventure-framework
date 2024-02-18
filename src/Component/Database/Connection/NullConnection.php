@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection;
@@ -23,13 +24,12 @@ use Laventure\Component\Database\Query\QueryInterface;
 */
 class NullConnection implements ConnectionInterface
 {
-
     /**
      * @inheritDoc
     */
     public function getName(): string
     {
-         return '';
+        return '';
     }
 
 
@@ -115,7 +115,7 @@ class NullConnection implements ConnectionInterface
     */
     public function createQueryBuilder(): QueryBuilderInterface
     {
-         return new NullQueryBuilder();
+        return new NullQueryBuilder();
     }
 
 

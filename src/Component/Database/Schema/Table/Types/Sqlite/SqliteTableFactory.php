@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Table\Types\Sqlite;
@@ -18,8 +19,6 @@ use Laventure\Component\Database\Schema\Table\TableInterface;
 */
 class SqliteTableFactory implements TableFactoryInterface
 {
-
-
     /**
      * @param ConnectionInterface $connection
     */

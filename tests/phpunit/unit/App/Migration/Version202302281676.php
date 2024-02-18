@@ -1,17 +1,15 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PHPUnitTest\App\Migration;
-
 
 use Laventure\Component\Database\Migration\Migration;
 use Laventure\Component\Database\Schema\Blueprint\Blueprint;
 use Laventure\Component\Database\Schema\SchemaInterface;
 
-
 class Version202302281676 extends Migration
 {
-
     /**
      * @inheritDoc
     */

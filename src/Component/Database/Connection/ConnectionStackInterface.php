@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection;
-
 
 /**
  * ConnectionStackInterface
@@ -15,8 +15,8 @@ namespace Laventure\Component\Database\Connection;
 */
 interface ConnectionStackInterface
 {
-     /**
-      * @return ConnectionInterface[]
-     */
-     public function getConnections(): array;
+    /**
+     * @return ConnectionInterface[]
+    */
+    public function getConnections(): array;
 }

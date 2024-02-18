@@ -7,7 +7,6 @@ namespace Laventure\Component\Database\Schema\Constraints\Contract;
 use Laventure\Component\Database\Schema\Column\Contract\HasColumnInterface;
 use Laventure\Component\Database\Schema\Constraints\ConstraintInterface;
 
-
 /**
  * IndexInterface
  *

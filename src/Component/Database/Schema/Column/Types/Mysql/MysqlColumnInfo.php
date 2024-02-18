@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Column\Types\Mysql;
@@ -16,109 +17,108 @@ use Laventure\Component\Database\Schema\Column\Info\ColumnInfo;
 */
 class MysqlColumnInfo extends ColumnInfo
 {
-
-     /**
-      * @inheritdoc
-     */
-     public function getField(): string
-     {
-         return $this->get('Field');
-     }
-
-
-
-
-     /**
-      * @inheritdoc
-     */
-     public function getType(): string
-     {
-         return $this->get('Type');
-     }
+    /**
+     * @inheritdoc
+    */
+    public function getField(): string
+    {
+        return $this->get('Field');
+    }
 
 
 
 
-
-     /**
-      * @inheritdoc
-     */
-     public function getCollation(): string
-     {
-         return $this->get('Collation', '');
-     }
+    /**
+     * @inheritdoc
+    */
+    public function getType(): string
+    {
+        return $this->get('Type');
+    }
 
 
 
 
 
-     /**
-      * @inheritdoc
-     */
-     public function isNullable(): bool
-     {
-         $null = $this->get('Null');
-
-         return $null === 'YES';
-     }
+    /**
+     * @inheritdoc
+    */
+    public function getCollation(): string
+    {
+        return $this->get('Collation', '');
+    }
 
 
 
 
 
-     /**
-      * @inheritdoc
-     */
-     public function getKey(): string
-     {
-         return $this->get('Key');
-     }
+    /**
+     * @inheritdoc
+    */
+    public function isNullable(): bool
+    {
+        $null = $this->get('Null');
+
+        return $null === 'YES';
+    }
 
 
 
 
 
-     /**
-      * @inheritdoc
-     */
-     public function getDefault(): mixed
-     {
-         return $this->get('Default');
-     }
+    /**
+     * @inheritdoc
+    */
+    public function getKey(): string
+    {
+        return $this->get('Key');
+    }
 
 
 
 
 
-     /**
-      * @inheritdoc
-     */
-     public function getExtra(): string
-     {
-         return $this->get('Extra');
-     }
+    /**
+     * @inheritdoc
+    */
+    public function getDefault(): mixed
+    {
+        return $this->get('Default');
+    }
 
 
 
 
 
-     /**
-      * @inheritdoc
-     */
-     public function getPrivileges(): ?string
-     {
-         return $this->get('Privileges');
-     }
+    /**
+     * @inheritdoc
+    */
+    public function getExtra(): string
+    {
+        return $this->get('Extra');
+    }
 
 
 
 
 
-     /**
-      * @return string
-     */
-     public function getComment(): string
-     {
-         return $this->get('Comment');
-     }
+    /**
+     * @inheritdoc
+    */
+    public function getPrivileges(): ?string
+    {
+        return $this->get('Privileges');
+    }
+
+
+
+
+
+    /**
+     * @return string
+    */
+    public function getComment(): string
+    {
+        return $this->get('Comment');
+    }
 }

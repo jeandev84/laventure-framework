@@ -1,6 +1,6 @@
 <?php
-namespace PHPUnitTest\App\Migration;
 
+namespace PHPUnitTest\App\Migration;
 
 use Laventure\Component\Database\Migration\Migration;
 use Laventure\Component\Database\Schema\Blueprint\Blueprint;
@@ -8,7 +8,6 @@ use Laventure\Component\Database\Schema\SchemaInterface;
 
 class Version202302281721 extends Migration
 {
-
     /**
      * @inheritDoc
    */

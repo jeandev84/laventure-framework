@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Constraints\Types\Keys\Foreign;
@@ -21,8 +22,7 @@ class ForeignKeyGenerator
     public function __construct(
         protected string $table,
         protected string $column
-    )
-    {
+    ) {
     }
 
 

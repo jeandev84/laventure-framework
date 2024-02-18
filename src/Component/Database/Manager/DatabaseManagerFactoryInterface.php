@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Manager;
@@ -14,11 +15,11 @@ namespace Laventure\Component\Database\Manager;
 */
 interface DatabaseManagerFactoryInterface
 {
-      /**
-       * @param array $connections
-       * @return DatabaseManagerInterface
-      */
-      public function createDatabaseManager(
-          array $connections = []
-      ): DatabaseManagerInterface;
+    /**
+     * @param array $connections
+     * @return DatabaseManagerInterface
+    */
+    public function createDatabaseManager(
+        array $connections = []
+    ): DatabaseManagerInterface;
 }

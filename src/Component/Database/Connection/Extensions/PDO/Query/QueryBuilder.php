@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\PDO\Query;
-
 
 use Laventure\Component\Database\Query\Builder\AbstractQueryBuilder;
 
@@ -17,8 +17,6 @@ use Laventure\Component\Database\Query\Builder\AbstractQueryBuilder;
 */
 class QueryBuilder extends AbstractQueryBuilder
 {
-
-
     /**
      * @param string $column
      * @param $value
@@ -26,8 +24,8 @@ class QueryBuilder extends AbstractQueryBuilder
     */
     public function set(string $column, $value): static
     {
-         parent::set($column, ":$column");
-         return $this->setParameter($column, $value);
+        parent::set($column, ":$column");
+        return $this->setParameter($column, $value);
     }
 
 
@@ -70,14 +68,14 @@ class QueryBuilder extends AbstractQueryBuilder
     */
     protected function resolveCriteria(string $column, $value): array
     {
-         $expr            = $this->expr();
-         $bindParam       = $this->resolveBindingColumn($column);
+        $expr            = $this->expr();
+        $bindParam       = $this->resolveBindingColumn($column);
 
-         if (is_array($value)) {
-             return [$bindParam, $value, $expr->in($column, ":$bindParam")->__toString()];
-         }
+        if (is_array($value)) {
+            return [$bindParam, $value, $expr->in($column, ":$bindParam")->__toString()];
+        }
 
-         return [$bindParam, $value, $expr->eq($column, ":$bindParam")->__toString()];
+        return [$bindParam, $value, $expr->eq($column, ":$bindParam")->__toString()];
     }
 
 

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\Mysqli;
@@ -28,7 +29,6 @@ use mysqli;
 */
 class MysqliConnection implements ConnectionInterface
 {
-
     use ConnectionTrait;
 
 
@@ -44,8 +44,8 @@ class MysqliConnection implements ConnectionInterface
     */
     public function __construct(MysqliConnectionFactoryInterface $factory)
     {
-         $this->factory = $factory;
-         $this->withConfiguration(new NullConfiguration());
+        $this->factory = $factory;
+        $this->withConfiguration(new NullConfiguration());
     }
 
 
@@ -55,8 +55,8 @@ class MysqliConnection implements ConnectionInterface
     */
     public function connect(ConfigurationInterface $config): void
     {
-         $this->withConnection($this->factory->makeConnection($config))
-              ->withConfiguration($config);
+        $this->withConnection($this->factory->makeConnection($config))
+             ->withConfiguration($config);
     }
 
 
@@ -68,7 +68,7 @@ class MysqliConnection implements ConnectionInterface
     */
     public function connected(): bool
     {
-         return $this->connection instanceof mysqli;
+        return $this->connection instanceof mysqli;
     }
 
 
@@ -91,8 +91,8 @@ class MysqliConnection implements ConnectionInterface
     */
     public function purge(): void
     {
-         $this->withConfiguration(new NullConfiguration());
-         $this->disconnect();
+        $this->withConfiguration(new NullConfiguration());
+        $this->disconnect();
     }
 
 
@@ -163,7 +163,7 @@ class MysqliConnection implements ConnectionInterface
     */
     public function executeQuery(string $sql): mixed
     {
-         return $this->createQuery()->exec($sql);
+        return $this->createQuery()->exec($sql);
     }
 
 
@@ -175,7 +175,7 @@ class MysqliConnection implements ConnectionInterface
     */
     public function getDatabase(): DatabaseInterface
     {
-       return new MysqlDatabase($this, $this->getDatabaseName());
+        return new MysqlDatabase($this, $this->getDatabaseName());
     }
 
 
@@ -244,7 +244,7 @@ class MysqliConnection implements ConnectionInterface
     */
     public function transaction(callable $func): mixed
     {
-          return false;
+        return false;
     }
 
 
@@ -256,7 +256,7 @@ class MysqliConnection implements ConnectionInterface
     */
     public function transactionIf(callable $func, bool $condition = false): mixed
     {
-         return false;
+        return false;
     }
 
 

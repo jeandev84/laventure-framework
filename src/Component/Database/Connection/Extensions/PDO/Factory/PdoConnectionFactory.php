@@ -86,9 +86,9 @@ class PdoConnectionFactory implements PdoConnectionFactoryInterface
     */
     public function make(string $driver, ConfigurationInterface $config): PDO
     {
-         $config['driver'] = $config->get('driver', $driver);
+        $config['driver'] = $config->get('driver', $driver);
 
-         return $this->makeConnection($config);
+        return $this->makeConnection($config);
     }
 
 

@@ -15,8 +15,6 @@ namespace Laventure\Component\Database\Builder\SQL\Conditions\Contract;
 */
 interface HasConditionInterface
 {
-
-
     /**
      * @param array $conditions
      * @return $this

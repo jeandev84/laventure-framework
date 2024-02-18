@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database;
-
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
 
@@ -17,10 +17,9 @@ use Laventure\Component\Database\Connection\ConnectionInterface;
  */
 interface DatabaseFactoryInterface
 {
-
-      /**
-       * @param string $name
-       * @return DatabaseInterface
-      */
-      public function create(string $name): DatabaseInterface;
+    /**
+     * @param string $name
+     * @return DatabaseInterface
+    */
+    public function create(string $name): DatabaseInterface;
 }

@@ -17,7 +17,6 @@ use Laventure\Traits\Options\HasOptionsTrait;
 */
 class Constraint implements ConstraintInterface
 {
-
     use HasOptionsTrait;
 
 

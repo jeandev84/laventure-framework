@@ -72,7 +72,7 @@ abstract class AbstractController implements ContainerAwareInterface
     */
     public function getConnection(): ConnectionInterface
     {
-        return $this->container['db']->connection();
+        return $this->container['database.manager']->connection();
     }
 
 

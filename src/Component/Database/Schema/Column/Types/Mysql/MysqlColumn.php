@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Column\Types\Mysql;
@@ -16,7 +17,6 @@ use Laventure\Component\Database\Schema\Column\Column;
  */
 class MysqlColumn extends Column
 {
-
     /**
      * @inheritDoc
     */

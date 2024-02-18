@@ -176,7 +176,8 @@ class Blueprint
     public function timestamps(): static
     {
         $this->datetime('created_at');
-        $this->datetime('updated_at')->nullable();;
+        $this->datetime('updated_at')->nullable();
+        ;
 
         return $this;
     }
@@ -221,10 +222,10 @@ class Blueprint
     */
     public function rememberToken(): static
     {
-          $this->string('remember_token', 100)
-               ->nullable();
+        $this->string('remember_token', 100)
+             ->nullable();
 
-          return $this;
+        return $this;
     }
 
 
@@ -267,9 +268,9 @@ class Blueprint
     */
     public function index(array $columns): static
     {
-         $this->table->index($columns);
+        $this->table->index($columns);
 
-         return $this;
+        return $this;
     }
 
 

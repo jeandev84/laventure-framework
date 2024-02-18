@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Constraints\Types;
@@ -19,7 +20,6 @@ use Laventure\Component\Database\Schema\Constraints\Traits\HasConstraintTrait;
 */
 class DefaultValue extends Constraint implements HasConstraintInterface
 {
-
     use HasConstraintTrait;
 
 
@@ -49,7 +49,8 @@ class DefaultValue extends Constraint implements HasConstraintInterface
         $sql = "DEFAULT $this->value";
 
         if ($this->constraints) {
-            $sql = sprintf('DEFAULT "%s"%s',
+            $sql = sprintf(
+                'DEFAULT "%s"%s',
                 $this->value,
                 $this->getConstraintsAsString()
             );

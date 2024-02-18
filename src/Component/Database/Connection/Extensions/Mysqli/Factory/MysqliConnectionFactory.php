@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\Mysqli\Factory;
@@ -19,7 +20,6 @@ use Throwable;
 */
 class MysqliConnectionFactory implements MysqliConnectionFactoryInterface
 {
-
     /**
      * @inheritDoc
     */
@@ -30,8 +30,7 @@ class MysqliConnectionFactory implements MysqliConnectionFactoryInterface
         string $database,
         ?int $port = null,
         ?string $socket = null
-    ): mysqli
-    {
+    ): mysqli {
         try {
             return new mysqli($hostname, $username, $password, $database, $port ?: 3306, $socket);
         } catch (Throwable $e) {
@@ -47,13 +46,13 @@ class MysqliConnectionFactory implements MysqliConnectionFactoryInterface
     */
     public function makeConnection(ConfigurationInterface $config): mysqli
     {
-         return $this->makeMysqli(
-             $config->host(),
-             $config->username(),
-             $config->password(),
-             $config->database(),
-             $config->port(),
-             $config->get('socket', '')
-         );
+        return $this->makeMysqli(
+            $config->host(),
+            $config->username(),
+            $config->password(),
+            $config->database(),
+            $config->port(),
+            $config->get('socket', '')
+        );
     }
 }

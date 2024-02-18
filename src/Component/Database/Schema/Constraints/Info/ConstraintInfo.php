@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Constraints\Info;
@@ -14,4 +15,6 @@ use Laventure\Component\Database\Schema\Info\Info;
  *
  * @package  Laventure\Component\Database\Schema\Constraints\Info
 */
-class ConstraintInfo extends Info {}
+class ConstraintInfo extends Info
+{
+}

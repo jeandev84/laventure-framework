@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PHPUnitTest\App\Service\Connection;
@@ -18,32 +19,31 @@ use PDO;
 */
 class Connection
 {
+    private static $instance;
 
-     private static $instance;
 
-
-     private static $config = [
-         'mysql' => [
-             'dsn' => 'mysql:host=127.0.0.1;dbname=laventure_test;charset=utf8',
-             'username' => 'root',
-             'password' => 'secret',
-             'options' => [
-                 #PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ
-                 PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES UTF8'
-             ],
-         ]
-     ];
-
+    private static $config = [
+        'mysql' => [
+            'dsn' => 'mysql:host=127.0.0.1;dbname=laventure_test;charset=utf8',
+            'username' => 'root',
+            'password' => 'secret',
+            'options' => [
+                #PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ
+                PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES UTF8'
+            ],
+        ]
+    ];
 
 
 
 
-     /**
-      * @param string $name
-      * @return ConnectionInterface
-     */
-     public static function make(string $name = 'mysql'): ConnectionInterface
-     {
+
+    /**
+     * @param string $name
+     * @return ConnectionInterface
+    */
+    public static function make(string $name = 'mysql'): ConnectionInterface
+    {
         if (! static::$instance) {
             # 1. Initialize database manager
             $manager     = new DatabaseManager();
@@ -54,5 +54,5 @@ class Connection
         }
 
         return static::$instance;
-     }
+    }
 }

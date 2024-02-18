@@ -17,8 +17,6 @@ use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 */
 interface ConfigurationResolverInterface
 {
-
-
     /**
      * @param ConfigurationInterface $config
      * @return ConfigurationInterface

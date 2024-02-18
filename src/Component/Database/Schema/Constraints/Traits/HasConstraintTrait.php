@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Constraints\Traits;
-
 
 use Laventure\Component\Database\Schema\Constraints\ConstraintInterface;
 
@@ -17,7 +17,6 @@ use Laventure\Component\Database\Schema\Constraints\ConstraintInterface;
 */
 trait HasConstraintTrait
 {
-
     /**
      * @var array
     */

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Column\Types\Mysql;
@@ -18,7 +19,6 @@ use Laventure\Component\Database\Schema\Column\Info\ColumnInfoInterface;
 */
 class MysqlColumnFactory implements ColumnFactoryInterface
 {
-
     /**
      * @inheritDoc
     */
@@ -26,8 +26,7 @@ class MysqlColumnFactory implements ColumnFactoryInterface
         string $name,
         string $type = '',
         string $constraints = ''
-    ): ColumnInterface
-    {
+    ): ColumnInterface {
         return new MysqlColumn($name, $type, $constraints);
     }
 

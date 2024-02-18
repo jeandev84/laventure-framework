@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PHPUnitTest\App\Service\Migration;
@@ -21,19 +22,17 @@ use PHPUnitTest\App\Migration\Version202302281721;
  */
 class MigrationStack
 {
-
-
-     /**
-      * @return Migration[]
-     */
-     public static function getMigrations(): array
-     {
-         return [
-             new Version202302281689(),
-             new Version202302281721(),
-             new Version202302281534(),
-             new Version202302281676(),
-             new Version202302281678()
-         ];
-     }
+    /**
+     * @return Migration[]
+    */
+    public static function getMigrations(): array
+    {
+        return [
+            new Version202302281689(),
+            new Version202302281721(),
+            new Version202302281534(),
+            new Version202302281676(),
+            new Version202302281678()
+        ];
+    }
 }

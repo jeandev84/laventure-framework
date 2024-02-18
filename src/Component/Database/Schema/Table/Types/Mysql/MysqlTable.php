@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Table\Types\Mysql;
@@ -29,8 +30,6 @@ use Laventure\Component\Database\Schema\Table\Table;
 */
 class MysqlTable extends Table
 {
-
-
     /**
      * @var MysqlColumnFactory
     */
@@ -46,8 +45,7 @@ class MysqlTable extends Table
         ConnectionInterface $connection,
         string $name,
         string $schemaName = ''
-    )
-    {
+    ) {
         parent::__construct($connection, $name, $schemaName);
         $this->columnFactory = new MysqlColumnFactory();
     }
@@ -76,7 +74,8 @@ class MysqlTable extends Table
     */
     public function create(): bool
     {
-        $sql = sprintf('CREATE TABLE IF NOT EXISTS `%s` (%s);',
+        $sql = sprintf(
+            'CREATE TABLE IF NOT EXISTS `%s` (%s);',
             $this->name,
             $this->getCriteria()->create()
         );
@@ -97,9 +96,9 @@ class MysqlTable extends Table
     */
     public function increments(string $name): static
     {
-         $this->bigIncrements($name)->primary();
+        $this->bigIncrements($name)->primary();
 
-         return $this;
+        return $this;
     }
 
 
@@ -110,8 +109,8 @@ class MysqlTable extends Table
     */
     public function bigIncrements(string $name): ColumnInterface
     {
-         return $this->addColumn($name, 'BIGINT')
-                    ->increment();
+        return $this->addColumn($name, 'BIGINT')
+                   ->increment();
     }
 
 
@@ -122,7 +121,7 @@ class MysqlTable extends Table
     */
     public function integer(string $name, int $length = 11): ColumnInterface
     {
-         return $this->addColumn($name, "INT($length)");
+        return $this->addColumn($name, "INT($length)");
     }
 
 
@@ -457,9 +456,9 @@ class MysqlTable extends Table
         $columns = [];
 
         foreach ($this->fetchColumnsQuery()->all() as $data) {
-           $columns[] = $this->columnFactory->createColumnFromInfo(
-               new MysqlColumnInfo($data)
-           );
+            $columns[] = $this->columnFactory->createColumnFromInfo(
+                new MysqlColumnInfo($data)
+            );
         }
 
         return $columns;
@@ -516,7 +515,7 @@ class MysqlTable extends Table
 
 
 
-    
+
 
     /**
      * @inheritDoc
@@ -524,14 +523,14 @@ class MysqlTable extends Table
     public function getIndexes(): array
     {
         $indexes = [];
-        
+
         foreach ($this->fetchIndexes() as $data) {
             $info      = new ConstraintInfo($data);
             $index     = new Index([$info->get('Column_name')], $info->get('Key_name'));
             $indexType = $info->get('Index_type');
             $indexes[$indexType][] = $index->type($indexType)->withOptions($info->getData());
         }
-        
+
         return $indexes;
     }
 
@@ -558,9 +557,9 @@ class MysqlTable extends Table
     */
     public function getPrimaryKeys(): array
     {
-         return array_filter($this->getConstraints(), function (Constraint $constraint) {
-             return ($constraint->getKey() === 'PRIMARY');
-         });
+        return array_filter($this->getConstraints(), function (Constraint $constraint) {
+            return ($constraint->getKey() === 'PRIMARY');
+        });
     }
 
 

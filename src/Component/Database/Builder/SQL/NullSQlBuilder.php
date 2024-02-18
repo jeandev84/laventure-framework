@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL;
@@ -19,7 +20,6 @@ use Laventure\Component\Database\Query\QueryInterface;
 */
 class NullSQlBuilder implements SQlBuilderInterface
 {
-
     /**
      * @inheritDoc
     */
@@ -57,6 +57,6 @@ class NullSQlBuilder implements SQlBuilderInterface
     */
     public function expr(): ExpressionInterface
     {
-         throw new \RuntimeException("Could not found expression for null sql builder.");
+        throw new \RuntimeException("Could not found expression for null sql builder.");
     }
 }

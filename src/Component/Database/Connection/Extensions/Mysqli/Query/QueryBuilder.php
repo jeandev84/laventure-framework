@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\Mysqli\Query;
@@ -16,7 +17,6 @@ use Laventure\Component\Database\Query\Builder\AbstractQueryBuilder;
 */
 class QueryBuilder extends AbstractQueryBuilder
 {
-
     /**
      * @inheritDoc
     */

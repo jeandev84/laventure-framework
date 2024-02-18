@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Repository;
@@ -14,5 +15,4 @@ namespace Laventure\Component\Database\ORM\Repository;
 */
 class EntityRepository implements EntityRepositoryInterface
 {
-
 }

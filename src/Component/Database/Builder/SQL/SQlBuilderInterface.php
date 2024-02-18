@@ -18,8 +18,6 @@ use Laventure\Component\Database\Query\QueryInterface;
 */
 interface SQlBuilderInterface
 {
-
-
     /**
      * @return string
     */

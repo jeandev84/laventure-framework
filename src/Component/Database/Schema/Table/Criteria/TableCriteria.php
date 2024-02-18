@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Table\Criteria;
-
 
 use Laventure\Component\Database\Schema\Table\Table;
 
@@ -17,8 +17,6 @@ use Laventure\Component\Database\Schema\Table\Table;
 */
 class TableCriteria implements TableCriteriaInterface
 {
-
-
     /**
      * @param Table $table
     */

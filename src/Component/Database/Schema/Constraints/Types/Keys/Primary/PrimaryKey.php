@@ -20,7 +20,6 @@ use Laventure\Component\Database\Schema\Constraints\Contract\PrimaryKeyInterface
 */
 class PrimaryKey extends ConstraintHasColumns implements PrimaryKeyInterface
 {
-
     /**
      * @param string|null $key
     */

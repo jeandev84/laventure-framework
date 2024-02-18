@@ -25,7 +25,6 @@ use Laventure\Traits\Options\HasOptionsTrait;
 */
 abstract class Column implements ColumnInterface
 {
-
     use HasOptionsTrait;
     use HasConstraintTrait;
 
