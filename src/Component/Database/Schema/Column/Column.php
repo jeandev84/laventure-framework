@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Column;
 
+use Laventure\Component\Database\Schema\Column\Info\ColumnInfo;
+use Laventure\Component\Database\Schema\Column\Info\ColumnInfoInterface;
 use Laventure\Component\Database\Schema\Constraints\ConstraintInterface;
 use Laventure\Component\Database\Schema\Constraints\Types\DefaultValue;
 use Laventure\Component\Database\Schema\Constraints\Types\Keys\Primary\PrimaryKey;
@@ -191,6 +193,33 @@ abstract class Column implements ColumnInterface
     {
         return $this->addConstraint(new DefaultValue($value, true));
     }
+
+
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function comments(string $comments): static
+    {
+        return $this->options(compact('comments'));
+    }
+
+
+
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function collation(string $collation): static
+    {
+        return $this->options(compact('collation'));
+    }
+
+
 
 
 

@@ -322,8 +322,26 @@ abstract class Table implements TableInterface
      */
     public function hasColumn(string $name): bool
     {
-        return in_array($name, $this->getColumns());
+        return in_array($name, $this->getColumnNames());
     }
+
+
+
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function getColumnNames(): array
+    {
+        return array_filter($this->getColumns(), function (ColumnInterface $column) {
+            return $column->getName();
+        });
+    }
+
+
+
 
 
 

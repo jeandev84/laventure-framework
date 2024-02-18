@@ -3,10 +3,11 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Table\Drivers\Mysql;
 
+use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Query\Result\QueryResultInterface;
 use Laventure\Component\Database\Schema\Column\ColumnInterface;
-use Laventure\Component\Database\Schema\Column\Drivers\Mysql\MysqlColumn;
-use Laventure\Component\Database\Schema\Column\Info\ColumnInfo;
+use Laventure\Component\Database\Schema\Column\Drivers\Mysql\MysqlColumnFactory;
+use Laventure\Component\Database\Schema\Column\Drivers\Mysql\MysqlColumnInfo;
 use Laventure\Component\Database\Schema\Table\Table;
 
 /**
@@ -24,6 +25,28 @@ use Laventure\Component\Database\Schema\Table\Table;
 */
 class MysqlTable extends Table
 {
+
+
+    /**
+     * @var MysqlColumnFactory
+    */
+    protected MysqlColumnFactory $columnFactory;
+
+
+    /**
+     * @param ConnectionInterface $connection
+     * @param string $name
+     * @param string $schemaName
+    */
+    public function __construct(ConnectionInterface $connection, string $name, string $schemaName = '')
+    {
+        parent::__construct($connection, $name, $schemaName);
+        $this->columnFactory = new MysqlColumnFactory();
+    }
+
+
+
+
     /**
      * @inheritDoc
     */
@@ -32,7 +55,7 @@ class MysqlTable extends Table
         string $type = '',
         string $constraints = ''
     ): ColumnInterface {
-        return new MysqlColumn($name, $type, $constraints);
+        return $this->columnFactory->createColumn("`$name`", $type, $constraints);
     }
 
 
@@ -408,26 +431,47 @@ class MysqlTable extends Table
     */
     public function getColumns(): array
     {
+        $columns = [];
+
+        foreach ($this->getColumnsInfo() as $info) {
+           $columns[] = $this->columnFactory->createFromInfo($info);
+        }
+
+        return $columns;
+    }
+
+
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function getColumnNames(): array
+    {
         return $this->fetchColumnsQuery()->columns();
     }
 
 
 
 
+
+
     /**
      * @inheritDoc
+     * @return MysqlColumnInfo[]
     */
     public function getColumnsInfo(): array
     {
-        $columns = [];
+        $info = [];
 
-        foreach ($this->fetchColumnsQuery()->all() as $info) {
-            if (is_array($info)) {
-                $columns[] = new ColumnInfo($info);
+        foreach ($this->fetchColumnsQuery()->all() as $data) {
+            if (is_array($data)) {
+                $info[] = new MysqlColumnInfo($data);
             }
         }
 
-        return $columns;
+        return $info;
     }
 
 

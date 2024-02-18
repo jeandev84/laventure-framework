@@ -217,12 +217,14 @@ class Blueprint
 
 
     /**
-     * @return ColumnInterface
+     * @return $this
     */
-    public function rememberToken(): ColumnInterface
+    public function rememberToken(): static
     {
-        return $this->string('remember_token', 100)
-                    ->nullable();
+          $this->string('remember_token', 100)
+               ->nullable();
+
+          return $this;
     }
 
 

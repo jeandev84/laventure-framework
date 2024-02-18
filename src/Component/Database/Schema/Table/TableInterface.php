@@ -7,6 +7,7 @@ namespace Laventure\Component\Database\Schema\Table;
 use Laventure\Component\Database\Query\QueryInterface;
 use Laventure\Component\Database\Schema\Column\ColumnInterface;
 use Laventure\Component\Database\Schema\Column\Info\ColumnInfo;
+use Laventure\Component\Database\Schema\Column\Info\ColumnInfoInterface;
 use Laventure\Component\Database\Schema\Constraints\ConstraintInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\IndexInterface;
@@ -612,7 +613,7 @@ interface TableInterface
     /**
      * Returns table columns
      *
-     * @return mixed
+     * @return ColumnInterface[]
     */
     public function getColumns(): array;
 
@@ -623,7 +624,7 @@ interface TableInterface
     /**
      * Returns infos existent columns
      *
-     * @return ColumnInfo[]
+     * @return ColumnInfoInterface[]
     */
     public function getColumnsInfo(): array;
 
@@ -640,6 +641,16 @@ interface TableInterface
     public function hasColumn(string $name): bool;
 
 
+
+
+
+
+    /**
+     * Returns column names
+     *
+     * @return array
+    */
+    public function getColumnNames(): array;
 
 
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Column;
 
+use Laventure\Component\Database\Schema\Column\Info\ColumnInfoInterface;
 use Laventure\Component\Database\Schema\Constraints\ConstraintInterface;
 use Stringable;
 
@@ -40,6 +41,32 @@ interface ColumnInterface extends Stringable
 
 
 
+
+
+
+    /**
+     * Add comments
+     *
+     * @param string $comments
+     * @return $this
+    */
+    public function comments(string $comments): static;
+
+
+
+
+
+
+
+
+
+    /**
+     * Add collation
+     *
+     * @param string $collation
+     * @return $this
+    */
+    public function collation(string $collation): static;
 
 
 

@@ -13,7 +13,7 @@ namespace Laventure\Component\Database\Schema\Column\Info;
  *
  * @package  Laventure\Component\Database\Schema\Column\Info
 */
-class ColumnInfo
+abstract class ColumnInfo implements ColumnInfoInterface
 {
     /**
      * @param array $data
@@ -26,9 +26,7 @@ class ColumnInfo
 
 
     /**
-     * @param $id
-     * @param $default
-     * @return mixed
+     * @inheritdoc
     */
     public function get($id, $default = null): mixed
     {
