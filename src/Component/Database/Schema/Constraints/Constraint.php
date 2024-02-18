@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Constraints;
 
+use Laventure\Traits\Options\HasOptionsTrait;
+
 /**
  * Constraint
  *
@@ -13,19 +15,32 @@ namespace Laventure\Component\Database\Schema\Constraints;
  *
  * @package  Laventure\Component\Database\Schema\Constraints
 */
-abstract class Constraint implements ConstraintInterface
+class Constraint implements ConstraintInterface
 {
+
+    use HasOptionsTrait;
+
 
     /**
      * @param string $type
-     * @param array $columns
      * @param string|null $key
     */
     public function __construct(
-        protected string  $type,
-        protected array $columns = [],
+        protected string $type,
         protected ?string $key = null
     ) {
+    }
+
+
+    /**
+     * @param string $type
+     * @return $this
+    */
+    public function type(string $type): static
+    {
+        $this->type = $type;
+
+        return $this;
     }
 
 
@@ -50,51 +65,6 @@ abstract class Constraint implements ConstraintInterface
 
 
 
-    /**
-     * @inheritDoc
-    */
-    public function getColumns(): array
-    {
-        return $this->columns;
-    }
-
-
-
-
-    /**
-     * @return bool
-    */
-    public function hasColumns(): bool
-    {
-        return !empty($this->columns);
-    }
-
-
-
-
-
-    /**
-     * @return string
-    */
-    public function getFirstColumn(): string
-    {
-        return $this->columns[0] ?? '';
-    }
-
-
-
-
-    /**
-     * @return string
-    */
-    public function getColumnsAsString(): string
-    {
-        return join(',', $this->getColumns());
-    }
-
-
-
-
 
 
     /**
@@ -104,6 +74,8 @@ abstract class Constraint implements ConstraintInterface
     {
         return sprintf('CONSTRAINT %s', $this->key);
     }
+
+
 
 
 

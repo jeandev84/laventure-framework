@@ -16,7 +16,7 @@ use Laventure\Component\Database\DatabaseInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Extensions\PDO\Drivers\Pgsql
+ * @package  Laventure\Component\Database\Connection\Extensions\PDO\Types\Pgsql
 */
 class PgsqlConnection extends PdoConnection
 {

@@ -25,6 +25,12 @@ class ForeignKey extends Constraint implements ForeignKeyInterface
     protected ConstrainedInterface $constrained;
 
 
+    /**
+     * @var string
+    */
+    protected string $column;
+
+
 
 
     /**
@@ -35,12 +41,21 @@ class ForeignKey extends Constraint implements ForeignKeyInterface
 
 
     /**
-     * @param string $name
+     * @var string
+    */
+    protected string $references;
+
+
+
+
+    /**
+     * @param string $column (Example: user_id)
      * @param string|null $key
     */
-    public function __construct(string $name, ?string $key = null)
+    public function __construct(string $column, ?string $key = null)
     {
-        parent::__construct($name, [], $key);
+        parent::__construct('foreignKey', $key);
+        $this->column      = $column;
         $this->constrained = new Constrained();
     }
 
@@ -48,12 +63,12 @@ class ForeignKey extends Constraint implements ForeignKeyInterface
 
 
     /**
-     * @param string $column
+     * @param string $column (Example: id)
      * @return $this
     */
     public function references(string $column): static
     {
-        $this->columns[0] = $column;
+        $this->references = $column;
 
         return $this;
     }
@@ -64,7 +79,7 @@ class ForeignKey extends Constraint implements ForeignKeyInterface
 
 
     /**
-     * @param string $table
+     * @param string $table (Example: users)
      * @return ConstrainedInterface
     */
     public function on(string $table): ConstrainedInterface
@@ -81,6 +96,8 @@ class ForeignKey extends Constraint implements ForeignKeyInterface
 
 
     /**
+     * Example: onDelete('cascade'), onUpdate('cascade')
+     *
      * @return ConstrainedInterface
     */
     public function constrained(): ConstrainedInterface
@@ -94,18 +111,37 @@ class ForeignKey extends Constraint implements ForeignKeyInterface
     /**
      * @inheritDoc
      *
-     * Example: CONSTRAINT fk_products_user_id FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE cascade
+     * Example: CONSTRAINT fk_products_user_id
+     *          FOREIGN KEY (user_id)
+     *          REFERENCES users (id)
+     *          ON DELETE cascade
     */
     public function getSQL(): string
     {
-        $criteria[] = sprintf('FOREIGN KEY (%s) REFERENCES %s (%s)', $this->type, $this->table, $this->getFirstColumn());
-        $criteria[] = $this->constrained;
-        $constraints = join(' ', array_filter($criteria));
+        $constraint = $this->getForeignSQL();
 
         if (!$this->key) {
-            return $constraints;
+            return $constraint;
         }
 
-        return sprintf('%s %s', parent::getSQL(), $constraints);
+        return sprintf('%s %s', parent::getSQL(), $constraint);
+    }
+
+
+
+
+
+    /**
+     * @return string
+    */
+    protected function getForeignSQL(): string
+    {
+        $foreign[] = sprintf('FOREIGN KEY (%s) REFERENCES %s (%s)',
+            $this->column,
+            $this->table,
+            $this->references
+        );
+        $foreign[] = $this->constrained;
+        return join(' ', array_filter($foreign));
     }
 }

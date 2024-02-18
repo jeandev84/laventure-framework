@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Constraints\Types;
 
+use Laventure\Component\Database\Schema\Column\Traits\HasColumnTrait;
 use Laventure\Component\Database\Schema\Constraints\Constraint;
+use Laventure\Component\Database\Schema\Constraints\ConstraintHasColumns;
 use Laventure\Component\Database\Schema\Constraints\Contract\UniqueInterface;
 
 /**
@@ -16,7 +18,7 @@ use Laventure\Component\Database\Schema\Constraints\Contract\UniqueInterface;
  *
  * @package  Laventure\Component\Database\Schema\Constraints\Types
 */
-class Unique extends Constraint implements UniqueInterface
+class Unique extends ConstraintHasColumns implements UniqueInterface
 {
     /**
      * @param array $columns
@@ -24,7 +26,7 @@ class Unique extends Constraint implements UniqueInterface
     */
     public function __construct(array $columns = [], string $key = null)
     {
-        parent::__construct('unique', $columns, $key);
+        parent::__construct('unique', $key, $columns);
     }
 
 
@@ -33,6 +35,6 @@ class Unique extends Constraint implements UniqueInterface
     */
     public function getSQL(): string
     {
-        return "UNIQUE " . ($this->hasColumns() ? "(". $this->getColumnsAsString() . ")" : '');
+        return "UNIQUE" . $this->wrapColumnsIf();
     }
 }

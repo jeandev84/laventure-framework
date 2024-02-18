@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Schema\Table;
 
 use Laventure\Component\Database\Query\QueryInterface;
-use Laventure\Component\Database\Schema\Column\ColumnInterface;
-use Laventure\Component\Database\Schema\Column\Info\ColumnInfo;
+use Laventure\Component\Database\Schema\Column\Contract\ColumnInterface;
 use Laventure\Component\Database\Schema\Column\Info\ColumnInfoInterface;
 use Laventure\Component\Database\Schema\Constraints\ConstraintInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
@@ -621,15 +620,6 @@ interface TableInterface
 
 
 
-    /**
-     * Returns infos existent columns
-     *
-     * @return ColumnInfoInterface[]
-    */
-    public function getColumnsInfo(): array;
-
-
-
 
 
     /**
@@ -691,6 +681,15 @@ interface TableInterface
 
 
 
+
+
+
+    /**
+     * Returns all system constraints
+     *
+     * @return array
+    */
+    public function getAllSystemConstraints(): array;
 
 
 
@@ -856,15 +855,13 @@ interface TableInterface
 
 
 
-
-
-
     /**
      * Returns all constraints
      *
-     * @return array
+     * @param string|null $constraintType
+     * @return ConstraintInterface[]
     */
-    public function getConstraints(): array;
+    public function getConstraints(string $constraintType = null): array;
 
 
 

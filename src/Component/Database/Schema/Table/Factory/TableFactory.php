@@ -6,9 +6,9 @@ namespace Laventure\Component\Database\Schema\Table\Factory;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Connection\ConnectionType;
-use Laventure\Component\Database\Schema\Column\Drivers\Mysql\MysqlColumnFactory;
-use Laventure\Component\Database\Schema\Table\Drivers\Mysql\MysqlTable;
-use Laventure\Component\Database\Schema\Table\Drivers\Mysql\MysqlTableFactory;
+use Laventure\Component\Database\Schema\Column\Types\Mysql\MysqlColumnFactory;
+use Laventure\Component\Database\Schema\Table\Types\Mysql\MysqlTable;
+use Laventure\Component\Database\Schema\Table\Types\Mysql\MysqlTableFactory;
 use Laventure\Component\Database\Schema\Table\TableInterface;
 
 /**

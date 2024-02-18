@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Constraints\Contract;
 
+use Laventure\Component\Database\Schema\Column\Contract\HasColumnInterface;
 use Laventure\Component\Database\Schema\Constraints\ConstraintInterface;
+
 
 /**
  * UniqueInterface
@@ -15,6 +17,6 @@ use Laventure\Component\Database\Schema\Constraints\ConstraintInterface;
  *
  * @package  Laventure\Component\Database\Schema\Constraints\Contract
 */
-interface UniqueInterface extends ConstraintInterface
+interface UniqueInterface extends HasColumnInterface, ConstraintInterface
 {
 }

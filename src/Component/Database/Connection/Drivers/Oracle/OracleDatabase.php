@@ -13,7 +13,7 @@ use Laventure\Component\Database\Database;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Drivers\Oracle
+ * @package  Laventure\Component\Database\Connection\Types\Oracle
  */
 class OracleDatabase extends Database
 {

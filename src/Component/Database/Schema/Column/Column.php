@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Column;
 
-use Laventure\Component\Database\Schema\Column\Info\ColumnInfo;
-use Laventure\Component\Database\Schema\Column\Info\ColumnInfoInterface;
+use Laventure\Component\Database\Schema\Column\Contract\ColumnInterface;
 use Laventure\Component\Database\Schema\Constraints\ConstraintInterface;
+use Laventure\Component\Database\Schema\Constraints\Traits\HasConstraintTrait;
 use Laventure\Component\Database\Schema\Constraints\Types\DefaultValue;
 use Laventure\Component\Database\Schema\Constraints\Types\Keys\Primary\PrimaryKey;
 use Laventure\Component\Database\Schema\Constraints\Types\NotNull;
 use Laventure\Component\Database\Schema\Constraints\Types\Nullable;
 use Laventure\Component\Database\Schema\Constraints\Types\Unique;
+use Laventure\Traits\Options\HasOptionsTrait;
 
 /**
  * Column
@@ -24,6 +25,22 @@ use Laventure\Component\Database\Schema\Constraints\Types\Unique;
 */
 abstract class Column implements ColumnInterface
 {
+
+    use HasOptionsTrait;
+    use HasConstraintTrait;
+
+
+
+    protected const DEFAULT_OPTIONS = [
+        'signed'      => false,
+        'constraint'  => null,
+        'comments'    => null,
+        'collation'   => null
+    ];
+
+
+
+
     /**
      * Column name
      *
@@ -46,28 +63,6 @@ abstract class Column implements ColumnInterface
 
 
     /**
-     * @var ConstraintInterface[]
-    */
-    protected array $constraints = [];
-
-
-
-
-    /**
-     * @var array|null[]
-    */
-    protected array $options = [
-        'signed'      => false,
-        'constraint'  => null,
-        'comments'    => null,
-        'collation'   => null
-    ];
-
-
-
-
-
-    /**
      * @param string $name
      * @param string $type
      * @param string|null $constraint
@@ -76,7 +71,8 @@ abstract class Column implements ColumnInterface
     {
         $this->name($name)
              ->type($type)
-             ->constraint($constraint);
+             ->constraint($constraint)
+             ->withOptions(static::DEFAULT_OPTIONS);
     }
 
 
@@ -129,7 +125,7 @@ abstract class Column implements ColumnInterface
     */
     public function primary(): static
     {
-        return $this->addConstraint(new PrimaryKey());
+        return $this->withConstraint(new PrimaryKey());
     }
 
 
@@ -141,7 +137,7 @@ abstract class Column implements ColumnInterface
     */
     public function unique(): static
     {
-        return $this->addConstraint(new Unique());
+        return $this->withConstraint(new Unique());
     }
 
 
@@ -179,7 +175,7 @@ abstract class Column implements ColumnInterface
     */
     public function nullable(): static
     {
-        return $this->addConstraint(new Nullable());
+        return $this->withConstraint(new Nullable());
     }
 
 
@@ -191,7 +187,7 @@ abstract class Column implements ColumnInterface
     */
     public function default($value): static
     {
-        return $this->addConstraint(new DefaultValue($value, true));
+        return $this->withConstraint(new DefaultValue($value, true));
     }
 
 
@@ -203,7 +199,7 @@ abstract class Column implements ColumnInterface
     */
     public function comments(string $comments): static
     {
-        return $this->options(compact('comments'));
+        return $this->withOptions(compact('comments'));
     }
 
 
@@ -216,23 +212,7 @@ abstract class Column implements ColumnInterface
     */
     public function collation(string $collation): static
     {
-        return $this->options(compact('collation'));
-    }
-
-
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function options(array $options): static
-    {
-        $this->options = array_merge($this->options, $options);
-
-        return $this;
+        return $this->withOptions(compact('collation'));
     }
 
 
@@ -329,55 +309,14 @@ abstract class Column implements ColumnInterface
 
 
     /**
-     * @inheritDoc
-    */
-    public function addConstraints(array $constraints): static
-    {
-        foreach ($constraints as $constraint) {
-            $this->addConstraint($constraint);
-        }
-
-        return $this;
-    }
-
-
-
-
-    /**
      * @inheritdoc
     */
-    public function addConstraint(ConstraintInterface $constraint): static
+    public function withConstraint(ConstraintInterface $constraint): static
     {
         $this->constraints[$constraint->getType()] = $constraint;
 
         return $this->option($constraint->getType(), true);
     }
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function hasConstraint(string $name): bool
-    {
-        return isset($this->constraints[$name]);
-    }
-
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function getConstraints(): array
-    {
-        return $this->constraints;
-    }
-
 
 
 
@@ -406,16 +345,6 @@ abstract class Column implements ColumnInterface
 
 
 
-    /**
-     * @inheritDoc
-    */
-    public function getOptions(): array
-    {
-        return $this->options;
-    }
-
-
-
 
     /**
      * @param $id
@@ -427,33 +356,6 @@ abstract class Column implements ColumnInterface
         $this->options[$id] = $value;
 
         return $this;
-    }
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function getOption($id, $default = null): mixed
-    {
-        return $this->options[$id] ?? $default;
-    }
-
-
-
-
-    /**
-     * @return string
-    */
-    public function getConstraintAsString(): string
-    {
-        $func = function (ConstraintInterface $constraint) {
-            return $constraint->getSQL();
-        };
-
-        $constraints = array_filter($this->getConstraints(), $func);
-
-        return join(' ', $constraints);
     }
 
 
@@ -471,10 +373,10 @@ abstract class Column implements ColumnInterface
         }
 
         if (empty($this->constraints)) {
-            $this->addConstraint(new NotNull());
+            $this->withConstraint(new NotNull());
         }
 
-        return $this->options['constraint'] = $this->getConstraintAsString();
+        return $this->options['constraint'] = $this->getConstraintsAsString();
     }
 
 
@@ -492,6 +394,8 @@ abstract class Column implements ColumnInterface
             $this->getConstraint()
         ]));
     }
+
+
 
 
 

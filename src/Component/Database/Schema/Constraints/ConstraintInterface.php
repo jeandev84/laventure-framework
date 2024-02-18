@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Constraints;
 
+use Laventure\Contract\Options\HasOptionInterface;
 use Stringable;
 
 /**
@@ -15,7 +16,7 @@ use Stringable;
  *
  * @package  Laventure\Component\Database\Schema\Constraints
 */
-interface ConstraintInterface extends Stringable
+interface ConstraintInterface extends HasOptionInterface, Stringable
 {
     /**
      * Returns constraint name
@@ -33,16 +34,6 @@ interface ConstraintInterface extends Stringable
      * @return string|null
     */
     public function getKey(): ?string;
-
-
-
-
-    /**
-     * Returns columns constraints
-     *
-     * @return array
-    */
-    public function getColumns(): array;
 
 
 

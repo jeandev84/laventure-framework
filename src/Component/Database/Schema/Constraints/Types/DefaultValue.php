@@ -5,6 +5,8 @@ namespace Laventure\Component\Database\Schema\Constraints\Types;
 
 use Laventure\Component\Database\Schema\Constraints\Constraint;
 use Laventure\Component\Database\Schema\Constraints\ConstraintInterface;
+use Laventure\Component\Database\Schema\Constraints\Contract\HasConstraintInterface;
+use Laventure\Component\Database\Schema\Constraints\Traits\HasConstraintTrait;
 
 /**
  * DefaultValue
@@ -15,14 +17,10 @@ use Laventure\Component\Database\Schema\Constraints\ConstraintInterface;
  *
  * @package  Laventure\Component\Database\Schema\Constraints\Types
 */
-class DefaultValue extends Constraint
+class DefaultValue extends Constraint implements HasConstraintInterface
 {
 
-
-    /**
-     * @var string[]
-    */
-    protected array $constraints = [];
+    use HasConstraintTrait;
 
 
 
@@ -33,25 +31,12 @@ class DefaultValue extends Constraint
     public function __construct(protected $value, bool $notNull = false)
     {
         if ($notNull === true) {
-            $this->constraints(new NotNull());
+            $this->withConstraint(new NotNull());
         }
 
         parent::__construct('default');
     }
 
-
-
-
-    /**
-     * @param ConstraintInterface $constraint
-     * @return $this
-    */
-    public function constraints(ConstraintInterface $constraint): static
-    {
-         $this->constraints[] = $constraint->getSQL();
-
-         return $this;
-    }
 
 
 
@@ -64,20 +49,12 @@ class DefaultValue extends Constraint
         $sql = "DEFAULT $this->value";
 
         if ($this->constraints) {
-            $sql = sprintf('DEFAULT "%s"%s', $this->value, $this->constraintsAsString());
+            $sql = sprintf('DEFAULT "%s"%s',
+                $this->value,
+                $this->getConstraintsAsString()
+            );
         }
 
         return $sql;
-    }
-
-
-
-
-    /**
-     * @return string
-    */
-    private function constraintsAsString(): string
-    {
-        return join(' ', $this->constraints);
     }
 }

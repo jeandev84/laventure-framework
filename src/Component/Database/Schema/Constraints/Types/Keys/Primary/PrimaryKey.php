@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Constraints\Types\Keys\Primary;
 
+use Laventure\Component\Database\Schema\Column\Traits\HasColumnTrait;
 use Laventure\Component\Database\Schema\Constraints\Constraint;
+use Laventure\Component\Database\Schema\Constraints\ConstraintHasColumns;
 use Laventure\Component\Database\Schema\Constraints\Contract\PrimaryKeyInterface;
 
 /**
@@ -16,14 +18,15 @@ use Laventure\Component\Database\Schema\Constraints\Contract\PrimaryKeyInterface
  *
  * @package  Laventure\Component\Database\Schema\Constraints\Types\Keys\Primary
 */
-class PrimaryKey extends Constraint implements PrimaryKeyInterface
+class PrimaryKey extends ConstraintHasColumns implements PrimaryKeyInterface
 {
+
     /**
      * @param string|null $key
     */
     public function __construct(array $columns = [], string $key = null)
     {
-        parent::__construct('primaryKey', $columns, $key);
+        parent::__construct('primaryKey', $key, $columns);
     }
 
 
@@ -33,6 +36,6 @@ class PrimaryKey extends Constraint implements PrimaryKeyInterface
     */
     public function getSQL(): string
     {
-        return "PRIMARY KEY" . ($this->hasColumns() ? "(". $this->getColumnsAsString() . ")" : '');
+        return "PRIMARY KEY" . $this->wrapColumnsIf();
     }
 }

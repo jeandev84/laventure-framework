@@ -13,7 +13,7 @@ use Laventure\Exceptions\BaseException;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Drivers
+ * @package  Laventure\Component\Database\Connection\Types
 */
 class DriverException extends BaseException
 {
