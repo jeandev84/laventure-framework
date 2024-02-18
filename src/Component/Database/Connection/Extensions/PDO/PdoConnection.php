@@ -39,6 +39,15 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
     protected PdoConfigurationResolver $resolver;
 
 
+
+
+    /**
+     * @var mixed
+    */
+    protected $func;
+
+
+
     /**
      * @param PdoConnectionFactoryInterface $factory
     */
@@ -213,7 +222,7 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
         try {
 
             $this->beginTransaction();
-            $func($this);
+            $this->func = $func($this);
             return $this->commit();
 
         } catch (PDOException $e) {
@@ -224,6 +233,24 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
 
             throw new PDOException($e->getMessage(), $e->getCode());
         }
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function transactionIf(callable $func, bool $condition = false): mixed
+    {
+        if ($condition) {
+            $this->transaction($func);
+            return $this->func;
+        }
+
+        return $condition;
     }
 
 

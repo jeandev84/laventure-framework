@@ -61,13 +61,6 @@ class Migrator implements MigratorInterface
 
 
 
-    /**
-     * @var array
-    */
-    protected array $log = [];
-
-
-
 
 
     /**
@@ -152,6 +145,7 @@ class Migrator implements MigratorInterface
             $this->install();
 
             foreach ($this->getNewMigrations() as $migration) {
+
                 $migration->up($this->schema);
                 $qb = $this->connection->createQueryBuilder();
                 $qb->insert($this->table)
@@ -314,20 +308,5 @@ class Migrator implements MigratorInterface
     public function getConnection(): ConnectionInterface
     {
         return $this->connection;
-    }
-
-
-
-
-    /**
-     * Log process migration
-     *
-     * @param string $message
-     *
-     * @return void
-    */
-    public function log(string $message): void
-    {
-        $this->log[] = "[". date('Y-m-d H:i:s') . "] $message";
     }
 }
