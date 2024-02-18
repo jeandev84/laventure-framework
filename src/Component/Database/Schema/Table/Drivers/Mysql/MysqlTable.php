@@ -38,7 +38,11 @@ class MysqlTable extends Table
      * @param string $name
      * @param string $schemaName
     */
-    public function __construct(ConnectionInterface $connection, string $name, string $schemaName = '')
+    public function __construct(
+        ConnectionInterface $connection,
+        string $name,
+        string $schemaName = ''
+    )
     {
         parent::__construct($connection, $name, $schemaName);
         $this->columnFactory = new MysqlColumnFactory();
@@ -434,7 +438,7 @@ class MysqlTable extends Table
         $columns = [];
 
         foreach ($this->getColumnsInfo() as $info) {
-           $columns[] = $this->columnFactory->createFromInfo($info);
+           $columns[] = $this->columnFactory->createColumnFromInfo($info);
         }
 
         return $columns;

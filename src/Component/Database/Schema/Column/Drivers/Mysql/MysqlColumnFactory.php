@@ -37,7 +37,7 @@ class MysqlColumnFactory implements ColumnFactoryInterface
     /**
      * @inheritDoc
     */
-    public function createFromInfo(ColumnInfoInterface $info): ColumnInterface
+    public function createColumnFromInfo(ColumnInfoInterface $info): ColumnInterface
     {
         return $this->createColumn($info->getField(), $info->getType())
                     ->comments($info->getComment())

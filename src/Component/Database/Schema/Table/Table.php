@@ -538,7 +538,7 @@ abstract class Table implements TableInterface
     public function getSchemaName(): string
     {
         if (!$this->schemaName) {
-            throw new TableException("Could not determine schema name.");
+            $this->schemaName = $this->connection->getDatabaseName();
         }
 
         return $this->schemaName;

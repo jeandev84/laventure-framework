@@ -40,5 +40,5 @@ interface ColumnFactoryInterface
      * @param ColumnInfoInterface $info
      * @return ColumnInterface
     */
-    public function createFromInfo(ColumnInfoInterface $info): ColumnInterface;
+    public function createColumnFromInfo(ColumnInfoInterface $info): ColumnInterface;
 }

@@ -19,11 +19,11 @@ interface TableFactoryInterface
 {
     /**
      * @param string $name
-     * @param string|null $schemaName
+     * @param string $schemaName
      * @return TableInterface
     */
     public function createTable(
         string $name,
-        string $schemaName = null
+        string $schemaName = ''
     ): TableInterface;
 }

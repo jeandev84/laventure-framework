@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Schema\Table\Drivers\Sqlite;
 
 use Laventure\Component\Database\Schema\Column\ColumnInterface;
-use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
 use Laventure\Component\Database\Schema\Table\Table;
 
 /**
@@ -21,26 +20,32 @@ class SqliteTable extends Table
 
     /**
      * @inheritDoc
-    */
-    public function create(): bool
+     */
+    public function foreignKeyChecks(callable $func): mixed
     {
-
-    }
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function createColumn(string $name, string $type = '', string $constraints = ''): ColumnInterface
-    {
-
+        // TODO: Implement foreignKeyChecks() method.
     }
 
     /**
      * @inheritDoc
      */
-    public function increments(string $name): ColumnInterface
+    public function create(): bool
+    {
+        // TODO: Implement create() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function column(string $name, string $type = '', string $constraints = ''): ColumnInterface
+    {
+        // TODO: Implement column() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function increments(string $name): static
     {
         // TODO: Implement increments() method.
     }
@@ -200,6 +205,14 @@ class SqliteTable extends Table
     /**
      * @inheritDoc
      */
+    public function tinyText(string $name): ColumnInterface
+    {
+        // TODO: Implement tinyText() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function morphs(string $name): ColumnInterface
     {
         // TODO: Implement morphs() method.
@@ -208,16 +221,64 @@ class SqliteTable extends Table
     /**
      * @inheritDoc
      */
-    public function foreign(string $name): ForeignKeyInterface
+    public function getColumns(): array
     {
-        // TODO: Implement foreign() method.
+        // TODO: Implement getColumns() method.
     }
 
     /**
      * @inheritDoc
      */
-    public function getColumns(): array
+    public function getColumnsInfo(): array
     {
-        // TODO: Implement getColumns() method.
+        // TODO: Implement getColumnsInfo() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getPrimaryKeys(): array
+    {
+        // TODO: Implement getPrimaryKeys() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getForeignKeys(): array
+    {
+        // TODO: Implement getForeignKeys() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function dropForeignKeys(): mixed
+    {
+        // TODO: Implement dropForeignKeys() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getIndexes(): array
+    {
+        // TODO: Implement getIndexes() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getUniques(): array
+    {
+        // TODO: Implement getUniques() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getConstraints(): array
+    {
+        // TODO: Implement getConstraints() method.
     }
 }
