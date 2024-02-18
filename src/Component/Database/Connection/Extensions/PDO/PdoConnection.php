@@ -6,6 +6,7 @@ namespace Laventure\Component\Database\Connection\Extensions\PDO;
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Configuration\NullConfiguration;
 use Laventure\Component\Database\Connection\Extensions\PDO\Config\Resolver\PdoConfigurationResolver;
+use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\PdoDsn;
 use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnectionFactoryInterface;
 use Laventure\Component\Database\Connection\Extensions\PDO\Query\Query;
 use Laventure\Component\Database\Connection\Extensions\PDO\Query\QueryBuilder;
@@ -322,9 +323,11 @@ abstract class PdoConnection implements PdoConnectionInterface
             return $database;
         }
 
-        if (!$database = $this->retrieveDatabaseNameFromDsn()) {
+        $dsn = $this->getPdoDsn();
+
+        if (!$database = $dsn->get('dbname')) {
             throw new RuntimeException(
-                "Could not retrieve database name from (". $this->config('dsn') . ")"
+                "Could not retrieve database name from (". $dsn . ")"
             );
         }
 
@@ -334,22 +337,12 @@ abstract class PdoConnection implements PdoConnectionInterface
 
 
 
+
     /**
-     * @return string|false
+     * @return PdoDsn
     */
-    private function retrieveDatabaseNameFromDsn(): string|false
+    public function getPdoDsn(): PdoDsn
     {
-        $dsn    = $this->config('dsn');
-        $params = explode(':', $dsn, 2)[1];
-        $params = explode(';', $params);
-
-        foreach ($params as $param) {
-            [$search, $value] = explode('=', $param, 2);
-            if ($search === 'dbname') {
-                return $value;
-            }
-        }
-
-        return false;
+        return new PdoDsn($this->config('dsn'));
     }
 }

@@ -101,10 +101,10 @@ class Configuration extends Parameter implements ConfigurationInterface
 
     /**
      * @inheritDoc
-     */
-    public function port(): string
+    */
+    public function port(): int
     {
-        return $this->get('port', '');
+        return $this->integer('port');
     }
 
 

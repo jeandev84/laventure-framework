@@ -140,26 +140,22 @@ class Migrator implements MigratorInterface
     */
     public function migrate(): bool
     {
-        return $this->connection->transactionIf(function () {
+        $this->install();
 
-            $this->install();
+        foreach ($this->getNewMigrations() as $migration) {
 
-            foreach ($this->getNewMigrations() as $migration) {
+            $migration->up($this->schema);
+            $qb = $this->connection->createQueryBuilder();
+            $qb->insert($this->table)
+                ->values([
+                    'version'     => $migration->getVersion(),
+                    'executed_at' => date('Y-m-d H:i:s')
+                ])
+                ->getQuery()
+                ->execute();
+        }
 
-                $migration->up($this->schema);
-                $qb = $this->connection->createQueryBuilder();
-                $qb->insert($this->table)
-                    ->values([
-                        'version'     => $migration->getVersion(),
-                        'executed_at' => date('Y-m-d H:i:s')
-                    ])
-                    ->getQuery()
-                    ->execute();
-            }
-
-            return empty($this->getNewMigrations());
-
-        }, !empty($this->getNewMigrations()));
+        return empty($this->getNewMigrations());
     }
 
 
@@ -171,15 +167,11 @@ class Migrator implements MigratorInterface
     */
     public function rollback(): mixed
     {
-        return $this->connection->transactionIf(function () {
+        foreach ($this->getMigrations() as $migration) {
+            $migration->down($this->schema);
+        }
 
-            foreach ($this->getMigrations() as $migration) {
-                $migration->down($this->schema);
-            }
-
-            return $this->schema->truncate($this->table);
-
-        }, !empty($this->migrations));
+        return $this->schema->truncate($this->table);
     }
 
 

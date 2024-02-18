@@ -37,4 +37,20 @@ class PgsqlConnection extends PdoConnection
     {
         return new PgsqlDatabase($this, $this->getDatabaseName());
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function activateTransaction(): void
+    {
+        // TODO: Implement activateTransaction() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function disableTransaction(): void
+    {
+        // TODO: Implement disableTransaction() method.
+    }
 }

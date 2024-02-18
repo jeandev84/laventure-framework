@@ -57,9 +57,9 @@ interface ConfigurationInterface extends ParameterInterface
     /**
      * Returns port
      *
-     * @return int|null
+     * @return int
      */
-    public function port(): ?int;
+    public function port(): int;
 
 
 
