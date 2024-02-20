@@ -18,9 +18,7 @@ use Stringable;
 */
 class PdoDsn implements Stringable, ArrayAccess
 {
-    /**
-     * @var string
-    */
+
     protected string $dsn;
 
 
@@ -36,7 +34,6 @@ class PdoDsn implements Stringable, ArrayAccess
     */
     public function __construct(string $dsn)
     {
-        $this->dsn = $dsn;
         $this->parseOptions($dsn);
     }
 
@@ -96,6 +93,8 @@ class PdoDsn implements Stringable, ArrayAccess
             [$key, $value] = explode('=', $attributes, 2);
             $this->params[$key] = $value;
         }
+
+        $this->dsn = $dsn;
     }
 
 

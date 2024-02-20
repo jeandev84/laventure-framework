@@ -104,7 +104,7 @@ class PdoDsnBuilder implements PdoDsnBuilderInterface
     {
         $config = http_build_query($this->params, '', ';');
 
-        return "$this->driver:$config";
+        return urldecode("$this->driver:$config");
     }
 
 

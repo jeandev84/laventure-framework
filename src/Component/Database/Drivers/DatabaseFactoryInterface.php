@@ -1,10 +1,7 @@
 <?php
-
 declare(strict_types=1);
 
-namespace Laventure\Component\Database;
-
-use Laventure\Component\Database\Connection\ConnectionInterface;
+namespace Laventure\Component\Database\Drivers;
 
 /**
  * DatabaseFactoryInterface

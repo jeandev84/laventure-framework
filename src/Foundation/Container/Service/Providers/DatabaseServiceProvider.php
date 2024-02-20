@@ -1,22 +1,20 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Container\Service\Providers;
 
 use Laventure\Component\Container\Service\Provider\Contract\BootableServiceProvider;
 use Laventure\Component\Container\Service\Provider\ServiceProvider;
-
-use Laventure\Component\Database\Configuration\Configuration;
-use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Connection\ConnectionInterface;
-use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\PdoDsnBuilder;
 use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnectionFactory;
 use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnectionFactoryInterface;
+use Laventure\Component\Database\Manager;
 use Laventure\Component\Database\Manager\DatabaseManager;
-use Laventure\Component\Database\Manager\DatabaseManagerFactory;
-use Laventure\Component\Database\Manager\DatabaseManagerFactoryInterface;
 use Laventure\Component\Database\Manager\DatabaseManagerInterface;
+use Laventure\Component\Database\Manager\Factory\DatabaseManagerFactory;
+use Laventure\Component\Database\Manager\Factory\DatabaseManagerFactoryInterface;
+use Laventure\Component\Database\Migrator\MigratorInterface;
+use Laventure\Component\Database\Schema\SchemaInterface;
 use Laventure\Foundation\Database\Configuration\DatabaseConfigurationManager;
 
 /**
@@ -34,10 +32,7 @@ class DatabaseServiceProvider extends ServiceProvider implements BootableService
      * @var array|array[]
     */
     protected array $provides = [
-        DatabaseManagerInterface::class => [
-            DatabaseManager::class,
-            'database.manager'
-        ]
+        Manager::class => ['db.manager']
     ];
 
 
@@ -62,20 +57,6 @@ class DatabaseServiceProvider extends ServiceProvider implements BootableService
                  'credentials'   => $credentials
              ]);
         });
-
-        $this->app->singleton(
-         PdoConnectionFactoryInterface::class,
-            function () {
-                return new PdoConnectionFactory();
-            }
-        );
-
-        $this->app->singleton(
-         DatabaseManagerFactoryInterface::class,
-            function (PdoConnectionFactoryInterface $factory) {
-                return new DatabaseManagerFactory($factory);
-            }
-        );
     }
 
 
@@ -86,17 +67,21 @@ class DatabaseServiceProvider extends ServiceProvider implements BootableService
     */
     public function register(): void
     {
-        $this->app->singleton(
-         DatabaseManagerInterface::class,
-            function (DatabaseManagerFactoryInterface $factory, DatabaseConfigurationManager $config) {
-                $database = $factory->createDatabaseManager();
+        $this->app->singletons([
+            Manager::class => function (DatabaseConfigurationManager $config) {
+                $database = new Manager();
                 $database->open($config->getConnection(), $config->getConfiguration());
                 return $database;
+            },
+            ConnectionInterface::class => function (Manager $manager) {
+                return $manager->connection();
+            },
+            SchemaInterface::class => function (Manager $manager) {
+               return $manager->schema();
+            },
+            MigratorInterface::class => function (Manager $manager) {
+               return $manager->migration();
             }
-        );
-
-        $this->app->singleton(ConnectionInterface::class, function (DatabaseManagerInterface $manager) {
-            return $manager->connection();
-        });
+        ]);
     }
 }

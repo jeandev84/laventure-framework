@@ -79,6 +79,22 @@ class Migrator implements MigratorInterface
 
 
 
+    /**
+     * @inheritDoc
+    */
+    public function table(string $table): static
+    {
+        $this->table = $table;
+
+        return $this;
+    }
+
+
+
+
+
+
+
 
 
     /**

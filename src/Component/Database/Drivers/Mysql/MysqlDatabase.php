@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Drivers\Mysql;
 
-use Laventure\Component\Database\Database;
+use Laventure\Component\Database\Drivers\Database;
 
 /**
  * MysqlDatabase

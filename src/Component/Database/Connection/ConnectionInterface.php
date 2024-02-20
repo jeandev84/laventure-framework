@@ -6,7 +6,7 @@ namespace Laventure\Component\Database\Connection;
 
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Connection\Transaction\TransactionInterface;
-use Laventure\Component\Database\DatabaseInterface;
+use Laventure\Component\Database\Drivers\DatabaseInterface;
 use Laventure\Component\Database\Query\Builder\QueryBuilderInterface;
 use Laventure\Component\Database\Query\QueryInterface;
 

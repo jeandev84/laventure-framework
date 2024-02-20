@@ -122,6 +122,17 @@ interface MigratorInterface
 
 
 
+    /**
+     * Set migrator version table
+     *
+     * @param string $table
+     * @return $this
+    */
+    public function table(string $table): static;
+
+
+
+
 
     /**
      * Returns version table

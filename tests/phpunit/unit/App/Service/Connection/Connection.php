@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace PHPUnitTest\App\Service\Connection;
 
+use Laventure\Component\Database\Configuration\Configuration;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Manager\DatabaseManager;
+use Laventure\Component\Database\Manager\Factory\DatabaseManagerFactory;
 use PDO;
 
 /**
@@ -46,8 +48,9 @@ class Connection
     {
         if (! static::$instance) {
             # 1. Initialize database manager
-            $manager     = new DatabaseManager();
-            $manager->open($name, self::$config[$name]);
+            $factory     = new DatabaseManagerFactory();
+            $manager     = $factory->createDatabaseManager();
+            $manager->open($name, new Configuration(self::$config[$name]));
 
             # 2. Get connection
             static::$instance = $manager->connection();

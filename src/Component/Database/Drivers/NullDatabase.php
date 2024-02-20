@@ -1,8 +1,7 @@
 <?php
-
 declare(strict_types=1);
 
-namespace Laventure\Component\Database;
+namespace Laventure\Component\Database\Drivers;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Connection\NullConnection;
@@ -14,7 +13,7 @@ use Laventure\Component\Database\Connection\NullConnection;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database
+ * @package  Laventure\Component\Database\Drivers
 */
 class NullDatabase implements DatabaseInterface
 {

@@ -6,8 +6,8 @@ namespace Laventure\Component\Database\Connection;
 
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Configuration\NullConfiguration;
-use Laventure\Component\Database\DatabaseInterface;
-use Laventure\Component\Database\NullDatabase;
+use Laventure\Component\Database\Drivers\DatabaseInterface;
+use Laventure\Component\Database\Drivers\NullDatabase;
 use Laventure\Component\Database\Query\Builder\NullQueryBuilder;
 use Laventure\Component\Database\Query\Builder\QueryBuilderInterface;
 use Laventure\Component\Database\Query\NullQuery;

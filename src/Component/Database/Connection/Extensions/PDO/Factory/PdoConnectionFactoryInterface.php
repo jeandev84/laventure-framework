@@ -1,12 +1,9 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\PDO\Factory;
 
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
-use Laventure\Component\Database\Connection\ConnectionInterface;
-use Laventure\Component\Database\Connection\ConnectionStackInterface;
 use Laventure\Component\Database\Connection\Factory\ConnectionFactoryInterface;
 use PDO;
 
@@ -19,7 +16,7 @@ use PDO;
  *
  * @package  Laventure\Component\Database\Connection\Extensions\PDO\Factory
 */
-interface PdoConnectionFactoryInterface extends ConnectionFactoryInterface, ConnectionStackInterface
+interface PdoConnectionFactoryInterface extends ConnectionFactoryInterface
 {
     /**
      * @param string $dsn
@@ -43,15 +40,4 @@ interface PdoConnectionFactoryInterface extends ConnectionFactoryInterface, Conn
      * @return PDO
     */
     public function makeConnection(ConfigurationInterface $config): PDO;
-
-
-
-
-
-    /**
-     * @param string $driver
-     * @param ConfigurationInterface $config
-     * @return PDO
-    */
-    public function make(string $driver, ConfigurationInterface $config): PDO;
 }

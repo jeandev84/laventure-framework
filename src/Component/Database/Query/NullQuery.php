@@ -103,7 +103,7 @@ class NullQuery implements QueryInterface
     /**
      * @inheritDoc
      */
-    public function setParameters(array $params): static
+    public function setParameters(array $parameters): static
     {
         return $this;
     }

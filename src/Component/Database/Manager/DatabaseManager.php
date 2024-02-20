@@ -6,6 +6,7 @@ namespace Laventure\Component\Database\Manager;
 
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Connection\ConnectionInterface;
+use Laventure\Component\Database\Connection\ConnectionStack;
 
 /**
  * DatabaseManager
@@ -53,11 +54,10 @@ class DatabaseManager implements DatabaseManagerInterface
 
 
 
-
     /**
      * @param ConnectionInterface[] $connections
     */
-    public function __construct(array $connections = [])
+    public function __construct(array $connections)
     {
         $this->connections($connections);
     }
@@ -117,6 +117,9 @@ class DatabaseManager implements DatabaseManagerInterface
 
         return $this;
     }
+
+
+
 
 
 
@@ -205,7 +208,7 @@ class DatabaseManager implements DatabaseManagerInterface
     /**
      * @inheritDoc
     */
-    public function connection(string $name = ''): ConnectionInterface
+    public function connection(string $name = null): ConnectionInterface
     {
         $name   = $name ?: $this->getCurrent();
         $config = $this->configuration($name);

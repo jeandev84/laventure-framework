@@ -7,6 +7,8 @@ namespace Laventure\Foundation\Http\Controller;
 use Laventure\Component\Container\Common\ContainerAwareTrait;
 use Laventure\Component\Container\ContainerAwareInterface;
 use Laventure\Component\Database\Connection\ConnectionInterface;
+use Laventure\Component\Database\Manager;
+use Laventure\Component\Database\ORM\Manager\EntityManagerInterface;
 use Laventure\Component\Http\Message\Response\JsonResponse;
 use Laventure\Component\Http\Message\Response\RedirectResponse;
 use Laventure\Component\Http\Message\Response\Response;
@@ -68,11 +70,36 @@ abstract class AbstractController implements ContainerAwareInterface
 
 
     /**
+     * @return Manager
+    */
+    public function getManager(): Manager
+    {
+        return $this->container['db.manager'];
+    }
+
+
+
+
+
+    /**
+     * @return EntityManagerInterface
+    */
+    public function getEntityManager(): EntityManagerInterface
+    {
+        return $this->getManager()->getEntityManager();
+    }
+
+
+
+
+
+
+    /**
      * @return ConnectionInterface
     */
     public function getConnection(): ConnectionInterface
     {
-        return $this->container['database.manager']->connection();
+        return $this->getManager()->connection();
     }
 
 

@@ -72,11 +72,11 @@ interface DatabaseManagerInterface
 
 
     /**
-     * @param string $name
+     * @param string|null $name
      *
      * @return ConnectionInterface
     */
-    public function connection(string $name = ''): ConnectionInterface;
+    public function connection(string $name = null): ConnectionInterface;
 
 
 

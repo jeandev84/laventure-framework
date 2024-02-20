@@ -6,7 +6,7 @@ namespace Laventure\Component\Database\Connection\Extensions\PDO\Drivers\Oracle;
 
 use Laventure\Component\Database\Connection\ConnectionName;
 use Laventure\Component\Database\Connection\Extensions\PDO\PdoConnection;
-use Laventure\Component\Database\DatabaseInterface;
+use Laventure\Component\Database\Drivers\DatabaseInterface;
 use Laventure\Component\Database\Drivers\Oracle\OracleDatabase;
 
 /**

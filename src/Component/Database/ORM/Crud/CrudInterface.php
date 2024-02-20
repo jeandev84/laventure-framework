@@ -1,8 +1,7 @@
 <?php
-
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Query\Crud;
+namespace Laventure\Component\Database\ORM\Crud;
 
 /**
  * CrudInterface
@@ -11,19 +10,23 @@ namespace Laventure\Component\Database\Query\Crud;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Query\Crud
- */
+ * @package  Laventure\Component\Database\ORM\Crud
+*/
 interface CrudInterface
 {
     /**
+     * Create a new record and returns the last insert ID
+     *
      * @param array $attributes
-     * @return mixed
+     * @return int
     */
-    public function create(array $attributes): mixed;
+    public function create(array $attributes): int;
 
 
 
     /**
+     * Read a record by given $id
+     *
      * @param $id
      *
      * @return mixed
@@ -35,6 +38,8 @@ interface CrudInterface
 
 
     /**
+     * Update a record by given $id
+     *
      * @param array $attributes
      * @param $id
      * @return mixed
@@ -47,6 +52,8 @@ interface CrudInterface
 
 
     /**
+     * Delete a record by given $id
+     *
      * @param $id
      * @return mixed
     */

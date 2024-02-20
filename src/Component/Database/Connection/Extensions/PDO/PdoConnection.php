@@ -8,6 +8,7 @@ use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Configuration\NullConfiguration;
 use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\PdoDsn;
 use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\PdoDsnBuilder;
+use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnectionFactory;
 use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnectionFactoryInterface;
 use Laventure\Component\Database\Connection\Extensions\PDO\Query\Query;
 use Laventure\Component\Database\Connection\Extensions\PDO\Query\QueryBuilder;
@@ -48,13 +49,12 @@ abstract class PdoConnection implements PdoConnectionInterface
 
 
 
-
     /**
-     * @param PdoConnectionFactoryInterface $factory
+     * @param PdoConnectionFactoryInterface|null $factory
     */
-    public function __construct(PdoConnectionFactoryInterface $factory)
+    public function __construct(PdoConnectionFactoryInterface $factory = null)
     {
-        $this->factory  = $factory;
+        $this->factory  = $factory ?: new PdoConnectionFactory();
         $this->withConfiguration(new NullConfiguration());
     }
 
@@ -264,7 +264,7 @@ abstract class PdoConnection implements PdoConnectionInterface
     {
         $this->withConfiguration($config);
 
-        return $this->factory->make($this->getName(), $config);
+        return $this->factory->makeConnection($config);
     }
 
 
@@ -315,5 +315,31 @@ abstract class PdoConnection implements PdoConnectionInterface
     public function getDsn(): PdoDsn
     {
         return new PdoDsn($this->config('dsn'));
+    }
+
+
+
+
+
+
+
+    /**
+     * @param string $driver
+     * @return bool
+    */
+    public function hasAvailableDriver(string $driver): bool
+    {
+        return in_array($driver, $this->getAvailableDrivers());
+    }
+
+
+
+
+    /**
+     * @return array
+    */
+    public function getAvailableDrivers(): array
+    {
+        return PDO::getAvailableDrivers();
     }
 }

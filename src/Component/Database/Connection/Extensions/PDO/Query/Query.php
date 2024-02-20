@@ -51,7 +51,7 @@ class Query implements QueryInterface
     /**
      * @var array
     */
-    protected array $params = [];
+    protected array $parameters = [];
 
 
 
@@ -230,11 +230,11 @@ class Query implements QueryInterface
     /**
      * @inheritDoc
      */
-    public function setParameters(array $params): static
+    public function setParameters(array $parameters): static
     {
-        $this->params = $params;
+        $this->parameters = array_merge($this->parameters, $parameters);
 
-        return $this->log(compact('params'));
+        return $this->log(compact('parameters'));
     }
 
 
@@ -247,7 +247,7 @@ class Query implements QueryInterface
     public function execute(): bool
     {
         try {
-            return $this->statement->execute($this->params);
+            return $this->statement->execute($this->parameters);
         } catch (PDOException $e) {
             $this->abort($e);
         }
@@ -327,12 +327,12 @@ class Query implements QueryInterface
 
 
     /**
-     * @param array $params
+     * @param array $log
      * @return $this
     */
-    private function log(array $params): static
+    private function log(array $log): static
     {
-        $this->log = array_merge($this->log, $params);
+        $this->log = array_merge($this->log, $log);
 
         return $this;
     }
@@ -349,8 +349,10 @@ class Query implements QueryInterface
     */
     private function abort(Throwable $e): void
     {
-        $sql = $this->log['sql'];
-
-        throw new QueryException("SQL: $sql". $e->getMessage(), $this->log, 409);
+        throw new QueryException(
+   "SQL: {$this->log['sql']} {$e->getMessage()}",
+           $this->log,
+     409
+        );
     }
 }

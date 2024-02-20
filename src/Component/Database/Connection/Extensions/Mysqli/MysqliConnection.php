@@ -12,7 +12,7 @@ use Laventure\Component\Database\Connection\Extensions\Mysqli\Factory\MysqliConn
 use Laventure\Component\Database\Connection\Extensions\Mysqli\Query\Query;
 use Laventure\Component\Database\Connection\Extensions\Mysqli\Query\QueryBuilder;
 use Laventure\Component\Database\Connection\Traits\ConnectionTrait;
-use Laventure\Component\Database\DatabaseInterface;
+use Laventure\Component\Database\Drivers\DatabaseInterface;
 use Laventure\Component\Database\Drivers\Mysql\MysqlDatabase;
 use Laventure\Component\Database\Query\Builder\QueryBuilderInterface;
 use Laventure\Component\Database\Query\QueryInterface;

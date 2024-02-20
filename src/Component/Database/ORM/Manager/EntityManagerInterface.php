@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Manager;
 
+use Laventure\Component\Database\ORM\Repository\EntityRepositoryInterface;
+
 /**
  * EntityManagerInterface
  *
@@ -13,6 +15,12 @@ namespace Laventure\Component\Database\ORM\Manager;
  *
  * @package  Laventure\Component\Database\ORM\Manager
  */
-interface EntityManagerInterface
+interface EntityManagerInterface extends ObjectManagerInterface
 {
+
+     /**
+      * @param string $classname
+      * @return EntityRepositoryInterface
+     */
+     public function getRepository(string $classname): EntityRepositoryInterface;
 }
