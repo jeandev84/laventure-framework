@@ -35,4 +35,17 @@ class DatabaseManagerFactory implements DatabaseManagerFactoryInterface
             new OracleConnection()
         ]);
     }
+
+
+
+
+
+    /**
+     * @return DatabaseManagerInterface
+    */
+    public static function create(): DatabaseManagerInterface
+    {
+        $factory = new static();
+        return $factory->createDatabaseManager();
+    }
 }

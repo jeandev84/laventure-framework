@@ -17,4 +17,8 @@ use Laventure\Component\Http\Message\Request\Utils\Params\ServerParams;
  */
 class ServerBag extends ServerParams
 {
+    public function __construct(array $params = [])
+    {
+        parent::__construct($params);
+    }
 }

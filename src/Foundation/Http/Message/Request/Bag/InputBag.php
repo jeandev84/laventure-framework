@@ -15,4 +15,8 @@ namespace Laventure\Foundation\Http\Message\Request\Bag;
  */
 class InputBag extends ParameterBag
 {
+    public function __construct(array $params = [])
+    {
+        parent::__construct($params);
+    }
 }

@@ -12,6 +12,7 @@ use Laventure\Foundation\Http\Message\Request\Bag\ParameterBag;
 use Laventure\Foundation\Http\Message\Request\Bag\ServerBag;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
+use Psr\Http\Message\UploadedFileInterface;
 use Psr\Http\Message\UriInterface;
 
 /**
@@ -133,22 +134,96 @@ final class Request
 
 
     /**
-     * @param ServerRequestInterface $request
+     * @param string $method
+     * @param string $url
     */
-    public function __construct(ServerRequestInterface $request)
+    public function __construct(string $method, string $url)
     {
-        $this->method     = $request->getMethod();
-        $this->target     = $request->getRequestTarget();
-        $this->uri        = $request->getUri();
-        $this->body       = $request->getBody();
-        $this->queries    = new InputBag($request->getQueryParams());
-        $this->request    = new InputBag($request->getParsedBody());
-        $this->attributes = new ParameterBag($request->getAttributes());
-        $this->cookies    = new InputBag($request->getCookieParams());
-        $this->files      = new InputBag($request->getUploadedFiles());
-        $this->server     = new ServerBag($request->getServerParams());
-        $this->headers    = new HeaderBag($request->getHeaders());
+        $this->method     = $method;
+        $this->target     = $url;
+        $this->queries    = new InputBag();
+        $this->request    = new InputBag();
+        $this->attributes = new ParameterBag();
+        $this->cookies    = new InputBag();
+        $this->files      = new InputBag();
+        $this->server     = new ServerBag();
+        $this->headers    = new HeaderBag();
     }
+
+
+
+
+
+
+
+
+    /**
+     * @param string $method
+     * @return $this
+    */
+    public function withMethod(string $method): static
+    {
+        $this->method = $method;
+
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @return string
+    */
+    public function getMethod(): string
+    {
+        return $this->method;
+    }
+
+
+
+
+
+    /**
+     * @param UriInterface $uri
+     * @return $this
+    */
+    public function withUri(UriInterface $uri): static
+    {
+        $this->uri = $uri;
+
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @return UriInterface
+    */
+    public function getUri(): UriInterface
+    {
+        return $this->uri;
+    }
+
+
+
+
+
+
+
+    /**
+     * @param string $target
+     * @return $this
+    */
+    public function withTarget(string $target): static
+    {
+        $this->target = $target;
+
+        return $this;
+    }
+
 
 
 
@@ -167,6 +242,8 @@ final class Request
 
 
 
+
+
     /**
      * @return StreamInterface
     */
@@ -178,10 +255,225 @@ final class Request
 
 
 
+
+
+    /**
+     * @param array $queries
+     * @return $this
+     */
+    public function withQueryParams(array $queries): static
+    {
+        $this->queries->add($queries);
+
+        return $this;
+    }
+
+
+
+
+
+
+    /**
+     * @return array
+     */
+    public function getQueryParams(): array
+    {
+        return $this->queries->all();
+    }
+
+
+
+
+
+    /**
+     * @param array $parsedBody
+     * @return $this
+     */
+    public function withParsedBody(array $parsedBody): static
+    {
+        $this->request->add($parsedBody);
+
+        return $this;
+    }
+
+
+
+
+
+
+    /**
+     * @return array
+     */
+    public function getParsedBody(): array
+    {
+        return $this->request->all();
+    }
+
+
+
+
+
+
+    /**
+     * @param array $attributes
+     * @return $this
+     */
+    public function withAttributes(array $attributes): static
+    {
+        $this->attributes->add($attributes);
+
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @return array
+     */
+    public function getAttributes(): array
+    {
+        return $this->attributes->all();
+    }
+
+
+
+
+
+
+    /**
+     * @param array $cookieParams
+     * @return $this
+     */
+    public function withCookieParams(array $cookieParams): static
+    {
+        $this->cookies->add($cookieParams);
+
+        return $this;
+    }
+
+
+
+
+
+
+    /**
+     * @return array
+     */
+    public function getCookieParams(): array
+    {
+        return $this->cookies->all();
+    }
+
+
+
+
+
+
+    /**
+     * @param UploadedFileInterface[] $uploadedFiles
+     * @return $this
+     */
+    public function withUploadedFiles(array $uploadedFiles): static
+    {
+        $this->files->add($uploadedFiles);
+
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @return UploadedFileInterface[]
+     */
+    public function getUploadedFiles(): array
+    {
+        return $this->files->all();
+    }
+
+
+
+
+
+    /**
+     * @param array $serverParams
+     * @return $this
+     */
+    public function withServerParams(array $serverParams): static
+    {
+        $this->server->add($serverParams);
+
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @return array
+    */
+    public function getServerParams(): array
+    {
+        return $this->server->all();
+    }
+
+
+
+
+
+
+    /**
+     * @param array $headers
+     * @return $this
+     */
+    public function withHeaders(array $headers): static
+    {
+        $this->headers->add($headers);
+
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @param $key
+     * @param $value
+     * @return $this
+    */
+    public function withHeader($key, $value): static
+    {
+        $this->headers->set($key, (array)$value);
+
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @return array
+    */
+    public function getHeaders(): array
+    {
+        return $this->headers->all();
+    }
+
+
+
+
+
+
     /**
      * @return string
     */
-    public function url(): string
+    public function getUrl(): string
     {
         return $this->target;
     }
@@ -193,7 +485,7 @@ final class Request
     /**
      * @return string
     */
-    public function baseUrl(): string
+    public function getBaseUrl(): string
     {
         return $this->server->getBaseUrl();
     }
@@ -203,32 +495,24 @@ final class Request
 
 
     /**
-     * @return UriInterface
-    */
-    public function getUri(): UriInterface
-    {
-        return $this->uri;
-    }
-
-
-
-
-    /**
-     * @return string
-    */
-    public function getMethod(): string
-    {
-        return $this->method;
-    }
-
-
-
-
-    /**
      * @return static
     */
     public static function createFromGlobals(): static
     {
-        return new self(ServerRequest::fromGlobals());
+        $serverRequest = ServerRequest::fromGlobals();
+        $request = new static(
+            $serverRequest->getMethod(),
+            $serverRequest->getRequestTarget()
+        );
+
+        return $request->withUri($serverRequest->getUri())
+                       ->withBody($serverRequest->getBody())
+                       ->withServerParams($serverRequest->getServerParams())
+                       ->withQueryParams($serverRequest->getQueryParams())
+                       ->withParsedBody($serverRequest->getParsedBody())
+                       ->withUploadedFiles($serverRequest->getUploadedFiles())
+                       ->withAttributes($serverRequest->getAttributes())
+                       ->withCookieParams($serverRequest->getCookieParams())
+                       ->withHeaders($serverRequest->getHeaders());
     }
 }

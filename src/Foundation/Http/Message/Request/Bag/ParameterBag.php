@@ -17,4 +17,8 @@ use Laventure\Utils\Parameter\Parameter;
 */
 class ParameterBag extends Parameter
 {
+    public function __construct(array $params = [])
+    {
+        parent::__construct($params);
+    }
 }

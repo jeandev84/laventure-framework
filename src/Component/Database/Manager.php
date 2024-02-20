@@ -40,11 +40,15 @@ class Manager
 
 
 
+     /**
+      * @var EntityManagerInterface
+     */
+     protected EntityManagerInterface $em;
+
 
      public function __construct()
      {
-         $factory        = new DatabaseManagerFactory();
-         $this->manager  = $factory->createDatabaseManager();
+         $this->manager  = DatabaseManagerFactory::create();
      }
 
 
@@ -81,13 +85,26 @@ class Manager
 
 
 
+     /**
+      * @param EntityManagerInterface $em
+      * @return $this
+     */
+     public function setEntityManager(EntityManagerInterface $em): static
+     {
+         $this->em = $em;
+
+         return $this;
+     }
+
+
+
 
      /**
       * @return EntityManagerInterface
      */
      public function getEntityManager(): EntityManagerInterface
      {
-          return new EntityManager();
+          return $this->em;
      }
 
 
