@@ -129,7 +129,7 @@ class HttpKernel implements HttpKernelInterface
     */
     public function terminate($request, $response): void
     {
-        $this->app->terminate($request, $response);
+        //TODO terminate application
     }
 
 

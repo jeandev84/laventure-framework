@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Routing\Route\Collector;
@@ -21,8 +20,8 @@ use Laventure\Component\Routing\Route\RouteInterface;
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
  * @package  Laventure\Component\Routing\Route\Collector
- */
-interface RouteCollectorInterface
+*/
+interface RouteCollectorInterface extends RouteCollectionInterface
 {
     /**
      *  Collect route called by each kind methods
@@ -188,34 +187,6 @@ interface RouteCollectorInterface
 
 
 
-
-    /**
-     * Collect routes
-     *
-     * @param RouteInterface $route
-     *
-     * @return RouteInterface
-    */
-    public function addRoute(RouteInterface $route): RouteInterface;
-
-
-
-
-
-
-    /**
-     * Add route from controller attributes for example
-     *
-     * @param array $controllers
-     *
-     * @return $this
-    */
-    public function registerControllers(array $controllers): static;
-
-
-
-
-
     /**
      * Collect resources
      *
@@ -282,43 +253,9 @@ interface RouteCollectorInterface
 
 
 
-    /**
-     * Returns routes
-     *
-     * @return RouteInterface[]
-    */
-    public function getRoutes(): array;
-
-
-
-
-
-
 
     /**
      * @return ResourceInterface[]
     */
     public function getResources(): array;
-
-
-
-
-
-
-
-    /**
-     * Returns route collection
-     *
-     * @return RouteCollectionInterface
-    */
-    public function getCollection(): RouteCollectionInterface;
-
-
-
-
-
-    /**
-     * @return RouteGroupInterface
-    */
-    public function getGroup(): RouteGroupInterface;
 }
