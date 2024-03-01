@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL\DQL\Select;
@@ -331,9 +330,9 @@ class SelectBuilder implements SelectBuilderInterface
     /**
      * @inheritDoc
     */
-    public function getSQL(): string
+    public function getCommands(): array
     {
-        return (new QueryFormatter())->addFormats([
+        return [
             new Select($this->selects, $this->distinct),
             new From($this->from),
             new Join($this->joins),
@@ -342,7 +341,7 @@ class SelectBuilder implements SelectBuilderInterface
             new Having($this->having),
             new OrderBy($this->orderBy),
             new Limit($this->limit, $this->offset)
-        ])->format();
+        ];
     }
 
 

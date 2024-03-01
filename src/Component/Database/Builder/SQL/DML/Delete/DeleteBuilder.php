@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL\DML\Delete;
@@ -18,7 +17,7 @@ use Laventure\Component\Database\Builder\SQL\SqlBuilderTrait;
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
  * @package  Laventure\Component\Database\Builder\SQL\DML\Delete
- */
+*/
 class DeleteBuilder implements DeleteBuilderInterface
 {
     use SqlBuilderTrait;
@@ -38,14 +37,15 @@ class DeleteBuilder implements DeleteBuilderInterface
 
 
 
+
     /**
      * @inheritDoc
     */
-    public function getSQL(): string
+    public function getCommands(): array
     {
-        return (new QueryFormatter())->addFormats([
+        return [
             new Delete($this->table),
             new Where($this->wheres)
-        ])->format();
+        ];
     }
 }

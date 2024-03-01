@@ -16,7 +16,7 @@ use Laventure\Component\Database\Builder\SQL\SqlBuilderTrait;
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
  * @package  Laventure\Component\Database\Builder\SQL\DML\Insert
- */
+*/
 class InsertBuilder implements InsertBuilderInterface
 {
     use SqlBuilderTrait;
@@ -94,14 +94,10 @@ class InsertBuilder implements InsertBuilderInterface
     /**
      * @inheritDoc
     */
-    public function getSQL(): string
+    public function getCommands(): array
     {
-        return (new QueryFormatter())->addFormats([
-            new Insert(
-                $this->table,
-                $this->insert,
-                $this->values
-            )
-        ])->format();
+        return [
+            new Insert($this->table, $this->insert, $this->values)
+        ];
     }
 }

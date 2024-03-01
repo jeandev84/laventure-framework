@@ -4,10 +4,19 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL;
 
+use Laventure\Component\Database\Builder\SQL\Commands\From;
+use Laventure\Component\Database\Builder\SQL\Commands\GroupBy;
+use Laventure\Component\Database\Builder\SQL\Commands\Having;
+use Laventure\Component\Database\Builder\SQL\Commands\Join;
+use Laventure\Component\Database\Builder\SQL\Commands\Limit;
+use Laventure\Component\Database\Builder\SQL\Commands\OrderBy;
+use Laventure\Component\Database\Builder\SQL\Commands\Select;
+use Laventure\Component\Database\Builder\SQL\Commands\Where;
 use Laventure\Component\Database\Builder\SQL\Expr\Expr;
 use Laventure\Component\Database\Builder\SQL\Formatter\QueryFormatter;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Query\QueryInterface;
+use Stringable;
 
 /**
  * SqlBuilderTrait
@@ -95,8 +104,22 @@ trait SqlBuilderTrait
 
 
 
+
     /**
      * @return string
     */
-    abstract public function getSQL(): string;
+    public function getSQL(): string
+    {
+        return (new QueryFormatter())
+               ->addFormats($this->getCommands())
+               ->format();
+    }
+
+
+
+
+    /**
+     * @return Stringable[]
+    */
+    abstract public function getCommands(): array;
 }

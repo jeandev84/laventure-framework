@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL\DML\Update;
@@ -71,12 +70,12 @@ class UpdateBuilder implements UpdateBuilderInterface
     /**
      * @inheritDoc
     */
-    public function getSQL(): string
+    public function getCommands(): array
     {
-        return (new QueryFormatter())->addFormats([
+        return [
             new Update($this->table),
             new Set($this->set),
             new Where($this->wheres)
-        ])->format();
+        ];
     }
 }

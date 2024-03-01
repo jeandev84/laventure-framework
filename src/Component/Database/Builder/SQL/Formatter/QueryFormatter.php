@@ -61,7 +61,8 @@ class QueryFormatter implements FormatterInterface
     */
     public function format(): string
     {
-        return join(' ', array_filter($this->formats)) . ";";
+        /* return join(' ', array_filter($this->formats)) . ";"; */
+        return join(' ', array_filter($this->formats));
     }
 
 
