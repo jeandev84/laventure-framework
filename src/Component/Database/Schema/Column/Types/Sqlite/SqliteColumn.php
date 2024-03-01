@@ -22,7 +22,7 @@ class SqliteColumn extends Column
     */
     public function increment(): static
     {
-        return $this->type();
+        return $this->type('AUTOINCREMENT');
     }
 
 

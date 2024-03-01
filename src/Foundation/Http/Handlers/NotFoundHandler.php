@@ -1,11 +1,10 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Http\Handlers;
 
 use Laventure\Component\Http\Message\Response\Response;
-use Laventure\Component\Templating\Template\Template;
+use Laventure\Foundation\Http\Controller\NotFound\NotFoundController;
 use Laventure\Foundation\Http\Handlers\Contract\HandlerInterface;
 use Laventure\Foundation\Http\Message\Request\Request;
 
@@ -20,13 +19,21 @@ use Laventure\Foundation\Http\Message\Request\Request;
 */
 class NotFoundHandler implements HandlerInterface
 {
+
+    /**
+     * @param NotFoundController $controller
+    */
+    public function __construct(protected NotFoundController $controller)
+    {
+    }
+
+
+
     /**
      * @inheritdoc
     */
     public function handle(Request $request): Response
     {
-        $template = new Template(__DIR__.'/resource/views/404.html');
-
-        return (new Response(404))->setContent(strval($template));
+        return $this->controller->index($request);
     }
 }

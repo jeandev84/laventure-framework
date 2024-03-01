@@ -22,9 +22,10 @@ class MysqlDatabase extends Database
     */
     public function create(): bool
     {
-        $this->connection->executeQuery(
-            "CREATE DATABASE IF NOT EXISTS {$this->name};"
-        );
+        $this->connection->executeQuery("CREATE DATABASE IF NOT EXISTS {$this->name};");
+        $this->connection->executeQuery("DEFAULT CHARACTER SET {$this->charset()};");
+        $this->connection->executeQuery("DEFAULT COLLATE {$this->collation()};");
+        $this->connection->executeQuery("SET default_storage_engine {$this->collation()};");
 
         return $this->exists();
     }
@@ -37,9 +38,7 @@ class MysqlDatabase extends Database
     */
     public function drop(): bool
     {
-        $this->connection->executeQuery(
-            "DROP DATABASE IF EXISTS {$this->name};"
-        );
+        $this->connection->executeQuery("DROP DATABASE IF EXISTS {$this->name};");
 
         return !$this->exists();
     }
@@ -70,5 +69,17 @@ class MysqlDatabase extends Database
                     ->statement("SHOW DATABASES;")
                     ->fetch()
                     ->columns();
+    }
+
+
+
+
+
+    /**
+     * @return string
+    */
+    public function engine(): string
+    {
+        return $this->connection->config('engine', 'InnoDB');
     }
 }

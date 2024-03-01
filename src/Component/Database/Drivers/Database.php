@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Drivers;
 
+use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 
 /**
@@ -59,5 +60,66 @@ abstract class Database implements DatabaseInterface
     public function exists(): bool
     {
         return in_array($this->name, $this->list());
+    }
+
+
+
+
+    /**
+     * @param array $queries
+     * @return void
+    */
+    public function executeQueries(array $queries): void
+    {
+         foreach ($queries as $query) {
+             $this->connection->executeQuery($query);
+         }
+    }
+
+
+
+
+    /**
+     * @param $key
+     * @param $default
+     * @return mixed
+    */
+    public function config($key, $default = null): mixed
+    {
+        return $this->connection->config($key, $default);
+    }
+
+
+
+
+
+    /**
+     * @return string
+    */
+    public function charset(): string
+    {
+        return $this->config('charset', 'utf8');
+    }
+
+
+
+
+
+
+    /**
+     * @return string
+    */
+    public function collation(): string
+    {
+        return $this->config('collation', 'utf8_general_ci');
+    }
+
+
+
+
+    public function engine(): string
+    {
+        return $this->connection->getConfiguration()
+                                ->engine();
     }
 }

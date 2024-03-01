@@ -41,6 +41,8 @@ class Message implements MessageInterface
 
 
 
+
+
     /**
      * Retrieves the HTTP protocol version as a string.
      *

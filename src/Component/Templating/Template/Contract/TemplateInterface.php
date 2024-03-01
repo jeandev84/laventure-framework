@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Templating\Template\Contract;
 
+use Stringable;
+
 /**
  * TemplateInterface
  *
@@ -13,7 +15,7 @@ namespace Laventure\Component\Templating\Template\Contract;
  *
  * @package  Laventure\Component\Templating\Template\Contract
 */
-interface TemplateInterface
+interface TemplateInterface extends Stringable
 {
     /**
      * Returns path of template

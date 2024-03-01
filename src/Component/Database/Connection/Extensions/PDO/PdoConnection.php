@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\PDO;
@@ -82,6 +81,8 @@ abstract class PdoConnection implements PdoConnectionInterface
 
 
 
+
+
     /**
      * @inheritDoc
     */
@@ -113,6 +114,8 @@ abstract class PdoConnection implements PdoConnectionInterface
     {
         return is_null($this->connection);
     }
+
+
 
 
 
@@ -262,10 +265,16 @@ abstract class PdoConnection implements PdoConnectionInterface
     */
     public function makeConnection(ConfigurationInterface $config): PDO
     {
+        if (!$config->has('dsn')) {
+           $config['dsn'] = $this->makePdoDsn($config);
+        }
+
         $this->withConfiguration($config);
 
         return $this->factory->makeConnection($config);
     }
+
+
 
 
 
@@ -341,5 +350,25 @@ abstract class PdoConnection implements PdoConnectionInterface
     public function getAvailableDrivers(): array
     {
         return PDO::getAvailableDrivers();
+    }
+
+
+
+
+
+    /**
+     * @param ConfigurationInterface $config
+     * @return string
+    */
+    protected function makePdoDsn(ConfigurationInterface $config): string
+    {
+        return PdoDsnBuilder::create($config['driver'], [
+            [
+                'host'     => $config->host(),
+                'port'     => $config->port(),
+                'dbname'   => $config->database(),
+                'charset'  => $config->charset()
+            ]
+        ]);
     }
 }
