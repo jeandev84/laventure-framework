@@ -15,4 +15,33 @@ namespace Laventure\Component\Database\ORM\UnitOfWork;
 */
 class UnitOfWork implements UnitOfWorkInterface
 {
+    public const STATE_MANAGED   = 1;
+    public const STATE_NEW       = 2;
+    public const STATE_DETACHED  = 3;
+    public const STATE_REMOVED   = 4;
+
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function registerState(object $object, $state): mixed
+    {
+
+    }
+
+
+
+
+
+    /**
+     * Clear storage
+     *
+     * @return void
+    */
+    public function clear(): void
+    {
+
+    }
 }

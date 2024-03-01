@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Http\Controller\NotFound;
-
 
 use Laventure\Component\Http\Message\Response\Response;
 use Laventure\Foundation\Http\Message\Request\Request;
@@ -18,13 +18,12 @@ use Laventure\Foundation\Http\Message\Request\Request;
 */
 class NotFoundController
 {
-
-     /**
-      * @param Request $request
-      * @return Response
-     */
-     public function index(Request $request): Response
-     {
-         return new NotFoundResponse();
-     }
+    /**
+     * @param Request $request
+     * @return Response
+    */
+    public function index(Request $request): Response
+    {
+        return new NotFoundResponse();
+    }
 }

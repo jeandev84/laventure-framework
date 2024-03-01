@@ -172,7 +172,7 @@ interface SchemaInterface
      *
      * @return array
     */
-    public function getTables(): array;
+    public function listTables(): array;
 
 
 

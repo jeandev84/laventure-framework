@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\ORM\Manager;
+namespace Laventure\Component\Database\ORM\Persistence\Manager;
 
 /**
  * EntityManager
@@ -11,7 +11,7 @@ namespace Laventure\Component\Database\ORM\Manager;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\ORM
+ * @package  Laventure\Component\Database\ORM\Persistence\Manager
 */
 class EntityManager implements EntityManagerInterface
 {

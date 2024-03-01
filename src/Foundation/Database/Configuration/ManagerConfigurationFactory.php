@@ -1,11 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Database\Configuration;
 
 use Laventure\Component\Database\Configuration\Configuration;
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
-
 
 /**
  * ManagerConfigurationFactory
@@ -18,13 +18,12 @@ use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 */
 class ManagerConfigurationFactory
 {
-
-     /**
-      * @param array $credentials
-      * @return ConfigurationInterface
-     */
-     public function create(array $credentials): ConfigurationInterface
-     {
-         return new Configuration($credentials);
-     }
+    /**
+     * @param array $credentials
+     * @return ConfigurationInterface
+    */
+    public function create(array $credentials): ConfigurationInterface
+    {
+        return new Configuration($credentials);
+    }
 }

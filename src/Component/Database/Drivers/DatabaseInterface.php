@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Drivers;
@@ -49,6 +50,16 @@ interface DatabaseInterface
 
 
 
+    /**
+     * Create schema by given name
+     *
+     * @param string $name
+     * @return mixed
+    */
+    public function createSchema(string $name): mixed;
+
+
+
 
     /**
      * Drop database
@@ -80,6 +91,9 @@ interface DatabaseInterface
      * @return bool
     */
     public function exists(): bool;
+
+
+
 
 
 

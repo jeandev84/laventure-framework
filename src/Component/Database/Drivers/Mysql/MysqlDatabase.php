@@ -82,4 +82,16 @@ class MysqlDatabase extends Database
     {
         return $this->connection->config('engine', 'InnoDB');
     }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function createSchema(string $name): mixed
+    {
+        #return $this->connection->executeQuery('CREATE SCHEMA ....');
+        return false;
+    }
 }

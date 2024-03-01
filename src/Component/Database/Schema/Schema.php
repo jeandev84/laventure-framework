@@ -204,7 +204,7 @@ class Schema implements SchemaInterface
     */
     public function exists(string $table): bool
     {
-        return in_array($table, $this->getTables());
+        return in_array($table, $this->listTables());
     }
 
 
@@ -238,7 +238,7 @@ class Schema implements SchemaInterface
     /**
      * @inheritDoc
     */
-    public function getTables(): array
+    public function listTables(): array
     {
         return $this->connection
                     ->getDatabase()
@@ -255,8 +255,7 @@ class Schema implements SchemaInterface
     public function getName(): string
     {
         if (!$this->name) {
-            $this->name = $this->connection
-                               ->getDatabaseName();
+            $this->name = $this->connection->getDatabaseName();
         }
 
         return $this->name;
@@ -284,20 +283,5 @@ class Schema implements SchemaInterface
     public function getFactory(): TableFactoryInterface
     {
         return $this->factory;
-    }
-
-
-
-
-
-    /**
-     * @return Info
-    */
-    public function getInfo(): Info
-    {
-        return new Info([
-            'name'    => $this->getName(),
-            'tables'  => $this->getTables()
-        ]);
     }
 }

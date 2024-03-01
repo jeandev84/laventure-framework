@@ -350,9 +350,9 @@ class Query implements QueryInterface
     private function abort(Throwable $e): void
     {
         throw new QueryException(
-   "SQL: {$this->log['sql']} {$e->getMessage()}",
-           $this->log,
-     409
+            "SQL: {$this->log['sql']} {$e->getMessage()}",
+            $this->log,
+            409
         );
     }
 }

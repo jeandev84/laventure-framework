@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Manager;
 
+use Laventure\Component\Database\Configuration\Configuration;
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Connection\ConnectionInterface;
-use Laventure\Component\Database\Connection\ConnectionStack;
 
 /**
  * DatabaseManager
@@ -57,7 +57,7 @@ class DatabaseManager implements DatabaseManagerInterface
     /**
      * @param ConnectionInterface[] $connections
     */
-    public function __construct(array $connections)
+    public function __construct(array $connections = [])
     {
         $this->connections($connections);
     }
@@ -69,10 +69,10 @@ class DatabaseManager implements DatabaseManagerInterface
     /**
      * @inheritDoc
     */
-    public function open(string $name, ConfigurationInterface $config): static
+    public function open(string $name, array $credentials): static
     {
         $this->setCurrent($name);
-        $this->setConfiguration($name, $config);
+        $this->setConfiguration($name, $credentials);
 
         return $this;
     }
@@ -80,38 +80,12 @@ class DatabaseManager implements DatabaseManagerInterface
 
 
 
-
-    /**
-     * @param string $connection
-     * @return void
-    */
-    public function setCurrent(string $connection): void
-    {
-        $this->connection = $connection;
-    }
-
-
-
-
-
-    /**
-     * @return string|null
-    */
-    public function getCurrent(): ?string
-    {
-        return $this->connection;
-    }
-
-
-
-
-
     /**
      * @param string $name
-     * @param ConfigurationInterface $config
+     * @param array $config
      * @return $this
     */
-    public function setConfiguration(string $name, ConfigurationInterface $config): static
+    public function setConfiguration(string $name, array $config): static
     {
         $this->config[$name] = $config;
 
@@ -196,7 +170,7 @@ class DatabaseManager implements DatabaseManagerInterface
             $this->abortIf("empty params for connection ($name)");
         }
 
-        return $this->config[$name];
+        return new Configuration($this->config[$name]);
     }
 
 
@@ -290,6 +264,30 @@ class DatabaseManager implements DatabaseManagerInterface
         $this->connections = [];
         $this->connected   = [];
         $this->connection  = null;
+    }
+
+
+
+
+    /**
+     * @param string $connection
+     * @return void
+    */
+    public function setCurrent(string $connection): void
+    {
+        $this->connection = $connection;
+    }
+
+
+
+
+
+    /**
+     * @return string|null
+     */
+    public function getCurrent(): ?string
+    {
+        return $this->connection;
     }
 
 

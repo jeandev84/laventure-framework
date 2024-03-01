@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Routing\Route\Collector;
@@ -35,9 +36,8 @@ use ReflectionException;
  *
  * @package  Laventure\Component\Routing\Route\Collector
 */
-class RouteCollector  extends RouteCollection implements RouteCollectorInterface
+class RouteCollector extends RouteCollection implements RouteCollectorInterface
 {
-
     /**
      * @var RouteGroupInterface
      */

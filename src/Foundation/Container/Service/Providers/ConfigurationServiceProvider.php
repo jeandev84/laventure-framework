@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Container\Service\Providers;
@@ -31,10 +30,7 @@ class ConfigurationServiceProvider extends ServiceProvider implements BootableSe
      * @var array
      */
     protected array $provides = [
-        ConfigInterface::class => [
-            Config::class,
-            'config'
-        ]
+        ConfigInterface::class => [Config::class, 'config']
     ];
 
 

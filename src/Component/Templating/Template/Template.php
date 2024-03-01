@@ -91,9 +91,9 @@ class Template implements TemplateInterface
     */
     public function __toString(): string
     {
-         extract($this->parameters);
-         ob_start();
-         require $this->path;
-         return ob_get_clean();
+        extract($this->parameters);
+        ob_start();
+        require $this->path;
+        return ob_get_clean();
     }
 }

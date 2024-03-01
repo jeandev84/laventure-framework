@@ -8,7 +8,7 @@ use Laventure\Component\Database\Builder\SQL\Conditions\SQlBuilderConditionTrait
 use Laventure\Component\Database\Builder\SQL\Expr\Set;
 use Laventure\Component\Database\Builder\SQL\Expr\Update;
 use Laventure\Component\Database\Builder\SQL\Expr\Where;
-use Laventure\Component\Database\Builder\SQL\Formatter\SQlFormatter;
+use Laventure\Component\Database\Builder\SQL\Formatter\QueryFormatter;
 
 /**
  * UpdateBuilder
@@ -71,7 +71,7 @@ class UpdateBuilder implements UpdateBuilderInterface
     */
     public function getSQL(): string
     {
-        return (new SQlFormatter())->addFormats([
+        return (new QueryFormatter())->addFormats([
             new Update($this->table),
             new Set($this->set),
             new Where($this->wheres)

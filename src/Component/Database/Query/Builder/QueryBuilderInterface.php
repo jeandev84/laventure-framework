@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder;
@@ -30,10 +31,12 @@ interface QueryBuilderInterface
 
     /**
      * Select query
-     * @param string $columns
+     * @param string|null $columns
      * @return QueryBuilderInterface
     */
-    public function select(string $columns = "*"): static;
+    public function select(string $columns = null): static;
+
+
 
 
 
@@ -46,6 +49,7 @@ interface QueryBuilderInterface
      * @return $this
     */
     public function distinct(bool $distinct): static;
+
 
 
 
@@ -234,6 +238,9 @@ interface QueryBuilderInterface
      * @return $this
     */
     public function orderBy(string $column, string $direction = null): static;
+
+
+
 
 
 
@@ -465,15 +472,6 @@ interface QueryBuilderInterface
     */
     public function getParameters(): array;
 
-
-
-
-
-
-    /**
-     * @return ConnectionInterface
-    */
-    public function getConnection(): ConnectionInterface;
 
 
 

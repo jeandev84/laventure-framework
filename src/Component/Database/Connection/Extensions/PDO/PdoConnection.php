@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\PDO;
@@ -47,14 +48,9 @@ abstract class PdoConnection implements PdoConnectionInterface
 
 
 
-
-    /**
-     * @param PdoConnectionFactoryInterface|null $factory
-    */
-    public function __construct(PdoConnectionFactoryInterface $factory = null)
+    public function __construct()
     {
-        $this->factory  = $factory ?: new PdoConnectionFactory();
-        $this->withConfiguration(new NullConfiguration());
+        $this->factory = new PdoConnectionFactory();
     }
 
 
@@ -68,6 +64,9 @@ abstract class PdoConnection implements PdoConnectionInterface
     {
         $this->withConnection($this->makeConnection($config));
     }
+
+
+
 
 
 
@@ -266,7 +265,7 @@ abstract class PdoConnection implements PdoConnectionInterface
     public function makeConnection(ConfigurationInterface $config): PDO
     {
         if (!$config->has('dsn')) {
-           $config['dsn'] = $this->makePdoDsn($config);
+            $config['dsn'] = $this->makePdoDsn($config);
         }
 
         $this->withConfiguration($config);
@@ -293,9 +292,8 @@ abstract class PdoConnection implements PdoConnectionInterface
 
 
 
-
     /**
-     * @inheritdoc
+     * @return string
     */
     public function getDatabaseName(): string
     {

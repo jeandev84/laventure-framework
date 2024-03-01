@@ -18,7 +18,6 @@ use Stringable;
 */
 class PdoDsn implements Stringable, ArrayAccess
 {
-
     protected string $dsn;
 
 

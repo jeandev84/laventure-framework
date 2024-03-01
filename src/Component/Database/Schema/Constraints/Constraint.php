@@ -71,6 +71,10 @@ class Constraint implements ConstraintInterface
     */
     public function getSQL(): string
     {
+        if (!$this->key) {
+            return '';
+        }
+
         return sprintf('CONSTRAINT %s', $this->key);
     }
 

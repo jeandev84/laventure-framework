@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Http\Handlers;
@@ -19,7 +20,6 @@ use Laventure\Foundation\Http\Message\Request\Request;
 */
 class NotFoundHandler implements HandlerInterface
 {
-
     /**
      * @param NotFoundController $controller
     */

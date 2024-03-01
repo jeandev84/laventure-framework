@@ -21,7 +21,7 @@ trait ConnectionTrait
     /**
      * @var ConfigurationInterface
      */
-    protected ConfigurationInterface $config;
+    protected $config;
 
 
     /**
@@ -78,6 +78,10 @@ trait ConnectionTrait
     */
     public function getConfiguration(): ConfigurationInterface
     {
+        if (!$this->config) {
+            $this->config = new NullConfiguration();
+        }
+
         return $this->config;
     }
 

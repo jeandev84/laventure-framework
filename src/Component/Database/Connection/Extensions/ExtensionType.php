@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions;
@@ -14,6 +15,6 @@ namespace Laventure\Component\Database\Connection\Extensions;
 */
 enum ExtensionType
 {
-   const Pdo    = 'pdo';
-   const Mysqli = 'mysqli';
+    public const Pdo    = 'pdo';
+    public const Mysqli = 'mysqli';
 }

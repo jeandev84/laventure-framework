@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Constraints\Types\Keys\Foreign;
@@ -118,7 +117,7 @@ class ForeignKey extends Constraint implements ForeignKeyInterface
     */
     public function getSQL(): string
     {
-        $constraint = $this->getForeignSQL();
+        $constraint = $this->format();
 
         if (!$this->key) {
             return $constraint;
@@ -134,10 +133,10 @@ class ForeignKey extends Constraint implements ForeignKeyInterface
     /**
      * @return string
     */
-    protected function getForeignSQL(): string
+    protected function format(): string
     {
         $foreign[] = sprintf(
-            'FOREIGN KEY (%s) REFERENCES %s (%s)',
+     'FOREIGN KEY (%s) REFERENCES %s (%s)',
             $this->column,
             $this->table,
             $this->references

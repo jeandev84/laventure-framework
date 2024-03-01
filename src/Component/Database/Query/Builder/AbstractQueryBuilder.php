@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder;
@@ -100,9 +99,9 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     /**
      * @inheritDoc
     */
-    public function select(string $columns = "*"): static
+    public function select(string $columns = null): static
     {
-        $this->builder->select()->select($columns);
+        $this->builder->select()->select($columns ?: "*");
 
         return $this;
     }

@@ -16,7 +16,7 @@ use Stringable;
  *
  * @package  Laventure\Component\Database\Builder\SQL\Formatter
  */
-class SQlFormatter implements FormatterInterface
+class QueryFormatter implements FormatterInterface
 {
     /**
      * @var string[]

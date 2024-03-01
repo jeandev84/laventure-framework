@@ -13,7 +13,7 @@ use Laventure\Component\Database\Builder\SQL\Expr\Limit;
 use Laventure\Component\Database\Builder\SQL\Expr\OrderBy;
 use Laventure\Component\Database\Builder\SQL\Expr\Select;
 use Laventure\Component\Database\Builder\SQL\Expr\Where;
-use Laventure\Component\Database\Builder\SQL\Formatter\SQlFormatter;
+use Laventure\Component\Database\Builder\SQL\Formatter\QueryFormatter;
 use Laventure\Component\Database\Query\Result\QueryResultInterface;
 
 /**
@@ -33,7 +33,7 @@ class SelectBuilder implements SelectBuilderInterface
     /**
      * @var bool
     */
-    protected bool $distinct = false;
+    public bool $distinct = false;
 
 
 
@@ -332,8 +332,8 @@ class SelectBuilder implements SelectBuilderInterface
     */
     public function getSQL(): string
     {
-        return (new SQlFormatter())->addFormats([
-            new Select($this->resolveSelects()),
+        return (new QueryFormatter())->addFormats([
+            new Select($this->selects, $this->distinct),
             new From($this->from),
             new Join($this->joins),
             new Where($this->wheres),

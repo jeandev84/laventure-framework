@@ -22,23 +22,24 @@ interface DatabaseManagerInterface
      * Open connection by given name
      *
      * @param string $name
-     * @param ConfigurationInterface $config
+     * @param array $credentials
      * @return mixed
      */
-    public function open(string $name, ConfigurationInterface $config): mixed;
+    public function open(string $name, array $credentials): mixed;
 
 
 
 
 
     /**
-     * Add all configurations
+     * Add all configuration
      *
-     * @param ConfigurationInterface[] $configs
+     * @param array $configs
      *
      * @return $this
      */
     public function configurations(array $configs): static;
+
 
 
 
@@ -53,6 +54,7 @@ interface DatabaseManagerInterface
      * @return $this
      */
     public function connections(array $connections): static;
+
 
 
 

@@ -1,23 +1,18 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Container\Service\Providers;
 
+use Laventure\Component\Config\Config;
+use Laventure\Component\Config\ConfigInterface;
 use Laventure\Component\Container\Service\Provider\Contract\BootableServiceProvider;
 use Laventure\Component\Container\Service\Provider\ServiceProvider;
 use Laventure\Component\Database\Configuration\Configuration;
-use Laventure\Component\Database\Connection\ConnectionInterface;
-use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnectionFactory;
-use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnectionFactoryInterface;
 use Laventure\Component\Database\Manager;
-use Laventure\Component\Database\Manager\DatabaseManager;
-use Laventure\Component\Database\Manager\DatabaseManagerInterface;
 use Laventure\Component\Database\Manager\Factory\DatabaseManagerFactory;
-use Laventure\Component\Database\Manager\Factory\DatabaseManagerFactoryInterface;
-use Laventure\Component\Database\Migrator\MigratorInterface;
-use Laventure\Component\Database\Schema\SchemaInterface;
+use Laventure\Component\Database\ORM\Persistence\Manager\Registry\ManagerRegistry;
 use Laventure\Foundation\Database\Configuration\ManagerConfiguration;
-use Laventure\Foundation\Database\Configuration\ManagerConfigurationFactory;
 
 /**
  * DatabaseServiceProvider
@@ -45,19 +40,18 @@ class DatabaseServiceProvider extends ServiceProvider implements BootableService
     */
     public function boot(): void
     {
-        $this->app->singleton(ManagerConfiguration::class, function () {
+        $this->app->singleton(ManagerConfiguration::class, function (Config $config) {
 
-             $config         = $this->app['config'];
-             $connection     = $config->get('database.connection');
-             $extension      = $config->get('database.extension');
-             $credentialKey  = "database.connections.$extension.$connection";
-             $credentials    = $config->get($credentialKey);
+            $connection     = $config['database.connection'];
+            $extension      = $config['database.extension'];
+            $credentialKey  = "database.connections.$extension.$connection";
+            $credentials    = $config[$credentialKey];
 
-             return new ManagerConfiguration([
-                 'connection'    => $connection,
-                 'extension'     => $extension,
-                 'credentials'   => $credentials
-             ]);
+            return new ManagerConfiguration([
+                'connection'    => $connection,
+                'extension'     => $extension,
+                'credentials'   => $credentials
+            ]);
         });
     }
 
@@ -72,17 +66,11 @@ class DatabaseServiceProvider extends ServiceProvider implements BootableService
         $this->app->singletons([
             Manager::class => function (ManagerConfiguration $config) {
                 $database      = new Manager();
-                $database->open($config->getConnection(), new Configuration($config->getCredentials()));
+                $database->open($config->getConnection(), $config->getCredentials());
                 return $database;
             },
-            ConnectionInterface::class => function (Manager $manager) {
-                return $manager->connection();
-            },
-            SchemaInterface::class => function (Manager $manager) {
-               return $manager->schema();
-            },
-            MigratorInterface::class => function (Manager $manager) {
-               return $manager->migration();
+            ManagerRegistry::class => function () {
+                return new ManagerRegistry();
             }
         ]);
     }

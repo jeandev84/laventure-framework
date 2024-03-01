@@ -15,4 +15,38 @@ namespace Laventure\Component\Database\ORM\UnitOfWork;
 */
 interface UnitOfWorkInterface
 {
+    /**
+     * Register state
+     *
+     * @param object $object
+     * @param $state
+     * @return mixed
+    */
+    public function registerState(object $object, $state): mixed;
+
+
+
+
+
+
+    /**
+     * Find id
+     *
+     * @param $id
+     * @return mixed
+    */
+    public function find($id): mixed;
+
+
+
+
+
+
+
+    /**
+     * Commit changes
+     *
+     * @return void
+    */
+    public function commit(): void;
 }

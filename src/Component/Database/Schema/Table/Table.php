@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Table;
@@ -19,6 +18,7 @@ use Laventure\Component\Database\Schema\Constraints\Types\Keys\Primary\PrimaryKe
 use Laventure\Component\Database\Schema\Constraints\Types\Unique;
 use Laventure\Component\Database\Schema\Table\Criteria\TableCriteria;
 use Laventure\Component\Database\Schema\Table\Criteria\TableCriteriaInterface;
+use RuntimeException;
 
 /**
  * Table
@@ -536,7 +536,9 @@ abstract class Table implements TableInterface
     public function getSchemaName(): string
     {
         if (!$this->schemaName) {
-            $this->schemaName = $this->connection->getDatabaseName();
+           throw new RuntimeException(
+       "Could not found schema name from : ". get_called_class()
+           );
         }
 
         return $this->schemaName;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL\DML\Insert;
 
-use Laventure\Component\Database\Builder\SQL\Formatter\SQlFormatter;
+use Laventure\Component\Database\Builder\SQL\Formatter\QueryFormatter;
 use Laventure\Component\Database\Builder\SQL\SQlBuilderTrait;
 use Laventure\Component\Database\Builder\SQL\Expr\Insert;
 
@@ -96,7 +96,7 @@ class InsertBuilder implements InsertBuilderInterface
     */
     public function getSQL(): string
     {
-        return (new SQlFormatter())->addFormats([
+        return (new QueryFormatter())->addFormats([
             new Insert(
                 $this->table,
                 $this->insert,

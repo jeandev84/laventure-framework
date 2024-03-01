@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace PHPUnitTest\Component\Database\Migrator;
@@ -110,5 +109,4 @@ class MigratorTest extends TestCase
         $this->assertTrue($schema->exists('goods'));
         $this->assertTrue($schema->exists('users'));
     }
-
 }

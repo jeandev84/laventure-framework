@@ -7,7 +7,7 @@ namespace Laventure\Component\Database\Builder\SQL\DML\Delete;
 use Laventure\Component\Database\Builder\SQL\Conditions\SQlBuilderConditionTrait;
 use Laventure\Component\Database\Builder\SQL\Expr\Where;
 use Laventure\Component\Database\Builder\SQL\Expr\Delete;
-use Laventure\Component\Database\Builder\SQL\Formatter\SQlFormatter;
+use Laventure\Component\Database\Builder\SQL\Formatter\QueryFormatter;
 
 /**
  * DeleteBuilder
@@ -41,7 +41,7 @@ class DeleteBuilder implements DeleteBuilderInterface
     */
     public function getSQL(): string
     {
-        return (new SQlFormatter())->addFormats([
+        return (new QueryFormatter())->addFormats([
             new Delete($this->table),
             new Where($this->wheres)
         ])->format();

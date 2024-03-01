@@ -17,13 +17,16 @@ use Stringable;
 */
 class Select implements Stringable
 {
-    protected bool $distinct = false;
 
 
     /**
-     * @param string $columns
+     * @param array $columns
+     * @param bool $distinct
     */
-    public function __construct(public string $columns)
+    public function __construct(
+        public array $columns,
+        public bool $distinct = false
+    )
     {
 
     }
@@ -35,6 +38,10 @@ class Select implements Stringable
     */
     public function __toString(): string
     {
-        return "SELECT $this->columns";
+        $selects  =  join(', ', array_filter($this->columns));
+        $selects  =  !empty($this->columns) ? $selects : "*";
+        $selects  =  $this->distinct ? "DISTINCT $selects" : $selects;
+
+        return "SELECT $selects";
     }
 }

@@ -13,12 +13,12 @@ namespace Laventure\Component\Config;
  *
  * @package  Laventure\Component\Config
 */
-class Config implements ConfigInterface
+class Config implements ConfigInterface, \ArrayAccess
 {
     /**
      * @param array $config
     */
-    public function __construct(private readonly array $config)
+    public function __construct(protected array $config)
     {
     }
 
@@ -46,5 +46,50 @@ class Config implements ConfigInterface
         }
 
         return $value;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function offsetExists(mixed $offset): bool
+    {
+        return isset($this->config[$offset]);
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function offsetGet(mixed $offset): mixed
+    {
+        return $this->get($offset);
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function offsetSet(mixed $offset, mixed $value): void
+    {
+        $this->config[$offset] = $value;
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function offsetUnset(mixed $offset): void
+    {
+        unset($this->config[$offset]);
     }
 }
