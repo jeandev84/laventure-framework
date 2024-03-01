@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Routing\Route\Collector;
@@ -36,14 +35,8 @@ use ReflectionException;
  *
  * @package  Laventure\Component\Routing\Route\Collector
 */
-class RouteCollector implements RouteCollectorInterface
+class RouteCollector  extends RouteCollection implements RouteCollectorInterface
 {
-    /**
-     * @var RouteCollectionInterface
-     */
-    protected RouteCollectionInterface $collection;
-
-
 
     /**
      * @var RouteGroupInterface
@@ -121,7 +114,6 @@ class RouteCollector implements RouteCollectorInterface
      */
     public function __construct(string $namespace)
     {
-        $this->collection           = new RouteCollection();
         $this->group                = new RouteGroup();
         $this->routeFactory         = new RouteFactory();
         $this->routeResolverFactory = new RouteResolverFactory();
@@ -254,7 +246,7 @@ class RouteCollector implements RouteCollectorInterface
      */
     public function map($methods, string $path, mixed $action, string $name = ''): RouteInterface
     {
-        return $this->addRoute($this->makeRoute($methods, $path, $action, $name));
+        return $this->addRoute($this->createRoute($methods, $path, $action, $name));
     }
 
 
@@ -322,7 +314,7 @@ class RouteCollector implements RouteCollectorInterface
      */
     public function group(array $attributes, Closure $routes): static
     {
-        $this->group->group($this->makeGroupInvoker($attributes, $routes));
+        $this->group->group($this->createGroupInvoker($attributes, $routes));
 
         return $this;
     }
@@ -336,7 +328,7 @@ class RouteCollector implements RouteCollectorInterface
      */
     public function resource(string $name, string $controller): static
     {
-        return $this->addResource($this->makeWebResource($name, $controller));
+        return $this->addResource($this->createWebResource($name, $controller));
     }
 
 
@@ -364,7 +356,7 @@ class RouteCollector implements RouteCollectorInterface
      */
     public function apiResource(string $name, string $controller): static
     {
-        return $this->addResource($this->makeApiResource($name, $controller));
+        return $this->addResource($this->createApiResource($name, $controller));
     }
 
 
@@ -381,19 +373,6 @@ class RouteCollector implements RouteCollectorInterface
         }
 
         return $this;
-    }
-
-
-
-
-
-
-    /**
-     * @inheritDoc
-     */
-    public function addRoute(RouteInterface $route): RouteInterface
-    {
-        return $this->collection->addRoute($route);
     }
 
 
@@ -493,20 +472,6 @@ class RouteCollector implements RouteCollectorInterface
 
 
 
-
-
-
-    /**
-     * @inheritDoc
-     */
-    public function getRoutes(): array
-    {
-        return $this->collection->getRoutes();
-    }
-
-
-
-
     /**
      * @inheritDoc
      */
@@ -518,21 +483,9 @@ class RouteCollector implements RouteCollectorInterface
 
 
 
-
-
     /**
-     * @inheritdoc
-     */
-    public function getCollection(): RouteCollectionInterface
-    {
-        return $this->collection;
-    }
-
-
-
-    /**
-     * @inheritdoc
-     */
+     * @return RouteGroupInterface
+    */
     public function getGroup(): RouteGroupInterface
     {
         return $this->group;
@@ -546,7 +499,7 @@ class RouteCollector implements RouteCollectorInterface
     /**
      * @param ResourceFactoryInterface $resourceFactory
      * @return $this
-     */
+    */
     public function withResourceFactory(ResourceFactoryInterface $resourceFactory): static
     {
         $this->resourceFactory = $resourceFactory;
@@ -557,25 +510,11 @@ class RouteCollector implements RouteCollectorInterface
 
 
 
-    /**
-     * @param RouteCollectionInterface $collection
-     *
-     * @return $this
-     */
-    public function withCollection(RouteCollectionInterface $collection): static
-    {
-        $this->collection = $collection;
-
-        return $this;
-    }
-
-
-
 
     /**
      * @param RouteGroupInterface $group
      * @return $this
-     */
+    */
     public function withGroup(RouteGroupInterface $group): static
     {
         $this->group = $group;
@@ -590,7 +529,7 @@ class RouteCollector implements RouteCollectorInterface
      * @param RouteFactoryInterface $routeFactory
      *
      * @return $this
-     */
+    */
     public function withRouteFactory(RouteFactoryInterface $routeFactory): static
     {
         $this->routeFactory = $routeFactory;
@@ -621,7 +560,7 @@ class RouteCollector implements RouteCollectorInterface
      * @param GroupInvokerFactoryInterface $groupInvokerFactory
      *
      * @return $this
-     */
+    */
     public function withGroupInvokerFactory(GroupInvokerFactoryInterface $groupInvokerFactory): static
     {
         $this->groupInvokerFactory = $groupInvokerFactory;
@@ -639,10 +578,10 @@ class RouteCollector implements RouteCollectorInterface
      * @param mixed $action
      * @param string $name
      * @return RouteInterface
-     */
-    public function makeRoute($methods, string $path, mixed $action, string $name = ''): RouteInterface
+    */
+    public function createRoute($methods, string $path, mixed $action, string $name = ''): RouteInterface
     {
-        $resolver    = $this->makeRouteResolver();
+        $resolver    = $this->createRouteResolver();
         $methods     = $resolver->resolveMethods($methods);
         $path        = $resolver->resolvePath($path);
         $action      = $resolver->resolveAction($action);
@@ -660,11 +599,12 @@ class RouteCollector implements RouteCollectorInterface
 
     /**
      * @return RouteResolverInterface
-     */
-    public function makeRouteResolver(): RouteResolverInterface
+    */
+    public function createRouteResolver(): RouteResolverInterface
     {
         return $this->routeResolverFactory->createRouteResolver($this->group, $this->namespace);
     }
+
 
 
 
@@ -673,8 +613,8 @@ class RouteCollector implements RouteCollectorInterface
      * @param string $name
      * @param string $controller
      * @return ResourceInterface
-     */
-    public function makeWebResource(string $name, string $controller): ResourceInterface
+    */
+    public function createWebResource(string $name, string $controller): ResourceInterface
     {
         return $this->resourceFactory->createWebResource($name, $controller);
     }
@@ -688,7 +628,7 @@ class RouteCollector implements RouteCollectorInterface
      * @param string $controller
      * @return ResourceInterface
      */
-    public function makeApiResource(string $name, string $controller): ResourceInterface
+    public function createApiResource(string $name, string $controller): ResourceInterface
     {
         return $this->resourceFactory->createApiResource($name, $controller);
     }
@@ -702,7 +642,7 @@ class RouteCollector implements RouteCollectorInterface
      * @param Closure $routes
      * @return GroupInvokerInterface
      */
-    public function makeGroupInvoker(array $attributes, Closure $routes): GroupInvokerInterface
+    public function createGroupInvoker(array $attributes, Closure $routes): GroupInvokerInterface
     {
         return $this->groupInvokerFactory->createInvoker($attributes, $routes, $this);
     }
@@ -710,9 +650,13 @@ class RouteCollector implements RouteCollectorInterface
 
 
 
-
     /**
-     * @inheritdoc
+     * Add route from controller attributes for example
+     *
+     * @param array $controllers
+     *
+     * @return $this
+     * @throws ReflectionException
     */
     public function registerControllers(array $controllers): static
     {
@@ -759,20 +703,9 @@ class RouteCollector implements RouteCollectorInterface
                 $path     = $route->getPath();
                 $name     = $route->getName();
                 $wheres   = $route->getRequirements();
-                $route = $this->map(
-                    $methods,
-                    $prefix. $path,
-                    [$controller, $methodName],
-                    $namePrefix.$name
-                )
-                ->wheres($wheres);
-                $this->collection->addRouteByController($controller, $route);
+                $this->map($methods, $prefix. $path, [$controller, $methodName], $namePrefix.$name)
+                     ->wheres($wheres);
             }
         }
-
-        /*
-        dump($this->collection->getControllers());
-        dump($this->getRoutes());
-        */
     }
 }

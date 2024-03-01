@@ -27,51 +27,6 @@ interface RouteCollectionInterface
 
 
 
-    /**
-     * @param string $controller
-     *
-     * @param RouteInterface $route
-     *
-     * @return mixed
-    */
-    public function addRouteByController(string $controller, RouteInterface $route): RouteInterface;
-
-
-
-
-
-    /**
-     * @param string $methods
-     *
-     * @param RouteInterface $route
-     *
-     * @return mixed
-    */
-    public function addRouteByMethods(string $methods, RouteInterface $route): RouteInterface;
-
-
-
-
-    /**
-     * @param string $name
-     * @param RouteInterface $route
-     * @return RouteInterface
-    */
-    public function addNamedRoute(string $name, RouteInterface $route): RouteInterface;
-
-
-
-
-    /**
-     * @param string $path
-     * @param RouteInterface $route
-     * @return RouteInterface
-    */
-    public function addRouteByPath(string $path, RouteInterface $route): RouteInterface;
-
-
-
-
 
     /**
      * Returns all routes
@@ -85,103 +40,25 @@ interface RouteCollectionInterface
 
 
     /**
-     * Returns routes by given method
+     * Determine if exists route by given name
      *
-     * @return RouteInterface[]
-    */
-    public function getMethodRoutes(string $method): array;
-
-
-
-
-
-
-    /**
-     * Returns route by methods
-     *
-     * @return array
-    */
-    public function getMethods(): array;
-
-
-
-
-
-
-    /**
-     * Returns routes by controllers
-     *
-     * @return RouteInterface[]
-    */
-    public function getControllers(): array;
-
-
-
-
-
-
-    /**
-     * @param string $controller
-     *
-     * @return RouteInterface[]
-    */
-    public function getControllerRoutes(string $controller): array;
-
-
-
-
-    /**
-     * @param string $path
-     *
-     * @return RouteInterface|null
-    */
-    public function getRouteByPath(string $path): ?RouteInterface;
-
-
-
-
-    /**
-     * @return RouteInterface[]
-    */
-    public function getNamedRoutes(): array;
-
-
-
-
-
-    /**
-      * @param string $name
-      *
-      * @return RouteInterface|null
-     */
-    public function getNamedRoute(string $name): ?RouteInterface;
-
-
-
-
-
-    /**
      * @param string $name
      *
      * @return bool
     */
-    public function hasNamedRoute(string $name): bool;
+    public function has(string $name): bool;
 
 
-
-
-    /**
-     * @param string $controller
-     * @return bool
-    */
-    public function hasController(string $controller): bool;
 
 
 
 
     /**
-     * @param string $methods
-     * @return bool
+     * Returns named route
+     *
+     * @param string $name
+     *
+     * @return RouteInterface|null
     */
-    public function hasMethods(string $methods): bool;
+    public function getRoute(string $name): ?RouteInterface;
 }

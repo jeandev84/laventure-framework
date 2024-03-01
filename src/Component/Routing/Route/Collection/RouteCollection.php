@@ -60,15 +60,20 @@ class RouteCollection implements RouteCollectionInterface
     */
     public function addRoute(RouteInterface $route): RouteInterface
     {
-        $this->addRouteByMethods($route->getMethodsAsString(), $route);
-        $this->addRouteByPath($route->getPath(), $route);
+        $methods    = $route->getMethodsAsString();
+        $path       = $route->getPath();
+        $controller = $route->getController();
+        $name       = $route->getName();
 
-        if ($controller = $route->getController()) {
-            $this->addRouteByController($controller, $route);
+        $this->methods[$methods][$path] = $route;
+        $this->paths[$path] = $route;
+
+        if ($controller) {
+            $this->controllers[$controller][$path] = $route;
         }
 
-        if ($name = $route->getName()) {
-            $this->addNamedRoute($name, $route);
+        if ($name) {
+            $this->namedRoutes[$name] = $route;
         }
 
         return $this->routes[] = $route;
@@ -90,8 +95,33 @@ class RouteCollection implements RouteCollectionInterface
 
 
 
+
     /**
      * @inheritDoc
+    */
+    public function has(string $name): bool
+    {
+        return isset($this->namedRoutes[$name]);
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getRoute(string $name): ?RouteInterface
+    {
+        return $this->namedRoutes[$name] ?? null;
+    }
+
+
+
+
+
+    /**
+     * @return RouteInterface[]
     */
     public function getNamedRoutes(): array
     {
@@ -102,33 +132,8 @@ class RouteCollection implements RouteCollectionInterface
 
 
 
-
     /**
-     * @inheritDoc
-    */
-    public function getNamedRoute(string $name): ?RouteInterface
-    {
-        return $this->namedRoutes[$name] ?? null;
-    }
-
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function hasNamedRoute(string $name): bool
-    {
-        return isset($this->namedRoutes[$name]);
-    }
-
-
-
-
-    /**
-     * @inheritDoc
+     * @return RouteInterface[]
     */
     public function getMethods(): array
     {
@@ -138,10 +143,13 @@ class RouteCollection implements RouteCollectionInterface
 
 
 
+
+
     /**
-     * @inheritDoc
+     * @param string $method
+     * @return array
     */
-    public function getMethodRoutes(string $method): array
+    public function getRoutesByMethod(string $method): array
     {
         return $this->methods[$method] ?? [];
     }
@@ -151,7 +159,7 @@ class RouteCollection implements RouteCollectionInterface
 
 
     /**
-     * @inheritDoc
+     * @return array
     */
     public function getControllers(): array
     {
@@ -162,9 +170,10 @@ class RouteCollection implements RouteCollectionInterface
 
 
     /**
-     * @inheritDoc
+     * @param string $controller
+     * @return array
     */
-    public function getControllerRoutes(string $controller): array
+    public function getRoutesByController(string $controller): array
     {
         return $this->controllers[$controller] ?? [];
     }
@@ -172,46 +181,10 @@ class RouteCollection implements RouteCollectionInterface
 
 
 
-    /**
-     * @inheritDoc
-    */
-    public function addRouteByController(string $controller, RouteInterface $route): RouteInterface
-    {
-        $this->controllers[$controller][$route->getPath()] = $route;
-
-        return $route;
-    }
-
-
-
 
     /**
-     * @inheritDoc
-    */
-    public function addRouteByMethods(string $methods, RouteInterface $route): RouteInterface
-    {
-        $this->methods[$methods][$route->getPath()] = $route;
-
-        return $route;
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function addNamedRoute(string $name, RouteInterface $route): RouteInterface
-    {
-        $this->namedRoutes[$name] = $route;
-
-        return $route;
-    }
-
-
-
-    /**
-     * @inheritDoc
+     * @param string $controller
+     * @return bool
     */
     public function hasController(string $controller): bool
     {
@@ -220,34 +193,16 @@ class RouteCollection implements RouteCollectionInterface
 
 
 
-    /**
-     * @inheritDoc
-    */
-    public function hasMethods(string $methods): bool
-    {
-        return isset($this->methods[$methods]);
-    }
-
 
     /**
-     * @inheritDoc
-    */
-    public function addRouteByPath(string $path, RouteInterface $route): RouteInterface
-    {
-        $this->paths[$path] = $route;
-
-        return $route;
-    }
-
-
-
-    /**
-     * @inheritDoc
+     * @param string $path
+     * @return RouteInterface|null
     */
     public function getRouteByPath(string $path): ?RouteInterface
     {
         return $this->paths[$path] ?? null;
     }
+
 
 
 

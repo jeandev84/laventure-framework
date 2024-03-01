@@ -87,7 +87,7 @@ class RouterTest extends TestCase
         ]);
 
         #dd($router->getRoutes());
-        $controllerRoutes = $collection->getControllerRoutes(OrderController::class);
+        $controllerRoutes = $collection->getRoutesByController(OrderController::class);
         $this->assertNotEmpty($controllerRoutes);
         $this->assertSame($router->getRoutes(), array_values($controllerRoutes));
 

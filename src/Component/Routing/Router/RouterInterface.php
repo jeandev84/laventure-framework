@@ -40,31 +40,4 @@ interface RouterInterface
      * @return string|null
     */
     public function generate(string $name, array $params = []): ?string;
-
-
-
-
-
-    /**
-     * Determine if exists route by given name
-     *
-     * @param string $name
-     *
-     * @return bool
-    */
-    public function has(string $name): bool;
-
-
-
-
-
-
-    /**
-     * Returns named route
-     *
-     * @param string $name
-     *
-     * @return RouteInterface|null
-    */
-    public function getRoute(string $name): ?RouteInterface;
 }
