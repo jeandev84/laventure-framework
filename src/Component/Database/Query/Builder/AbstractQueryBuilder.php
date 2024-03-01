@@ -8,7 +8,7 @@ use Laventure\Component\Database\Builder\SQL\Conditions\Contract\WhereBuilderInt
 use Laventure\Component\Database\Builder\SQL\DQL\Select\SelectBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\Expr\Conditions\andX;
 use Laventure\Component\Database\Builder\SQL\Expr\Conditions\orX;
-use Laventure\Component\Database\Builder\SQL\ExpressionInterface;
+use Laventure\Component\Database\Builder\SQL\Expr\ExpressionInterface;
 use Laventure\Component\Database\Builder\SQL\SqlBuilderInterface;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Query\QueryInterface;

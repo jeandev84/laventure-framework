@@ -1,15 +1,13 @@
 <?php
-
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Builder\SQL;
+namespace Laventure\Component\Database\Builder\SQL\Expr;
 
 use Laventure\Component\Database\Builder\SQL\Expr\Comparison\ComparisonInterface;
 use Laventure\Component\Database\Builder\SQL\Expr\Conditions\Contract\andXInterface;
 use Laventure\Component\Database\Builder\SQL\Expr\Conditions\Contract\orXInterface;
 use Laventure\Component\Database\Builder\SQL\Expr\Func\FuncInterface;
 use Laventure\Component\Database\Builder\SQL\Expr\Math\MathInterface;
-use Stringable;
 
 /**
  * ExpressionInterface
@@ -18,7 +16,7 @@ use Stringable;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Builder\SQL
+ * @package  Laventure\Component\Database\Builder\SQL\Expr
 */
 interface ExpressionInterface
 {

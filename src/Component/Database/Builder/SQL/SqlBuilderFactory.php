@@ -13,6 +13,7 @@ use Laventure\Component\Database\Builder\SQL\DML\Update\UpdateBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\DQL\Select\SelectBuilder;
 use Laventure\Component\Database\Builder\SQL\DQL\Select\SelectBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\Expr\Expr;
+use Laventure\Component\Database\Builder\SQL\Expr\ExpressionInterface;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 
 /**

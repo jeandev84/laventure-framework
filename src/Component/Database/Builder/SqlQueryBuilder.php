@@ -8,7 +8,7 @@ use Laventure\Component\Database\Builder\SQL\DML\Delete\DeleteBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\DML\Insert\InsertBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\DML\Update\UpdateBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\DQL\Select\SelectBuilderInterface;
-use Laventure\Component\Database\Builder\SQL\ExpressionInterface;
+use Laventure\Component\Database\Builder\SQL\Expr\ExpressionInterface;
 use Laventure\Component\Database\Builder\SQL\SqlBuilderFactory;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 

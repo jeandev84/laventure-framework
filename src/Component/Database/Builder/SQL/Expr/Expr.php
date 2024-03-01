@@ -14,7 +14,6 @@ use Laventure\Component\Database\Builder\SQL\Expr\Func\Func;
 use Laventure\Component\Database\Builder\SQL\Expr\Func\FuncInterface;
 use Laventure\Component\Database\Builder\SQL\Expr\Math\Math;
 use Laventure\Component\Database\Builder\SQL\Expr\Math\MathInterface;
-use Laventure\Component\Database\Builder\SQL\ExpressionInterface;
 
 /**
  * Expr
