@@ -18,8 +18,6 @@ use Reflector;
 */
 class ClassMetadata implements ClassMetadataInterface
 {
-
-
     /**
      * @var ReflectionClass
     */

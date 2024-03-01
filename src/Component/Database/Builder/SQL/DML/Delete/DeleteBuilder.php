@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL\DML\Delete;
 
-use Laventure\Component\Database\Builder\SQL\Conditions\SQlBuilderConditionTrait;
-use Laventure\Component\Database\Builder\SQL\Expr\Where;
-use Laventure\Component\Database\Builder\SQL\Expr\Delete;
+use Laventure\Component\Database\Builder\SQL\Commands\Delete;
+use Laventure\Component\Database\Builder\SQL\Commands\Where;
+use Laventure\Component\Database\Builder\SQL\Conditions\WhereBuilderTrait;
 use Laventure\Component\Database\Builder\SQL\Formatter\QueryFormatter;
+use Laventure\Component\Database\Builder\SQL\SqlBuilderTrait;
 
 /**
  * DeleteBuilder
@@ -20,7 +21,8 @@ use Laventure\Component\Database\Builder\SQL\Formatter\QueryFormatter;
  */
 class DeleteBuilder implements DeleteBuilderInterface
 {
-    use SQlBuilderConditionTrait;
+    use SqlBuilderTrait;
+    use WhereBuilderTrait;
 
     protected $table = null;
 

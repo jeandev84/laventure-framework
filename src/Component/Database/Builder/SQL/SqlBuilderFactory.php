@@ -24,7 +24,7 @@ use Laventure\Component\Database\Connection\ConnectionInterface;
  *
  * @package  Laventure\Component\Database\Builder\SQL
 */
-class SqlBuilderFactory
+class SqlBuilderFactory implements SqlBuilderFactoryInterface
 {
     /**
      * @var ConnectionInterface
@@ -35,9 +35,9 @@ class SqlBuilderFactory
 
 
     /**
-     * @var SQlBuilderInterface
+     * @var SqlBuilderInterface
     */
-    protected SQlBuilderInterface $builder;
+    protected SqlBuilderInterface $builder;
 
 
 
@@ -55,9 +55,9 @@ class SqlBuilderFactory
 
 
     /**
-     * @return ExpressionInterface
+     * @inheritdoc
     */
-    public function createExpr(): ExpressionInterface
+    public function createExpressionBuilder(): ExpressionInterface
     {
         return new Expr();
     }
@@ -66,9 +66,9 @@ class SqlBuilderFactory
 
 
     /**
-     * @return SelectBuilderInterface
+     * @inheritdoc
     */
-    public function createSelect(): SelectBuilderInterface
+    public function createSelectBuilder(): SelectBuilderInterface
     {
         return new SelectBuilder($this->connection);
     }
@@ -78,9 +78,9 @@ class SqlBuilderFactory
 
 
     /**
-     * @return InsertBuilderInterface
+     * @inheritdoc
     */
-    public function createInsert(): InsertBuilderInterface
+    public function createInsertBuilder(): InsertBuilderInterface
     {
         return new InsertBuilder($this->connection);
     }
@@ -89,9 +89,9 @@ class SqlBuilderFactory
 
 
     /**
-     * @return UpdateBuilderInterface
+     * @inheritdoc
     */
-    public function createUpdate(): UpdateBuilderInterface
+    public function createUpdateBuilder(): UpdateBuilderInterface
     {
         return new UpdateBuilder($this->connection);
     }
@@ -101,9 +101,9 @@ class SqlBuilderFactory
 
 
     /**
-     * @return DeleteBuilderInterface
+     * @inheritdoc
     */
-    public function createDelete(): DeleteBuilderInterface
+    public function createDeleteBuilder(): DeleteBuilderInterface
     {
         return new DeleteBuilder($this->connection);
     }

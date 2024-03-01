@@ -70,22 +70,6 @@ class Configuration extends Parameter implements ConfigurationInterface
 
 
 
-
-
-    /**
-     * @inheritDoc
-     */
-    public function engine(): string
-    {
-        return $this->get('engine', '');
-    }
-
-
-
-
-
-
-
     /**
      * @inheritDoc
      */

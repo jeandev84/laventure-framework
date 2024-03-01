@@ -10,7 +10,7 @@ use Laventure\Component\Database\Builder\SQL\DML\Update\UpdateBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\DQL\Select\SelectBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\ExpressionInterface;
 use Laventure\Component\Database\Builder\SQL\SqlBuilderFactory;
-use Laventure\Component\Database\Builder\SQL\SQlBuilderInterface;
+use Laventure\Component\Database\Builder\SQL\SqlBuilderInterface;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 
 /**
@@ -47,11 +47,11 @@ class Builder
     public function __construct(ConnectionInterface $connection)
     {
         $this->factory    = new SqlBuilderFactory($connection);
-        $this->select     = $this->factory->createSelect();
-        $this->insert     = $this->factory->createInsert();
-        $this->update     = $this->factory->createUpdate();
-        $this->delete     = $this->factory->createDelete();
-        $this->expr       = $this->factory->createExpr();
+        $this->select     = $this->factory->createSelectBuilder();
+        $this->insert     = $this->factory->createInsertBuilder();
+        $this->update     = $this->factory->createUpdateBuilder();
+        $this->delete     = $this->factory->createDeleteBuilder();
+        $this->expr       = $this->factory->createExpressionBuilder();
         $this->connection = $connection;
     }
 
@@ -153,9 +153,9 @@ class Builder
 
 
     /**
-     * @return SQlBuilderInterface
+     * @return SqlBuilderInterface
     */
-    public function getSQLBuilder(): SQlBuilderInterface
+    public function getSQLBuilder(): SqlBuilderInterface
     {
         return match ($this->state) {
             self::SELECT => $this->select,

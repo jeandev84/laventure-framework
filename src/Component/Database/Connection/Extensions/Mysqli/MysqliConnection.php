@@ -8,12 +8,12 @@ use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Configuration\NullConfiguration;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Connection\ConnectionName;
+use Laventure\Component\Database\Connection\Drivers\Mysql\MysqlDatabase;
 use Laventure\Component\Database\Connection\Extensions\Mysqli\Factory\MysqliConnectionFactoryInterface;
 use Laventure\Component\Database\Connection\Extensions\Mysqli\Query\Query;
 use Laventure\Component\Database\Connection\Extensions\Mysqli\Query\QueryBuilder;
 use Laventure\Component\Database\Connection\Traits\ConnectionTrait;
-use Laventure\Component\Database\Drivers\DatabaseInterface;
-use Laventure\Component\Database\Drivers\Mysql\MysqlDatabase;
+use Laventure\Component\Database\DatabaseInterface;
 use Laventure\Component\Database\Query\Builder\QueryBuilderInterface;
 use Laventure\Component\Database\Query\QueryInterface;
 use mysqli;
@@ -45,7 +45,6 @@ class MysqliConnection implements ConnectionInterface
     public function __construct(MysqliConnectionFactoryInterface $factory)
     {
         $this->factory = $factory;
-        $this->withConfiguration(new NullConfiguration());
     }
 
 

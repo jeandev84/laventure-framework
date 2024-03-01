@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL\DQL\Select;
 
-use Laventure\Component\Database\Builder\SQL\Conditions\Contract\SQlBuilderConditionInterface;
+use Laventure\Component\Database\Builder\SQL\Conditions\Contract\WhereBuilderInterface;
+use Laventure\Component\Database\Builder\SQL\SqlBuilderInterface;
 use Laventure\Component\Database\Query\Result\QueryResultInterface;
 
 /**
- * SelectBuilderInterface
+ * SelectWhereBuilderInterface
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -16,7 +17,7 @@ use Laventure\Component\Database\Query\Result\QueryResultInterface;
  *
  * @package  Laventure\Component\Database\Builder\SQL\DQL\Select
 */
-interface SelectBuilderInterface extends SQlBuilderConditionInterface
+interface SelectBuilderInterface extends SqlBuilderInterface, WhereBuilderInterface
 {
     /**
      * Select columns

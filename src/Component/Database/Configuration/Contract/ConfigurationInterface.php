@@ -111,18 +111,4 @@ interface ConfigurationInterface extends ParameterInterface
      * @return string
      */
     public function prefix(): string;
-
-
-
-
-
-
-
-
-    /**
-     * Returns engine name
-     *
-     * @return string
-     */
-    public function engine(): string;
 }

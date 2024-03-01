@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Table;
@@ -536,9 +537,9 @@ abstract class Table implements TableInterface
     public function getSchemaName(): string
     {
         if (!$this->schemaName) {
-           throw new RuntimeException(
-       "Could not found schema name from : ". get_called_class()
-           );
+            throw new RuntimeException(
+                "Could not found schema name from : ". get_called_class()
+            );
         }
 
         return $this->schemaName;

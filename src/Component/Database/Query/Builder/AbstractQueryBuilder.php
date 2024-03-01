@@ -1,14 +1,15 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder;
 
-use Laventure\Component\Database\Builder\SQL\Conditions\Contract\SQlBuilderConditionInterface;
+use Laventure\Component\Database\Builder\SQL\Conditions\Contract\WhereBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\DQL\Select\SelectBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\Expr\Conditions\andX;
 use Laventure\Component\Database\Builder\SQL\Expr\Conditions\orX;
 use Laventure\Component\Database\Builder\SQL\ExpressionInterface;
-use Laventure\Component\Database\Builder\SQL\SQlBuilderInterface;
+use Laventure\Component\Database\Builder\SQL\SqlBuilderInterface;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Query\QueryInterface;
 
@@ -596,10 +597,8 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
 
 
 
-
-
     /**
-     * @inheritDoc
+     * @return ConnectionInterface
     */
     public function getConnection(): ConnectionInterface
     {
@@ -640,9 +639,9 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
 
 
     /**
-     * @return SQlBuilderInterface
+     * @return SqlBuilderInterface
     */
-    public function getSQLBuilder(): SQlBuilderInterface
+    public function getSQLBuilder(): SqlBuilderInterface
     {
         $builder  = $this->builder->getSQLBuilder();
 
@@ -650,7 +649,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
             $builder = $this->resolveHaving($builder);
         }
 
-        if ($builder instanceof SQlBuilderConditionInterface) {
+        if ($builder instanceof WhereBuilderInterface) {
             $builder = $this->resolveWheres($builder);
         }
 
@@ -677,9 +676,9 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
 
     /**
      * @param SelectBuilderInterface $builder
-     * @return SQlBuilderInterface
+     * @return SqlBuilderInterface
     */
-    private function resolveHaving(SelectBuilderInterface $builder): SQlBuilderInterface
+    private function resolveHaving(SelectBuilderInterface $builder): SqlBuilderInterface
     {
         $having = $this->resolveConditions($this->having);
 
@@ -695,10 +694,10 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
 
 
     /**
-     * @param SQlBuilderConditionInterface $builder
-     * @return SQlBuilderInterface
+     * @param WhereBuilderInterface $builder
+     * @return SqlBuilderInterface
     */
-    private function resolveWheres(SQlBuilderConditionInterface $builder): SQlBuilderInterface
+    private function resolveWheres(WhereBuilderInterface $builder): SqlBuilderInterface
     {
         $wheres = $this->resolveConditions($this->wheres);
 

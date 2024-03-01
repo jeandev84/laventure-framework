@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL\DQL\Select;
 
-use Laventure\Component\Database\Builder\SQL\Conditions\SQlBuilderConditionTrait;
-use Laventure\Component\Database\Builder\SQL\Expr\From;
-use Laventure\Component\Database\Builder\SQL\Expr\GroupBy;
-use Laventure\Component\Database\Builder\SQL\Expr\Having;
-use Laventure\Component\Database\Builder\SQL\Expr\Join;
-use Laventure\Component\Database\Builder\SQL\Expr\Limit;
-use Laventure\Component\Database\Builder\SQL\Expr\OrderBy;
-use Laventure\Component\Database\Builder\SQL\Expr\Select;
-use Laventure\Component\Database\Builder\SQL\Expr\Where;
+use Laventure\Component\Database\Builder\SQL\Commands\From;
+use Laventure\Component\Database\Builder\SQL\Commands\GroupBy;
+use Laventure\Component\Database\Builder\SQL\Commands\Having;
+use Laventure\Component\Database\Builder\SQL\Commands\Join;
+use Laventure\Component\Database\Builder\SQL\Commands\Limit;
+use Laventure\Component\Database\Builder\SQL\Commands\OrderBy;
+use Laventure\Component\Database\Builder\SQL\Commands\Select;
+use Laventure\Component\Database\Builder\SQL\Commands\Where;
+use Laventure\Component\Database\Builder\SQL\Conditions\WhereBuilderTrait;
 use Laventure\Component\Database\Builder\SQL\Formatter\QueryFormatter;
-use Laventure\Component\Database\Query\Result\QueryResultInterface;
+use Laventure\Component\Database\Builder\SQL\SqlBuilderTrait;
 
 /**
  * SelectBuilder
@@ -27,7 +27,8 @@ use Laventure\Component\Database\Query\Result\QueryResultInterface;
 */
 class SelectBuilder implements SelectBuilderInterface
 {
-    use SQlBuilderConditionTrait;
+    use SqlBuilderTrait;
+    use WhereBuilderTrait;
 
 
     /**

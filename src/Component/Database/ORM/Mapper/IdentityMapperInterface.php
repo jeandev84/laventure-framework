@@ -15,48 +15,47 @@ namespace Laventure\Component\Database\ORM\Mapper;
 */
 interface IdentityMapperInterface
 {
-
-      /**
-       * @param $id
-       * @param $data
-       * @return mixed
-      */
-      public function map($id, $data): mixed;
-
-
-
-
-
-
-      /**
-       * Determine if exists ID in storage
-       *
-       * @param $id
-       * @return bool
-      */
-      public function has($id): bool;
+    /**
+     * @param $id
+     * @param $data
+     * @return mixed
+    */
+    public function map($id, $data): mixed;
 
 
 
 
 
 
-      /**
-       * Returns data by given ID
-       *
-       * @param $id
-       * @return mixed
-      */
-      public function get($id): mixed;
+    /**
+     * Determine if exists ID in storage
+     *
+     * @param $id
+     * @return bool
+    */
+    public function has($id): bool;
 
 
 
 
 
-      /**
-       * @param $class
-       * @param $id
-       * @return string
-      */
-      public function createIdentity($class, $id): string;
+
+    /**
+     * Returns data by given ID
+     *
+     * @param $id
+     * @return mixed
+    */
+    public function get($id): mixed;
+
+
+
+
+
+    /**
+     * @param $class
+     * @param $id
+     * @return string
+    */
+    public function createIdentity($class, $id): string;
 }

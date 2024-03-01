@@ -17,15 +17,15 @@ use Reflector;
 */
 interface ClassMetadataInterface
 {
-     /**
-      * @return string
-     */
-     public function getClassName(): string;
+    /**
+     * @return string
+    */
+    public function getClassName(): string;
 
 
 
-     /**
-      * @return Reflector
-     */
-     public function getReflector(): Reflector;
+    /**
+     * @return Reflector
+    */
+    public function getReflector(): Reflector;
 }

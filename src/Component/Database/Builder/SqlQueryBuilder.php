@@ -38,22 +38,11 @@ class SqlQueryBuilder implements SqlQueryBuilderInterface
 
 
     /**
-     * @return ConnectionInterface
-    */
-    public function getConnection(): ConnectionInterface
-    {
-        return $this->factory->getConnection();
-    }
-
-
-
-
-    /**
      * @inheritDoc
     */
     public function expr(): ExpressionInterface
     {
-        return $this->factory->createExpr();
+        return $this->factory->createExpressionBuilder();
     }
 
 
@@ -66,8 +55,7 @@ class SqlQueryBuilder implements SqlQueryBuilderInterface
     */
     public function select(string $selects = null): SelectBuilderInterface
     {
-        return $this->factory->createSelect()
-                             ->select($selects ?: "*");
+        return $this->factory->createSelectBuilder()->select($selects ?: "*");
     }
 
 
@@ -79,8 +67,7 @@ class SqlQueryBuilder implements SqlQueryBuilderInterface
     */
     public function insert(string $table): InsertBuilderInterface
     {
-        return $this->factory->createInsert()
-                             ->insert($table);
+        return $this->factory->createInsertBuilder()->insert($table);
     }
 
 
@@ -92,8 +79,7 @@ class SqlQueryBuilder implements SqlQueryBuilderInterface
     */
     public function update(string $table): UpdateBuilderInterface
     {
-        return $this->factory->createUpdate()
-                             ->update($table);
+        return $this->factory->createUpdateBuilder()->update($table);
     }
 
 
@@ -105,7 +91,6 @@ class SqlQueryBuilder implements SqlQueryBuilderInterface
     */
     public function delete(string $table): DeleteBuilderInterface
     {
-        return $this->factory->createDelete()
-                             ->delete($table);
+        return $this->factory->createDeleteBuilder()->delete($table);
     }
 }

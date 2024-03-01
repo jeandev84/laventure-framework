@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL\DML\Insert;
 
-use Laventure\Component\Database\Builder\SQL\SQlBuilderInterface;
+use Laventure\Component\Database\Builder\SQL\SqlBuilderInterface;
 
 /**
  * InsertBuilderInterface
@@ -15,7 +15,7 @@ use Laventure\Component\Database\Builder\SQL\SQlBuilderInterface;
  *
  * @package  Laventure\Component\Database\Builder\SQL\DML\Insert
  */
-interface InsertBuilderInterface extends SQlBuilderInterface
+interface InsertBuilderInterface extends SqlBuilderInterface
 {
     /**
      * @param string $table

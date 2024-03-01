@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL\DML\Update;
 
-use Laventure\Component\Database\Builder\SQL\SQlBuilderInterface;
-use Laventure\Component\Database\Builder\SQL\Conditions\Contract\SQlBuilderConditionInterface;
+use Laventure\Component\Database\Builder\SQL\SqlBuilderInterface;
+use Laventure\Component\Database\Builder\SQL\Conditions\Contract\WhereBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\SettableInterface;
 
 /**
@@ -17,7 +17,7 @@ use Laventure\Component\Database\Builder\SQL\SettableInterface;
  *
  * @package  Laventure\Component\Database\Builder\SQL\DML\Update
 */
-interface UpdateBuilderInterface extends SQlBuilderConditionInterface, SettableInterface
+interface UpdateBuilderInterface extends SqlBuilderInterface, WhereBuilderInterface, SettableInterface
 {
     /**
      * @param string $table

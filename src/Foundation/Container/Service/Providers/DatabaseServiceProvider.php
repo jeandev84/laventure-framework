@@ -5,12 +5,10 @@ declare(strict_types=1);
 namespace Laventure\Foundation\Container\Service\Providers;
 
 use Laventure\Component\Config\Config;
-use Laventure\Component\Config\ConfigInterface;
 use Laventure\Component\Container\Service\Provider\Contract\BootableServiceProvider;
 use Laventure\Component\Container\Service\Provider\ServiceProvider;
-use Laventure\Component\Database\Configuration\Configuration;
-use Laventure\Component\Database\Manager;
 use Laventure\Component\Database\Manager\Factory\DatabaseManagerFactory;
+use Laventure\Component\Database\Manager\Manager;
 use Laventure\Component\Database\ORM\Persistence\Manager\Registry\ManagerRegistry;
 use Laventure\Foundation\Database\Configuration\ManagerConfiguration;
 

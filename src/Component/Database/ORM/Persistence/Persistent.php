@@ -20,7 +20,6 @@ use Laventure\Component\Database\ORM\Query\QueryBuilder;
 */
 class Persistent
 {
-
     /**
      * @var QueryBuilder
     */

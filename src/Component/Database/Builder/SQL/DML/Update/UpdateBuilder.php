@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL\DML\Update;
 
-use Laventure\Component\Database\Builder\SQL\Conditions\SQlBuilderConditionTrait;
-use Laventure\Component\Database\Builder\SQL\Expr\Set;
-use Laventure\Component\Database\Builder\SQL\Expr\Update;
-use Laventure\Component\Database\Builder\SQL\Expr\Where;
+use Laventure\Component\Database\Builder\SQL\Commands\Set;
+use Laventure\Component\Database\Builder\SQL\Commands\Update;
+use Laventure\Component\Database\Builder\SQL\Commands\Where;
+use Laventure\Component\Database\Builder\SQL\Conditions\WhereBuilderTrait;
 use Laventure\Component\Database\Builder\SQL\Formatter\QueryFormatter;
+use Laventure\Component\Database\Builder\SQL\SqlBuilderTrait;
 
 /**
  * UpdateBuilder
@@ -21,7 +22,8 @@ use Laventure\Component\Database\Builder\SQL\Formatter\QueryFormatter;
 */
 class UpdateBuilder implements UpdateBuilderInterface
 {
-    use SQlBuilderConditionTrait;
+    use SqlBuilderTrait;
+    use WhereBuilderTrait;
 
 
     /**
