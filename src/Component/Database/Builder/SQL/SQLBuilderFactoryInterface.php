@@ -11,7 +11,7 @@ use Laventure\Component\Database\Builder\SQL\DQL\Select\SelectBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\Expr\ExpressionInterface;
 
 /**
- * SqlBuilderFactoryInterface
+ * SQLBuilderFactoryInterface
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -19,7 +19,7 @@ use Laventure\Component\Database\Builder\SQL\Expr\ExpressionInterface;
  *
  * @package  Laventure\Component\Database\Builder\SQL
 */
-interface SqlBuilderFactoryInterface
+interface SQLBuilderFactoryInterface
 {
     /**
      * Create expression builder

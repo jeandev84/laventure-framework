@@ -13,7 +13,7 @@ namespace Laventure\Component\Database\Builder\SQL\Conditions;
  *
  * @package  Laventure\Component\Database\Builder\SQL\Conditions
 */
-trait WhereBuilderTrait
+trait WhereTrait
 {
     /**
      * @var array

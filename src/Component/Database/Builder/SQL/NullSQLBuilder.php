@@ -19,7 +19,7 @@ use Laventure\Component\Database\Connection\Query\QueryInterface;
  *
  * @package  Laventure\Component\Database\Builder\SQL
 */
-class NullSqlBuilder implements SqlBuilderInterface
+class NullSQLBuilder implements SQLBuilderInterface
 {
     /**
      * @inheritDoc

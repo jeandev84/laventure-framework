@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Builder\SQL\DML\Delete;
 
 use Laventure\Component\Database\Builder\SQL\Conditions\Contract\WhereInterface;
-use Laventure\Component\Database\Builder\SQL\SqlBuilderInterface;
+use Laventure\Component\Database\Builder\SQL\SQLBuilderInterface;
 
 /**
  * DeleteWhereBuilderInterface
@@ -16,7 +16,7 @@ use Laventure\Component\Database\Builder\SQL\SqlBuilderInterface;
  *
  * @package  Laventure\Component\Database\Builder\SQL\DML\Delete
  */
-interface DeleteBuilderInterface extends SqlBuilderInterface, WhereInterface
+interface DeleteBuilderInterface extends SQLBuilderInterface, WhereInterface
 {
     /**
      * @param string $table

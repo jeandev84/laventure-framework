@@ -6,7 +6,7 @@ namespace Laventure\Component\Database\Builder\SQL\DML\Update;
 use Laventure\Component\Database\Builder\SQL\Commands\Set;
 use Laventure\Component\Database\Builder\SQL\Commands\Update;
 use Laventure\Component\Database\Builder\SQL\Commands\Where;
-use Laventure\Component\Database\Builder\SQL\Conditions\WhereBuilderTrait;
+use Laventure\Component\Database\Builder\SQL\Conditions\WhereTrait;
 use Laventure\Component\Database\Builder\SQL\Traits\SqlBuilderTrait;
 
 /**
@@ -21,7 +21,7 @@ use Laventure\Component\Database\Builder\SQL\Traits\SqlBuilderTrait;
 class UpdateBuilder implements UpdateBuilderInterface
 {
     use SqlBuilderTrait;
-    use WhereBuilderTrait;
+    use WhereTrait;
 
 
     /**

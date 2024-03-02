@@ -16,7 +16,7 @@ use Laventure\Component\Database\Builder\SQL\Expr\ExpressionInterface;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 
 /**
- * SqlBuilderFactory
+ * SQLBuilderFactory
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -24,7 +24,7 @@ use Laventure\Component\Database\Connection\ConnectionInterface;
  *
  * @package  Laventure\Component\Database\Builder\SQL
 */
-class SqlBuilderFactory implements SqlBuilderFactoryInterface
+class SQLBuilderFactory implements SQLBuilderFactoryInterface
 {
     /**
      * @var ConnectionInterface
@@ -35,9 +35,9 @@ class SqlBuilderFactory implements SqlBuilderFactoryInterface
 
 
     /**
-     * @var SqlBuilderInterface
+     * @var SQLBuilderInterface
     */
-    protected SqlBuilderInterface $builder;
+    protected SQLBuilderInterface $builder;
 
 
 

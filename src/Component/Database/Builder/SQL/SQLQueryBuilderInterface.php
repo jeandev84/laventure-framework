@@ -18,7 +18,7 @@ use Laventure\Component\Database\Builder\SQL\Expr\ExpressionInterface;
  *
  * @package  Laventure\Component\Database\Builder\SQL
 */
-interface SqlQueryBuilderInterface
+interface SQLQueryBuilderInterface
 {
     /**
      * @return ExpressionInterface

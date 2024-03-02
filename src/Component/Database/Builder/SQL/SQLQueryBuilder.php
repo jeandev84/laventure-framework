@@ -11,7 +11,7 @@ use Laventure\Component\Database\Builder\SQL\Expr\ExpressionInterface;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 
 /**
- * SqlQueryBuilder
+ * SQLQueryBuilder
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -19,9 +19,9 @@ use Laventure\Component\Database\Connection\ConnectionInterface;
  *
  * @package  Laventure\Component\Database\Builder\SQL
 */
-class SqlQueryBuilder implements SqlQueryBuilderInterface
+class SQLQueryBuilder implements SQLQueryBuilderInterface
 {
-    protected SqlBuilderFactory $factory;
+    protected SQLBuilderFactory $factory;
 
 
     /**
@@ -29,7 +29,7 @@ class SqlQueryBuilder implements SqlQueryBuilderInterface
     */
     public function __construct(ConnectionInterface $connection)
     {
-        $this->factory = new SqlBuilderFactory($connection);
+        $this->factory = new SQLBuilderFactory($connection);
     }
 
 
@@ -53,7 +53,9 @@ class SqlQueryBuilder implements SqlQueryBuilderInterface
     */
     public function select(string $selects = null): SelectBuilderInterface
     {
-        return $this->factory->createSelectBuilder()->select($selects ?: "*");
+        return $this->factory
+                    ->createSelectBuilder()
+                    ->select($selects ?: "*");
     }
 
 
@@ -65,7 +67,9 @@ class SqlQueryBuilder implements SqlQueryBuilderInterface
     */
     public function insert(string $table): InsertBuilderInterface
     {
-        return $this->factory->createInsertBuilder()->insert($table);
+        return $this->factory
+                    ->createInsertBuilder()
+                    ->insert($table);
     }
 
 
@@ -77,7 +81,9 @@ class SqlQueryBuilder implements SqlQueryBuilderInterface
     */
     public function update(string $table): UpdateBuilderInterface
     {
-        return $this->factory->createUpdateBuilder()->update($table);
+        return $this->factory
+                    ->createUpdateBuilder()
+                    ->update($table);
     }
 
 
@@ -89,6 +95,8 @@ class SqlQueryBuilder implements SqlQueryBuilderInterface
     */
     public function delete(string $table): DeleteBuilderInterface
     {
-        return $this->factory->createDeleteBuilder()->delete($table);
+        return $this->factory
+                    ->createDeleteBuilder()
+                    ->delete($table);
     }
 }

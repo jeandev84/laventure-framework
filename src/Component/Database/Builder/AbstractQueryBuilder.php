@@ -10,8 +10,8 @@ use Laventure\Component\Database\Builder\SQL\DML\Insert\InsertBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\DML\Update\UpdateBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\DQL\Select\SelectBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\Expr\ExpressionInterface;
-use Laventure\Component\Database\Builder\SQL\SqlBuilderFactory;
-use Laventure\Component\Database\Builder\SQL\SqlBuilderInterface;
+use Laventure\Component\Database\Builder\SQL\SQLBuilderFactory;
+use Laventure\Component\Database\Builder\SQL\SQLBuilderInterface;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Connection\Query\Builder\Builder;
 use Laventure\Component\Database\Connection\Query\QueryInterface;
@@ -34,7 +34,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
 
     protected string $state = self::SELECT;
     protected ConnectionInterface $connection;
-    protected SqlBuilderFactory $factory;
+    protected SQLBuilderFactory $factory;
     protected SelectBuilderInterface $select;
     protected InsertBuilderInterface $insert;
     protected UpdateBuilderInterface $update;
@@ -94,7 +94,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function __construct(ConnectionInterface $connection)
     {
-        $this->factory    = new SqlBuilderFactory($connection);
+        $this->factory    = new SQLBuilderFactory($connection);
         $this->select     = $this->factory->createSelectBuilder();
         $this->insert     = $this->factory->createInsertBuilder();
         $this->update     = $this->factory->createUpdateBuilder();
@@ -619,7 +619,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function getConnection(): ConnectionInterface
     {
-        return $this->builder->getConnection();
+        return $this->connection;
     }
 
 
@@ -631,7 +631,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function getSQL(): string
     {
-        return $this->getSQlBuilder()->getSQL();
+        return $this->getBuilder()->getSQL();
     }
 
 
@@ -643,7 +643,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     public function getQuery(): QueryInterface
     {
-        $statement = $this->getSQlBuilder()->getQuery();
+        $statement = $this->getBuilder()->getQuery();
         $statement->setParameters($this->parameters);
         $statement->bindValues($this->bindingValues);
         $statement->bindParams($this->bindingParams);
@@ -654,9 +654,9 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
 
 
     /**
-     * @return SqlBuilderInterface
+     * @return SQLBuilderInterface
     */
-    public function getSQlBuilder(): SqlBuilderInterface
+    private function getBuilder(): SQLBuilderInterface
     {
         $builder  = $this->getCurrentBuilder();
 
@@ -787,9 +787,9 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
 
 
     /**
-     * @return SqlBuilderInterface
+     * @return SQLBuilderInterface
     */
-    private function getCurrentBuilder(): SqlBuilderInterface
+    private function getCurrentBuilder(): SQLBuilderInterface
     {
         return match ($this->state) {
             self::SELECT => $this->select,

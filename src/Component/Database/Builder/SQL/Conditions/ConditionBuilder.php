@@ -87,7 +87,7 @@ class ConditionBuilder implements BuilderInterface
                 if ($key !== $type) {
                     $resolved[] = $type;
                 }
-                $resolved[] = $having->__toString();
+                $resolved[] = strval($having);
             }
         }
 

@@ -11,7 +11,7 @@ use Laventure\Component\Database\Builder\SQL\Commands\Limit;
 use Laventure\Component\Database\Builder\SQL\Commands\OrderBy;
 use Laventure\Component\Database\Builder\SQL\Commands\Select;
 use Laventure\Component\Database\Builder\SQL\Commands\Where;
-use Laventure\Component\Database\Builder\SQL\Conditions\WhereBuilderTrait;
+use Laventure\Component\Database\Builder\SQL\Conditions\WhereTrait;
 use Laventure\Component\Database\Builder\SQL\Traits\SqlBuilderTrait;
 
 /**
@@ -26,7 +26,7 @@ use Laventure\Component\Database\Builder\SQL\Traits\SqlBuilderTrait;
 class SelectBuilder implements SelectBuilderInterface
 {
     use SqlBuilderTrait;
-    use WhereBuilderTrait;
+    use WhereTrait;
 
 
     /**

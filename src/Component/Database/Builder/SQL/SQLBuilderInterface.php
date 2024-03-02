@@ -8,7 +8,7 @@ use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Connection\Query\QueryInterface;
 
 /**
- * SqlBuilderInterface
+ * SQLBuilderInterface
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -16,7 +16,7 @@ use Laventure\Component\Database\Connection\Query\QueryInterface;
  *
  * @package  Laventure\Component\Database\Builder\SQL
 */
-interface SqlBuilderInterface
+interface SQLBuilderInterface
 {
     /**
      * @return string

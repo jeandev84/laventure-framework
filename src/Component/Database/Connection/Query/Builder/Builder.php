@@ -8,8 +8,8 @@ use Laventure\Component\Database\Builder\SQL\DML\Insert\InsertBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\DML\Update\UpdateBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\DQL\Select\SelectBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\Expr\ExpressionInterface;
-use Laventure\Component\Database\Builder\SQL\SqlBuilderFactory;
-use Laventure\Component\Database\Builder\SQL\SqlBuilderInterface;
+use Laventure\Component\Database\Builder\SQL\SQLBuilderFactory;
+use Laventure\Component\Database\Builder\SQL\SQLBuilderInterface;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 
 /**
@@ -30,7 +30,7 @@ class Builder
 
     protected string $state = self::SELECT;
     protected ConnectionInterface $connection;
-    protected SqlBuilderFactory $factory;
+    protected SQLBuilderFactory $factory;
     protected SelectBuilderInterface $select;
     protected InsertBuilderInterface $insert;
     protected UpdateBuilderInterface $update;
@@ -45,7 +45,7 @@ class Builder
     */
     public function __construct(ConnectionInterface $connection)
     {
-        $this->factory    = new SqlBuilderFactory($connection);
+        $this->factory    = new SQLBuilderFactory($connection);
         $this->select     = $this->factory->createSelectBuilder();
         $this->insert     = $this->factory->createInsertBuilder();
         $this->update     = $this->factory->createUpdateBuilder();
@@ -152,9 +152,9 @@ class Builder
 
 
     /**
-     * @return SqlBuilderInterface
+     * @return SQLBuilderInterface
     */
-    public function getSQLBuilder(): SqlBuilderInterface
+    public function getSQLBuilder(): SQLBuilderInterface
     {
         return match ($this->state) {
             self::SELECT => $this->select,

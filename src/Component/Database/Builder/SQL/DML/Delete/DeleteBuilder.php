@@ -5,7 +5,7 @@ namespace Laventure\Component\Database\Builder\SQL\DML\Delete;
 
 use Laventure\Component\Database\Builder\SQL\Commands\Delete;
 use Laventure\Component\Database\Builder\SQL\Commands\Where;
-use Laventure\Component\Database\Builder\SQL\Conditions\WhereBuilderTrait;
+use Laventure\Component\Database\Builder\SQL\Conditions\WhereTrait;
 use Laventure\Component\Database\Builder\SQL\Traits\SqlBuilderTrait;
 
 /**
@@ -20,7 +20,7 @@ use Laventure\Component\Database\Builder\SQL\Traits\SqlBuilderTrait;
 class DeleteBuilder implements DeleteBuilderInterface
 {
     use SqlBuilderTrait;
-    use WhereBuilderTrait;
+    use WhereTrait;
 
     protected $table = null;
 
