@@ -1,14 +1,13 @@
 <?php
-
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Query\Builder;
+namespace Laventure\Component\Database\Builder;
 
 use Laventure\Component\Database\Builder\SQL\Expr\ExpressionInterface;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Connection\NullConnection;
-use Laventure\Component\Database\Query\NullQuery;
-use Laventure\Component\Database\Query\QueryInterface;
+use Laventure\Component\Database\Connection\Query\NullQuery;
+use Laventure\Component\Database\Connection\Query\QueryInterface;
 
 /**
  * NullQueryBuilder
@@ -17,7 +16,7 @@ use Laventure\Component\Database\Query\QueryInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Query\Builder
+ * @package  Laventure\Component\Database\Builder
 */
 class NullQueryBuilder implements QueryBuilderInterface
 {
@@ -430,7 +429,7 @@ class NullQueryBuilder implements QueryBuilderInterface
 
 
     /**
-     * @inheritDoc
+     * @return ConnectionInterface
     */
     public function getConnection(): ConnectionInterface
     {
@@ -457,5 +456,18 @@ class NullQueryBuilder implements QueryBuilderInterface
     public function getQuery(): QueryInterface
     {
         return new NullQuery();
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function distinct(bool $distinct): static
+    {
+        return $this;
     }
 }

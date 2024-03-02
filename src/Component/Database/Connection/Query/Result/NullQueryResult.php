@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Query\Result;
+namespace Laventure\Component\Database\Connection\Query\Result;
 
 /**
  * NullQueryResult
@@ -18,7 +18,7 @@ class NullQueryResult implements QueryResultInterface
     /**
      * @inheritDoc
     */
-    public function all(): array
+    public function all(int $fetchMode = 0): array
     {
         return [];
     }
@@ -29,7 +29,7 @@ class NullQueryResult implements QueryResultInterface
     /**
      * @inheritDoc
     */
-    public function one(): mixed
+    public function one(int $fetchMode = 0): mixed
     {
         return null;
     }

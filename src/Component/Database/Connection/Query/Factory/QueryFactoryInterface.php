@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Query\Factory;
+namespace Laventure\Component\Database\Connection\Query\Factory;
 
-use Laventure\Component\Database\Query\QueryInterface;
+use Laventure\Component\Database\Connection\Query\QueryInterface;
 
 /**
  * QueryFactoryInterface

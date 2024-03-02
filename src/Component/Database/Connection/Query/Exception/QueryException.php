@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Query\Exception;
+namespace Laventure\Component\Database\Connection\Query\Exception;
 
 use Laventure\Exceptions\BaseException;
 

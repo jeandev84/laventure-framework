@@ -1,10 +1,9 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\PDO\Query;
 
-use Laventure\Component\Database\Query\Builder\AbstractQueryBuilder;
+use Laventure\Component\Database\Builder\AbstractQueryBuilder;
 
 /**
  * PdoBuilder
@@ -34,11 +33,13 @@ class QueryBuilder extends AbstractQueryBuilder
     /**
      * @inheritDoc
     */
-    protected function resolveMultipleInsert(int $position, array $attributes): static
+    protected function resolveMultipleInsert(array $values): static
     {
-        foreach ($attributes as $column => $value) {
-            $this->setValue($column, ":{$column}_{$position}", $position);
-            $this->setParameter("{$column}_{$position}", $value);
+        foreach ($values as $position => $attributes) {
+            foreach ($attributes as $column => $value) {
+                $this->setValue($column, ":{$column}_{$position}", $position);
+                $this->setParameter("{$column}_{$position}", $value);
+            }
         }
 
         return $this;
@@ -50,9 +51,9 @@ class QueryBuilder extends AbstractQueryBuilder
     /**
      * @inheritDoc
     */
-    protected function resolveInsert(array $attributes): static
+    protected function resolveInsert(array $values): static
     {
-        foreach ($attributes as $column => $value) {
+        foreach ($values as $column => $value) {
             $this->setValue($column, ":$column");
             $this->setParameter($column, $value);
         }

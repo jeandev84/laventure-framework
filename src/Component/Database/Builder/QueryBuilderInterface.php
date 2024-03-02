@@ -1,11 +1,10 @@
 <?php
-
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Query\Builder;
+namespace Laventure\Component\Database\Builder;
 
 use Laventure\Component\Database\Builder\SQL\Expr\ExpressionInterface;
-use Laventure\Component\Database\Query\QueryInterface;
+use Laventure\Component\Database\Connection\Query\QueryInterface;
 
 /**
  * BuilderInterfaceHas
@@ -14,7 +13,7 @@ use Laventure\Component\Database\Query\QueryInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Query\Builder
+ * @package  Laventure\Component\Database\Builder
 */
 interface QueryBuilderInterface
 {
@@ -494,4 +493,17 @@ interface QueryBuilderInterface
      * @return QueryInterface
     */
     public function getQuery(): QueryInterface;
+
+
+
+
+
+
+
+    /**
+     * Clear query builder
+     *
+     * @return void
+    */
+    public function clear(): void;
 }

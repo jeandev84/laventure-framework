@@ -22,13 +22,17 @@ use Laventure\Component\Database\Builder\SQL\Expr\ExpressionInterface;
 interface SqlBuilderFactoryInterface
 {
     /**
+     * Create expression builder
+     *
      * @return ExpressionInterface
     */
-    public function createExpressionBuilder(): ExpressionInterface;
+    public function expr(): ExpressionInterface;
 
 
 
     /**
+     * Create select builder
+     *
      * @return SelectBuilderInterface
     */
     public function createSelectBuilder(): SelectBuilderInterface;
@@ -38,6 +42,8 @@ interface SqlBuilderFactoryInterface
 
 
     /**
+     * Create insert builder
+     *
      * @return InsertBuilderInterface
     */
     public function createInsertBuilder(): InsertBuilderInterface;
@@ -48,6 +54,8 @@ interface SqlBuilderFactoryInterface
 
 
     /**
+     * Create update builder
+     *
      * @return UpdateBuilderInterface
     */
     public function createUpdateBuilder(): UpdateBuilderInterface;
@@ -58,6 +66,8 @@ interface SqlBuilderFactoryInterface
 
 
     /**
+     * Create delete builder
+     *
      * @return DeleteBuilderInterface
     */
     public function createDeleteBuilder(): DeleteBuilderInterface;

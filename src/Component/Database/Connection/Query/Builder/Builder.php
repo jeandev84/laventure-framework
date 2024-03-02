@@ -1,8 +1,7 @@
 <?php
-
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Query\Builder;
+namespace Laventure\Component\Database\Connection\Query\Builder;
 
 use Laventure\Component\Database\Builder\SQL\DML\Delete\DeleteBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\DML\Insert\InsertBuilderInterface;
@@ -51,7 +50,7 @@ class Builder
         $this->insert     = $this->factory->createInsertBuilder();
         $this->update     = $this->factory->createUpdateBuilder();
         $this->delete     = $this->factory->createDeleteBuilder();
-        $this->expr       = $this->factory->createExpressionBuilder();
+        $this->expr       = $this->factory->expr();
         $this->connection = $connection;
     }
 
@@ -84,7 +83,7 @@ class Builder
     /**
      * @return SelectBuilderInterface
     */
-    public function select(): SelectBuilderInterface
+    public function selectQuery(): SelectBuilderInterface
     {
         $this->state = self::SELECT;
 
@@ -98,7 +97,7 @@ class Builder
     /**
      * @return InsertBuilderInterface
     */
-    public function insert(): InsertBuilderInterface
+    public function insertQuery(): InsertBuilderInterface
     {
         $this->state = self::INSERT;
 
@@ -113,7 +112,7 @@ class Builder
     /**
      * @return UpdateBuilderInterface
     */
-    public function update(): UpdateBuilderInterface
+    public function updateQuery(): UpdateBuilderInterface
     {
         $this->state = self::UPDATE;
 
@@ -128,7 +127,7 @@ class Builder
     /**
      * @return DeleteBuilderInterface
     */
-    public function delete(): DeleteBuilderInterface
+    public function deleteQuery(): DeleteBuilderInterface
     {
         $this->state = self::DELETE;
 

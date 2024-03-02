@@ -1,14 +1,13 @@
 <?php
-
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Builder\SQL;
+namespace Laventure\Component\Database\Builder\SQL\Traits;
 
 use Laventure\Component\Database\Builder\SQL\Expr\Expr;
 use Laventure\Component\Database\Builder\SQL\Expr\ExpressionInterface;
 use Laventure\Component\Database\Builder\SQL\Formatter\QueryFormatter;
 use Laventure\Component\Database\Connection\ConnectionInterface;
-use Laventure\Component\Database\Query\QueryInterface;
+use Laventure\Component\Database\Connection\Query\QueryInterface;
 use Stringable;
 
 /**
@@ -18,7 +17,7 @@ use Stringable;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Builder\SQL
+ * @package  Laventure\Component\Database\Builder\SQL\Traits
  */
 trait SqlBuilderTrait
 {
@@ -26,8 +25,6 @@ trait SqlBuilderTrait
      * @var ConnectionInterface
     */
     protected ConnectionInterface $connection;
-
-
 
 
 
@@ -49,12 +46,6 @@ trait SqlBuilderTrait
     public function getQuery(): QueryInterface
     {
         return $this->connection->statement($this->getSQL());
-
-        /*
-        $statement->bindParams($this->getBindingParams());
-        $statement->bindValues($this->getBindingValues());
-        return $statement->setParameters($this->getParameters());
-        */
     }
 
 
@@ -114,5 +105,5 @@ trait SqlBuilderTrait
     /**
      * @return Stringable[]
     */
-    abstract public function getCommands(): array;
+    abstract protected function getCommands(): array;
 }

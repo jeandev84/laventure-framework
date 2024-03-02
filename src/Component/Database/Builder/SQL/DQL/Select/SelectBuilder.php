@@ -12,8 +12,7 @@ use Laventure\Component\Database\Builder\SQL\Commands\OrderBy;
 use Laventure\Component\Database\Builder\SQL\Commands\Select;
 use Laventure\Component\Database\Builder\SQL\Commands\Where;
 use Laventure\Component\Database\Builder\SQL\Conditions\WhereBuilderTrait;
-use Laventure\Component\Database\Builder\SQL\Formatter\QueryFormatter;
-use Laventure\Component\Database\Builder\SQL\SqlBuilderTrait;
+use Laventure\Component\Database\Builder\SQL\Traits\SqlBuilderTrait;
 
 /**
  * SelectBuilder
@@ -342,20 +341,5 @@ class SelectBuilder implements SelectBuilderInterface
             new OrderBy($this->orderBy),
             new Limit($this->limit, $this->offset)
         ];
-    }
-
-
-
-
-
-    /**
-     * @return string
-    */
-    private function resolveSelects(): string
-    {
-        $columns  =  join(', ', array_filter($this->selects));
-        $columns  =  !empty($this->selects) ? $columns : "*";
-
-        return $this->distinct ? "DISTINCT $columns" : $columns;
     }
 }

@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL;
@@ -58,7 +57,7 @@ class SqlBuilderFactory implements SqlBuilderFactoryInterface
     /**
      * @inheritdoc
     */
-    public function createExpressionBuilder(): ExpressionInterface
+    public function expr(): ExpressionInterface
     {
         return new Expr();
     }

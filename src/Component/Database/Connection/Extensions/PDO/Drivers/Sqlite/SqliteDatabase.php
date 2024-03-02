@@ -2,28 +2,30 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Connection\Drivers\Oracle;
+namespace Laventure\Component\Database\Connection\Extensions\PDO\Drivers\Sqlite;
 
 use Laventure\Component\Database\Database;
 
 /**
- * OracleDatabase
+ * SqliteDatabase
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Types\Oracle
+ * @package  Laventure\Component\Database\Connection\Types\Sqlite
  */
-class OracleDatabase extends Database
+class SqliteDatabase extends Database
 {
     /**
      * @inheritDoc
-     */
+    */
     public function create(): mixed
     {
-        // TODO: Implement create() method.
+
     }
+
+
 
     /**
      * @inheritDoc
@@ -47,5 +49,13 @@ class OracleDatabase extends Database
     public function list(): array
     {
         // TODO: Implement list() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function createSchema(string $name): mixed
+    {
+        // TODO: Implement createSchema() method.
     }
 }

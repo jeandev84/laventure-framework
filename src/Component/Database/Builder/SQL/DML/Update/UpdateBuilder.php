@@ -7,8 +7,7 @@ use Laventure\Component\Database\Builder\SQL\Commands\Set;
 use Laventure\Component\Database\Builder\SQL\Commands\Update;
 use Laventure\Component\Database\Builder\SQL\Commands\Where;
 use Laventure\Component\Database\Builder\SQL\Conditions\WhereBuilderTrait;
-use Laventure\Component\Database\Builder\SQL\Formatter\QueryFormatter;
-use Laventure\Component\Database\Builder\SQL\SqlBuilderTrait;
+use Laventure\Component\Database\Builder\SQL\Traits\SqlBuilderTrait;
 
 /**
  * UpdateBuilder

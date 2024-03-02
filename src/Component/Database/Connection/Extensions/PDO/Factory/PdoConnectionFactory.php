@@ -6,10 +6,6 @@ namespace Laventure\Component\Database\Connection\Extensions\PDO\Factory;
 
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Connection\Exception\ConnectionException;
-use Laventure\Component\Database\Connection\Extensions\PDO\Drivers\Mysql\MysqlConnection;
-use Laventure\Component\Database\Connection\Extensions\PDO\Drivers\Oracle\OracleConnection;
-use Laventure\Component\Database\Connection\Extensions\PDO\Drivers\Pgsql\PgsqlConnection;
-use Laventure\Component\Database\Connection\Extensions\PDO\Drivers\Sqlite\SqliteConnection;
 use PDO;
 use PDOException;
 

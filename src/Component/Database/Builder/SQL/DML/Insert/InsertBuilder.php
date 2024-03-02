@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Builder\SQL\DML\Insert;
 
 use Laventure\Component\Database\Builder\SQL\Commands\Insert;
-use Laventure\Component\Database\Builder\SQL\Formatter\QueryFormatter;
-use Laventure\Component\Database\Builder\SQL\SqlBuilderTrait;
+use Laventure\Component\Database\Builder\SQL\Traits\SqlBuilderTrait;
 
 /**
  * InsertBuilder

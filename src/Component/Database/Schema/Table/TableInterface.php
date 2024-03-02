@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Table;
 
-use Laventure\Component\Database\Query\QueryInterface;
+use Laventure\Component\Database\Connection\Query\QueryInterface;
 use Laventure\Component\Database\Schema\Column\Contract\ColumnInterface;
-use Laventure\Component\Database\Schema\Column\Info\ColumnInfoInterface;
 use Laventure\Component\Database\Schema\Constraints\ConstraintInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\IndexInterface;

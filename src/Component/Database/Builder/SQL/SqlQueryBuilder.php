@@ -1,15 +1,13 @@
 <?php
-
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Builder;
+namespace Laventure\Component\Database\Builder\SQL;
 
 use Laventure\Component\Database\Builder\SQL\DML\Delete\DeleteBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\DML\Insert\InsertBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\DML\Update\UpdateBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\DQL\Select\SelectBuilderInterface;
 use Laventure\Component\Database\Builder\SQL\Expr\ExpressionInterface;
-use Laventure\Component\Database\Builder\SQL\SqlBuilderFactory;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 
 /**
@@ -19,7 +17,7 @@ use Laventure\Component\Database\Connection\ConnectionInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Builder
+ * @package  Laventure\Component\Database\Builder\SQL
 */
 class SqlQueryBuilder implements SqlQueryBuilderInterface
 {
@@ -42,7 +40,7 @@ class SqlQueryBuilder implements SqlQueryBuilderInterface
     */
     public function expr(): ExpressionInterface
     {
-        return $this->factory->createExpressionBuilder();
+        return $this->factory->expr();
     }
 
 

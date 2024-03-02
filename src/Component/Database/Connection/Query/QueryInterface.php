@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Query;
+namespace Laventure\Component\Database\Connection\Query;
 
-use Laventure\Component\Database\Query\Result\QueryResultInterface;
+use Laventure\Component\Database\Connection\Query\Result\QueryResultInterface;
 
 /**
  * QueryInterface

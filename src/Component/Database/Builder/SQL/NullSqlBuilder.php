@@ -7,8 +7,8 @@ namespace Laventure\Component\Database\Builder\SQL;
 use Laventure\Component\Database\Builder\SQL\Expr\ExpressionInterface;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Connection\NullConnection;
-use Laventure\Component\Database\Query\NullQuery;
-use Laventure\Component\Database\Query\QueryInterface;
+use Laventure\Component\Database\Connection\Query\NullQuery;
+use Laventure\Component\Database\Connection\Query\QueryInterface;
 
 /**
  * NullSqlBuilder

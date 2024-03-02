@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL\Conditions\Contract;
@@ -13,7 +12,7 @@ namespace Laventure\Component\Database\Builder\SQL\Conditions\Contract;
  *
  * @package  Laventure\Component\Database\Builder\SQL\Conditions\Contract
 */
-interface WhereBuilderInterface
+interface WhereInterface
 {
     /**
      * @param string $condition
