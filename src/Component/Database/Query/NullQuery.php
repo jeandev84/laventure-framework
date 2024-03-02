@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Connection\Query;
+namespace Laventure\Component\Database\Query;
 
-use Laventure\Component\Database\Connection\Query\Result\NullQueryResult;
-use Laventure\Component\Database\Connection\Query\Result\QueryResultInterface;
+use Laventure\Component\Database\Query\Result\NullQueryResult;
+use Laventure\Component\Database\Query\Result\QueryResultInterface;
 
 /**
  * NullQuery
@@ -174,5 +174,27 @@ class NullQuery implements QueryInterface
     public function getSQL(): string
     {
         return '';
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function setParameter($id, $value): static
+    {
+        return $this;
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getParameter($id): mixed
+    {
+        return null;
     }
 }

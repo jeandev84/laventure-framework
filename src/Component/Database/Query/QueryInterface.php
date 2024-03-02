@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Connection\Query;
+namespace Laventure\Component\Database\Query;
 
-use Laventure\Component\Database\Connection\Query\Result\QueryResultInterface;
+use Laventure\Component\Database\Query\Result\QueryResultInterface;
 
 /**
  * QueryInterface
@@ -48,6 +48,7 @@ interface QueryInterface
      * @return $this
     */
     public function bindParam($param, $value, int $type = 0): static;
+
 
 
 
@@ -115,8 +116,33 @@ interface QueryInterface
      *
      * @param array $parameters
      * @return $this
-     */
+    */
     public function setParameters(array $parameters): static;
+
+
+
+
+
+
+    /**
+     * @param $id
+     * @param $value
+     * @return $this
+    */
+    public function setParameter($id, $value): static;
+
+
+
+
+
+    /**
+     * Returns parameter value
+     *
+     * @param $id
+     * @return mixed
+    */
+    public function getParameter($id): mixed;
+
 
 
 
@@ -179,7 +205,6 @@ interface QueryInterface
      * @return QueryResultInterface
     */
     public function fetch(): QueryResultInterface;
-
 
 
 

@@ -1,12 +1,11 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\PDO\Query;
 
-use Laventure\Component\Database\Connection\Query\Exception\QueryException;
-use Laventure\Component\Database\Connection\Query\QueryInterface;
-use Laventure\Component\Database\Connection\Query\Result\QueryResultInterface;
+use Laventure\Component\Database\Query\Exception\QueryException;
+use Laventure\Component\Database\Query\QueryInterface;
+use Laventure\Component\Database\Query\Result\QueryResultInterface;
 use PDO;
 use PDOException;
 use PDOStatement;
@@ -274,7 +273,7 @@ class Query implements QueryInterface
 
     /**
      * @inheritDoc
-     */
+    */
     public function lastInsertId(string $name = null): int
     {
         return intval($this->pdo->lastInsertId($name));

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Builder;
+namespace Laventure\Component\Database\Query\Builder;
 
 use Laventure\Component\Database\Builder\SQL\Conditions\ConditionBuilder;
 use Laventure\Component\Database\Builder\SQL\Conditions\Contract\WhereInterface;
@@ -13,8 +13,7 @@ use Laventure\Component\Database\Builder\SQL\Expr\ExpressionInterface;
 use Laventure\Component\Database\Builder\SQL\SQLBuilderFactory;
 use Laventure\Component\Database\Builder\SQL\SQLBuilderInterface;
 use Laventure\Component\Database\Connection\ConnectionInterface;
-use Laventure\Component\Database\Connection\Query\Builder\Builder;
-use Laventure\Component\Database\Connection\Query\QueryInterface;
+use Laventure\Component\Database\Query\QueryInterface;
 
 /**
  * AbstractQueryBuilder

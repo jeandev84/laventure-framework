@@ -3,11 +3,9 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL\Traits;
 
-use Laventure\Component\Database\Builder\SQL\Expr\Expr;
-use Laventure\Component\Database\Builder\SQL\Expr\ExpressionInterface;
 use Laventure\Component\Database\Builder\SQL\Formatter\QueryFormatter;
 use Laventure\Component\Database\Connection\ConnectionInterface;
-use Laventure\Component\Database\Connection\Query\QueryInterface;
+use Laventure\Component\Database\Query\QueryInterface;
 use Stringable;
 
 /**
@@ -64,19 +62,6 @@ trait SqlBuilderTrait
 
 
 
-
-    /**
-     * @return Expr
-    */
-    public function expr(): ExpressionInterface
-    {
-        return new Expr();
-    }
-
-
-
-
-
     /**
      * @return ConnectionInterface
     */
@@ -98,6 +83,7 @@ trait SqlBuilderTrait
                ->addFormats($this->getCommands())
                ->format();
     }
+
 
 
 

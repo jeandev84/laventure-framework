@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Database;
+namespace Laventure\Component\Database\Query\Exception;
 
 use Laventure\Exceptions\BaseException;
 
 /**
- * DatabaseException
+ * QueryException
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Types
+ * @package  Laventure\Component\Database\Query\Exception
  */
-class DatabaseException extends BaseException
+class QueryException extends BaseException
 {
 }

@@ -1,20 +1,21 @@
 <?php
+
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Connection\Extensions\PDO\Drivers\Oracle;
+namespace Laventure\Component\Database\Connection\Extensions\PDO\Drivers\Pgsql;
 
-use Laventure\Component\Database\Database;
+use Laventure\Component\Database\Relational\Database;
 
 /**
- * OracleDatabase
+ * PgsqlDatabase
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Extensions\PDO\Drivers\Oracle
- */
-class OracleDatabase extends Database
+ * @package  Laventure\Component\Database\Connection\Types\Pgsql
+*/
+class PgsqlDatabase extends Database
 {
     /**
      * @inheritDoc

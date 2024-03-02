@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Schema\Table\Types\Mysql;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
-use Laventure\Component\Database\Connection\Query\Result\QueryResultInterface;
+use Laventure\Component\Database\Query\Result\QueryResultInterface;
 use Laventure\Component\Database\Schema\Column\Contract\ColumnInterface;
 use Laventure\Component\Database\Schema\Column\Types\Mysql\MysqlColumnFactory;
 use Laventure\Component\Database\Schema\Column\Types\Mysql\MysqlColumnInfo;

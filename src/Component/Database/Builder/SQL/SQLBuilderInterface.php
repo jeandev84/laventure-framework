@@ -3,9 +3,8 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Builder\SQL;
 
-use Laventure\Component\Database\Builder\SQL\Expr\ExpressionInterface;
 use Laventure\Component\Database\Connection\ConnectionInterface;
-use Laventure\Component\Database\Connection\Query\QueryInterface;
+use Laventure\Component\Database\Query\QueryInterface;
 
 /**
  * SQLBuilderInterface
@@ -40,13 +39,4 @@ interface SQLBuilderInterface
      * @return QueryInterface
     */
     public function getQuery(): QueryInterface;
-
-
-
-
-
-    /**
-     * @return ExpressionInterface
-    */
-    public function expr(): ExpressionInterface;
 }

@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\PDO;
 
-use Laventure\Component\Database\Builder\QueryBuilderInterface;
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Configuration\NullConfiguration;
 use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\PdoDsn;
@@ -12,8 +11,9 @@ use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnection
 use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnectionFactoryInterface;
 use Laventure\Component\Database\Connection\Extensions\PDO\Query\Query;
 use Laventure\Component\Database\Connection\Extensions\PDO\Query\QueryBuilder;
-use Laventure\Component\Database\Connection\Query\QueryInterface;
 use Laventure\Component\Database\Connection\Traits\ConnectionTrait;
+use Laventure\Component\Database\Query\Builder\QueryBuilderInterface;
+use Laventure\Component\Database\Query\QueryInterface;
 use PDO;
 use PDOException;
 use RuntimeException;

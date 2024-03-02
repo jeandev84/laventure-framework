@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Database;
+namespace Laventure\Component\Database\Relational;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
 
@@ -19,12 +19,8 @@ abstract class Database implements DatabaseInterface
 {
     /**
      * @param ConnectionInterface $connection
-     * @param string $name
     */
-    public function __construct(
-        protected ConnectionInterface $connection,
-        protected string $name
-    ) {
+    public function __construct(protected ConnectionInterface $connection) {
 
     }
 
@@ -48,7 +44,9 @@ abstract class Database implements DatabaseInterface
     */
     public function getName(): string
     {
-        return $this->name;
+        return $this->connection
+                    ->getConfiguration()
+                    ->database();
     }
 
 
@@ -59,7 +57,7 @@ abstract class Database implements DatabaseInterface
     */
     public function exists(): bool
     {
-        return in_array($this->name, $this->list());
+        return in_array($this->getName(), $this->list());
     }
 
 
