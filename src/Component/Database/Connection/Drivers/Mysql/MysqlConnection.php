@@ -6,7 +6,7 @@ namespace Laventure\Component\Database\Connection\Types\Mysql;
 use Laventure\Component\Database\Connection\ConnectionName;
 use Laventure\Component\Database\Connection\Extensions\PDO\Drivers\Mysql\MysqlDatabase;
 use Laventure\Component\Database\Connection\Extensions\PDO\PdoConnection;
-use Laventure\Component\Database\Relational\DatabaseInterface;
+use Laventure\Component\Database\DatabaseInterface;
 
 /**
  * MysqlConnection

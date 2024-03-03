@@ -33,7 +33,7 @@ class ViewServiceProvider extends ServiceProvider implements BootableServiceProv
     protected array $provides = [
         TemplateEngineConfigInterface::class => [
             TemplateEngineConfig::class,
-            'template.engine.config'
+            'template.engine.demo'
         ],
         RendererInterface::class => [
             Renderer::class,

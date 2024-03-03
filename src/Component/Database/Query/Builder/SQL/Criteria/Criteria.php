@@ -72,18 +72,6 @@ class Criteria
 
 
 
-    /**
-     * @var string|null
-    */
-    public ?string $table = null;
-
-
-    /**
-     * @var string|null
-    */
-    public ?string $alias = null;
-
-
 
     /**
      * @var array
@@ -96,6 +84,15 @@ class Criteria
      * @var array
     */
     public array $values = [];
+
+
+
+
+    /**
+     * @var array
+    */
+    public array $update = [];
+
 
 
 
@@ -124,7 +121,6 @@ class Criteria
 
 
 
-
     /**
      * @var array
     */
@@ -137,33 +133,4 @@ class Criteria
      * @var array
     */
     public array $bindingValues = [];
-
-
-
-
-
-//    /**
-//     * @param string $table
-//     * @param string $alias
-//     * @return $this
-//    */
-//    public function table(string $table, string $alias = ''): static
-//    {
-//        $this->table = ($alias ? "$table $alias" : $table);
-//        $this->alias = $alias;
-//
-//        return $this;
-//    }
-
-
-
-
-
-    /**
-     * @return array
-    */
-    public function toArray(): array
-    {
-        return get_object_vars($this);
-    }
 }

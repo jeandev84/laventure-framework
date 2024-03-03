@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Query\Builder\SQL;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
+use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionInterface;
 use Laventure\Component\Database\Query\QueryInterface;
 use Stringable;
 
@@ -29,14 +30,10 @@ interface SQLBuilderInterface extends Stringable
 
 
     /**
-     * @param $id
-     * @param $value
-     * @param $type
+     * @param array $parameters
      * @return $this
     */
-    public function bindParam($id, $value, $type = null): static;
-
-
+    public function setParameters(array $parameters): static;
 
 
 
@@ -81,6 +78,46 @@ interface SQLBuilderInterface extends Stringable
 
 
 
+    /**
+     * @param $id
+     * @param $value
+     * @param $type
+     * @return $this
+    */
+    public function bindParam($id, $value, $type = null): static;
+
+
+
+
+
+
+
+    /**
+     * @param $id
+     * @param $value
+     * @param $type
+     * @return $this
+    */
+    public function bindValue($id, $value, $type = null): static;
+
+
+
+
+
+
+
+    /**
+     * @param $id
+     * @param $value
+     * @param $type
+     * @return $this
+    */
+    public function bindColumn($id, $value, $type = null): static;
+
+
+
+
+
 
 
 
@@ -93,8 +130,22 @@ interface SQLBuilderInterface extends Stringable
 
 
 
+
+
+
+
     /**
      * @return QueryInterface
     */
     public function getQuery(): QueryInterface;
+
+
+
+
+
+
+    /**
+     * @return ExpressionInterface
+    */
+    public function expr(): ExpressionInterface;
 }

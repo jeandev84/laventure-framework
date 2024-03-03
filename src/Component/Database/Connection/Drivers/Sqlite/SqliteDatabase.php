@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Types\Sqlite;
 
-use Laventure\Component\Database\Relational\Database;
+use Laventure\Component\Database\Database;
 
 /**
  * SqliteDatabase

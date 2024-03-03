@@ -71,11 +71,11 @@ $mysqlTable = new MysqlTable($connection, 'goods');
 #dd($mysqlTable->getIndexes());
 
 /*
-$config = new \Laventure\Component\Database\Configuration\Configuration([
+$demo = new \Laventure\Component\Database\Configuration\Configuration([
     'dsn' => 'mysql:host=127.0.0.1;dbname=laventure_test;charset=utf8'
 ]);
 
-dd($config);
+dd($demo);
 */
 
 $dsn = new PdoDsn(

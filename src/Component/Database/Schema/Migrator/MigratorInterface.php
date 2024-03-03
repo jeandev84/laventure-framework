@@ -1,11 +1,9 @@
 <?php
-
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Migrator;
+namespace Laventure\Component\Database\Schema\Migrator;
 
-use Laventure\Component\Database\Migration\Migration;
-use Laventure\Component\Database\Migration\MigrationInterface;
+use Laventure\Component\Database\Schema\Migration\MigrationInterface;
 
 /**
  * MigratorInterface

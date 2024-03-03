@@ -1,12 +1,11 @@
 <?php
-
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Migrator;
+namespace Laventure\Component\Database\Schema\Migrator;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
-use Laventure\Component\Database\Migration\MigrationInterface;
 use Laventure\Component\Database\Schema\Blueprint\Blueprint;
+use Laventure\Component\Database\Schema\Migration\MigrationInterface;
 use Laventure\Component\Database\Schema\Schema;
 use Laventure\Component\Database\Schema\SchemaInterface;
 
@@ -103,7 +102,7 @@ class Migrator implements MigratorInterface
     */
     public function addMigration(MigrationInterface $migration): static
     {
-        $this->migrations[$migration->getVersion()] = $migration;
+        $this->migrations[$migration->getName()] = $migration;
 
         return $this;
     }
@@ -165,7 +164,7 @@ class Migrator implements MigratorInterface
             $qb = $this->connection->createQueryBuilder();
             $qb->insert($this->table)
                 ->values([
-                    'version'     => $migration->getVersion(),
+                    'version'     => $migration->getName(),
                     'executed_at' => date('Y-m-d H:i:s')
                 ])
                 ->getQuery()
@@ -257,7 +256,7 @@ class Migrator implements MigratorInterface
     public function getNewMigrations(): array
     {
         $func = function (MigrationInterface $migration) {
-            return !$this->migrated($migration->getVersion());
+            return !$this->migrated($migration->getName());
         };
 
         return array_filter($this->getMigrations(), $func);

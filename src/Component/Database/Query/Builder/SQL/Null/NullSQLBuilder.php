@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Query\Builder\SQL\Null;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
-use Laventure\Component\Database\Connection\NullConnection;
+use Laventure\Component\Database\Connection\Null\NullConnection;
 use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionInterface;
 use Laventure\Component\Database\Query\Builder\SQL\SQLBuilderInterface;
 use Laventure\Component\Database\Query\Null\NullQuery;

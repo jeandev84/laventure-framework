@@ -165,10 +165,10 @@ class ContainerTest extends TestCase
             $this->assertArrayHasKey($provider, $this->container->getProviders());
         }
 
-        $this->assertSame($this->container['app.config'], $this->container[Config::class]);
+        $this->assertSame($this->container['app.demo'], $this->container[Config::class]);
         $this->assertSame($this->container[ConfigInterface::class], $this->container[Config::class]);
         $this->assertSame($this->container['test'], $this->container[TestService::class]);
-        $this->assertSame('BootedConfig', $this->container['config.booted']);
+        $this->assertSame('BootedConfig', $this->container['demo.booted']);
     }
 
 

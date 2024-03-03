@@ -5,7 +5,6 @@ namespace Laventure\Component\Database\Query\Builder\SQL\DML\Insert;
 
 use Laventure\Component\Database\Query\Builder\SQL\Commands\Insert;
 use Laventure\Component\Database\Query\Builder\SQL\SQLBuilder;
-use Laventure\Component\Database\Query\Builder\SQL\Traits\SQLBuilderTrait;
 
 
 /**
@@ -92,7 +91,7 @@ class InsertBuilder extends SQLBuilder implements InsertBuilderInterface
     /**
      * @inheritDoc
     */
-    public function getCommands(): array
+    public function getFormats(): array
     {
         return [
             new Insert($this->table, $this->insert, $this->values)

@@ -3,13 +3,8 @@ declare(strict_types=1);
 
 namespace PHPUnitTest\Component\Database\Migrator;
 
-use Laventure\Component\Database\Migrator\Migrator;
+use Laventure\Component\Database\Schema\Migrator\Migrator;
 use PHPUnit\Framework\TestCase;
-use PHPUnitTest\App\Migration\Version202302281534;
-use PHPUnitTest\App\Migration\Version202302281676;
-use PHPUnitTest\App\Migration\Version202302281678;
-use PHPUnitTest\App\Migration\Version202302281689;
-use PHPUnitTest\App\Migration\Version202302281721;
 use PHPUnitTest\App\Service\Connection\Connection;
 use PHPUnitTest\App\Service\Migration\MigrationStack;
 

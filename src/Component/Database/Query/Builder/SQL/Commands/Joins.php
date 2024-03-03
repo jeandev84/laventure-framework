@@ -7,20 +7,20 @@ namespace Laventure\Component\Database\Query\Builder\SQL\Commands;
 use Stringable;
 
 /**
- * From
+ * Joins
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Builder\SQL\Commands
- */
-class From implements Stringable
+ * @package  Laventure\Component\Database\Builder\SQL\DQL\Expr\Joins
+*/
+class Joins implements Stringable
 {
     /**
-     * @param array $from
+     * @param array $joins
     */
-    public function __construct(public array $from)
+    public function __construct(public array $joins)
     {
     }
 
@@ -31,6 +31,6 @@ class From implements Stringable
     */
     public function __toString(): string
     {
-        return "FROM ". join(', ', array_values($this->from));
+        return ($this->joins ? join(' ', $this->joins) : '');
     }
 }

@@ -22,7 +22,7 @@ class ConfigServiceProvider extends ServiceProvider implements BootableServicePr
 {
     protected array $provides = [
         Config::class => [
-            'app.config',
+            'app.demo',
             ConfigInterface::class
         ]
     ];
@@ -34,7 +34,7 @@ class ConfigServiceProvider extends ServiceProvider implements BootableServicePr
      */
     public function boot(): void
     {
-        $this->app->bind('config.booted', 'BootedConfig');
+        $this->app->bind('demo.booted', 'BootedConfig');
     }
 
 
@@ -44,7 +44,7 @@ class ConfigServiceProvider extends ServiceProvider implements BootableServicePr
     public function register(): void
     {
         $this->app->singleton(Config::class, function () {
-            return $this->app->make(Config::class, ['config' => $_ENV]);
+            return $this->app->make(Config::class, ['demo' => $_ENV]);
         });
     }
 }

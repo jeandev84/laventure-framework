@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Connection;
+namespace Laventure\Component\Database\Connection\Null;
 
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Configuration\Null\NullConfiguration;
+use Laventure\Component\Database\Connection\ConnectionInterface;
+use Laventure\Component\Database\DatabaseInterface;
 use Laventure\Component\Database\Query\Builder\Null\NullQueryBuilder;
 use Laventure\Component\Database\Query\Builder\QueryBuilderInterface;
 use Laventure\Component\Database\Query\Null\NullQuery;
 use Laventure\Component\Database\Query\QueryInterface;
-use Laventure\Component\Database\Relational\DatabaseInterface;
-use Laventure\Component\Database\Relational\NullDatabase;
 
 /**
  * NullConnection
@@ -235,6 +235,38 @@ class NullConnection implements ConnectionInterface
     */
     public function transaction(callable $func): mixed
     {
-        return false;
+        return null;
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function activateTransaction(): void
+    {
+
+    }
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function transactionIf(callable $func, bool $condition = false): mixed
+    {
+        return null;
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function disableTransaction(): void
+    {
+
     }
 }

@@ -33,10 +33,9 @@ interface SelectBuilderInterface extends SQLBuilderInterface, WhereInterface
     /**
      * Select distinct values
      *
-     * @param bool $distinct
      * @return $this
     */
-    public function distinct(bool $distinct): static;
+    public function distinct(): static;
 
 
 
@@ -49,6 +48,9 @@ interface SelectBuilderInterface extends SQLBuilderInterface, WhereInterface
      * @return $this
     */
     public function addSelect(string $columns): static;
+
+
+
 
 
 
@@ -70,7 +72,7 @@ interface SelectBuilderInterface extends SQLBuilderInterface, WhereInterface
 
 
     /**
-     * Join table
+     * Joins table
      * @param string $table
      * @param string $condition
      * @return $this
@@ -84,7 +86,7 @@ interface SelectBuilderInterface extends SQLBuilderInterface, WhereInterface
 
 
     /**
-     * Join table
+     * Joins table
      * @param string $table
      * @param string $condition
      * @return $this
@@ -98,7 +100,7 @@ interface SelectBuilderInterface extends SQLBuilderInterface, WhereInterface
 
 
     /**
-     * Join table
+     * Joins table
      * @param string $table
      * @param string $condition
      * @return $this
@@ -112,7 +114,7 @@ interface SelectBuilderInterface extends SQLBuilderInterface, WhereInterface
 
 
     /**
-     * Join table
+     * Joins table
      * @param string $table
      * @param string $condition
      * @return $this
@@ -127,7 +129,7 @@ interface SelectBuilderInterface extends SQLBuilderInterface, WhereInterface
 
 
     /**
-     * Join table
+     * Joins table
      * @param string $table
      * @param string $condition
      * @return $this
@@ -174,6 +176,15 @@ interface SelectBuilderInterface extends SQLBuilderInterface, WhereInterface
     public function addGroupBy(string $columns): static;
 
 
+
+
+
+    /**
+     * @param string $condition
+     * @param $type
+     * @return $this
+    */
+    public function addHaving(string $condition, $type = null): static;
 
 
 

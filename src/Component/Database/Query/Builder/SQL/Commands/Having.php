@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder\SQL\Commands;
 
+use Laventure\Component\Database\Query\Builder\SQL\Conditions\SQLCondition;
 use Stringable;
 
 /**
@@ -18,10 +19,18 @@ use Stringable;
 class Having implements Stringable
 {
     /**
+     * @var SQLCondition
+    */
+    protected SQLCondition $conditions;
+
+
+
+    /**
      * @param array $having
     */
-    public function __construct(public array $having)
+    public function __construct(array $having)
     {
+        $this->conditions = new SQLCondition($having);
     }
 
 
@@ -32,10 +41,10 @@ class Having implements Stringable
     */
     public function __toString(): string
     {
-        if (!$this->having) {
+        if (! $this->conditions->empty()) {
             return '';
         }
 
-        return sprintf('HAVING %s', join($this->having));
+        return sprintf('HAVING %s', $this->conditions->build());
     }
 }

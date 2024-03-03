@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Relational;
+namespace Laventure\Component\Database\Connection\Null;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
-use Laventure\Component\Database\Connection\NullConnection;
+use Laventure\Component\Database\DatabaseInterface;
 
 /**
  * NullDatabase

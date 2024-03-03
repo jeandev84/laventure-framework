@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Query\Builder\SQL\Traits;
+namespace Laventure\Component\Database\Query\Builder\SQL;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
-use Laventure\Component\Database\Query\Builder\SQL\Formatter\QueryFormatter;
+use Laventure\Component\Database\Query\Builder\SQL\Formatter\SQLFormatter;
 use Laventure\Component\Database\Query\QueryInterface;
 use Stringable;
 
@@ -79,7 +79,7 @@ trait SQLBuilderTrait
     */
     public function getSQL(): string
     {
-        return (new QueryFormatter())
+        return (new SQLFormatter())
                ->addFormats($this->getCommands())
                ->format();
     }

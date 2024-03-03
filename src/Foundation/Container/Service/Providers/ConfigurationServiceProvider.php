@@ -24,14 +24,14 @@ use Laventure\Foundation\Config\Loader\ConfigLoader;
  */
 class ConfigurationServiceProvider extends ServiceProvider implements BootableServiceProvider
 {
-    private string $pattern = '/config/params/*.php';
+    private string $pattern = '/demo/params/*.php';
 
 
     /**
      * @var array
      */
     protected array $provides = [
-        ConfigInterface::class => [Config::class, 'config']
+        ConfigInterface::class => [Config::class, 'demo']
     ];
 
 

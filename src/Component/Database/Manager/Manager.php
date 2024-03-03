@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Manager;
@@ -8,9 +7,8 @@ use Laventure\Component\Database\Connection\Types\Mysql\MysqlConnection;
 use Laventure\Component\Database\Connection\Types\Oracle\OracleConnection;
 use Laventure\Component\Database\Connection\Types\Pgsql\PgsqlConnection;
 use Laventure\Component\Database\Connection\Types\Sqlite\SqliteConnection;
-use Laventure\Component\Database\Manager\Factory\DatabaseManagerFactory;
-use Laventure\Component\Database\Migrator\Migrator;
-use Laventure\Component\Database\Migrator\MigratorInterface;
+use Laventure\Component\Database\Schema\Migrator\Migrator;
+use Laventure\Component\Database\Schema\Migrator\MigratorInterface;
 use Laventure\Component\Database\Schema\Schema;
 use Laventure\Component\Database\Schema\SchemaInterface;
 

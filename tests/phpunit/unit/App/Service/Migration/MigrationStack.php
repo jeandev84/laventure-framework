@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace PHPUnitTest\App\Service\Migration;
 
-use Laventure\Component\Database\Migration\Migration;
+use Laventure\Component\Database\Schema\Migration\Migration;
 use PHPUnitTest\App\Migration\Version202302281534;
 use PHPUnitTest\App\Migration\Version202302281676;
 use PHPUnitTest\App\Migration\Version202302281678;

@@ -5,7 +5,7 @@ namespace Laventure\Component\Database\Query\Builder\Common;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Query\Builder\QueryBuilderInterface;
-use Laventure\Component\Database\Query\Builder\SQL\Conditions\ConditionBuilder;
+use Laventure\Component\Database\Query\Builder\SQL\Conditions\SQLCondition;
 use Laventure\Component\Database\Query\Builder\SQL\Conditions\Where\WhereInterface;
 use Laventure\Component\Database\Query\Builder\SQL\DML\Delete\DeleteBuilderInterface;
 use Laventure\Component\Database\Query\Builder\SQL\DML\Insert\InsertBuilderInterface;
@@ -654,6 +654,17 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
 
 
     /**
+     * @inheritdoc
+    */
+    public function clear(): void
+    {
+         //TODO Implements
+    }
+
+
+
+
+    /**
      * @return SQLBuilderInterface
     */
     private function getBuilder(): SQLBuilderInterface
@@ -697,7 +708,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     private function buildHaving(SelectBuilderInterface $builder): SelectBuilderInterface
     {
-        $conditionBuilder = new ConditionBuilder($this->having);
+        $conditionBuilder = new SQLCondition($this->having);
 
         if (!$conditionBuilder->empty()) {
             $builder->having($conditionBuilder->build());
@@ -716,7 +727,7 @@ abstract class AbstractQueryBuilder implements QueryBuilderInterface
     */
     private function buildWheres(WhereInterface $builder): WhereInterface
     {
-        $conditionBuilder = new ConditionBuilder($this->wheres);
+        $conditionBuilder = new SQLCondition($this->wheres);
 
         if (!$conditionBuilder->empty()) {
             $builder->where($conditionBuilder->build());

@@ -1,36 +1,24 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder\SQL\Commands;
 
-use Stringable;
-
 /**
- * From
+ * LeftJoin
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Builder\SQL\Commands
- */
-class From implements Stringable
+ * @package  Laventure\Component\Database\Query\Builder\SQL\Commands
+*/
+class LeftJoin extends Join
 {
-    /**
-     * @param array $from
-    */
-    public function __construct(public array $from)
-    {
-    }
-
-
-
     /**
      * @inheritDoc
     */
     public function __toString(): string
     {
-        return "FROM ". join(', ', array_values($this->from));
+        return "LEFT JOIN $this->table ON $this->condition";
     }
 }

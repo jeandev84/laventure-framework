@@ -15,6 +15,8 @@ namespace Laventure\Component\Database\Query\Builder\SQL\Conditions\Where;
 interface WhereInterface
 {
     /**
+     * Add WHERE conditions
+     *
      * @param string $condition
      *
      * @return $this
@@ -26,6 +28,8 @@ interface WhereInterface
 
 
     /**
+     * Add WHERE conditions AND
+     *
      * @param string $condition
      *
      * @return $this
@@ -39,6 +43,8 @@ interface WhereInterface
 
 
     /**
+     * Add WHERE conditions OR
+     *
      * @param string $condition
      *
      * @return $this
@@ -53,6 +59,22 @@ interface WhereInterface
 
 
     /**
+     * Add WHERE conditions BY criteria
+     *
+     * @param array $conditions
+     * @return $this
+    */
+    public function criteria(array $conditions): static;
+
+
+
+
+
+
+
+    /**
+     * Returns conditions
+     *
      * @return array
     */
     public function getWheres(): array;

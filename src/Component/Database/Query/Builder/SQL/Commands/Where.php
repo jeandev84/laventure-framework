@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder\SQL\Commands;
 
+use Laventure\Component\Database\Query\Builder\SQL\Conditions\SQLCondition;
 use Stringable;
 
 /**
@@ -18,9 +19,9 @@ use Stringable;
 class Where implements Stringable
 {
     /**
-     * @var array
+     * @var SQLCondition
     */
-    protected array $wheres = [];
+    protected SQLCondition $conditions;
 
 
 
@@ -29,7 +30,7 @@ class Where implements Stringable
     */
     public function __construct(array $wheres)
     {
-        $this->wheres = $wheres;
+        $this->conditions = new SQLCondition($wheres);
     }
 
 
@@ -39,10 +40,10 @@ class Where implements Stringable
     */
     public function __toString(): string
     {
-        if (! $this->wheres) {
+        if (! $this->conditions->empty()) {
             return '';
         }
 
-        return sprintf('WHERE %s', join(' ', $this->wheres));
+        return sprintf('WHERE %s', $this->conditions->build());
     }
 }

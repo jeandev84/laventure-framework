@@ -1,8 +1,7 @@
 <?php
-
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Migration;
+namespace Laventure\Component\Database\Schema\Migration;
 
 use Laventure\Component\Database\Schema\SchemaInterface;
 
@@ -13,7 +12,7 @@ use Laventure\Component\Database\Schema\SchemaInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Migration
+ * @package  Laventure\Component\Database\Schema\Migration
 */
 interface MigrationInterface
 {
@@ -45,11 +44,11 @@ interface MigrationInterface
 
 
     /**
-     * Returns migration version
+     * Returns migration name, that's may be used as version
      *
      * @return string
     */
-    public function getVersion(): string;
+    public function getName(): string;
 
 
 

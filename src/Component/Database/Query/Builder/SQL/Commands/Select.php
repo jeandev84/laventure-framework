@@ -17,15 +17,27 @@ use Stringable;
 */
 class Select implements Stringable
 {
+
+    /**
+     * @var array
+    */
+    protected array $columns;
+
+
+    /**
+     * @var string|null
+    */
+    protected ?string $prefix;
+
+
+
     /**
      * @param array $columns
-     * @param bool $distinct
+     * @param $prefix
     */
-    public function __construct(
-        public array $columns,
-        public bool $distinct = false
-    ) {
-
+    public function __construct(array $columns, $prefix = null) {
+        $this->columns  = $columns;
+        $this->prefix   = $prefix;
     }
 
 
@@ -35,10 +47,28 @@ class Select implements Stringable
     */
     public function __toString(): string
     {
-        $selects  =  join(', ', array_filter($this->columns));
-        $selects  =  !empty($this->columns) ? $selects : "*";
-        $selects  =  $this->distinct ? "DISTINCT $selects" : $selects;
+        $selects = $this->resolveSelects($this->columns);
+
+        if ($this->prefix) {
+            $selects = "$this->prefix $selects";
+        }
 
         return "SELECT $selects";
+    }
+
+
+
+
+    /**
+     * @param array $columns
+     * @return string
+    */
+    private function resolveSelects(array $columns): string
+    {
+        if (empty($columns)) {
+            return "*";
+        }
+
+        return join(', ', array_filter($columns));
     }
 }

@@ -68,7 +68,7 @@ class UpdateBuilder extends SQLBuilder implements UpdateBuilderInterface
     /**
      * @inheritDoc
     */
-    public function getCommands(): array
+    public function getFormats(): array
     {
         return [
             new Update($this->table),
