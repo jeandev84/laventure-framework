@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder;
 
-use Laventure\Component\Database\Builder\SQL\Expr\ExpressionInterface;
+use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionInterface;
 use Laventure\Component\Database\Query\QueryInterface;
 
 /**

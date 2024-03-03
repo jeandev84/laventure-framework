@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema;
@@ -172,7 +171,7 @@ interface SchemaInterface
      *
      * @return array
     */
-    public function listTables(): array;
+    public function getTables(): array;
 
 
 

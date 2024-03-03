@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Manager;
 
-use Laventure\Component\Database\Connection\Extensions\PDO\Drivers\Mysql\MysqlConnection;
-use Laventure\Component\Database\Connection\Extensions\PDO\Drivers\Oracle\OracleConnection;
-use Laventure\Component\Database\Connection\Extensions\PDO\Drivers\Pgsql\PgsqlConnection;
-use Laventure\Component\Database\Connection\Extensions\PDO\Drivers\Sqlite\SqliteConnection;
+use Laventure\Component\Database\Connection\Types\Mysql\MysqlConnection;
+use Laventure\Component\Database\Connection\Types\Oracle\OracleConnection;
+use Laventure\Component\Database\Connection\Types\Pgsql\PgsqlConnection;
+use Laventure\Component\Database\Connection\Types\Sqlite\SqliteConnection;
 use Laventure\Component\Database\Manager\Factory\DatabaseManagerFactory;
 use Laventure\Component\Database\Migrator\Migrator;
 use Laventure\Component\Database\Migrator\MigratorInterface;

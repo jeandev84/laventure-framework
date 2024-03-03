@@ -11,7 +11,7 @@ namespace Laventure\Component\Database\Schema\Constraints\Types\Keys\Foreign;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Schema\Constraints\Types\Keys\Foreign
+ * @package  Laventure\Component\Database\Schema\Constraints\Drivers\Keys\Foreign
 */
 class ForeignKeyGenerator
 {

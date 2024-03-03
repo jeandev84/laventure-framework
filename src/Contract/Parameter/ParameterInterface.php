@@ -13,7 +13,7 @@ use ArrayAccess;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Types\Parameter
+ * @package  Laventure\Drivers\Parameter
 */
 interface ParameterInterface extends ArrayAccess
 {

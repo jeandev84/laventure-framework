@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Configuration;
@@ -75,7 +74,7 @@ class Configuration extends Parameter implements ConfigurationInterface
      */
     public function host(): string
     {
-        return $this->get('host', '');
+        return $this->required('host');
     }
 
 
@@ -100,7 +99,7 @@ class Configuration extends Parameter implements ConfigurationInterface
      */
     public function database(): string
     {
-        return $this->get('database', '');
+        return $this->required('database');
     }
 
 

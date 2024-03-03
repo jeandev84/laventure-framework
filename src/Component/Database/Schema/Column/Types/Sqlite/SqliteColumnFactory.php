@@ -15,7 +15,7 @@ use Laventure\Component\Database\Schema\Column\Info\ColumnInfoInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Schema\Column\Types\Sqlite
+ * @package  Laventure\Component\Database\Schema\Column\Drivers\Sqlite
 */
 class SqliteColumnFactory implements ColumnFactoryInterface
 {

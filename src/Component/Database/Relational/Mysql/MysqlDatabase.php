@@ -13,7 +13,7 @@ use Laventure\Component\Database\Relational\Database;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Types\Mysql
+ * @package  Laventure\Component\Database\Connection\Drivers\Mysql
 */
 class MysqlDatabase extends Database
 {
@@ -38,7 +38,7 @@ class MysqlDatabase extends Database
     */
     public function drop(): bool
     {
-        $this->exec("DROP DATABASE IF EXISTS {$this->name};");
+        $this->exec("DROP DATABASE IF EXISTS {$this->getName()};");
 
         return !$this->exists();
     }
@@ -52,7 +52,7 @@ class MysqlDatabase extends Database
     public function getTables(): array
     {
         return $this->connection
-                    ->statement("SHOW FULL TABLES FROM {$this->name};")
+                    ->statement("SHOW FULL TABLES FROM {$this->getName()};")
                     ->fetch()
                     ->columns();
     }

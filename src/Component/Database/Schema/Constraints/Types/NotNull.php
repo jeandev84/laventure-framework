@@ -13,7 +13,7 @@ use Laventure\Component\Database\Schema\Constraints\Constraint;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package Laventure\Component\Database\Schema\Constraints\Types
+ * @package Laventure\Component\Database\Schema\Constraints\Drivers
 */
 class NotNull extends Constraint
 {

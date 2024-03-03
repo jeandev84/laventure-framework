@@ -14,7 +14,7 @@ use Laventure\Contract\Parameter\ParameterInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Configuration\Types
+ * @package  Laventure\Component\Database\Configuration\Drivers
  */
 interface ConfigurationInterface extends ParameterInterface
 {

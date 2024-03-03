@@ -16,7 +16,7 @@ use Laventure\Component\Database\Schema\Constraints\Contract\UniqueInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Schema\Constraints\Types
+ * @package  Laventure\Component\Database\Schema\Constraints\Drivers
 */
 class Unique extends ConstraintHasColumns implements UniqueInterface
 {

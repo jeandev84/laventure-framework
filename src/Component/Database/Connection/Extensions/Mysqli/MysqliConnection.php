@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Connection\Extensions\Mysqli;
 
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
-use Laventure\Component\Database\Configuration\NullConfiguration;
+use Laventure\Component\Database\Configuration\Null\NullConfiguration;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Connection\ConnectionName;
 use Laventure\Component\Database\Connection\Extensions\Mysqli\Factory\MysqliConnectionFactoryInterface;
@@ -173,7 +173,7 @@ class MysqliConnection implements ConnectionInterface
     */
     public function getDatabase(): DatabaseInterface
     {
-        return new MysqlDatabase($this, $this->getDatabaseName());
+        return new MysqlDatabase($this);
     }
 
 

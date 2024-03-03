@@ -13,7 +13,7 @@ use Laventure\Component\Database\Relational\Database;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Types\Sqlite
+ * @package  Laventure\Component\Database\Connection\Drivers\Sqlite
  */
 class SqliteDatabase extends Database
 {

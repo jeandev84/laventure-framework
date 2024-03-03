@@ -16,7 +16,7 @@ use Laventure\Component\Routing\Route\Resource\Resource;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Routing\Route\Resource\Types
+ * @package  Laventure\Component\Routing\Route\Resource\Drivers
 */
 class ApiResource extends Resource
 {

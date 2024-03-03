@@ -14,7 +14,7 @@ use Laventure\Component\Database\Schema\Table\Table;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Schema\Table\Types\Sqlite
+ * @package  Laventure\Component\Database\Schema\Table\Drivers\Sqlite
 */
 class SqliteTable extends Table
 {

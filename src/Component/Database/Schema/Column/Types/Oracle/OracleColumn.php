@@ -13,7 +13,7 @@ use Laventure\Component\Database\Schema\Column\Column;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Schema\Column\Types\Oracle
+ * @package  Laventure\Component\Database\Schema\Column\Drivers\Oracle
 */
 class OracleColumn extends Column
 {

@@ -11,7 +11,7 @@ namespace Laventure\Component\Container\Service\Provider\Contract;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Container\Service\Provider\Types
+ * @package  Laventure\Component\Container\Service\Provider\Drivers
  */
 interface ServiceProviderInterface
 {

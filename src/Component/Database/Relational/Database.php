@@ -14,7 +14,7 @@ use Laventure\Component\Database\Connection\ConnectionInterface;
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
  * @package  Laventure\Component\Database\Driver
- */
+*/
 abstract class Database implements DatabaseInterface
 {
     /**
@@ -40,7 +40,7 @@ abstract class Database implements DatabaseInterface
 
 
     /**
-     * @return string
+     * @inheritdoc
     */
     public function getName(): string
     {
@@ -58,20 +58,6 @@ abstract class Database implements DatabaseInterface
     public function exists(): bool
     {
         return in_array($this->getName(), $this->list());
-    }
-
-
-
-
-    /**
-     * @param array $queries
-     * @return void
-    */
-    public function executeQueries(array $queries): void
-    {
-        foreach ($queries as $query) {
-            $this->connection->executeQuery($query);
-        }
     }
 
 

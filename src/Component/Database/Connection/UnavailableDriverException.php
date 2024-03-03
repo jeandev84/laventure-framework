@@ -11,7 +11,7 @@ namespace Laventure\Component\Database\Connection;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Types
+ * @package  Laventure\Component\Database\Connection\Drivers
  */
 class UnavailableDriverException extends DriverException
 {

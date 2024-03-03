@@ -12,7 +12,7 @@ use Laventure\Component\Database\Connection\ConnectionInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Types
+ * @package  Laventure\Component\Database\Drivers
 */
 interface DatabaseInterface
 {

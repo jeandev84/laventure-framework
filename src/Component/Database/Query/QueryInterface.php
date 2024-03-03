@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query;
@@ -148,12 +147,28 @@ interface QueryInterface
 
 
 
+
+
+    /**
+     * Returns parameters
+     *
+     * @return array
+    */
+    public function getParameters(): array;
+
+
+
+
+
+
+
     /**
      * Execute query
      *
      * @return mixed
     */
     public function execute(): mixed;
+
 
 
 
@@ -166,6 +181,8 @@ interface QueryInterface
      * @return mixed
     */
     public function exec(string $sql): mixed;
+
+
 
 
 

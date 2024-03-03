@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Connection\Extensions\PDO;
 
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
-use Laventure\Component\Database\Configuration\NullConfiguration;
+use Laventure\Component\Database\Configuration\Null\NullConfiguration;
 use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\PdoDsn;
 use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\PdoDsnBuilder;
 use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnectionFactory;
@@ -288,28 +288,6 @@ abstract class PdoConnection implements PdoConnectionInterface
     }
 
 
-
-
-
-    /**
-     * @return string
-    */
-    public function getDatabaseName(): string
-    {
-        if ($database = $this->config->database()) {
-            return $database;
-        }
-
-        $dsn = $this->getDsn();
-
-        if (!$database = $dsn['dbname']) {
-            throw new RuntimeException(
-                "Could not retrieve database name from (". $dsn . ")"
-            );
-        }
-
-        return $database;
-    }
 
 
 

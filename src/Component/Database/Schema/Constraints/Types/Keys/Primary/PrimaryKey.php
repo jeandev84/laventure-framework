@@ -16,7 +16,7 @@ use Laventure\Component\Database\Schema\Constraints\Contract\PrimaryKeyInterface
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Schema\Constraints\Types\Keys\Primary
+ * @package  Laventure\Component\Database\Schema\Constraints\Drivers\Keys\Primary
 */
 class PrimaryKey extends ConstraintHasColumns implements PrimaryKeyInterface
 {

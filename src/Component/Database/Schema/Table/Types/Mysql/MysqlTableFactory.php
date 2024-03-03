@@ -15,7 +15,7 @@ use Laventure\Component\Database\Schema\Table\TableInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Schema\Table\Types\Mysql
+ * @package  Laventure\Component\Database\Schema\Table\Drivers\Mysql
 */
 class MysqlTableFactory implements TableFactoryInterface
 {

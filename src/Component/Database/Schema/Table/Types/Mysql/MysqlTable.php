@@ -21,7 +21,7 @@ use Laventure\Component\Database\Schema\Table\Table;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Schema\Table\Types\Mysql
+ * @package  Laventure\Component\Database\Schema\Table\Drivers\Mysql
  *
  * @see https://www.w3schools.com/sql/sql_datatypes.asp
  * @see https://www.w3schools.com/sql/sql_ref_mysql.asp

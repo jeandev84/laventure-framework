@@ -16,7 +16,7 @@ use Laventure\Component\Database\Schema\Constraints\Traits\HasConstraintTrait;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Schema\Constraints\Types
+ * @package  Laventure\Component\Database\Schema\Constraints\Drivers
 */
 class DefaultValue extends Constraint implements HasConstraintInterface
 {
