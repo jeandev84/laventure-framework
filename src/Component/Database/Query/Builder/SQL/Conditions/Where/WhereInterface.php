@@ -56,6 +56,16 @@ interface WhereInterface
 
 
 
+    /**
+     * @param string $condition
+     * @param $type
+     * @return $this
+    */
+    public function addWhere(string $condition, $type = null): static;
+
+
+
+
 
 
     /**

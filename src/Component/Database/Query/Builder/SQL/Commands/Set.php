@@ -13,7 +13,7 @@ use Stringable;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Query\Builder\SQL\Expr\Set
+ * @package  Laventure\Component\Database\Query\Builder\SQL\Commands\Set
  */
 class Set implements Stringable
 {

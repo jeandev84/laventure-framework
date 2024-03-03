@@ -9,13 +9,14 @@ use Laventure\Component\Database\Query\Builder\SQL\Commands\GroupBy;
 use Laventure\Component\Database\Query\Builder\SQL\Commands\Having;
 use Laventure\Component\Database\Query\Builder\SQL\Commands\InnerJoin;
 use Laventure\Component\Database\Query\Builder\SQL\Commands\Join;
-use Laventure\Component\Database\Query\Builder\SQL\Commands\Joins;
 use Laventure\Component\Database\Query\Builder\SQL\Commands\LeftJoin;
 use Laventure\Component\Database\Query\Builder\SQL\Commands\Limit;
 use Laventure\Component\Database\Query\Builder\SQL\Commands\OrderBy;
 use Laventure\Component\Database\Query\Builder\SQL\Commands\RightJoin;
 use Laventure\Component\Database\Query\Builder\SQL\Commands\Select;
+use Laventure\Component\Database\Query\Builder\SQL\Commands\Utils\Joins;
 use Laventure\Component\Database\Query\Builder\SQL\Commands\Where;
+use Laventure\Component\Database\Query\Builder\SQL\Conditions\ConditionType;
 use Laventure\Component\Database\Query\Builder\SQL\Conditions\Where\WhereTrait;
 use Laventure\Component\Database\Query\Builder\SQL\SQLBuilder;
 
@@ -71,15 +72,10 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
     /**
      * @var string[]
     */
-    public array $having = [
-        'CONDITIONS' => [],
-        'AND'        => [],
-        'OR'         => []
-    ];
+    public array $having = [];
 
 
-
-
+    
 
 
     /**
@@ -152,13 +148,13 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
     */
     public function from(string $table, string $alias = ''): static
     {
-        $this->from[$table] = ($alias ? "$table $alias" : $table);
+        $this->from[$alias ?: $table] = ($alias ? "$table $alias" : $table);
 
         return $this;
     }
-
-
-
+    
+    
+    
 
 
     /**
@@ -239,7 +235,7 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
     */
     public function addJoinExpr(Join $join): static
     {
-        return $this->addJoin($join->__toString());
+        return $this->addJoin(strval($join));
     }
 
 
@@ -289,7 +285,7 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
     */
     public function andHaving(string $condition): static
     {
-        return $this->addHaving($condition, 'AND');
+        return $this->addHaving($condition, ConditionType::AND);
     }
 
 
@@ -303,7 +299,7 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
     */
     public function orHaving(string $condition): static
     {
-        return $this->addHaving($condition, 'OR');
+        return $this->addHaving($condition, ConditionType::OR);
     }
 
 
@@ -313,9 +309,9 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
     /**
      * @inheritDoc
     */
-    public function addHaving(string $condition, string $type = null): static
+    public function addHaving(string $condition, $type = null): static
     {
-        $this->having[$type ?: 'CONDITIONS'][] = $condition;
+        $this->having[$type ?: ConditionType::DEFAULT][] = $condition;
 
         return $this;
     }

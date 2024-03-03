@@ -17,6 +17,19 @@ use Laventure\Component\Database\Query\Builder\SQL\SQLBuilderInterface;
 */
 interface SelectBuilderInterface extends SQLBuilderInterface, WhereInterface
 {
+    
+
+    /**
+     * Select distinct values
+     *
+     * @return $this
+    */
+    public function distinct(): static;
+    
+    
+    
+    
+    
     /**
      * Select columns
      *
@@ -25,17 +38,7 @@ interface SelectBuilderInterface extends SQLBuilderInterface, WhereInterface
     */
     public function select(string $columns): static;
 
-
-
-
-
-
-    /**
-     * Select distinct values
-     *
-     * @return $this
-    */
-    public function distinct(): static;
+    
 
 
 
@@ -65,14 +68,14 @@ interface SelectBuilderInterface extends SQLBuilderInterface, WhereInterface
     public function from(string $table, string $alias = ''): static;
 
 
-
-
+    
+    
 
 
 
 
     /**
-     * Joins table
+     * joinX table
      * @param string $table
      * @param string $condition
      * @return $this
@@ -86,7 +89,7 @@ interface SelectBuilderInterface extends SQLBuilderInterface, WhereInterface
 
 
     /**
-     * Joins table
+     * joinX table
      * @param string $table
      * @param string $condition
      * @return $this
@@ -100,7 +103,7 @@ interface SelectBuilderInterface extends SQLBuilderInterface, WhereInterface
 
 
     /**
-     * Joins table
+     * joinX table
      * @param string $table
      * @param string $condition
      * @return $this
@@ -114,7 +117,7 @@ interface SelectBuilderInterface extends SQLBuilderInterface, WhereInterface
 
 
     /**
-     * Joins table
+     * joinX table
      * @param string $table
      * @param string $condition
      * @return $this
@@ -129,7 +132,7 @@ interface SelectBuilderInterface extends SQLBuilderInterface, WhereInterface
 
 
     /**
-     * Joins table
+     * joinX table
      * @param string $table
      * @param string $condition
      * @return $this
@@ -153,6 +156,10 @@ interface SelectBuilderInterface extends SQLBuilderInterface, WhereInterface
 
 
 
+    
+    
+    
+    
 
 
     /**
@@ -176,6 +183,10 @@ interface SelectBuilderInterface extends SQLBuilderInterface, WhereInterface
     public function addGroupBy(string $columns): static;
 
 
+    
+    
+    
+    
 
 
 

@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder\SQL\Conditions\Where;
 
+use Laventure\Component\Database\Query\Builder\SQL\Conditions\ConditionType;
+
 /**
  * WhereBuilderTrait
  *
@@ -17,11 +19,7 @@ trait WhereTrait
     /**
      * @var array
     */
-    public array $wheres = [
-        'CONDITIONS' => [],
-        'AND'        => [],
-        'OR'         => []
-    ];
+    public array $wheres = [];
 
 
 
@@ -32,9 +30,7 @@ trait WhereTrait
     */
     public function where(string $condition): static
     {
-        $this->wheres['CONDITIONS'][] = $condition;
-
-        return $this;
+        return $this->addWhere($condition);
     }
 
 
@@ -45,9 +41,7 @@ trait WhereTrait
     */
     public function andWhere(string $condition): static
     {
-        $this->wheres['AND'][] = $condition;
-
-        return $this;
+        return $this->addWhere($condition, ConditionType::AND);
     }
 
 
@@ -58,12 +52,26 @@ trait WhereTrait
     */
     public function orWhere(string $condition): static
     {
-        $this->wheres['OR'][] = $condition;
+        return $this->addWhere($condition, ConditionType::OR);
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function addWhere(string $condition, $type = null): static
+    {
+        $this->wheres[$type ?: ConditionType::DEFAULT][] = $condition;
 
         return $this;
     }
 
 
+    
+    
 
 
 

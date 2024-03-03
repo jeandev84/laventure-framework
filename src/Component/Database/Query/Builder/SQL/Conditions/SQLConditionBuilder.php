@@ -16,7 +16,7 @@ use Laventure\Contract\Builder\BuilderInterface;
  *
  * @package  Laventure\Component\Database\Builder\SQL\Conditions
 */
-class SQLCondition implements BuilderInterface
+class SQLConditionBuilder implements BuilderInterface
 {
 
     protected array $conditions = [];
@@ -75,7 +75,7 @@ class SQLCondition implements BuilderInterface
     */
     private function resolve(array $conditions): array
     {
-        if (!empty($conditions['CONDITIONS'])) {
+        if (!empty($conditions[ConditionType::DEFAULT])) {
             return $conditions;
         }
 
@@ -85,8 +85,8 @@ class SQLCondition implements BuilderInterface
         foreach ($conditions as $type => $criteria) {
             if (!empty($criteria)) {
                 $having = match($type) {
-                    'AND' => new andX($criteria),
-                    'OR'  => new orX($criteria),
+                    ConditionType::AND => new andX($criteria),
+                    ConditionType::OR  => new orX($criteria),
                 };
                 if ($key !== $type) {
                     $resolved[] = $type;
