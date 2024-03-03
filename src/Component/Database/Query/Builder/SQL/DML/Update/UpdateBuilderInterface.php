@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Query\Builder\SQL\DML\Update;
 
 use Laventure\Component\Database\Query\Builder\SQL\Conditions\Where\WhereInterface;
-use Laventure\Component\Database\Query\Builder\SQL\SettableInterface;
+use Laventure\Component\Database\Query\Builder\SQL\DML\SettableInterface;
 use Laventure\Component\Database\Query\Builder\SQL\SQLBuilderInterface;
 
 /**

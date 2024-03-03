@@ -88,10 +88,11 @@ class InsertBuilder extends SQLBuilder implements InsertBuilderInterface
 
 
 
+
     /**
      * @inheritDoc
     */
-    public function getFormats(): array
+    public function getCommands(): array
     {
         return [
             new Insert($this->table, $this->insert, $this->values)

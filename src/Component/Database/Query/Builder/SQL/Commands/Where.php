@@ -40,7 +40,7 @@ class Where implements Stringable
     */
     public function __toString(): string
     {
-        if (! $this->conditions->empty()) {
+        if ($this->conditions->empty()) {
             return '';
         }
 

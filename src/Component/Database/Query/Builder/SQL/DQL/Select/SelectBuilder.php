@@ -326,7 +326,7 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
     */
     public function orderBy(string $column, string $direction = null): static
     {
-        return $this->addOrderBy([$column => $direction ?: 'ASC']);
+        return $this->addOrderBy([$column => $direction ?: 'asc']);
     }
 
 
@@ -340,7 +340,11 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
     public function addOrderBy(array $orders): static
     {
         foreach ($orders as $column => $direction) {
-            $this->orderBy[] = "$column $direction";
+            $this->orderBy[$column]  = sprintf(
+         '%s %s',
+                $column,
+                strtoupper($direction)
+            );
         }
 
         return $this;
@@ -381,7 +385,7 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
     /**
      * @inheritDoc
     */
-    protected function getFormats(): array
+    protected function getCommands(): array
     {
         return [
             new Select($this->selects, $this->prefix),

@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder\SQL\Commands;
@@ -19,25 +18,13 @@ class Select implements Stringable
 {
 
     /**
-     * @var array
-    */
-    protected array $columns;
-
-
-    /**
-     * @var string|null
-    */
-    protected ?string $prefix;
-
-
-
-    /**
      * @param array $columns
-     * @param $prefix
+     * @param string $prefix
     */
-    public function __construct(array $columns, $prefix = null) {
-        $this->columns  = $columns;
-        $this->prefix   = $prefix;
+    public function __construct(
+        protected array $columns,
+        protected string $prefix = ''
+    ) {
     }
 
 
@@ -65,9 +52,7 @@ class Select implements Stringable
     */
     private function resolveSelects(array $columns): string
     {
-        if (empty($columns)) {
-            return "*";
-        }
+        if (empty($columns)) { return "*"; }
 
         return join(', ', array_filter($columns));
     }

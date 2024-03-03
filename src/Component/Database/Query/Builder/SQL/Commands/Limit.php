@@ -39,6 +39,10 @@ class Limit implements Stringable
 
         $limit = "LIMIT $this->limit";
 
-        return ($this->offset ? "$limit OFFSET $this->offset" : $limit);
+        if ($this->offset) {
+            $limit = "$limit OFFSET $this->offset";
+        }
+
+        return $limit;
     }
 }

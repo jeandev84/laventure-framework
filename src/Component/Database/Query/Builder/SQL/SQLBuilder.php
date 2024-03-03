@@ -216,7 +216,7 @@ abstract class SQLBuilder implements SQLBuilderInterface
     public function getSQL(): string
     {
         return (new SQLFormatter())
-               ->addFormats($this->getFormats())
+               ->addFormats($this->getCommands())
                ->format();
     }
 
@@ -254,5 +254,5 @@ abstract class SQLBuilder implements SQLBuilderInterface
     /**
      * @return Stringable[]
     */
-    abstract protected function getFormats(): array;
+    abstract protected function getCommands(): array;
 }

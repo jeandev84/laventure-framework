@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Query\Builder\SQL\Factory;
+namespace Laventure\Component\Database\Query\Builder\Factory;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Query\Builder\SQL\DML\Delete\DeleteBuilder;
@@ -23,7 +23,7 @@ use Laventure\Component\Database\Query\Builder\SQL\SQLBuilderInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Builder\SQL
+ * @package  Laventure\Component\Database\Query\Builder\Factory
 */
 class SQLBuilderFactory implements SQLBuilderFactoryInterface
 {

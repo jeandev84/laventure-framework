@@ -1,8 +1,7 @@
 <?php
-
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Query\Builder\SQL\Factory;
+namespace Laventure\Component\Database\Query\Builder;
 
 use Laventure\Component\Database\Query\Builder\SQL\DML\Delete\DeleteBuilderInterface;
 use Laventure\Component\Database\Query\Builder\SQL\DML\Insert\InsertBuilderInterface;
@@ -11,7 +10,7 @@ use Laventure\Component\Database\Query\Builder\SQL\DQL\Select\SelectBuilderInter
 use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionInterface;
 
 /**
- * SQLBuilderFactoryInterface
+ * SQlQueryBuilderInterface
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -19,56 +18,48 @@ use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionInterface;
  *
  * @package  Laventure\Component\Database\Builder\SQL
 */
-interface SQLBuilderFactoryInterface
+interface SQLQueryBuilderInterface
 {
     /**
-     * Create expression builder
-     *
      * @return ExpressionInterface
     */
     public function expr(): ExpressionInterface;
 
 
 
+
     /**
-     * Create select builder
-     *
+     * @param string|null $selects
      * @return SelectBuilderInterface
     */
-    public function createSelectBuilder(): SelectBuilderInterface;
-
+    public function select(string $selects = null): SelectBuilderInterface;
 
 
 
 
     /**
-     * Create insert builder
-     *
+     * @param string $table
      * @return InsertBuilderInterface
     */
-    public function createInsertBuilder(): InsertBuilderInterface;
-
+    public function insert(string $table): InsertBuilderInterface;
 
 
 
 
 
     /**
-     * Create update builder
-     *
+     * @param string $table
      * @return UpdateBuilderInterface
     */
-    public function createUpdateBuilder(): UpdateBuilderInterface;
-
+    public function update(string $table): UpdateBuilderInterface;
 
 
 
 
 
     /**
-     * Create delete builder
-     *
+     * @param string $table
      * @return DeleteBuilderInterface
     */
-    public function createDeleteBuilder(): DeleteBuilderInterface;
+    public function delete(string $table): DeleteBuilderInterface;
 }

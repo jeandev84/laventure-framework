@@ -6,7 +6,8 @@ namespace Laventure\Component\Database\Query\Builder\SQL\DML\Delete;
 use Laventure\Component\Database\Query\Builder\SQL\Commands\Delete;
 use Laventure\Component\Database\Query\Builder\SQL\Commands\Where;
 use Laventure\Component\Database\Query\Builder\SQL\Conditions\Where\WhereTrait;
-use Laventure\Component\Database\Query\Builder\SQL\SQLBuilderTrait;
+use Laventure\Component\Database\Query\Builder\SQL\SQLBuilder;
+
 
 /**
  * DeleteBuilder
@@ -17,9 +18,8 @@ use Laventure\Component\Database\Query\Builder\SQL\SQLBuilderTrait;
  *
  * @package  Laventure\Component\Database\Builder\SQL\DML\Delete
 */
-class DeleteBuilder implements DeleteBuilderInterface
+class DeleteBuilder extends SQLBuilder implements DeleteBuilderInterface
 {
-    use SQLBuilderTrait;
     use WhereTrait;
 
     protected $table = null;
@@ -36,11 +36,10 @@ class DeleteBuilder implements DeleteBuilderInterface
 
 
 
-
     /**
      * @inheritDoc
     */
-    public function getCommands(): array
+    protected function getCommands(): array
     {
         return [
             new Delete($this->table),

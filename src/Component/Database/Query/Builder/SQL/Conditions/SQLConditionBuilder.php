@@ -77,7 +77,7 @@ class SQLConditionBuilder implements BuilderInterface
     private function resolve(array $conditions): array
     {
         if (!empty($conditions[ConditionType::DEFAULT])) {
-            return $conditions;
+            return $conditions[ConditionType::DEFAULT];
         }
 
         $resolved = [];
@@ -85,10 +85,11 @@ class SQLConditionBuilder implements BuilderInterface
 
         foreach ($conditions as $type => $criteria) {
             if (!empty($criteria)) {
+                $criteriaAsString = join(', ', $criteria);
                 $having = match($type) {
                     ConditionType::AND => new andX($criteria),
                     ConditionType::OR  => new orX($criteria),
-                    default            => new RuntimeException("Could not get criteria type ($type)")
+                    default            => new RuntimeException("Could not get criteria type ($type) ($criteriaAsString)")
                 };
                 if ($key !== $type) {
                     $resolved[] = $type;

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Query\Builder\Common;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
+use Laventure\Component\Database\Query\Builder\Factory\SQLBuilderFactory;
 use Laventure\Component\Database\Query\Builder\QueryBuilderInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Conditions\SQLConditionBuilder;
 use Laventure\Component\Database\Query\Builder\SQL\Conditions\Where\WhereInterface;
@@ -12,7 +13,6 @@ use Laventure\Component\Database\Query\Builder\SQL\DML\Insert\InsertBuilderInter
 use Laventure\Component\Database\Query\Builder\SQL\DML\Update\UpdateBuilderInterface;
 use Laventure\Component\Database\Query\Builder\SQL\DQL\Select\SelectBuilderInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionInterface;
-use Laventure\Component\Database\Query\Builder\SQL\Factory\SQLBuilderFactory;
 use Laventure\Component\Database\Query\Builder\SQL\SQLBuilderInterface;
 use Laventure\Component\Database\Query\QueryInterface;
 
