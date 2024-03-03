@@ -6,6 +6,7 @@ namespace Laventure\Component\Database\Query\Builder\SQL\Conditions;
 use Laventure\Component\Database\Query\Builder\SQL\Expr\Conditions\andX;
 use Laventure\Component\Database\Query\Builder\SQL\Expr\Conditions\orX;
 use Laventure\Contract\Builder\BuilderInterface;
+use RuntimeException;
 
 /**
  * ConditionBuilder
@@ -87,6 +88,7 @@ class SQLConditionBuilder implements BuilderInterface
                 $having = match($type) {
                     ConditionType::AND => new andX($criteria),
                     ConditionType::OR  => new orX($criteria),
+                    default            => new RuntimeException("Could not get criteria type ($type)")
                 };
                 if ($key !== $type) {
                     $resolved[] = $type;
