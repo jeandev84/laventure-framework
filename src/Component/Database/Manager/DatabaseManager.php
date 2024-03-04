@@ -190,7 +190,7 @@ class DatabaseManager implements DatabaseManagerInterface
             $this->abortIf("unavailable connection named '$name'");
         }
 
-        return $this->connect($name, $config);
+        return $this->make($name, $config);
     }
 
 
@@ -202,7 +202,7 @@ class DatabaseManager implements DatabaseManagerInterface
      * @param ConfigurationInterface $config
      * @return ConnectionInterface
     */
-    public function connect(string $name, ConfigurationInterface $config): ConnectionInterface
+    public function make(string $name, ConfigurationInterface $config): ConnectionInterface
     {
         $this->connections[$name]->connect($config);
 

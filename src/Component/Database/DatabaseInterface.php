@@ -26,6 +26,18 @@ interface DatabaseInterface
 
 
 
+
+    /**
+     * @param string $name
+     * @return $this
+    */
+    public function name(string $name): static;
+
+
+
+
+
+
     /**
      * Returns connection
      *

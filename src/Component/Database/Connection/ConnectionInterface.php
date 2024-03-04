@@ -38,9 +38,9 @@ interface ConnectionInterface extends TransactionInterface
      *
      * @param ConfigurationInterface $config
      *
-     * @return void
+     * @return mixed
     */
-    public function connect(ConfigurationInterface $config): void;
+    public function connect(ConfigurationInterface $config): mixed;
 
 
 
@@ -179,17 +179,6 @@ interface ConnectionInterface extends TransactionInterface
      * @return int|bool
     */
     public function executeQuery(string $sql): mixed;
-
-
-
-
-
-    /**
-     * Returns database name
-     *
-     * @return string
-    */
-    public function getDatabaseName(): string;
 
 
 

@@ -17,12 +17,57 @@ use Laventure\Component\Database\Connection\ConnectionInterface;
 */
 abstract class Database implements DatabaseInterface
 {
+
+
+    /**
+     * @var ConnectionInterface
+    */
+    protected ConnectionInterface $connection;
+
+
+    /**
+     * @var string
+    */
+    protected string $name;
+
+
+
+
+
     /**
      * @param ConnectionInterface $connection
     */
-    public function __construct(protected ConnectionInterface $connection) {
-
+    public function __construct(ConnectionInterface $connection) {
+        $this->connection = $connection;
+        $this->name       = $connection->configuration()->database();
     }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function name(string $name): static
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+
 
 
 
@@ -39,15 +84,6 @@ abstract class Database implements DatabaseInterface
 
 
 
-    /**
-     * @inheritdoc
-    */
-    public function getName(): string
-    {
-        return $this->connection
-                    ->configuration()
-                    ->database();
-    }
 
 
 

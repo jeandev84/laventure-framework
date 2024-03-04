@@ -44,7 +44,7 @@ class DatabaseServiceProvider extends ServiceProvider
                 $credentials    = $config[$credentialKey];
 
                 $database = new Manager();
-                $database->addConnections([
+                $database->addCredentials([
                     'connection'    => $connection,
                     'extension'     => $extension,
                     'credentials'   => $credentials,

@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Manager;
 
+use Laventure\Component\Database\Configuration\Configuration;
+use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Connection\Drivers\Mysql\MysqlConnection;
 use Laventure\Component\Database\Connection\Drivers\Oracle\OracleConnection;
 use Laventure\Component\Database\Connection\Drivers\Pgsql\PgsqlConnection;
@@ -22,7 +24,7 @@ use Laventure\Component\Database\Schema\Table\TableInterface;
  *
  * @package  Laventure\Component\Database
 */
-class Manager extends DatabaseManager
+class Manager
 {
     /**
      * @var static
@@ -30,6 +32,11 @@ class Manager extends DatabaseManager
     protected static $instance;
 
 
+
+    /**
+     * @var DatabaseManager
+    */
+    protected DatabaseManager $databaseManager;
 
 
 
@@ -43,7 +50,9 @@ class Manager extends DatabaseManager
 
     public function __construct()
     {
-        parent::__construct($this->getDefaultConnections());
+        $this->databaseManager = new DatabaseManager(
+            $this->getDefaultConnections()
+        );
     }
 
 
@@ -54,15 +63,31 @@ class Manager extends DatabaseManager
      * @param array $credentials
      * @return $this
     */
-    public function addConnections(array $credentials): static
+    public function addCredentials(array $credentials): static
     {
         $this->credentials = $credentials;
 
         return $this;
     }
+    
+    
+    
 
 
+    /**
+     * @param string $name
+     * @param array $credentials
+     * @return $this
+    */
+    public function open(string $name, array $credentials): static
+    {
+        $this->databaseManager->open($name, $credentials);
 
+        return $this;
+    }
+
+    
+    
 
 
     /**
@@ -76,6 +101,31 @@ class Manager extends DatabaseManager
         );
     }
 
+
+
+
+
+    /**
+     * @param string|null $name
+     * @return ConnectionInterface
+    */
+    public function connection(string $name = null): ConnectionInterface
+    {
+         return $this->databaseManager->connection($name);
+    }
+
+
+
+
+
+    /**
+     * @param string $name
+     * @return TableInterface
+    */
+    public function table(string $name): TableInterface
+    {
+        return $this->connection()->createTable($name);
+    }
 
 
 
@@ -106,14 +156,47 @@ class Manager extends DatabaseManager
 
 
 
+
+
     /**
-     * @param string $name
-     * @return TableInterface
+     * @return ManagerConfiguration
     */
-    public function table(string $name): TableInterface
+    public function config(): ManagerConfiguration
     {
-        return $this->connection()->createTable($name);
+        return new ManagerConfiguration($this->credentials);
     }
+
+
+
+
+
+    /**
+     * @return Configuration
+    */
+    public function credentials(): Configuration
+    {
+        return new Configuration($this->config()->getCredentials());
+    }
+
+
+
+
+    /**
+     * @return mixed
+    */
+    public function createDatabase(): mixed
+    {
+        $credentials = $this->credentials();
+        $database    = $credentials->database();
+        $credentials->remove('database');
+        $connection = $this->connection();
+        $connection->connect($credentials);
+        return $connection->getDatabase()
+                         ->name($database)
+                         ->create();
+    }
+
+    
 
 
 
@@ -124,23 +207,10 @@ class Manager extends DatabaseManager
     public static function instance(): static
     {
         if (!static::$instance) {
-            static::$instance = new static();
+            static::$instance = new self();
         }
 
         return static::$instance;
-    }
-
-
-
-
-
-
-    /**
-     * @return ManagerConfiguration
-    */
-    public function config(): ManagerConfiguration
-    {
-         return new ManagerConfiguration($this->credentials);
     }
 
 

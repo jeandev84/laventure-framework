@@ -14,6 +14,7 @@ use Laventure\Component\Database\Connection\Extensions\PDO\Query\Query;
 use Laventure\Component\Database\Connection\Query\QueryInterface;
 use Laventure\Component\Database\Connection\Traits\ConnectionTrait;
 use PDO;
+use PDOException;
 
 /**
  * PdoConnectionTrait
@@ -53,11 +54,13 @@ trait PdoConnectionTrait
 
     /**
      * @param ConfigurationInterface $config
-     * @return void
-     */
-    public function connect(ConfigurationInterface $config): void
+     * @return $this
+    */
+    public function connect(ConfigurationInterface $config): static
     {
         $this->withConnection($this->makePdo($config));
+
+        return $this;
     }
 
 
@@ -95,7 +98,7 @@ trait PdoConnectionTrait
     public function purge(): void
     {
         $this->withConfiguration(new NullConfiguration())
-            ->disconnect();
+             ->disconnect();
     }
 
 
@@ -257,11 +260,11 @@ trait PdoConnectionTrait
 
 
     /**
-     * @inheritdoc
-     */
+     * @param ConfigurationInterface $config
+     * @return PDO
+    */
     public function makePdo(ConfigurationInterface $config): PDO
     {
-        $config['dsn'] = $this->makePdoDsn($config);
         $this->withConfiguration($config);
 
         return $this->factory->makeConnection($config);
@@ -319,24 +322,6 @@ trait PdoConnectionTrait
         return PDO::getAvailableDrivers();
     }
 
-
-
-
-    /**
-     * @param ConfigurationInterface $config
-     * @return string
-    */
-    private function makePdoDsn(ConfigurationInterface $config): string
-    {
-        return PdoDsnBuilder::create($config['driver'], [
-            [
-                'host'     => $config->host(),
-                'port'     => $config->port(),
-                'dbname'   => $config->database(),
-                'charset'  => $config->charset()
-            ]
-        ]);
-    }
 
 
 
