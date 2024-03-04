@@ -6,6 +6,8 @@ namespace Laventure\Component\Database\Connection\Extensions\PDO;
 
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Configuration\Null\NullConfiguration;
+use Laventure\Component\Database\Connection\Exception\ConnectionException;
+use Laventure\Component\Database\Connection\Extensions\PDO\Config\PdoConfiguration;
 use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\PdoDsn;
 use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\PdoDsnBuilder;
 use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnectionFactory;
@@ -58,6 +60,10 @@ trait PdoConnectionTrait
     */
     public function connect(ConfigurationInterface $config): static
     {
+        if (!$config->has('dsn')) {
+            $config['dsn'] = $this->makePdoDsn($config);
+        }
+
         $this->withConnection($this->makePdo($config));
 
         return $this;
@@ -74,6 +80,28 @@ trait PdoConnectionTrait
     public function connected(): bool
     {
         return $this->connection instanceof PDO;
+    }
+
+
+
+
+
+
+    /**
+     * Reconnect to the database
+     *
+     * @param ConfigurationInterface $config
+     *
+     * @return $this
+     * @throws ConnectionException
+    */
+    public function reconnect(ConfigurationInterface $config): static
+    {
+        if (!$config->has('dsn')) {
+           throw new ConnectionException("Unable dsn for reconnect to database");
+        }
+
+        return $this->withConnection($this->makePdo($config));
     }
 
 
@@ -265,11 +293,12 @@ trait PdoConnectionTrait
     */
     public function makePdo(ConfigurationInterface $config): PDO
     {
+        $config->add($this->getDsnParamsFromString($config['dsn']));
+
         $this->withConfiguration($config);
 
         return $this->factory->makeConnection($config);
     }
-
 
 
 
@@ -320,6 +349,48 @@ trait PdoConnectionTrait
     public function getAvailableDrivers(): array
     {
         return PDO::getAvailableDrivers();
+    }
+
+
+
+
+
+    /**
+     * @param ConfigurationInterface $config
+     * @return string
+    */
+    private function makePdoDsn(ConfigurationInterface $config): string
+    {
+        return PdoDsnBuilder::create($config['driver'], [
+            'host'     => $config['host'],
+            'port'     => $config['port'],
+            'dbname'   => $config['database'],
+            'charset'  => $config['charset']
+        ]);
+    }
+
+
+
+
+
+
+    /**
+     * @param string $dsn
+     * @return array
+    */
+    public function getDsnParamsFromString(string $dsn): array
+    {
+        $config = [];
+        [$driver, $options] = explode(':', $dsn, 2);
+        $params = explode(';', $options);
+        $config['driver'] = $driver;
+
+        foreach ($params as $attributes) {
+            [$key, $value] = explode('=', $attributes, 2);
+            $params[$key] = $value;
+        }
+
+        return $config;
     }
 
 

@@ -77,7 +77,6 @@ class PdoDsn implements Stringable, ArrayAccess
 
 
 
-
     /**
      * @param string $dsn
      * @return void

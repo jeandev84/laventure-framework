@@ -26,19 +26,12 @@ use Laventure\Component\Database\Schema\Table\TableInterface;
  *
  * @package  Laventure\Component\Database
 */
-class Manager
+class Manager extends DatabaseManager
 {
     /**
      * @var static
     */
     protected static $instance;
-
-
-
-    /**
-     * @var DatabaseManager
-    */
-    protected DatabaseManager $databaseManager;
 
 
 
@@ -50,13 +43,11 @@ class Manager
 
 
 
+
     public function __construct()
     {
-        $this->databaseManager = new DatabaseManager(
-            $this->getDefaultConnections()
-        );
+        parent::__construct($this->getDefaultConnections());
     }
-
 
 
 
@@ -73,21 +64,6 @@ class Manager
         return $this;
     }
 
-
-
-
-    /**
-     * @param string $name
-     * @param ConfigurationInterface $config
-     * @return $this
-    */
-    public function open(string $name, ConfigurationInterface $config): static
-    {
-        $this->databaseManager->open($name, $config);
-
-        return $this;
-    }
-
     
     
 
@@ -98,23 +74,11 @@ class Manager
     public function bootConnection(): static
     {
         return $this->open(
-            $this->currentConnection(),
-            $this->credentials()
+            $this->config()->getConnection(),
+            new Configuration($this->config()->getCredentials())
         );
     }
 
-
-
-
-
-    /**
-     * @param string|null $name
-     * @return ConnectionInterface
-    */
-    public function connection(string $name = null): ConnectionInterface
-    {
-         return $this->databaseManager->connection($name);
-    }
 
 
 
@@ -166,61 +130,6 @@ class Manager
     public function config(): ManagerConfiguration
     {
         return new ManagerConfiguration($this->credentials);
-    }
-
-
-
-
-
-    /**
-     * @return string
-    */
-    public function currentConnection(): string
-    {
-        return $this->config()->getConnection();
-    }
-
-
-
-
-    /**
-     * @return ConfigurationInterface
-    */
-    public function credentials(): ConfigurationInterface
-    {
-        $config = new Configuration($this->config()->getCredentials());
-
-        if ($this->config()->hasPdoExtension()) {
-            $config = new PdoConfiguration($config->all());
-            $config->setDsn($config['driver'], [
-                'host'     => $config->host(),
-                'port'     => $config->port(),
-                'dbname'   => $config->database(),
-                'charset'  => $config->charset()
-            ]);
-        }
-
-        return $config;
-    }
-
-
-
-
-
-
-    /**
-     * @return mixed
-    */
-    public function createDatabase(): mixed
-    {
-        $credentials = $this->credentials();
-        $database    = $credentials->database();
-        $credentials->remove('database');
-        $connection = $this->connection();
-        $connection->connect($credentials);
-        return $connection->getDatabase()
-                          ->name($database)
-                          ->create();
     }
 
     

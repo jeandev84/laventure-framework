@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Manager;
 
 use Laventure\Component\Database\Configuration\Configuration;
+use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\PdoDsnBuilder;
 
 /**
  * ManagerConfiguration
@@ -43,7 +44,7 @@ class ManagerConfiguration extends Configuration
     */
     public function getCredentials(): array
     {
-       return $this->required('credentials');
+        return $this->required('credentials', []);
     }
 
 
@@ -56,17 +57,5 @@ class ManagerConfiguration extends Configuration
     public function getConnections(): array
     {
         return $this->required('connections');
-    }
-
-
-
-
-
-    /**
-     * @return bool
-    */
-    public function hasPdoExtension(): bool
-    {
-        return $this->match('extension', 'pdo');
     }
 }
