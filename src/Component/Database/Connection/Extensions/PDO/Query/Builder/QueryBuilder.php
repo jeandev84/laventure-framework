@@ -7,6 +7,7 @@ use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Connection\Query\Builder\SQL\Criteria\PDO\SQLCriteriaResolverPDO;
 use Laventure\Component\Database\Connection\Query\Builder\SQL\DML\Delete\DeleteBuilderInterface;
 use Laventure\Component\Database\Connection\Query\Builder\SQL\DML\Insert\InsertBuilderInterface;
+use Laventure\Component\Database\Connection\Query\Builder\SQL\DML\Insert\PDO\InsertResolverPDO;
 use Laventure\Component\Database\Connection\Query\Builder\SQL\DML\Update\UpdateBuilderInterface;
 use Laventure\Component\Database\Connection\Query\Builder\SQL\DQL\Select\SelectBuilderInterface;
 use Laventure\Component\Database\Connection\Query\Builder\SQL\Expr\ExpressionInterface;
@@ -73,8 +74,11 @@ class QueryBuilder implements SQLQueryBuilderInterface
     */
     public function insert(string $table): InsertBuilderInterface
     {
-
+        $insert = $this->builder->insert($table);
+        $insert->addInsertResolver(new InsertResolverPDO($insert));
+        return $insert;
     }
+
 
 
 
@@ -84,7 +88,9 @@ class QueryBuilder implements SQLQueryBuilderInterface
     */
     public function update(string $table): UpdateBuilderInterface
     {
-
+        $update = $this->builder->update($table);
+        $update->addCriteriaResolver(new SQLCriteriaResolverPDO($update));
+        return $update;
     }
 
 
@@ -95,6 +101,8 @@ class QueryBuilder implements SQLQueryBuilderInterface
     */
     public function delete(string $table): DeleteBuilderInterface
     {
-
+        $delete = $this->builder->delete($table);
+        $delete->addCriteriaResolver(new SQLCriteriaResolverPDO($delete));
+        return $delete;
     }
 }

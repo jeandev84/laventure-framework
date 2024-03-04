@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Query\Builder\SQL\Criteria\PDO;
 
+use Laventure\Component\Database\Connection\Query\Builder\SQL\Criteria\CriteriaResolved;
+use Laventure\Component\Database\Connection\Query\Builder\SQL\Criteria\CriteriaResolvedInterface;
 use Laventure\Component\Database\Connection\Query\Builder\SQL\Criteria\SQLCriteriaResolver;
 use Laventure\Component\Database\Connection\Query\Builder\SQL\SQLBuilderInterface;
 
@@ -22,12 +24,15 @@ class SQLCriteriaResolverPDO extends SQLCriteriaResolver
     /**
      * @inheritdoc
     */
-    public function resolveWhereIn($column, array $value): SQLBuilderInterface
+    public function resolveWhereIn($column, array $value): CriteriaResolvedInterface
     {
         $expr        = $this->builder->expr();
         $bindParam   = $this->resolveBindingColumn($column);
-        $this->builder->andWhere($expr->in($column, ":$bindParam"));
-        return $this->builder->setParameter($column, $value);
+        return new CriteriaResolved(
+            $expr->in($column, ":$bindParam"),
+            $column,
+            $value
+        );
     }
 
 
@@ -36,12 +41,15 @@ class SQLCriteriaResolverPDO extends SQLCriteriaResolver
     /**
      * @inheritdoc
     */
-    public function resolveWhereEqualTo($column, $value): SQLBuilderInterface
+    public function resolveWhereEqualTo($column, $value): CriteriaResolvedInterface
     {
         $expr        = $this->builder->expr();
         $bindParam   = $this->resolveBindingColumn($column);
-        $this->builder->andWhere($expr->eq($column, ":$bindParam"));
-        return $this->builder->setParameter($column, $value);
+        return new CriteriaResolved(
+            $expr->eq($column, ":$bindParam"),
+            $column,
+            $value
+        );
     }
 
 

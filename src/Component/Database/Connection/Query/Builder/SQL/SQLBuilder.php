@@ -201,10 +201,12 @@ abstract class SQLBuilder implements SQLBuilderInterface
     {
         foreach ($conditions as $column => $value) {
             if (is_array($value)) {
-                $this->criteriaResolver->resolveWhereIn($column, $value);
+                $resolved = $this->criteriaResolver->resolveWhereIn($column, $value);
             } else {
-                $this->criteriaResolver->resolveWhereEqualTo($column, $value);
+                $resolved = $this->criteriaResolver->resolveWhereEqualTo($column, $value);
             }
+            $this->andWhere($resolved->getCondition());
+            $this->setParameter($resolved->getParam(), $resolved->getValue());
         }
         return $this;
     }
