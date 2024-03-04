@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Connection\Query\Builder\SQL\DML\Insert\PDO;
+namespace Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\SQL\DML\Insert;
 
 use Laventure\Component\Database\Connection\Query\Builder\SQL\DML\Insert\InsertResolver;
 

@@ -147,8 +147,7 @@ abstract class SQLBuilder implements SQLBuilderInterface
     */
     public function set($column, $value): static
     {
-        $this->set[$column] = $this->settableResolver
-                                   ->resolve($column, $value);
+        $this->set[$column] = $this->settableResolver->resolve($column, $value);
 
         return $this;
     }

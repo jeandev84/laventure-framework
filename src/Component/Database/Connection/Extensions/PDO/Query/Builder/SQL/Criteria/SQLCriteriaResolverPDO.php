@@ -1,12 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Connection\Query\Builder\SQL\Criteria\PDO;
+namespace Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\SQL\Criteria;
 
 use Laventure\Component\Database\Connection\Query\Builder\SQL\Criteria\CriteriaResolved;
 use Laventure\Component\Database\Connection\Query\Builder\SQL\Criteria\CriteriaResolvedInterface;
 use Laventure\Component\Database\Connection\Query\Builder\SQL\Criteria\SQLCriteriaResolver;
-use Laventure\Component\Database\Connection\Query\Builder\SQL\SQLBuilderInterface;
 
 /**
  * SQLCriteriaResolverPDO

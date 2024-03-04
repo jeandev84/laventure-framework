@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Connection\Query\Builder\SQL\Set\PDO;
+namespace Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\SQL\Set;
 
 use Laventure\Component\Database\Connection\Query\Builder\SQL\Set\SettableResolver;
 

@@ -1,17 +1,17 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Connection\Extensions\PDO\Query;
+namespace Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
-use Laventure\Component\Database\Connection\Query\Builder\SQL\Criteria\PDO\SQLCriteriaResolverPDO;
+use Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\SQL\Criteria\SQLCriteriaResolverPDO;
+use Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\SQL\DML\Insert\InsertResolverPDO;
+use Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\SQL\Set\SettableResolverPDO;
 use Laventure\Component\Database\Connection\Query\Builder\SQL\DML\Delete\DeleteBuilderInterface;
 use Laventure\Component\Database\Connection\Query\Builder\SQL\DML\Insert\InsertBuilderInterface;
-use Laventure\Component\Database\Connection\Query\Builder\SQL\DML\Insert\PDO\InsertResolverPDO;
 use Laventure\Component\Database\Connection\Query\Builder\SQL\DML\Update\UpdateBuilderInterface;
 use Laventure\Component\Database\Connection\Query\Builder\SQL\DQL\Select\SelectBuilderInterface;
 use Laventure\Component\Database\Connection\Query\Builder\SQL\Expr\ExpressionInterface;
-use Laventure\Component\Database\Connection\Query\Builder\SQL\Set\PDO\SettableResolverPDO;
 use Laventure\Component\Database\Connection\Query\Builder\SQLQueryBuilder;
 use Laventure\Component\Database\Connection\Query\Builder\SQLQueryBuilderInterface;
 

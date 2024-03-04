@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Connection\Drivers\Mysql;
 
 
-use Laventure\Component\Database\Connection\Extensions\PDO\Query\QueryBuilder;
+use Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\QueryBuilder;
 
 
 /**
