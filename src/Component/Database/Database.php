@@ -85,9 +85,6 @@ abstract class Database implements DatabaseInterface
 
 
 
-
-
-
     /**
      * @return bool
     */
@@ -149,12 +146,25 @@ abstract class Database implements DatabaseInterface
 
 
 
+
+
+    /**
+     * @param array $queries
+     * @return bool|int
+    */
+    public function execQueries(array $queries): bool|int
+    {
+        return $this->exec(join(' ', $queries));
+    }
+
+
+
     protected function createQuery(string $sql): bool|int
     {
         $config     = $this->connection->configuration();
         $database   = $config->database();
         $config->removeDatabase();
         $this->connection->connect($config);
-
+        return $this->connection->executeQuery($sql);
     }
 }

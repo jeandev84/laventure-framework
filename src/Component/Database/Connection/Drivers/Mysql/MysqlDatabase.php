@@ -21,10 +21,13 @@ class MysqlDatabase extends Database
     */
     public function create(): bool
     {
-        $this->exec("CREATE DATABASE IF NOT EXISTS {$this->getName()};");
-        $this->exec("DEFAULT CHARACTER SET {$this->charset()};");
-        $this->exec("DEFAULT COLLATE {$this->collation()};");
-        $this->exec("SET default_storage_engine = {$this->engine()};");
+        $this->execQueries([
+            "CREATE DATABASE IF NOT EXISTS {$this->getName()}",
+            "DEFAULT CHARACTER SET {$this->charset()}",
+            "DEFAULT COLLATE {$this->collation()};"
+        ]);
+
+        $this->exec( "SET default_storage_engine = {$this->engine()};");
 
         return $this->exists();
     }
@@ -79,7 +82,7 @@ class MysqlDatabase extends Database
     */
     public function engine(): string
     {
-        return $this->connection->config('engine', 'InnoDB');
+        return $this->connection->config('engine', 'INNODB');
     }
 
 

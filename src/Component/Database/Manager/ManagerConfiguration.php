@@ -44,7 +44,7 @@ class ManagerConfiguration extends Configuration
     */
     public function getCredentials(): array
     {
-        return $this->required('credentials', []);
+        return $this->required('credentials');
     }
 
 
