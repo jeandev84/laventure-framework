@@ -146,4 +146,15 @@ abstract class Database implements DatabaseInterface
     {
         return $this->connection->executeQuery($sql);
     }
+
+
+
+    protected function createQuery(string $sql): bool|int
+    {
+        $config     = $this->connection->configuration();
+        $database   = $config->database();
+        $config->removeDatabase();
+        $this->connection->connect($config);
+
+    }
 }

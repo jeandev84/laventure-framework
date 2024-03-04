@@ -110,4 +110,16 @@ interface ConfigurationInterface extends ParameterInterface
      * @return string
      */
     public function prefix(): string;
+
+
+
+
+
+
+    /**
+     * Remove database credential
+     *
+     * @return mixed
+    */
+    public function removeDatabase(): mixed;
 }

@@ -352,4 +352,19 @@ class Parameter implements ParameterInterface
 
         return $this->get($key);
     }
+
+
+
+
+
+
+    /**
+     * @param $id
+     * @param $value
+     * @return bool
+    */
+    public function match($id, $value): bool
+    {
+        return $this->get($id) === $value;
+    }
 }

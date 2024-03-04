@@ -32,7 +32,7 @@ class ManagerConfiguration extends Configuration
     */
     public function getExtension(): string
     {
-        return $this->string('extension');
+        return $this->required('extension');
     }
 
 
@@ -43,9 +43,8 @@ class ManagerConfiguration extends Configuration
     */
     public function getCredentials(): array
     {
-        return $this->required('credentials');
+       return $this->required('credentials');
     }
-
 
 
 
@@ -56,6 +55,18 @@ class ManagerConfiguration extends Configuration
     */
     public function getConnections(): array
     {
-        return $this->get('connections', []);
+        return $this->required('connections');
+    }
+
+
+
+
+
+    /**
+     * @return bool
+    */
+    public function hasPdoExtension(): bool
+    {
+        return $this->match('extension', 'pdo');
     }
 }

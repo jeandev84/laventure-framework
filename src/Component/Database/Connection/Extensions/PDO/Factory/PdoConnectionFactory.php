@@ -5,6 +5,7 @@ namespace Laventure\Component\Database\Connection\Extensions\PDO\Factory;
 
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Connection\Exception\ConnectionException;
+use Laventure\Component\Database\Connection\Extensions\PDO\Config\PdoConfiguration;
 use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\PdoDsnBuilder;
 use PDO;
 use PDOException;
@@ -65,10 +66,6 @@ class PdoConnectionFactory implements PdoConnectionFactoryInterface
     */
     public function makeConnection(ConfigurationInterface $config): PDO
     {
-        if (!$config->has('dsn')) {
-            $config['dsn'] = $this->makePdoDsn($config);
-        }
-
         return $this->makePdo(
             $config->required('dsn'),
             $config->username(),
@@ -80,11 +77,13 @@ class PdoConnectionFactory implements PdoConnectionFactoryInterface
 
 
 
+
+
     /**
      * @param ConfigurationInterface $config
      * @return string
     */
-    public function makePdoDsn(ConfigurationInterface $config): string
+    private function makePdoDsn(ConfigurationInterface $config): string
     {
         return PdoDsnBuilder::create($config['driver'], [
             [
@@ -95,5 +94,4 @@ class PdoConnectionFactory implements PdoConnectionFactoryInterface
             ]
         ]);
     }
-
 }

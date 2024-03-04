@@ -112,4 +112,16 @@ class Configuration extends Parameter implements ConfigurationInterface
     {
         return $this->get('collation', '');
     }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function removeDatabase(): bool
+    {
+        return $this->remove('database');
+    }
 }

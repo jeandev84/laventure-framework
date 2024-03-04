@@ -37,7 +37,7 @@ class DatabaseManager implements DatabaseManagerInterface
 
 
     /**
-     * @var array
+     * @var ConfigurationInterface[]
     */
     protected array $config = [];
 
@@ -68,10 +68,10 @@ class DatabaseManager implements DatabaseManagerInterface
     /**
      * @inheritDoc
     */
-    public function open(string $name, array $credentials): static
+    public function open(string $name, ConfigurationInterface $config): static
     {
         $this->setCurrent($name);
-        $this->setConfiguration($name, $credentials);
+        $this->setConfiguration($name, $config);
 
         return $this;
     }
@@ -79,12 +79,14 @@ class DatabaseManager implements DatabaseManagerInterface
 
 
 
+
+
     /**
      * @param string $name
-     * @param array $config
+     * @param ConfigurationInterface $config
      * @return $this
-    */
-    public function setConfiguration(string $name, array $config): static
+   */
+    public function setConfiguration(string $name, ConfigurationInterface $config): static
     {
         $this->config[$name] = $config;
 
@@ -169,7 +171,7 @@ class DatabaseManager implements DatabaseManagerInterface
             $this->abortIf("empty params for connection ($name)");
         }
 
-        return new Configuration($this->config[$name]);
+        return $this->config[$name];
     }
 
 
@@ -197,26 +199,6 @@ class DatabaseManager implements DatabaseManagerInterface
 
 
 
-    /**
-     * @param string $name
-     * @param ConfigurationInterface $config
-     * @return ConnectionInterface
-    */
-    public function make(string $name, ConfigurationInterface $config): ConnectionInterface
-    {
-        $this->connections[$name]->connect($config);
-
-        if (! $this->connections[$name]->connected()) {
-            $this->abortIf("no connection detected for '$name'.");
-        }
-
-        $this->setCurrent($name);
-
-        return $this->connected[$name] = $this->connections[$name];
-    }
-
-
-
 
 
     /**
@@ -234,7 +216,7 @@ class DatabaseManager implements DatabaseManagerInterface
     /**
      * @inheritDoc
     */
-    public function credentials(): array
+    public function configs(): array
     {
         return $this->config;
     }
@@ -301,5 +283,26 @@ class DatabaseManager implements DatabaseManagerInterface
         (function () use ($message) {
             throw new DatabaseManagerException($message, [], 500);
         })();
+    }
+
+
+
+
+    /**
+     * @param string $name
+     * @param ConfigurationInterface $config
+     * @return ConnectionInterface
+    */
+    private function make(string $name, ConfigurationInterface $config): ConnectionInterface
+    {
+        $this->connections[$name]->connect($config);
+
+        if (! $this->connections[$name]->connected()) {
+            $this->abortIf("no connection detected for '$name'.");
+        }
+
+        $this->setCurrent($name);
+
+        return $this->connected[$name] = $this->connections[$name];
     }
 }
