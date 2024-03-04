@@ -20,7 +20,8 @@ use Laventure\Component\Database\Query\Builder\SQL\SQLBuilder;
 */
 class DeleteBuilder extends SQLBuilder implements DeleteBuilderInterface
 {
-    use WhereTrait;
+
+    #use WhereTrait;
 
     protected $table = null;
 

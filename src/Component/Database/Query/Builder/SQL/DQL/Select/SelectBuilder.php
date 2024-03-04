@@ -17,7 +17,6 @@ use Laventure\Component\Database\Query\Builder\SQL\Commands\Select;
 use Laventure\Component\Database\Query\Builder\SQL\Commands\Utils\Joins;
 use Laventure\Component\Database\Query\Builder\SQL\Commands\Where;
 use Laventure\Component\Database\Query\Builder\SQL\Conditions\ConditionType;
-use Laventure\Component\Database\Query\Builder\SQL\Conditions\Where\WhereTrait;
 use Laventure\Component\Database\Query\Builder\SQL\SQLBuilder;
 
 /**
@@ -31,8 +30,6 @@ use Laventure\Component\Database\Query\Builder\SQL\SQLBuilder;
 */
 class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
 {
-    use WhereTrait;
-
 
     /**
      * @var string

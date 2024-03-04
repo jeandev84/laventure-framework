@@ -5,6 +5,7 @@ namespace Laventure\Component\Database\Query\Builder\SQL\Conditions\Where;
 
 use Laventure\Component\Database\Query\Builder\SQL\Conditions\ConditionType;
 
+
 /**
  * WhereBuilderTrait
  *
@@ -25,10 +26,10 @@ trait WhereTrait
 
 
     /**
-     * @param string $condition
+     * @param $condition
      * @return $this
     */
-    public function where(string $condition): static
+    public function where($condition): static
     {
         return $this->addWhere($condition);
     }
@@ -39,7 +40,7 @@ trait WhereTrait
     /**
      * @inheritDoc
     */
-    public function andWhere(string $condition): static
+    public function andWhere($condition): static
     {
         return $this->addWhere($condition, ConditionType::AND);
     }
@@ -50,7 +51,7 @@ trait WhereTrait
     /**
      * @inheritDoc
     */
-    public function orWhere(string $condition): static
+    public function orWhere($condition): static
     {
         return $this->addWhere($condition, ConditionType::OR);
     }
@@ -62,11 +63,26 @@ trait WhereTrait
     /**
      * @inheritDoc
     */
-    public function addWhere(string $condition, $type = null): static
+    public function addWhere($condition, $type = null): static
     {
         $this->wheres[$type ?: ConditionType::DEFAULT][] = $condition;
 
         return $this;
+    }
+
+
+
+
+
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function whereIn($column, array $value): static
+    {
+        return $this->andWhere("$column IN (". join(', ', $value) . ")");
     }
 
 
@@ -76,18 +92,15 @@ trait WhereTrait
 
 
     /**
-     * Add WHERE conditions BY criteria
-     *
-     * @param array $conditions
-     * @return $this
+     * @inheritdoc
     */
     public function criteria(array $conditions): static
     {
         foreach ($conditions as $column => $value) {
             if (is_array($value)) {
-                $this->addCriteriaFromArrayValues($column, $value);
+                $this->whereIn($column, $value);
             } else {
-                $this->addCriteria($column, $value);
+                $this->andWhere("$column = $value");
             }
         }
 
@@ -105,34 +118,5 @@ trait WhereTrait
     public function getWheres(): array
     {
         return $this->wheres;
-    }
-
-
-
-
-
-    /**
-     * @param string $column
-     * @param $value
-     * @return void
-    */
-    protected function addCriteria(string $column, $value): void
-    {
-        $this->andWhere("$column = $value");
-    }
-
-
-
-
-
-
-    /**
-     * @param string $column
-     * @param array $value
-     * @return void
-    */
-    protected function addCriteriaFromArrayValues(string $column, array $value): void
-    {
-         $this->andWhere("$column IN (". join(', ', $value) . ")");
     }
 }

@@ -4,11 +4,16 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Query\Builder\SQL;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
+use Laventure\Component\Database\Query\Builder\SQL\Conditions\ConditionType;
+use Laventure\Component\Database\Query\Builder\SQL\Criteria\SQLCriteriaResolver;
+use Laventure\Component\Database\Query\Builder\SQL\Criteria\SQLCriteriaResolverInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Expr\Expr;
 use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Formatter\SQLFormatter;
 use Laventure\Component\Database\Query\QueryInterface;
 use Stringable;
+use function _PHPStan_3d4486d07\React\Promise\resolve;
+
 
 /**
  * SQLBuilder
@@ -21,10 +26,29 @@ use Stringable;
 */
 abstract class SQLBuilder implements SQLBuilderInterface
 {
+
     /**
      * @var ConnectionInterface
     */
     protected ConnectionInterface $connection;
+
+
+
+
+    /**
+     * @var SQLCriteriaResolverInterface
+    */
+    protected SQLCriteriaResolverInterface $criteriaResolver;
+
+
+
+
+
+    /**
+     * @var array
+    */
+    public array $wheres = [];
+
 
 
 
@@ -71,7 +95,132 @@ abstract class SQLBuilder implements SQLBuilderInterface
     */
     public function __construct(ConnectionInterface $connection)
     {
-        $this->connection = $connection;
+        $this->connection       = $connection;
+        $this->criteriaResolver = new SQLCriteriaResolver();
+    }
+
+
+
+
+
+
+    /**
+     * @param SQLCriteriaResolverInterface $criteriaResolver
+     * @return $this
+    */
+    public function criteriaResolver(SQLCriteriaResolverInterface $criteriaResolver): static
+    {
+        $this->criteriaResolver = $criteriaResolver;
+
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @param $condition
+     * @return $this
+    */
+    public function where($condition): static
+    {
+        return $this->addWhere($condition);
+    }
+
+
+
+
+    /**
+     * @param $condition
+     * @return $this
+    */
+    public function andWhere($condition): static
+    {
+        return $this->addWhere($condition, ConditionType::AND);
+    }
+
+
+
+
+
+
+
+    /**
+     * @param $condition
+     * @return $this
+    */
+    public function orWhere($condition): static
+    {
+        return $this->addWhere($condition, ConditionType::OR);
+    }
+
+
+
+
+
+
+    /**
+     * @param $condition
+     * @param $type
+     * @return $this
+    */
+    public function addWhere($condition, $type = null): static
+    {
+        $this->wheres[$type ?: ConditionType::DEFAULT][] = $condition;
+
+        return $this;
+    }
+
+
+
+
+
+
+    /**
+     * @param $column
+     * @param array $value
+     * @return $this
+    */
+    public function whereIn($column, array $value): static
+    {
+        return $this->andWhere($this->expr()->in($column, $value));
+    }
+
+
+
+
+
+
+    /**
+     * @param array $conditions
+     * @return $this
+    */
+    public function criteria(array $conditions): static
+    {
+        $this->criteriaResolver->withBuilder($this);
+
+        foreach ($conditions as $column => $value) {
+            if (is_array($value)) {
+                $this->criteriaResolver->resolveWhereIn($column, $value);
+            } else {
+                $this->criteriaResolver->resolveWhereEqualTo($column, $value);
+            }
+        }
+        return $this;
+    }
+
+
+
+
+
+
+    /**
+     * @return array
+    */
+    public function getWheres(): array
+    {
+        return $this->wheres;
     }
 
 
@@ -96,9 +245,9 @@ abstract class SQLBuilder implements SQLBuilderInterface
     /**
      * @inheritdoc
     */
-    public function bindParam($id, $value, $type = null): static
+    public function bindParam($id, $value, int $type = 0): static
     {
-        $this->bindParams[$id] = [$id, $value, intval($type)];
+        $this->bindParams[$id] = [$id, $value, $type];
 
         return $this;
     }
@@ -111,9 +260,9 @@ abstract class SQLBuilder implements SQLBuilderInterface
     /**
      * @inheritdoc
     */
-    public function bindValue($id, $value, $type = null): static
+    public function bindValue($id, $value, int $type = 0): static
     {
-        $this->bindValues[$id] = [$id, $value, intval($type)];
+        $this->bindValues[$id] = [$id, $value, $type];
 
         return $this;
     }
@@ -124,9 +273,9 @@ abstract class SQLBuilder implements SQLBuilderInterface
     /**
      * @inheritdoc
     */
-    public function bindColumn($id, $value, $type = null): static
+    public function bindColumn($id, $value, int $type = 0): static
     {
-        $this->bindColumns[$id] = [$id, $value, intval($type)];
+        $this->bindColumns[$id] = [$id, $value, $type];
 
         return $this;
     }
@@ -185,12 +334,12 @@ abstract class SQLBuilder implements SQLBuilderInterface
     */
     public function getQuery(): QueryInterface
     {
-        $statement = $this->connection->statement($this->getSQL());
-        $statement->setParameters($this->parameters);
-        $statement->bindParams($this->bindParams);
-        $statement->bindValues($this->bindValues);
-        $statement->bindColumns($this->bindColumns);
-        return $statement;
+        return $this->connection
+                    ->statement($this->getSQL())
+                    ->setParameters($this->parameters)
+                    ->bindParams($this->bindParams)
+                    ->bindValues($this->bindValues)
+                    ->bindColumns($this->bindColumns);
     }
 
 

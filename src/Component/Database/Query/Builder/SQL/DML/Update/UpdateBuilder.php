@@ -20,8 +20,8 @@ use Laventure\Component\Database\Query\Builder\SQL\SQLBuilder;
 */
 class UpdateBuilder extends SQLBuilder implements UpdateBuilderInterface
 {
-    use WhereTrait;
 
+    #use WhereTrait;
 
     /**
      * @var string|null

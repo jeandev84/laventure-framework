@@ -195,11 +195,11 @@ interface ExpressionInterface
      *
      * @param string $column
      *
-     * @param string|array $value
+     * @param $value
      *
      * @return FuncInterface
     */
-    public function in(string $column, string|array $value): FuncInterface;
+    public function in(string $column, $value): FuncInterface;
 
 
 

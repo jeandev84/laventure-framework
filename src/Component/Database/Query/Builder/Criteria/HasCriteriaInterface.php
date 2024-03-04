@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Query\Builder\SQL\Criteria;
+namespace Laventure\Component\Database\Query\Builder\Criteria;
 
 /**
  * HasCriteriaInterface

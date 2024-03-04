@@ -171,7 +171,7 @@ class Expr implements ExpressionInterface
     /**
      * @inheritDoc
     */
-    public function in(string $column, array|string $value): FuncInterface
+    public function in(string $column, $value): FuncInterface
     {
         if (is_array($value)) {
             $value = join(', ', $value);

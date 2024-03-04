@@ -81,10 +81,10 @@ interface SQLBuilderInterface extends Stringable
     /**
      * @param $id
      * @param $value
-     * @param $type
+     * @param int $type
      * @return $this
     */
-    public function bindParam($id, $value, $type = null): static;
+    public function bindParam($id, $value, int $type = 0): static;
 
 
 
@@ -95,10 +95,10 @@ interface SQLBuilderInterface extends Stringable
     /**
      * @param $id
      * @param $value
-     * @param $type
+     * @param int $type
      * @return $this
     */
-    public function bindValue($id, $value, $type = null): static;
+    public function bindValue($id, $value, int $type = 0): static;
 
 
 
@@ -109,10 +109,10 @@ interface SQLBuilderInterface extends Stringable
     /**
      * @param $id
      * @param $value
-     * @param $type
+     * @param int $type
      * @return $this
     */
-    public function bindColumn($id, $value, $type = null): static;
+    public function bindColumn($id, $value, int $type = 0): static;
 
 
 

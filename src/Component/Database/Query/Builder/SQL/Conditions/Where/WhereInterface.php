@@ -17,11 +17,26 @@ interface WhereInterface
     /**
      * Add WHERE conditions
      *
-     * @param string $condition
+     * @param $condition
      *
      * @return $this
     */
-    public function where(string $condition): static;
+    public function where($condition): static;
+
+
+
+
+
+
+
+    /**
+     * @param $column
+     * @param array $value
+     * @return $this
+    */
+    public function whereIn($column, array $value): static;
+
+
 
 
 
@@ -30,11 +45,11 @@ interface WhereInterface
     /**
      * Add WHERE conditions AND
      *
-     * @param string $condition
+     * @param $condition
      *
      * @return $this
     */
-    public function andWhere(string $condition): static;
+    public function andWhere($condition): static;
 
 
 
@@ -45,11 +60,11 @@ interface WhereInterface
     /**
      * Add WHERE conditions OR
      *
-     * @param string $condition
+     * @param $condition
      *
      * @return $this
     */
-    public function orWhere(string $condition): static;
+    public function orWhere($condition): static;
 
 
 
@@ -57,11 +72,11 @@ interface WhereInterface
 
 
     /**
-     * @param string $condition
+     * @param $condition
      * @param $type
      * @return $this
     */
-    public function addWhere(string $condition, $type = null): static;
+    public function addWhere($condition, $type = null): static;
 
 
 
