@@ -29,11 +29,6 @@ class UpdateBuilder extends SQLBuilder implements UpdateBuilderInterface
 
 
 
-    /**
-     * @var array
-    */
-    public array $set = [];
-
 
 
     /**
@@ -45,20 +40,6 @@ class UpdateBuilder extends SQLBuilder implements UpdateBuilderInterface
 
         return $this;
     }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function set($column, $value): static
-    {
-        $this->set[$column] = "$column = $value";
-
-        return $this;
-    }
-
 
 
 

@@ -10,6 +10,8 @@ use Laventure\Component\Database\Connection\Query\Builder\SQL\Criteria\SQLCriter
 use Laventure\Component\Database\Connection\Query\Builder\SQL\Expr\Expr;
 use Laventure\Component\Database\Connection\Query\Builder\SQL\Expr\ExpressionInterface;
 use Laventure\Component\Database\Connection\Query\Builder\SQL\Formatter\SQLFormatter;
+use Laventure\Component\Database\Connection\Query\Builder\SQL\Set\SettableResolver;
+use Laventure\Component\Database\Connection\Query\Builder\SQL\Set\SettableResolverInterface;
 use Laventure\Component\Database\Connection\Query\QueryInterface;
 use Stringable;
 
@@ -39,6 +41,24 @@ abstract class SQLBuilder implements SQLBuilderInterface
     */
     protected SQLCriteriaResolverInterface $criteriaResolver;
 
+
+
+
+
+    /**
+     * @var SettableResolverInterface
+    */
+    protected SettableResolverInterface $settableResolver;
+
+
+
+
+
+
+    /**
+     * @var array
+    */
+    public array $set = [];
 
 
 
@@ -96,6 +116,7 @@ abstract class SQLBuilder implements SQLBuilderInterface
     {
         $this->connection       = $connection;
         $this->criteriaResolver = new SQLCriteriaResolver($this);
+        $this->settableResolver = new SettableResolver($this);
     }
 
 
@@ -119,6 +140,23 @@ abstract class SQLBuilder implements SQLBuilderInterface
 
 
 
+    /**
+     * @param $column
+     * @param $value
+     * @return $this
+    */
+    public function set($column, $value): static
+    {
+        $this->set[$column] = $this->settableResolver
+                                   ->resolve($column, $value);
+
+        return $this;
+    }
+
+
+
+
+
 
     /**
      * @param $condition
@@ -128,6 +166,9 @@ abstract class SQLBuilder implements SQLBuilderInterface
     {
         return $this->addWhere($condition);
     }
+
+
+
 
 
 
@@ -201,12 +242,12 @@ abstract class SQLBuilder implements SQLBuilderInterface
     {
         foreach ($conditions as $column => $value) {
             if (is_array($value)) {
-                $resolved = $this->criteriaResolver->resolveWhereIn($column, $value);
+                $criteria = $this->criteriaResolver->resolveWhereIn($column, $value);
             } else {
-                $resolved = $this->criteriaResolver->resolveWhereEqualTo($column, $value);
+                $criteria = $this->criteriaResolver->resolveWhereEqualTo($column, $value);
             }
-            $this->andWhere($resolved->getCondition());
-            $this->setParameter($resolved->getParam(), $resolved->getValue());
+            $this->andWhere($criteria->getCondition());
+            $this->setParameter($criteria->getParam(), $criteria->getValue());
         }
         return $this;
     }

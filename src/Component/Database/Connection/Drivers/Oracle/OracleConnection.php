@@ -1,11 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Connection\Types\Oracle;
+namespace Laventure\Component\Database\Connection\Drivers\Oracle;
 
+use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Connection\ConnectionName;
 use Laventure\Component\Database\Connection\Extensions\PDO\Drivers\Oracle\OracleDatabase;
 use Laventure\Component\Database\Connection\Extensions\PDO\PdoConnection;
+use Laventure\Component\Database\Connection\Query\Builder\SQLQueryBuilderInterface;
 use Laventure\Component\Database\DatabaseInterface;
 
 /**
@@ -17,7 +19,7 @@ use Laventure\Component\Database\DatabaseInterface;
  *
  * @package  Laventure\Component\Database\Connection\Extensions\PDO\Drivers\Oracle
 */
-class OracleConnection extends PdoConnection
+class OracleConnection extends PdoConnection implements ConnectionInterface
 {
     /**
      * @inheritDoc
@@ -37,19 +39,37 @@ class OracleConnection extends PdoConnection
         return new OracleDatabase($this);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function activateTransaction(): void
-    {
-        // TODO: Implement activateTransaction() method.
-    }
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
+    public function activateTransaction(): void
+    {
+
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
     public function disableTransaction(): void
     {
-        // TODO: Implement disableTransaction() method.
+
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function createQueryBuilder(): SQLQueryBuilderInterface
+    {
+        return new OracleQueryBuilder($this);
     }
 }

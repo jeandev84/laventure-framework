@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Connection\Query\Builder\SQL\DML;
+namespace Laventure\Component\Database\Connection\Query\Builder\SQL\Set;
 
 /**
  * SettableInterface
@@ -10,7 +10,7 @@ namespace Laventure\Component\Database\Connection\Query\Builder\SQL\DML;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Builder\SQL
+ * @package  Laventure\Component\Database\Connection\Query\Builder\SQL\Set
  */
 interface SettableInterface
 {
@@ -20,4 +20,14 @@ interface SettableInterface
      * @return $this
     */
     public function set($column, $value): static;
+
+
+
+
+
+    /**
+     * @param SettableResolverInterface $settableResolver
+     * @return $this
+    */
+    public function addSetResolver(SettableResolverInterface $settableResolver): static;
 }

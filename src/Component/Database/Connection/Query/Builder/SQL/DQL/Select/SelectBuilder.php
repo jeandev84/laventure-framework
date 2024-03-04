@@ -118,10 +118,9 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
     */
     public function distinct(): static
     {
-        $this->prefix = "DISTINCT";
-
-        return $this;
+        return $this->addPrefix("DISTINCT");
     }
+
 
 
 
@@ -394,5 +393,20 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
             new OrderBy($this->orderBy),
             new Limit($this->limit, $this->offset)
         ];
+    }
+
+
+
+
+
+    /**
+     * @param string $prefix
+     * @return $this
+    */
+    protected function addPrefix(string $prefix): static
+    {
+        $this->prefix = $prefix;
+
+        return $this;
     }
 }

@@ -31,6 +31,19 @@ class MysqlConnection extends PdoConnection implements ConnectionInterface
 
 
 
+
+    /**
+     * @inheritDoc
+    */
+    public function createQueryBuilder(): SQLQueryBuilderInterface
+    {
+        return new MysqlQueryBuilder($this);
+    }
+
+
+
+
+
     /**
      * @return DatabaseInterface
     */
@@ -58,16 +71,5 @@ class MysqlConnection extends PdoConnection implements ConnectionInterface
     public function disableTransaction(): void
     {
         $this->executeQuery('SET autocommit = 0');
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function createQueryBuilder(): SQLQueryBuilderInterface
-    {
-        // TODO: Implement createQueryBuilder() method.
     }
 }

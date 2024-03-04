@@ -26,7 +26,7 @@ use mysqli;
  *
  * @package  Laventure\Component\Database\Connection\Extensions\Mysqli
 */
-class MysqliConnection implements ConnectionInterface
+class MysqliConnection implements MysqliConnectionInterface
 {
     use ConnectionTrait;
 
@@ -278,5 +278,16 @@ class MysqliConnection implements ConnectionInterface
     public function getName(): string
     {
         return ConnectionName::Mysqli;
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function makeMysqli(ConfigurationInterface $config): mysqli
+    {
+
     }
 }

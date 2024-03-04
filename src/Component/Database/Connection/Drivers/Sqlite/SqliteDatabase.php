@@ -1,8 +1,7 @@
 <?php
-
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Connection\Types\Sqlite;
+namespace Laventure\Component\Database\Connection\Drivers\Sqlite;
 
 use Laventure\Component\Database\Database;
 

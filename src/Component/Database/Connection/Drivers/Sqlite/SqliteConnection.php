@@ -1,10 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Connection\Types\Sqlite;
+namespace Laventure\Component\Database\Connection\Drivers\Sqlite;
 
+use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Connection\ConnectionName;
 use Laventure\Component\Database\Connection\Extensions\PDO\PdoConnection;
+use Laventure\Component\Database\Connection\Query\Builder\SQLQueryBuilderInterface;
 use Laventure\Component\Database\DatabaseInterface;
 
 /**
@@ -14,9 +16,9 @@ use Laventure\Component\Database\DatabaseInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Extensions\PDO\Drivers\Sqlite
+ * @package  Laventure\Component\Database\Connection\Drivers\Sqlite
 */
-class SqliteConnection extends PdoConnection
+class SqliteConnection extends PdoConnection implements ConnectionInterface
 {
     /**
      * @inheritDoc
@@ -28,6 +30,18 @@ class SqliteConnection extends PdoConnection
 
 
 
+
+    /**
+     * @inheritDoc
+    */
+    public function createQueryBuilder(): SQLQueryBuilderInterface
+    {
+        return new SqliteQueryBuilder($this);
+    }
+
+
+
+
     /**
      * @inheritDoc
     */
@@ -35,6 +49,9 @@ class SqliteConnection extends PdoConnection
     {
         return new SqliteDatabase($this);
     }
+
+
+
 
     /**
      * @inheritDoc

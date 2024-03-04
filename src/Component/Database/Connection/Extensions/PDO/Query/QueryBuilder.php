@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder;
+namespace Laventure\Component\Database\Connection\Extensions\PDO\Query;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Connection\Query\Builder\SQL\Criteria\PDO\SQLCriteriaResolverPDO;
@@ -11,6 +11,7 @@ use Laventure\Component\Database\Connection\Query\Builder\SQL\DML\Insert\PDO\Ins
 use Laventure\Component\Database\Connection\Query\Builder\SQL\DML\Update\UpdateBuilderInterface;
 use Laventure\Component\Database\Connection\Query\Builder\SQL\DQL\Select\SelectBuilderInterface;
 use Laventure\Component\Database\Connection\Query\Builder\SQL\Expr\ExpressionInterface;
+use Laventure\Component\Database\Connection\Query\Builder\SQL\Set\PDO\SettableResolverPDO;
 use Laventure\Component\Database\Connection\Query\Builder\SQLQueryBuilder;
 use Laventure\Component\Database\Connection\Query\Builder\SQLQueryBuilderInterface;
 
@@ -69,6 +70,7 @@ class QueryBuilder implements SQLQueryBuilderInterface
 
 
 
+
     /**
      * @inheritDoc
     */
@@ -90,6 +92,7 @@ class QueryBuilder implements SQLQueryBuilderInterface
     {
         $update = $this->builder->update($table);
         $update->addCriteriaResolver(new SQLCriteriaResolverPDO($update));
+        $update->addSetResolver(new SettableResolverPDO($update));
         return $update;
     }
 

@@ -1,11 +1,10 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Query\Builder\SQL\DML\Update;
 
 use Laventure\Component\Database\Connection\Query\Builder\SQL\Conditions\Where\WhereInterface;
-use Laventure\Component\Database\Connection\Query\Builder\SQL\DML\SettableInterface;
+use Laventure\Component\Database\Connection\Query\Builder\SQL\Set\SettableInterface;
 use Laventure\Component\Database\Connection\Query\Builder\SQL\SQLBuilderInterface;
 
 /**

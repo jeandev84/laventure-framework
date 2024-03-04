@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Connection\Extensions\PDO\Query\Result;
+namespace Laventure\Component\Database\Connection\Extensions\PDO\Query;
 
 use Laventure\Component\Database\Connection\Query\Result\QueryResultInterface;
 use PDO;
@@ -86,7 +86,7 @@ class QueryResult implements QueryResultInterface
     /**
      * @inheritDoc
     */
-    public function columns(): mixed
+    public function columns(): array
     {
         return $this->all(PDO::FETCH_COLUMN);
     }
