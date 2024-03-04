@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\Mysqli\Query;
 
-use Laventure\Component\Database\Query\QueryInterface;
-use Laventure\Component\Database\Query\Result\QueryResultInterface;
+use Laventure\Component\Database\Connection\Query\QueryInterface;
+use Laventure\Component\Database\Connection\Query\Result\QueryResultInterface;
 use mysqli;
 
 /**

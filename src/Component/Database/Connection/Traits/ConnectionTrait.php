@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Traits;
 
-use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
-use Laventure\Component\Database\Configuration\Null\NullConfiguration;
+use Laventure\Component\Database\Connection\Configuration\Contract\ConfigurationInterface;
+use Laventure\Component\Database\Connection\Configuration\Null\NullConfiguration;
 
 /**
  * ConnectionTrait

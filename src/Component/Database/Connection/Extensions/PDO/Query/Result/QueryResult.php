@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\PDO\Query\Result;
 
-use Laventure\Component\Database\Query\Result\QueryResultInterface;
+use Laventure\Component\Database\Connection\Query\Result\QueryResultInterface;
 use PDO;
 use PDOStatement;
 

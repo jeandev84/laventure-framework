@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\Mysqli\Query;
 
-use Laventure\Component\Database\Query\Builder\Common\AbstractQueryBuilder;
+use Laventure\Component\Database\Connection\Query\Builder\Common\AbstractQueryBuilder;
 
 /**
  * QueryBuilder

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\PDO;
 
+use Laventure\Component\Database\Connection\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use PDO;
 
@@ -14,15 +15,16 @@ use PDO;
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
  * @package  Laventure\Component\Database\Connection\Extensions\PDO
- */
-interface PdoConnectionInterface extends ConnectionInterface
+*/
+interface PdoConnectionInterface
 {
     /**
      * Returns PDO connection
      *
+     * @param ConfigurationInterface $config
      * @return PDO
     */
-    public function getConnection(): PDO;
+    public function makePdo(ConfigurationInterface $config): PDO;
 
 
 
@@ -33,7 +35,9 @@ interface PdoConnectionInterface extends ConnectionInterface
      *
      * @return array
     */
-    public function getDrivers(): array;
+    public function getAvailableDrivers(): array;
+
+
 
 
 
@@ -41,8 +45,7 @@ interface PdoConnectionInterface extends ConnectionInterface
 
 
     /**
-     * @param string $driver
      * @return bool
     */
-    public function isAvailable(string $driver): bool;
+    public function isAvailable(): bool;
 }

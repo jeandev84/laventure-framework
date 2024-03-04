@@ -3,17 +3,16 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\PDO;
 
-use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
-use Laventure\Component\Database\Configuration\Null\NullConfiguration;
+use Laventure\Component\Database\Connection\Configuration\Contract\ConfigurationInterface;
+use Laventure\Component\Database\Connection\Configuration\Null\NullConfiguration;
 use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\PdoDsn;
 use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\PdoDsnBuilder;
 use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnectionFactory;
 use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnectionFactoryInterface;
-use Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\QueryBuilder;
 use Laventure\Component\Database\Connection\Extensions\PDO\Query\Query;
+use Laventure\Component\Database\Connection\Query\Builder\SQLQueryBuilderInterface;
+use Laventure\Component\Database\Connection\Query\QueryInterface;
 use Laventure\Component\Database\Connection\Traits\ConnectionTrait;
-use Laventure\Component\Database\Query\Builder\QueryBuilderInterface;
-use Laventure\Component\Database\Query\QueryInterface;
 use PDO;
 use PDOException;
 
@@ -26,7 +25,7 @@ use PDOException;
  *
  * @package  Laventure\Component\Database\Connection\Extensions\PDO
 */
-abstract class PdoConnection implements PdoConnectionInterface
+class PdoConnection implements PdoConnectionInterface
 {
     use ConnectionTrait;
 
@@ -60,7 +59,7 @@ abstract class PdoConnection implements PdoConnectionInterface
     */
     public function connect(ConfigurationInterface $config): void
     {
-        $this->withConnection($this->makeConnection($config));
+        $this->withConnection($this->makePdo($config));
     }
 
 
@@ -131,9 +130,9 @@ abstract class PdoConnection implements PdoConnectionInterface
     /**
      * @inheritDoc
     */
-    public function createQueryBuilder(): QueryBuilderInterface
+    public function createQueryBuilder(): SQLQueryBuilderInterface
     {
-        return new QueryBuilder($this);
+        #return new QueryBuilder($this);
     }
 
 
@@ -163,45 +162,47 @@ abstract class PdoConnection implements PdoConnectionInterface
 
 
 
-
     /**
-     * @inheritDoc
+     * @return bool
     */
     public function beginTransaction(): bool
     {
-        return $this->getConnection()->beginTransaction();
+        return $this->makePdo()->beginTransaction();
     }
 
 
 
 
+
+
     /**
-     * @inheritDoc
+     * @return bool
     */
     public function hasActiveTransaction(): bool
     {
-        return $this->getConnection()->inTransaction();
+        return $this->makePdo()->inTransaction();
     }
 
 
 
 
 
-
     /**
-     * @inheritDoc
+     * @return bool
     */
     public function commit(): bool
     {
-        return $this->getConnection()->commit();
+        return $this->makePdo()->commit();
     }
 
 
 
 
 
+
+
     /**
-     * @inheritDoc
+     * @return bool
     */
     public function rollback(): bool
     {
@@ -213,8 +214,10 @@ abstract class PdoConnection implements PdoConnectionInterface
 
 
 
+
     /**
-     * @inheritDoc
+     * @param callable $func
+     * @return bool
     */
     public function transaction(callable $func): bool
     {
@@ -240,7 +243,9 @@ abstract class PdoConnection implements PdoConnectionInterface
 
 
     /**
-     * @inheritDoc
+     * @param callable $func
+     * @param bool $condition
+     * @return mixed
     */
     public function transactionIf(callable $func, bool $condition = false): mixed
     {
@@ -256,11 +261,11 @@ abstract class PdoConnection implements PdoConnectionInterface
 
 
 
+
     /**
-     * @param ConfigurationInterface $config
-     * @return PDO
+     * @inheritdoc
     */
-    public function makeConnection(ConfigurationInterface $config): PDO
+    public function makePdo(ConfigurationInterface $config): PDO
     {
         if (!$config->has('dsn')) {
             $config['dsn'] = $this->makePdoDsn($config);
@@ -270,8 +275,6 @@ abstract class PdoConnection implements PdoConnectionInterface
 
         return $this->factory->makeConnection($config);
     }
-
-
 
 
 
@@ -307,9 +310,9 @@ abstract class PdoConnection implements PdoConnectionInterface
     /**
      * @inheritdoc
     */
-    public function isAvailable(string $driver): bool
+    public function isAvailable(): bool
     {
-        return in_array($driver, $this->getDrivers());
+        return in_array($this->getName(), $this->getAvailableDrivers());
     }
 
 
@@ -318,7 +321,7 @@ abstract class PdoConnection implements PdoConnectionInterface
     /**
      * @inheritdoc
     */
-    public function getDrivers(): array
+    public function getAvailableDrivers(): array
     {
         return PDO::getAvailableDrivers();
     }

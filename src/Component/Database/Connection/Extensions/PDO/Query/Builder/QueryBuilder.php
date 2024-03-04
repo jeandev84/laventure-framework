@@ -4,13 +4,13 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
-use Laventure\Component\Database\Query\Builder\SQL\DML\Delete\DeleteBuilderInterface;
-use Laventure\Component\Database\Query\Builder\SQL\DML\Insert\InsertBuilderInterface;
-use Laventure\Component\Database\Query\Builder\SQL\DML\Update\UpdateBuilderInterface;
-use Laventure\Component\Database\Query\Builder\SQL\DQL\Select\SelectBuilderInterface;
-use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionInterface;
-use Laventure\Component\Database\Query\Builder\SQLQueryBuilder;
-use Laventure\Component\Database\Query\Builder\SQLQueryBuilderInterface;
+use Laventure\Component\Database\Connection\Query\Builder\SQL\DML\Delete\DeleteBuilderInterface;
+use Laventure\Component\Database\Connection\Query\Builder\SQL\DML\Insert\InsertBuilderInterface;
+use Laventure\Component\Database\Connection\Query\Builder\SQL\DML\Update\UpdateBuilderInterface;
+use Laventure\Component\Database\Connection\Query\Builder\SQL\DQL\Select\SelectBuilderInterface;
+use Laventure\Component\Database\Connection\Query\Builder\SQL\Expr\ExpressionInterface;
+use Laventure\Component\Database\Connection\Query\Builder\SQLQueryBuilder;
+use Laventure\Component\Database\Connection\Query\Builder\SQLQueryBuilderInterface;
 
 /**
  * PdoBuilder

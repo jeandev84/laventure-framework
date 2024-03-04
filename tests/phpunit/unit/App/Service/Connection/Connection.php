@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace PHPUnitTest\App\Service\Connection;
 
-use Laventure\Component\Database\Configuration\Configuration;
+use Laventure\Component\Database\Connection\Configuration\Configuration;
 use Laventure\Component\Database\Connection\ConnectionInterface;
-use Laventure\Component\Database\Manager\DatabaseManager;
 use Laventure\Component\Database\Manager\Factory\DatabaseManagerFactory;
 use PDO;
 

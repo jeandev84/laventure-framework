@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Foundation\Database\Configuration;
 
-use Laventure\Component\Database\Configuration\Configuration;
-use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
-use Laventure\Component\Database\Connection\Extensions\ExtensionType;
-use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\PdoDsnBuilder;
+use Laventure\Component\Database\Connection\Configuration\Configuration;
 
 /**
  * ManagerConfiguration
