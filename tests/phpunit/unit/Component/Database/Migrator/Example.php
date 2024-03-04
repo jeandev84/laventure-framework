@@ -1,9 +1,9 @@
 <?php
 
-use Laventure\Component\Database\Connection\Configuration\Configuration;
+use Laventure\Component\Database\Configuration\Configuration;
+use Laventure\Component\Database\Connection\Drivers\Mysql\Table\MysqlTable;
 use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\PdoDsn;
 use Laventure\Component\Database\Manager\Manager;
-use Laventure\Component\Database\Schema\Table\Types\Mysql\MysqlTable;
 use PHPUnitTest\App\Service\Migration\MigrationStack;
 
 

@@ -4,11 +4,12 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Connection\Drivers\Mysql;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
-use Laventure\Component\Database\Connection\ConnectionName;
-use Laventure\Component\Database\Connection\Extensions\PDO\Drivers\Mysql\MysqlDatabase;
-use Laventure\Component\Database\Connection\Extensions\PDO\PdoConnection;
+use Laventure\Component\Database\Connection\Drivers\Mysql\Table\MysqlTable;
+use Laventure\Component\Database\Connection\Extensions\PDO\PdoConnectionTrait;
+use Laventure\Component\Database\Connection\Name\ConnectionName;
 use Laventure\Component\Database\Connection\Query\Builder\SQLQueryBuilderInterface;
 use Laventure\Component\Database\DatabaseInterface;
+use Laventure\Component\Database\Schema\Table\TableInterface;
 
 /**
  * MysqlConnection
@@ -19,10 +20,14 @@ use Laventure\Component\Database\DatabaseInterface;
  *
  * @package  Laventure\Component\Database\Connection\Drivers\Mysql
 */
-class MysqlConnection extends PdoConnection implements ConnectionInterface
+class MysqlConnection implements ConnectionInterface
 {
+
+    use PdoConnectionTrait;
+
+
     /**
-     * @return string
+     * @inheritdoc
     */
     public function getName(): string
     {
@@ -38,6 +43,18 @@ class MysqlConnection extends PdoConnection implements ConnectionInterface
     public function createQueryBuilder(): SQLQueryBuilderInterface
     {
         return new MysqlQueryBuilder($this);
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function createTable(string $name, string $schemaName = ''): TableInterface
+    {
+        return new MysqlTable($this, $name, $schemaName);
     }
 
 

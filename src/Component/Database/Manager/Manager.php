@@ -3,14 +3,16 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Manager;
 
-use Laventure\Component\Database\Connection\Types\Mysql\MysqlConnection;
-use Laventure\Component\Database\Connection\Types\Oracle\OracleConnection;
-use Laventure\Component\Database\Connection\Types\Pgsql\PgsqlConnection;
-use Laventure\Component\Database\Connection\Types\Sqlite\SqliteConnection;
+
+use Laventure\Component\Database\Connection\Drivers\Mysql\MysqlConnection;
+use Laventure\Component\Database\Connection\Drivers\Oracle\OracleConnection;
+use Laventure\Component\Database\Connection\Drivers\Sqlite\SqliteConnection;
+use Laventure\Component\Database\Connection\Drivers\Pgsql\PgsqlConnection;
 use Laventure\Component\Database\Schema\Migrator\Migrator;
 use Laventure\Component\Database\Schema\Migrator\MigratorInterface;
 use Laventure\Component\Database\Schema\Schema;
 use Laventure\Component\Database\Schema\SchemaInterface;
+use Laventure\Component\Database\Schema\Table\TableInterface;
 
 /**
  * Manager
@@ -60,6 +62,21 @@ class Manager extends DatabaseManager
     {
         return new Migrator($this->connection($name));
     }
+
+
+
+
+
+    /**
+     * @param string $name
+     * @return TableInterface
+    */
+    public function table(string $name): TableInterface
+    {
+        return $this->connection()->createTable($name);
+    }
+
+
 
 
 

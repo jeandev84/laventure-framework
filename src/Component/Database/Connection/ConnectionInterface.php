@@ -3,11 +3,12 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection;
 
-use Laventure\Component\Database\Connection\Configuration\Contract\ConfigurationInterface;
+use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Connection\Query\Builder\SQLQueryBuilderInterface;
 use Laventure\Component\Database\Connection\Query\QueryInterface;
 use Laventure\Component\Database\Connection\Transaction\TransactionInterface;
 use Laventure\Component\Database\DatabaseInterface;
+use Laventure\Component\Database\Schema\Table\TableInterface;
 
 /**
  * ConnectionInterface
@@ -137,6 +138,23 @@ interface ConnectionInterface extends TransactionInterface
 
 
 
+    /**
+     * Create table
+     *
+     * @param string $name
+     * @param string $schemaName
+     * @return TableInterface
+    */
+    public function createTable(string $name, string $schemaName = ''): TableInterface;
+
+
+
+
+
+
+
+
+
 
     /**
      * Create a statement prepared or not
@@ -183,7 +201,9 @@ interface ConnectionInterface extends TransactionInterface
      *
      * @return ConfigurationInterface
     */
-    public function getConfiguration(): ConfigurationInterface;
+    public function configuration(): ConfigurationInterface;
+
+
 
 
 

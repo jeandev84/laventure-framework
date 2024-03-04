@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema;
@@ -7,8 +6,6 @@ namespace Laventure\Component\Database\Schema;
 use Closure;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Schema\Blueprint\Blueprint;
-use Laventure\Component\Database\Schema\Info\Info;
-use Laventure\Component\Database\Schema\Table\Factory\TableFactory;
 use Laventure\Component\Database\Schema\Table\Factory\TableFactoryInterface;
 use Laventure\Component\Database\Schema\Table\TableInterface;
 
@@ -55,7 +52,6 @@ class Schema implements SchemaInterface
     {
         $this->connection = $connection;
         $this->name       = $name;
-        $this->factory    = new TableFactory($connection);
     }
 
 
@@ -66,7 +62,7 @@ class Schema implements SchemaInterface
     */
     public function table(string $name): TableInterface
     {
-        return $this->factory->createTable(
+        return $this->connection->createTable(
             $name,
             $this->getName()
         );
@@ -256,7 +252,7 @@ class Schema implements SchemaInterface
     {
         if (!$this->name) {
             $this->name = $this->connection
-                               ->getConfiguration()
+                               ->configuration()
                                ->database();
         }
 

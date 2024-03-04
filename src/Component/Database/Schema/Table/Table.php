@@ -276,6 +276,7 @@ abstract class Table implements TableInterface
 
 
 
+
     /**
      * Support text to 65 kb
      *
@@ -482,6 +483,10 @@ abstract class Table implements TableInterface
     {
         return in_array($key, $this->getPrimaryKeys());
     }
+
+
+
+
 
 
 

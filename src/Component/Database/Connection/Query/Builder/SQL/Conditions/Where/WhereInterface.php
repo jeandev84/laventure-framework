@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Query\Builder\SQL\Conditions\Where;
 
-use Laventure\Component\Database\Connection\Query\Builder\SQL\Criteria\SQLCriteriaResolverInterface;
+use Laventure\Component\Database\Connection\Query\Builder\SQL\Criteria\Resolver\SQLCriteriaResolverInterface;
 
 /**
  * WhereBuilderInterface

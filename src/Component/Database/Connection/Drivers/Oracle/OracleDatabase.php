@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Connection\Extensions\PDO\Drivers\Oracle;
+namespace Laventure\Component\Database\Connection\Drivers\Oracle;
 
 use Laventure\Component\Database\Database;
 
@@ -12,7 +12,7 @@ use Laventure\Component\Database\Database;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Extensions\PDO\Drivers\Oracle
+ * @package  Laventure\Component\Database\Connection\Drivers\Oracle
  */
 class OracleDatabase extends Database
 {

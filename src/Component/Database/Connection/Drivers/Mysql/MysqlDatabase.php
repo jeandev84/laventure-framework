@@ -1,8 +1,7 @@
 <?php
-
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Connection\Extensions\PDO\Drivers\Mysql;
+namespace Laventure\Component\Database\Connection\Drivers\Mysql;
 
 use Laventure\Component\Database\Database;
 

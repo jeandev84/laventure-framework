@@ -45,7 +45,7 @@ abstract class Database implements DatabaseInterface
     public function getName(): string
     {
         return $this->connection
-                    ->getConfiguration()
+                    ->configuration()
                     ->database();
     }
 

@@ -21,8 +21,6 @@ class SettableResolverPDO extends SettableResolver
     */
     public function resolve($column, $value): string
     {
-        $set = parent::resolve($column, ":$column");
-        $this->builder->setParameter($column, $value);
-        return $set;
+        return parent::resolve($column, ":$column");
     }
 }

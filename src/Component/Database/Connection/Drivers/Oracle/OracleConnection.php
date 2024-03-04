@@ -4,11 +4,11 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Connection\Drivers\Oracle;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
-use Laventure\Component\Database\Connection\ConnectionName;
-use Laventure\Component\Database\Connection\Extensions\PDO\Drivers\Oracle\OracleDatabase;
-use Laventure\Component\Database\Connection\Extensions\PDO\PdoConnection;
+use Laventure\Component\Database\Connection\Extensions\PDO\PdoConnectionTrait;
+use Laventure\Component\Database\Connection\Name\ConnectionName;
 use Laventure\Component\Database\Connection\Query\Builder\SQLQueryBuilderInterface;
 use Laventure\Component\Database\DatabaseInterface;
+use Laventure\Component\Database\Schema\Table\TableInterface;
 
 /**
  * OracleConnection
@@ -17,10 +17,14 @@ use Laventure\Component\Database\DatabaseInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Extensions\PDO\Drivers\Oracle
+ * @package  Laventure\Component\Database\Connection\Drivers\Oracle
 */
-class OracleConnection extends PdoConnection implements ConnectionInterface
+class OracleConnection implements ConnectionInterface
 {
+
+    use PdoConnectionTrait;
+
+
     /**
      * @inheritDoc
     */
@@ -71,5 +75,16 @@ class OracleConnection extends PdoConnection implements ConnectionInterface
     public function createQueryBuilder(): SQLQueryBuilderInterface
     {
         return new OracleQueryBuilder($this);
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function createTable(string $name, string $schemaName = ''): TableInterface
+    {
+
     }
 }

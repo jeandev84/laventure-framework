@@ -3,8 +3,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\PDO;
 
-use Laventure\Component\Database\Connection\Configuration\Contract\ConfigurationInterface;
-use Laventure\Component\Database\Connection\ConnectionInterface;
+use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use PDO;
 
 /**
@@ -36,7 +35,7 @@ interface PdoConnectionInterface
      * @param string $driver
      * @return bool
     */
-    public function isAvailable(string $driver): bool;
+    public function hasDriver(string $driver): bool;
 
 
 

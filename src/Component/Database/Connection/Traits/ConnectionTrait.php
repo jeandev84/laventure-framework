@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Traits;
 
-use Laventure\Component\Database\Connection\Configuration\Contract\ConfigurationInterface;
-use Laventure\Component\Database\Connection\Configuration\Null\NullConfiguration;
+use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
+use Laventure\Component\Database\Configuration\Null\NullConfiguration;
 
 /**
  * ConnectionTrait
@@ -76,7 +76,7 @@ trait ConnectionTrait
     /**
      * @return ConfigurationInterface
     */
-    public function getConfiguration(): ConfigurationInterface
+    public function configuration(): ConfigurationInterface
     {
         if (!$this->config) {
             $this->config = new NullConfiguration();

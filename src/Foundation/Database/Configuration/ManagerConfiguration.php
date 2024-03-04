@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Foundation\Database\Configuration;
 
-use Laventure\Component\Database\Connection\Configuration\Configuration;
+use Laventure\Component\Database\Configuration\Configuration;
 
 /**
  * ManagerConfiguration

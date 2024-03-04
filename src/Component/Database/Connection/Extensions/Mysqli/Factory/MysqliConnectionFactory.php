@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\Mysqli\Factory;
 
-use Laventure\Component\Database\Connection\Configuration\Contract\ConfigurationInterface;
-use Laventure\Component\Database\Connection\DriverException;
+use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
+use Laventure\Component\Database\Connection\Drivers\DriverException;
 use mysqli;
 use Throwable;
 

@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Connection\Query\Builder\SQL;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
-use Laventure\Component\Database\Connection\Query\Builder\SQL\Criteria\SQLCriteriaResolverInterface;
 use Laventure\Component\Database\Connection\Query\Builder\SQL\Expr\ExpressionInterface;
 use Laventure\Component\Database\Connection\Query\QueryInterface;
 use Stringable;

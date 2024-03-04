@@ -38,7 +38,7 @@ class Insert implements Stringable
     public function __toString(): string
     {
         return sprintf(
-            "INSERT INTO %s (%s) VALUES %s",
+     "INSERT INTO %s (%s) VALUES %s",
             $this->table,
             $this->columns(),
             $this->values()

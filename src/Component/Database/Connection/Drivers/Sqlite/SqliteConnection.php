@@ -4,10 +4,11 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Connection\Drivers\Sqlite;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
-use Laventure\Component\Database\Connection\ConnectionName;
-use Laventure\Component\Database\Connection\Extensions\PDO\PdoConnection;
+use Laventure\Component\Database\Connection\Extensions\PDO\PdoConnectionTrait;
+use Laventure\Component\Database\Connection\Name\ConnectionName;
 use Laventure\Component\Database\Connection\Query\Builder\SQLQueryBuilderInterface;
 use Laventure\Component\Database\DatabaseInterface;
+use Laventure\Component\Database\Schema\Table\TableInterface;
 
 /**
  * SqliteConnection
@@ -18,8 +19,12 @@ use Laventure\Component\Database\DatabaseInterface;
  *
  * @package  Laventure\Component\Database\Connection\Drivers\Sqlite
 */
-class SqliteConnection extends PdoConnection implements ConnectionInterface
+class SqliteConnection implements ConnectionInterface
 {
+
+    use PdoConnectionTrait;
+
+
     /**
      * @inheritDoc
     */
@@ -67,5 +72,13 @@ class SqliteConnection extends PdoConnection implements ConnectionInterface
     public function disableTransaction(): void
     {
         // TODO: Implement disableTransaction() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function createTable(string $name, string $schemaName = ''): TableInterface
+    {
+        // TODO: Implement createTable() method.
     }
 }

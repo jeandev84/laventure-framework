@@ -108,6 +108,7 @@ class Query implements QueryInterface
     */
     public function prepare(string $sql): static
     {
+        #dd($sql);
         $this->statement = $this->pdo->prepare($sql);
 
         return $this->log(compact('sql'));
@@ -194,9 +195,12 @@ class Query implements QueryInterface
 
 
 
+
+
+
     /**
      * @inheritdoc
-     */
+    */
     public function bindColumns(array $columns): static
     {
         foreach ($columns as $bind) {
@@ -243,6 +247,45 @@ class Query implements QueryInterface
 
     /**
      * @inheritDoc
+    */
+    public function setParameter($id, $value): static
+    {
+        $this->parameters[$id] = $value;
+
+        return $this;
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getParameter($id): mixed
+    {
+        return $this->parameters[$id] ?? null;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getParameters(): array
+    {
+        return $this->parameters;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
      */
     public function execute(): bool
     {
@@ -264,21 +307,11 @@ class Query implements QueryInterface
         try {
             return $this->pdo->exec($sql);
         } catch (PDOException $e) {
+            dd($e->getMessage());
             $this->abort($e);
         }
     }
 
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function lastInsertId(string $name = null): int
-    {
-        return intval($this->pdo->lastInsertId($name));
-    }
 
 
 
@@ -321,6 +354,18 @@ class Query implements QueryInterface
     {
         return $this->statement->queryString;
     }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function lastInsertId(string $name = null): int
+    {
+        return intval($this->pdo->lastInsertId($name));
+    }
+
 
 
 

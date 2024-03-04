@@ -5,8 +5,8 @@ namespace Laventure\Component\Database\Connection\Query\Builder\SQL;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Connection\Query\Builder\SQL\Conditions\ConditionType;
-use Laventure\Component\Database\Connection\Query\Builder\SQL\Criteria\SQLCriteriaResolver;
-use Laventure\Component\Database\Connection\Query\Builder\SQL\Criteria\SQLCriteriaResolverInterface;
+use Laventure\Component\Database\Connection\Query\Builder\SQL\Criteria\Resolver\SQLCriteriaResolver;
+use Laventure\Component\Database\Connection\Query\Builder\SQL\Criteria\Resolver\SQLCriteriaResolverInterface;
 use Laventure\Component\Database\Connection\Query\Builder\SQL\Expr\Expr;
 use Laventure\Component\Database\Connection\Query\Builder\SQL\Expr\ExpressionInterface;
 use Laventure\Component\Database\Connection\Query\Builder\SQL\Formatter\SQLFormatter;
@@ -147,7 +147,9 @@ abstract class SQLBuilder implements SQLBuilderInterface
     */
     public function set($column, $value): static
     {
-        $this->set[$column] = $this->settableResolver->resolve($column, $value);
+        $this->set[$column] = $this->settableResolver
+                                   ->resolve($column, $value);
+        $this->setParameter($column, $value);
 
         return $this;
     }
