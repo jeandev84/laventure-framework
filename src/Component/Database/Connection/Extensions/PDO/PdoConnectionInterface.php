@@ -30,22 +30,24 @@ interface PdoConnectionInterface
 
 
 
+
+
+    /**
+     * @param string $driver
+     * @return bool
+    */
+    public function isAvailable(string $driver): bool;
+
+
+
+
+
+
+
     /**
      * Returns drivers
      *
      * @return array
     */
     public function getAvailableDrivers(): array;
-
-
-
-
-
-
-
-
-    /**
-     * @return bool
-    */
-    public function isAvailable(): bool;
 }

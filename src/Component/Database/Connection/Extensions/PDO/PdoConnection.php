@@ -9,6 +9,7 @@ use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\PdoDsn;
 use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\PdoDsnBuilder;
 use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnectionFactory;
 use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnectionFactoryInterface;
+use Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\QueryBuilder;
 use Laventure\Component\Database\Connection\Extensions\PDO\Query\Query;
 use Laventure\Component\Database\Connection\Query\Builder\SQLQueryBuilderInterface;
 use Laventure\Component\Database\Connection\Query\QueryInterface;
@@ -36,8 +37,6 @@ class PdoConnection implements PdoConnectionInterface
     protected PdoConnectionFactoryInterface $factory;
 
 
-
-
     /**
      * @var mixed
     */
@@ -55,7 +54,8 @@ class PdoConnection implements PdoConnectionInterface
 
 
     /**
-     * @inheritDoc
+     * @param ConfigurationInterface $config
+     * @return void
     */
     public function connect(ConfigurationInterface $config): void
     {
@@ -68,7 +68,7 @@ class PdoConnection implements PdoConnectionInterface
 
 
     /**
-     * @inheritDoc
+     * @return bool
     */
     public function connected(): bool
     {
@@ -80,7 +80,7 @@ class PdoConnection implements PdoConnectionInterface
 
 
     /**
-     * @inheritDoc
+     * @return void
     */
     public function disconnect(): void
     {
@@ -92,7 +92,7 @@ class PdoConnection implements PdoConnectionInterface
 
 
     /**
-     * @inheritDoc
+     * @return void
     */
     public function purge(): void
     {
@@ -103,8 +103,10 @@ class PdoConnection implements PdoConnectionInterface
 
 
 
+
+
     /**
-     * @inheritDoc
+     * @return bool
     */
     public function disconnected(): bool
     {
@@ -115,8 +117,9 @@ class PdoConnection implements PdoConnectionInterface
 
 
 
+
     /**
-     * @inheritDoc
+     * @return QueryInterface
     */
     public function createQuery(): QueryInterface
     {
@@ -127,20 +130,11 @@ class PdoConnection implements PdoConnectionInterface
 
 
 
-    /**
-     * @inheritDoc
-    */
-    public function createQueryBuilder(): SQLQueryBuilderInterface
-    {
-        #return new QueryBuilder($this);
-    }
-
-
-
 
 
     /**
-     * @inheritDoc
+     * @param string $sql
+     * @return QueryInterface
     */
     public function statement(string $sql): QueryInterface
     {
@@ -150,8 +144,10 @@ class PdoConnection implements PdoConnectionInterface
 
 
 
+
     /**
-     * @inheritDoc
+     * @param string $sql
+     * @return mixed
     */
     public function executeQuery(string $sql): mixed
     {
@@ -167,7 +163,7 @@ class PdoConnection implements PdoConnectionInterface
     */
     public function beginTransaction(): bool
     {
-        return $this->makePdo()->beginTransaction();
+        return $this->getConnection()->beginTransaction();
     }
 
 
@@ -180,7 +176,7 @@ class PdoConnection implements PdoConnectionInterface
     */
     public function hasActiveTransaction(): bool
     {
-        return $this->makePdo()->inTransaction();
+        return $this->getConnection()->inTransaction();
     }
 
 
@@ -192,7 +188,7 @@ class PdoConnection implements PdoConnectionInterface
     */
     public function commit(): bool
     {
-        return $this->makePdo()->commit();
+        return $this->getConnection()->commit();
     }
 
 
@@ -307,13 +303,17 @@ class PdoConnection implements PdoConnectionInterface
 
 
 
+
+
     /**
      * @inheritdoc
     */
-    public function isAvailable(): bool
+    public function isAvailable(string $driver): bool
     {
-        return in_array($this->getName(), $this->getAvailableDrivers());
+        return in_array($driver, $this->getAvailableDrivers());
     }
+
+
 
 
 

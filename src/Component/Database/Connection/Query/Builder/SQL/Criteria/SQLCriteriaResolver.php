@@ -21,7 +21,7 @@ class SQLCriteriaResolver implements SQLCriteriaResolverInterface
     /**
      * @param SQLBuilder $builder
     */
-    public function __construct(protected SQLBuilder $builder)
+    public function __construct(protected SQLBuilderInterface $builder)
     {
     }
 
@@ -30,9 +30,13 @@ class SQLCriteriaResolver implements SQLCriteriaResolverInterface
     /**
      * @inheritDoc
     */
-    public function resolveWhereIn($column, array $value): SQLBuilderInterface
+    public function resolveWhereIn($column, array $value): CriteriaResolvedInterface
     {
-        return $this->builder->whereIn($column, $value);
+        return new CriteriaResolved(
+            $this->builder->expr()->in($column, $value),
+            $column,
+            $value
+        );
     }
 
 
@@ -43,8 +47,12 @@ class SQLCriteriaResolver implements SQLCriteriaResolverInterface
     /**
      * @inheritDoc
     */
-    public function resolveWhereEqualTo($column, $value): SQLBuilderInterface
+    public function resolveWhereEqualTo($column, $value): CriteriaResolvedInterface
     {
-        return $this->builder->andWhere("$column = $value");
+        return new CriteriaResolved(
+            $this->builder->expr()->eq($column, $value),
+            $column,
+            $value
+        );
     }
 }

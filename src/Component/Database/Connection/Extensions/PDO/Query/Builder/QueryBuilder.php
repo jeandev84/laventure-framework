@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
+use Laventure\Component\Database\Connection\Query\Builder\SQL\Criteria\PDO\SQLCriteriaResolverPDO;
 use Laventure\Component\Database\Connection\Query\Builder\SQL\DML\Delete\DeleteBuilderInterface;
 use Laventure\Component\Database\Connection\Query\Builder\SQL\DML\Insert\InsertBuilderInterface;
 use Laventure\Component\Database\Connection\Query\Builder\SQL\DML\Update\UpdateBuilderInterface;
@@ -59,7 +60,9 @@ class QueryBuilder implements SQLQueryBuilderInterface
     */
     public function select(string $selects = null): SelectBuilderInterface
     {
-
+         $select = $this->builder->select($selects);
+         $select->addCriteriaResolver(new SQLCriteriaResolverPDO($select));
+         return $select;
     }
 
 

@@ -3,9 +3,11 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Drivers\Mysql;
 
+use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Connection\ConnectionName;
 use Laventure\Component\Database\Connection\Extensions\PDO\Drivers\Mysql\MysqlDatabase;
 use Laventure\Component\Database\Connection\Extensions\PDO\PdoConnection;
+use Laventure\Component\Database\Connection\Query\Builder\SQLQueryBuilderInterface;
 use Laventure\Component\Database\DatabaseInterface;
 
 /**
@@ -17,7 +19,7 @@ use Laventure\Component\Database\DatabaseInterface;
  *
  * @package  Laventure\Component\Database\Connection\Drivers\Mysql
 */
-class MysqlConnection extends PdoConnection
+class MysqlConnection extends PdoConnection implements ConnectionInterface
 {
     /**
      * @return string
@@ -56,5 +58,16 @@ class MysqlConnection extends PdoConnection
     public function disableTransaction(): void
     {
         $this->executeQuery('SET autocommit = 0');
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function createQueryBuilder(): SQLQueryBuilderInterface
+    {
+        // TODO: Implement createQueryBuilder() method.
     }
 }

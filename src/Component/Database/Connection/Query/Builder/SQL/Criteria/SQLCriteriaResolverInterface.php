@@ -20,9 +20,9 @@ interface SQLCriteriaResolverInterface
       /**
        * @param $column
        * @param array $value
-       * @return mixed
+       * @return CriteriaResolvedInterface
       */
-      public function resolveWhereIn($column, array $value): mixed;
+      public function resolveWhereIn($column, array $value): CriteriaResolvedInterface;
 
 
 
@@ -33,7 +33,7 @@ interface SQLCriteriaResolverInterface
       /**
        * @param $column
        * @param $value
-       * @return mixed
+       * @return CriteriaResolvedInterface
       */
-      public function resolveWhereEqualTo($column, $value): mixed;
+      public function resolveWhereEqualTo($column, $value): CriteriaResolvedInterface;
 }
