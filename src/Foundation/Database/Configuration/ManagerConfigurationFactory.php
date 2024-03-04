@@ -14,7 +14,7 @@ use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Foundation\Database\Configuration
+ * @package  Laventure\Foundation\Database\Definition
 */
 class ManagerConfigurationFactory
 {

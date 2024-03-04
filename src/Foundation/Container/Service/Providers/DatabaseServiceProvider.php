@@ -1,16 +1,12 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Container\Service\Providers;
 
 use Laventure\Component\Config\Config;
-use Laventure\Component\Container\Service\Provider\Contract\BootableServiceProvider;
 use Laventure\Component\Container\Service\Provider\ServiceProvider;
-use Laventure\Component\Database\Manager\Factory\DatabaseManagerFactory;
 use Laventure\Component\Database\Manager\Manager;
 use Laventure\Component\Database\ORM\Persistence\Manager\Registry\ManagerRegistry;
-use Laventure\Foundation\Database\Configuration\ManagerConfiguration;
 
 /**
  * DatabaseServiceProvider
@@ -21,7 +17,7 @@ use Laventure\Foundation\Database\Configuration\ManagerConfiguration;
  *
  * @package  Laventure\Foundation\Providers
 */
-class DatabaseServiceProvider extends ServiceProvider implements BootableServiceProvider
+class DatabaseServiceProvider extends ServiceProvider
 {
     /**
      * @var array|array[]
@@ -33,28 +29,6 @@ class DatabaseServiceProvider extends ServiceProvider implements BootableService
 
 
 
-    /**
-     * @inheritDoc
-    */
-    public function boot(): void
-    {
-        $this->app->singleton(ManagerConfiguration::class, function (Config $config) {
-
-            $connection     = $config['database.connection'];
-            $extension      = $config['database.extension'];
-            $credentialKey  = "database.connections.$extension.$connection";
-            $credentials    = $config[$credentialKey];
-
-            return new ManagerConfiguration([
-                'connection'    => $connection,
-                'extension'     => $extension,
-                'credentials'   => $credentials
-            ]);
-        });
-    }
-
-
-
 
     /**
      * @inheritDoc
@@ -62,9 +36,23 @@ class DatabaseServiceProvider extends ServiceProvider implements BootableService
     public function register(): void
     {
         $this->app->singletons([
-            Manager::class => function (ManagerConfiguration $config) {
-                $database      = new Manager();
-                $database->open($config->getConnection(), $config->getCredentials());
+            Manager::class => function (Config $config) {
+
+                $connection     = $config['database.connection'];
+                $extension      = $config['database.extension'];
+                $credentialKey  = "database.connections.$extension.$connection";
+                $credentials    = $config[$credentialKey];
+
+                $database = new Manager();
+                $database->addConnections([
+                    'connection'    => $connection,
+                    'extension'     => $extension,
+                    'credentials'   => $credentials,
+                    'connections'   => $config['database.connections']
+                ]);
+
+                $database->bootConnection();
+
                 return $database;
             },
             ManagerRegistry::class => function () {

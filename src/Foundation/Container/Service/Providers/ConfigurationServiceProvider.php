@@ -31,13 +31,15 @@ class ConfigurationServiceProvider extends ServiceProvider implements BootableSe
      * @var array
      */
     protected array $provides = [
-        ConfigInterface::class => [Config::class, 'demo']
+        ConfigInterface::class => [Config::class, 'app.config']
     ];
+
+
 
 
     /**
      * @inheritDoc
-     */
+    */
     public function boot(): void
     {
         $this->dotEnv()->load();

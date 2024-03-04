@@ -7,13 +7,13 @@ use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Utils\Parameter\Parameter;
 
 /**
- * Configuration
+ * Definition
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Configuration
+ * @package  Laventure\Component\Database\Definition
  */
 class Configuration extends Parameter implements ConfigurationInterface
 {

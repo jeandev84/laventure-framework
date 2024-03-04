@@ -107,7 +107,7 @@ interface DatabaseManagerInterface
      *
      * @return ConfigurationInterface[]
     */
-    public function configs(): array;
+    public function credentials(): array;
 
 
 

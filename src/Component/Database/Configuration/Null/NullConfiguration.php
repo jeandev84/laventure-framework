@@ -13,7 +13,7 @@ use Laventure\Component\Database\Configuration\Configuration;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Configuration\Null
+ * @package  Laventure\Component\Database\Definition\Null
 */
 class NullConfiguration extends Configuration
 {

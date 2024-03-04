@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Manager;
@@ -235,7 +234,7 @@ class DatabaseManager implements DatabaseManagerInterface
     /**
      * @inheritDoc
     */
-    public function configs(): array
+    public function credentials(): array
     {
         return $this->config;
     }

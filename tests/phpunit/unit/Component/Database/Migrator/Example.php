@@ -71,7 +71,7 @@ $mysqlTable = new MysqlTable($connection, 'goods');
 #dd($mysqlTable->getIndexes());
 
 /*
-$demo = new \Laventure\Component\Database\Configuration\Configuration([
+$demo = new \Laventure\Component\Database\Definition\Definition([
     'dsn' => 'mysql:host=127.0.0.1;dbname=laventure_test;charset=utf8'
 ]);
 

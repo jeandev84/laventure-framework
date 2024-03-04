@@ -1,8 +1,7 @@
 <?php
-
 declare(strict_types=1);
 
-namespace Laventure\Foundation\Database\Configuration;
+namespace Laventure\Component\Database\Manager;
 
 use Laventure\Component\Database\Configuration\Configuration;
 
@@ -22,8 +21,10 @@ class ManagerConfiguration extends Configuration
     */
     public function getConnection(): string
     {
-        return $this->get('connection');
+        return $this->required('connection');
     }
+
+
 
 
     /**
@@ -31,7 +32,7 @@ class ManagerConfiguration extends Configuration
     */
     public function getExtension(): string
     {
-        return $this->get('extension');
+        return $this->string('extension');
     }
 
 
@@ -42,6 +43,19 @@ class ManagerConfiguration extends Configuration
     */
     public function getCredentials(): array
     {
-        return $this->get('credentials');
+        return $this->required('credentials');
+    }
+
+
+
+
+
+
+    /**
+     * @return array
+    */
+    public function getConnections(): array
+    {
+        return $this->get('connections', []);
     }
 }

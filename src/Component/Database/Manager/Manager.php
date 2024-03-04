@@ -3,11 +3,10 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Manager;
 
-
 use Laventure\Component\Database\Connection\Drivers\Mysql\MysqlConnection;
 use Laventure\Component\Database\Connection\Drivers\Oracle\OracleConnection;
-use Laventure\Component\Database\Connection\Drivers\Sqlite\SqliteConnection;
 use Laventure\Component\Database\Connection\Drivers\Pgsql\PgsqlConnection;
+use Laventure\Component\Database\Connection\Drivers\Sqlite\SqliteConnection;
 use Laventure\Component\Database\Schema\Migrator\Migrator;
 use Laventure\Component\Database\Schema\Migrator\MigratorInterface;
 use Laventure\Component\Database\Schema\Schema;
@@ -32,9 +31,49 @@ class Manager extends DatabaseManager
 
 
 
+
+
+    /**
+     * @var array
+    */
+    protected array $credentials = [];
+
+
+
+
     public function __construct()
     {
         parent::__construct($this->getDefaultConnections());
+    }
+
+
+
+
+
+    /**
+     * @param array $credentials
+     * @return $this
+    */
+    public function addConnections(array $credentials): static
+    {
+        $this->credentials = $credentials;
+
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @return $this
+    */
+    public function bootConnection(): static
+    {
+        return $this->open(
+            $this->config()->getConnection(),
+            $this->config()->getCredentials()
+        );
     }
 
 
@@ -79,9 +118,6 @@ class Manager extends DatabaseManager
 
 
 
-
-
-
     /**
      * @return static
     */
@@ -92,6 +128,19 @@ class Manager extends DatabaseManager
         }
 
         return static::$instance;
+    }
+
+
+
+
+
+
+    /**
+     * @return ManagerConfiguration
+    */
+    public function config(): ManagerConfiguration
+    {
+         return new ManagerConfiguration($this->credentials);
     }
 
 
