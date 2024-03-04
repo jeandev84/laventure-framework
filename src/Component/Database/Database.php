@@ -134,28 +134,15 @@ abstract class Database implements DatabaseInterface
 
 
 
-
     /**
-     * @param string $sql
+     * @param string ...$sql
      * @return bool|int
     */
-    public function exec(string $sql): bool|int
+    public function exec(string ...$sql): bool|int
     {
-        return $this->connection->executeQuery($sql);
+        return $this->connection->executeQuery(join(' ', $sql));
     }
 
-
-
-
-
-    /**
-     * @param array $queries
-     * @return bool|int
-    */
-    public function execQueries(array $queries): bool|int
-    {
-        return $this->exec(join(' ', $queries));
-    }
 
 
 

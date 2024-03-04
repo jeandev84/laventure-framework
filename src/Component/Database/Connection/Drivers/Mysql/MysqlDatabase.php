@@ -21,11 +21,11 @@ class MysqlDatabase extends Database
     */
     public function create(): bool
     {
-        $this->execQueries([
-            "CREATE DATABASE IF NOT EXISTS {$this->getName()}",
+        $this->exec(
+       "CREATE DATABASE IF NOT EXISTS {$this->getName()}",
             "DEFAULT CHARACTER SET {$this->charset()}",
             "DEFAULT COLLATE {$this->collation()};"
-        ]);
+        );
 
         $this->exec( "SET default_storage_engine = {$this->engine()};");
 
