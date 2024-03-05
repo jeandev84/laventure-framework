@@ -52,7 +52,7 @@ class Migrator implements MigratorInterface
 
 
     /**
-     * Collect migrations
+     * Collect Migrations
      *
      * @var MigrationInterface[]
     */
@@ -68,7 +68,7 @@ class Migrator implements MigratorInterface
      *
      * @param string $table
     */
-    public function __construct(ConnectionInterface $connection, string $table = 'migrations')
+    public function __construct(ConnectionInterface $connection, string $table = 'Migrations')
     {
         $this->connection = $connection;
         $this->table      = $table;

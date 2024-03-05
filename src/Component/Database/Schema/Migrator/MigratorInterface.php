@@ -30,7 +30,7 @@ interface MigratorInterface
 
 
     /**
-     * Migrate all migrations
+     * Migrate all Migrations
      *
      * @return mixed
     */
@@ -69,7 +69,7 @@ interface MigratorInterface
 
 
     /**
-     * Refresh migrations
+     * Refresh Migrations
      *
      * @return mixed
     */
@@ -82,7 +82,7 @@ interface MigratorInterface
 
 
     /**
-     * Get all migrations
+     * Get all Migrations
      *
      * @return MigrationInterface[]
     */
@@ -95,7 +95,7 @@ interface MigratorInterface
 
 
     /**
-     * Get migrations to apply
+     * Get Migrations to apply
      *
      * @return MigrationInterface[]
     */
@@ -109,7 +109,7 @@ interface MigratorInterface
 
 
     /**
-     * Get applied migrations
+     * Get applied Migrations
      *
      * @return string[]
     */

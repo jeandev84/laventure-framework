@@ -228,7 +228,7 @@ abstract class SQLBuilder implements SQLBuilderInterface
     */
     public function addWhere($condition, $type = null): static
     {
-        $this->wheres[$type ?: ConditionType::DEFAULT][] = $condition;
+        $this->criteria->wheres[$type ?: ConditionType::DEFAULT][] = $condition;
 
         return $this;
     }
