@@ -84,19 +84,6 @@ interface TransactionInterface
 
 
     /**
-     * @param callable $func
-     * @param bool $condition
-     * @return bool
-    */
-    public function transactionIf(callable $func, bool $condition = false): mixed;
-
-
-
-
-
-
-
-    /**
      * @return void
      */
     public function disableTransaction(): void;

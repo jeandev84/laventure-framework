@@ -17,7 +17,7 @@ use mysqli;
  *
  * @package  Laventure\Component\Database\Connection\Extensions\Mysqli
 */
-interface MysqliConnectionInterface extends ConnectionInterface
+interface MysqliConnectionInterface
 {
 
      /**

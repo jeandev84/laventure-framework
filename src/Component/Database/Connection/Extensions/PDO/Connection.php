@@ -4,7 +4,19 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Connection\Extensions\PDO;
 
 
+use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
+use Laventure\Component\Database\Configuration\Null\NullConfiguration;
+use Laventure\Component\Database\Connection\Common\AbstractConnection;
 use Laventure\Component\Database\Connection\ConnectionInterface;
+use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\PdoDsnBuilder;
+use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnectionFactory;
+use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnectionFactoryInterface;
+use Laventure\Component\Database\Connection\Extensions\PDO\Query\Query;
+use Laventure\Component\Database\Query\QueryInterface;
+use PDO;
+use PDOException;
+use RuntimeException;
+
 
 /**
  * Connection
@@ -15,7 +27,391 @@ use Laventure\Component\Database\Connection\ConnectionInterface;
  *
  * @package  Laventure\Component\Database\Connection\Extensions\PDO
 */
-abstract class Connection implements ConnectionInterface, PdoConnectionInterface
+abstract class Connection extends AbstractConnection implements PdoConnectionInterface
 {
-     use PdoConnectionTrait;
+    /**
+     * @var PdoConnectionFactoryInterface
+    */
+    protected PdoConnectionFactoryInterface $factory;
+
+
+
+    /**
+     * @param PdoConnectionFactoryInterface|null $factory
+     */
+    public function __construct(PdoConnectionFactoryInterface $factory = null)
+    {
+        $this->factory = $factory ?: new PdoConnectionFactory();
+    }
+
+
+
+
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function connectToPdo(ConfigurationInterface $config): mixed
+    {
+        if (!$config->has('dsn')) {
+            throw new RuntimeException("No DSN specified for making connection.");
+        }
+
+        $config->add($this->getDsnParamsFromString($config['dsn']));
+
+        $this->withConfiguration($config);
+
+        return $this->withConnection($this->makePdo($config));
+    }
+
+
+
+
+
+
+    /**
+     * @return bool
+     */
+    public function connected(): bool
+    {
+        return $this->connection instanceof PDO;
+    }
+
+
+
+
+
+
+    /**
+     * @return void
+     */
+    public function disconnect(): void
+    {
+        $this->connection = null;
+    }
+
+
+
+
+
+    /**
+     * @return void
+     */
+    public function purge(): void
+    {
+        $this->withConfiguration(new NullConfiguration())->disconnect();
+    }
+
+
+
+
+
+
+    /**
+     * @return bool
+     */
+    public function disconnected(): bool
+    {
+        return is_null($this->connection);
+    }
+
+
+
+
+
+
+    /**
+     * @return QueryInterface
+     */
+    public function createQuery(): QueryInterface
+    {
+        return new Query($this->getConnection());
+    }
+
+
+
+
+
+
+
+    /**
+     * @param string $sql
+     * @return QueryInterface
+     */
+    public function statement(string $sql): QueryInterface
+    {
+        return $this->createQuery()->prepare($sql);
+    }
+
+
+
+
+    
+    
+
+    /**
+     * @inheritdoc
+    */
+    public function executeQuery(string $sql): mixed
+    {
+        return $this->createQuery()->exec($sql);
+    }
+
+
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function beginTransaction(): bool
+    {
+        return $this->getConnection()->beginTransaction();
+    }
+
+
+
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function hasActiveTransaction(): bool
+    {
+        return $this->getConnection()->inTransaction();
+    }
+
+
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function commit(): bool
+    {
+        return $this->getConnection()->commit();
+    }
+
+
+
+
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function rollback(): bool
+    {
+        return $this->getConnection()->rollBack();
+    }
+
+
+
+
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function transaction(callable $func): bool
+    {
+        try {
+
+            $this->beginTransaction();
+            $func($this);
+            return $this->commit();
+
+        } catch (PDOException $e) {
+
+            if ($this->hasActiveTransaction()) {
+                $this->rollBack();
+            }
+
+            throw new PDOException($e->getMessage(), $e->getCode());
+        }
+    }
+
+
+
+
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function makePdo(ConfigurationInterface $config): PDO
+    {
+        return $this->factory->makeConnection($config);
+    }
+
+
+
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function getConnection(): PDO
+    {
+        return $this->connection;
+    }
+
+
+
+
+
+
+    /**
+     * @return bool
+    */
+    public function isAvailable(): bool
+    {
+        return $this->hasAvailableDriver($this->getName());
+    }
+
+
+
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function hasAvailableDriver(string $driver): bool
+    {
+        return in_array($driver, $this->getAvailableDrivers());
+    }
+
+
+
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function getAvailableDrivers(): array
+    {
+        return PDO::getAvailableDrivers();
+    }
+
+
+
+
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function connectWithoutDatabase(ConfigurationInterface $config): static
+    {
+        if (!$config->has('dsn')) {
+            $config['dsn'] = $this->makeDefaultDsn($config);
+        }
+
+        return $this->connectToPdo($config);
+    }
+
+
+
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function connectIfExistsDatabase(ConfigurationInterface $config): static
+    {
+        $config['dsn'] = $this->makeDsnIfDatabaseExists($config);
+
+        return $this->connectToPdo($config);
+    }
+
+
+
+
+
+
+
+
+    /**
+     * @param string $dsn
+     * @return array
+    */
+    private function getDsnParamsFromString(string $dsn): array
+    {
+        $config = [];
+        [$driver, $options] = explode(':', $dsn, 2);
+        $params = explode(';', $options);
+        $config['driver'] = $driver;
+
+        foreach ($params as $attributes) {
+            [$key, $value] = explode('=', $attributes, 2);
+            $params[$key] = $value;
+        }
+
+        return $config;
+    }
+
+
+
+
+
+    /**
+     * @param ConfigurationInterface $config
+     * @return string
+    */
+    private function makeDefaultDsn(ConfigurationInterface $config): string
+    {
+        return $this->makePdoDsn($config['driver'], [
+            'host'     => $config['host'],
+            'port'     => $config['port'],
+            'charset'  => $config['charset']
+        ]);
+    }
+
+
+
+
+
+    /**
+     * @param ConfigurationInterface $config
+     * @return string
+    */
+    private function makeDsnIfDatabaseExists(ConfigurationInterface $config): string
+    {
+        if ($config->has('dsn')) {
+            return rtrim($config['dsn'], ';') . ";dbname={$config->getDatabase()};";
+        }
+
+        return $this->makePdoDsn($config['driver'], [
+            'host'     => $config['host'],
+            'port'     => $config['port'],
+            'dbname'   => $config['database'],
+            'charset'  => $config['charset']
+        ]);
+    }
+
+
+
+
+
+    /**
+     * @param string $driver
+     * @param array $params
+     * @return string
+    */
+    private function makePdoDsn(string $driver, array $params): string
+    {
+        return PdoDsnBuilder::create($driver, $params);
+    }
 }

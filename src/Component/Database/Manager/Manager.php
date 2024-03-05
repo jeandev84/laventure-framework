@@ -163,7 +163,7 @@ class Manager extends DatabaseManager implements ManagerInterface
     /**
      * @return static
     */
-    public static function instance(): static
+    public static function getInstance(): static
     {
         if (!static::$instance) {
             static::$instance = new self();

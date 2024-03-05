@@ -5,16 +5,21 @@ namespace Laventure\Component\Database\Connection\Extensions\Mysqli;
 
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Configuration\Null\NullConfiguration;
+use Laventure\Component\Database\Connection\Common\AbstractConnection;
+use Laventure\Component\Database\Connection\ConnectionInterface;
+use Laventure\Component\Database\Connection\Drivers\Mysql\Table\MysqlTable;
+use Laventure\Component\Database\Connection\Extensions\Mysqli\Factory\MysqliConnectionFactory;
 use Laventure\Component\Database\Connection\Extensions\Mysqli\Factory\MysqliConnectionFactoryInterface;
 use Laventure\Component\Database\Connection\Extensions\Mysqli\Query\Builder\QueryBuilder;
 use Laventure\Component\Database\Connection\Extensions\Mysqli\Query\Query;
-use Laventure\Component\Database\Connection\Extensions\PDO\Drivers\Mysql\MysqlDatabase;
 use Laventure\Component\Database\Connection\Name\ConnectionName;
-use Laventure\Component\Database\Connection\Query\Builder\QueryBuilderInterface;
 use Laventure\Component\Database\Connection\Traits\ConnectionTrait;
 use Laventure\Component\Database\DatabaseInterface;
 use Laventure\Component\Database\Query\QueryInterface;
+use Laventure\Component\Database\Schema\Table\TableInterface;
 use mysqli;
+
+
 
 /**
  * MysqliConnection
@@ -25,11 +30,8 @@ use mysqli;
  *
  * @package  Laventure\Component\Database\Connection\Extensions\Mysqli
 */
-class MysqliConnection implements MysqliConnectionInterface
+class MysqliConnection extends AbstractConnection implements  MysqliConnectionInterface
 {
-    use ConnectionTrait;
-
-
     /**
      * @var MysqliConnectionFactoryInterface
     */
@@ -37,24 +39,16 @@ class MysqliConnection implements MysqliConnectionInterface
 
 
 
+
     /**
-     * @param MysqliConnectionFactoryInterface $factory
+     * @param MysqliConnectionFactoryInterface|null $factory
     */
-    public function __construct(MysqliConnectionFactoryInterface $factory)
+    public function __construct(MysqliConnectionFactoryInterface $factory = null)
     {
-        $this->factory = $factory;
+        $this->factory = $factory ?: new MysqliConnectionFactory();
     }
 
 
-
-    /**
-     * @inheritDoc
-    */
-    public function connect(ConfigurationInterface $config): void
-    {
-        $this->withConnection($this->factory->makeConnection($config))
-             ->withConfiguration($config);
-    }
 
 
 
@@ -281,12 +275,48 @@ class MysqliConnection implements MysqliConnectionInterface
 
 
 
+    
 
     /**
      * @inheritDoc
     */
     public function makeMysqli(ConfigurationInterface $config): mysqli
     {
+         return $this->factory->makeConnection($config);
+    }
 
+    
+    
+    
+    
+    
+    /**
+     * @inheritDoc
+    */
+    public function createTable(string $name, string $schemaName = ''): TableInterface
+    {
+        return new MysqlTable($this, $name, $schemaName);
+    }
+
+    
+    
+    
+    /**
+     * @inheritDoc
+    */
+    protected function connectWithoutDatabase(ConfigurationInterface $config): static
+    {
+        
+    }
+
+    
+    
+    
+    /**
+     * @inheritDoc
+    */
+    protected function connectIfExistsDatabase(ConfigurationInterface $config): static
+    {
+        // TODO: Implement connectIfExistsDatabase() method.
     }
 }
