@@ -434,7 +434,7 @@ trait PdoConnectionTrait
     private function makeDsnIfDatabaseExists(ConfigurationInterface $config): string
     {
         if ($config->has('dsn')) {
-            return rtrim($config['dsn'], ';') . ";dbname={$config->database()};";
+            return rtrim($config['dsn'], ';') . ";dbname={$config->getDatabase()};";
         }
 
         return $this->makePdoDsn($config['driver'], [

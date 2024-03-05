@@ -253,7 +253,7 @@ class Schema implements SchemaInterface
         if (!$this->name) {
             $this->name = $this->connection
                                ->configuration()
-                               ->database();
+                               ->getDatabase();
         }
 
         return $this->name;

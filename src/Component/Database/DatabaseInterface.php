@@ -27,16 +27,6 @@ interface DatabaseInterface
 
 
 
-    /**
-     * @param string $name
-     * @return $this
-    */
-    public function name(string $name): static;
-
-
-
-
-
 
     /**
      * Returns connection
@@ -90,7 +80,7 @@ interface DatabaseInterface
 
 
     /**
-     * Returns schemas of database
+     * Returns table names of database
      *
      * @return array
     */
@@ -102,7 +92,7 @@ interface DatabaseInterface
 
 
     /**
-     * Determine if database created or exists
+     * Determine if database exists
      *
      * @return bool
     */
@@ -115,7 +105,7 @@ interface DatabaseInterface
 
 
     /**
-     * Show all databases
+     * List all databases
      *
      * @return array
     */

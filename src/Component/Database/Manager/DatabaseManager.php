@@ -3,9 +3,13 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Manager;
 
-use Laventure\Component\Database\Configuration\Configuration;
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
+use Laventure\Component\Database\Configuration\Exception\ConfigurationException;
 use Laventure\Component\Database\Connection\ConnectionInterface;
+use Laventure\Component\Database\Connection\Exception\NotFoundConnectionException;
+use Laventure\Component\Database\Connection\Exception\UnavailableConnectionException;
+use Laventure\Component\Database\Manager\Contract\DatabaseManagerInterface;
+use Laventure\Component\Database\Manager\Exception\DatabaseManagerException;
 
 /**
  * DatabaseManager
@@ -66,15 +70,15 @@ class DatabaseManager implements DatabaseManagerInterface
 
 
     /**
-     * @inheritDoc
+     * @inheritdoc
     */
-    public function open(string $name, ConfigurationInterface $config): static
+    public function setConnectionName(string $connection): static
     {
-        $this->setCurrent($name);
-        $this->setConfiguration($name, $config);
+        $this->connection = $connection;
 
         return $this;
     }
+
 
 
 
@@ -82,17 +86,28 @@ class DatabaseManager implements DatabaseManagerInterface
 
 
     /**
-     * @param string $name
-     * @param ConfigurationInterface $config
-     * @return $this
-   */
+     * @inheritdoc
+    */
+    public function getConnectionName(): string
+    {
+        return $this->connection;
+    }
+
+
+
+
+
+
+
+    /**
+     * @inheritdoc
+    */
     public function setConfiguration(string $name, ConfigurationInterface $config): static
     {
         $this->config[$name] = $config;
 
         return $this;
     }
-
 
 
 
@@ -114,6 +129,39 @@ class DatabaseManager implements DatabaseManagerInterface
 
 
 
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function hasConfiguration(string $name): bool
+    {
+        return !empty($this->config[$name]);
+    }
+
+
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getConfigurations(): array
+    {
+        return $this->config;
+    }
+
+
+
+
+
+
+
+
     /**
      * @inheritDoc
     */
@@ -130,12 +178,10 @@ class DatabaseManager implements DatabaseManagerInterface
 
 
 
+
+
     /**
-     * Add connection
-     *
-     * @param ConnectionInterface $connection
-     *
-     * @return $this
+     * @inheritdoc
     */
     public function setConnection(ConnectionInterface $connection): static
     {
@@ -148,9 +194,10 @@ class DatabaseManager implements DatabaseManagerInterface
 
 
 
+
+
     /**
-     * @param string $name
-     * @return bool
+     * @inheritdoc
     */
     public function hasConnection(string $name): bool
     {
@@ -162,16 +209,13 @@ class DatabaseManager implements DatabaseManagerInterface
 
 
 
+
     /**
      * @inheritDoc
     */
-    public function configuration(string $name): ConfigurationInterface
+    public function getConnections(): array
     {
-        if (empty($this->config[$name])) {
-            $this->abortIf("empty params for connection ($name)");
-        }
-
-        return $this->config[$name];
+        return $this->connections;
     }
 
 
@@ -183,16 +227,74 @@ class DatabaseManager implements DatabaseManagerInterface
     /**
      * @inheritDoc
     */
+    public function open(string $name, ConfigurationInterface $config): static
+    {
+        return $this->setConnectionName($name)
+                    ->setConfiguration($name, $config);
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function configuration(string $name): ConfigurationInterface
+    {
+        if (!$this->hasConfiguration($name)) {
+            throw new ConfigurationException(
+        "empty params for connection ($name)", [], 409
+            );
+        }
+
+        return $this->config[$name];
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+     * @param string|null $name
+     * @return ConnectionInterface
+     * @throws ConfigurationException
+     * @throws NotFoundConnectionException
+     * @throws UnavailableConnectionException
+    */
     public function connection(string $name = null): ConnectionInterface
     {
-        $name   = $name ?: $this->getCurrent();
+        $name   = $name ?: $this->getConnectionName();
         $config = $this->configuration($name);
 
         if (!$this->hasConnection($name)) {
-            $this->abortIf("unavailable connection named '$name'");
+            throw new NotFoundConnectionException($name);
         }
 
-        return $this->make($name, $config);
+        return $this->connect($name, $config);
+    }
+
+
+
+
+
+    /**
+     * @inheritdoc
+     * @throws UnavailableConnectionException
+    */
+    public function connect(string $name, ConfigurationInterface $config): ConnectionInterface
+    {
+        $this->connections[$name]->connect($config);
+
+        if (! $this->connections[$name]->connected()) {
+            throw new UnavailableConnectionException($name);
+        }
+
+        $this->setConnectionName($name);
+
+        return $this->connected[$name] = $this->connections[$name];
     }
 
 
@@ -213,26 +315,6 @@ class DatabaseManager implements DatabaseManagerInterface
 
 
 
-    /**
-     * @inheritDoc
-    */
-    public function configs(): array
-    {
-        return $this->config;
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function getConnections(): array
-    {
-        return $this->connections;
-    }
-
-
 
 
 
@@ -245,64 +327,5 @@ class DatabaseManager implements DatabaseManagerInterface
         $this->connections = [];
         $this->connected   = [];
         $this->connection  = null;
-    }
-
-
-
-
-    /**
-     * @param string $connection
-     * @return void
-    */
-    public function setCurrent(string $connection): void
-    {
-        $this->connection = $connection;
-    }
-
-
-
-
-
-    /**
-     * @return string|null
-     */
-    public function getCurrent(): ?string
-    {
-        return $this->connection;
-    }
-
-
-
-
-    /**
-     * @param string $message
-     * @return void
-    */
-    protected function abortIf(string $message): void
-    {
-        (function () use ($message) {
-            throw new DatabaseManagerException($message, [], 500);
-        })();
-    }
-
-
-
-
-    /**
-     * @param string $name
-     * @param ConfigurationInterface $config
-     * @return ConnectionInterface
-    */
-    private function make(string $name, ConfigurationInterface $config): ConnectionInterface
-    {
-        $this->connections[$name]->connect($config);
-
-        if (! $this->connections[$name]->connected()) {
-            $this->abortIf("no connection detected for '$name'.");
-        }
-
-        $this->setCurrent($name);
-
-        return $this->connected[$name] = $this->connections[$name];
     }
 }

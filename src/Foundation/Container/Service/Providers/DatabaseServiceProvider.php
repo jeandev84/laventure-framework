@@ -51,7 +51,7 @@ class DatabaseServiceProvider extends ServiceProvider
                     'connections'   => $config['database.connections']
                 ]);
 
-                $database->bootConnection();
+                $database->bootManager();
 
                 return $database;
             },

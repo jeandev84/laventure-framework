@@ -82,7 +82,7 @@ class MysqlDatabase extends Database
     */
     public function engine(): string
     {
-        return $this->connection->config('engine', 'INNODB');
+        return $this->config('engine', 'INNODB');
     }
 
 
@@ -93,7 +93,7 @@ class MysqlDatabase extends Database
     */
     public function createSchema(string $name): mixed
     {
-        #return $this->connection->executeQuery('CREATE SCHEMA ....');
+        #return $this->exec('CREATE SCHEMA ....');
         return false;
     }
 }

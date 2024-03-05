@@ -1,10 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Manager;
+namespace Laventure\Component\Database\Manager\Config;
 
 use Laventure\Component\Database\Configuration\Configuration;
-use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\PdoDsnBuilder;
 
 /**
  * ManagerConfiguration
@@ -15,10 +14,10 @@ use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\PdoDsnBuilder;
  *
  * @package  Laventure\Foundation\Database\Definition
 */
-class ManagerConfiguration extends Configuration
+class ManagerConfiguration extends Configuration implements ManagerConfigurationInterface
 {
     /**
-     * @return string
+     * @inheritdoc
     */
     public function getConnection(): string
     {
@@ -29,7 +28,7 @@ class ManagerConfiguration extends Configuration
 
 
     /**
-     * @return string
+     * @inheritdoc
     */
     public function getExtension(): string
     {
@@ -40,7 +39,7 @@ class ManagerConfiguration extends Configuration
 
 
     /**
-     * @return array
+     * @inheritdoc
     */
     public function getCredentials(): array
     {

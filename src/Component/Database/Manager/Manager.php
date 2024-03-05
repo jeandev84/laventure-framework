@@ -4,13 +4,13 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Manager;
 
 use Laventure\Component\Database\Configuration\Configuration;
-use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
-use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Connection\Drivers\Mysql\MysqlConnection;
 use Laventure\Component\Database\Connection\Drivers\Oracle\OracleConnection;
 use Laventure\Component\Database\Connection\Drivers\Pgsql\PgsqlConnection;
 use Laventure\Component\Database\Connection\Drivers\Sqlite\SqliteConnection;
-use Laventure\Component\Database\Connection\Extensions\PDO\Config\PdoConfiguration;
+use Laventure\Component\Database\Manager\Config\ManagerConfiguration;
+use Laventure\Component\Database\Manager\Config\ManagerConfigurationInterface;
+use Laventure\Component\Database\Manager\Contract\ManagerInterface;
 use Laventure\Component\Database\Schema\Migrator\Migrator;
 use Laventure\Component\Database\Schema\Migrator\MigratorInterface;
 use Laventure\Component\Database\Schema\Schema;
@@ -26,7 +26,7 @@ use Laventure\Component\Database\Schema\Table\TableInterface;
  *
  * @package  Laventure\Component\Database
 */
-class Manager extends DatabaseManager
+class Manager extends DatabaseManager implements ManagerInterface
 {
     /**
      * @var static
@@ -54,8 +54,7 @@ class Manager extends DatabaseManager
 
 
     /**
-     * @param array $credentials
-     * @return $this
+     * @inheritdoc
     */
     public function addCredentials(array $credentials): static
     {
@@ -69,14 +68,11 @@ class Manager extends DatabaseManager
 
 
     /**
-     * @return $this
+     * @inheritdoc
     */
-    public function bootConnection(): static
+    public function bootManager(): static
     {
-        return $this->open(
-            $this->config()->getConnection(),
-            new Configuration($this->config()->getCredentials())
-        );
+        return $this->open($this->getTypeConnection(), $this->getCredentials());
     }
 
 
@@ -85,37 +81,36 @@ class Manager extends DatabaseManager
 
 
     /**
-     * @param string $name
-     * @return TableInterface
+     * @inheritdoc
     */
-    public function table(string $name): TableInterface
+    public function table(string $name, string $connection = null): TableInterface
     {
-        return $this->connection()->createTable($name);
-    }
-
-
-
-
-    /**
-     * @param string|null $name
-     * @return SchemaInterface
-    */
-    public function schema(string $name = null): SchemaInterface
-    {
-        return new Schema($this->connection($name));
+        return $this->connection($connection)->createTable($name);
     }
 
 
 
 
 
+
     /**
-     * @param string|null $name
-     * @return MigratorInterface
+     * @inheritdoc
     */
-    public function migration(string $name = null): MigratorInterface
+    public function schema(string $connection = null): SchemaInterface
     {
-        return new Migrator($this->connection($name));
+        return new Schema($this->connection($connection));
+    }
+
+
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function migration(string $connection = null): MigratorInterface
+    {
+        return new Migrator($this->connection($connection));
     }
 
 
@@ -125,14 +120,33 @@ class Manager extends DatabaseManager
 
 
     /**
-     * @return ManagerConfiguration
+     * @inheritdoc
     */
-    public function config(): ManagerConfiguration
+    public function getConfiguration(): ManagerConfigurationInterface
     {
         return new ManagerConfiguration($this->credentials);
     }
 
-    
+
+
+
+
+
+
+    /**
+     * @return array
+    */
+    public function getDefaultConnections(): array
+    {
+        return [
+            new MysqlConnection(),
+            new PgsqlConnection(),
+            new SqliteConnection(),
+            new OracleConnection()
+        ];
+    }
+
+
 
 
 
@@ -154,15 +168,28 @@ class Manager extends DatabaseManager
 
 
     /**
-     * @return array
+     * Returns connection credentials
+     *
+     * @return Configuration
     */
-    public function getDefaultConnections(): array
+    private function getCredentials(): Configuration
     {
-        return [
-            new MysqlConnection(),
-            new PgsqlConnection(),
-            new SqliteConnection(),
-            new OracleConnection()
-        ];
+        return new Configuration($this->getConfiguration()->getCredentials());
+    }
+
+
+
+
+
+
+
+    /**
+     * Returns type of connection
+     *
+     * @return string
+    */
+    private function getTypeConnection(): string
+    {
+        return $this->getConfiguration()->getConnection();
     }
 }

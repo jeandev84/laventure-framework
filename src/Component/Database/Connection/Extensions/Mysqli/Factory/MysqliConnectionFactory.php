@@ -47,11 +47,11 @@ class MysqliConnectionFactory implements MysqliConnectionFactoryInterface
     public function makeConnection(ConfigurationInterface $config): mysqli
     {
         return $this->makeMysqli(
-            $config->host(),
-            $config->username(),
-            $config->password(),
-            $config->database(),
-            $config->port(),
+            $config->getHost(),
+            $config->getUsername(),
+            $config->getPassword(),
+            $config->getDatabase(),
+            $config->getPort(),
             $config->get('socket', '')
         );
     }

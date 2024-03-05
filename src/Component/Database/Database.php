@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
+use Laventure\Component\Database\Query\QueryInterface;
 
 /**
  * Database
@@ -39,15 +40,15 @@ abstract class Database implements DatabaseInterface
     */
     public function __construct(ConnectionInterface $connection) {
         $this->connection = $connection;
-        $this->name       = $connection->configuration()->database();
+        $this->name       = $connection->configuration()->getDatabase();
     }
 
 
 
 
-
     /**
-     * @inheritDoc
+     * @param string $name
+     * @return $this
     */
     public function name(string $name): static
     {
@@ -61,9 +62,16 @@ abstract class Database implements DatabaseInterface
 
     /**
      * @inheritdoc
+     * @throws DatabaseException
     */
     public function getName(): string
     {
+        if (!$this->name) {
+            throw new DatabaseException(
+      "Database name is not specified for ". get_called_class()
+            );
+        }
+
         return $this->name;
     }
 
@@ -83,10 +91,9 @@ abstract class Database implements DatabaseInterface
 
 
 
-
-
     /**
-     * @return bool
+     * @inheritdoc
+     * @throws DatabaseException
     */
     public function exists(): bool
     {
@@ -146,12 +153,13 @@ abstract class Database implements DatabaseInterface
 
 
 
-    protected function createQuery(string $sql): bool|int
+
+    /**
+     * @param $sql
+     * @return QueryInterface
+    */
+    public function statement($sql): QueryInterface
     {
-        $config     = $this->connection->configuration();
-        $database   = $config->database();
-        $config->removeDatabase();
-        $this->connection->connect($config);
-        return $this->connection->executeQuery($sql);
+        return $this->connection->statement($sql);
     }
 }

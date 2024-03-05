@@ -20,7 +20,7 @@ class Configuration extends Parameter implements ConfigurationInterface
     /**
      * @inheritDoc
      */
-    public function username(): ?string
+    public function getUsername(): ?string
     {
         return $this->get('username');
     }
@@ -32,7 +32,7 @@ class Configuration extends Parameter implements ConfigurationInterface
     /**
      * @inheritDoc
      */
-    public function password(): ?string
+    public function getPassword(): ?string
     {
         return $this->get('password');
     }
@@ -45,7 +45,7 @@ class Configuration extends Parameter implements ConfigurationInterface
     /**
      * @inheritDoc
      */
-    public function charset(): string
+    public function getCharset(): string
     {
         return $this->get('charset', 'utf8');
     }
@@ -58,7 +58,7 @@ class Configuration extends Parameter implements ConfigurationInterface
     /**
      * @inheritDoc
      */
-    public function prefix(): string
+    public function getPrefix(): string
     {
         return $this->get('prefix', '');
     }
@@ -71,7 +71,7 @@ class Configuration extends Parameter implements ConfigurationInterface
     /**
      * @inheritDoc
      */
-    public function host(): string
+    public function getHost(): string
     {
         return $this->get('host', '');
     }
@@ -84,7 +84,7 @@ class Configuration extends Parameter implements ConfigurationInterface
     /**
      * @inheritDoc
     */
-    public function port(): int
+    public function getPort(): int
     {
         return $this->integer('port');
     }
@@ -96,7 +96,7 @@ class Configuration extends Parameter implements ConfigurationInterface
     /**
      * @inheritDoc
      */
-    public function database(): string
+    public function getDatabase(): string
     {
         return $this->get('database', '');
     }
@@ -108,20 +108,8 @@ class Configuration extends Parameter implements ConfigurationInterface
     /**
      * @return string
      */
-    public function collation(): string
+    public function getCollation(): string
     {
         return $this->get('collation', '');
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function removeDatabase(): bool
-    {
-        return $this->remove('database');
     }
 }

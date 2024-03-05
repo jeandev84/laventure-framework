@@ -94,7 +94,7 @@ trait ConnectionTrait
     */
     public function getDatabaseName(): string
     {
-        return $this->config->database();
+        return $this->config->getDatabase();
     }
 
 

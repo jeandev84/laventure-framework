@@ -68,8 +68,8 @@ class PdoConnectionFactory implements PdoConnectionFactoryInterface
     {
         return $this->makePdo(
             $config->required('dsn'),
-            $config->username(),
-            $config->password(),
+            $config->getUsername(),
+            $config->getPassword(),
             $config->get('options', [])
         );
     }
@@ -87,10 +87,10 @@ class PdoConnectionFactory implements PdoConnectionFactoryInterface
     {
         return PdoDsnBuilder::create($config['driver'], [
             [
-                'host'     => $config->host(),
-                'port'     => $config->port(),
-                'dbname'   => $config->database(),
-                'charset'  => $config->charset()
+                'host'     => $config->getHost(),
+                'port'     => $config->getPort(),
+                'dbname'   => $config->getDatabase(),
+                'charset'  => $config->getCharset()
             ]
         ]);
     }

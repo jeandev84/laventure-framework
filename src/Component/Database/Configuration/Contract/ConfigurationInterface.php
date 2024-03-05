@@ -22,7 +22,7 @@ interface ConfigurationInterface extends ParameterInterface
      *
      * @return string
     */
-    public function host(): string;
+    public function getHost(): string;
 
 
 
@@ -34,7 +34,7 @@ interface ConfigurationInterface extends ParameterInterface
      *
      * @return string|null
      */
-    public function username(): ?string;
+    public function getUsername(): ?string;
 
 
 
@@ -46,7 +46,7 @@ interface ConfigurationInterface extends ParameterInterface
      *
      * @return string|null
      */
-    public function password(): ?string;
+    public function getPassword(): ?string;
 
 
 
@@ -58,7 +58,7 @@ interface ConfigurationInterface extends ParameterInterface
      *
      * @return int
      */
-    public function port(): int;
+    public function getPort(): int;
 
 
 
@@ -71,7 +71,7 @@ interface ConfigurationInterface extends ParameterInterface
      *
      * @return string
      */
-    public function database(): string;
+    public function getDatabase(): string;
 
 
 
@@ -84,7 +84,7 @@ interface ConfigurationInterface extends ParameterInterface
      *
      * @return string
      */
-    public function charset(): string;
+    public function getCharset(): string;
 
 
 
@@ -97,7 +97,7 @@ interface ConfigurationInterface extends ParameterInterface
      *
      * @return string
      */
-    public function collation(): string;
+    public function getCollation(): string;
 
 
 
@@ -109,17 +109,5 @@ interface ConfigurationInterface extends ParameterInterface
      *
      * @return string
      */
-    public function prefix(): string;
-
-
-
-
-
-
-    /**
-     * Remove database credential
-     *
-     * @return mixed
-    */
-    public function removeDatabase(): mixed;
+    public function getPrefix(): string;
 }

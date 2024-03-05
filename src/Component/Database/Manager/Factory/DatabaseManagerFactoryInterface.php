@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Manager\Factory;
 
-use Laventure\Component\Database\Manager\DatabaseManagerInterface;
+use Laventure\Component\Database\Manager\Contract\DatabaseManagerInterface;
 
 /**
  * DatabaseManagerFactoryInterface
