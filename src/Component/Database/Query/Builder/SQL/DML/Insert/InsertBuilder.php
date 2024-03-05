@@ -17,48 +17,8 @@ use Laventure\Component\Database\Query\Builder\SQL\SQLBuilder;
  *
  * @package  Laventure\Component\Database\Builder\SQL\DML\Insert
 */
-class InsertBuilder extends SQLBuilder implements InsertBuilderInterface
+class InsertBuilder extends SQLBuilder implements InsertBuilderInterface, InsertResolverInterface
 {
-
-
-    /**
-     * @var InsertResolverInterface
-    */
-    protected InsertResolverInterface $insertResolver;
-
-
-
-    /**
-     * @var string|null
-    */
-    public ?string $table = null;
-
-
-
-    /**
-     * @var array
-    */
-    public array $insert = [];
-
-
-
-    /**
-     * @var array
-    */
-    public array $values = [];
-
-
-
-
-    /**
-     * @param ConnectionInterface $connection
-    */
-    public function __construct(ConnectionInterface $connection)
-    {
-        parent::__construct($connection);
-        $this->insertResolver = new InsertResolver($this);
-    }
-
 
 
 
@@ -67,7 +27,7 @@ class InsertBuilder extends SQLBuilder implements InsertBuilderInterface
     */
     public function insert(string $table): static
     {
-        $this->table = $table;
+        $this->criteria->table = $table;
 
         return $this;
     }
@@ -79,18 +39,40 @@ class InsertBuilder extends SQLBuilder implements InsertBuilderInterface
     */
     public function values(array $values): static
     {
-        /*
-      v  $this->insert   = array_keys($values);
-       v $this->values[] = $values;
-        */
-
         if (isset($values[0])) {
-            $this->insertResolver->resolveMultipleInsert($values);
+            $this->resolveMultipleInsert($values);
         } else {
-            $this->insertResolver->resolveInsert($values);
+            $this->resolveInsert($values);
         }
 
         return $this;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function resolveMultipleInsert(array $values): static
+    {
+        foreach ($values as $position => $attributes) {
+            $this->addInsert($attributes, $position);
+        }
+
+        return $this;
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function resolveInsert(array $values): static
+    {
+        return $this->addInsert($values);
     }
 
 
@@ -105,11 +87,11 @@ class InsertBuilder extends SQLBuilder implements InsertBuilderInterface
         if ($index < 0) { $index = 0; }
 
         if (!isset($this->values[$index])) {
-            $this->values[$index] = [];
+            $this->criteria->values[$index] = [];
         }
 
-        $this->insert[$column] = $column;
-        $this->values[$index][$column] = $value;
+        $this->criteria->columns[$column] = $column;
+        $this->criteria->values[$index][$column] = $value;
 
         return $this;
     }
@@ -121,12 +103,15 @@ class InsertBuilder extends SQLBuilder implements InsertBuilderInterface
     /**
      * @inheritDoc
     */
-    public function addInsertResolver(InsertResolverInterface $insertResolver): static
+    public function addInsert(array $attributes, int $index = 0): static
     {
-        $this->insertResolver = $insertResolver;
+        foreach ($attributes as $column => $value) {
+            $this->setValue($column, $value, $index);
+        }
 
         return $this;
     }
+
 
 
 
@@ -138,7 +123,11 @@ class InsertBuilder extends SQLBuilder implements InsertBuilderInterface
     public function getCommands(): array
     {
         return [
-            new Insert($this->table, $this->insert, $this->values)
+            new Insert(
+               $this->criteria->table,
+               $this->criteria->columns,
+               $this->criteria->values
+            )
         ];
     }
 }

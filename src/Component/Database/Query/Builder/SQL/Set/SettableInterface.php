@@ -20,14 +20,4 @@ interface SettableInterface
      * @return $this
     */
     public function set($column, $value): static;
-
-
-
-
-
-    /**
-     * @param SettableResolverInterface $settableResolver
-     * @return $this
-    */
-    public function addSetResolver(SettableResolverInterface $settableResolver): static;
 }

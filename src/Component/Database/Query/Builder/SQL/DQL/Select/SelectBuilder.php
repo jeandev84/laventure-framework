@@ -82,6 +82,7 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
     public function from(string $table, string $alias = ''): static
     {
         $this->criteria->from[$alias ?: $table] = ($alias ? "$table $alias" : $table);
+        $this->criteria->alias = $alias;
 
         return $this;
     }

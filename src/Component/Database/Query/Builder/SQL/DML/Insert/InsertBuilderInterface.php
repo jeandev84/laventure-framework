@@ -34,6 +34,17 @@ interface InsertBuilderInterface extends SQLBuilderInterface
     public function values(array $values): static;
 
 
+    
+    
+    
+    /**
+     * @param array $attributes
+     * @param int $index
+     * @return $this
+    */
+    public function addInsert(array $attributes, int $index = 0): static;
+
+
 
 
     /**
@@ -43,17 +54,4 @@ interface InsertBuilderInterface extends SQLBuilderInterface
      * @return $this
     */
     public function setValue(string $column, $value, int $index = 0): static;
-
-
-
-
-
-
-    /**
-     * Add insert resolver
-     *
-     * @param InsertResolverInterface $insertResolver
-     * @return $this
-    */
-    public function addInsertResolver(InsertResolverInterface $insertResolver): static;
 }

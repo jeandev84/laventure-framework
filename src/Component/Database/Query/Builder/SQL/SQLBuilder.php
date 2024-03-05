@@ -7,6 +7,7 @@ use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Conditions\ConditionType;
 use Laventure\Component\Database\Query\Builder\SQL\Conditions\Criteria\Resolver\SQLCriteriaResolver;
 use Laventure\Component\Database\Query\Builder\SQL\Conditions\Criteria\Resolver\SQLCriteriaResolverInterface;
+use Laventure\Component\Database\Query\Builder\SQL\Conditions\Where\WhereInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Criteria\Criteria;
 use Laventure\Component\Database\Query\Builder\SQL\Criteria\CriteriaInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionBuilderInterface;
@@ -27,7 +28,7 @@ use Stringable;
  *
  * @package  Laventure\Component\Database\Query\Builder\SQL
 */
-abstract class SQLBuilder implements SQLBuilderInterface
+abstract class SQLBuilder implements WhereInterface, SQLBuilderInterface
 {
 
     /**
@@ -35,22 +36,6 @@ abstract class SQLBuilder implements SQLBuilderInterface
     */
     protected ConnectionInterface $connection;
 
-
-
-
-    /**
-     * @var SQLCriteriaResolverInterface
-    */
-    protected SQLCriteriaResolverInterface $criteriaResolver;
-
-
-
-
-
-    /**
-     * @var SettableResolverInterface
-    */
-    protected SettableResolverInterface $settableResolver;
 
 
 
@@ -110,49 +95,13 @@ abstract class SQLBuilder implements SQLBuilderInterface
 
     /**
      * @param ConnectionInterface $connection
-     * @param CriteriaInterface|null $criteria
     */
-    public function __construct(ConnectionInterface $connection, CriteriaInterface $criteria = null)
+    public function __construct(ConnectionInterface $connection)
     {
         $this->connection        = $connection;
-        $this->criteria          = $criteria ?: new Criteria();
+        $this->criteria          = new Criteria();
         $this->expressionFactory = new ExpressionBuilderFactory();
-        $this->criteriaResolver  = new SQLCriteriaResolver($this);
-        $this->settableResolver  = new SettableResolver($this);
     }
-
-
-
-
-
-
-    /**
-     * @param SQLCriteriaResolverInterface $criteriaResolver
-     * @return $this
-    */
-    public function addCriteriaResolver(SQLCriteriaResolverInterface $criteriaResolver): static
-    {
-        $this->criteriaResolver = $criteriaResolver;
-
-        return $this;
-    }
-
-
-
-
-
-
-    /**
-     * @param SettableResolverInterface $settableResolver
-     * @return $this
-    */
-    public function addSetResolver(SettableResolverInterface $settableResolver): static
-    {
-        $this->settableResolver = $settableResolver;
-
-        return $this;
-    }
-
 
 
 
@@ -165,9 +114,8 @@ abstract class SQLBuilder implements SQLBuilderInterface
     */
     public function set($column, $value): static
     {
-        $this->criteria->set[$column] = $this->settableResolver
-                                   ->resolve($column, $value);
-        $this->setParameter($column, $value);
+        $this->criteria
+             ->set[$column] = $this->expr()->eq($column, $value);
 
         return $this;
     }
@@ -253,6 +201,23 @@ abstract class SQLBuilder implements SQLBuilderInterface
 
 
 
+
+    /**
+     * @param $column
+     * @param $value
+     * @return $this
+    */
+    public function whereEqualTo($column, $value): static
+    {
+         return $this->andWhere($this->expr()->eq($column, $value));
+    }
+
+
+
+
+
+
+
     /**
      * @param array $conditions
      * @return $this
@@ -261,12 +226,10 @@ abstract class SQLBuilder implements SQLBuilderInterface
     {
         foreach ($conditions as $column => $value) {
             if (is_array($value)) {
-                $criteria = $this->criteriaResolver->resolveWhereIn($column, $value);
+                $this->whereIn($column, $value);
             } else {
-                $criteria = $this->criteriaResolver->resolveWhereEqualTo($column, $value);
+                $this->whereEqualTo($column, $value);
             }
-            $this->andWhere($criteria->getCondition());
-            $this->setParameter($criteria->getParam(), $criteria->getValue());
         }
         return $this;
     }
@@ -281,7 +244,7 @@ abstract class SQLBuilder implements SQLBuilderInterface
     */
     public function getWheres(): array
     {
-        return $this->wheres;
+        return $this->criteria->wheres;
     }
 
 

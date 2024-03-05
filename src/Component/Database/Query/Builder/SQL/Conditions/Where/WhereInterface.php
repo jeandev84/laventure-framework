@@ -104,18 +104,6 @@ interface WhereInterface extends HasCriteriaInterface
 
 
     /**
-     * @param SQLCriteriaResolverInterface $criteriaResolver
-     * @return $this
-    */
-    public function addCriteriaResolver(SQLCriteriaResolverInterface $criteriaResolver): static;
-
-
-
-
-
-
-
-    /**
      * Returns conditions
      *
      * @return array

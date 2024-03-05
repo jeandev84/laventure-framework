@@ -89,7 +89,9 @@ class SQLConditionBuilder implements BuilderInterface
                 $having = match($type) {
                     ConditionType::AND => new andX($criteria),
                     ConditionType::OR  => new orX($criteria),
-                    default            => new RuntimeException("Could not get criteria type ($type) ($criteriaAsString)")
+                    default            => new RuntimeException(
+              "Could not get criteria type ($type) ($criteriaAsString)"
+                    )
                 };
                 if ($key !== $type) {
                     $resolved[] = $type;
