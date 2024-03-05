@@ -12,7 +12,125 @@ namespace Laventure\Component\Database\Query\Builder\SQL\Criteria;
  *
  * @package  Laventure\Component\Database\Query\Builder\SQL\Criteria
 */
-class Criteria
+class Criteria implements CriteriaInterface
 {
 
+    /**
+     * @var string[]
+    */
+    public array $columns = [];
+
+
+
+    /**
+     * @var string[]
+    */
+    public array $from = [];
+
+
+
+    /**
+     * @var string[]
+    */
+    public array $joins = [];
+
+
+
+    /**
+     * @var string[]
+    */
+    public array $groupBy = [];
+
+
+
+
+    /**
+     * @var string[]
+    */
+    public array $having = [];
+
+
+
+
+
+    /**
+     * @var string[]
+    */
+    public array $orderBy = [];
+
+
+
+
+
+
+    /**
+     * @var null
+    */
+    public $offset = null;
+
+
+
+
+
+    /**
+     * @var null
+    */
+    public $limit = null;
+
+
+
+
+
+
+    /**
+     * @var string[]
+    */
+    public array $set = [];
+
+
+
+
+
+    /**
+     * @var array
+    */
+    public array $wheres = [];
+
+
+
+
+    /**
+     * @var string|null
+    */
+    public ?string $table = null;
+
+
+
+
+    /**
+     * @var string|null
+    */
+    public ?string $alias = null;
+
+
+
+
+
+    /**
+     * @var array
+    */
+    public array $values = [];
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function toArray(): array
+    {
+        return get_object_vars($this);
+    }
 }

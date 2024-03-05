@@ -33,71 +33,8 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
 
     /**
      * @var string
-     */
+    */
     public string $prefix = '';
-
-
-
-    /**
-     * @var string[]
-     */
-    public array $selects = [];
-
-
-    /**
-     * @var string[]
-     */
-    public array $from = [];
-
-
-
-    /**
-     * @var string[]
-     */
-    public array $joins = [];
-
-
-
-    /**
-     * @var string[]
-     */
-    public array $groupBy = [];
-
-
-
-
-    /**
-     * @var string[]
-     */
-    public array $having = [];
-
-
-
-
-
-    /**
-     * @var string[]
-     */
-    public array $orderBy = [];
-
-
-
-
-
-
-    /**
-     * @var null
-     */
-    public $offset = null;
-
-
-
-
-    /**
-     * @var null
-     */
-    public $limit = null;
-
 
 
 
@@ -130,7 +67,7 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
      */
     public function addSelect(string $columns): static
     {
-        $this->selects[] = $columns;
+        $this->criteria->columns[] = $columns;
 
         return $this;
     }
@@ -144,7 +81,7 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
      */
     public function from(string $table, string $alias = ''): static
     {
-        $this->from[$alias ?: $table] = ($alias ? "$table $alias" : $table);
+        $this->criteria->from[$alias ?: $table] = ($alias ? "$table $alias" : $table);
 
         return $this;
     }
@@ -216,7 +153,7 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
      */
     public function addJoin(string $join): static
     {
-        $this->joins[] = $join;
+        $this->criteria->joins[] = $join;
 
         return $this;
     }
@@ -228,7 +165,7 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
     /**
      * @param Join $join
      * @return $this
-     */
+    */
     public function addJoinExpr(Join $join): static
     {
         return $this->addJoin(strval($join));
@@ -255,7 +192,7 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
      */
     public function addGroupBy(string $columns): static
     {
-        $this->groupBy[] = $columns;
+        $this->criteria->groupBy[] = $columns;
 
         return $this;
     }
@@ -304,10 +241,10 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
 
     /**
      * @inheritDoc
-     */
+    */
     public function addHaving(string $condition, $type = null): static
     {
-        $this->having[$type ?: ConditionType::DEFAULT][] = $condition;
+        $this->criteria->having[$type ?: ConditionType::DEFAULT][] = $condition;
 
         return $this;
     }
@@ -332,11 +269,11 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
 
     /**
      * @inheritdoc
-     */
+    */
     public function addOrderBy(array $orders): static
     {
         foreach ($orders as $column => $direction) {
-            $this->orderBy[$column]  = sprintf(
+            $this->criteria->orderBy[$column]  = sprintf(
                 '%s %s',
                 $column,
                 strtoupper($direction)
@@ -349,12 +286,14 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
 
 
 
+
+
     /**
      * @inheritdoc
-     */
+    */
     public function limit($limit): static
     {
-        $this->limit = $limit;
+        $this->criteria->limit = $limit;
 
         return $this;
     }
@@ -368,7 +307,7 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
      */
     public function offset($offset): static
     {
-        $this->offset = $offset;
+        $this->criteria->offset = $offset;
 
         return $this;
     }
@@ -384,14 +323,14 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
     protected function getCommands(): array
     {
         return [
-            new Select($this->selects, $this->prefix),
-            new From($this->from),
-            new Joins($this->joins),
-            new Where($this->wheres),
-            new GroupBy($this->groupBy),
-            new Having($this->having),
-            new OrderBy($this->orderBy),
-            new Limit($this->limit, $this->offset)
+            new Select($this->criteria->columns, $this->prefix),
+            new From($this->criteria->from),
+            new Joins($this->criteria->joins),
+            new Where($this->criteria->wheres),
+            new GroupBy($this->criteria->groupBy),
+            new Having($this->criteria->having),
+            new OrderBy($this->criteria->orderBy),
+            new Limit($this->criteria->limit, $this->criteria->offset)
         ];
     }
 
@@ -402,7 +341,7 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
     /**
      * @param string $prefix
      * @return $this
-     */
+    */
     protected function addPrefix(string $prefix): static
     {
         $this->prefix = $prefix;

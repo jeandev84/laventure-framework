@@ -7,6 +7,8 @@ use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Conditions\ConditionType;
 use Laventure\Component\Database\Query\Builder\SQL\Conditions\Criteria\Resolver\SQLCriteriaResolver;
 use Laventure\Component\Database\Query\Builder\SQL\Conditions\Criteria\Resolver\SQLCriteriaResolverInterface;
+use Laventure\Component\Database\Query\Builder\SQL\Criteria\Criteria;
+use Laventure\Component\Database\Query\Builder\SQL\Criteria\CriteriaInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionBuilderInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Expr\Factory\ExpressionBuilderFactory;
 use Laventure\Component\Database\Query\Builder\SQL\Formatter\SQLFormatter;
@@ -63,9 +65,10 @@ abstract class SQLBuilder implements SQLBuilderInterface
 
 
     /**
-     * @var array
+     * @var Criteria
     */
-    public array $set = [];
+    protected Criteria $criteria;
+
 
 
 
@@ -73,15 +76,6 @@ abstract class SQLBuilder implements SQLBuilderInterface
     /**
      * @var array
     */
-    public array $wheres = [];
-
-
-
-
-
-    /**
-     * @var array
-     */
     protected array $parameters = [];
 
 
@@ -114,14 +108,14 @@ abstract class SQLBuilder implements SQLBuilderInterface
 
 
 
-
-
     /**
      * @param ConnectionInterface $connection
+     * @param CriteriaInterface|null $criteria
     */
-    public function __construct(ConnectionInterface $connection)
+    public function __construct(ConnectionInterface $connection, CriteriaInterface $criteria = null)
     {
         $this->connection        = $connection;
+        $this->criteria          = $criteria ?: new Criteria();
         $this->expressionFactory = new ExpressionBuilderFactory();
         $this->criteriaResolver  = new SQLCriteriaResolver($this);
         $this->settableResolver  = new SettableResolver($this);
@@ -171,7 +165,7 @@ abstract class SQLBuilder implements SQLBuilderInterface
     */
     public function set($column, $value): static
     {
-        $this->set[$column] = $this->settableResolver
+        $this->criteria->set[$column] = $this->settableResolver
                                    ->resolve($column, $value);
         $this->setParameter($column, $value);
 
@@ -460,6 +454,18 @@ abstract class SQLBuilder implements SQLBuilderInterface
     public function expr(): ExpressionBuilderInterface
     {
         return $this->expressionFactory->createExpressionBuilder();
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getCriteria(): CriteriaInterface
+    {
+        return $this->criteria;
     }
 
 

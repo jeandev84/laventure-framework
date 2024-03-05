@@ -20,26 +20,17 @@ use Laventure\Component\Database\Query\Builder\SQL\SQLBuilder;
 class UpdateBuilder extends SQLBuilder implements UpdateBuilderInterface
 {
 
-    #use WhereTrait;
-
-    /**
-     * @var string|null
-    */
-    public ?string $table = null;
-
-
-
-
 
     /**
      * @inheritDoc
     */
     public function update(string $table): static
     {
-        $this->table = $table;
+        $this->criteria->table = $table;
 
         return $this;
     }
+
 
 
 
@@ -51,9 +42,9 @@ class UpdateBuilder extends SQLBuilder implements UpdateBuilderInterface
     public function getCommands(): array
     {
         return [
-            new Update($this->table),
-            new Set($this->set),
-            new Where($this->wheres)
+            new Update($this->criteria->table),
+            new Set($this->criteria->set),
+            new Where($this->criteria->wheres)
         ];
     }
 }

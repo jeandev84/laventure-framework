@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Query\Builder\SQL;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
+use Laventure\Component\Database\Query\Builder\SQL\Criteria\CriteriaInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionBuilderInterface;
 use Laventure\Component\Database\Query\QueryInterface;
 use Stringable;
@@ -149,4 +150,15 @@ interface SQLBuilderInterface extends Stringable
      * @return ExpressionBuilderInterface
     */
     public function expr(): ExpressionBuilderInterface;
+
+
+
+
+
+
+
+    /**
+     * @return CriteriaInterface
+    */
+    public function getCriteria(): CriteriaInterface;
 }
