@@ -28,7 +28,7 @@ use Stringable;
  *
  * @package  Laventure\Component\Database\Query\Builder\SQL
 */
-abstract class SQLBuilder implements WhereInterface, SQLBuilderInterface
+abstract class SQLBuilder implements WhereInterface, SQLBuilderInterface, SettableResolverInterface
 {
 
     /**
@@ -114,10 +114,20 @@ abstract class SQLBuilder implements WhereInterface, SQLBuilderInterface
     */
     public function set($column, $value): static
     {
-        $this->criteria
-             ->set[$column] = $this->expr()->eq($column, $value);
+        $this->criteria->set[$column] = $this->resolveSet($column, $value);
 
         return $this;
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function resolveSet($column, $value): string
+    {
+        return strval($this->expr()->eq($column, $value));
     }
 
 

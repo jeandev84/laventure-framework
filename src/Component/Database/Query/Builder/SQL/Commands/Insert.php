@@ -37,13 +37,13 @@ class Insert implements Stringable
     */
     public function __toString(): string
     {
-        return sprintf(
-     "INSERT INTO %s (%s) VALUES %s",
+        return sprintf("INSERT INTO %s (%s)",
             $this->table,
-            $this->columns(),
-            $this->values()
+            $this->columns()
         );
     }
+
+
 
 
 
@@ -54,22 +54,5 @@ class Insert implements Stringable
     private function columns(): string
     {
         return join(', ', $this->columns);
-    }
-
-
-
-
-    /**
-     * @return string
-    */
-    private function values(): string
-    {
-        $format = [];
-
-        foreach ($this->values as $values) {
-            $format[] = '('. join(', ', array_values($values)) . ')';
-        }
-
-        return join(', ', $format);
     }
 }

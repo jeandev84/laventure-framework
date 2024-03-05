@@ -21,5 +21,5 @@ interface SettableResolverInterface
      * @param $value
      * @return string
     */
-    public function resolve($column, $value): string;
+    public function resolveSet($column, $value): string;
 }
