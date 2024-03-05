@@ -19,8 +19,8 @@ class SettableResolverPDO extends SettableResolver
     /**
      * @inheritDoc
     */
-    public function resolveSet($column, $value): string
+    public function eq($column, $value): string
     {
-        return parent::resolveSet($column, ":$column");
+        return parent::eq($column, ":$column");
     }
 }

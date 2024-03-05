@@ -17,16 +17,16 @@ use Stringable;
 */
 class Insert implements Stringable
 {
+
     /**
      * @param string $table
      * @param array $columns
-     * @param array $values
     */
     public function __construct(
         public string $table,
-        public array $columns,
-        public array $values
+        public array $columns
     ) {
+
     }
 
 

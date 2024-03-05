@@ -30,7 +30,7 @@ class SettableResolver implements SettableResolverInterface
     /**
      * @inheritDoc
     */
-    public function resolveSet($column, $value): string
+    public function eq($column, $value): string
     {
         return strval($this->builder->expr()->eq($column, $value));
     }

@@ -5,6 +5,7 @@ namespace Laventure\Component\Database\Query\Builder\SQL\DML\Insert;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Commands\Insert;
+use Laventure\Component\Database\Query\Builder\SQL\Commands\Values;
 use Laventure\Component\Database\Query\Builder\SQL\SQLBuilder;
 
 
@@ -123,11 +124,8 @@ class InsertBuilder extends SQLBuilder implements InsertBuilderInterface, Insert
     public function getCommands(): array
     {
         return [
-            new Insert(
-               $this->criteria->table,
-               $this->criteria->columns,
-               $this->criteria->values
-            )
+            new Insert($this->criteria->table, $this->criteria->columns),
+            new Values($this->criteria->values)
         ];
     }
 }

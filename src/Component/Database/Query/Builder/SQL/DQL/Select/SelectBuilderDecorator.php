@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder\SQL\DQL\Select;
 
-use Laventure\Component\Database\Connection\ConnectionInterface;
-use Laventure\Component\Database\Query\Builder\SQL\Conditions\Criteria\Resolver\SQLCriteriaResolverInterface;
-use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionBuilderInterface;
-use Laventure\Component\Database\Query\QueryInterface;
+
+use Laventure\Component\Database\Query\Builder\SQL\Decorator\SQLBuilderDecoratorTrait;
+use Laventure\Component\Database\Query\Builder\SQL\SQLBuilder;
 
 /**
  * SelectBuilderDecorator
@@ -20,13 +19,24 @@ use Laventure\Component\Database\Query\QueryInterface;
 class SelectBuilderDecorator implements SelectBuilderInterface
 {
 
+    use SQLBuilderDecoratorTrait;
+
+
+    /**
+     * @var SelectBuilderInterface
+    */
+    protected $builder;
+
+
+
+
     /**
      * @param SelectBuilderInterface $builder
-     */
-    public function __construct(protected SelectBuilderInterface $builder)
+    */
+    public function __construct(SelectBuilderInterface $builder)
     {
+        $this->builder = $builder;
     }
-
 
 
 
@@ -254,8 +264,12 @@ class SelectBuilderDecorator implements SelectBuilderInterface
     */
     public function addOrderBy(array $orders): static
     {
+        $this->builder->addOrderBy($orders);
 
+        return $this;
     }
+
+
 
 
 
@@ -264,7 +278,9 @@ class SelectBuilderDecorator implements SelectBuilderInterface
     */
     public function limit($limit): static
     {
-        // TODO: Implement limit() method.
+        $this->builder->limit($limit);
+
+        return $this;
     }
 
 
@@ -272,266 +288,11 @@ class SelectBuilderDecorator implements SelectBuilderInterface
 
     /**
      * @inheritDoc
-     */
+    */
     public function offset($offset): static
     {
-
-    }
-
-
-
-
-
-
-    /**
-     * @inheritDoc
-     */
-    public function where($condition): static
-    {
-        // TODO: Implement where() method.
-    }
-
-
-
-
-
-
-    /**
-     * @inheritDoc
-     */
-    public function whereIn($column, array $value): static
-    {
-        $this->builder->whereIn($column, $value);
+        $this->builder->offset($offset);
 
         return $this;
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-     */
-    public function andWhere($condition): static
-    {
-        $this->builder->andWhere($condition);
-
-        return $this;
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-     */
-    public function orWhere($condition): static
-    {
-        $this->builder->orWhere($condition);
-
-        return $this;
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-     */
-    public function addWhere($condition, $type = null): static
-    {
-        $this->builder->addWhere($condition, $type);
-
-        return $this;
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-     */
-    public function addCriteriaResolver(SQLCriteriaResolverInterface $criteriaResolver): static
-    {
-        $this->builder->addCriteriaResolver($criteriaResolver);
-
-        return $this;
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-     */
-    public function criteria(array $conditions): static
-    {
-        $this->builder->criteria($conditions);
-
-        return $this;
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-     */
-    public function getWheres(): array
-    {
-        return $this->builder->getWheres();
-    }
-
-
-
-
-
-
-    /**
-     * @inheritDoc
-     */
-    public function setParameters(array $parameters): static
-    {
-        $this->builder->setParameters($parameters);
-
-        return $this;
-    }
-
-
-
-    /**
-     * @inheritDoc
-     */
-    public function setParameter($id, $value): static
-    {
-        $this->builder->setParameter($id, $value);
-
-        return $this;
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-     */
-    public function getParameter($id): mixed
-    {
-        return $this->builder->getParameter($id);
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-     */
-    public function getParameters(): array
-    {
-        return $this->builder->getParameters();
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-     */
-    public function bindParam($id, $value, int $type = 0): static
-    {
-        $this->builder->bindParam($id, $value, $type);
-
-        return $this;
-    }
-
-
-
-
-
-
-    /**
-     * @inheritDoc
-     */
-    public function bindValue($id, $value, int $type = 0): static
-    {
-        $this->builder->bindValue($id, $value, $type);
-
-        return $this;
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-     */
-    public function bindColumn($id, $value, int $type = 0): static
-    {
-        $this->builder->bindColumn($id, $value, $type);
-
-        return $this;
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-     */
-    public function getSQL(): string
-    {
-        return $this->builder->getSQL();
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-     */
-    public function __toString()
-    {
-        return $this->getSQL();
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-     */
-    public function expr(): ExpressionBuilderInterface
-    {
-        return $this->builder->expr();
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function getConnection(): ConnectionInterface
-    {
-        return $this->builder->getConnection();
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function getQuery(): QueryInterface
-    {
-        return $this->builder->getQuery();
     }
 }

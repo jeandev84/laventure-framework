@@ -5,15 +5,13 @@ namespace Laventure\Component\Database\Query\Builder\SQL;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Conditions\ConditionType;
-use Laventure\Component\Database\Query\Builder\SQL\Conditions\Criteria\Resolver\SQLCriteriaResolver;
-use Laventure\Component\Database\Query\Builder\SQL\Conditions\Criteria\Resolver\SQLCriteriaResolverInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Conditions\Where\WhereInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Criteria\Criteria;
 use Laventure\Component\Database\Query\Builder\SQL\Criteria\CriteriaInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionBuilderInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Expr\Factory\ExpressionBuilderFactory;
 use Laventure\Component\Database\Query\Builder\SQL\Formatter\SQLFormatter;
-use Laventure\Component\Database\Query\Builder\SQL\Set\SettableResolver;
+use Laventure\Component\Database\Query\Builder\SQL\Set\SettableInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Set\SettableResolverInterface;
 use Laventure\Component\Database\Query\QueryInterface;
 use Stringable;
@@ -28,7 +26,7 @@ use Stringable;
  *
  * @package  Laventure\Component\Database\Query\Builder\SQL
 */
-abstract class SQLBuilder implements WhereInterface, SQLBuilderInterface, SettableResolverInterface
+abstract class SQLBuilder implements WhereInterface, SQLBuilderInterface, SettableInterface
 {
 
     /**
@@ -110,22 +108,9 @@ abstract class SQLBuilder implements WhereInterface, SQLBuilderInterface, Settab
     /**
      * @param $column
      * @param $value
-     * @return $this
+     * @return string
     */
-    public function set($column, $value): static
-    {
-        $this->criteria->set[$column] = $this->resolveSet($column, $value);
-
-        return $this;
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function resolveSet($column, $value): string
+    public function eq($column, $value): string
     {
         return strval($this->expr()->eq($column, $value));
     }
@@ -134,10 +119,24 @@ abstract class SQLBuilder implements WhereInterface, SQLBuilderInterface, Settab
 
 
 
+    /**
+     * @inheritdoc
+    */
+    public function set($column, $value): static
+    {
+        $this->criteria->set[$column] = $this->eq($column, $value);
+
+        return $this;
+    }
+
+
+
+
+
+
 
     /**
-     * @param $condition
-     * @return $this
+     * @inheritdoc
     */
     public function where($condition): static
     {
@@ -151,8 +150,7 @@ abstract class SQLBuilder implements WhereInterface, SQLBuilderInterface, Settab
 
 
     /**
-     * @param $condition
-     * @return $this
+     * @inheritdoc
     */
     public function andWhere($condition): static
     {
@@ -166,8 +164,7 @@ abstract class SQLBuilder implements WhereInterface, SQLBuilderInterface, Settab
 
 
     /**
-     * @param $condition
-     * @return $this
+     * @inheritdoc
     */
     public function orWhere($condition): static
     {
@@ -180,9 +177,7 @@ abstract class SQLBuilder implements WhereInterface, SQLBuilderInterface, Settab
 
 
     /**
-     * @param $condition
-     * @param $type
-     * @return $this
+     * @inheritdoc
     */
     public function addWhere($condition, $type = null): static
     {
@@ -197,9 +192,7 @@ abstract class SQLBuilder implements WhereInterface, SQLBuilderInterface, Settab
 
 
     /**
-     * @param $column
-     * @param array $value
-     * @return $this
+     * @inheritdoc
     */
     public function whereIn($column, array $value): static
     {
@@ -213,13 +206,11 @@ abstract class SQLBuilder implements WhereInterface, SQLBuilderInterface, Settab
 
 
     /**
-     * @param $column
-     * @param $value
-     * @return $this
+     * @inheritdoc
     */
     public function whereEqualTo($column, $value): static
     {
-         return $this->andWhere($this->expr()->eq($column, $value));
+         return $this->andWhere($this->eq($column, $value));
     }
 
 
@@ -229,8 +220,7 @@ abstract class SQLBuilder implements WhereInterface, SQLBuilderInterface, Settab
 
 
     /**
-     * @param array $conditions
-     * @return $this
+     * @inheritdoc
     */
     public function criteria(array $conditions): static
     {
@@ -241,6 +231,7 @@ abstract class SQLBuilder implements WhereInterface, SQLBuilderInterface, Settab
                 $this->whereEqualTo($column, $value);
             }
         }
+
         return $this;
     }
 
