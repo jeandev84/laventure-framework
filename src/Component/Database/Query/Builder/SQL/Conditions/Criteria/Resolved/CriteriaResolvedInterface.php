@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Query\Builder\SQL\Criteria\Resolved;
+namespace Laventure\Component\Database\Query\Builder\SQL\Conditions\Criteria\Resolved;
 
 
 /**

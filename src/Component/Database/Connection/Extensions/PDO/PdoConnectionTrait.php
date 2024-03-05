@@ -6,7 +6,6 @@ namespace Laventure\Component\Database\Connection\Extensions\PDO;
 
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Configuration\Null\NullConfiguration;
-use Laventure\Component\Database\Connection\Extensions\PDO\Config\PdoConfiguration;
 use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\PdoDsnBuilder;
 use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnectionFactory;
 use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnectionFactoryInterface;
@@ -32,7 +31,7 @@ trait PdoConnectionTrait
 
     /**
      * @var PdoConnectionFactoryInterface
-     */
+    */
     protected PdoConnectionFactoryInterface $factory;
 
 

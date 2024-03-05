@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Query\Builder\SQL\Criteria\Resolver;
+namespace Laventure\Component\Database\Query\Builder\SQL\Conditions\Criteria\Resolver;
 
 
-use Laventure\Component\Database\Query\Builder\SQL\Criteria\Resolved\CriteriaResolvedInterface;
+use Laventure\Component\Database\Query\Builder\SQL\Conditions\Criteria\Resolved\CriteriaResolvedInterface;
 
 /**
  * SQLCriteriaMapperInterface

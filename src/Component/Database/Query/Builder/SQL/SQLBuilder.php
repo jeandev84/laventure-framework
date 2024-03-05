@@ -5,8 +5,8 @@ namespace Laventure\Component\Database\Query\Builder\SQL;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Conditions\ConditionType;
-use Laventure\Component\Database\Query\Builder\SQL\Criteria\Resolver\SQLCriteriaResolver;
-use Laventure\Component\Database\Query\Builder\SQL\Criteria\Resolver\SQLCriteriaResolverInterface;
+use Laventure\Component\Database\Query\Builder\SQL\Conditions\Criteria\Resolver\SQLCriteriaResolver;
+use Laventure\Component\Database\Query\Builder\SQL\Conditions\Criteria\Resolver\SQLCriteriaResolverInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Expr\Expr;
 use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Formatter\SQLFormatter;
