@@ -50,7 +50,6 @@ class InsertBuilder extends SQLBuilder implements InsertBuilderInterface
 
 
 
-
     /**
      * @param ConnectionInterface $connection
     */

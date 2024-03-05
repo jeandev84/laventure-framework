@@ -60,22 +60,6 @@ interface ConnectionInterface extends TransactionInterface
 
 
 
-
-
-    /**
-     * Reconnect to the database
-     *
-     * @param ConfigurationInterface $config
-     *
-     * @return mixed
-    */
-    public function reconnect(ConfigurationInterface $config): mixed;
-
-
-
-
-
-
     /**
      * Disconnect to the database
      *

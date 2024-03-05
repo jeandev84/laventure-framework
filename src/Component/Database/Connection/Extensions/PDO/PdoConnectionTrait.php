@@ -61,10 +61,15 @@ trait PdoConnectionTrait
     public function connect(ConfigurationInterface $config): static
     {
         if (!$config->has('dsn')) {
-            $config['dsn'] = $this->makePdoDsn($config);
+            $config['dsn'] = $this->makeDefaultDsn($config);
         }
 
         $this->withConnection($this->makePdo($config));
+
+        if ($this->getDatabase()->exists()) {
+            $config['dsn'] = $this->makeDsnIfDatabaseExists($config);
+            $this->withConnection($this->makePdo($config));
+        }
 
         return $this;
     }
@@ -83,26 +88,6 @@ trait PdoConnectionTrait
     }
 
 
-
-
-
-
-    /**
-     * Reconnect to the database
-     *
-     * @param ConfigurationInterface $config
-     *
-     * @return $this
-     * @throws ConnectionException
-    */
-    public function reconnect(ConfigurationInterface $config): static
-    {
-        if (!$config->has('dsn')) {
-           throw new ConnectionException("Unable dsn for reconnect to database");
-        }
-
-        return $this->withConnection($this->makePdo($config));
-    }
 
 
 
@@ -356,17 +341,13 @@ trait PdoConnectionTrait
 
 
     /**
-     * @param ConfigurationInterface $config
+     * @param string $driver
+     * @param array $params
      * @return string
     */
-    private function makePdoDsn(ConfigurationInterface $config): string
+    private function makePdoDsn(string $driver, array $params): string
     {
-        return PdoDsnBuilder::create($config['driver'], [
-            'host'     => $config['host'],
-            'port'     => $config['port'],
-            'dbname'   => $config['database'],
-            'charset'  => $config['charset']
-        ]);
+        return PdoDsnBuilder::create($driver, $params);
     }
 
 
@@ -391,6 +372,41 @@ trait PdoConnectionTrait
         }
 
         return $config;
+    }
+
+
+
+
+
+    /**
+     * @param ConfigurationInterface $config
+     * @return string
+    */
+    private function makeDefaultDsn(ConfigurationInterface $config): string
+    {
+        return $this->makePdoDsn($config['driver'], [
+            'host'     => $config['host'],
+            'port'     => $config['port'],
+            'charset'  => $config['charset']
+        ]);
+    }
+
+
+
+
+
+    /**
+     * @param ConfigurationInterface $config
+     * @return string
+    */
+    private function makeDsnIfDatabaseExists(ConfigurationInterface $config): string
+    {
+        return $this->makePdoDsn($config['driver'], [
+            'host'     => $config['host'],
+            'port'     => $config['port'],
+            'dbname'   => $config['database'],
+            'charset'  => $config['charset']
+        ]);
     }
 
 
