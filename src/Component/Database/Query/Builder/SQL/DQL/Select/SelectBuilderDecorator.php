@@ -1,30 +1,29 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Connection\Drivers\Mysql\Query\Builder\SQL\Commands\DQL;
+namespace Laventure\Component\Database\Query\Builder\SQL\DQL\Select;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Conditions\Criteria\Resolver\SQLCriteriaResolverInterface;
-use Laventure\Component\Database\Query\Builder\SQL\DQL\Select\SelectBuilderInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionBuilderInterface;
 use Laventure\Component\Database\Query\QueryInterface;
 
-
 /**
- * Select
+ * SelectBuilderDecorator
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Drivers\Mysql\Query\Builder\SQL\Commands
+ * @package  Laventure\Component\Database\Query\Builder\SQL\DQL\Select
 */
-class Select implements SelectBuilderInterface
+class SelectBuilderDecorator implements SelectBuilderInterface
 {
+
     /**
-     * @param SelectBuilderInterface $select
-    */
-    public function __construct(protected SelectBuilderInterface $select)
+     * @param SelectBuilderInterface $builder
+     */
+    public function __construct(protected SelectBuilderInterface $builder)
     {
     }
 
@@ -36,7 +35,7 @@ class Select implements SelectBuilderInterface
     */
     public function distinct(): static
     {
-        $this->select->distinct();
+        $this->builder->distinct();
 
         return $this;
     }
@@ -49,7 +48,7 @@ class Select implements SelectBuilderInterface
     */
     public function select(string $columns): static
     {
-        $this->select->select($columns);
+        $this->builder->select($columns);
 
         return $this;
     }
@@ -62,7 +61,7 @@ class Select implements SelectBuilderInterface
     */
     public function addSelect(string $columns): static
     {
-        $this->select->addSelect($columns);
+        $this->builder->addSelect($columns);
 
         return $this;
     }
@@ -75,7 +74,7 @@ class Select implements SelectBuilderInterface
     */
     public function from(string $table, string $alias = ''): static
     {
-        $this->select->from($table, $alias);
+        $this->builder->from($table, $alias);
 
         return $this;
     }
@@ -88,7 +87,7 @@ class Select implements SelectBuilderInterface
     */
     public function join(string $table, string $condition): static
     {
-        $this->select->join($table, $condition);
+        $this->builder->join($table, $condition);
 
         return $this;
     }
@@ -101,7 +100,7 @@ class Select implements SelectBuilderInterface
     */
     public function leftJoin(string $table, string $condition): static
     {
-        $this->select->join($table, $condition);
+        $this->builder->leftJoin($table, $condition);
 
         return $this;
     }
@@ -111,103 +110,158 @@ class Select implements SelectBuilderInterface
 
     /**
      * @inheritDoc
-     */
+    */
     public function rightJoin(string $table, string $condition): static
     {
-        // TODO: Implement rightJoin() method.
+        $this->builder->rightJoin($table, $condition);
+
+        return $this;
     }
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function innerJoin(string $table, string $condition): static
     {
-        // TODO: Implement innerJoin() method.
+        $this->builder->innerJoin($table, $condition);
+
+        return $this;
     }
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function fullJoin(string $table, string $condition): static
     {
-        // TODO: Implement fullJoin() method.
+        $this->builder->fullJoin($table, $condition);
+
+        return $this;
     }
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function addJoin(string $join): static
     {
-        // TODO: Implement addJoin() method.
+        $this->builder->addJoin($join);
+
+        return $this;
     }
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function groupBy(string $columns): static
     {
-        // TODO: Implement groupBy() method.
+        $this->builder->groupBy($columns);
+
+        return $this;
     }
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function addGroupBy(string $columns): static
     {
-        // TODO: Implement addGroupBy() method.
+        $this->builder->addGroupBy($columns);
+
+        return $this;
     }
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function addHaving(string $condition, $type = null): static
     {
-        // TODO: Implement addHaving() method.
+        $this->builder->addHaving($condition, $type);
+
+        return $this;
     }
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function having(string $condition): static
     {
-        // TODO: Implement having() method.
+        $this->builder->having($condition);
+
+        return $this;
     }
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function andHaving(string $condition): static
     {
-        // TODO: Implement andHaving() method.
+        $this->builder->addHaving($condition);
+
+        return $this;
     }
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function orHaving(string $condition): static
     {
-        // TODO: Implement orHaving() method.
+        $this->builder->orHaving($condition);
+
+        return $this;
     }
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function orderBy(string $column, string $direction = null): static
     {
-        // TODO: Implement orderBy() method.
+        $this->builder->orderBy($column, $direction);
+
+        return $this;
     }
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function addOrderBy(array $orders): static
     {
-        // TODO: Implement addOrderBy() method.
+
     }
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function limit($limit): static
     {
         // TODO: Implement limit() method.
@@ -218,7 +272,7 @@ class Select implements SelectBuilderInterface
 
     /**
      * @inheritDoc
-    */
+     */
     public function offset($offset): static
     {
 
@@ -231,7 +285,7 @@ class Select implements SelectBuilderInterface
 
     /**
      * @inheritDoc
-    */
+     */
     public function where($condition): static
     {
         // TODO: Implement where() method.
@@ -244,10 +298,10 @@ class Select implements SelectBuilderInterface
 
     /**
      * @inheritDoc
-    */
+     */
     public function whereIn($column, array $value): static
     {
-        $this->select->whereIn($column, $value);
+        $this->builder->whereIn($column, $value);
 
         return $this;
     }
@@ -258,10 +312,10 @@ class Select implements SelectBuilderInterface
 
     /**
      * @inheritDoc
-    */
+     */
     public function andWhere($condition): static
     {
-        $this->select->andWhere($condition);
+        $this->builder->andWhere($condition);
 
         return $this;
     }
@@ -272,10 +326,10 @@ class Select implements SelectBuilderInterface
 
     /**
      * @inheritDoc
-    */
+     */
     public function orWhere($condition): static
     {
-        $this->select->orWhere($condition);
+        $this->builder->orWhere($condition);
 
         return $this;
     }
@@ -285,10 +339,10 @@ class Select implements SelectBuilderInterface
 
     /**
      * @inheritDoc
-    */
+     */
     public function addWhere($condition, $type = null): static
     {
-        $this->select->addWhere($condition, $type);
+        $this->builder->addWhere($condition, $type);
 
         return $this;
     }
@@ -298,10 +352,10 @@ class Select implements SelectBuilderInterface
 
     /**
      * @inheritDoc
-    */
+     */
     public function addCriteriaResolver(SQLCriteriaResolverInterface $criteriaResolver): static
     {
-        $this->select->addCriteriaResolver($criteriaResolver);
+        $this->builder->addCriteriaResolver($criteriaResolver);
 
         return $this;
     }
@@ -312,10 +366,10 @@ class Select implements SelectBuilderInterface
 
     /**
      * @inheritDoc
-    */
+     */
     public function criteria(array $conditions): static
     {
-        $this->select->criteria($conditions);
+        $this->builder->criteria($conditions);
 
         return $this;
     }
@@ -326,10 +380,10 @@ class Select implements SelectBuilderInterface
 
     /**
      * @inheritDoc
-    */
+     */
     public function getWheres(): array
     {
-        return $this->select->getWheres();
+        return $this->builder->getWheres();
     }
 
 
@@ -342,7 +396,7 @@ class Select implements SelectBuilderInterface
      */
     public function setParameters(array $parameters): static
     {
-        $this->select->setParameters($parameters);
+        $this->builder->setParameters($parameters);
 
         return $this;
     }
@@ -354,7 +408,7 @@ class Select implements SelectBuilderInterface
      */
     public function setParameter($id, $value): static
     {
-        $this->select->setParameter($id, $value);
+        $this->builder->setParameter($id, $value);
 
         return $this;
     }
@@ -367,7 +421,7 @@ class Select implements SelectBuilderInterface
      */
     public function getParameter($id): mixed
     {
-        return $this->select->getParameter($id);
+        return $this->builder->getParameter($id);
     }
 
 
@@ -378,7 +432,7 @@ class Select implements SelectBuilderInterface
      */
     public function getParameters(): array
     {
-        return $this->select->getParameters();
+        return $this->builder->getParameters();
     }
 
 
@@ -389,7 +443,7 @@ class Select implements SelectBuilderInterface
      */
     public function bindParam($id, $value, int $type = 0): static
     {
-        $this->select->bindParam($id, $value, $type);
+        $this->builder->bindParam($id, $value, $type);
 
         return $this;
     }
@@ -404,7 +458,7 @@ class Select implements SelectBuilderInterface
      */
     public function bindValue($id, $value, int $type = 0): static
     {
-        $this->select->bindValue($id, $value, $type);
+        $this->builder->bindValue($id, $value, $type);
 
         return $this;
     }
@@ -417,7 +471,7 @@ class Select implements SelectBuilderInterface
      */
     public function bindColumn($id, $value, int $type = 0): static
     {
-        $this->select->bindColumn($id, $value, $type);
+        $this->builder->bindColumn($id, $value, $type);
 
         return $this;
     }
@@ -428,10 +482,10 @@ class Select implements SelectBuilderInterface
 
     /**
      * @inheritDoc
-    */
+     */
     public function getSQL(): string
     {
-        return $this->select->getSQL();
+        return $this->builder->getSQL();
     }
 
 
@@ -440,7 +494,7 @@ class Select implements SelectBuilderInterface
 
     /**
      * @inheritDoc
-    */
+     */
     public function __toString()
     {
         return $this->getSQL();
@@ -451,10 +505,10 @@ class Select implements SelectBuilderInterface
 
     /**
      * @inheritDoc
-    */
+     */
     public function expr(): ExpressionBuilderInterface
     {
-        return $this->select->expr();
+        return $this->builder->expr();
     }
 
 
@@ -466,8 +520,9 @@ class Select implements SelectBuilderInterface
     */
     public function getConnection(): ConnectionInterface
     {
-        return $this->select->getConnection();
+        return $this->builder->getConnection();
     }
+
 
 
 
@@ -477,6 +532,6 @@ class Select implements SelectBuilderInterface
     */
     public function getQuery(): QueryInterface
     {
-        return $this->select->getQuery();
+        return $this->builder->getQuery();
     }
 }

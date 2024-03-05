@@ -11,7 +11,7 @@ use Laventure\Component\Database\Query\Builder\SQL\DQL\Select\SelectBuilderInter
 use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionBuilderInterface;
 
 /**
- * OracleSQLQueryBuilder
+ * OracleQueryBuilder
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -19,7 +19,7 @@ use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionBuilderInterfa
  *
  * @package  Laventure\Component\Database\Connection\Drivers\Oracle
 */
-class OracleSQLQueryBuilder extends AbstractSQLQueryBuilder
+class OracleQueryBuilder extends AbstractSQLQueryBuilder
 {
 
     /**

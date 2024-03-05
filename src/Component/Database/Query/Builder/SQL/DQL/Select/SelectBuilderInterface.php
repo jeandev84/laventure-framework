@@ -18,18 +18,6 @@ use Laventure\Component\Database\Query\Builder\SQL\SQLBuilderInterface;
 interface SelectBuilderInterface extends SQLBuilderInterface, WhereInterface
 {
     
-
-    /**
-     * Select distinct values
-     *
-     * @return $this
-    */
-    public function distinct(): static;
-    
-    
-    
-    
-    
     /**
      * Select columns
      *
@@ -38,7 +26,18 @@ interface SelectBuilderInterface extends SQLBuilderInterface, WhereInterface
     */
     public function select(string $columns): static;
 
-    
+
+
+
+
+    /**
+     * Select distinct values
+     *
+     * @return $this
+    */
+    public function distinct(): static;
+
+
 
 
 

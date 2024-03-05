@@ -14,7 +14,7 @@ use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionBuilderInterfa
 
 
 /**
- * MysqlSQLQueryBuilder
+ * MysqlQueryBuilder
  * Decorator SQL query builder
  *
  * @author Jean-Claude <jeanyao@ymail.com>
@@ -23,19 +23,8 @@ use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionBuilderInterfa
  *
  * @package  Laventure\Component\Database\Connection\Drivers\Mysql
 */
-class MysqlSQLQueryBuilder extends AbstractSQLQueryBuilder
+class MysqlQueryBuilder extends AbstractSQLQueryBuilder
 {
-
-    /**
-     * @inheritDoc
-    */
-    public function expr(): ExpressionBuilderInterface
-    {
-
-    }
-
-
-
 
     /**
      * @inheritDoc

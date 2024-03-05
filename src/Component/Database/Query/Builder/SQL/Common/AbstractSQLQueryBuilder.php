@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder\SQL\Common;
 
+use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionBuilderInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Factory\SQLQueryBuilderFactoryInterface;
 use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
 
@@ -28,6 +29,17 @@ abstract class AbstractSQLQueryBuilder implements SQLQueryBuilderInterface
        */
        public function __construct(SQLQueryBuilderFactoryInterface $builderFactory)
        {
-            $this->builder = $builderFactory->createSQLBuilder();
+            $this->builder = $builderFactory->createSQLQueryBuilder();
        }
+
+
+
+
+        /**
+         * @inheritDoc
+        */
+        public function expr(): ExpressionBuilderInterface
+        {
+            return $this->builder->expr();
+        }
 }

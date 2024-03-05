@@ -49,7 +49,7 @@ class OracleConnection extends Connection
     */
     public function createQueryBuilder(): SQLQueryBuilderInterface
     {
-        return new OracleSQLQueryBuilder($this->createSQLBuilderFactory());
+        return new OracleQueryBuilder($this->createSQLBuilderFactory());
     }
 
 

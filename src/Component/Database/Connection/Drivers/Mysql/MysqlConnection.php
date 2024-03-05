@@ -38,7 +38,7 @@ class MysqlConnection extends Connection
     */
     public function createQueryBuilder(): SQLQueryBuilderInterface
     {
-        return new MysqlSQLQueryBuilder($this->createSQLBuilderFactory());
+        return new MysqlQueryBuilder($this->createSQLBuilderFactory());
     }
 
 

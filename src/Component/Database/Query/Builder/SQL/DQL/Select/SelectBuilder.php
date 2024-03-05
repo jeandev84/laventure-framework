@@ -27,40 +27,40 @@ use Laventure\Component\Database\Query\Builder\SQL\SQLBuilder;
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
  * @package  Laventure\Component\Database\Builder\SQL\DQL\Select
-*/
+ */
 class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
 {
 
     /**
      * @var string
-    */
+     */
     public string $prefix = '';
 
 
 
     /**
      * @var string[]
-    */
+     */
     public array $selects = [];
 
 
     /**
      * @var string[]
-    */
+     */
     public array $from = [];
 
 
 
     /**
      * @var string[]
-    */
+     */
     public array $joins = [];
 
 
 
     /**
      * @var string[]
-    */
+     */
     public array $groupBy = [];
 
 
@@ -68,16 +68,16 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
 
     /**
      * @var string[]
-    */
+     */
     public array $having = [];
 
 
-    
+
 
 
     /**
      * @var string[]
-    */
+     */
     public array $orderBy = [];
 
 
@@ -87,7 +87,7 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
 
     /**
      * @var null
-    */
+     */
     public $offset = null;
 
 
@@ -95,7 +95,7 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
 
     /**
      * @var null
-    */
+     */
     public $limit = null;
 
 
@@ -104,7 +104,7 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
 
     /**
      * @inheritdoc
-    */
+     */
     public function select(string $columns): static
     {
         return $this->addSelect($columns);
@@ -115,7 +115,7 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
 
     /**
      * @inheritdoc
-    */
+     */
     public function distinct(): static
     {
         return $this->addPrefix("DISTINCT");
@@ -127,7 +127,7 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
 
     /**
      * @inheritdoc
-    */
+     */
     public function addSelect(string $columns): static
     {
         $this->selects[] = $columns;
@@ -141,21 +141,21 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
 
     /**
      * @inheritdoc
-    */
+     */
     public function from(string $table, string $alias = ''): static
     {
         $this->from[$alias ?: $table] = ($alias ? "$table $alias" : $table);
 
         return $this;
     }
-    
-    
-    
+
+
+
 
 
     /**
      * @inheritdoc
-    */
+     */
     public function join(string $table, string $condition): static
     {
         return $this->addJoinExpr(new Join($table, $condition));
@@ -168,7 +168,7 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
 
     /**
      * @inheritdoc
-    */
+     */
     public function leftJoin(string $table, string $condition): static
     {
         return $this->addJoinExpr(new LeftJoin($table, $condition));
@@ -180,7 +180,7 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
 
     /**
      * @inheritdoc
-    */
+     */
     public function rightJoin(string $table, string $condition): static
     {
         return $this->addJoinExpr(new RightJoin($table, $condition));
@@ -191,7 +191,7 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
 
     /**
      * @inheritdoc
-    */
+     */
     public function innerJoin(string $table, string $condition): static
     {
         return $this->addJoinExpr(new InnerJoin($table, $condition));
@@ -202,7 +202,7 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
 
     /**
      * @inheritdoc
-    */
+     */
     public function fullJoin(string $table, string $condition): static
     {
         return $this->addJoinExpr(new FullJoin($table, $condition));
@@ -213,7 +213,7 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
 
     /**
      * @inheritdoc
-    */
+     */
     public function addJoin(string $join): static
     {
         $this->joins[] = $join;
@@ -228,7 +228,7 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
     /**
      * @param Join $join
      * @return $this
-    */
+     */
     public function addJoinExpr(Join $join): static
     {
         return $this->addJoin(strval($join));
@@ -241,7 +241,7 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
 
     /**
      * @inheritdoc
-    */
+     */
     public function groupBy(string $columns): static
     {
         return $this->addGroupBy($columns);
@@ -252,7 +252,7 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
 
     /**
      * @inheritdoc
-    */
+     */
     public function addGroupBy(string $columns): static
     {
         $this->groupBy[] = $columns;
@@ -266,7 +266,7 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
 
     /**
      * @inheritdoc
-    */
+     */
     public function having(string $condition): static
     {
         return $this->addHaving($condition);
@@ -278,7 +278,7 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
 
     /**
      * @inheritDoc
-    */
+     */
     public function andHaving(string $condition): static
     {
         return $this->addHaving($condition, ConditionType::AND);
@@ -292,7 +292,7 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
 
     /**
      * @inheritDoc
-    */
+     */
     public function orHaving(string $condition): static
     {
         return $this->addHaving($condition, ConditionType::OR);
@@ -304,7 +304,7 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
 
     /**
      * @inheritDoc
-    */
+     */
     public function addHaving(string $condition, $type = null): static
     {
         $this->having[$type ?: ConditionType::DEFAULT][] = $condition;
@@ -319,7 +319,7 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
 
     /**
      * @inheritdoc
-    */
+     */
     public function orderBy(string $column, string $direction = null): static
     {
         return $this->addOrderBy([$column => $direction ?: 'asc']);
@@ -332,12 +332,12 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
 
     /**
      * @inheritdoc
-    */
+     */
     public function addOrderBy(array $orders): static
     {
         foreach ($orders as $column => $direction) {
             $this->orderBy[$column]  = sprintf(
-         '%s %s',
+                '%s %s',
                 $column,
                 strtoupper($direction)
             );
@@ -351,7 +351,7 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
 
     /**
      * @inheritdoc
-    */
+     */
     public function limit($limit): static
     {
         $this->limit = $limit;
@@ -365,7 +365,7 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
 
     /**
      * @inheritdoc
-    */
+     */
     public function offset($offset): static
     {
         $this->offset = $offset;
@@ -380,7 +380,7 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
 
     /**
      * @inheritDoc
-    */
+     */
     protected function getCommands(): array
     {
         return [
@@ -402,7 +402,7 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
     /**
      * @param string $prefix
      * @return $this
-    */
+     */
     protected function addPrefix(string $prefix): static
     {
         $this->prefix = $prefix;
