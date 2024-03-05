@@ -1,11 +1,9 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Manager;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
-use Laventure\Component\Database\Connection\Query\Builder\QueryBuilderInterface;
 use Laventure\Component\Database\ORM\Metadata\ClassMetadataInterface;
 use Laventure\Component\Database\ORM\Persistence\Repository\EntityRepositoryInterface;
 use Laventure\Component\Database\ORM\UnitOfWork\UnitOfWorkInterface;
@@ -22,39 +20,6 @@ use Laventure\Component\Database\Query\QueryInterface;
 */
 interface EntityManagerInterface extends ObjectManagerInterface
 {
-    /**
-     * @param string $entity
-     * @param $id
-     * @return object|null
-    */
-    public function find(string $entity, $id): ?object;
-
-
-
-
-    /**
-     * @param string $entity
-     * @return EntityRepositoryInterface
-    */
-    public function getRepository(string $entity): EntityRepositoryInterface;
-
-
-
-
-
-
-
-    /**
-     * @param string $entity
-     * @return ClassMetadataInterface
-    */
-    public function getClassMetadata(string $entity): ClassMetadataInterface;
-
-
-
-
-
-
 
 
     /**
