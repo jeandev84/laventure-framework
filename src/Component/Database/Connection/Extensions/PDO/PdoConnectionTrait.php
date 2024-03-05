@@ -36,11 +36,6 @@ trait PdoConnectionTrait
     protected PdoConnectionFactoryInterface $factory;
 
 
-    /**
-     * @var mixed
-    */
-    protected mixed $func;
-
 
 
     public function __construct()
@@ -261,8 +256,7 @@ trait PdoConnectionTrait
     public function transactionIf(callable $func, bool $condition = false): mixed
     {
         if ($condition) {
-            $this->transaction($func);
-            return $this->func;
+            return call_user_func([$this, 'transaction'], $func);
         }
 
         return $condition;
@@ -312,7 +306,7 @@ trait PdoConnectionTrait
     */
     public function isAvailable(): bool
     {
-        return in_array($this->getName(), $this->getAvailableDrivers());
+        return $this->hasDriver($this->getName());
     }
 
 
