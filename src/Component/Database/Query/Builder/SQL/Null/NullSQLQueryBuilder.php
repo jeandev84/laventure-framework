@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Query\Builder\Null;
+namespace Laventure\Component\Database\Query\Builder\SQL\Null;
 
 use Laventure\Component\Database\Connection\Null\NullConnection;
 use Laventure\Component\Database\Query\Builder\SQL\DML\Delete\DeleteBuilderInterface;
@@ -11,11 +11,11 @@ use Laventure\Component\Database\Query\Builder\SQL\DML\Update\Null\NullUpdateBui
 use Laventure\Component\Database\Query\Builder\SQL\DML\Update\UpdateBuilderInterface;
 use Laventure\Component\Database\Query\Builder\SQL\DQL\Select\Null\NullSelectBuilder;
 use Laventure\Component\Database\Query\Builder\SQL\DQL\Select\SelectBuilderInterface;
-use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionInterface;
-use Laventure\Component\Database\Query\Builder\SQLQueryBuilderInterface;
+use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionBuilderInterface;
+use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
 
 /**
- * NullQueryBuilder
+ * NullSQLQueryBuilder
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -23,7 +23,7 @@ use Laventure\Component\Database\Query\Builder\SQLQueryBuilderInterface;
  *
  * @package  Laventure\Component\Database\Builder
 */
-class NullQueryBuilder implements SQLQueryBuilderInterface
+class NullSQLQueryBuilder implements SQLQueryBuilderInterface
 {
 
     protected NullConnection $connection;
@@ -40,7 +40,7 @@ class NullQueryBuilder implements SQLQueryBuilderInterface
     /**
      * @inheritDoc
     */
-    public function expr(): ExpressionInterface
+    public function expr(): ExpressionBuilderInterface
     {
         throw new \RuntimeException("Could not found expression for null query builder.");
     }

@@ -10,7 +10,7 @@ use Laventure\Component\Database\Query\Builder\SQL\Expr\Func\FuncInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Expr\Math\MathInterface;
 
 /**
- * ExpressionInterface
+ * ExpressionBuilderInterface
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -18,7 +18,7 @@ use Laventure\Component\Database\Query\Builder\SQL\Expr\Math\MathInterface;
  *
  * @package  Laventure\Component\Database\Builder\SQL\Expr
 */
-interface ExpressionInterface
+interface ExpressionBuilderInterface
 {
     /**
      * Example: $condition1 AND $condition2 AND $condition3 ...

@@ -9,8 +9,8 @@ use Laventure\Component\Database\Configuration\Null\NullConfiguration;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\DatabaseInterface;
 use Laventure\Component\Database\Null\NullDatabase;
-use Laventure\Component\Database\Query\Builder\Null\NullQueryBuilder;
-use Laventure\Component\Database\Query\Builder\SQLQueryBuilderInterface;
+use Laventure\Component\Database\Query\Builder\SQL\Null\NullSQLQueryBuilder;
+use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
 use Laventure\Component\Database\Query\Null\NullQuery;
 use Laventure\Component\Database\Query\QueryInterface;
 
@@ -116,7 +116,7 @@ class NullConnection implements ConnectionInterface
     */
     public function createQueryBuilder(): SQLQueryBuilderInterface
     {
-        return new NullQueryBuilder();
+        return new NullSQLQueryBuilder();
     }
 
 

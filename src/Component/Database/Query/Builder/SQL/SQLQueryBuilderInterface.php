@@ -1,17 +1,16 @@
 <?php
-
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Query\Builder\Factory;
+namespace Laventure\Component\Database\Query\Builder\SQL;
 
 use Laventure\Component\Database\Query\Builder\SQL\DML\Delete\DeleteBuilderInterface;
 use Laventure\Component\Database\Query\Builder\SQL\DML\Insert\InsertBuilderInterface;
 use Laventure\Component\Database\Query\Builder\SQL\DML\Update\UpdateBuilderInterface;
 use Laventure\Component\Database\Query\Builder\SQL\DQL\Select\SelectBuilderInterface;
-use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionInterface;
+use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionBuilderInterface;
 
 /**
- * SQLBuilderFactoryInterface
+ * SQlQueryBuilderInterface
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -19,56 +18,48 @@ use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionInterface;
  *
  * @package  Laventure\Component\Database\Builder\SQL
 */
-interface SQLBuilderFactoryInterface
+interface SQLQueryBuilderInterface
 {
     /**
-     * Create expression builder
-     *
-     * @return ExpressionInterface
+     * @return ExpressionBuilderInterface
     */
-    public function expr(): ExpressionInterface;
+    public function expr(): ExpressionBuilderInterface;
+
 
 
 
     /**
-     * Create select builder
-     *
+     * @param string|null $selects
      * @return SelectBuilderInterface
     */
-    public function createSelectBuilder(): SelectBuilderInterface;
-
+    public function select(string $selects = null): SelectBuilderInterface;
 
 
 
 
     /**
-     * Create insert builder
-     *
+     * @param string $table
      * @return InsertBuilderInterface
     */
-    public function createInsertBuilder(): InsertBuilderInterface;
-
+    public function insert(string $table): InsertBuilderInterface;
 
 
 
 
 
     /**
-     * Create update builder
-     *
+     * @param string $table
      * @return UpdateBuilderInterface
     */
-    public function createUpdateBuilder(): UpdateBuilderInterface;
-
+    public function update(string $table): UpdateBuilderInterface;
 
 
 
 
 
     /**
-     * Create delete builder
-     *
+     * @param string $table
      * @return DeleteBuilderInterface
     */
-    public function createDeleteBuilder(): DeleteBuilderInterface;
+    public function delete(string $table): DeleteBuilderInterface;
 }

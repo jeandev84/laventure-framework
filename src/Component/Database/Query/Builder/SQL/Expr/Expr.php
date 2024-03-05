@@ -23,7 +23,7 @@ use Laventure\Component\Database\Query\Builder\SQL\Expr\Math\MathInterface;
  *
  * @package  Laventure\Component\Database\Builder\SQL\Exp
 */
-class Expr implements ExpressionInterface
+class Expr implements ExpressionBuilderInterface
 {
     /**
      * @inheritDoc

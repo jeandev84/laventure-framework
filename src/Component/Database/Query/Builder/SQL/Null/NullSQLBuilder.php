@@ -6,7 +6,7 @@ namespace Laventure\Component\Database\Query\Builder\SQL\Null;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Connection\Null\NullConnection;
-use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionInterface;
+use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionBuilderInterface;
 use Laventure\Component\Database\Query\Builder\SQL\SQLBuilderInterface;
 use Laventure\Component\Database\Query\Null\NullQuery;
 use Laventure\Component\Database\Query\QueryInterface;
@@ -57,7 +57,7 @@ class NullSQLBuilder implements SQLBuilderInterface
     /**
      * @inheritDoc
     */
-    public function expr(): ExpressionInterface
+    public function expr(): ExpressionBuilderInterface
     {
         throw new \RuntimeException("Could not found expression for null sql builder.");
     }

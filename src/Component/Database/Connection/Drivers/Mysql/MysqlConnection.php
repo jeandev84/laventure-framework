@@ -3,13 +3,11 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Drivers\Mysql;
 
-use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Connection\Drivers\Mysql\Table\MysqlTable;
 use Laventure\Component\Database\Connection\Extensions\PDO\Connection;
-use Laventure\Component\Database\Connection\Extensions\PDO\PdoConnectionTrait;
 use Laventure\Component\Database\Connection\Name\ConnectionName;
 use Laventure\Component\Database\DatabaseInterface;
-use Laventure\Component\Database\Query\Builder\SQLQueryBuilderInterface;
+use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
 use Laventure\Component\Database\Schema\Table\TableInterface;
 
 /**
@@ -40,7 +38,7 @@ class MysqlConnection extends Connection
     */
     public function createQueryBuilder(): SQLQueryBuilderInterface
     {
-        return new MysqlQueryBuilder($this);
+        return new MysqlSQLQueryBuilder($this->createSQLBuilderFactory());
     }
 
 

@@ -7,8 +7,8 @@ use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Conditions\ConditionType;
 use Laventure\Component\Database\Query\Builder\SQL\Conditions\Criteria\Resolver\SQLCriteriaResolver;
 use Laventure\Component\Database\Query\Builder\SQL\Conditions\Criteria\Resolver\SQLCriteriaResolverInterface;
-use Laventure\Component\Database\Query\Builder\SQL\Expr\Expr;
-use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionInterface;
+use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionBuilderInterface;
+use Laventure\Component\Database\Query\Builder\SQL\Expr\Factory\ExpressionBuilderFactory;
 use Laventure\Component\Database\Query\Builder\SQL\Formatter\SQLFormatter;
 use Laventure\Component\Database\Query\Builder\SQL\Set\SettableResolver;
 use Laventure\Component\Database\Query\Builder\SQL\Set\SettableResolverInterface;
@@ -50,6 +50,13 @@ abstract class SQLBuilder implements SQLBuilderInterface
     */
     protected SettableResolverInterface $settableResolver;
 
+
+
+
+    /**
+     * @var ExpressionBuilderFactory
+    */
+    protected ExpressionBuilderFactory $expressionFactory;
 
 
 
@@ -114,9 +121,10 @@ abstract class SQLBuilder implements SQLBuilderInterface
     */
     public function __construct(ConnectionInterface $connection)
     {
-        $this->connection       = $connection;
-        $this->criteriaResolver = new SQLCriteriaResolver($this);
-        $this->settableResolver = new SettableResolver($this);
+        $this->connection        = $connection;
+        $this->expressionFactory = new ExpressionBuilderFactory();
+        $this->criteriaResolver  = new SQLCriteriaResolver($this);
+        $this->settableResolver  = new SettableResolver($this);
     }
 
 
@@ -449,9 +457,9 @@ abstract class SQLBuilder implements SQLBuilderInterface
     /**
      * @inheritDoc
     */
-    public function expr(): ExpressionInterface
+    public function expr(): ExpressionBuilderInterface
     {
-        return new Expr();
+        return $this->expressionFactory->createExpressionBuilder();
     }
 
 

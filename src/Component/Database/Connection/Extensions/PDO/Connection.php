@@ -7,11 +7,13 @@ namespace Laventure\Component\Database\Connection\Extensions\PDO;
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Configuration\Null\NullConfiguration;
 use Laventure\Component\Database\Connection\Common\AbstractConnection;
-use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\PdoDsnBuilder;
 use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnectionFactory;
 use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnectionFactoryInterface;
+use Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\Factory\PdoSQLQueryBuilderFactory;
 use Laventure\Component\Database\Connection\Extensions\PDO\Query\Query;
+use Laventure\Component\Database\Query\Builder\SQL\Factory\SQLQueryBuilderFactoryInterface;
+use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
 use Laventure\Component\Database\Query\QueryInterface;
 use PDO;
 use PDOException;
@@ -49,11 +51,10 @@ abstract class Connection extends AbstractConnection implements PdoConnectionInt
 
 
 
-
     /**
      * @inheritdoc
     */
-    public function connectToPdo(ConfigurationInterface $config): mixed
+    public function connectToPdo(ConfigurationInterface $config): static
     {
         if (!$config->has('dsn')) {
             throw new RuntimeException("No DSN specified for making connection.");
@@ -72,8 +73,8 @@ abstract class Connection extends AbstractConnection implements PdoConnectionInt
 
 
     /**
-     * @return bool
-     */
+     * @inheritdoc
+    */
     public function connected(): bool
     {
         return $this->connection instanceof PDO;
@@ -85,8 +86,8 @@ abstract class Connection extends AbstractConnection implements PdoConnectionInt
 
 
     /**
-     * @return void
-     */
+     * @inheritdoc
+    */
     public function disconnect(): void
     {
         $this->connection = null;
@@ -97,8 +98,8 @@ abstract class Connection extends AbstractConnection implements PdoConnectionInt
 
 
     /**
-     * @return void
-     */
+     * @inheritdoc
+    */
     public function purge(): void
     {
         $this->withConfiguration(new NullConfiguration())->disconnect();
@@ -110,8 +111,8 @@ abstract class Connection extends AbstractConnection implements PdoConnectionInt
 
 
     /**
-     * @return bool
-     */
+     * @inheritdoc
+    */
     public function disconnected(): bool
     {
         return is_null($this->connection);
@@ -123,14 +124,39 @@ abstract class Connection extends AbstractConnection implements PdoConnectionInt
 
 
     /**
-     * @return QueryInterface
-     */
+     * @inheritdoc
+    */
     public function createQuery(): QueryInterface
     {
         return new Query($this->getConnection());
     }
 
 
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function createQueryBuilder(): SQLQueryBuilderInterface
+    {
+        return $this->createSQLBuilderFactory()
+                    ->createSQLBuilder();
+    }
+
+
+
+
+
+    /**
+     * Returns SQL Builder factory
+     *
+     * @return SQLQueryBuilderFactoryInterface
+    */
+    public function createSQLBuilderFactory(): SQLQueryBuilderFactoryInterface
+    {
+         return new PdoSQLQueryBuilderFactory($this);
+    }
 
 
 

@@ -1,26 +1,25 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Connection\Drivers\Pgsql;
+namespace Laventure\Component\Database\Connection\Drivers\Oracle;
 
-
+use Laventure\Component\Database\Query\Builder\SQL\Common\AbstractSQLQueryBuilder;
 use Laventure\Component\Database\Query\Builder\SQL\DML\Delete\DeleteBuilderInterface;
 use Laventure\Component\Database\Query\Builder\SQL\DML\Insert\InsertBuilderInterface;
 use Laventure\Component\Database\Query\Builder\SQL\DML\Update\UpdateBuilderInterface;
 use Laventure\Component\Database\Query\Builder\SQL\DQL\Select\SelectBuilderInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionBuilderInterface;
-use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
 
 /**
- * PgsqlQueryBuilder
+ * OracleSQLQueryBuilder
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Drivers\Pgsql
+ * @package  Laventure\Component\Database\Connection\Drivers\Oracle
 */
-class PgsqlQueryBuilder implements SQLQueryBuilderInterface
+class OracleSQLQueryBuilder extends AbstractSQLQueryBuilder
 {
 
     /**

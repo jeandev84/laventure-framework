@@ -7,7 +7,7 @@ use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Connection\Name\ConnectionName;
 use Laventure\Component\Database\DatabaseInterface;
-use Laventure\Component\Database\Query\Builder\SQLQueryBuilderInterface;
+use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
 use Laventure\Component\Database\Query\QueryInterface;
 use Laventure\Component\Database\Schema\Table\TableInterface;
 

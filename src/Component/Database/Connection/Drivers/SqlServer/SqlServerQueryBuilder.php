@@ -1,8 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Connection\Drivers\Pgsql;
-
+namespace Laventure\Component\Database\Connection\Drivers\SqlServer;
 
 use Laventure\Component\Database\Query\Builder\SQL\DML\Delete\DeleteBuilderInterface;
 use Laventure\Component\Database\Query\Builder\SQL\DML\Insert\InsertBuilderInterface;
@@ -12,20 +11,20 @@ use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionBuilderInterfa
 use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
 
 /**
- * PgsqlQueryBuilder
+ * SqlServerQueryBuilder
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Drivers\Pgsql
+ * @package  Laventure\Component\Database\Connection\Drivers\SqlServer
 */
-class PgsqlQueryBuilder implements SQLQueryBuilderInterface
+class SqlServerQueryBuilder implements SQLQueryBuilderInterface
 {
 
     /**
      * @inheritDoc
-     */
+    */
     public function expr(): ExpressionBuilderInterface
     {
 
@@ -36,7 +35,7 @@ class PgsqlQueryBuilder implements SQLQueryBuilderInterface
 
     /**
      * @inheritDoc
-     */
+    */
     public function select(string $selects = null): SelectBuilderInterface
     {
 
@@ -47,7 +46,7 @@ class PgsqlQueryBuilder implements SQLQueryBuilderInterface
 
     /**
      * @inheritDoc
-     */
+    */
     public function insert(string $table): InsertBuilderInterface
     {
 
@@ -58,7 +57,7 @@ class PgsqlQueryBuilder implements SQLQueryBuilderInterface
 
     /**
      * @inheritDoc
-     */
+    */
     public function update(string $table): UpdateBuilderInterface
     {
 

@@ -11,9 +11,9 @@ use Laventure\Component\Database\Query\Builder\SQL\DML\Delete\DeleteBuilderInter
 use Laventure\Component\Database\Query\Builder\SQL\DML\Insert\InsertBuilderInterface;
 use Laventure\Component\Database\Query\Builder\SQL\DML\Update\UpdateBuilderInterface;
 use Laventure\Component\Database\Query\Builder\SQL\DQL\Select\SelectBuilderInterface;
-use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionInterface;
-use Laventure\Component\Database\Query\Builder\SQLQueryBuilder;
-use Laventure\Component\Database\Query\Builder\SQLQueryBuilderInterface;
+use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionBuilderInterface;
+use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilder;
+use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
 
 /**
  * PdoBuilder
@@ -49,7 +49,7 @@ class QueryBuilder implements SQLQueryBuilderInterface
     /**
      * @inheritDoc
     */
-    public function expr(): ExpressionInterface
+    public function expr(): ExpressionBuilderInterface
     {
         return $this->builder->expr();
     }

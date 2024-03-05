@@ -6,7 +6,6 @@ namespace Laventure\Component\Database\Query\Builder\SQL\DML\Update;
 use Laventure\Component\Database\Query\Builder\SQL\Commands\Set;
 use Laventure\Component\Database\Query\Builder\SQL\Commands\Update;
 use Laventure\Component\Database\Query\Builder\SQL\Commands\Where;
-use Laventure\Component\Database\Query\Builder\SQL\Set\SettableResolverInterface;
 use Laventure\Component\Database\Query\Builder\SQL\SQLBuilder;
 
 /**

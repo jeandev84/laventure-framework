@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Query\Builder\Factory;
+namespace Laventure\Component\Database\Query\Builder\SQL\Factory;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Query\Builder\SQL\DML\Delete\DeleteBuilder;
@@ -12,9 +12,7 @@ use Laventure\Component\Database\Query\Builder\SQL\DML\Update\UpdateBuilder;
 use Laventure\Component\Database\Query\Builder\SQL\DML\Update\UpdateBuilderInterface;
 use Laventure\Component\Database\Query\Builder\SQL\DQL\Select\SelectBuilder;
 use Laventure\Component\Database\Query\Builder\SQL\DQL\Select\SelectBuilderInterface;
-use Laventure\Component\Database\Query\Builder\SQL\Expr\Expr;
-use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionInterface;
-use Laventure\Component\Database\Query\Builder\SQL\SQLBuilderInterface;
+
 
 /**
  * SQLBuilderFactory
@@ -23,51 +21,25 @@ use Laventure\Component\Database\Query\Builder\SQL\SQLBuilderInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Query\Builder\Factory
+ * @package  Laventure\Component\Database\Query\Builder\SQL\Factory
 */
 class SQLBuilderFactory implements SQLBuilderFactoryInterface
 {
-    /**
-     * @var ConnectionInterface
-    */
-    protected ConnectionInterface $connection;
-
-
-
-
-    /**
-     * @var SQLBuilderInterface
-    */
-    protected SQLBuilderInterface $builder;
-
-
 
 
     /**
      * @param ConnectionInterface $connection
     */
-    public function __construct(ConnectionInterface $connection)
+    public function __construct(protected ConnectionInterface $connection)
     {
-        $this->connection = $connection;
-    }
 
-
-
-
-
-    /**
-     * @inheritdoc
-    */
-    public function expr(): ExpressionInterface
-    {
-        return new Expr();
     }
 
 
 
 
     /**
-     * @inheritdoc
+     * @inheritDoc
     */
     public function createSelectBuilder(): SelectBuilderInterface
     {
@@ -78,8 +50,9 @@ class SQLBuilderFactory implements SQLBuilderFactoryInterface
 
 
 
+
     /**
-     * @inheritdoc
+     * @inheritDoc
     */
     public function createInsertBuilder(): InsertBuilderInterface
     {
@@ -89,12 +62,13 @@ class SQLBuilderFactory implements SQLBuilderFactoryInterface
 
 
 
+
     /**
-     * @inheritdoc
+     * @inheritDoc
     */
     public function createUpdateBuilder(): UpdateBuilderInterface
     {
-        return new UpdateBuilder($this->connection);
+       return new UpdateBuilder($this->connection);
     }
 
 
@@ -102,7 +76,7 @@ class SQLBuilderFactory implements SQLBuilderFactoryInterface
 
 
     /**
-     * @inheritdoc
+     * @inheritDoc
     */
     public function createDeleteBuilder(): DeleteBuilderInterface
     {

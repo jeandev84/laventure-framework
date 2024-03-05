@@ -1,15 +1,16 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Query\Builder;
+namespace Laventure\Component\Database\Query\Builder\SQL;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
-use Laventure\Component\Database\Query\Builder\Factory\SQLBuilderFactory;
 use Laventure\Component\Database\Query\Builder\SQL\DML\Delete\DeleteBuilderInterface;
 use Laventure\Component\Database\Query\Builder\SQL\DML\Insert\InsertBuilderInterface;
 use Laventure\Component\Database\Query\Builder\SQL\DML\Update\UpdateBuilderInterface;
 use Laventure\Component\Database\Query\Builder\SQL\DQL\Select\SelectBuilderInterface;
-use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionInterface;
+use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionBuilderInterface;
+use Laventure\Component\Database\Query\Builder\SQL\Expr\Factory\ExpressionBuilderFactory;
+use Laventure\Component\Database\Query\Builder\SQL\Factory\SQLBuilderFactory;
 
 /**
  * SQLQueryBuilder
@@ -22,7 +23,22 @@ use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionInterface;
 */
 class SQLQueryBuilder implements SQLQueryBuilderInterface
 {
-    protected SQLBuilderFactory $factory;
+
+
+    protected ConnectionInterface $connection;
+
+
+    /**
+     * @var SQLBuilderFactory
+    */
+    protected SQLBuilderFactory $builderFactory;
+
+
+    /**
+     * @var ExpressionBuilderFactory
+    */
+    protected ExpressionBuilderFactory $expressionFactory;
+
 
 
     /**
@@ -30,7 +46,9 @@ class SQLQueryBuilder implements SQLQueryBuilderInterface
     */
     public function __construct(ConnectionInterface $connection)
     {
-        $this->factory = new SQLBuilderFactory($connection);
+         $this->connection        = $connection;
+         $this->builderFactory    = new SQLBuilderFactory($connection);
+         $this->expressionFactory = new ExpressionBuilderFactory();
     }
 
 
@@ -39,9 +57,10 @@ class SQLQueryBuilder implements SQLQueryBuilderInterface
     /**
      * @inheritDoc
     */
-    public function expr(): ExpressionInterface
+    public function expr(): ExpressionBuilderInterface
     {
-        return $this->factory->expr();
+        return $this->expressionFactory
+                    ->createExpressionBuilder();
     }
 
 
@@ -54,7 +73,7 @@ class SQLQueryBuilder implements SQLQueryBuilderInterface
     */
     public function select(string $selects = null): SelectBuilderInterface
     {
-        return $this->factory
+        return $this->builderFactory
                     ->createSelectBuilder()
                     ->select($selects ?: "*");
     }
@@ -68,7 +87,7 @@ class SQLQueryBuilder implements SQLQueryBuilderInterface
     */
     public function insert(string $table): InsertBuilderInterface
     {
-        return $this->factory
+        return $this->builderFactory
                     ->createInsertBuilder()
                     ->insert($table);
     }
@@ -82,7 +101,7 @@ class SQLQueryBuilder implements SQLQueryBuilderInterface
     */
     public function update(string $table): UpdateBuilderInterface
     {
-        return $this->factory
+        return $this->builderFactory
                     ->createUpdateBuilder()
                     ->update($table);
     }
@@ -96,7 +115,7 @@ class SQLQueryBuilder implements SQLQueryBuilderInterface
     */
     public function delete(string $table): DeleteBuilderInterface
     {
-        return $this->factory
+        return $this->builderFactory
                     ->createDeleteBuilder()
                     ->delete($table);
     }

@@ -25,10 +25,9 @@ class SQLCriteriaResolverPDO extends SQLCriteriaResolver
     */
     public function resolveWhereIn($column, array $value): CriteriaResolvedInterface
     {
-        $expr        = $this->builder->expr();
         $bindParam   = $this->resolveBindingColumn($column);
         return new CriteriaResolved(
-            $expr->in($column, ":$bindParam"),
+            $this->builder->expr()->in($column, ":$bindParam"),
             $column,
             $value
         );
@@ -42,10 +41,9 @@ class SQLCriteriaResolverPDO extends SQLCriteriaResolver
     */
     public function resolveWhereEqualTo($column, $value): CriteriaResolvedInterface
     {
-        $expr        = $this->builder->expr();
-        $bindParam   = $this->resolveBindingColumn($column);
+        $bindParam = $this->resolveBindingColumn($column);
         return new CriteriaResolved(
-            $expr->eq($column, ":$bindParam"),
+            $this->builder->expr()->eq($column, ":$bindParam"),
             $column,
             $value
         );
