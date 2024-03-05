@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Manager\Config;
 
 use Laventure\Component\Database\Configuration\Configuration;
+use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
+use Laventure\Utils\Parameter\Parameter;
 
 /**
  * ManagerConfiguration
@@ -14,7 +16,7 @@ use Laventure\Component\Database\Configuration\Configuration;
  *
  * @package  Laventure\Foundation\Database\Definition
 */
-class ManagerConfiguration extends Configuration implements ManagerConfigurationInterface
+class ManagerConfiguration extends Parameter implements ManagerConfigurationInterface
 {
     /**
      * @inheritdoc
@@ -41,9 +43,9 @@ class ManagerConfiguration extends Configuration implements ManagerConfiguration
     /**
      * @inheritdoc
     */
-    public function getCredentials(): array
+    public function getCredentials(): ConfigurationInterface
     {
-        return $this->required('credentials');
+        return new Configuration($this->required('credentials'));
     }
 
 

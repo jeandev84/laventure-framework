@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Manager;
 
 use Laventure\Component\Database\Configuration\Configuration;
+use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Connection\Drivers\Mysql\MysqlConnection;
 use Laventure\Component\Database\Connection\Drivers\Oracle\OracleConnection;
 use Laventure\Component\Database\Connection\Drivers\Pgsql\PgsqlConnection;
@@ -38,7 +39,12 @@ class Manager extends DatabaseManager implements ManagerInterface
     /**
      * @var array
     */
-    protected array $credentials = [];
+    protected array $credentials = [
+        'connection'    => null,
+        'extension'     => null,
+        'credentials'   => [],
+        'connections'   => []
+    ];
 
 
 
@@ -58,7 +64,10 @@ class Manager extends DatabaseManager implements ManagerInterface
     */
     public function addCredentials(array $credentials): static
     {
-        $this->credentials = $credentials;
+        $this->credentials = array_merge(
+            $this->credentials,
+            $credentials
+        );
 
         return $this;
     }
@@ -170,11 +179,11 @@ class Manager extends DatabaseManager implements ManagerInterface
     /**
      * Returns connection credentials
      *
-     * @return Configuration
+     * @return ConfigurationInterface
     */
-    private function getCredentials(): Configuration
+    private function getCredentials(): ConfigurationInterface
     {
-        return new Configuration($this->getConfiguration()->getCredentials());
+        return $this->getConfiguration()->getCredentials();
     }
 
 

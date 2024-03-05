@@ -5,6 +5,7 @@ namespace Laventure\Component\Database\Manager\Config;
 
 
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
+use Laventure\Contract\Parameter\ParameterInterface;
 
 /**
  * ManagerConfigurationInterface
@@ -15,7 +16,7 @@ use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
  *
  * @package  Laventure\Component\Database\Manager\Config
 */
-interface ManagerConfigurationInterface extends ConfigurationInterface
+interface ManagerConfigurationInterface extends ParameterInterface
 {
     /**
      * Returns current connection name
@@ -44,7 +45,7 @@ interface ManagerConfigurationInterface extends ConfigurationInterface
     /**
      * Returns credentials current connection
      *
-     * @return array
+     * @return ConfigurationInterface
     */
-    public function getCredentials(): array;
+    public function getCredentials(): ConfigurationInterface;
 }
