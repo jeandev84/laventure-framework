@@ -1,10 +1,10 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Metadata;
 
 use ReflectionClass;
+use ReflectionException;
 use Reflector;
 
 /**
@@ -21,12 +21,25 @@ class ClassMetadata implements ClassMetadataInterface
     /**
      * @var ReflectionClass
     */
-    protected ReflectionClass $reflector;
+    protected ReflectionClass $reflection;
 
 
+
+    /**
+     * @var string|object
+    */
+    protected $class;
+
+
+
+    /**
+     * @param $class
+     * @throws ReflectionException
+    */
     public function __construct($class)
     {
-        $this->reflector = new ReflectionClass($class);
+        $this->reflection = new ReflectionClass($class);
+        $this->class      = $class;
     }
 
 
@@ -34,9 +47,9 @@ class ClassMetadata implements ClassMetadataInterface
     /**
      * @inheritDoc
     */
-    public function getClassName(): string
+    public function getName(): string
     {
-        return $this->reflector->getName();
+        return $this->reflection->getName();
     }
 
 
@@ -47,6 +60,6 @@ class ClassMetadata implements ClassMetadataInterface
     */
     public function getReflector(): Reflector
     {
-        return $this->reflector;
+        return $this->reflection;
     }
 }

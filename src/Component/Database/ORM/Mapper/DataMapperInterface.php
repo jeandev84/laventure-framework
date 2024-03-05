@@ -16,7 +16,7 @@ namespace Laventure\Component\Database\ORM\Mapper;
 interface DataMapperInterface
 {
     /**
-     * Find data
+     * Find data by ID (SELECT BY ID)
      *
      * @param $id
      *
@@ -30,7 +30,7 @@ interface DataMapperInterface
 
 
     /**
-     * Save data
+     * Save data (INSERT or UPDATE)
      *
      * @param object $object
      *
