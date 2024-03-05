@@ -45,6 +45,7 @@ interface EntityManagerInterface extends ObjectManagerInterface
 
 
 
+
     /**
      * @return SQLQueryBuilderInterface
     */

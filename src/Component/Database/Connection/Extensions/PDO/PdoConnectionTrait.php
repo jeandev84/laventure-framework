@@ -14,6 +14,7 @@ use Laventure\Component\Database\Connection\Traits\ConnectionTrait;
 use Laventure\Component\Database\Query\QueryInterface;
 use PDO;
 use PDOException;
+use RuntimeException;
 
 /**
  * PdoConnectionTrait
@@ -37,7 +38,7 @@ trait PdoConnectionTrait
 
     /**
      * @var mixed
-     */
+    */
     protected mixed $func;
 
 
@@ -50,6 +51,14 @@ trait PdoConnectionTrait
 
 
 
+    /**
+     * @return string
+    */
+    abstract public function getName(): string;
+
+
+
+
 
     /**
      * @param ConfigurationInterface $config
@@ -57,15 +66,10 @@ trait PdoConnectionTrait
     */
     public function connect(ConfigurationInterface $config): static
     {
-        if (!$config->has('dsn')) {
-            $config['dsn'] = $this->makeDefaultDsn($config);
-        }
-
-        $this->withConnection($this->makePdo($config));
+        $this->connectBefore($config);
 
         if ($this->getDatabase()->exists()) {
-            $config['dsn'] = $this->makeDsnIfDatabaseExists($config);
-            $this->withConnection($this->makePdo($config));
+           $this->connectAfter($config);
         }
 
         return $this;
@@ -275,6 +279,10 @@ trait PdoConnectionTrait
     */
     public function makePdo(ConfigurationInterface $config): PDO
     {
+        if (!$config->has('dsn')) {
+            throw new RuntimeException("No DSN specified for making connection.");
+        }
+
         $config->add($this->getDsnParamsFromString($config['dsn']));
 
         $this->withConfiguration($config);
@@ -350,13 +358,46 @@ trait PdoConnectionTrait
 
 
 
+    /**
+     * @param ConfigurationInterface $config
+     * @return $this
+    */
+    private function connectBefore(ConfigurationInterface $config): static
+    {
+        if (!$config->has('dsn')) {
+            $config['dsn'] = $this->makeDefaultDsn($config);
+        }
+
+        return $this->withConnection($this->makePdo($config));
+    }
+
+
+
+
+
+
+    /**
+     * @param ConfigurationInterface $config
+     * @return $this
+    */
+    private function connectAfter(ConfigurationInterface $config): static
+    {
+        $config['dsn'] = $this->makeDsnIfDatabaseExists($config);
+        return $this->withConnection($this->makePdo($config));
+    }
+
+
+
+
+
+
 
 
     /**
      * @param string $dsn
      * @return array
     */
-    public function getDsnParamsFromString(string $dsn): array
+    private function getDsnParamsFromString(string $dsn): array
     {
         $config = [];
         [$driver, $options] = explode(':', $dsn, 2);
@@ -398,6 +439,10 @@ trait PdoConnectionTrait
     */
     private function makeDsnIfDatabaseExists(ConfigurationInterface $config): string
     {
+        if ($config->has('dsn')) {
+            return rtrim($config['dsn'], ';') . ";dbname={$config->database()};";
+        }
+
         return $this->makePdoDsn($config['driver'], [
             'host'     => $config['host'],
             'port'     => $config['port'],
@@ -405,13 +450,4 @@ trait PdoConnectionTrait
             'charset'  => $config['charset']
         ]);
     }
-
-
-
-
-
-    /**
-     * @return string
-    */
-    abstract public function getName(): string;
 }

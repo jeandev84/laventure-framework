@@ -15,9 +15,10 @@ namespace Laventure\Component\Database\Connection\Name;
 */
 enum ConnectionName
 {
-    public const Mysql   = 'mysql';
-    public const Pgsql   = 'pgsql';
-    public const Oracle  = 'oci';
-    public const Sqlite  = 'sqlite';
-    public const Mysqli  = 'mysqli';
+    public const Mysql      = 'mysql';
+    public const Pgsql      = 'pgsql';
+    public const Oracle     = 'oci';
+    public const Sqlite     = 'sqlite';
+    public const Mysqli     = 'mysqli';
+    public const SqlServer  = 'sqlserver';
 }

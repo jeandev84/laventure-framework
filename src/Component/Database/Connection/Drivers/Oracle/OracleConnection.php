@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Connection\Drivers\Oracle;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
+use Laventure\Component\Database\Connection\Extensions\PDO\Connection;
 use Laventure\Component\Database\Connection\Extensions\PDO\PdoConnectionTrait;
 use Laventure\Component\Database\Connection\Name\ConnectionName;
 use Laventure\Component\Database\DatabaseInterface;
@@ -19,11 +20,8 @@ use Laventure\Component\Database\Schema\Table\TableInterface;
  *
  * @package  Laventure\Component\Database\Connection\Drivers\Oracle
 */
-class OracleConnection implements ConnectionInterface
+class OracleConnection extends Connection
 {
-
-    use PdoConnectionTrait;
-
 
     /**
      * @inheritDoc
