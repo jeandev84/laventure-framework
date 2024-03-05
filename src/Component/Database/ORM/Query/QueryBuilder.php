@@ -1,8 +1,8 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Query;
+
 
 /**
  * QueryBuilder
@@ -15,4 +15,5 @@ namespace Laventure\Component\Database\ORM\Query;
 */
 class QueryBuilder
 {
+
 }

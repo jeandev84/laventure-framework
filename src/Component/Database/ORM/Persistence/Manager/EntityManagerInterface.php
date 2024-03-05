@@ -7,6 +7,7 @@ use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\ORM\Metadata\ClassMetadataInterface;
 use Laventure\Component\Database\ORM\Persistence\Repository\EntityRepositoryInterface;
 use Laventure\Component\Database\ORM\UnitOfWork\UnitOfWorkInterface;
+use Laventure\Component\Database\Query\Builder\SQLQueryBuilderInterface;
 use Laventure\Component\Database\Query\QueryInterface;
 
 /**
@@ -44,11 +45,10 @@ interface EntityManagerInterface extends ObjectManagerInterface
 
 
 
-
     /**
-     * @return mixed
+     * @return SQLQueryBuilderInterface
     */
-    public function createQueryBuilder(): QueryBuilderInterface;
+    public function createQueryBuilder(): SQLQueryBuilderInterface;
 
 
 
