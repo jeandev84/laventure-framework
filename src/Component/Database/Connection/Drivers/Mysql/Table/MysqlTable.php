@@ -6,7 +6,7 @@ namespace Laventure\Component\Database\Connection\Drivers\Mysql\Table;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Connection\Drivers\Mysql\Column\MysqlColumnFactory;
 use Laventure\Component\Database\Connection\Drivers\Mysql\Column\MysqlColumnInfo;
-use Laventure\Component\Database\Connection\Query\Result\QueryResultInterface;
+use Laventure\Component\Database\Query\Result\QueryResultInterface;
 use Laventure\Component\Database\Schema\Column\Contract\ColumnInterface;
 use Laventure\Component\Database\Schema\Constraints\Constraint;
 use Laventure\Component\Database\Schema\Constraints\Info\ConstraintInfo;

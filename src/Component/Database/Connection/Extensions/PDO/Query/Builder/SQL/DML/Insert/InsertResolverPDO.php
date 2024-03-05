@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\SQL\DML\Insert;
 
-use Laventure\Component\Database\Connection\Query\Builder\SQL\DML\Insert\InsertResolver;
+use Laventure\Component\Database\Query\Builder\SQL\DML\Insert\InsertResolver;
 
 /**
  * InsertResolverPDO

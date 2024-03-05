@@ -7,8 +7,8 @@ use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Connection\Drivers\Mysql\Table\MysqlTable;
 use Laventure\Component\Database\Connection\Extensions\PDO\PdoConnectionTrait;
 use Laventure\Component\Database\Connection\Name\ConnectionName;
-use Laventure\Component\Database\Connection\Query\Builder\SQLQueryBuilderInterface;
 use Laventure\Component\Database\DatabaseInterface;
+use Laventure\Component\Database\Query\Builder\SQLQueryBuilderInterface;
 use Laventure\Component\Database\Schema\Table\TableInterface;
 
 /**

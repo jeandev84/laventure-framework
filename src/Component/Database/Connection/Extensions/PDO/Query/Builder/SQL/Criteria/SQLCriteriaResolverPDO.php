@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\SQL\Criteria;
 
-use Laventure\Component\Database\Connection\Query\Builder\SQL\Criteria\Resolved\CriteriaResolved;
-use Laventure\Component\Database\Connection\Query\Builder\SQL\Criteria\Resolved\CriteriaResolvedInterface;
-use Laventure\Component\Database\Connection\Query\Builder\SQL\Criteria\Resolver\SQLCriteriaResolver;
+use Laventure\Component\Database\Query\Builder\SQL\Criteria\Resolved\CriteriaResolved;
+use Laventure\Component\Database\Query\Builder\SQL\Criteria\Resolved\CriteriaResolvedInterface;
+use Laventure\Component\Database\Query\Builder\SQL\Criteria\Resolver\SQLCriteriaResolver;
 
 /**
  * SQLCriteriaResolverPDO

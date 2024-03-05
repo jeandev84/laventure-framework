@@ -5,9 +5,9 @@ namespace Laventure\Component\Database\Connection\Drivers\SqlServer;
 
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Connection\ConnectionInterface;
-use Laventure\Component\Database\Connection\Query\Builder\SQLQueryBuilderInterface;
-use Laventure\Component\Database\Connection\Query\QueryInterface;
 use Laventure\Component\Database\DatabaseInterface;
+use Laventure\Component\Database\Query\Builder\SQLQueryBuilderInterface;
+use Laventure\Component\Database\Query\QueryInterface;
 use Laventure\Component\Database\Schema\Table\TableInterface;
 
 /**

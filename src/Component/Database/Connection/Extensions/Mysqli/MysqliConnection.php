@@ -11,9 +11,9 @@ use Laventure\Component\Database\Connection\Extensions\Mysqli\Query\Query;
 use Laventure\Component\Database\Connection\Extensions\PDO\Drivers\Mysql\MysqlDatabase;
 use Laventure\Component\Database\Connection\Name\ConnectionName;
 use Laventure\Component\Database\Connection\Query\Builder\QueryBuilderInterface;
-use Laventure\Component\Database\Connection\Query\QueryInterface;
 use Laventure\Component\Database\Connection\Traits\ConnectionTrait;
 use Laventure\Component\Database\DatabaseInterface;
+use Laventure\Component\Database\Query\QueryInterface;
 use mysqli;
 
 /**
