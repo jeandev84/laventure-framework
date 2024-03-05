@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder\SQL\Conditions\Where;
 
+use Laventure\Component\Database\Query\Builder\SQL\Conditions\Criteria\HasCriteriaInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Conditions\Criteria\Resolver\SQLCriteriaResolverInterface;
 
 /**
@@ -14,7 +15,7 @@ use Laventure\Component\Database\Query\Builder\SQL\Conditions\Criteria\Resolver\
  *
  * @package  Laventure\Component\Database\Builder\SQL\Conditions\Contract
 */
-interface WhereInterface
+interface WhereInterface extends HasCriteriaInterface
 {
     /**
      * Add WHERE conditions
@@ -37,6 +38,19 @@ interface WhereInterface
      * @return $this
     */
     public function whereIn($column, array $value): static;
+
+
+
+
+
+
+
+    /**
+     * @param $column
+     * @param $value
+     * @return $this
+    */
+    public function whereEqualTo($column, $value): static;
 
 
 
@@ -73,6 +87,9 @@ interface WhereInterface
 
 
 
+
+
+
     /**
      * @param $condition
      * @param $type
@@ -91,20 +108,6 @@ interface WhereInterface
      * @return $this
     */
     public function addCriteriaResolver(SQLCriteriaResolverInterface $criteriaResolver): static;
-
-
-
-
-
-
-
-    /**
-     * Add WHERE conditions BY criteria
-     *
-     * @param array $conditions
-     * @return $this
-    */
-    public function criteria(array $conditions): static;
 
 
 

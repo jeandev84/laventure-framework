@@ -19,11 +19,11 @@ class Select implements Stringable
 
     /**
      * @param array $columns
-     * @param string $prefix
+     * @param string $suffix
     */
     public function __construct(
         protected array $columns,
-        protected string $prefix = ''
+        protected string $suffix = ''
     ) {
     }
 
@@ -36,8 +36,8 @@ class Select implements Stringable
     {
         $selects = $this->resolveSelects($this->columns);
 
-        if ($this->prefix) {
-            $selects = "$this->prefix $selects";
+        if ($this->suffix) {
+            $selects = "$this->suffix $selects";
         }
 
         return "SELECT $selects";

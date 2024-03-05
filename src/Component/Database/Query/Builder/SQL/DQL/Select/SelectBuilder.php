@@ -34,7 +34,7 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
     /**
      * @var string
     */
-    public string $prefix = '';
+    public string $suffix = '';
 
 
 
@@ -55,7 +55,7 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
      */
     public function distinct(): static
     {
-        return $this->addPrefix("DISTINCT");
+        return $this->addSelectSuffix("DISTINCT");
     }
 
 
@@ -319,11 +319,11 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
 
     /**
      * @inheritDoc
-     */
+    */
     protected function getCommands(): array
     {
         return [
-            new Select($this->criteria->columns, $this->prefix),
+            new Select($this->criteria->columns, $this->suffix),
             new From($this->criteria->from),
             new Joins($this->criteria->joins),
             new Where($this->criteria->wheres),
@@ -339,12 +339,12 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
 
 
     /**
-     * @param string $prefix
+     * @param string $suffix
      * @return $this
     */
-    protected function addPrefix(string $prefix): static
+    protected function addSelectSuffix(string $suffix): static
     {
-        $this->prefix = $prefix;
+        $this->suffix = $suffix;
 
         return $this;
     }
