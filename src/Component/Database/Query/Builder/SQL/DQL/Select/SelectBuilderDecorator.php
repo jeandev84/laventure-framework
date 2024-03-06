@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Query\Builder\SQL\DQL\Select;
 
 
+use Laventure\Component\Database\Query\Builder\SQL\Decorator\SQLBuilderDecorator;
 use Laventure\Component\Database\Query\Builder\SQL\Decorator\SQLBuilderDecoratorTrait;
 use Laventure\Component\Database\Query\Builder\SQL\SQLBuilder;
 
@@ -16,11 +17,8 @@ use Laventure\Component\Database\Query\Builder\SQL\SQLBuilder;
  *
  * @package  Laventure\Component\Database\Query\Builder\SQL\DQL\Select
 */
-class SelectBuilderDecorator implements SelectBuilderInterface
+class SelectBuilderDecorator extends SQLBuilderDecorator implements SelectBuilderInterface
 {
-
-    use SQLBuilderDecoratorTrait;
-
 
     /**
      * @var SelectBuilderInterface
@@ -29,14 +27,14 @@ class SelectBuilderDecorator implements SelectBuilderInterface
 
 
 
-
     /**
      * @param SelectBuilderInterface $builder
     */
     public function __construct(SelectBuilderInterface $builder)
     {
-        $this->builder = $builder;
+        parent::__construct($builder);
     }
+
 
 
 

@@ -18,7 +18,7 @@ use Laventure\Component\Database\Query\Builder\SQL\SQLBuilder;
  *
  * @package  Laventure\Component\Database\Builder\SQL\DML\Insert
 */
-class InsertBuilder extends SQLBuilder implements InsertBuilderInterface, InsertResolverInterface
+class InsertBuilder extends SQLBuilder implements InsertBuilderInterface
 {
 
 
@@ -35,15 +35,30 @@ class InsertBuilder extends SQLBuilder implements InsertBuilderInterface, Insert
 
 
 
+
+
+    /**
+     * @inheritDoc
+    */
+    public function hasMultiple(array $values): bool
+    {
+        return isset($values[0]);
+    }
+
+
+
+
+
+
     /**
      * @inheritDoc
     */
     public function values(array $values): static
     {
-        if (isset($values[0])) {
-            $this->resolveMultipleInsert($values);
+        if ($this->hasMultiple($values)) {
+            $this->addMultipleInsert($values);
         } else {
-            $this->resolveInsert($values);
+            $this->addInsert($values);
         }
 
         return $this;
@@ -53,10 +68,11 @@ class InsertBuilder extends SQLBuilder implements InsertBuilderInterface, Insert
 
 
 
+
     /**
-     * @inheritDoc
+     * @inheritdoc
     */
-    public function resolveMultipleInsert(array $values): static
+    public function addMultipleInsert(array $values): static
     {
         foreach ($values as $position => $attributes) {
             $this->addInsert($attributes, $position);
@@ -68,13 +84,21 @@ class InsertBuilder extends SQLBuilder implements InsertBuilderInterface, Insert
 
 
 
+
     /**
      * @inheritDoc
-     */
-    public function resolveInsert(array $values): static
+    */
+    public function addInsert(array $attributes, int $index = 0): static
     {
-        return $this->addInsert($values);
+        foreach ($attributes as $column => $value) {
+            $this->setValue($column, $value, $index);
+        }
+
+        return $this;
     }
+
+
+
 
 
 
@@ -93,22 +117,6 @@ class InsertBuilder extends SQLBuilder implements InsertBuilderInterface, Insert
 
         $this->criteria->columns[$column] = $column;
         $this->criteria->values[$index][$column] = $value;
-
-        return $this;
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function addInsert(array $attributes, int $index = 0): static
-    {
-        foreach ($attributes as $column => $value) {
-            $this->setValue($column, $value, $index);
-        }
 
         return $this;
     }

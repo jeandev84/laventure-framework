@@ -34,6 +34,18 @@ interface InsertBuilderInterface extends SQLBuilderInterface
     public function values(array $values): static;
 
 
+
+
+
+
+    /**
+     * @param array $values
+     * @return bool
+    */
+    public function hasMultiple(array $values): bool;
+
+
+
     
     
     
@@ -43,6 +55,20 @@ interface InsertBuilderInterface extends SQLBuilderInterface
      * @return $this
     */
     public function addInsert(array $attributes, int $index = 0): static;
+
+
+
+
+
+
+    /**
+     * @param array $values
+     * @return $this
+    */
+    public function addMultipleInsert(array $values): static;
+
+
+
 
 
 

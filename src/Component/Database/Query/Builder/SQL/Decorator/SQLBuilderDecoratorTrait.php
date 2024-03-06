@@ -8,10 +8,7 @@ use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Criteria\CriteriaInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionBuilderInterface;
 use Laventure\Component\Database\Query\Builder\SQL\SQLBuilder;
-use Laventure\Component\Database\Query\Builder\SQL\SQLBuilderInterface;
 use Laventure\Component\Database\Query\QueryInterface;
-
-
 
 /**
  * SQLBuilderDecoratorTrait
@@ -24,11 +21,9 @@ use Laventure\Component\Database\Query\QueryInterface;
 */
 trait SQLBuilderDecoratorTrait
 {
-
-
     /**
      * @var SQLBuilder
-    */
+     */
     protected $builder;
 
 
@@ -36,19 +31,22 @@ trait SQLBuilderDecoratorTrait
 
     /**
      * @param $builder
-    */
-    public function __construct($builder)
+     * @return mixed
+   */
+    public function withBuilder($builder): static
     {
         $this->builder = $builder;
+
+        return $this;
     }
 
 
 
 
 
-
     /**
-     * @inheritDoc
+     * @param array $parameters
+     * @return $this
     */
     public function setParameters(array $parameters): static
     {
@@ -61,9 +59,10 @@ trait SQLBuilderDecoratorTrait
 
 
 
-
     /**
-     * @inheritDoc
+     * @param $id
+     * @param $value
+     * @return $this
     */
     public function setParameter($id, $value): static
     {
@@ -75,8 +74,10 @@ trait SQLBuilderDecoratorTrait
 
 
 
+
     /**
-     * @inheritDoc
+     * @param $id
+     * @return mixed
     */
     public function getParameter($id): mixed
     {
@@ -86,8 +87,9 @@ trait SQLBuilderDecoratorTrait
 
 
 
+
     /**
-     * @inheritDoc
+     * @return array
     */
     public function getParameters(): array
     {
@@ -97,8 +99,12 @@ trait SQLBuilderDecoratorTrait
 
 
 
+
     /**
-     * @inheritDoc
+     * @param $id
+     * @param $value
+     * @param int $type
+     * @return $this
     */
     public function bindParam($id, $value, int $type = 0): static
     {
@@ -111,9 +117,11 @@ trait SQLBuilderDecoratorTrait
 
 
 
-
     /**
-     * @inheritDoc
+     * @param $id
+     * @param $value
+     * @param int $type
+     * @return $this
     */
     public function bindValue($id, $value, int $type = 0): static
     {
@@ -125,8 +133,12 @@ trait SQLBuilderDecoratorTrait
 
 
 
+
     /**
-     * @inheritDoc
+     * @param $id
+     * @param $value
+     * @param int $type
+     * @return $this
     */
     public function bindColumn($id, $value, int $type = 0): static
     {
@@ -140,7 +152,7 @@ trait SQLBuilderDecoratorTrait
 
 
     /**
-     * @inheritDoc
+     * @return string
     */
     public function getSQL(): string
     {
@@ -152,7 +164,7 @@ trait SQLBuilderDecoratorTrait
 
 
     /**
-     * @inheritDoc
+     * @return string
     */
     public function __toString()
     {
@@ -162,8 +174,9 @@ trait SQLBuilderDecoratorTrait
 
 
 
+
     /**
-     * @inheritDoc
+     * @return ExpressionBuilderInterface
     */
     public function expr(): ExpressionBuilderInterface
     {
@@ -175,7 +188,7 @@ trait SQLBuilderDecoratorTrait
 
 
     /**
-     * @inheritDoc
+     * @return ConnectionInterface
     */
     public function getConnection(): ConnectionInterface
     {
@@ -187,7 +200,7 @@ trait SQLBuilderDecoratorTrait
 
 
     /**
-     * @inheritDoc
+     * @return QueryInterface
     */
     public function getQuery(): QueryInterface
     {
@@ -198,7 +211,7 @@ trait SQLBuilderDecoratorTrait
 
 
     /**
-     * @inheritDoc
+     * @return CriteriaInterface
     */
     public function getCriteria(): CriteriaInterface
     {
@@ -235,6 +248,7 @@ trait SQLBuilderDecoratorTrait
 
         return $this;
     }
+
 
 
 
@@ -343,6 +357,6 @@ trait SQLBuilderDecoratorTrait
     */
     public function getWheres(): array
     {
-        return $this->getBuilder()->getWheres();
+        return $this->builder->getWheres();
     }
 }
