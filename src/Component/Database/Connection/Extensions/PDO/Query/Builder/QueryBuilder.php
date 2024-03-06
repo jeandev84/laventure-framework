@@ -4,9 +4,10 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
-use Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\SQL\Criteria\SQLCriteriaResolverPDO;
-use Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\SQL\DML\Insert\InsertResolverPDO;
-use Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\SQL\Set\SettableResolverPDO;
+use Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\SQL\Commands\DML\Delete;
+use Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\SQL\Commands\DML\Insert;
+use Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\SQL\Commands\DML\Update;
+use Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\SQL\Commands\DQL\Select;
 use Laventure\Component\Database\Query\Builder\SQL\DML\Delete\DeleteBuilderInterface;
 use Laventure\Component\Database\Query\Builder\SQL\DML\Insert\InsertBuilderInterface;
 use Laventure\Component\Database\Query\Builder\SQL\DML\Update\UpdateBuilderInterface;
@@ -64,9 +65,7 @@ class QueryBuilder implements SQLQueryBuilderInterface
     */
     public function select(string $selects = null): SelectBuilderInterface
     {
-         $select = $this->builder->select($selects);
-         $select->addCriteriaResolver(new SQLCriteriaResolverPDO($select));
-         return $select;
+         return new Select($this->builder->select($selects));
     }
 
 
@@ -78,9 +77,7 @@ class QueryBuilder implements SQLQueryBuilderInterface
     */
     public function insert(string $table): InsertBuilderInterface
     {
-        $insert = $this->builder->insert($table);
-        $insert->addInsertResolver(new InsertResolverPDO($insert));
-        return $insert;
+        return new Insert($this->builder->insert($table));
     }
 
 
@@ -92,10 +89,7 @@ class QueryBuilder implements SQLQueryBuilderInterface
     */
     public function update(string $table): UpdateBuilderInterface
     {
-        $update = $this->builder->update($table);
-        $update->addCriteriaResolver(new SQLCriteriaResolverPDO($update));
-        $update->addSetResolver(new SettableResolverPDO($update));
-        return $update;
+        return new Update($this->builder->update($table));
     }
 
 
@@ -106,8 +100,6 @@ class QueryBuilder implements SQLQueryBuilderInterface
     */
     public function delete(string $table): DeleteBuilderInterface
     {
-        $delete = $this->builder->delete($table);
-        $delete->addCriteriaResolver(new SQLCriteriaResolverPDO($delete));
-        return $delete;
+        return new Delete($this->builder->delete($table));
     }
 }
