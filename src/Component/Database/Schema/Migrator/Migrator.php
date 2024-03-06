@@ -68,7 +68,7 @@ class Migrator implements MigratorInterface
      *
      * @param string $table
     */
-    public function __construct(ConnectionInterface $connection, string $table = 'Migrations')
+    public function __construct(ConnectionInterface $connection, string $table = 'migrations')
     {
         $this->connection = $connection;
         $this->table      = $table;

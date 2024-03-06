@@ -55,6 +55,7 @@ class InsertBuilder extends SQLBuilder implements InsertBuilderInterface
     */
     public function values(array $values): static
     {
+        dd($values);
         if ($this->hasMultiple($values)) {
             $this->addMultipleInsert($values);
         } else {

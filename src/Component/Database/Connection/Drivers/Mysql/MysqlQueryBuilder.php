@@ -8,9 +8,6 @@ use Laventure\Component\Database\Connection\Drivers\Mysql\Query\Builder\SQL\Comm
 use Laventure\Component\Database\Connection\Drivers\Mysql\Query\Builder\SQL\Commands\DML\MysqlInsertBuilder;
 use Laventure\Component\Database\Connection\Drivers\Mysql\Query\Builder\SQL\Commands\DML\MysqlUpdateBuilder;
 use Laventure\Component\Database\Connection\Drivers\Mysql\Query\Builder\SQL\Commands\DQL\MysqlSelectBuilder;
-use Laventure\Component\Database\Connection\Drivers\Mysql\Query\Builder\SQL\Commands\DML\PgsqlInsertBuilder;
-use Laventure\Component\Database\Connection\Drivers\Mysql\Query\Builder\SQL\Commands\DML\PgsqlUpdateBuilder;
-use Laventure\Component\Database\Connection\Drivers\Mysql\Query\Builder\SQL\Commands\DQL\PgsqlSelectBuilder;
 use Laventure\Component\Database\Query\Builder\SQL\Common\AbstractSQLQueryBuilder;
 use Laventure\Component\Database\Query\Builder\SQL\DML\Delete\DeleteBuilderInterface;
 use Laventure\Component\Database\Query\Builder\SQL\DML\Insert\InsertBuilderInterface;
@@ -48,6 +45,7 @@ class MysqlQueryBuilder extends AbstractSQLQueryBuilder
     */
     public function insert(string $table): InsertBuilderInterface
     {
+        dd($this->builder->insert($table));
         return new MysqlInsertBuilder($this->builder->insert($table));
     }
 

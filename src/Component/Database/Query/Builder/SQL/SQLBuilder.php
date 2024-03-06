@@ -56,40 +56,6 @@ abstract class SQLBuilder implements WhereInterface, SQLBuilderInterface, Settab
 
 
 
-    /**
-     * @var array
-    */
-    protected array $parameters = [];
-
-
-
-
-
-    /**
-     * @var array
-    */
-    protected array $bindParams = [];
-
-
-
-
-    /**
-     * @var array
-    */
-    protected array $bindValues = [];
-
-
-
-
-
-    /**
-     * @var array
-    */
-    protected array $bindColumns = [];
-
-
-
-
 
     /**
      * @param ConnectionInterface $connection
@@ -257,7 +223,7 @@ abstract class SQLBuilder implements WhereInterface, SQLBuilderInterface, Settab
     */
     public function setParameter($id, $value): static
     {
-        $this->parameters[$id] = $value;
+        $this->criteria->parameters[$id] = $value;
 
         return $this;
     }
@@ -272,7 +238,7 @@ abstract class SQLBuilder implements WhereInterface, SQLBuilderInterface, Settab
     */
     public function bindParam($id, $value, int $type = 0): static
     {
-        $this->bindParams[$id] = [$id, $value, $type];
+        $this->criteria->bindParams[$id] = [$id, $value, $type];
 
         return $this;
     }
@@ -287,7 +253,7 @@ abstract class SQLBuilder implements WhereInterface, SQLBuilderInterface, Settab
     */
     public function bindValue($id, $value, int $type = 0): static
     {
-        $this->bindValues[$id] = [$id, $value, $type];
+        $this->criteria->bindValues[$id] = [$id, $value, $type];
 
         return $this;
     }
@@ -300,7 +266,7 @@ abstract class SQLBuilder implements WhereInterface, SQLBuilderInterface, Settab
     */
     public function bindColumn($id, $value, int $type = 0): static
     {
-        $this->bindColumns[$id] = [$id, $value, $type];
+        $this->criteria->bindColumns[$id] = [$id, $value, $type];
 
         return $this;
     }
@@ -315,7 +281,7 @@ abstract class SQLBuilder implements WhereInterface, SQLBuilderInterface, Settab
     */
     public function getParameter($id): mixed
     {
-        return $this->parameters[$id] ?? null;
+        return $this->criteria->parameters[$id] ?? null;
     }
 
 
@@ -329,8 +295,8 @@ abstract class SQLBuilder implements WhereInterface, SQLBuilderInterface, Settab
     */
     public function setParameters(array $parameters): static
     {
-        $this->parameters = array_merge(
-            $this->parameters,
+        $this->criteria->parameters = array_merge(
+            $this->criteria->parameters,
             $parameters
         );
 
@@ -347,7 +313,7 @@ abstract class SQLBuilder implements WhereInterface, SQLBuilderInterface, Settab
     */
     public function getParameters(): array
     {
-        return $this->parameters;
+        return $this->criteria->parameters;
     }
 
 
@@ -361,10 +327,10 @@ abstract class SQLBuilder implements WhereInterface, SQLBuilderInterface, Settab
     {
         return $this->connection
                     ->statement($this->getSQL())
-                    ->setParameters($this->parameters)
-                    ->bindParams($this->bindParams)
-                    ->bindValues($this->bindValues)
-                    ->bindColumns($this->bindColumns);
+                    ->setParameters($this->criteria->parameters)
+                    ->bindParams($this->criteria->bindParams)
+                    ->bindValues($this->criteria->bindValues)
+                    ->bindColumns($this->criteria->bindColumns);
     }
 
 

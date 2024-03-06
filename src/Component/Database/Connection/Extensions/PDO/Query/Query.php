@@ -108,7 +108,6 @@ class Query implements QueryInterface
     */
     public function prepare(string $sql): static
     {
-        #dd($sql);
         $this->statement = $this->pdo->prepare($sql);
 
         return $this->log(compact('sql'));

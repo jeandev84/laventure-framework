@@ -125,6 +125,40 @@ class Criteria implements CriteriaInterface
 
 
 
+    /**
+     * @var array
+    */
+    public array $parameters = [];
+
+
+
+
+
+    /**
+     * @var array
+    */
+    public array $bindParams = [];
+
+
+
+
+    /**
+     * @var array
+    */
+    public array $bindValues = [];
+
+
+
+
+
+    /**
+     * @var array
+    */
+    public array $bindColumns = [];
+
+
+
+
 
     /**
      * @inheritDoc
