@@ -42,14 +42,4 @@ final class Request extends ServerRequest
     {
         parent::__construct($method, $uri, $server);
     }
-
-
-
-    /**
-     * @return static
-    */
-    public static function createFromGlobals(): static
-    {
-        return static::fromGlobals();
-    }
 }

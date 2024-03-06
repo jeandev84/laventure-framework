@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Http\Message;
 
-use Laventure\Contract\Parameter\ParameterInterface;
-use Laventure\Foundation\Http\Message\Request\Bag\HeaderBag;
+use Laventure\Component\Http\Bag\HeaderBag;
 use Laventure\Utils\Parameter\Parameter;
 use Psr\Http\Message\MessageInterface;
 use Psr\Http\Message\StreamInterface;

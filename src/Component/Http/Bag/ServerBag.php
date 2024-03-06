@@ -1,8 +1,7 @@
 <?php
-
 declare(strict_types=1);
 
-namespace Laventure\Foundation\Http\Message\Request\Bag;
+namespace Laventure\Component\Http\Bag;
 
 use Laventure\Component\Http\Message\Request\Utils\Params\ServerParams;
 

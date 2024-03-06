@@ -3,12 +3,12 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Http\Message\Request;
 
+use Laventure\Component\Http\Bag\InputBag;
+use Laventure\Component\Http\Bag\ParameterBag;
+use Laventure\Component\Http\Bag\ServerBag;
 use Laventure\Component\Http\Message\Request\Body\RequestBody;
 use Laventure\Component\Http\Message\Request\Utils\Normalizer\FileNormalizer;
 use Laventure\Component\Http\Message\Request\Utils\Params\ServerParams;
-use Laventure\Foundation\Http\Message\Request\Bag\InputBag;
-use Laventure\Foundation\Http\Message\Request\Bag\ParameterBag;
-use Laventure\Foundation\Http\Message\Request\Bag\ServerBag;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UriInterface;
 
@@ -49,7 +49,7 @@ class ServerRequest extends Request implements ServerRequestInterface
     /**
      * @var ParameterBag
     */
-    public ParameterBag $uploadedFiles;
+    public ParameterBag $files;
 
 
 
@@ -81,8 +81,9 @@ class ServerRequest extends Request implements ServerRequestInterface
         $this->server     = new ServerBag($server);
         $this->cookies    = new ParameterBag();
         $this->query      = new InputBag();
-        $this->uploadedFiles      = new ParameterBag();
+        $this->files      = new ParameterBag();
         $this->parsedBody = new InputBag();
+        $this->attributes = new ParameterBag();
     }
 
 
@@ -157,7 +158,7 @@ class ServerRequest extends Request implements ServerRequestInterface
     */
     public function getUploadedFiles(): array
     {
-        return $this->uploadedFiles->all();
+        return $this->files->all();
     }
 
 
@@ -169,7 +170,7 @@ class ServerRequest extends Request implements ServerRequestInterface
     */
     public function withUploadedFiles(array $uploadedFiles): static
     {
-        $this->uploadedFiles->add($uploadedFiles);
+        $this->files->add($uploadedFiles);
 
         return $this;
     }
@@ -254,12 +255,12 @@ class ServerRequest extends Request implements ServerRequestInterface
 
 
     /**
-     * @return static
+     * @return mixed
     */
     public static function fromGlobals(): static
     {
         $server  = new ServerParams($_SERVER);
-        $request = new self($server->getMethod(), $server->getUri(), $server->all());
+        $request = new static($server->getMethod(), $server->getUri(), $server->all());
         $request->withQueryParams($_GET)
                 ->withParsedBody($_POST)
                 ->withBody(new RequestBody())

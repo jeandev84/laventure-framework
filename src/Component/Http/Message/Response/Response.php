@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Http\Message\Response;
@@ -43,6 +42,7 @@ class Response extends Message implements ResponseInterface, Stringable
     */
     public function __construct(int $status = 200, array $headers = [], StreamInterface $body = null)
     {
+        parent::__construct('', $headers);
         $this->withBody($body ?: new ResponseBody())
              ->withHeaders($headers)
              ->withStatus($status);
