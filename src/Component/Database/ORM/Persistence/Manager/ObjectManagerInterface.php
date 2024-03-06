@@ -32,12 +32,11 @@ interface ObjectManagerInterface
 
 
     /**
-     * @param string $entity
+     * @param string $class
      * @param $id
      * @return object|null
     */
-    public function find(string $entity, $id): ?object;
-
+    public function find(string $class, $id): ?object;
 
 
 

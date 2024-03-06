@@ -1,25 +1,24 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Connection\Drivers\Oracle;
+namespace Laventure\Component\Database\Connection\Drivers\Sqlite;
 
-use Laventure\Component\Database\Connection\Drivers\Oracle\Table\OracleTable;
-use Laventure\Component\Database\Connection\Extensions\PDO\PdoConnection;
+use Laventure\Component\Database\Connection\Extensions\PDO\Connection;
 use Laventure\Component\Database\Connection\Name\ConnectionName;
 use Laventure\Component\Database\DatabaseInterface;
 use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
 use Laventure\Component\Database\Schema\Table\TableInterface;
 
 /**
- * OraclePdoConnection
+ * SqliteConnection
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\PdoConnection\Drivers\Oracle
+ * @package  Laventure\Component\Database\PdoConnection\Drivers\Sqlite
 */
-class OraclePdoConnection extends PdoConnection
+class SqliteConnection extends Connection
 {
 
     /**
@@ -27,19 +26,8 @@ class OraclePdoConnection extends PdoConnection
     */
     public function getName(): string
     {
-        return ConnectionName::Oracle;
+        return ConnectionName::Sqlite;
     }
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function getDatabase(): DatabaseInterface
-    {
-        return new OracleDatabase($this);
-    }
-
 
 
 
@@ -49,9 +37,8 @@ class OraclePdoConnection extends PdoConnection
     */
     public function createQueryBuilder(): SQLQueryBuilderInterface
     {
-        return new OracleQueryBuilder($this->createSQLBuilderFactory());
+        return new SqliteQueryBuilder($this);
     }
-
 
 
 
@@ -59,31 +46,35 @@ class OraclePdoConnection extends PdoConnection
     /**
      * @inheritDoc
     */
-    public function createTable(string $name, string $schemaName = ''): TableInterface
+    public function getDatabase(): DatabaseInterface
     {
-        return new OracleTable($this, $name, $schemaName);
+        return new SqliteDatabase($this);
     }
-
 
 
 
 
     /**
      * @inheritDoc
-    */
+     */
     public function activateTransaction(): void
     {
-
+        // TODO: Implement activateTransaction() method.
     }
-
-
-
 
     /**
      * @inheritDoc
-    */
+     */
     public function disableTransaction(): void
     {
+        // TODO: Implement disableTransaction() method.
+    }
 
+    /**
+     * @inheritDoc
+     */
+    public function createTable(string $name, string $schemaName = ''): TableInterface
+    {
+        // TODO: Implement createTable() method.
     }
 }

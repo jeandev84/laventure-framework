@@ -23,18 +23,7 @@ interface ManagerConfigurationInterface extends ParameterInterface
      *
      * @return string
     */
-    public function getConnection(): string;
-
-
-
-
-    /**
-     * Returns current extension
-     *
-     * @return string
-    */
-    public function getExtension(): string;
-
+    public function connectionType(): string;
 
 
 
@@ -47,5 +36,18 @@ interface ManagerConfigurationInterface extends ParameterInterface
      *
      * @return ConfigurationInterface
     */
-    public function getCredentials(): ConfigurationInterface;
+    public function credentials(): ConfigurationInterface;
+
+
+
+
+
+
+
+    /**
+     * Returns all connections credentials
+     *
+     * @return array
+    */
+    public function connections(): array;
 }

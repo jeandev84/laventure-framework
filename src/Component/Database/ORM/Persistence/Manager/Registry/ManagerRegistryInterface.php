@@ -1,0 +1,48 @@
+<?php
+declare(strict_types=1);
+
+namespace Laventure\Component\Database\ORM\Persistence\Manager\Registry;
+
+
+use Laventure\Component\Database\ORM\Persistence\Manager\EntityManagerInterface;
+use Laventure\Component\Database\ORM\Persistence\Manager\ObjectManagerInterface;
+use Laventure\Component\Database\ORM\Persistence\Repository\ObjectRepositoryInterface;
+
+/**
+ * ManagerRegistryInterface
+ *
+ * @author Jean-Claude <jeanyao@ymail.com>
+ *
+ * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
+ *
+ * @package  Laventure\Component\Database\Manager\Registry
+ */
+interface ManagerRegistryInterface
+{
+    /**
+     * @param ObjectManagerInterface $manager
+     * @return $this
+    */
+    public function setManager(ObjectManagerInterface $manager): static;
+
+
+
+    /**
+     * Returns manager
+     *
+     * @return ObjectManagerInterface
+    */
+    public function getManager(): ObjectManagerInterface;
+
+
+
+
+
+    /**
+     * Returns entity repository
+     *
+     * @param string $entity
+     * @return ObjectRepositoryInterface
+    */
+    public function getRepository(string $entity): ObjectRepositoryInterface;
+}

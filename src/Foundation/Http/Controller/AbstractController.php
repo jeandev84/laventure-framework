@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Http\Controller;
@@ -8,6 +7,7 @@ use Laventure\Component\Container\Common\ContainerAwareTrait;
 use Laventure\Component\Container\ContainerAwareInterface;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\ORM\Persistence\Manager\Registry\ManagerRegistry;
+use Laventure\Component\Database\ORM\Persistence\Manager\Registry\ManagerRegistryInterface;
 use Laventure\Component\Http\Message\Response\JsonResponse;
 use Laventure\Component\Http\Message\Response\RedirectResponse;
 use Laventure\Component\Http\Message\Response\Response;
@@ -69,26 +69,12 @@ abstract class AbstractController implements ContainerAwareInterface
 
 
     /**
-     * @return ManagerRegistry
+     * @return ManagerRegistryInterface
     */
-    public function getManagerRegistry(): ManagerRegistry
+    public function getManagerRegistry(): ManagerRegistryInterface
     {
-        return $this->container['manager.registry'];
+        return $this->container['db.manager.registry'];
     }
-
-
-
-
-
-
-    /**
-     * @return ConnectionInterface
-    */
-    public function getConnection(): ConnectionInterface
-    {
-        return $this->getManager()->connection();
-    }
-
 
 
 

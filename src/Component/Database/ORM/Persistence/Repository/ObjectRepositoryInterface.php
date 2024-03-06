@@ -37,7 +37,7 @@ interface ObjectRepositoryInterface
      * @param array $orderBy
      *
      * @return object|null
-     */
+    */
     public function findOneBy(array $criteria, array $orderBy = []): mixed;
 
 
@@ -50,9 +50,8 @@ interface ObjectRepositoryInterface
      * Returns all records
      *
      * @return array
-     */
+    */
     public function findAll(): array;
-
 
 
 

@@ -1,11 +1,11 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Manager\Registry;
 
 use Laventure\Component\Database\ORM\Persistence\Manager\EntityManagerInterface;
-use Laventure\Component\Database\ORM\Persistence\Repository\EntityRepositoryInterface;
+use Laventure\Component\Database\ORM\Persistence\Manager\ObjectManagerInterface;
+use Laventure\Component\Database\ORM\Persistence\Repository\ObjectRepositoryInterface;
 
 /**
  * ManagerRegistry
@@ -16,23 +16,22 @@ use Laventure\Component\Database\ORM\Persistence\Repository\EntityRepositoryInte
  *
  * @package  Laventure\Component\Database\ORM\Persistence\Manager\Registry
 */
-class ManagerRegistry
+class ManagerRegistry implements ManagerRegistryInterface
 {
     /**
-     * @var EntityManagerInterface
+     * @var ObjectManagerInterface
     */
-    protected EntityManagerInterface $em;
+    protected ObjectManagerInterface $manager;
 
 
 
 
     /**
-     * @param EntityManagerInterface $em
-     * @return $this
+     * @inheritdoc
     */
-    public function setManager(EntityManagerInterface $em): static
+    public function setManager(ObjectManagerInterface $manager): static
     {
-        $this->em = $em;
+        $this->manager = $manager;
 
         return $this;
     }
@@ -41,23 +40,21 @@ class ManagerRegistry
 
 
     /**
-     * @return EntityManagerInterface
+     * @inheritdoc
     */
-    public function getManager(): EntityManagerInterface
+    public function getManager(): ObjectManagerInterface
     {
-        return $this->em;
+        return $this->manager;
     }
 
 
 
 
-
     /**
-     * @param string $classname
-     * @return EntityRepositoryInterface
+     * @inheritDoc
     */
-    public function getRepository(string $classname): EntityRepositoryInterface
+    public function getRepository(string $entity): ObjectRepositoryInterface
     {
-        return $this->getManager()->getRepository($classname);
+        return $this->getManager()->getRepository($entity);
     }
 }

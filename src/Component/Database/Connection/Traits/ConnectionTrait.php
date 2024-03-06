@@ -50,6 +50,9 @@ trait ConnectionTrait
 
 
 
+
+
+
     /**
      * @param mixed $connection
      *
@@ -134,7 +137,7 @@ trait ConnectionTrait
 
 
     /**
-     * PdoConnection without database for example
+     * connect without database
      *
      * @param ConfigurationInterface $config
      * @return mixed

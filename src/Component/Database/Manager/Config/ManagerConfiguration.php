@@ -21,7 +21,7 @@ class ManagerConfiguration extends Parameter implements ManagerConfigurationInte
     /**
      * @inheritdoc
     */
-    public function getConnection(): string
+    public function connectionType(): string
     {
         return $this->required('connection');
     }
@@ -29,23 +29,16 @@ class ManagerConfiguration extends Parameter implements ManagerConfigurationInte
 
 
 
-    /**
-     * @inheritdoc
-    */
-    public function getExtension(): string
-    {
-        return $this->required('extension');
-    }
-
-
 
 
     /**
      * @inheritdoc
     */
-    public function getCredentials(): ConfigurationInterface
+    public function credentials(): ConfigurationInterface
     {
-        return new Configuration($this->required('credentials'));
+        return new Configuration(
+            $this->connections()[$this->connectionType()]
+        );
     }
 
 
@@ -55,7 +48,7 @@ class ManagerConfiguration extends Parameter implements ManagerConfigurationInte
     /**
      * @return array
     */
-    public function getConnections(): array
+    public function connections(): array
     {
         return $this->required('connections');
     }

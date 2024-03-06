@@ -5,7 +5,6 @@ namespace Laventure\Component\Database\Connection\Extensions\PDO\Factory;
 
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Connection\Exception\ConnectionException;
-use Laventure\Component\Database\Connection\Extensions\PDO\Config\PdoConfiguration;
 use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\Builder\PdoDsnBuilder;
 use PDO;
 use PDOException;
@@ -70,7 +69,7 @@ class PdoConnectionFactory implements PdoConnectionFactoryInterface
             $config->required('dsn'),
             $config->getUsername(),
             $config->getPassword(),
-            $config->get('options', [])
+            $config->getOptions()
         );
     }
 

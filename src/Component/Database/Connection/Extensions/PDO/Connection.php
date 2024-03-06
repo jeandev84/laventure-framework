@@ -31,7 +31,7 @@ use RuntimeException;
  *
  * @package  Laventure\Component\Database\PdoConnection\Extensions\PDO
 */
-abstract class PdoConnection implements PdoConnectionInterface
+abstract class Connection implements PdoConnectionInterface
 {
     use ConnectionTrait;
 
@@ -54,9 +54,9 @@ abstract class PdoConnection implements PdoConnectionInterface
 
 
 
-
     /**
-     * @inheritdoc
+     * @param ConfigurationInterface $config
+     * @return $this
     */
     public function connectToPdo(ConfigurationInterface $config): static
     {

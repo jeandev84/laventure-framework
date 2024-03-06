@@ -112,4 +112,15 @@ class Configuration extends Parameter implements ConfigurationInterface
     {
         return $this->get('collation', 'utf8_general_ci');
     }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getOptions(): array
+    {
+        return $this->get('options', []);
+    }
 }

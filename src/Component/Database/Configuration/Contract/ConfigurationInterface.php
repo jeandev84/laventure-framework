@@ -110,4 +110,17 @@ interface ConfigurationInterface extends ParameterInterface
      * @return string
      */
     public function getPrefix(): string;
+
+
+
+
+
+
+
+    /**
+     * Returns connection options
+     *
+     * @return array
+    */
+    public function getOptions(): array;
 }

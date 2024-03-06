@@ -5,8 +5,13 @@ namespace Laventure\Foundation\Container\Service\Providers;
 
 use Laventure\Component\Config\Config;
 use Laventure\Component\Container\Service\Provider\ServiceProvider;
+use Laventure\Component\Database\Connection\ConnectionInterface;
+use Laventure\Component\Database\Manager\Contract\ManagerInterface;
 use Laventure\Component\Database\Manager\Manager;
+use Laventure\Component\Database\ORM\Persistence\Manager\EntityManager;
+use Laventure\Component\Database\ORM\Persistence\Manager\EntityManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Manager\Registry\ManagerRegistry;
+use Laventure\Component\Database\ORM\Persistence\Manager\Registry\ManagerRegistryInterface;
 
 /**
  * DatabaseServiceProvider
@@ -23,7 +28,8 @@ class DatabaseServiceProvider extends ServiceProvider
      * @var array|array[]
     */
     protected array $provides = [
-        Manager::class => ['db.manager']
+        ManagerInterface::class => [Manager::class, 'db.manager'],
+        ManagerRegistryInterface::class => [ManagerRegistry::class, 'db.manager.registry']
     ];
 
 
@@ -36,27 +42,22 @@ class DatabaseServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singletons([
-            Manager::class => function (Config $config) {
-
-                $connection     = $config['database.connection'];
-                $extension      = $config['database.extension'];
-                $credentialKey  = "database.connections.$extension.$connection";
-                $credentials    = $config[$credentialKey];
-
+            ManagerInterface::class => function (Config $config) {
                 $database = new Manager();
-                $database->addCredentials([
-                    'connection'    => $connection,
-                    'extension'     => $extension,
-                    'credentials'   => $credentials,
-                    'connections'   => $config['database.connections']
-                ]);
-
+                $database->addCredentials($config['database']);
                 $database->bootManager();
-
                 return $database;
             },
-            ManagerRegistry::class => function () {
-                return new ManagerRegistry();
+            ConnectionInterface::class => function (ManagerInterface $manager) {
+               return $manager->connection();
+            },
+            EntityManagerInterface::class => function (Manager $manager) {
+                return new EntityManager();
+            },
+            ManagerRegistryInterface::class => function (EntityManagerInterface $em) {
+                $registry = new ManagerRegistry();
+                $registry->setManager($em);
+                return $registry;
             }
         ]);
     }
