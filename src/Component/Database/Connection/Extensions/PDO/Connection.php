@@ -423,9 +423,7 @@ abstract class Connection extends AbstractConnection implements PdoConnectionInt
     private function makePdoDsn(string $driver, array $params): string
     {
         if (!$this->hasAvailableDriver($driver)) {
-           throw new DriverException(
-        "unavailable driver $driver. Please try to install it."
-           );
+            throw new DriverException("unavailable driver $driver. Please try to install it.");
         }
 
         return PdoDsnBuilder::create($driver, $params);
