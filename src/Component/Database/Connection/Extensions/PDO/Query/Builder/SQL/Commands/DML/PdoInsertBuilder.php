@@ -29,8 +29,6 @@ class PdoInsertBuilder extends InsertBuilderDecorator
               }
           }
 
-          #dd($this->builder->getCriteria()->toArray());
-
           return $this;
       }
 
@@ -46,8 +44,6 @@ class PdoInsertBuilder extends InsertBuilderDecorator
               $this->setValue($column, ":$column");
               $this->setParameter($column, $value);
           }
-
-          dd($this->builder->getCriteria()->toArray());
 
 
           return $this;

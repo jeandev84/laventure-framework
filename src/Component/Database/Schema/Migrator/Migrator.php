@@ -46,7 +46,7 @@ class Migrator implements MigratorInterface
      *
      * @var string
     */
-    protected string $table;
+    protected string $table = 'migrations';
 
 
 
@@ -62,16 +62,12 @@ class Migrator implements MigratorInterface
 
 
 
-
     /**
      * @param ConnectionInterface $connection
-     *
-     * @param string $table
     */
-    public function __construct(ConnectionInterface $connection, string $table = 'migrations')
+    public function __construct(ConnectionInterface $connection)
     {
         $this->connection = $connection;
-        $this->table      = $table;
         $this->schema     = new Schema($connection);
     }
 
