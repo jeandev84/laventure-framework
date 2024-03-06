@@ -8,6 +8,7 @@ use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Configuration\Null\NullConfiguration;
 use Laventure\Component\Database\Connection\Common\AbstractConnection;
 use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\PdoDsnBuilder;
+use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\Reader\PdoDsnReader;
 use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnectionFactory;
 use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnectionFactoryInterface;
 use Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\Factory\PdoSQLQueryBuilderFactory;
@@ -60,7 +61,7 @@ abstract class Connection extends AbstractConnection implements PdoConnectionInt
             throw new RuntimeException("No DSN specified for making connection.");
         }
 
-        $config->add($this->getDsnParams($config['dsn']));
+        $config->add($this->readDsnParams($config['dsn']));
 
         dd($config);
         $this->withConfiguration($config);
@@ -372,28 +373,10 @@ abstract class Connection extends AbstractConnection implements PdoConnectionInt
      * @param string $dsn
      * @return array
     */
-    private function getDsnParams(string $dsn): array
+    private function readDsnParams(string $dsn): array
     {
-        $config = [];
-        [$driver, $options] = explode(':', $dsn, 2);
-        $params = explode(';', $options);
-        $config['driver'] = $driver;
-
-        foreach ($params as $attributes) {
-            [$key, $value] = explode('=', $attributes);
-            $config[$key] = $value;
-        }
-
-        if (!empty($config['dbname'])) {
-            $config['database'] = $config['dbname'];
-            unset($config['dbname']);
-        }
-
-        if (!empty($config['port'])) {
-            $config['port'] = intval($config['port']);
-        }
-
-        return $config;
+        return (new PdoDsnReader($dsn))
+               ->read();
     }
 
 

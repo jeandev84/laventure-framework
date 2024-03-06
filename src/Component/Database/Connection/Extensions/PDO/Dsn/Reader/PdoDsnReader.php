@@ -23,11 +23,22 @@ class PdoDsnReader implements ReaderInterface
     protected string $dsn;
 
 
+
     /**
      * @var array
     */
-    protected array $replaceKeys = [];
+    protected array $replaceKeys = [
+        'dbname' => 'database'
+    ];
 
+
+
+    /**
+     * @var array|string[]
+    */
+    protected array $casts = [
+        'port' => 'int'
+    ];
 
 
     /**
@@ -47,10 +58,14 @@ class PdoDsnReader implements ReaderInterface
     */
     public function withReplaceKeys(array $replaceKeys): static
     {
-        $this->replaceKeys = $replaceKeys;
+        $this->replaceKeys = array_merge(
+            $this->replaceKeys,
+            $replaceKeys
+        );
 
         return $this;
     }
+
 
 
 
@@ -81,14 +96,65 @@ class PdoDsnReader implements ReaderInterface
         }
 
         if ($this->replaceKeys) {
-            foreach ($this->replaceKeys as $key => $replace) {
-                if (!empty($config[$key])) {
-                    $config[$replace] = $config[$key];
-                    unset($config[$key]);
-                }
+            $config = $this->replaceKeys($config);
+        }
+
+        if ($this->casts) {
+            $this->castKeys($config);
+        }
+
+        return $config;
+    }
+
+
+
+
+    /**
+     * @param array $config
+     * @return array
+    */
+    private function replaceKeys(array $config): array
+    {
+        foreach ($this->replaceKeys as $key => $replace) {
+            if (!empty($config[$key])) {
+                $config[$replace] = $config[$key];
+                unset($config[$key]);
             }
         }
 
         return $config;
+    }
+
+
+
+
+
+    /**
+     * @param array $config
+     * @return array
+    */
+    private function castKeys(array $config): array
+    {
+        foreach ($this->casts as $key => $cast) {
+            if (!empty($config[$key])) {
+                $config[$key] = call_user_func([$this, $cast], $config[$key]);
+            }
+        }
+
+        return $config;
+    }
+
+
+
+
+
+
+    /**
+     * @param $value
+     * @return int
+    */
+    private function int($value): int
+    {
+        return intval($value);
     }
 }
