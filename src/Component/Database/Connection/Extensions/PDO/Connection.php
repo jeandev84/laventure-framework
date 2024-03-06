@@ -380,7 +380,7 @@ abstract class Connection extends AbstractConnection implements PdoConnectionInt
 
         foreach ($params as $attributes) {
             [$key, $value] = explode('=', $attributes, 2);
-            $params[$key] = $value;
+            $config[$key] = $value;
         }
 
         return $config;
