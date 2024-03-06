@@ -149,9 +149,7 @@ abstract class Connection extends AbstractConnection implements PdoConnectionInt
 
 
     /**
-     * Returns SQL Builder factory
-     *
-     * @return SQLQueryBuilderFactoryInterface
+     * @inheritdoc
     */
     public function createSQLBuilderFactory(): SQLQueryBuilderFactoryInterface
     {
