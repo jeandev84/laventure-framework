@@ -6,7 +6,7 @@ namespace Laventure\Component\Database\Connection\Extensions\PDO\Factory;
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Connection\Exception\ConnectionException;
 use Laventure\Component\Database\Connection\Extensions\PDO\Config\PdoConfiguration;
-use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\PdoDsnBuilder;
+use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\Builder\PdoDsnBuilder;
 use PDO;
 use PDOException;
 

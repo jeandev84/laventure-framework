@@ -7,7 +7,7 @@ namespace Laventure\Component\Database\Connection\Extensions\PDO;
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Configuration\Null\NullConfiguration;
 use Laventure\Component\Database\Connection\Common\AbstractConnection;
-use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\PdoDsnBuilder;
+use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\Builder\PdoDsnBuilder;
 use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\Reader\PdoDsnReader;
 use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnectionFactory;
 use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnectionFactoryInterface;

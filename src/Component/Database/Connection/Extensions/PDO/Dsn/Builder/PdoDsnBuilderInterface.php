@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Connection\Extensions\PDO\Dsn;
+namespace Laventure\Component\Database\Connection\Extensions\PDO\Dsn\Builder;
 
 use Laventure\Contract\Builder\BuilderInterface;
 use Stringable;
