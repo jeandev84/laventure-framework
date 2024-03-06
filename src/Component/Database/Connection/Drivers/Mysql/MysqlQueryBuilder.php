@@ -45,7 +45,6 @@ class MysqlQueryBuilder extends AbstractSQLQueryBuilder
     */
     public function insert(string $table): InsertBuilderInterface
     {
-        dd($this->builder->insert($table));
         return new MysqlInsertBuilder($this->builder->insert($table));
     }
 

@@ -82,9 +82,9 @@ class InsertBuilderDecorator extends SQLBuilderDecorator implements InsertBuilde
       /**
        * @inheritDoc
       */
-      public function addInsert(array $attributes, int $index = 0): static
+      public function addInsert(array $attributes): static
       {
-           $this->builder->addInsert($attributes, $index);
+           $this->builder->addInsert($attributes);
 
            return $this;
       }

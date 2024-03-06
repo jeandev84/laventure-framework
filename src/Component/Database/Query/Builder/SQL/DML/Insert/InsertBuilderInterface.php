@@ -51,10 +51,9 @@ interface InsertBuilderInterface extends SQLBuilderInterface
     
     /**
      * @param array $attributes
-     * @param int $index
      * @return $this
     */
-    public function addInsert(array $attributes, int $index = 0): static;
+    public function addInsert(array $attributes): static;
 
 
 

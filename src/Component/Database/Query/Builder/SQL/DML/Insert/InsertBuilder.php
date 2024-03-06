@@ -55,7 +55,6 @@ class InsertBuilder extends SQLBuilder implements InsertBuilderInterface
     */
     public function values(array $values): static
     {
-        dd($values);
         if ($this->hasMultiple($values)) {
             $this->addMultipleInsert($values);
         } else {
@@ -76,7 +75,9 @@ class InsertBuilder extends SQLBuilder implements InsertBuilderInterface
     public function addMultipleInsert(array $values): static
     {
         foreach ($values as $position => $attributes) {
-            $this->addInsert($attributes, $position);
+            foreach ($attributes as $column => $value) {
+                $this->setValue($column, $value, $position);
+            }
         }
 
         return $this;
@@ -89,10 +90,10 @@ class InsertBuilder extends SQLBuilder implements InsertBuilderInterface
     /**
      * @inheritDoc
     */
-    public function addInsert(array $attributes, int $index = 0): static
+    public function addInsert(array $attributes): static
     {
         foreach ($attributes as $column => $value) {
-            $this->setValue($column, $value, $index);
+            $this->setValue($column, $value);
         }
 
         return $this;
@@ -112,8 +113,8 @@ class InsertBuilder extends SQLBuilder implements InsertBuilderInterface
     {
         if ($index < 0) { $index = 0; }
 
-        if (!isset($this->values[$index])) {
-            $this->criteria->values[$index] = [];
+        if (!isset($this->values[$index][$column])) {
+            $this->criteria->values[$index][$column] = null;
         }
 
         $this->criteria->columns[$column] = $column;
@@ -132,6 +133,8 @@ class InsertBuilder extends SQLBuilder implements InsertBuilderInterface
     */
     public function getCommands(): array
     {
+        dd($this->criteria->values);
+
         return [
             new Insert($this->criteria->table, $this->criteria->columns),
             new Values($this->criteria->values)
