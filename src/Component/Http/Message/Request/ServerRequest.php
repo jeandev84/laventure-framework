@@ -7,8 +7,8 @@ use Laventure\Component\Http\Bag\InputBag;
 use Laventure\Component\Http\Bag\ParameterBag;
 use Laventure\Component\Http\Bag\ServerBag;
 use Laventure\Component\Http\Message\Request\Body\RequestBody;
+use Laventure\Component\Http\Message\Request\Server\Server;
 use Laventure\Component\Http\Message\Request\Utils\Normalizer\FileNormalizer;
-use Laventure\Component\Http\Message\Request\Utils\Params\ServerParams;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UriInterface;
 
@@ -259,7 +259,7 @@ class ServerRequest extends Request implements ServerRequestInterface
     */
     public static function fromGlobals(): static
     {
-        $server  = new ServerParams($_SERVER);
+        $server  = new Server($_SERVER);
         $request = new static($server->getMethod(), $server->getUri(), $server->all());
         $request->withQueryParams($_GET)
                 ->withParsedBody($_POST)

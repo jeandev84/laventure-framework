@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Http\Bag;
 
-use Laventure\Component\Http\Message\Request\Utils\Params\ServerParams;
+use Laventure\Component\Http\Message\Request\Server\Server;
 
 /**
  * ServerBag
@@ -14,7 +14,7 @@ use Laventure\Component\Http\Message\Request\Utils\Params\ServerParams;
  *
  * @package  Laventure\Foundation\Http\Request\Bag
  */
-class ServerBag extends ServerParams
+class ServerBag extends Server
 {
     public function __construct(array $params = [])
     {

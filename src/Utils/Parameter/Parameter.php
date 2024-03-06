@@ -285,11 +285,13 @@ class Parameter implements ParameterInterface
      * @param $id
      * @param $value
      * @return bool
-     */
-    public function same($id, $value): bool
+    */
+    public function eq($id, $value): bool
     {
         return $this->get($id) === $value;
     }
+
+
 
 
 

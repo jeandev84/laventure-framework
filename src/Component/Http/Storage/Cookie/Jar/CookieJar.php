@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Http\Storage\Cookie\Jar;
@@ -7,8 +6,6 @@ namespace Laventure\Component\Http\Storage\Cookie\Jar;
 use Laventure\Component\Http\Storage\Cookie\Cookie;
 use Laventure\Component\Http\Storage\Cookie\CookieInterface;
 use Laventure\Component\Http\Storage\Cookie\CookieParamsTrait;
-use Laventure\Component\Http\Storage\Cookie\Params\CookieParams;
-use Laventure\Component\Http\Storage\Cookie\Params\CookieParamsInterface;
 use Laventure\Utils\Parameter\Parameter;
 
 /**
