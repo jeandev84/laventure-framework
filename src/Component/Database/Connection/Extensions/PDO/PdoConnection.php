@@ -23,15 +23,15 @@ use RuntimeException;
 
 
 /**
- * Connection
+ * PdoConnection
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Extensions\PDO
+ * @package  Laventure\Component\Database\PdoConnection\Extensions\PDO
 */
-abstract class Connection implements PdoConnectionInterface
+abstract class PdoConnection implements PdoConnectionInterface
 {
     use ConnectionTrait;
 

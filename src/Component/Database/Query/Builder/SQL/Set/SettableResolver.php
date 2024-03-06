@@ -12,7 +12,7 @@ use Laventure\Component\Database\Query\Builder\SQL\SQLBuilderInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Query\Builder\SQL\Set
+ * @package  Laventure\Component\Database\PdoConnection\Query\Builder\SQL\Set
 */
 class SettableResolver implements SettableResolverInterface
 {

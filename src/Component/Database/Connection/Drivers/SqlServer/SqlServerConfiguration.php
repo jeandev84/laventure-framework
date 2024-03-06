@@ -10,7 +10,7 @@ namespace Laventure\Component\Database\Connection\Drivers\SqlServer;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Drivers\SqlServer
+ * @package  Laventure\Component\Database\PdoConnection\Drivers\SqlServer
 */
 class SqlServerConfiguration
 {

@@ -10,7 +10,7 @@ namespace Laventure\Component\Database\Connection\Drivers\Sqlite;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Drivers\Sqlite
+ * @package  Laventure\Component\Database\PdoConnection\Drivers\Sqlite
 */
 class SqliteConfiguration
 {

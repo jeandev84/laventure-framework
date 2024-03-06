@@ -11,7 +11,7 @@ namespace Laventure\Component\Database\Connection\Name;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Name
+ * @package  Laventure\Component\Database\PdoConnection\Name
 */
 enum ConnectionName
 {

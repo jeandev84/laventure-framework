@@ -13,7 +13,7 @@ use Laventure\Component\Database\Query\Builder\SQL\DQL\Select\SelectBuilderDecor
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\SQL\Commands\DQL
+ * @package  Laventure\Component\Database\PdoConnection\Extensions\PDO\Query\Builder\SQL\Commands\DQL
 */
 class PdoSelectBuilder extends SelectBuilderDecorator
 {

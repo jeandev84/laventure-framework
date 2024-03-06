@@ -12,7 +12,7 @@ use Laventure\Component\Database\Query\Builder\SQL\DML\Insert\InsertBuilderDecor
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\SQL\Commands\DML
+ * @package  Laventure\Component\Database\PdoConnection\Extensions\PDO\Query\Builder\SQL\Commands\DML
  */
 class PdoInsertBuilder extends InsertBuilderDecorator
 {

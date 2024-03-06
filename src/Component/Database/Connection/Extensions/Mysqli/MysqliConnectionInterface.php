@@ -15,7 +15,7 @@ use mysqli;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Extensions\Mysqli
+ * @package  Laventure\Component\Database\PdoConnection\Extensions\Mysqli
 */
 interface MysqliConnectionInterface extends ConnectionInterface
 {

@@ -14,7 +14,7 @@ use Laventure\Component\Database\Configuration\Null\NullConfiguration;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Traits
+ * @package  Laventure\Component\Database\PdoConnection\Traits
  */
 trait ConnectionTrait
 {
@@ -134,7 +134,7 @@ trait ConnectionTrait
 
 
     /**
-     * Connection without database for example
+     * PdoConnection without database for example
      *
      * @param ConfigurationInterface $config
      * @return mixed
@@ -147,7 +147,7 @@ trait ConnectionTrait
 
 
     /**
-     * Connection to the database if exists
+     * PdoConnection to the database if exists
      *
      * @param ConfigurationInterface $config
      * @return $this

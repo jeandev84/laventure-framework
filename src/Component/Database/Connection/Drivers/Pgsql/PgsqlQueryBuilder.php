@@ -21,7 +21,7 @@ use Laventure\Component\Database\Query\Builder\SQL\DQL\Select\SelectBuilderInter
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Drivers\Pgsql
+ * @package  Laventure\Component\Database\PdoConnection\Drivers\Pgsql
 */
 class PgsqlQueryBuilder extends AbstractSQLQueryBuilder
 {

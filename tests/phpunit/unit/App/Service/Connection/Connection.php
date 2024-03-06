@@ -10,13 +10,13 @@ use Laventure\Component\Database\Manager\Factory\DatabaseManagerFactory;
 use PDO;
 
 /**
- * Connection
+ * PdoConnection
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  PHPUnitTest\App\Service\Connection
+ * @package  PHPUnitTest\App\Service\PdoConnection
 */
 class Connection
 {

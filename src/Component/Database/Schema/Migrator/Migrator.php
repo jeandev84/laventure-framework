@@ -21,7 +21,7 @@ use Laventure\Component\Database\Schema\SchemaInterface;
 class Migrator implements MigratorInterface
 {
     /**
-     * Connection
+     * PdoConnection
      *
      * @var ConnectionInterface
     */

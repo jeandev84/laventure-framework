@@ -11,7 +11,7 @@ namespace Laventure\Component\Database\Connection\Extensions\PDO\Dsn\Builder;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Extensions\PDO\Dsn
+ * @package  Laventure\Component\Database\PdoConnection\Extensions\PDO\Dsn
  */
 class PdoDsnBuilder implements PdoDsnBuilderInterface
 {

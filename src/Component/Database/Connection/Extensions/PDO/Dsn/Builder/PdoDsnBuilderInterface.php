@@ -14,7 +14,7 @@ use Stringable;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Client\PDO\Dsn
+ * @package  Laventure\Component\Database\PdoConnection\Client\PDO\Dsn
 */
 interface PdoDsnBuilderInterface extends BuilderInterface, Stringable
 {

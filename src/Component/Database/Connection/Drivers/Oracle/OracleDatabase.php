@@ -12,7 +12,7 @@ use Laventure\Component\Database\Database;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Drivers\Oracle
+ * @package  Laventure\Component\Database\PdoConnection\Drivers\Oracle
  */
 class OracleDatabase extends Database
 {

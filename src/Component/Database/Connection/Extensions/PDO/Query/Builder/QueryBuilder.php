@@ -23,7 +23,7 @@ use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Extensions\PDO\Query
+ * @package  Laventure\Component\Database\PdoConnection\Extensions\PDO\Query
 */
 class QueryBuilder implements SQLQueryBuilderInterface
 {

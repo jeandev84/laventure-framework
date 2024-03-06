@@ -28,7 +28,7 @@ use mysqli;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Extensions\Mysqli
+ * @package  Laventure\Component\Database\PdoConnection\Extensions\Mysqli
 */
 class MysqliConnection implements MysqliConnectionInterface
 {
@@ -50,8 +50,6 @@ class MysqliConnection implements MysqliConnectionInterface
     {
         $this->factory = $factory ?: new MysqliConnectionFactory();
     }
-
-
 
 
 

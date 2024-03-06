@@ -14,7 +14,7 @@ use Laventure\Component\Database\Query\Builder\SQL\Decorator\SQLBuilderDecorator
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\SQL
+ * @package  Laventure\Component\Database\PdoConnection\Extensions\PDO\Query\Builder\SQL
 */
 trait PdoSQLBuilderTrait
 {

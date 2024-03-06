@@ -10,7 +10,7 @@ namespace Laventure\Component\Database\Connection\Drivers\Mysql;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Drivers\Mysql
+ * @package  Laventure\Component\Database\PdoConnection\Drivers\Mysql
 */
 class MysqlConfiguration
 {

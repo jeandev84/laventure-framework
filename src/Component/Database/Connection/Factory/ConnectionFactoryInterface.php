@@ -13,7 +13,7 @@ use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Factory
+ * @package  Laventure\Component\Database\PdoConnection\Factory
 */
 interface ConnectionFactoryInterface
 {

@@ -13,7 +13,7 @@ use Laventure\Component\Database\Database;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Drivers\Pgsql
+ * @package  Laventure\Component\Database\PdoConnection\Drivers\Pgsql
 */
 class PgsqlDatabase extends Database
 {

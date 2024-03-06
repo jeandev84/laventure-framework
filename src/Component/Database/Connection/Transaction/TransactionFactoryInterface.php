@@ -11,7 +11,7 @@ namespace Laventure\Component\Database\Connection\Transaction;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Transaction
+ * @package  Laventure\Component\Database\PdoConnection\Transaction
 */
 interface TransactionFactoryInterface
 {

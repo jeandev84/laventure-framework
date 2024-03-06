@@ -17,7 +17,7 @@ use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Drivers\SqlServer
+ * @package  Laventure\Component\Database\PdoConnection\Drivers\SqlServer
 */
 class SqlServerQueryBuilder implements SQLQueryBuilderInterface
 {

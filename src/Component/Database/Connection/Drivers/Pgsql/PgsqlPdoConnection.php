@@ -3,22 +3,22 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Drivers\Pgsql;
 
-use Laventure\Component\Database\Connection\Extensions\PDO\Connection;
+use Laventure\Component\Database\Connection\Extensions\PDO\PdoConnection;
 use Laventure\Component\Database\Connection\Name\ConnectionName;
 use Laventure\Component\Database\DatabaseInterface;
 use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
 use Laventure\Component\Database\Schema\Table\TableInterface;
 
 /**
- * PgsqlConnection
+ * PgsqlPdoConnection
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Drivers\Pgsql
+ * @package  Laventure\Component\Database\PdoConnection\Drivers\Pgsql
 */
-class PgsqlConnection extends Connection
+class PgsqlPdoConnection extends PdoConnection
 {
 
     /**

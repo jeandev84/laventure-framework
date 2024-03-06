@@ -19,7 +19,7 @@ use Laventure\Component\Database\Schema\Table\TableInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection
+ * @package  Laventure\Component\Database\PdoConnection
 */
 interface ConnectionInterface extends TransactionInterface
 {

@@ -13,7 +13,7 @@ use Laventure\Component\Database\Query\Result\QueryResultInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Extensions\Mysqli\Query
+ * @package  Laventure\Component\Database\PdoConnection\Extensions\Mysqli\Query
 */
 class QueryResult implements QueryResultInterface
 {

@@ -15,7 +15,7 @@ use Throwable;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Extensions\Mysqli\Factory
+ * @package  Laventure\Component\Database\PdoConnection\Extensions\Mysqli\Factory
 */
 class MysqliConnectionFactory implements MysqliConnectionFactoryInterface
 {

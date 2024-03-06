@@ -12,7 +12,7 @@ use Laventure\Contract\Reader\ReaderInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Extensions\PDO\Dsn\Reader
+ * @package  Laventure\Component\Database\PdoConnection\Extensions\PDO\Dsn\Reader
 */
 class PdoDsnReader implements ReaderInterface
 {

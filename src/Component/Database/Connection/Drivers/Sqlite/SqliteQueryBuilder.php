@@ -20,7 +20,7 @@ use Laventure\Component\Database\Query\Builder\SQL\DQL\Select\SelectBuilderInter
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Drivers\Sqlite
+ * @package  Laventure\Component\Database\PdoConnection\Drivers\Sqlite
 */
 class SqliteQueryBuilder extends AbstractSQLQueryBuilder
 {

@@ -15,7 +15,7 @@ use PDO;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Extensions\PDO\Factory
+ * @package  Laventure\Component\Database\PdoConnection\Extensions\PDO\Factory
 */
 interface PdoConnectionFactoryInterface extends ConnectionFactoryInterface
 {
