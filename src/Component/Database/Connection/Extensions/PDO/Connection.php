@@ -60,8 +60,6 @@ abstract class Connection extends AbstractConnection implements PdoConnectionInt
             throw new RuntimeException("No DSN specified for making connection.");
         }
 
-        $config->add($this->getDsnParamsFromString($config['dsn']));
-
         $this->withConfiguration($config);
 
         return $this->withConnection($this->makePdo($config));
@@ -373,16 +371,18 @@ abstract class Connection extends AbstractConnection implements PdoConnectionInt
     */
     private function getDsnParamsFromString(string $dsn): array
     {
+        dump($dsn);
         $config = [];
         [$driver, $options] = explode(':', $dsn, 2);
         $params = explode(';', $options);
         $config['driver'] = $driver;
 
         foreach ($params as $attributes) {
-            [$key, $value] = explode('=', $attributes, 2);
+            [$key, $value] = explode('=', $attributes);
             $config[$key] = $value;
         }
 
+        dump($config);
         return $config;
     }
 
@@ -396,6 +396,10 @@ abstract class Connection extends AbstractConnection implements PdoConnectionInt
     */
     private function makeDefaultDsn(ConfigurationInterface $config): string
     {
+        if ($config->has('dsn')) {
+            return $config['dsn'];
+        }
+
         return $this->makePdoDsn($config['driver'], [
             'host'     => $config['host'],
             'port'     => $config['port'],
@@ -414,7 +418,7 @@ abstract class Connection extends AbstractConnection implements PdoConnectionInt
     private function makeDsnIfDatabaseExists(ConfigurationInterface $config): string
     {
         if ($config->has('dsn')) {
-            return rtrim($config['dsn'], ';') . ";dbname={$config->getDatabase()};";
+            return $config['dsn'];
         }
 
         return $this->makePdoDsn($config['driver'], [
