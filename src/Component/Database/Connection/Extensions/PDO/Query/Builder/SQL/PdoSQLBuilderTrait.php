@@ -8,7 +8,7 @@ use Laventure\Component\Database\Query\Builder\SQL\Decorator\SQLBuilderDecorator
 
 
 /**
- * PdoSQLBuilderDecoratorTrait
+ * PdoSQLBuilderTrait
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -16,7 +16,7 @@ use Laventure\Component\Database\Query\Builder\SQL\Decorator\SQLBuilderDecorator
  *
  * @package  Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\SQL
 */
-trait PdoSQLBuilderDecoratorTrait
+trait PdoSQLBuilderTrait
 {
      use SQLBuilderDecoratorTrait;
 

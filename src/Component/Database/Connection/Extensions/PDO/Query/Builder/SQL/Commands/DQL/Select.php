@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\SQL\Commands\DQL;
 
-use Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\SQL\PdoSQLBuilderDecoratorTrait;
+use Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\SQL\PdoSQLBuilderTrait;
 use Laventure\Component\Database\Query\Builder\SQL\DQL\Select\SelectBuilderDecorator;
 
 /**
@@ -17,5 +17,5 @@ use Laventure\Component\Database\Query\Builder\SQL\DQL\Select\SelectBuilderDecor
 */
 class Select extends SelectBuilderDecorator
 {
-      use PdoSQLBuilderDecoratorTrait;
+      use PdoSQLBuilderTrait;
 }
