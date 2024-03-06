@@ -6,7 +6,7 @@ namespace Laventure\Component\Database\Query\Builder\SQL\Commands;
 use Stringable;
 
 /**
- * Delete
+ * MysqlDeleteBuilder
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *

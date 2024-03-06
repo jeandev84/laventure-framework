@@ -127,7 +127,7 @@ class RouteTest extends TestCase
 
     public function testGeneratePath(): void
     {
-        $func1 = function () {return "Delete user";};
+        $func1 = function () {return "MysqlDeleteBuilder user";};
         $route1 = Route::create(['DELETE'], '/admin/users/{slug}/{id}', $func1, 'admin.users.delete.php')
                         ->wheres(['id' => '\d+', 'slug' => '[a-z\-0-9]+']);
         $route2 = Route::create(['GET'], '/foo/{name}/{isOptional?}', [\stdClass::class, '__invoke'], 'foo')

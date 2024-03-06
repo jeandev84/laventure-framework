@@ -16,7 +16,7 @@ use Laventure\Component\Database\Query\Builder\SQL\SQLBuilder;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Builder\SQL\DML\Insert
+ * @package  Laventure\Component\Database\Builder\SQL\DML\MysqlInsertBuilder
 */
 class InsertBuilder extends SQLBuilder implements InsertBuilderInterface
 {

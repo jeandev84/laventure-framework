@@ -39,7 +39,7 @@ interface CrudInterface
 
 
     /**
-     * Update a record by given $id
+     * MysqlUpdateBuilder a record by given $id
      *
      * @param array $attributes
      * @param $id
@@ -53,7 +53,7 @@ interface CrudInterface
 
 
     /**
-     * Delete a record by given $id
+     * MysqlDeleteBuilder a record by given $id
      *
      * @param $id
      * @return mixed

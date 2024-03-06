@@ -7,7 +7,7 @@ use Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\SQL\Pdo
 use Laventure\Component\Database\Query\Builder\SQL\DQL\Select\SelectBuilderDecorator;
 
 /**
- * Select
+ * MysqlSelectBuilder
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -15,7 +15,7 @@ use Laventure\Component\Database\Query\Builder\SQL\DQL\Select\SelectBuilderDecor
  *
  * @package  Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\SQL\Commands\DQL
 */
-class Select extends SelectBuilderDecorator
+class PdoSelectBuilder extends SelectBuilderDecorator
 {
       use PdoSQLBuilderTrait;
 }

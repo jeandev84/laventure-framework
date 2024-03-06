@@ -15,7 +15,7 @@ use Laventure\Component\Database\Query\Builder\SQL\SQLBuilder;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Query\Builder\SQL\DQL\Select
+ * @package  Laventure\Component\Database\Query\Builder\SQL\DQL\MysqlSelectBuilder
 */
 class SelectBuilderDecorator extends SQLBuilderDecorator implements SelectBuilderInterface
 {

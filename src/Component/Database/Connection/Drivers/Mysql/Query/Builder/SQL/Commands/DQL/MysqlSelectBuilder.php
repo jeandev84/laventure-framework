@@ -5,13 +5,14 @@ namespace Laventure\Component\Database\Connection\Drivers\Mysql\Query\Builder\SQ
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Conditions\Criteria\Resolver\SQLCriteriaResolverInterface;
+use Laventure\Component\Database\Query\Builder\SQL\Criteria\CriteriaInterface;
 use Laventure\Component\Database\Query\Builder\SQL\DQL\Select\SelectBuilderInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionBuilderInterface;
 use Laventure\Component\Database\Query\QueryInterface;
 
 
 /**
- * Select
+ * MysqlSelectBuilder
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -19,7 +20,7 @@ use Laventure\Component\Database\Query\QueryInterface;
  *
  * @package  Laventure\Component\Database\Connection\Drivers\Mysql\Query\Builder\SQL\Commands
 */
-class Select implements SelectBuilderInterface
+class MysqlSelectBuilder implements SelectBuilderInterface
 {
     /**
      * @param SelectBuilderInterface $select
@@ -111,106 +112,162 @@ class Select implements SelectBuilderInterface
 
     /**
      * @inheritDoc
-     */
+    */
     public function rightJoin(string $table, string $condition): static
     {
-        // TODO: Implement rightJoin() method.
+        $this->select->rightJoin($table, $condition);
+
+        return $this;
     }
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function innerJoin(string $table, string $condition): static
     {
-        // TODO: Implement innerJoin() method.
+         $this->select->innerJoin($table, $condition);
+
+         return $this;
     }
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function fullJoin(string $table, string $condition): static
     {
-        // TODO: Implement fullJoin() method.
+        $this->select->fullJoin($table, $condition);
+
+        return $this;
     }
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function addJoin(string $join): static
     {
-        // TODO: Implement addJoin() method.
+        $this->select->addJoin($join);
+
+        return $this;
     }
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function groupBy(string $columns): static
     {
-        // TODO: Implement groupBy() method.
+        $this->select->groupBy($columns);
+
+        return $this;
     }
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function addGroupBy(string $columns): static
     {
-        // TODO: Implement addGroupBy() method.
+        $this->select->addGroupBy($columns);
+
+        return $this;
     }
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function addHaving(string $condition, $type = null): static
     {
-        // TODO: Implement addHaving() method.
+        $this->select->addHaving($condition, $type);
+
+        return $this;
     }
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function having(string $condition): static
     {
-        // TODO: Implement having() method.
+        $this->select->having($condition);
+
+        return $this;
     }
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function andHaving(string $condition): static
     {
-        // TODO: Implement andHaving() method.
+        $this->select->andHaving($condition);
+
+        return $this;
     }
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function orHaving(string $condition): static
     {
-        // TODO: Implement orHaving() method.
+        $this->select->orHaving($condition);
+
+        return $this;
     }
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function orderBy(string $column, string $direction = null): static
     {
-        // TODO: Implement orderBy() method.
+        $this->select->orderBy($column, $direction);
+
+        return $this;
     }
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function addOrderBy(array $orders): static
     {
-        // TODO: Implement addOrderBy() method.
+        $this->select->addOrderBy($orders);
+
+        return $this;
     }
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function limit($limit): static
     {
-        // TODO: Implement limit() method.
+        $this->select->limit($limit);
+
+        return $this;
     }
 
 
@@ -221,7 +278,9 @@ class Select implements SelectBuilderInterface
     */
     public function offset($offset): static
     {
+        $this->select->offset($offset);
 
+        return $this;
     }
 
 
@@ -234,7 +293,9 @@ class Select implements SelectBuilderInterface
     */
     public function where($condition): static
     {
-        // TODO: Implement where() method.
+        $this->select->where($condition);
+
+        return $this;
     }
 
 
@@ -296,19 +357,6 @@ class Select implements SelectBuilderInterface
 
 
 
-    /**
-     * @inheritDoc
-    */
-    public function addCriteriaResolver(SQLCriteriaResolverInterface $criteriaResolver): static
-    {
-        $this->select->addCriteriaResolver($criteriaResolver);
-
-        return $this;
-    }
-
-
-
-
 
     /**
      * @inheritDoc
@@ -346,6 +394,8 @@ class Select implements SelectBuilderInterface
 
         return $this;
     }
+
+
 
 
 
@@ -478,5 +528,28 @@ class Select implements SelectBuilderInterface
     public function getQuery(): QueryInterface
     {
         return $this->select->getQuery();
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getCriteria(): CriteriaInterface
+    {
+        return $this->select->getCriteria();
+    }
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function whereEqualTo($column, $value): static
+    {
+        $this->select->whereEqualTo($column, $value);
+
+        return $this;
     }
 }

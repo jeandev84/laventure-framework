@@ -4,10 +4,10 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\SQL\Commands\DML;
 
 use Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\SQL\PdoSQLBuilderTrait;
-use Laventure\Component\Database\Query\Builder\SQL\DML\Delete\DeleteBuilderDecorator;
+use Laventure\Component\Database\Query\Builder\SQL\DML\Update\UpdateBuilderDecorator;
 
 /**
- * Delete
+ * MysqlUpdateBuilder
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -15,7 +15,7 @@ use Laventure\Component\Database\Query\Builder\SQL\DML\Delete\DeleteBuilderDecor
  *
  * @package  Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\SQL\Commands\DML
 */
-class Delete extends DeleteBuilderDecorator
+class PdoUpdateBuilder extends UpdateBuilderDecorator
 {
-     use PdoSQLBuilderTrait;
+      use PdoSQLBuilderTrait;
 }

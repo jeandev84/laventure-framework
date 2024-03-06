@@ -108,9 +108,9 @@ class Criteria implements CriteriaInterface
 
 
     /**
-     * @var string|null
+     * @var array
     */
-    public ?string $alias = null;
+    public array $alias = [];
 
 
 

@@ -8,7 +8,7 @@ use Attribute;
 use Laventure\Component\Routing\Route\Methods\Enums\HttpMethod;
 
 /**
- * Delete
+ * MysqlDeleteBuilder
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *

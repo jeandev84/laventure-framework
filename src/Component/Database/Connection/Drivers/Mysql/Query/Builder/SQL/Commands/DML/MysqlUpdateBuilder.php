@@ -6,7 +6,7 @@ namespace Laventure\Component\Database\Connection\Drivers\Mysql\Query\Builder\SQ
 use Laventure\Component\Database\Query\Builder\SQL\DML\Update\UpdateBuilderInterface;
 
 /**
- * Update
+ * MysqlUpdateBuilder
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -14,7 +14,7 @@ use Laventure\Component\Database\Query\Builder\SQL\DML\Update\UpdateBuilderInter
  *
  * @package  Laventure\Component\Database\Connection\Drivers\Mysql\Query\Builder\SQL\Commands
 */
-class Update implements UpdateBuilderInterface
+class MysqlUpdateBuilder implements UpdateBuilderInterface
 {
 
 }

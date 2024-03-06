@@ -6,7 +6,7 @@ namespace Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\S
 use Laventure\Component\Database\Query\Builder\SQL\DML\Insert\InsertBuilderDecorator;
 
 /**
- * Insert
+ * MysqlInsertBuilder
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -14,7 +14,7 @@ use Laventure\Component\Database\Query\Builder\SQL\DML\Insert\InsertBuilderDecor
  *
  * @package  Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\SQL\Commands\DML
  */
-class Insert extends InsertBuilderDecorator
+class PdoInsertBuilder extends InsertBuilderDecorator
 {
 
       /**

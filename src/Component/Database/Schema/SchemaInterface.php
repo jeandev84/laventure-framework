@@ -35,7 +35,7 @@ interface SchemaInterface
 
 
     /**
-     * Update schema
+     * MysqlUpdateBuilder schema
      *
      * @param string $table
      *

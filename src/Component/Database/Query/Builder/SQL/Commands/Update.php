@@ -7,7 +7,7 @@ namespace Laventure\Component\Database\Query\Builder\SQL\Commands;
 use Stringable;
 
 /**
- * Update
+ * MysqlUpdateBuilder
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *

@@ -14,7 +14,7 @@ use Laventure\Component\Database\Query\QueryInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Query\Builder\SQL\DQL\Select
+ * @package  Laventure\Component\Database\Query\Builder\SQL\DQL\MysqlSelectBuilder
 */
 class NullSelectBuilder extends SelectBuilder
 {

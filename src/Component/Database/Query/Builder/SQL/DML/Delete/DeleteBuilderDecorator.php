@@ -14,7 +14,7 @@ use Laventure\Component\Database\Query\Builder\SQL\Decorator\SQLBuilderDecorator
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Query\Builder\SQL\DML\Delete
+ * @package  Laventure\Component\Database\Query\Builder\SQL\DML\MysqlDeleteBuilder
 */
 class DeleteBuilderDecorator extends SQLBuilderDecorator implements DeleteBuilderInterface
 {

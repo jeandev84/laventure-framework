@@ -71,7 +71,7 @@ class Persistent
 
 
     /**
-     * Insert data
+     * MysqlInsertBuilder data
      *
      * @return int
     */

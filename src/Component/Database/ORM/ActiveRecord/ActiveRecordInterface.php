@@ -58,7 +58,7 @@ interface ActiveRecordInterface
 
 
     /**
-     * Update or Insert records
+     * MysqlUpdateBuilder or MysqlInsertBuilder records
      *
      * @return int
     */

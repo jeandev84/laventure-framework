@@ -4,10 +4,10 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
-use Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\SQL\Commands\DML\Delete;
-use Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\SQL\Commands\DML\Insert;
-use Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\SQL\Commands\DML\Update;
-use Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\SQL\Commands\DQL\Select;
+use Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\SQL\Commands\DML\PdoDeleteBuilder;
+use Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\SQL\Commands\DML\PdoInsertBuilder;
+use Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\SQL\Commands\DML\PdoUpdateBuilder;
+use Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\SQL\Commands\DQL\PdoSelectBuilder;
 use Laventure\Component\Database\Query\Builder\SQL\DML\Delete\DeleteBuilderInterface;
 use Laventure\Component\Database\Query\Builder\SQL\DML\Insert\InsertBuilderInterface;
 use Laventure\Component\Database\Query\Builder\SQL\DML\Update\UpdateBuilderInterface;
@@ -65,7 +65,7 @@ class QueryBuilder implements SQLQueryBuilderInterface
     */
     public function select(string $selects = null): SelectBuilderInterface
     {
-         return new Select($this->builder->select($selects));
+         return new PdoSelectBuilder($this->builder->select($selects));
     }
 
 
@@ -77,7 +77,7 @@ class QueryBuilder implements SQLQueryBuilderInterface
     */
     public function insert(string $table): InsertBuilderInterface
     {
-        return new Insert($this->builder->insert($table));
+        return new PdoInsertBuilder($this->builder->insert($table));
     }
 
 
@@ -89,7 +89,7 @@ class QueryBuilder implements SQLQueryBuilderInterface
     */
     public function update(string $table): UpdateBuilderInterface
     {
-        return new Update($this->builder->update($table));
+        return new PdoUpdateBuilder($this->builder->update($table));
     }
 
 
@@ -100,6 +100,6 @@ class QueryBuilder implements SQLQueryBuilderInterface
     */
     public function delete(string $table): DeleteBuilderInterface
     {
-        return new Delete($this->builder->delete($table));
+        return new PdoDeleteBuilder($this->builder->delete($table));
     }
 }

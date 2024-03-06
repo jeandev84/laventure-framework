@@ -26,7 +26,7 @@ use Laventure\Component\Database\Query\Builder\SQL\SQLBuilder;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Builder\SQL\DQL\Select
+ * @package  Laventure\Component\Database\Builder\SQL\DQL\MysqlSelectBuilder
  */
 class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
 {
@@ -81,8 +81,12 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
      */
     public function from(string $table, string $alias = ''): static
     {
-        $this->criteria->from[$alias ?: $table] = ($alias ? "$table $alias" : $table);
-        $this->criteria->alias = $alias;
+        if ($alias) {
+            $this->criteria->alias[$alias] = $table;
+            $this->criteria->from[$alias]  = "$table $alias";
+        } else {
+            $this->criteria->from[$table] = $table;
+        }
 
         return $this;
     }

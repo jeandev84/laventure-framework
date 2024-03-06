@@ -44,7 +44,7 @@ interface DataMapperInterface
 
 
     /**
-     * Delete data
+     * MysqlDeleteBuilder data
      *
      * @param object $object
      *
