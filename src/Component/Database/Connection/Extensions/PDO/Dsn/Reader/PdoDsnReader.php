@@ -87,15 +87,21 @@ class PdoDsnReader implements ReaderInterface
     */
     public function read(): array
     {
+        echo $this->dsn, "\n";
         $config = [];
         [$driver, $options] = explode(':', $this->dsn, 2);
         $params = explode(';', $options);
         $config['driver'] = $driver;
 
-        foreach ($params as $attributes) {
-            [$key, $value] = explode('=', $attributes);
-            $config[$key] = $value;
+        foreach ($params as $param) {
+            if (str_contains('=', $param)) {
+                [$key, $value] = explode('=', $param, 2);
+                if (!empty($value)) {
+                    $config[$key] = $value;
+                }
+            }
         }
+
 
         if ($this->replaceKeys) {
             $config = $this->replaceKeys($config);
@@ -105,7 +111,7 @@ class PdoDsnReader implements ReaderInterface
             $config = $this->castKeys($config);
         }
 
-        return $config;
+        return array_filter($config);
     }
 
 

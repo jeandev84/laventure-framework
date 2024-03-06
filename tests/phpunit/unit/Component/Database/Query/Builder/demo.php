@@ -89,7 +89,7 @@ $migrator->addMigrations(MigrationStack::getMigrations());
 #$migrator->rollback();
 
 # 4 . Migration reset
-#$migrator->reset();
+$migrator->reset();
 
 # 5. Migration refresh
 #$migrator->refresh();

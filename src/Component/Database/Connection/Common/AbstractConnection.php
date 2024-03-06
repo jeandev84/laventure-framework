@@ -47,9 +47,9 @@ abstract class AbstractConnection implements ConnectionInterface
      * Connection without database for example
      *
      * @param ConfigurationInterface $config
-     * @return $this
+     * @return mixed
     */
-    abstract public function connectWithoutDatabase(ConfigurationInterface $config): static;
+    abstract public function connectWithoutDatabase(ConfigurationInterface $config): mixed;
 
 
 
@@ -62,5 +62,5 @@ abstract class AbstractConnection implements ConnectionInterface
      * @param ConfigurationInterface $config
      * @return $this
     */
-    abstract public function connectIfExistsDatabase(ConfigurationInterface $config): static;
+    abstract public function connectIfExistsDatabase(ConfigurationInterface $config): mixed;
 }
