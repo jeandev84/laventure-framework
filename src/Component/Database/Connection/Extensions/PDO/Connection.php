@@ -379,10 +379,10 @@ abstract class Connection extends AbstractConnection implements PdoConnectionInt
 
 
 
-
     /**
      * @param ConfigurationInterface $config
      * @return string
+     * @throws DriverException
     */
     private function makeDefaultDsn(ConfigurationInterface $config): string
     {
