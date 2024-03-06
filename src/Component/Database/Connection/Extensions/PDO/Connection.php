@@ -6,7 +6,6 @@ namespace Laventure\Component\Database\Connection\Extensions\PDO;
 
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Configuration\Null\NullConfiguration;
-use Laventure\Component\Database\Connection\Common\AbstractConnection;
 use Laventure\Component\Database\Connection\Drivers\DriverException;
 use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\Builder\PdoDsnBuilder;
 use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\Reader\PdoDsnReader;
@@ -14,6 +13,7 @@ use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnection
 use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnectionFactoryInterface;
 use Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\Factory\PdoSQLQueryBuilderFactory;
 use Laventure\Component\Database\Connection\Extensions\PDO\Query\Query;
+use Laventure\Component\Database\Connection\Traits\ConnectionTrait;
 use Laventure\Component\Database\Query\Builder\SQL\Factory\SQLQueryBuilderFactoryInterface;
 use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
 use Laventure\Component\Database\Query\QueryInterface;
@@ -31,8 +31,10 @@ use RuntimeException;
  *
  * @package  Laventure\Component\Database\Connection\Extensions\PDO
 */
-abstract class Connection extends AbstractConnection implements PdoConnectionInterface
+abstract class Connection implements PdoConnectionInterface
 {
+    use ConnectionTrait;
+
     /**
      * @var PdoConnectionFactoryInterface
     */

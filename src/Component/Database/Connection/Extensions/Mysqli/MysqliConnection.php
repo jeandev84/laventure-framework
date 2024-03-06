@@ -5,14 +5,17 @@ namespace Laventure\Component\Database\Connection\Extensions\Mysqli;
 
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Configuration\Null\NullConfiguration;
-use Laventure\Component\Database\Connection\Common\AbstractConnection;
+use Laventure\Component\Database\Connection\Drivers\Mysql\MysqlDatabase;
 use Laventure\Component\Database\Connection\Drivers\Mysql\Schema\Table\MysqlTable;
 use Laventure\Component\Database\Connection\Extensions\Mysqli\Factory\MysqliConnectionFactory;
 use Laventure\Component\Database\Connection\Extensions\Mysqli\Factory\MysqliConnectionFactoryInterface;
-use Laventure\Component\Database\Connection\Extensions\Mysqli\Query\Builder\QueryBuilder;
 use Laventure\Component\Database\Connection\Extensions\Mysqli\Query\Query;
 use Laventure\Component\Database\Connection\Name\ConnectionName;
+use Laventure\Component\Database\Connection\Traits\ConnectionTrait;
 use Laventure\Component\Database\DatabaseInterface;
+use Laventure\Component\Database\Query\Builder\SQL\Factory\SQLQueryBuilderFactoryInterface;
+use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilder;
+use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
 use Laventure\Component\Database\Query\QueryInterface;
 use Laventure\Component\Database\Schema\Table\TableInterface;
 use mysqli;
@@ -27,8 +30,11 @@ use mysqli;
  *
  * @package  Laventure\Component\Database\Connection\Extensions\Mysqli
 */
-class MysqliConnection extends AbstractConnection implements  MysqliConnectionInterface
+class MysqliConnection implements MysqliConnectionInterface
 {
+
+    use ConnectionTrait;
+
     /**
      * @var MysqliConnectionFactoryInterface
     */
@@ -126,9 +132,10 @@ class MysqliConnection extends AbstractConnection implements  MysqliConnectionIn
     /**
      * @inheritDoc
     */
-    public function createQueryBuilder(): QueryBuilderInterface
+    public function createQueryBuilder(): SQLQueryBuilderInterface
     {
-        return new QueryBuilder($this);
+        //TODO returns here MysqlQueryBuilder()
+        return new SQLQueryBuilder($this);
     }
 
 
@@ -296,23 +303,28 @@ class MysqliConnection extends AbstractConnection implements  MysqliConnectionIn
     }
 
     
-    
-    
+
+
     /**
      * @inheritDoc
     */
-    protected function connectWithoutDatabase(ConfigurationInterface $config): static
+    public function createSQLBuilderFactory(): SQLQueryBuilderFactoryInterface
     {
-        
+        // TODO: Implement createSQLBuilderFactory() method.
     }
 
-    
-    
-    
     /**
      * @inheritDoc
-    */
-    protected function connectIfExistsDatabase(ConfigurationInterface $config): static
+     */
+    public function connectWithoutDatabase(ConfigurationInterface $config): mixed
+    {
+        // TODO: Implement connectWithoutDatabase() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function connectIfExistsDatabase(ConfigurationInterface $config): mixed
     {
         // TODO: Implement connectIfExistsDatabase() method.
     }

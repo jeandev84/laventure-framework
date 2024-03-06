@@ -32,6 +32,24 @@ trait ConnectionTrait
 
 
 
+
+    /**
+     * @param ConfigurationInterface $config
+     * @return $this
+    */
+    public function connect(ConfigurationInterface $config): static
+    {
+        $this->connectWithoutDatabase($config);
+
+        if ($this->getDatabase()->exists()) {
+            $this->connectIfExistsDatabase($config);
+        }
+
+        return $this;
+    }
+
+
+
     /**
      * @param mixed $connection
      *
@@ -110,4 +128,29 @@ trait ConnectionTrait
     {
         return $this->config->get($key, $default);
     }
+
+
+
+
+
+    /**
+     * Connection without database for example
+     *
+     * @param ConfigurationInterface $config
+     * @return mixed
+    */
+    abstract protected function connectWithoutDatabase(ConfigurationInterface $config): mixed;
+
+
+
+
+
+
+    /**
+     * Connection to the database if exists
+     *
+     * @param ConfigurationInterface $config
+     * @return $this
+    */
+    abstract protected function connectIfExistsDatabase(ConfigurationInterface $config): mixed;
 }
