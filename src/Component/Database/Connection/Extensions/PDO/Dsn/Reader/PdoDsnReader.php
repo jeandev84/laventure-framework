@@ -33,12 +33,14 @@ class PdoDsnReader implements ReaderInterface
 
 
 
+
     /**
      * @var array|string[]
     */
     protected array $casts = [
-        'port' => 'int'
+        'port' => 'integer'
     ];
+
 
 
     /**
@@ -100,7 +102,7 @@ class PdoDsnReader implements ReaderInterface
         }
 
         if ($this->casts) {
-            $this->castKeys($config);
+            $config = $this->castKeys($config);
         }
 
         return $config;
@@ -137,7 +139,10 @@ class PdoDsnReader implements ReaderInterface
     {
         foreach ($this->casts as $key => $cast) {
             if (!empty($config[$key])) {
-                $config[$key] = call_user_func([$this, $cast], $config[$key]);
+                $callback = [$this, "{$cast}Cast"];
+                if (is_callable($callback)) {
+                    $config[$key] = call_user_func($callback, $config[$key]);
+                }
             }
         }
 
@@ -153,7 +158,7 @@ class PdoDsnReader implements ReaderInterface
      * @param $value
      * @return int
     */
-    private function int($value): int
+    private function integerCast($value): int
     {
         return intval($value);
     }

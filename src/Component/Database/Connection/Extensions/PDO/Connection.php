@@ -63,7 +63,6 @@ abstract class Connection extends AbstractConnection implements PdoConnectionInt
 
         $config->add($this->readDsnParams($config['dsn']));
 
-        dd($config);
         $this->withConfiguration($config);
 
         return $this->withConnection($this->makePdo($config));
