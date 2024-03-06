@@ -135,7 +135,9 @@ abstract class Database implements DatabaseInterface
     */
     public function collation(): string
     {
-        return $this->config('collation', 'utf8_general_ci');
+        return $this->connection
+                    ->configuration()
+                    ->getCollation();
     }
 
 

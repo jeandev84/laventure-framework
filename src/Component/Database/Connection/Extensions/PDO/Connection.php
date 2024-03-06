@@ -386,9 +386,9 @@ abstract class Connection extends AbstractConnection implements PdoConnectionInt
     private function makeDefaultDsn(ConfigurationInterface $config): string
     {
         return $this->makePdoDsn($config['driver'], [
-            'host'     => $config['host'],
-            'port'     => $config['port'],
-            'charset'  => $config['charset']
+            'host'     => $config->getHost(),
+            'port'     => $config->getPort(),
+            'charset'  => $config->getCharset()
         ]);
     }
 
@@ -403,10 +403,10 @@ abstract class Connection extends AbstractConnection implements PdoConnectionInt
     private function makeDsnIfDatabaseExists(ConfigurationInterface $config): string
     {
         return $this->makePdoDsn($config['driver'], [
-            'host'     => $config['host'],
-            'port'     => $config['port'],
-            'dbname'   => $config['database'],
-            'charset'  => $config['charset']
+            'host'     => $config->getHost(),
+            'port'     => $config->getPort(),
+            'dbname'   => $config->getDatabase(),
+            'charset'  => $config->getCharset()
         ]);
     }
 

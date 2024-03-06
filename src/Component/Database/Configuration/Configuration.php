@@ -20,9 +20,9 @@ class Configuration extends Parameter implements ConfigurationInterface
     /**
      * @inheritDoc
      */
-    public function getUsername(): ?string
+    public function getUsername(): string
     {
-        return $this->get('username');
+        return $this->required('username');
     }
 
 
@@ -34,7 +34,7 @@ class Configuration extends Parameter implements ConfigurationInterface
      */
     public function getPassword(): ?string
     {
-        return $this->get('password');
+        return $this->required('password');
     }
 
 
@@ -73,7 +73,7 @@ class Configuration extends Parameter implements ConfigurationInterface
      */
     public function getHost(): string
     {
-        return $this->get('host', '');
+        return $this->required('host');
     }
 
 
@@ -86,7 +86,7 @@ class Configuration extends Parameter implements ConfigurationInterface
     */
     public function getPort(): int
     {
-        return $this->integer('port');
+        return intval($this->required('port'));
     }
 
 
@@ -98,7 +98,7 @@ class Configuration extends Parameter implements ConfigurationInterface
      */
     public function getDatabase(): string
     {
-        return $this->get('database', '');
+        return $this->required('database');
     }
 
 
@@ -110,6 +110,6 @@ class Configuration extends Parameter implements ConfigurationInterface
      */
     public function getCollation(): string
     {
-        return $this->get('collation', '');
+        return $this->get('collation', 'utf8_general_ci');
     }
 }
