@@ -9,7 +9,7 @@ use Laventure\Component\Database\Connection\Factory\ConnectionFactoryInterface;
 use PDO;
 
 /**
- * PdoConnectionFactoryInterface
+ * PdoFactoryInterface
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *

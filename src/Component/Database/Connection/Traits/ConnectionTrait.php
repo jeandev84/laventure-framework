@@ -139,7 +139,7 @@ trait ConnectionTrait
      * @param ConfigurationInterface $config
      * @return mixed
     */
-    abstract protected function connectWithoutDatabase(ConfigurationInterface $config): mixed;
+    abstract public function connectWithoutDatabase(ConfigurationInterface $config): mixed;
 
 
 
@@ -152,5 +152,5 @@ trait ConnectionTrait
      * @param ConfigurationInterface $config
      * @return $this
     */
-    abstract protected function connectIfExistsDatabase(ConfigurationInterface $config): mixed;
+    abstract public function connectIfExistsDatabase(ConfigurationInterface $config): mixed;
 }

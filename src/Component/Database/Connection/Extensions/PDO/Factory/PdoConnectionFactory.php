@@ -11,7 +11,7 @@ use PDO;
 use PDOException;
 
 /**
- * PdoConnectionFactory
+ * PdoFactory
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
