@@ -15,7 +15,7 @@ use Laventure\Component\Database\Query\Builder\SQL\SQLBuilder;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Builder\SQL\DML\MysqlUpdateBuilder
+ * @package  Laventure\Component\Database\Builder\SQL\DML\PgsqlUpdateBuilder
 */
 class UpdateBuilder extends SQLBuilder implements UpdateBuilderInterface
 {

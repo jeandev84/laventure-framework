@@ -7,7 +7,7 @@ namespace Laventure\Component\Database\Query\Builder\SQL\Commands;
 use Stringable;
 
 /**
- * MysqlInsertBuilder
+ * PgsqlInsertBuilder
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *

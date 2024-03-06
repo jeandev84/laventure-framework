@@ -34,7 +34,7 @@ interface TableInterface
 
 
     /**
-     * MysqlUpdateBuilder table
+     * PgsqlUpdateBuilder table
      *
      * @return mixed
     */

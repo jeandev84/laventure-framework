@@ -7,7 +7,7 @@ use Laventure\Component\Database\Query\Builder\SQL\DML\Delete\DeleteBuilderDecor
 
 
 /**
- * MysqlDeleteBuilder
+ * PgsqlDeleteBuilder
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -15,7 +15,7 @@ use Laventure\Component\Database\Query\Builder\SQL\DML\Delete\DeleteBuilderDecor
  *
  * @package  Laventure\Component\Database\Connection\Drivers\Mysql\Query\Builder\SQL\Commands
  */
-class MysqlDeleteBuilder extends DeleteBuilderDecorator
+class PgsqlDeleteBuilder extends DeleteBuilderDecorator
 {
 
 }

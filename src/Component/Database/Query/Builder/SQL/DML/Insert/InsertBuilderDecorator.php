@@ -14,7 +14,7 @@ use Laventure\Component\Database\Query\Builder\SQL\Decorator\SQLBuilderDecorator
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Query\Builder\SQL\DML\MysqlInsertBuilder
+ * @package  Laventure\Component\Database\Query\Builder\SQL\DML\PgsqlInsertBuilder
 */
 class InsertBuilderDecorator extends SQLBuilderDecorator implements InsertBuilderInterface
 {

@@ -39,7 +39,7 @@ interface CrudInterface
 
 
     /**
-     * MysqlUpdateBuilder a record by given $id
+     * PgsqlUpdateBuilder a record by given $id
      *
      * @param array $attributes
      * @param $id

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Connection\Drivers\Mysql\Query\Builder\SQL\Commands\DQL;
+namespace Laventure\Component\Database\Connection\Drivers\Oracle\Query\Builder\SQL\Commands\DQL;
 
 use Laventure\Component\Database\Query\Builder\SQL\DQL\Select\SelectBuilderDecorator;
 
@@ -13,9 +13,9 @@ use Laventure\Component\Database\Query\Builder\SQL\DQL\Select\SelectBuilderDecor
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Drivers\Mysql\Query\Builder\SQL\Commands
+ * @package  Laventure\Component\Database\Connection\Drivers\Oracle\Query\Builder\SQL\Commands\DQL
 */
-class MysqlSelectBuilder extends SelectBuilderDecorator
+class OracleSelectBuilder extends SelectBuilderDecorator
 {
 
 }

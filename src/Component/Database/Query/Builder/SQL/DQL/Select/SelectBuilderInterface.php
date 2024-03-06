@@ -13,13 +13,13 @@ use Laventure\Component\Database\Query\Builder\SQL\SQLBuilderInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Builder\SQL\DQL\MysqlSelectBuilder
+ * @package  Laventure\Component\Database\Builder\SQL\DQL\PgsqlSelectBuilder
 */
 interface SelectBuilderInterface extends SQLBuilderInterface, WhereInterface
 {
     
     /**
-     * MysqlSelectBuilder columns
+     * PgsqlSelectBuilder columns
      *
      * @param string $columns
      * @return $this
@@ -31,7 +31,7 @@ interface SelectBuilderInterface extends SQLBuilderInterface, WhereInterface
 
 
     /**
-     * MysqlSelectBuilder distinct values
+     * PgsqlSelectBuilder distinct values
      *
      * @return $this
     */
@@ -44,7 +44,7 @@ interface SelectBuilderInterface extends SQLBuilderInterface, WhereInterface
 
 
     /**
-     * MysqlSelectBuilder columns
+     * PgsqlSelectBuilder columns
      *
      * @param string $columns
      * @return $this

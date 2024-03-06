@@ -7,7 +7,7 @@ use Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\SQL\Pdo
 use Laventure\Component\Database\Query\Builder\SQL\DQL\Select\SelectBuilderDecorator;
 
 /**
- * MysqlSelectBuilder
+ * PgsqlSelectBuilder
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *

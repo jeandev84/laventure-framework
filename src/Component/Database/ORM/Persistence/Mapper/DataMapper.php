@@ -52,7 +52,7 @@ class DataMapper implements DataMapperInterface
 
 
     /**
-      * MysqlUpdateBuilder data and returns updated ID
+      * PgsqlUpdateBuilder data and returns updated ID
       *
       * @param object $object
       * @return int
@@ -68,7 +68,7 @@ class DataMapper implements DataMapperInterface
 
 
     /**
-     * MysqlInsertBuilder data and returns last insert ID
+     * PgsqlInsertBuilder data and returns last insert ID
      *
      * @param object $object
      * @return int

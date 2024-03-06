@@ -13,7 +13,7 @@ use Laventure\Component\Database\Query\Builder\SQL\SQLBuilderInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Builder\SQL\DML\MysqlInsertBuilder
+ * @package  Laventure\Component\Database\Builder\SQL\DML\PgsqlInsertBuilder
 */
 interface InsertBuilderInterface extends SQLBuilderInterface
 {

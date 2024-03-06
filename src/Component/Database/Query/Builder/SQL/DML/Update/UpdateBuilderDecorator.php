@@ -4,7 +4,11 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Query\Builder\SQL\DML\Update;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
+use Laventure\Component\Database\Query\Builder\SQL\Criteria\CriteriaInterface;
+use Laventure\Component\Database\Query\Builder\SQL\Decorator\SQLBuilderDecorator;
 use Laventure\Component\Database\Query\Builder\SQL\Decorator\SQLBuilderDecoratorTrait;
+use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionBuilderInterface;
+use Laventure\Component\Database\Query\QueryInterface;
 
 /**
  * UpdateBuilderDecorator
@@ -13,40 +17,35 @@ use Laventure\Component\Database\Query\Builder\SQL\Decorator\SQLBuilderDecorator
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Query\Builder\SQL\DML\MysqlUpdateBuilder
+ * @package  Laventure\Component\Database\Query\Builder\SQL\DML\PgsqlUpdateBuilder
 */
-class UpdateBuilderDecorator extends UpdateBuilder
+class UpdateBuilderDecorator extends SQLBuilderDecorator implements UpdateBuilderInterface
 {
-       use SQLBuilderDecoratorTrait;
 
 
-       /**
-        * @var UpdateBuilderInterface
-       */
-       protected $builder;
+    /**
+     * @var UpdateBuilderInterface
+    */
+    protected $builder;
 
 
-
-       /**
-        * @param UpdateBuilderInterface $builder
-       */
-       public function __construct(UpdateBuilderInterface $builder)
-       {
-           parent::__construct($builder->getConnection());
-       }
-
+    /**
+     * @param UpdateBuilderInterface $builder
+    */
+    public function __construct(UpdateBuilderInterface $builder)
+    {
+        parent::__construct($builder);
+    }
 
 
 
-       /**
-        * @param $column
-        * @param $value
-        * @return $this
-       */
-       public function set($column, $value): static
-       {
-           $this->builder->set($column, $value);
+    /**
+     * @inheritDoc
+    */
+    public function update(string $table): static
+    {
+        $this->builder->update($table);
 
-           return $this;
-       }
+        return $this;
+    }
 }

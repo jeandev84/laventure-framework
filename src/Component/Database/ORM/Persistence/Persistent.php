@@ -71,7 +71,7 @@ class Persistent
 
 
     /**
-     * MysqlInsertBuilder data
+     * PgsqlInsertBuilder data
      *
      * @return int
     */

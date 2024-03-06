@@ -58,7 +58,7 @@ interface ActiveRecordInterface
 
 
     /**
-     * MysqlUpdateBuilder or MysqlInsertBuilder records
+     * PgsqlUpdateBuilder or PgsqlInsertBuilder records
      *
      * @return int
     */
