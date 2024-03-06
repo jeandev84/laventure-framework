@@ -6,6 +6,7 @@ namespace Laventure\Foundation\Providers;
 use Laventure\Component\Config\Config;
 use Laventure\Component\Container\Service\Provider\ServiceProvider;
 use Laventure\Component\Database\Connection\ConnectionInterface;
+use Laventure\Component\Database\Connection\Name\ConnectionName;
 use Laventure\Component\Database\Manager\Contract\ManagerInterface;
 use Laventure\Component\Database\Manager\Manager;
 use Laventure\Component\Database\ORM\Persistence\Manager\EntityManager;
@@ -55,8 +56,7 @@ class DatabaseServiceProvider extends ServiceProvider
         $this->app->singletons([
             ManagerInterface::class => function (Config $config) {
                 $database = new Manager();
-                $credentials = $this->resolveCredentials($config);
-                $database->addCredentials($credentials);
+                $database->addCredentials($config['database']);
                 $database->bootManager();
                 return $database;
             },
@@ -72,19 +72,5 @@ class DatabaseServiceProvider extends ServiceProvider
                 return $registry;
             }
         ]);
-    }
-
-
-
-
-    /**
-     * @param Config $config
-     * @return array
-    */
-    private function resolveCredentials(Config $config): array
-    {
-        $credentials = $config['database'];
-        $credentials['basePath'] = $this->app['basePath'];
-        return $credentials;
     }
 }

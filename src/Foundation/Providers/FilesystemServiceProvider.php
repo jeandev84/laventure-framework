@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Laventure\Foundation\Providers;
 
 use Laventure\Component\Container\Service\Provider\ServiceProvider;
+use Laventure\Component\Filesystem\File\Locator\FileLocator;
+use Laventure\Component\Filesystem\File\Locator\FileLocatorInterface;
 use Laventure\Component\Filesystem\Filesystem;
 use Laventure\Component\Filesystem\FilesystemInterface;
 
@@ -25,6 +27,9 @@ class FilesystemServiceProvider extends ServiceProvider
     protected array $provides = [
        Filesystem::class => [
            FilesystemInterface::class
+       ],
+       FileLocatorInterface::class => [
+           FileLocator::class
        ]
     ];
 
@@ -34,6 +39,11 @@ class FilesystemServiceProvider extends ServiceProvider
     */
     public function register(): void
     {
-        $this->app->singleton(Filesystem::class, Filesystem::class);
+        $this->app->singletons([
+           Filesystem::class => Filesystem::class,
+           FileLocatorInterface::class => function (Filesystem $filesystem) {
+              return $filesystem->getFileLocator();
+           }
+        ]);
     }
 }

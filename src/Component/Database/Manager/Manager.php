@@ -202,6 +202,6 @@ class Manager extends DatabaseManager implements ManagerInterface
     */
     private function getType(): string
     {
-        return $this->getConfiguration()->getConnectionType();
+        return $this->getConfiguration()->connection();
     }
 }

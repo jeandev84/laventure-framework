@@ -73,7 +73,7 @@ class Filesystem implements FilesystemInterface
     /**
      * @inheritDoc
     */
-    public function setBasePath(string $path): static
+    public function setRoot(string $path): static
     {
         $this->fileLocator->setRoot($path);
 
@@ -85,12 +85,15 @@ class Filesystem implements FilesystemInterface
 
 
     /**
-     * @return string
+     * @inheritdoc
     */
-    public function getBasePath(): string
+    public function getRoot(): string
     {
         return $this->fileLocator->getRoot();
     }
+
+
+
 
 
 
@@ -102,6 +105,7 @@ class Filesystem implements FilesystemInterface
     {
         return $this->fileLocator->locate($path);
     }
+
 
 
 
@@ -132,14 +136,14 @@ class Filesystem implements FilesystemInterface
 
 
     /**
-     * @param string $filename
-     * @param string $content
-     * @return string
+     * @inheritdoc
     */
     public function dump(string $filename, string $content): string
     {
         return $this->file($filename)->dump($content);
     }
+
+
 
 
 
@@ -185,6 +189,9 @@ class Filesystem implements FilesystemInterface
 
         return $this->fileCollectionFactory->create($files);
     }
+
+
+
 
 
     /**

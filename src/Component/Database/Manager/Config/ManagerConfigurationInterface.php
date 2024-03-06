@@ -23,7 +23,7 @@ interface ManagerConfigurationInterface extends ParameterInterface
      *
      * @return string
     */
-    public function getConnectionType(): string;
+    public function connection(): string;
 
 
 

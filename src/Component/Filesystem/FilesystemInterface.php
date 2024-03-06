@@ -24,7 +24,20 @@ interface FilesystemInterface
      *
      * @return mixed
     */
-    public function setBasePath(string $path): mixed;
+    public function setRoot(string $path): mixed;
+
+
+
+
+
+    /**
+     * Returns base root
+     *
+     * @return string
+    */
+    public function getRoot(): string;
+
+
 
 
 
@@ -35,6 +48,9 @@ interface FilesystemInterface
      * @return mixed
     */
     public function locate(string $path): mixed;
+
+
+
 
 
 
@@ -57,11 +73,17 @@ interface FilesystemInterface
 
 
 
+
+
+
     /**
      * @param string $directory
      * @return mixed
     */
     public function dir(string $directory): mixed;
+
+
+
 
 
 
@@ -75,9 +97,23 @@ interface FilesystemInterface
 
 
 
+
+
     /**
      * @param string $pattern
      * @return mixed
     */
     public function collection(string $pattern): mixed;
+
+
+
+
+
+
+    /**
+     * @param string $filename
+     * @param string $content
+     * @return mixed
+     */
+    public function dump(string $filename, string $content): mixed;
 }

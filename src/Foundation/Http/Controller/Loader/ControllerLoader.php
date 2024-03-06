@@ -110,7 +110,7 @@ class ControllerLoader implements LoaderInterface
     {
         $search   = [$this->controllerPath, '/'];
         $replaces = [$this->namespace, "\\"];
-        $basePath = $this->filesystem->getBasePath();
+        $basePath = $this->filesystem->getRoot();
         $path     = str_replace($basePath, '', $path);
         $path     = ltrim($path, '/');
         $info     = pathinfo($path);
