@@ -13,7 +13,7 @@ namespace Laventure\Component\Config;
  *
  * @package  Laventure\Component\Config
 */
-class Config implements ConfigInterface, \ArrayAccess
+class Config implements ConfigInterface
 {
     /**
      * @param array $config

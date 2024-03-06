@@ -5,6 +5,7 @@ namespace Laventure\Component\Database\Manager\Config;
 
 use Laventure\Component\Database\Configuration\Configuration;
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
+use Laventure\Component\Database\Connection\Name\ConnectionName;
 use Laventure\Utils\Parameter\Parameter;
 
 /**
@@ -21,11 +22,10 @@ class ManagerConfiguration extends Parameter implements ManagerConfigurationInte
     /**
      * @inheritdoc
     */
-    public function connectionType(): string
+    public function getConnectionType(): string
     {
         return $this->required('connection');
     }
-
 
 
 
@@ -36,9 +36,13 @@ class ManagerConfiguration extends Parameter implements ManagerConfigurationInte
     */
     public function credentials(): ConfigurationInterface
     {
-        return new Configuration(
-            $this->connections()[$this->connectionType()]
-        );
+        $credentials = $this->credentialsByType();
+
+        if ($this->hasSQLiteType()) {
+           $credentials['database'] = $this->path($credentials['database']);
+        }
+
+        return new Configuration($credentials);
     }
 
 
@@ -51,5 +55,61 @@ class ManagerConfiguration extends Parameter implements ManagerConfigurationInte
     public function connections(): array
     {
         return $this->required('connections');
+    }
+
+
+
+
+
+    /**
+     * @param $path
+     * @return string
+    */
+    public function path($path): string
+    {
+        if (!$basePath = $this->basePath()) {
+             return $path;
+        }
+
+        return join(DIRECTORY_SEPARATOR, [
+            rtrim($basePath),
+            trim($path, '\\/')
+        ]);
+    }
+
+
+
+
+
+    /**
+     * @return string|null
+    */
+    public function basePath(): ?string
+    {
+        return $this->get('basePath');
+    }
+
+
+
+
+
+    /**
+     * @return array
+    */
+    private function credentialsByType(): array
+    {
+        return $this->connections()[$this->getConnectionType()];
+    }
+
+
+
+
+
+    /**
+     * @return bool
+    */
+    private function hasSQLiteType(): bool
+    {
+        return $this->getConnectionType() === ConnectionName::Sqlite;
     }
 }

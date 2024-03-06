@@ -20,7 +20,7 @@ interface FileLocatorInterface
      *
      * @return mixed
     */
-    public function setBasePath(string $root): mixed;
+    public function setRoot(string $root): mixed;
 
 
 
@@ -31,7 +31,7 @@ interface FileLocatorInterface
      *
      * @return string
     */
-    public function getBasePath(): string;
+    public function getRoot(): string;
 
 
 

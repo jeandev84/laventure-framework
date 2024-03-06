@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Foundation\Container\Facade\Route;
+namespace Laventure\Foundation\Facade\Route;
 
 use Closure;
 use Laventure\Component\Container\Facade\Facade;

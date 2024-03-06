@@ -18,11 +18,13 @@ use Laventure\Component\Database\Query\QueryInterface;
  *
  * @package  Laventure\Component\Database\ORM\Persistence\Manager
 */
-interface EntityManagerInterface extends ObjectManagerInterface, TransactionInterface
+interface EntityManagerInterface extends ObjectManagerInterface
 {
 
 
     /**
+     * Returns connection
+     *
      * @return ConnectionInterface
     */
     public function getConnection(): ConnectionInterface;
@@ -31,10 +33,9 @@ interface EntityManagerInterface extends ObjectManagerInterface, TransactionInte
 
 
 
-
-
-
     /**
+     * Returns unit of work
+     *
      * @return UnitOfWorkInterface
     */
     public function getUnitOfWork(): UnitOfWorkInterface;
@@ -44,8 +45,9 @@ interface EntityManagerInterface extends ObjectManagerInterface, TransactionInte
 
 
 
-
     /**
+     * Create native sql query builder
+     *
      * @return SQLQueryBuilderInterface
     */
     public function createQueryBuilder(): SQLQueryBuilderInterface;
@@ -57,9 +59,25 @@ interface EntityManagerInterface extends ObjectManagerInterface, TransactionInte
 
 
     /**
+     * Create native query builder
+     *
      * @param string $sql
      * @param array $params
      * @return QueryInterface
     */
     public function createNativeQuery(string $sql, array $params = []): QueryInterface;
+
+
+
+
+
+
+    /**
+     * Transaction
+     *
+     * @param callable $func
+     *
+     * @return mixed
+    */
+    public function transaction(callable $func): mixed;
 }

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Config;
 
+use ArrayAccess;
+
 /**
  * TemplateEngineConfigInterface
  *
@@ -13,7 +15,7 @@ namespace Laventure\Component\Config;
  *
  * @package  Laventure\Component\Config
  */
-interface ConfigInterface
+interface ConfigInterface extends ArrayAccess
 {
     /**
      * @param string $name

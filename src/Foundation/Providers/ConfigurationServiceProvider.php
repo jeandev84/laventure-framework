@@ -1,16 +1,15 @@
 <?php
-
 declare(strict_types=1);
 
-namespace Laventure\Foundation\Container\Service\Providers;
+namespace Laventure\Foundation\Providers;
 
 use Laventure\Component\Config\Config;
 use Laventure\Component\Config\ConfigInterface;
 use Laventure\Component\Container\Service\Provider\Contract\BootableServiceProvider;
 use Laventure\Component\Container\Service\Provider\ServiceProvider;
 use Laventure\Component\Filesystem\Filesystem;
-use Laventure\Dotenv\DotenvInterface;
 use Laventure\Dotenv\Dotenv;
+use Laventure\Dotenv\DotenvInterface;
 use Laventure\Foundation\Config\Loader\ConfigLoader;
 
 /**
@@ -24,9 +23,6 @@ use Laventure\Foundation\Config\Loader\ConfigLoader;
  */
 class ConfigurationServiceProvider extends ServiceProvider implements BootableServiceProvider
 {
-    private string $pattern = '/demo/params/*.php';
-
-
     /**
      * @var array
      */
@@ -54,7 +50,7 @@ class ConfigurationServiceProvider extends ServiceProvider implements BootableSe
     {
         $this->app->bind('app.env', $_ENV);
         $this->app->singleton(ConfigLoader::class, function () {
-            return new ConfigLoader($this->app[Filesystem::class], $this->pattern);
+            return new ConfigLoader($this->app[Filesystem::class]);
         });
         $this->app->singleton(ConfigInterface::class, function () {
             $loader = $this->app[ConfigLoader::class];

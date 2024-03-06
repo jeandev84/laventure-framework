@@ -75,7 +75,7 @@ class Filesystem implements FilesystemInterface
     */
     public function setBasePath(string $path): static
     {
-        $this->fileLocator->setBasePath($path);
+        $this->fileLocator->setRoot($path);
 
         return $this;
     }
@@ -89,7 +89,7 @@ class Filesystem implements FilesystemInterface
     */
     public function getBasePath(): string
     {
-        return $this->fileLocator->getBasePath();
+        return $this->fileLocator->getRoot();
     }
 
 

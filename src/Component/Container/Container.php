@@ -177,7 +177,7 @@ class Container implements ContainerInterface, ArrayAccess
      *
      * @return $this
     */
-    public function bindings(array $bindings): static
+    public function binds(array $bindings): static
     {
         foreach ($bindings as $id => $value) {
             $this->bind($id, $value);

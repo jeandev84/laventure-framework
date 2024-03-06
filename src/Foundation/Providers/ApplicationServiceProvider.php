@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Foundation\Container\Service\Providers;
+namespace Laventure\Foundation\Providers;
 
 use Laventure\Component\Container\Service\Provider\Contract\BootableServiceProvider;
 use Laventure\Component\Container\Service\Provider\ServiceProvider;
 use Laventure\Component\Http\Message\Response\Factory\ResponseFactory;
-use Laventure\Foundation\Container\Facade\Route\Route;
+use Laventure\Foundation\Facade\Route\Route;
 use Psr\Http\Message\ResponseFactoryInterface;
 
 /**

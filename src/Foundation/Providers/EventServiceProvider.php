@@ -1,8 +1,7 @@
 <?php
-
 declare(strict_types=1);
 
-namespace Laventure\Foundation\Container\Service\Providers;
+namespace Laventure\Foundation\Providers;
 
 use Laventure\Component\Container\Service\Provider\ServiceProvider;
 use Laventure\Component\Event\Dispatcher\EventDispatcher;

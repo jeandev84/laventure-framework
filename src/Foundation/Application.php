@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Foundation;
@@ -7,13 +6,13 @@ namespace Laventure\Foundation;
 use Laventure\Component\Container\Container;
 use Laventure\Component\Container\Exception\ContainerException;
 use Laventure\Contract\Application\ApplicationInterface;
-use Laventure\Foundation\Container\Service\Providers\ApplicationServiceProvider;
-use Laventure\Foundation\Container\Service\Providers\ConfigurationServiceProvider;
-use Laventure\Foundation\Container\Service\Providers\DatabaseServiceProvider;
-use Laventure\Foundation\Container\Service\Providers\EventServiceProvider;
-use Laventure\Foundation\Container\Service\Providers\FilesystemServiceProvider;
-use Laventure\Foundation\Container\Service\Providers\RouterServiceProvider;
-use Laventure\Foundation\Container\Service\Providers\ViewServiceProvider;
+use Laventure\Foundation\Providers\ApplicationServiceProvider;
+use Laventure\Foundation\Providers\ConfigurationServiceProvider;
+use Laventure\Foundation\Providers\DatabaseServiceProvider;
+use Laventure\Foundation\Providers\EventServiceProvider;
+use Laventure\Foundation\Providers\FilesystemServiceProvider;
+use Laventure\Foundation\Providers\RouterServiceProvider;
+use Laventure\Foundation\Providers\ViewServiceProvider;
 use Laventure\Traits\Application\ApplicationTrait;
 use Psr\Container\ContainerInterface;
 use ReflectionException;
@@ -31,6 +30,11 @@ final class Application extends Container implements ApplicationInterface
 {
     use ApplicationTrait;
 
+
+    /**
+     * @var string
+    */
+    protected string $basePath;
 
 
 
@@ -54,15 +58,30 @@ final class Application extends Container implements ApplicationInterface
     /**
      * @param string $basePath
      * @return $this
-     */
-    private function setPath(string $basePath): static
+    */
+    public function setPath(string $basePath): static
     {
-        $this->bindings(compact('basePath'));
-        $this->bindings([
-            'app.path' => $basePath
-        ]);
+        $basePath = rtrim(realpath($basePath), '\\/');
+
+        $this->binds(compact('basePath'));
+
+        $this->basePath = $basePath;
 
         return $this;
+    }
+
+
+
+
+    /**
+     * Load path
+     *
+     * @param string $path
+     * @return string
+    */
+    public function path(string $path = ''): string
+    {
+        return $this->basePath . ($path ? DIRECTORY_SEPARATOR . trim($path, '\\/') : $path);
     }
 
 

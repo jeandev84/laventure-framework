@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Foundation\Container\Service\Providers;
+namespace Laventure\Foundation\Providers;
 
 use Laventure\Component\Config\Config;
 use Laventure\Component\Container\Service\Provider\ServiceProvider;
@@ -10,6 +10,7 @@ use Laventure\Component\Database\Manager\Contract\ManagerInterface;
 use Laventure\Component\Database\Manager\Manager;
 use Laventure\Component\Database\ORM\Persistence\Manager\EntityManager;
 use Laventure\Component\Database\ORM\Persistence\Manager\EntityManagerInterface;
+use Laventure\Component\Database\ORM\Persistence\Manager\ObjectManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Manager\Registry\ManagerRegistry;
 use Laventure\Component\Database\ORM\Persistence\Manager\Registry\ManagerRegistryInterface;
 
@@ -28,8 +29,18 @@ class DatabaseServiceProvider extends ServiceProvider
      * @var array|array[]
     */
     protected array $provides = [
-        ManagerInterface::class => [Manager::class, 'db.manager'],
-        ManagerRegistryInterface::class => [ManagerRegistry::class, 'db.manager.registry']
+        ManagerInterface::class => [
+            Manager::class,
+            'db.manager'
+        ],
+        EntityManagerInterface::class => [
+            EntityManager::class,
+            ObjectManagerInterface::class
+        ],
+        ManagerRegistryInterface::class => [
+            ManagerRegistry::class,
+            'db.manager.registry'
+        ]
     ];
 
 
@@ -44,7 +55,8 @@ class DatabaseServiceProvider extends ServiceProvider
         $this->app->singletons([
             ManagerInterface::class => function (Config $config) {
                 $database = new Manager();
-                $database->addCredentials($config['database']);
+                $credentials = $this->resolveCredentials($config);
+                $database->addCredentials($credentials);
                 $database->bootManager();
                 return $database;
             },
@@ -60,5 +72,19 @@ class DatabaseServiceProvider extends ServiceProvider
                 return $registry;
             }
         ]);
+    }
+
+
+
+
+    /**
+     * @param Config $config
+     * @return array
+    */
+    private function resolveCredentials(Config $config): array
+    {
+        $credentials = $config['database'];
+        $credentials['basePath'] = $this->app['basePath'];
+        return $credentials;
     }
 }

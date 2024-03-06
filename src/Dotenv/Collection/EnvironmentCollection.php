@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Dotenv\Collection;
@@ -34,7 +33,7 @@ class EnvironmentCollection extends Parameter implements EnvironmentCollectionIn
     */
     public function put(string $env): bool
     {
-        $matches = $this->match($env);
+        $matches = $this->matchEnv($env);
 
         if (!empty($matches)) {
             [$key, $value] = $this->envAsArray($matches[0]);
@@ -72,7 +71,7 @@ class EnvironmentCollection extends Parameter implements EnvironmentCollectionIn
      * @param string $env
      * @return array
     */
-    public function match(string $env): array
+    public function matchEnv(string $env): array
     {
         preg_match('#^(?=[A-Z])(.*)=(.*)$#', $env, $matches);
 

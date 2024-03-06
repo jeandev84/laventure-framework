@@ -34,6 +34,8 @@ class Manager extends DatabaseManager implements ManagerInterface
     protected static $instance;
 
 
+    protected $loader;
+
 
     /**
      * @var array
@@ -200,6 +202,6 @@ class Manager extends DatabaseManager implements ManagerInterface
     */
     private function getType(): string
     {
-        return $this->getConfiguration()->connectionType();
+        return $this->getConfiguration()->getConnectionType();
     }
 }

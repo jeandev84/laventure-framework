@@ -52,7 +52,7 @@ class CompiledTemplateCache implements CompiledTemplateCacheInterface
             $cacheFile = new File($this->fileLocator->locate($cacheKey .'.php'));
             $cachePath = $cacheFile->dump($compiledTemplate->getCompiled());
             $template  = new CachedTemplate($cachePath, $template->getParameters());
-            $template->withCachePath($this->fileLocator->getBasePath());
+            $template->withCachePath($this->fileLocator->getRoot());
             return $template;
 
         } catch (\Throwable $e) {

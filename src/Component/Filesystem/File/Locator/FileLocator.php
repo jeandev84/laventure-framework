@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Filesystem\File\Locator;
@@ -30,7 +29,7 @@ class FileLocator implements FileLocatorInterface
     */
     public function __construct(string $root)
     {
-        $this->setBasePath($root);
+        $this->setRoot($root);
     }
 
 
@@ -38,12 +37,14 @@ class FileLocator implements FileLocatorInterface
     /**
      * @inheritDoc
     */
-    public function setBasePath(string $root): static
+    public function setRoot(string $root): static
     {
         $this->root = $this->normalizeBasePath($root);
 
         return $this;
     }
+
+
 
 
 
@@ -74,7 +75,7 @@ class FileLocator implements FileLocatorInterface
     /**
      * @inheritDoc
     */
-    public function getBasePath(): string
+    public function getRoot(): string
     {
         return $this->root;
     }
