@@ -25,6 +25,8 @@ class DeleteBuilderDecorator extends SQLBuilderDecorator implements DeleteBuilde
        protected $builder;
 
 
+
+
        /**
         * @param DeleteBuilderInterface $builder
        */

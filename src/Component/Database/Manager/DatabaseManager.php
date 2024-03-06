@@ -239,6 +239,7 @@ class DatabaseManager implements DatabaseManagerInterface
 
     /**
      * @inheritDoc
+     * @throws ConfigurationException
     */
     public function configuration(string $name): ConfigurationInterface
     {
