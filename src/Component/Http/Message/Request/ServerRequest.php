@@ -49,7 +49,7 @@ class ServerRequest extends Request implements ServerRequestInterface
     /**
      * @var ParameterBag
     */
-    public ParameterBag $files;
+    public ParameterBag $uploadedFiles;
 
 
 
@@ -81,7 +81,7 @@ class ServerRequest extends Request implements ServerRequestInterface
         $this->server     = new ServerBag($server);
         $this->cookies    = new ParameterBag();
         $this->query      = new InputBag();
-        $this->files      = new ParameterBag();
+        $this->uploadedFiles      = new ParameterBag();
         $this->parsedBody = new InputBag();
     }
 
@@ -157,7 +157,7 @@ class ServerRequest extends Request implements ServerRequestInterface
     */
     public function getUploadedFiles(): array
     {
-        return $this->files->all();
+        return $this->uploadedFiles->all();
     }
 
 
@@ -169,10 +169,7 @@ class ServerRequest extends Request implements ServerRequestInterface
     */
     public function withUploadedFiles(array $uploadedFiles): static
     {
-        $this->uploadedFiles = array_merge(
-            $this->uploadedFiles,
-            $uploadedFiles
-        );
+        $this->uploadedFiles->add($uploadedFiles);
 
         return $this;
     }
@@ -186,7 +183,7 @@ class ServerRequest extends Request implements ServerRequestInterface
     */
     public function getParsedBody(): mixed
     {
-        return $this->parsedBody;
+        return $this->parsedBody->all();
     }
 
 
@@ -197,7 +194,7 @@ class ServerRequest extends Request implements ServerRequestInterface
     */
     public function withParsedBody($data): static
     {
-        $this->parsedBody = $data;
+        $this->parsedBody->add($data);
 
         return $this;
     }
@@ -211,7 +208,7 @@ class ServerRequest extends Request implements ServerRequestInterface
     */
     public function getAttributes(): array
     {
-        return $this->attributes;
+        return $this->attributes->all();
     }
 
 
@@ -223,7 +220,7 @@ class ServerRequest extends Request implements ServerRequestInterface
     */
     public function getAttribute(string $name, $default = null): mixed
     {
-        return $this->attributes[$name] ?? $default;
+        return $this->attributes->get($name, $default);
     }
 
 
@@ -235,7 +232,7 @@ class ServerRequest extends Request implements ServerRequestInterface
     */
     public function withAttribute(string $name, $value): static
     {
-        $this->attributes[$name] = $value;
+        $this->attributes->set($name, $value);
 
         return $this;
     }
@@ -248,9 +245,9 @@ class ServerRequest extends Request implements ServerRequestInterface
     */
     public function withoutAttribute(string $name): static
     {
-        unset($this->attributes[$name]);
+         $this->attributes->remove($name);
 
-        return $this;
+         return $this;
     }
 
 
