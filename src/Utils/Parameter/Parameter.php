@@ -21,16 +21,16 @@ class Parameter implements ParameterInterface
     /**
      * @var array
     */
-    protected array $params;
+    protected array $params = [];
 
 
 
     /**
      * @param array $params
     */
-    public function __construct(array $params)
+    public function __construct(array $params = [])
     {
-        $this->params = $params;
+        $this->add($params);
     }
 
 

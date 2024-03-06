@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Http\Message\Request;
@@ -7,8 +6,10 @@ namespace Laventure\Component\Http\Message\Request;
 use Laventure\Component\Http\Message\Request\Body\RequestBody;
 use Laventure\Component\Http\Message\Request\Utils\Normalizer\FileNormalizer;
 use Laventure\Component\Http\Message\Request\Utils\Params\ServerParams;
+use Laventure\Foundation\Http\Message\Request\Bag\InputBag;
+use Laventure\Foundation\Http\Message\Request\Bag\ParameterBag;
+use Laventure\Foundation\Http\Message\Request\Bag\ServerBag;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Message\UploadedFileInterface;
 use Psr\Http\Message\UriInterface;
 
 /**
@@ -23,47 +24,48 @@ use Psr\Http\Message\UriInterface;
 class ServerRequest extends Request implements ServerRequestInterface
 {
     /**
-     * @var array
+     * @var ServerBag
     */
-    protected array $server = [];
+    public ServerBag $server;
 
 
 
     /**
-     * @var array
+     * @var ParameterBag
     */
-    protected array $cookies = [];
-
-
-
-    /**
-     * @var array
-    */
-    protected array $query = [];
+    public ParameterBag $cookies;
 
 
 
 
     /**
-     * @var UploadedFileInterface[]
+     * @var InputBag
     */
-    protected array $uploadedFiles = [];
+    public InputBag $query;
 
 
 
 
     /**
-     * @var array|object|null
+     * @var ParameterBag
     */
-    protected mixed $parsedBody = null;
+    public ParameterBag $files;
 
 
 
 
     /**
-     * @var array
+     * @var InputBag
     */
-    protected array $attributes = [];
+    public InputBag $parsedBody;
+
+
+
+
+    /**
+     * @var ParameterBag
+    */
+    public ParameterBag $attributes;
 
 
 
@@ -76,7 +78,11 @@ class ServerRequest extends Request implements ServerRequestInterface
     public function __construct(string $method, UriInterface|string $uri, array $server = [])
     {
         parent::__construct($method, $uri);
-        $this->server = $server;
+        $this->server     = new ServerBag($server);
+        $this->cookies    = new ParameterBag();
+        $this->query      = new InputBag();
+        $this->files      = new ParameterBag();
+        $this->parsedBody = new InputBag();
     }
 
 
@@ -87,7 +93,7 @@ class ServerRequest extends Request implements ServerRequestInterface
     */
     public function getServerParams(): array
     {
-        return $this->server;
+        return $this->server->all();
     }
 
 
@@ -99,7 +105,7 @@ class ServerRequest extends Request implements ServerRequestInterface
     */
     public function getCookieParams(): array
     {
-        return $this->cookies;
+        return $this->cookies->all();
     }
 
 
@@ -112,7 +118,7 @@ class ServerRequest extends Request implements ServerRequestInterface
     */
     public function withCookieParams(array $cookies): static
     {
-        $this->cookies = $cookies;
+        $this->cookies->add($cookies);
 
         return $this;
     }
@@ -125,7 +131,7 @@ class ServerRequest extends Request implements ServerRequestInterface
     */
     public function getQueryParams(): array
     {
-        return $this->query;
+        return $this->query->all();
     }
 
 
@@ -137,7 +143,7 @@ class ServerRequest extends Request implements ServerRequestInterface
     */
     public function withQueryParams(array $query): static
     {
-        $this->query = $query;
+        $this->query->add($query);
 
         return $this;
     }
@@ -151,7 +157,7 @@ class ServerRequest extends Request implements ServerRequestInterface
     */
     public function getUploadedFiles(): array
     {
-        return $this->uploadedFiles;
+        return $this->files->all();
     }
 
 

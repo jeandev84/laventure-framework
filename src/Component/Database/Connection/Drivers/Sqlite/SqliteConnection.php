@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Drivers\Sqlite;
 
+use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
+use Laventure\Component\Database\Connection\Drivers\Sqlite\Schema\Table\SqliteTable;
 use Laventure\Component\Database\Connection\Extensions\PDO\Connection;
 use Laventure\Component\Database\Connection\Name\ConnectionName;
 use Laventure\Component\Database\DatabaseInterface;
@@ -37,7 +39,7 @@ class SqliteConnection extends Connection
     */
     public function createQueryBuilder(): SQLQueryBuilderInterface
     {
-        return new SqliteQueryBuilder($this);
+        return new SqliteQueryBuilder($this->createSQLBuilderFactory());
     }
 
 
@@ -54,27 +56,49 @@ class SqliteConnection extends Connection
 
 
 
-    /**
-     * @inheritDoc
-     */
-    public function activateTransaction(): void
-    {
-        // TODO: Implement activateTransaction() method.
-    }
 
     /**
      * @inheritDoc
-     */
-    public function disableTransaction(): void
-    {
-        // TODO: Implement disableTransaction() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
+    */
     public function createTable(string $name, string $schemaName = ''): TableInterface
     {
-        // TODO: Implement createTable() method.
+        return new SqliteTable($this, $name, $schemaName);
+    }
+
+
+
+
+    /**
+     * @param ConfigurationInterface $config
+     * @return string
+    */
+    protected function makeDefaultDsn(ConfigurationInterface $config): string
+    {
+        return $this->makeSQLiteDsn($config);
+    }
+
+
+
+
+    /**
+     * @param ConfigurationInterface $config
+     * @return string
+    */
+    protected function makeDsnIfDatabaseExists(ConfigurationInterface $config): string
+    {
+        return $this->makeSQLiteDsn($config);
+    }
+
+
+
+
+
+    /**
+     * @param ConfigurationInterface $config
+     * @return string
+    */
+    private function makeSQLiteDsn(ConfigurationInterface $config): string
+    {
+        return sprintf('%s:%s', $config->required('driver'), $config->getDatabase());
     }
 }

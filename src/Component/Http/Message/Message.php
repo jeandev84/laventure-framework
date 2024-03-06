@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Http\Message;
 
+use Laventure\Contract\Parameter\ParameterInterface;
+use Laventure\Foundation\Http\Message\Request\Bag\HeaderBag;
+use Laventure\Utils\Parameter\Parameter;
 use Psr\Http\Message\MessageInterface;
 use Psr\Http\Message\StreamInterface;
 
@@ -26,9 +29,9 @@ class Message implements MessageInterface
 
 
     /**
-     * @var array
+     * @var HeaderBag
     */
-    protected array $headers = [];
+    public HeaderBag $headers;
 
 
 
@@ -36,8 +39,20 @@ class Message implements MessageInterface
     /**
      * @var StreamInterface
     */
-    protected StreamInterface $body;
+    public StreamInterface $body;
 
+
+
+
+    /**
+     * @param string $version
+     * @param array $headers
+    */
+    public function __construct(string $version = '', array $headers = [])
+    {
+        $this->version = $version;
+        $this->headers = new HeaderBag($headers);
+    }
 
 
 
@@ -49,7 +64,7 @@ class Message implements MessageInterface
      * The string MUST contain only the HTTP version number (e.g., "1.1", "1.0").
      *
      * @return string HTTP protocol version.
-     */
+    */
     public function getProtocolVersion(): string
     {
         return $this->version;
@@ -71,7 +86,7 @@ class Message implements MessageInterface
      *
      * @param string $version HTTP protocol version
      * @return static
-     */
+    */
     public function withProtocolVersion(string $version): static
     {
         $this->version = $version;
@@ -130,7 +145,7 @@ class Message implements MessageInterface
      */
     public function getHeaders(): array
     {
-        return $this->headers;
+        return $this->headers->all();
     }
 
 
@@ -147,7 +162,7 @@ class Message implements MessageInterface
      */
     public function hasHeader(string $name): bool
     {
-        return isset($this->headers[$name]);
+        return $this->headers->has($name);
     }
 
 
@@ -171,7 +186,7 @@ class Message implements MessageInterface
      */
     public function getHeader(string $name): array
     {
-        return $this->headers[$name] ?? [];
+        return $this->headers->get($name, []);
     }
 
 
@@ -222,7 +237,7 @@ class Message implements MessageInterface
     */
     public function withHeader($name, $value): static
     {
-        $this->headers[$name] = (array)$value;
+        $this->headers->set($name, (array)$value);
 
         return $this;
     }
@@ -247,7 +262,7 @@ class Message implements MessageInterface
      */
     public function withAddedHeader(string $name, $value): static
     {
-        $this->headers = array_merge($this->headers, [$name => (array)$value]);
+        $this->headers->add([$name => (array)$value]);
 
         return $this;
     }
@@ -269,7 +284,7 @@ class Message implements MessageInterface
      */
     public function withoutHeader(string $name): MessageInterface
     {
-        unset($this->headers[$name]);
+        $this->headers->remove($name);
 
         return $this;
     }

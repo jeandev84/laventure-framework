@@ -1,22 +1,23 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Connection\Drivers\Sqlite\Schema\Table;
+namespace Laventure\Component\Database\Connection\Drivers\Pgsql\Schema\Table;
 
 use Laventure\Component\Database\Schema\Column\Contract\ColumnInterface;
 use Laventure\Component\Database\Schema\Table\Table;
 
 /**
- * SqliteTable
+ * PgsqlTable
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Schema\Table\Drivers\Sqlite
+ * @package  Laventure\Component\Database\Connection\Drivers\Pgsql\Schema\Table
 */
-class SqliteTable extends Table
+class PgsqlTable extends Table
 {
+
     /**
      * @inheritDoc
      */
@@ -228,17 +229,17 @@ class SqliteTable extends Table
     /**
      * @inheritDoc
      */
-    public function getColumnsInfo(): array
+    public function getPrimaryKeys(): array
     {
-        // TODO: Implement getColumnsInfo() method.
+        // TODO: Implement getPrimaryKeys() method.
     }
 
     /**
      * @inheritDoc
      */
-    public function getPrimaryKeys(): array
+    public function listConstraints(): array
     {
-        // TODO: Implement getPrimaryKeys() method.
+        // TODO: Implement listConstraints() method.
     }
 
     /**
@@ -276,16 +277,8 @@ class SqliteTable extends Table
     /**
      * @inheritDoc
      */
-    public function getConstraints(): array
+    public function getConstraints(string $constraintType = null): array
     {
         // TODO: Implement getConstraints() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function listConstraints(): array
-    {
-        // TODO: Implement listConstraints() method.
     }
 }

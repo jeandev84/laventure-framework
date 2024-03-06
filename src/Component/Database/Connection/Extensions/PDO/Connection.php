@@ -364,19 +364,27 @@ abstract class Connection implements PdoConnectionInterface
 
 
 
+    /**
+     * @inheritDoc
+     */
+    public function activateTransaction(): void
+    {
+
+    }
 
 
 
 
     /**
-     * @param string $dsn
-     * @return array
-    */
-    private function readDsnParams(string $dsn): array
+     * @inheritDoc
+     */
+    public function disableTransaction(): void
     {
-        return (new PdoDsnReader($dsn))
-               ->read();
+
     }
+
+
+
 
 
 
@@ -386,7 +394,7 @@ abstract class Connection implements PdoConnectionInterface
      * @return string
      * @throws DriverException
     */
-    private function makeDefaultDsn(ConfigurationInterface $config): string
+    protected function makeDefaultDsn(ConfigurationInterface $config): string
     {
         return $this->makePdoDsn($config->required('driver'), [
             'host'     => $config->getHost(),
@@ -402,8 +410,9 @@ abstract class Connection implements PdoConnectionInterface
     /**
      * @param ConfigurationInterface $config
      * @return string
+     * @throws DriverException
     */
-    private function makeDsnIfDatabaseExists(ConfigurationInterface $config): string
+    protected function makeDsnIfDatabaseExists(ConfigurationInterface $config): string
     {
         return $this->makePdoDsn($config->required('driver'), [
             'host'     => $config->getHost(),
@@ -422,12 +431,25 @@ abstract class Connection implements PdoConnectionInterface
      * @return string
      * @throws DriverException
     */
-    private function makePdoDsn(string $driver, array $params): string
+    protected function makePdoDsn(string $driver, array $params): string
     {
         if (!$this->hasAvailableDriver($driver)) {
             throw new DriverException("unavailable driver $driver. Please try to install it.");
         }
 
         return PdoDsnBuilder::create($driver, $params);
+    }
+
+
+
+
+
+    /**
+     * @param string $dsn
+     * @return array
+    */
+    protected function readDsnParams(string $dsn): array
+    {
+        return (new PdoDsnReader($dsn))->read();
     }
 }
