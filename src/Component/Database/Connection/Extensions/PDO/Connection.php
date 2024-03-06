@@ -7,6 +7,7 @@ namespace Laventure\Component\Database\Connection\Extensions\PDO;
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Configuration\Null\NullConfiguration;
 use Laventure\Component\Database\Connection\Common\AbstractConnection;
+use Laventure\Component\Database\Connection\Drivers\DriverException;
 use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\Builder\PdoDsnBuilder;
 use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\Reader\PdoDsnReader;
 use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnectionFactory;
@@ -385,7 +386,7 @@ abstract class Connection extends AbstractConnection implements PdoConnectionInt
     */
     private function makeDefaultDsn(ConfigurationInterface $config): string
     {
-        return $this->makePdoDsn($config['driver'], [
+        return $this->makePdoDsn($config->required('driver'), [
             'host'     => $config->getHost(),
             'port'     => $config->getPort(),
             'charset'  => $config->getCharset()
@@ -402,7 +403,7 @@ abstract class Connection extends AbstractConnection implements PdoConnectionInt
     */
     private function makeDsnIfDatabaseExists(ConfigurationInterface $config): string
     {
-        return $this->makePdoDsn($config['driver'], [
+        return $this->makePdoDsn($config->required('driver'), [
             'host'     => $config->getHost(),
             'port'     => $config->getPort(),
             'dbname'   => $config->getDatabase(),
@@ -413,14 +414,20 @@ abstract class Connection extends AbstractConnection implements PdoConnectionInt
 
 
 
-
     /**
      * @param string $driver
      * @param array $params
      * @return string
+     * @throws DriverException
     */
     private function makePdoDsn(string $driver, array $params): string
     {
+        if (!$this->hasAvailableDriver($driver)) {
+           throw new DriverException(
+        "unavailable driver $driver. Please try to install it."
+           );
+        }
+
         return PdoDsnBuilder::create($driver, $params);
     }
 }
