@@ -29,6 +29,8 @@ class PdoInsertBuilder extends InsertBuilderDecorator
               }
           }
 
+          #dd($this->builder->getCriteria()->toArray());
+
           return $this;
       }
 
@@ -38,7 +40,7 @@ class PdoInsertBuilder extends InsertBuilderDecorator
       /**
        * @inheritdoc
       */
-      public function addInsert(array $attributes): static
+      public function addInsert(array $attributes, int $position = 0): static
       {
           foreach ($attributes as $column => $value) {
               $this->setValue($column, ":$column");
