@@ -29,7 +29,7 @@ abstract class AbstractSQLQueryBuilder implements SQLQueryBuilderInterface
        */
        public function __construct(SQLQueryBuilderFactoryInterface $builderFactory)
        {
-            $this->builder = $builderFactory->createSQLQueryBuilder();
+            $this->builder = $builderFactory->createBuilder();
        }
 
 

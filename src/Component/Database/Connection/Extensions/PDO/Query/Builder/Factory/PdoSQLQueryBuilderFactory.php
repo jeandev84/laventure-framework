@@ -33,7 +33,7 @@ class PdoSQLQueryBuilderFactory implements SQLQueryBuilderFactoryInterface
     /**
      * @inheritDoc
     */
-    public function createSQLQueryBuilder(): SQLQueryBuilderInterface
+    public function createBuilder(): SQLQueryBuilderInterface
     {
         return new QueryBuilder($this->connection);
     }

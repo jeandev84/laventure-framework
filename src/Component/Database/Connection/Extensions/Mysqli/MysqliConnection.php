@@ -6,19 +6,16 @@ namespace Laventure\Component\Database\Connection\Extensions\Mysqli;
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Configuration\Null\NullConfiguration;
 use Laventure\Component\Database\Connection\Common\AbstractConnection;
-use Laventure\Component\Database\Connection\ConnectionInterface;
-use Laventure\Component\Database\Connection\Drivers\Mysql\Table\MysqlTable;
 use Laventure\Component\Database\Connection\Extensions\Mysqli\Factory\MysqliConnectionFactory;
 use Laventure\Component\Database\Connection\Extensions\Mysqli\Factory\MysqliConnectionFactoryInterface;
 use Laventure\Component\Database\Connection\Extensions\Mysqli\Query\Builder\QueryBuilder;
 use Laventure\Component\Database\Connection\Extensions\Mysqli\Query\Query;
 use Laventure\Component\Database\Connection\Name\ConnectionName;
-use Laventure\Component\Database\Connection\Traits\ConnectionTrait;
 use Laventure\Component\Database\DatabaseInterface;
+use Laventure\Component\Database\Drivers\Mysql\Schema\Table\MysqlTable;
 use Laventure\Component\Database\Query\QueryInterface;
 use Laventure\Component\Database\Schema\Table\TableInterface;
 use mysqli;
-
 
 
 /**

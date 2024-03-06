@@ -3,12 +3,11 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Manager;
 
-use Laventure\Component\Database\Configuration\Configuration;
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
-use Laventure\Component\Database\Connection\Drivers\Mysql\MysqlConnection;
-use Laventure\Component\Database\Connection\Drivers\Oracle\OracleConnection;
-use Laventure\Component\Database\Connection\Drivers\Pgsql\PgsqlConnection;
-use Laventure\Component\Database\Connection\Drivers\Sqlite\SqliteConnection;
+use Laventure\Component\Database\Drivers\Mysql\MysqlConnection;
+use Laventure\Component\Database\Drivers\Oracle\OracleConnection;
+use Laventure\Component\Database\Drivers\Pgsql\PgsqlConnection;
+use Laventure\Component\Database\Drivers\Sqlite\SqliteConnection;
 use Laventure\Component\Database\Manager\Config\ManagerConfiguration;
 use Laventure\Component\Database\Manager\Config\ManagerConfigurationInterface;
 use Laventure\Component\Database\Manager\Contract\ManagerInterface;

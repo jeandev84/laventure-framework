@@ -141,7 +141,7 @@ abstract class Connection extends AbstractConnection implements PdoConnectionInt
     public function createQueryBuilder(): SQLQueryBuilderInterface
     {
         return $this->createSQLBuilderFactory()
-                    ->createSQLQueryBuilder();
+                    ->createBuilder();
     }
 
 

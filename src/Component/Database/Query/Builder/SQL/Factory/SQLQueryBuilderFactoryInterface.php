@@ -21,5 +21,5 @@ interface SQLQueryBuilderFactoryInterface
      /**
       * @return SQLQueryBuilderInterface
      */
-     public function createSQLQueryBuilder(): SQLQueryBuilderInterface;
+     public function createBuilder(): SQLQueryBuilderInterface;
 }
