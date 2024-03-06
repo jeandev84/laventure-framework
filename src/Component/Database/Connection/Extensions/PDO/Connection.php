@@ -402,10 +402,6 @@ abstract class Connection extends AbstractConnection implements PdoConnectionInt
     */
     private function makeDsnIfDatabaseExists(ConfigurationInterface $config): string
     {
-        if ($dsn = $config['dsn']) {
-            return rtrim($dsn, ';') . ";dbname={$config->getDatabase()}";
-        }
-
         return $this->makePdoDsn($config['driver'], [
             'host'     => $config['host'],
             'port'     => $config['port'],
