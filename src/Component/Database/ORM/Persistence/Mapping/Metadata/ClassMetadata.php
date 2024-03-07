@@ -208,6 +208,8 @@ class ClassMetadata implements ClassMetadataInterface
 
 
 
+
+
     /**
      * @inheritDoc
     */
@@ -236,7 +238,9 @@ class ClassMetadata implements ClassMetadataInterface
     */
     public function getAssociationNames(): array
     {
-        return array_filter();
+        return array_filter($this->getFieldNames(), function ($field) {
+            return $this->getTypeOfField($field)->isAssociation();
+        });
     }
     
 
