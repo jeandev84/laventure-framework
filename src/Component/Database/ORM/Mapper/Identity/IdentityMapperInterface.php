@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Mapper\Identity;
 
+use SplObjectStorage;
+
 /**
  * IdentityMapperInterface
  *
@@ -46,6 +48,19 @@ interface IdentityMapperInterface
      * @return mixed
     */
     public function get($id): mixed;
+
+
+
+
+
+
+
+    /**
+     * @return SplObjectStorage
+    */
+    public function all(): SplObjectStorage;
+
+
 
 
 

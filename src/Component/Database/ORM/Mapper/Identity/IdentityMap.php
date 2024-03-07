@@ -20,10 +20,18 @@ class IdentityMap implements IdentityMapperInterface
 {
 
     /**
-     * @param SplObjectStorage $storage
+     * @var SplObjectStorage
+     */
+    protected SplObjectStorage $storage;
+
+
+
+    /**
+     * @param SplObjectStorage|null $storage
     */
-    public function __construct(protected SplObjectStorage $storage)
+    public function __construct(SplObjectStorage $storage = null)
     {
+        $this->storage = $storage ?: new ObjectStorage();
     }
 
 
@@ -55,7 +63,7 @@ class IdentityMap implements IdentityMapperInterface
     */
     public function get($id): mixed
     {
-        return $this->storage[$id];
+        return $this->storage[$id] ?? null;
     }
 
 
@@ -69,5 +77,17 @@ class IdentityMap implements IdentityMapperInterface
     public function getIdentityId($class, $id): string
     {
         return "{$class}.{$id}";
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function all(): SplObjectStorage
+    {
+        return $this->storage;
     }
 }

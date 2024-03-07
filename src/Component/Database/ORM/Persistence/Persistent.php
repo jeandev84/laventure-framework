@@ -110,7 +110,7 @@ class Persistent implements PersistentInterface
     {
         $this->em = $em;
         $this->classMetadata = $em->getClassMetadata($entity);
-        $this->identityMap   = new IdentityMap(new ObjectStorage());
+        $this->identityMap   = new IdentityMap();
     }
 
 
@@ -130,7 +130,13 @@ class Persistent implements PersistentInterface
 
 
 
-    public function findBy(array $criteria): mixed
+    /**
+     * Find object by criteria
+     *
+     * @param array $criteria
+     * @return mixed
+    */
+    public function findOneBy(array $criteria): mixed
     {
 
     }
@@ -232,6 +238,18 @@ class Persistent implements PersistentInterface
     {
         return $this->em->createQueryBuilder();
     }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getIdentityMap(): IdentityMapperInterface
+    {
+        return $this->identityMap;
+    }
+
 
 
 
