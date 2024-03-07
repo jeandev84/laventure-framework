@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\UnitOfWork;
@@ -83,7 +82,7 @@ class UnitOfWork implements UnitOfWorkInterface
     */
     public function getPersistent($class): PersistentInterface
     {
-         return new Persistent();
+         return new Persistent($this->em, $class);
     }
 
 

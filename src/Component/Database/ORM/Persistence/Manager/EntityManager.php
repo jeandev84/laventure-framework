@@ -218,7 +218,7 @@ class EntityManager implements EntityManagerInterface
     /**
      * Add repositories
      *
-     * @param array $repositories
+     * @param ObjectRepositoryInterface[] $repositories
      * @return $this
     */
     public function addRepositories(array $repositories): static

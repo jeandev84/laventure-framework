@@ -107,7 +107,7 @@ class Persistent implements PersistentInterface
         $entity
     )
     {
-        $this->em = $em;
+        $this->em            = $em;
         $this->classMetadata = $em->getClassMetadata($entity);
         $this->identityMap   = new IdentityMap();
     }
