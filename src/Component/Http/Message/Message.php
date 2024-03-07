@@ -45,12 +45,11 @@ class Message implements MessageInterface
 
     /**
      * @param string $version
-     * @param array $headers
     */
-    public function __construct(string $version = '', array $headers = [])
+    public function __construct(string $version = '')
     {
         $this->version = $version;
-        $this->headers = new HeaderBag($headers);
+        $this->headers = new HeaderBag();
     }
 
 
