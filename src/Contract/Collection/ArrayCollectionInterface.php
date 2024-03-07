@@ -11,7 +11,7 @@ namespace Laventure\Contract\Collection;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Contract\Collection
+ * @package  Laventure\Contract\ObjectCollection
 */
 interface ArrayCollectionInterface
 {

@@ -13,7 +13,7 @@ use Laventure\Component\Routing\Route\RouteInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Routing\Route\Collection
+ * @package  Laventure\Component\Routing\Route\ObjectCollection
  */
 class RouteCollection implements RouteCollectionInterface
 {

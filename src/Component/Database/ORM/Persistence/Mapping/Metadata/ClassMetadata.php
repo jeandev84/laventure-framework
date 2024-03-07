@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Mapping\Metadata;
 
+use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Exception\NotFoundClassFieldException;
+use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Field\ClassFieldType;
+use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Field\ClassFieldTypeInterface;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionProperty;
@@ -43,6 +46,37 @@ class ClassMetadata implements ClassMetadataInterface
 
 
 
+    /**
+     * @var array
+    */
+    protected array $fieldValues = [];
+
+
+
+    /**
+     * @var array
+    */
+    protected array $identifiers = [];
+
+
+
+
+    /**
+     * @var array
+    */
+    protected array $singleValuedAssociations = [];
+
+
+
+
+    /**
+     * @var array
+    */
+    protected array $collectionAssociations = [];
+
+
+
+
 
     /**
      * @param $class
@@ -52,7 +86,13 @@ class ClassMetadata implements ClassMetadataInterface
     {
         $this->reflection = new ReflectionClass($class);
         $this->class      = $class;
+
+        if (is_object($class)) {
+            $this->fieldValues = $this->getFieldValues($class);
+        }
     }
+
+
 
 
 
@@ -123,6 +163,8 @@ class ClassMetadata implements ClassMetadataInterface
     }
 
 
+    
+    
 
 
     /**
@@ -136,16 +178,31 @@ class ClassMetadata implements ClassMetadataInterface
     }
 
 
+    
+    
+
+    /**
+     * @inheritDoc
+    */
+    public function getTypeOfField($field): ClassFieldTypeInterface
+    {
+        if (!$this->hasField($field)) {
+            throw new NotFoundClassFieldException($field, ["fromClass" => $this->getName()]);
+        }
+
+        return new ClassFieldType($field, $this->fieldValues[$field]);
+    }
 
 
-
+    
+    
 
     /**
      * @inheritDoc
     */
     public function hasAssociation($field): bool
     {
-
+        return $this->getTypeOfField($field)->isAssociation();
     }
 
 
@@ -156,7 +213,7 @@ class ClassMetadata implements ClassMetadataInterface
     */
     public function isSingleValuedAssociation($field): bool
     {
-
+        return $this->getTypeOfField($field)->isSingleAssociate();
     }
 
 
@@ -167,7 +224,7 @@ class ClassMetadata implements ClassMetadataInterface
     */
     public function isCollectionValuedAssociation($field): bool
     {
-
+        return $this->getTypeOfField($field)->isCollectionAssociate();
     }
 
 
@@ -179,26 +236,13 @@ class ClassMetadata implements ClassMetadataInterface
     */
     public function getAssociationNames(): array
     {
-
+        return array_filter();
     }
+    
 
 
 
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function getTypeOfField($field): mixed
-    {
-
-    }
-
-
-
-
-
+    
     /**
      * @inheritDoc
     */
@@ -239,10 +283,44 @@ class ClassMetadata implements ClassMetadataInterface
     /**
      * @inheritDoc
     */
-    public function getIdentifierValues(object $object): mixed
+    public function getIdentifierValues(object $object): array
     {
+        $fieldValues = [];
 
+        /*
+        foreach ($this->getProperties() as $property) {
+            $propertyName = $property->getName();
+            $value        = $property->getValue($object);
+            $fieldValues[$propertyName] = $value;
+        }
+        */
+
+        return $fieldValues;
     }
+
+    
+    
+
+
+
+    /**
+     * @param object $object
+     * @return array
+    */
+    public function getFieldValues(object $object): array
+    {
+        $fieldValues = [];
+
+        foreach ($this->getProperties() as $property) {
+            $propertyName = $property->getName();
+            $value        = $property->getValue($object);
+            $fieldValues[$propertyName] = $value;
+        }
+
+        return $fieldValues;
+    }
+
+
 
 
 

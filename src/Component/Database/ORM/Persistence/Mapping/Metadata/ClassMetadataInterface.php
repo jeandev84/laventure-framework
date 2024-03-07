@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Mapping\Metadata;
 
+use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Field\ClassFieldTypeInterface;
 use Reflector;
 
 /**
@@ -151,9 +152,9 @@ interface ClassMetadataInterface
      * Returns type of fields
      *
      * @param $field
-     * @return mixed
+     * @return ClassFieldTypeInterface
     */
-    public function getTypeOfField($field): mixed;
+    public function getTypeOfField($field): ClassFieldTypeInterface;
 
 
 
