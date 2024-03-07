@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Repository;
 
+use Laventure\Component\Database\ORM\Persistence\Manager\EntityManagerInterface;
+use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\ClassMetadataInterface;
+
 /**
  * ServiceRepository
  *
@@ -15,4 +18,12 @@ namespace Laventure\Component\Database\ORM\Persistence\Repository;
 */
 class ServiceRepository extends EntityRepository
 {
+     /**
+      * @param EntityManagerInterface $em
+      * @param string $classname
+     */
+     public function __construct(EntityManagerInterface $em, string $classname)
+     {
+         parent::__construct($em, $em->getClassMetadata($classname));
+     }
 }

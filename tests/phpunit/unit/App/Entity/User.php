@@ -5,8 +5,8 @@ namespace PHPUnitTest\App\Entity;
 
 use DateTimeImmutable;
 use DateTimeInterface;
-use Laventure\Component\Database\ORM\Persistence\Collection\ObjectCollection;
-use Laventure\Component\Database\ORM\Persistence\Collection\ObjectCollectionInterface;
+use Laventure\Component\Database\ORM\Persistence\Collection\ArrayCollection;
+use Laventure\Component\Database\ORM\Persistence\Collection\CollectionInterface;
 
 /**
  * User
@@ -61,9 +61,9 @@ class User
 
 
     /**
-     * @var ObjectCollectionInterface
+     * @var CollectionInterface
     */
-    private ObjectCollectionInterface $books;
+    private CollectionInterface $books;
 
 
 
@@ -96,12 +96,16 @@ class User
      * @param string $email
      * @param string $password
     */
-    public function __construct(string $username = '', string $email = '', string $password = '')
+    public function __construct(
+        string $username = '',
+        string $email = '',
+        string $password = ''
+    )
     {
         $this->username  = $username;
         $this->email     = $email;
         $this->password  = $password;
-        $this->books     = new ObjectCollection();
+        $this->books     = new ArrayCollection();
         $this->createdAt = new DateTimeImmutable();
     }
 
@@ -256,9 +260,9 @@ class User
 
 
     /**
-     * @return ObjectCollectionInterface
+     * @return CollectionInterface
     */
-    public function getBooks(): ObjectCollectionInterface
+    public function getBooks(): CollectionInterface
     {
         return $this->books;
     }

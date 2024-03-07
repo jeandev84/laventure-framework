@@ -6,7 +6,7 @@ namespace Laventure\Component\Database\ORM\Persistence\Manager\Config;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\ORM\Persistence\Manager\Event\EventManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Factory\ClassMetadataFactoryInterface;
-use Laventure\Component\Database\ORM\Persistence\Repository\Factory\ObjectRepositoryFactoryInterface;
+use Laventure\Component\Database\ORM\Persistence\Repository\Factory\EntityRepositoryFactoryInterface;
 use Laventure\Component\Database\ORM\UnitOfWork\Factory\UnitOfWorkFactoryInterface;
 
 /**
@@ -74,7 +74,7 @@ abstract class Configuration
     /**
      * Returns class repository factory
      *
-     * @return ObjectRepositoryFactoryInterface
+     * @return EntityRepositoryFactoryInterface
     */
-    abstract public function getRepositoryFactory(): ObjectRepositoryFactoryInterface;
+    abstract public function getRepositoryFactory(): EntityRepositoryFactoryInterface;
 }

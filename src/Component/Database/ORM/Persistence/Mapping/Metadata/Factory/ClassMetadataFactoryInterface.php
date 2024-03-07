@@ -32,10 +32,10 @@ interface ClassMetadataFactoryInterface
        /**
         * Returns class metadata for given class
         *
-        * @param string $classname
+        * @param $classname
         * @return ClassMetadataInterface
        */
-       public function getMetadataFor(string $classname): ClassMetadataInterface;
+       public function getMetadataFor($classname): ClassMetadataInterface;
 
 
 
@@ -44,10 +44,10 @@ interface ClassMetadataFactoryInterface
        /**
         * Determine if  exists metadata for given class name
         *
-        * @param string $classname
+        * @param $classname
         * @return bool
        */
-       public function hasMetadataFor(string $classname): bool;
+       public function hasMetadataFor($classname): bool;
 
 
 
@@ -56,11 +56,11 @@ interface ClassMetadataFactoryInterface
        /**
         * Add class metadata to storage
         *
-        * @param string $classname
+        * @param $classname
         * @param $class
         * @return mixed
        */
-       public function setMetadataFor(string $classname, $class): mixed;
+       public function setMetadataFor($classname, $class): mixed;
 
 
 
@@ -69,8 +69,8 @@ interface ClassMetadataFactoryInterface
        /**
         * Determine if is transient given classname
         *
-        * @param string $classname
+        * @param $classname
         * @return bool
        */
-       public function isTransient(string $classname): bool;
+       public function isTransient($classname): bool;
 }

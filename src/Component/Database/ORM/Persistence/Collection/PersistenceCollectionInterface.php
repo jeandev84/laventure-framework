@@ -26,9 +26,9 @@ interface PersistenceCollectionInterface
 
 
      /**
-      * @return ObjectCollectionInterface
+      * @return CollectionInterface
      */
-     public function getCollection(): ObjectCollectionInterface;
+     public function getCollection(): CollectionInterface;
 
 
 

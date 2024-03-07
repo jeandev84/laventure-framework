@@ -9,7 +9,8 @@ use Laventure\Component\Database\ORM\Persistence\Manager\Event\DefaultEventManag
 use Laventure\Component\Database\ORM\Persistence\Manager\Event\EventManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Factory\ClassMetadataFactory;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Factory\ClassMetadataFactoryInterface;
-use Laventure\Component\Database\ORM\Persistence\Repository\Factory\ObjectRepositoryFactoryInterface;
+use Laventure\Component\Database\ORM\Persistence\Repository\Factory\EntityRepositoryFactory;
+use Laventure\Component\Database\ORM\Persistence\Repository\Factory\EntityRepositoryFactoryInterface;
 use Laventure\Component\Database\ORM\UnitOfWork\Factory\UnitOfWorkFactory;
 use Laventure\Component\Database\ORM\UnitOfWork\Factory\UnitOfWorkFactoryInterface;
 
@@ -50,9 +51,9 @@ class Definition extends Configuration
 
 
     /**
-     * @var ObjectRepositoryFactoryInterface
+     * @var EntityRepositoryFactoryInterface
     */
-    protected ObjectRepositoryFactoryInterface $repositoryFactory;
+    protected EntityRepositoryFactoryInterface $repositoryFactory;
 
 
 
@@ -77,6 +78,7 @@ class Definition extends Configuration
          $this->metadataFactory   = new ClassMetadataFactory();
          $this->unitOfWorkFactory = new UnitOfWorkFactory();
          $this->eventManager      = new DefaultEventManager();
+         $this->repositoryFactory = new EntityRepositoryFactory();
     }
 
 
@@ -174,7 +176,7 @@ class Definition extends Configuration
     /**
      * @inheritDoc
     */
-    public function getRepositoryFactory(): ObjectRepositoryFactoryInterface
+    public function getRepositoryFactory(): EntityRepositoryFactoryInterface
     {
          return $this->repositoryFactory;
     }

@@ -17,11 +17,11 @@ class PersistenceCollection implements PersistenceCollectionInterface
 
     /**
      * @param string $assocName
-     * @param ObjectCollectionInterface $collections
+     * @param CollectionInterface $collections
     */
     public function __construct(
         protected string $assocName,
-        protected ObjectCollectionInterface $collections
+        protected CollectionInterface $collections
     )
     {
     }
@@ -44,7 +44,7 @@ class PersistenceCollection implements PersistenceCollectionInterface
     /**
      * @inheritDoc
     */
-    public function getCollection(): ObjectCollectionInterface
+    public function getCollection(): CollectionInterface
     {
         return $this->collections;
     }

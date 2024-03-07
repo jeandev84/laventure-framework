@@ -70,7 +70,12 @@ class EntityRepository implements EntityRepositoryInterface
     /**
      * @inheritDoc
     */
-    public function findBy(array $criteria, array $orderBy = [], int $limit = null, int $offset = null): mixed
+    public function findBy(
+        array $criteria,
+        array $orderBy = [],
+        int $limit = null,
+        int $offset = null
+    ): mixed
     {
 
     }
@@ -82,6 +87,6 @@ class EntityRepository implements EntityRepositoryInterface
     */
     public function getClassName(): string
     {
-
+       return $this->metadata->getName();
     }
 }

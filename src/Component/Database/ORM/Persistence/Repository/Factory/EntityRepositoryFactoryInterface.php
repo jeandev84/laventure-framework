@@ -4,11 +4,12 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\ORM\Persistence\Repository\Factory;
 
 
+use Laventure\Component\Database\ORM\Persistence\Manager\EntityManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Manager\ObjectManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Repository\ObjectRepositoryInterface;
 
 /**
- * ObjectRepositoryFactoryInterface
+ * EntityRepositoryFactoryInterface
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -16,7 +17,7 @@ use Laventure\Component\Database\ORM\Persistence\Repository\ObjectRepositoryInte
  *
  * @package  Laventure\Component\Database\ORM\Persistence\Repository\Factory
  */
-interface ObjectRepositoryFactoryInterface
+interface EntityRepositoryFactoryInterface
 {
       /**
        * @param string $classname
@@ -28,12 +29,12 @@ interface ObjectRepositoryFactoryInterface
 
 
      /**
-      * @param ObjectManagerInterface $manager
+      * @param EntityManagerInterface $em
       * @param string $classname
       * @return ObjectRepositoryInterface
      */
-     public function createDefaultRepository(
-         ObjectManagerInterface $manager,
+     public function createEntityRepository(
+         EntityManagerInterface $em,
          string $classname
      ): ObjectRepositoryInterface;
 }

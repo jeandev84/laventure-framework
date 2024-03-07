@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Types;
 
 use DateTimeInterface;
-use Laventure\Component\Database\ORM\Persistence\Collection\ObjectCollectionInterface;
+use Laventure\Component\Database\ORM\Persistence\Collection\CollectionInterface;
 
 /**
  * ClassFieldType
@@ -64,7 +64,7 @@ class ClassFieldType implements ClassFieldTypeInterface
     */
     public function isCollectionAssociate(): bool
     {
-        return $this->value instanceof ObjectCollectionInterface;
+        return $this->value instanceof CollectionInterface;
     }
 
 

@@ -52,6 +52,8 @@ class ClassMetadataFactory implements ClassMetadataFactoryInterface
 
 
 
+
+
     /**
      * @param ClassMetadataInterface[] $collections
      * @return $this
@@ -82,7 +84,7 @@ class ClassMetadataFactory implements ClassMetadataFactoryInterface
     /**
      * @inheritDoc
     */
-    public function getMetadataFor(string $classname): ClassMetadataInterface
+    public function getMetadataFor($classname): ClassMetadataInterface
     {
         if ($this->hasMetadataFor($classname)) {
             return $this->metadata[$classname];
@@ -97,17 +99,20 @@ class ClassMetadataFactory implements ClassMetadataFactoryInterface
     /**
      * @inheritDoc
     */
-    public function hasMetadataFor(string $classname): bool
+    public function hasMetadataFor($classname): bool
     {
         return isset($this->metadata[$classname]);
     }
 
 
 
+
+
+
     /**
      * @inheritDoc
     */
-    public function setMetadataFor(string $classname, $class): mixed
+    public function setMetadataFor($classname, $class): static
     {
         $this->metadata[$classname] = $this->getMetadataFor($class);
 
@@ -116,11 +121,13 @@ class ClassMetadataFactory implements ClassMetadataFactoryInterface
 
 
 
+
+
     /**
      * @inheritDoc
     */
-    public function isTransient(string $classname): bool
+    public function isTransient($classname): bool
     {
-
+        throw new \RuntimeException(__METHOD__ . ' not already implemented.');
     }
 }

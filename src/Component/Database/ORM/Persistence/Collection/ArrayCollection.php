@@ -6,7 +6,7 @@ namespace Laventure\Component\Database\ORM\Persistence\Collection;
 use Laventure\Component\Database\ORM\Persistence\Storage\ObjectStorage;
 
 /**
- * ObjectCollection
+ * ArrayCollection
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -14,7 +14,7 @@ use Laventure\Component\Database\ORM\Persistence\Storage\ObjectStorage;
  *
  * @package  Laventure\Component\Database\ORM\Persistence\ObjectCollection
 */
-class ObjectCollection extends ObjectStorage implements ObjectCollectionInterface
+class ArrayCollection extends ObjectStorage implements CollectionInterface
 {
 
     /**
@@ -54,7 +54,7 @@ class ObjectCollection extends ObjectStorage implements ObjectCollectionInterfac
     */
     public function __serialize(): array
     {
-         // TODO implements
+
     }
 
 
@@ -65,6 +65,6 @@ class ObjectCollection extends ObjectStorage implements ObjectCollectionInterfac
     */
     public function __unserialize(array $data): void
     {
-         //TODO implements
+
     }
 }

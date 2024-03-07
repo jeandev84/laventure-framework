@@ -11,7 +11,7 @@ use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\ClassMetadataI
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Factory\ClassMetadataFactoryInterface;
 use Laventure\Component\Database\ORM\Persistence\Query\Builder\QueryBuilder;
 use Laventure\Component\Database\ORM\Persistence\Query\Builder\QueryBuilderInterface;
-use Laventure\Component\Database\ORM\Persistence\Repository\Factory\ObjectRepositoryFactoryInterface;
+use Laventure\Component\Database\ORM\Persistence\Repository\Factory\EntityRepositoryFactoryInterface;
 use Laventure\Component\Database\ORM\Persistence\Repository\ObjectRepositoryInterface;
 use Laventure\Component\Database\ORM\UnitOfWork\UnitOfWorkInterface;
 use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
@@ -75,9 +75,9 @@ class EntityManager implements EntityManagerInterface
 
 
     /**
-     * @var ObjectRepositoryFactoryInterface
+     * @var EntityRepositoryFactoryInterface
     */
-    protected ObjectRepositoryFactoryInterface $repositoryFactory;
+    protected EntityRepositoryFactoryInterface $repositoryFactory;
 
 
 
@@ -279,7 +279,7 @@ class EntityManager implements EntityManagerInterface
         }
 
         if (!$repository = $this->repositoryFactory->createRepository($entity)) {
-            $repository = $this->repositoryFactory->createDefaultRepository($this, $entity);
+            $repository = $this->repositoryFactory->createEntityRepository($this, $entity);
         }
 
         return $this->repositories[$entity] = $repository;
@@ -293,7 +293,7 @@ class EntityManager implements EntityManagerInterface
     /**
      * @inheritDoc
     */
-    public function getClassMetadata(string $entity): ClassMetadataInterface
+    public function getClassMetadata($entity): ClassMetadataInterface
     {
         $this->abortIfIsClosed();
 

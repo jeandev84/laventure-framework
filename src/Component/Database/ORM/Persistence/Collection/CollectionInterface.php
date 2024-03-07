@@ -18,7 +18,7 @@ use Serializable;
  *
  * @package  Laventure\Component\Database\ORM\Persistence\ObjectCollection
 */
-interface ObjectCollectionInterface extends Countable, Iterator, Serializable, ArrayAccess
+interface CollectionInterface extends Countable, Iterator, Serializable, ArrayAccess
 {
 
       /**
