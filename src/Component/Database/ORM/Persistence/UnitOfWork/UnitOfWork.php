@@ -6,6 +6,7 @@ namespace Laventure\Component\Database\ORM\Persistence\UnitOfWork;
 
 use Laventure\Component\Database\ORM\Persistence\Manager\EntityManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Manager\Event\EventManagerInterface;
+use Laventure\Component\Database\ORM\Persistence\Manager\Events\OnClearEvent;
 use Laventure\Component\Database\ORM\Persistence\Mapper\Data\DataMapper;
 use Laventure\Component\Database\ORM\Persistence\Mapper\Data\DataMapperInterface;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\ClassMetadata;
@@ -202,9 +203,23 @@ class UnitOfWork implements UnitOfWorkInterface
     /**
      * @inheritDoc
     */
-    public function commit(): static
+    public function commit(): mixed
     {
-
+        return $this->em->transaction(function () {
+            foreach ($this->storage as $object) {
+                $state = $this->storage->getInfo();
+                switch ($state):
+                    case self::STATE_MANAGED:
+                    case self::STATE_NEW:
+                        $this->dataMapper->save($object);
+                        break;
+                    case self::STATE_REMOVED;
+                        $this->dataMapper->delete($object);
+                        break;
+                endswitch;
+            }
+            $this->clear();
+        });
     }
 
 
@@ -212,12 +227,14 @@ class UnitOfWork implements UnitOfWorkInterface
 
 
     /**
-     * Clear storage
-     *
-     * @return void
+     * @inheritDoc
     */
     public function clear(): void
     {
+        $this->eventManager->dispatchEvent(
+            new OnClearEvent($this->em)
+        );
+
         $this->storage->clear();
     }
 
@@ -251,13 +268,23 @@ class UnitOfWork implements UnitOfWorkInterface
 
 
 
-
     /**
      * @param object $object
      * @return $this
+     * @throws ReflectionException
     */
     public function addPersistState(object $object): static
     {
+        // subscribe persist events
+        $this->eventManager->subscribePersistEvents();
+
+        // add states
+        if ($this->isNew($object)) {
+            $this->addNewState($object);
+        } else {
+            $this->addManagedState($object);
+        }
+
         return $this;
     }
 
@@ -270,8 +297,9 @@ class UnitOfWork implements UnitOfWorkInterface
     */
     public function addNewState(object $object): static
     {
-        return $this;
+        return $this->addState($object, self::STATE_NEW);
     }
+
 
 
 
@@ -281,7 +309,7 @@ class UnitOfWork implements UnitOfWorkInterface
     */
     public function addManagedState(object $object): static
     {
-        return $this;
+        return $this->addState($object, self::STATE_MANAGED);
     }
 
 
@@ -293,7 +321,7 @@ class UnitOfWork implements UnitOfWorkInterface
     */
     public function addDetachedState(object $object): static
     {
-        return $this;
+        return $this->addState($object, self::STATE_DETACHED);
     }
 
 
@@ -306,6 +334,10 @@ class UnitOfWork implements UnitOfWorkInterface
     */
     public function addRemovedState(object $object): static
     {
-        return $this;
+        // subscribe persist events
+        $this->eventManager->subscribeRemoveEvents();
+
+        // add state
+        return $this->addState($object, self::STATE_REMOVED);
     }
 }
