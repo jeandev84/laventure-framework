@@ -279,10 +279,7 @@ class EntityManager implements EntityManagerInterface
         }
 
         if (!$repository = $this->repositoryFactory->createRepository($classname)) {
-            $repository = $this->repositoryFactory->createDefaultRepository(
-                $this,
-                $classname
-            );
+            $repository = $this->repositoryFactory->createDefaultRepository($this, $classname);
         }
 
         return $this->repositories[$classname] = $repository;
