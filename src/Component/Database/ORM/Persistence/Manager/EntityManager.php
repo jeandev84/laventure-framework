@@ -1,11 +1,15 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Manager;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
+use Laventure\Component\Database\ORM\Persistence\Manager\Config\Configuration;
+use Laventure\Component\Database\ORM\Persistence\Manager\Event\EventManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\ClassMetadataInterface;
+use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Factory\ClassMetadataFactoryInterface;
+use Laventure\Component\Database\ORM\Persistence\Query\Builder\QueryBuilderInterface;
+use Laventure\Component\Database\ORM\Persistence\Repository\Factory\ObjectRepositoryFactoryInterface;
 use Laventure\Component\Database\ORM\Persistence\Repository\ObjectRepositoryInterface;
 use Laventure\Component\Database\ORM\UnitOfWork\UnitOfWorkInterface;
 use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
@@ -22,13 +26,143 @@ use Laventure\Component\Database\Query\QueryInterface;
 */
 class EntityManager implements EntityManagerInterface
 {
+
+
+    /**
+     * @var ConnectionInterface
+    */
+    protected ConnectionInterface $connection;
+
+
+
+    /**
+     * @var Configuration
+    */
+    protected Configuration $config;
+
+
+
+
+
+    /**
+     * @var EventManagerInterface
+    */
+    protected EventManagerInterface $eventManager;
+
+
+
+
+
+    /**
+     * @var UnitOfWorkInterface
+    */
+    protected UnitOfWorkInterface $unitOfWork;
+
+
+
+
+
+    /**
+     * @var ClassMetadataFactoryInterface
+    */
+    protected ClassMetadataFactoryInterface $metadataFactory;
+
+
+
+
+
+    /**
+     * @var ObjectRepositoryFactoryInterface
+    */
+    protected ObjectRepositoryFactoryInterface $repositoryFactory;
+
+
+
+
+
+
+    /**
+     * @var ObjectRepositoryInterface[]
+    */
+    protected array $repositories = [];
+
+
+
+
+    /**
+     * @var object[]
+    */
+    protected array $initialized = [];
+
+
+
+
+    /**
+     * @var object[]
+    */
+    protected array $managed = [];
+
+
+
+
+
+
+    /**
+     * @var bool
+    */
+    protected bool $enabled = false;
+
+
+
+
+
+    /**
+     * @param Configuration $config
+    */
+    public function __construct(Configuration $config)
+    {
+        $this->config            = $config;
+        $this->connection        = $config->getConnection();
+        $this->eventManager      = $config->getEventManager();
+        $this->metadataFactory   = $config->getClassMetadataFactory();
+        $this->repositoryFactory = $config->getRepositoryFactory();
+        $this->unitOfWork        = $config->getUnitOfWorkFactory()->createUnitOfWork($this);
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function isOpen(): bool
+    {
+        return $this->enabled;
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getConfiguration(): Configuration
+    {
+        return $this->config;
+    }
+
+
+
+
+
     /**
      * @inheritDoc
     */
     public function getConnection(): ConnectionInterface
     {
-
+        return $this->connection;
     }
+
 
 
 
@@ -38,7 +172,42 @@ class EntityManager implements EntityManagerInterface
     */
     public function getUnitOfWork(): UnitOfWorkInterface
     {
+        return $this->unitOfWork;
+    }
 
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getEventManager(): EventManagerInterface
+    {
+       return $this->eventManager;
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getRepository(string $classname): ObjectRepositoryInterface
+    {
+        return $this->repositoryFactory->createRepository($classname);
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getClassMetadata(string $classname): ClassMetadataInterface
+    {
+        return $this->getMetadataFactory()->getMetadataFor($classname);
     }
 
 
@@ -48,7 +217,79 @@ class EntityManager implements EntityManagerInterface
     /**
      * @inheritDoc
     */
-    public function createQueryBuilder(): SQLQueryBuilderInterface
+    public function getMetadataFactory(): ClassMetadataFactoryInterface
+    {
+        return $this->metadataFactory;
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function resetManager(): static
+    {
+        $this->enabled = true;
+
+        return $this;
+    }
+
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function beginTransaction(): bool
+    {
+        return $this->connection->beginTransaction();
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function commit(): bool
+    {
+        return $this->connection->commit();
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function rollback(): bool
+    {
+         return $this->connection->rollback();
+    }
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function transaction(callable $func): mixed
+    {
+
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function createNativeQueryBuilder(): SQLQueryBuilderInterface
     {
 
     }
@@ -70,10 +311,24 @@ class EntityManager implements EntityManagerInterface
     /**
      * @inheritDoc
     */
+    public function createQueryBuilder(): QueryBuilderInterface
+    {
+
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
     public function initializeObject(object $object): mixed
     {
 
     }
+
 
 
 
@@ -89,6 +344,7 @@ class EntityManager implements EntityManagerInterface
 
 
 
+
     /**
      * @inheritDoc
     */
@@ -96,6 +352,7 @@ class EntityManager implements EntityManagerInterface
     {
 
     }
+
 
 
 
@@ -111,6 +368,7 @@ class EntityManager implements EntityManagerInterface
 
 
 
+
     /**
      * @inheritDoc
     */
@@ -118,6 +376,7 @@ class EntityManager implements EntityManagerInterface
     {
 
     }
+
 
 
 
@@ -143,6 +402,8 @@ class EntityManager implements EntityManagerInterface
 
 
 
+
+
     /**
      * @inheritDoc
     */
@@ -150,6 +411,8 @@ class EntityManager implements EntityManagerInterface
     {
 
     }
+
+
 
 
 
@@ -163,45 +426,14 @@ class EntityManager implements EntityManagerInterface
 
 
 
-    /**
-     * @inheritDoc
-    */
-    public function getRepository(string $classname): ObjectRepositoryInterface
-    {
-
-    }
 
 
 
     /**
      * @inheritDoc
     */
-    public function getClassMetadata(string $classname): ClassMetadataInterface
+    public function close(): void
     {
-
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function getMetadataFactory(): mixed
-    {
-
-    }
-
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function transaction(callable $func): mixed
-    {
-
+        $this->enabled = false;
     }
 }

@@ -7,7 +7,7 @@ namespace Laventure\Component\Database\ORM\Persistence;
 use Laventure\Component\Database\ORM\Mapper\IdentityMapperInterface;
 use Laventure\Component\Database\ORM\Persistence\Mapper\IdentityMapper;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\ClassMetadata;
-use Laventure\Component\Database\ORM\Query\QueryBuilder;
+use Laventure\Component\Database\ORM\Persistence\Query\Builder\QueryBuilder;
 
 /**
  * Persistent

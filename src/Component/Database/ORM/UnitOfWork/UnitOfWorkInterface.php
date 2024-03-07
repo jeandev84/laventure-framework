@@ -15,6 +15,15 @@ namespace Laventure\Component\Database\ORM\UnitOfWork;
 */
 interface UnitOfWorkInterface
 {
+
+    const STATE_MANAGED   = 1;
+    const STATE_NEW       = 2;
+    const STATE_DETACHED  = 3;
+    const STATE_REMOVED   = 4;
+
+
+
+
     /**
      * Register state
      *
@@ -29,13 +38,125 @@ interface UnitOfWorkInterface
 
 
 
+
     /**
-     * Find id
+     * Find storage object
      *
-     * @param $id
-     * @return mixed
+     * @param int $id
+     *
+     * @return object|null
     */
-    public function find($id): mixed;
+    public function find(int $id): ?object;
+
+
+
+
+
+
+
+
+    /**
+     * Register state NEW or UPDATE
+     *
+     * @param object $object
+     *
+     * @return void
+    */
+    public function persist(object $object): void;
+
+
+
+
+
+
+
+
+    /**
+     * Register state REMOVED
+     *
+     * @param object $object
+     *
+     * @return void
+    */
+    public function remove(object $object): void;
+
+
+
+
+
+
+
+    /**
+     * Refresh object
+     *
+     * @param object $object
+     *
+     * @return void
+    */
+    public function refresh(object $object): void;
+
+
+
+
+
+
+
+
+    /**
+     * Add object to the storage
+     *
+     * @param object $object
+     *
+     * @return void
+    */
+    public function attach(object $object): void;
+
+
+
+
+
+
+
+    /**
+     * Remove object from the storage
+     *
+     * @param object $object
+     *
+     * @return void
+    */
+    public function detach(object $object): void;
+
+
+
+
+
+
+
+
+    /**
+     * Add object to previous collection
+     *
+     * @param object $object
+     *
+     * @return void
+    */
+    public function merge(object $object): void;
+
+
+
+
+
+
+
+
+    /**
+     * Determine if object in storage
+     *
+     * @param object $object
+     *
+     * @return bool
+    */
+    public function contains(object $object): bool;
 
 
 

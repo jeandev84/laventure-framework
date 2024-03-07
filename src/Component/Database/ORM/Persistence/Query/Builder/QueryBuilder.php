@@ -1,11 +1,11 @@
 <?php
-
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\ORM\Query;
+namespace Laventure\Component\Database\ORM\Persistence\Query\Builder;
+
 
 /**
- * Query
+ * QueryBuilder
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -13,6 +13,7 @@ namespace Laventure\Component\Database\ORM\Query;
  *
  * @package  Laventure\Component\Database\ORM\Query
 */
-class Query
+class QueryBuilder
 {
+
 }

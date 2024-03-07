@@ -4,7 +4,9 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\ORM\Persistence\Manager;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
-use Laventure\Component\Database\Connection\Transaction\TransactionInterface;
+use Laventure\Component\Database\ORM\Persistence\Manager\Config\Configuration;
+use Laventure\Component\Database\ORM\Persistence\Manager\Event\EventManagerInterface;
+use Laventure\Component\Database\ORM\Persistence\Query\Builder\QueryBuilderInterface;
 use Laventure\Component\Database\ORM\UnitOfWork\UnitOfWorkInterface;
 use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
 use Laventure\Component\Database\Query\QueryInterface;
@@ -23,22 +25,11 @@ interface EntityManagerInterface extends ObjectManagerInterface
 
 
     /**
-     * Returns connection
+     * Determine if entity manager is open
      *
-     * @return ConnectionInterface
+     * @return bool
     */
-    public function getConnection(): ConnectionInterface;
-
-
-
-
-
-    /**
-     * Returns unit of work
-     *
-     * @return UnitOfWorkInterface
-    */
-    public function getUnitOfWork(): UnitOfWorkInterface;
+    public function isOpen(): bool;
 
 
 
@@ -46,11 +37,83 @@ interface EntityManagerInterface extends ObjectManagerInterface
 
 
     /**
-     * Create native sql query builder
+     * reset entity manager
+     *
+     * @return $this
+    */
+    public function resetManager(): static;
+
+
+
+
+
+
+    /**
+     * Begin transaction
+     *
+     * @return bool
+     */
+    public function beginTransaction(): bool;
+
+
+
+
+
+
+
+
+
+    /**
+     * Commit all changes
+     *
+     * @return bool
+    */
+    public function commit(): bool;
+
+
+
+
+
+
+
+
+
+    /**
+     * Rollback commit process
+     *
+     * @return bool
+    */
+    public function rollback(): bool;
+
+
+
+
+
+
+
+    /**
+     * Transaction
+     *
+     * @param callable $func
+     *
+     * @return mixed
+    */
+    public function transaction(callable $func): mixed;
+
+
+
+
+
+
+
+
+    /**
+     * Returns SQL query builder
      *
      * @return SQLQueryBuilderInterface
-    */
-    public function createQueryBuilder(): SQLQueryBuilderInterface;
+     */
+    public function createNativeQueryBuilder(): SQLQueryBuilderInterface;
+
 
 
 
@@ -73,11 +136,78 @@ interface EntityManagerInterface extends ObjectManagerInterface
 
 
     /**
-     * Transaction
+     * Create native sql query builder
      *
-     * @param callable $func
-     *
-     * @return mixed
+     * @return QueryBuilderInterface
     */
-    public function transaction(callable $func): mixed;
+    public function createQueryBuilder(): QueryBuilderInterface;
+
+
+
+
+
+
+
+
+    /**
+     * Returns entity manager configuration
+     *
+     * @return Configuration
+    */
+    public function getConfiguration(): Configuration;
+
+
+
+
+
+
+
+    /**
+     * Returns connection
+     *
+     * @return ConnectionInterface
+    */
+    public function getConnection(): ConnectionInterface;
+
+
+
+
+
+
+
+    /**
+     * Returns unit of work
+     *
+     * @return UnitOfWorkInterface
+    */
+    public function getUnitOfWork(): UnitOfWorkInterface;
+
+
+
+
+
+
+
+
+    /**
+     * Returns entity event manager
+     *
+     * @return EventManagerInterface
+    */
+    public function getEventManager(): EventManagerInterface;
+
+
+
+
+
+
+
+
+
+    /**
+     * Close entity manager
+     *
+     * @return void
+    */
+    public function close(): void;
 }
