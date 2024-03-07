@@ -5,14 +5,14 @@ namespace Laventure\Component\Database\Connection\Drivers\Sqlite;
 
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Connection\Drivers\Sqlite\Schema\Table\SqliteTable;
-use Laventure\Component\Database\Connection\Extensions\PDO\Connection;
+use Laventure\Component\Database\Connection\Extensions\PDO\PdoConnection;
 use Laventure\Component\Database\Connection\Name\ConnectionName;
 use Laventure\Component\Database\DatabaseInterface;
 use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
 use Laventure\Component\Database\Schema\Table\TableInterface;
 
 /**
- * SqliteConnection
+ * SqlitePdoConnection
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -20,7 +20,7 @@ use Laventure\Component\Database\Schema\Table\TableInterface;
  *
  * @package  Laventure\Component\Database\PdoConnection\Drivers\Sqlite
 */
-class SqliteConnection extends Connection
+class SqlitePdoConnection extends PdoConnection
 {
 
     /**

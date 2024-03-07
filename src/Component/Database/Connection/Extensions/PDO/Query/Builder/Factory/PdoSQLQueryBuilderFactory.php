@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\Factory;
 
-use Laventure\Component\Database\Connection\Extensions\PDO\Connection;
+use Laventure\Component\Database\Connection\Extensions\PDO\PdoConnection;
 use Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\QueryBuilder;
 use Laventure\Component\Database\Query\Builder\SQL\Factory\SQLQueryBuilderFactoryInterface;
 use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
@@ -21,9 +21,9 @@ class PdoSQLQueryBuilderFactory implements SQLQueryBuilderFactoryInterface
 {
 
     /**
-     * @param Connection $connection
+     * @param PdoConnection $connection
     */
-    public function __construct(protected Connection $connection)
+    public function __construct(protected PdoConnection $connection)
     {
     }
 

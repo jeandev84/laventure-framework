@@ -31,7 +31,7 @@ use RuntimeException;
  *
  * @package  Laventure\Component\Database\PdoConnection\Extensions\PDO
 */
-abstract class Connection implements PdoConnectionInterface
+abstract class PdoConnection implements PdoConnectionInterface
 {
     use ConnectionTrait;
 

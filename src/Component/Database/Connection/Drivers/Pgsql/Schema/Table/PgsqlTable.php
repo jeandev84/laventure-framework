@@ -13,7 +13,7 @@ use Laventure\Component\Database\Schema\Table\Table;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Connection\Drivers\Pgsql\Schema\Table
+ * @package  Laventure\Component\Database\PdoConnection\Drivers\Pgsql\Schema\Table
 */
 class PgsqlTable extends Table
 {
