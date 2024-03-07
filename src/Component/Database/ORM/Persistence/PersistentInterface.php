@@ -175,6 +175,8 @@ interface PersistentInterface
 
 
 
+
+
     /**
      * Returns class name
      *
@@ -193,4 +195,16 @@ interface PersistentInterface
      * @return string
     */
     public function getTableName(): string;
+
+
+
+
+
+
+    /**
+     * Returns table alias
+     *
+     * @return string
+    */
+    public function getTableAlias(): string;
 }

@@ -289,7 +289,7 @@ class Persistent implements PersistentInterface
     */
     public function getTableName(): string
     {
-        return '';
+        return mb_strtolower($this->getClassName()) . 's';
     }
 
 
@@ -297,11 +297,11 @@ class Persistent implements PersistentInterface
 
 
     /**
-     * @return string
+     * @inheritDoc
     */
     public function getTableAlias(): string
     {
-        return strtoupper($this->getClassName());
+        return $this->getTableName()[0];
     }
 
 

@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\DQL\Select;

@@ -6,6 +6,7 @@ namespace Laventure\Component\Database\ORM\Persistence\Repository;
 
 use Laventure\Component\Database\ORM\Persistence\Manager\Contract\EntityManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\ClassMetadataInterface;
+use Laventure\Component\Database\ORM\Persistence\PersistentInterface;
 use Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\DQL\Select\Select;
 use Laventure\Component\Database\ORM\Persistence\Repository\Contract\EntityRepositoryInterface;
 
@@ -53,7 +54,7 @@ class EntityRepository implements EntityRepositoryInterface
     /**
      * @inheritDoc
     */
-    public function find($id): mixed
+    public function find($id): object|null|false
     {
         return $this->em->find($this->getClassName(), $id);
     }
@@ -65,10 +66,15 @@ class EntityRepository implements EntityRepositoryInterface
     /**
      * @inheritDoc
     */
-    public function findOneBy(array $criteria, array $orderBy = []): mixed
+    public function findOneBy(array $criteria, array $orderBy = []): object|null|false
     {
-
+        return $this->createQueryBuilder($this->getTableAlias())
+                    ->criteria($criteria)
+                    ->addOrderBy($orderBy)
+                    ->getQuery()
+                    ->fetchOne();
     }
+
 
 
 
@@ -78,8 +84,12 @@ class EntityRepository implements EntityRepositoryInterface
     */
     public function findAll(): array
     {
-
+        return $this->createQueryBuilder($this->getTableAlias())
+                    ->getQuery()
+                    ->fetchAll();
     }
+
+
 
 
 
@@ -91,8 +101,14 @@ class EntityRepository implements EntityRepositoryInterface
         array $orderBy = [],
         int $limit = null,
         int $offset = null
-    ): mixed {
-
+    ): array {
+         return $this->createQueryBuilder($this->getTableAlias())
+                     ->criteria($criteria)
+                     ->addOrderBy($orderBy)
+                     ->limit($limit)
+                     ->offset($offset)
+                     ->getQuery()
+                     ->fetchAll();
     }
 
 
@@ -103,5 +119,30 @@ class EntityRepository implements EntityRepositoryInterface
     public function getClassName(): string
     {
         return $this->metadata->getName();
+    }
+
+
+
+
+
+    /**
+     * @return PersistentInterface
+    */
+    private function getPersistent(): PersistentInterface
+    {
+        return $this->em->getUnitOfWork()
+                        ->getPersistent($this->getClassName());
+    }
+
+
+
+
+
+    /**
+     * @return string
+    */
+    private function getTableAlias(): string
+    {
+        return $this->getPersistent()->getTableAlias();
     }
 }
