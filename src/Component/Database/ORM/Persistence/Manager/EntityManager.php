@@ -13,7 +13,7 @@ use Laventure\Component\Database\ORM\Persistence\Query\Builder\QueryBuilder;
 use Laventure\Component\Database\ORM\Persistence\Query\Builder\QueryBuilderInterface;
 use Laventure\Component\Database\ORM\Persistence\Repository\Factory\EntityRepositoryFactoryInterface;
 use Laventure\Component\Database\ORM\Persistence\Repository\ObjectRepositoryInterface;
-use Laventure\Component\Database\ORM\UnitOfWork\UnitOfWorkInterface;
+use Laventure\Component\Database\ORM\Persistence\UnitOfWork\UnitOfWorkInterface;
 use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
 use Laventure\Component\Database\Query\QueryInterface;
 use Throwable;

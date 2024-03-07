@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\ORM\Mapper\Data;
+namespace Laventure\Component\Database\ORM\Persistence\Mapper\Data;
 
 /**
  * DataMapperInterface

@@ -3,13 +3,12 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence;
 
-use Laventure\Component\Database\ORM\Mapper\Identity\IdentityMap;
-use Laventure\Component\Database\ORM\Mapper\Identity\IdentityMapperInterface;
 use Laventure\Component\Database\ORM\Persistence\Manager\EntityManagerInterface;
+use Laventure\Component\Database\ORM\Persistence\Mapper\Identity\IdentityMap;
+use Laventure\Component\Database\ORM\Persistence\Mapper\Identity\IdentityMapperInterface;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\ClassMetadataInterface;
 use Laventure\Component\Database\ORM\Persistence\Query\Builder\QueryBuilderInterface;
 use Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\DQL\Select\Select;
-use Laventure\Component\Database\ORM\Persistence\Storage\ObjectStorage;
 
 /**
  * Persistent

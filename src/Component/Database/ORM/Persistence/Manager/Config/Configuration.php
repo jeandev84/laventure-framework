@@ -7,7 +7,7 @@ use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\ORM\Persistence\Manager\Event\EventManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Factory\ClassMetadataFactoryInterface;
 use Laventure\Component\Database\ORM\Persistence\Repository\Factory\EntityRepositoryFactoryInterface;
-use Laventure\Component\Database\ORM\UnitOfWork\Factory\UnitOfWorkFactoryInterface;
+use Laventure\Component\Database\ORM\Persistence\UnitOfWork\Factory\UnitOfWorkFactoryInterface;
 
 /**
  * Configuration

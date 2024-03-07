@@ -1,12 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\ORM\UnitOfWork\Factory;
+namespace Laventure\Component\Database\ORM\Persistence\UnitOfWork\Factory;
 
 
 use Laventure\Component\Database\ORM\Persistence\Manager\EntityManagerInterface;
-use Laventure\Component\Database\ORM\Persistence\Manager\ObjectManagerInterface;
-use Laventure\Component\Database\ORM\UnitOfWork\UnitOfWorkInterface;
+use Laventure\Component\Database\ORM\Persistence\UnitOfWork\UnitOfWorkInterface;
 
 /**
  * UnitOfWorkFactoryInterface
@@ -15,7 +14,7 @@ use Laventure\Component\Database\ORM\UnitOfWork\UnitOfWorkInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\ORM\UnitOfWork\Factory
+ * @package  Laventure\Component\Database\ORM\Persistence\UnitOfWork\Factory
  */
 interface UnitOfWorkFactoryInterface
 {

@@ -11,8 +11,8 @@ use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Factory\ClassM
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Factory\ClassMetadataFactoryInterface;
 use Laventure\Component\Database\ORM\Persistence\Repository\Factory\EntityRepositoryFactory;
 use Laventure\Component\Database\ORM\Persistence\Repository\Factory\EntityRepositoryFactoryInterface;
-use Laventure\Component\Database\ORM\UnitOfWork\Factory\UnitOfWorkFactory;
-use Laventure\Component\Database\ORM\UnitOfWork\Factory\UnitOfWorkFactoryInterface;
+use Laventure\Component\Database\ORM\Persistence\UnitOfWork\Factory\UnitOfWorkFactory;
+use Laventure\Component\Database\ORM\Persistence\UnitOfWork\Factory\UnitOfWorkFactoryInterface;
 
 /**
  * Definition

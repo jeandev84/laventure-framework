@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\ORM\Mapper\Identity;
+namespace Laventure\Component\Database\ORM\Persistence\Mapper\Identity;
 
 use SplObjectStorage;
 

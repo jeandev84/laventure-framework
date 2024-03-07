@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\ORM\UnitOfWork\Factory;
+namespace Laventure\Component\Database\ORM\Persistence\UnitOfWork\Factory;
 
 use Laventure\Component\Database\ORM\Persistence\Manager\ObjectManagerInterface;
-use Laventure\Component\Database\ORM\UnitOfWork\UnitOfWork;
-use Laventure\Component\Database\ORM\UnitOfWork\UnitOfWorkInterface;
+use Laventure\Component\Database\ORM\Persistence\UnitOfWork\UnitOfWork;
+use Laventure\Component\Database\ORM\Persistence\UnitOfWork\UnitOfWorkInterface;
 
 /**
  * UnitOfWorkFactory

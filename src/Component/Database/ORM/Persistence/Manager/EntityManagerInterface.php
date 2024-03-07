@@ -7,7 +7,7 @@ use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\ORM\Persistence\Manager\Config\Configuration;
 use Laventure\Component\Database\ORM\Persistence\Manager\Event\EventManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Query\Builder\QueryBuilderInterface;
-use Laventure\Component\Database\ORM\UnitOfWork\UnitOfWorkInterface;
+use Laventure\Component\Database\ORM\Persistence\UnitOfWork\UnitOfWorkInterface;
 use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
 use Laventure\Component\Database\Query\QueryInterface;
 

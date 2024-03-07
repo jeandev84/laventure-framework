@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\ORM\UnitOfWork;
+namespace Laventure\Component\Database\ORM\Persistence\UnitOfWork;
 
 use Laventure\Component\Database\ORM\Persistence\Manager\EntityManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Manager\Event\EventManagerInterface;
-use Laventure\Component\Database\ORM\Persistence\Manager\ObjectManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Factory\ClassMetadataFactoryInterface;
 use Laventure\Component\Database\ORM\Persistence\Persistent;
 use Laventure\Component\Database\ORM\Persistence\PersistentInterface;

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\ORM\Mapper\Data;
+namespace Laventure\Component\Database\ORM\Persistence\Mapper\Data;
 
 use Laventure\Component\Database\ORM\Persistence\Manager\Event\EventManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\PersistentInterface;
@@ -13,7 +13,7 @@ use Laventure\Component\Database\ORM\Persistence\PersistentInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package Laventure\Component\Database\ORM\Mapper\Data
+ * @package Laventure\Component\Database\ORM\Persistence\Mapper\Data
 */
 class DataMapper implements DataMapperInterface
 {
