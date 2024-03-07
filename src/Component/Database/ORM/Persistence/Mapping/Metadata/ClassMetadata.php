@@ -325,9 +325,9 @@ class ClassMetadata implements ClassMetadataInterface
 
         foreach ($this->getProperties() as $property) {
             $propertyName = $property->getName();
-            $field        = $this->resolveFileName($propertyName);
+            $field        = $this->resolveFieldName($propertyName);
             $value        = $property->getValue($object);
-            if ($field === $this->identifier) {
+            if ($this->identifier === $field) {
                 $identifierValues[$field] = $value;
             } elseif ($this->isSingleValuedAssociation($field)) {
                 #$field = trim($field, 's');
@@ -355,7 +355,7 @@ class ClassMetadata implements ClassMetadataInterface
 
         foreach ($this->getProperties() as $property) {
             $propertyName = $property->getName();
-            $field        = $this->resolveFileName($propertyName);
+            $field        = $this->resolveFieldName($propertyName);
             $value        = $property->getValue($object);
             $fieldValues[$field] = $value;
         }
@@ -383,7 +383,7 @@ class ClassMetadata implements ClassMetadataInterface
      * @param string $field
      * @return string
     */
-    private function resolveFileName(string $field): string
+    private function resolveFieldName(string $field): string
     {
         return $this->camelCaseToUnderscore($field);
     }
