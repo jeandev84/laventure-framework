@@ -1,13 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\ORM\Persistence\Collection;
+namespace Laventure\Component\Database\ORM\Persistence\Collection\Persistent;
 
 
+use Laventure\Component\Database\ORM\Persistence\Collection\CollectionInterface;
 use Laventure\Component\Database\ORM\Persistence\PersistentInterface;
 
 /**
- * PersistenceCollectionInterface
+ * PersistentCollectionInterface
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -15,7 +16,7 @@ use Laventure\Component\Database\ORM\Persistence\PersistentInterface;
  *
  * @package  Laventure\Component\Database\ORM\Persistence\Collection
 */
-interface PersistenceCollectionInterface
+interface PersistentCollectionInterface
 {
      /**
       * @return string

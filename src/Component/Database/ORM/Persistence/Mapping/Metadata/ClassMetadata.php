@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Mapping\Metadata;
 
-use Laventure\Component\Database\ORM\Persistence\Collection\PersistenceCollection;
+use Laventure\Component\Database\ORM\Persistence\Collection\Persistent\PersistentCollection;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Exception\NotFoundClassFieldException;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Types\ClassFieldType;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Types\ClassFieldTypeInterface;
@@ -333,7 +333,7 @@ class ClassMetadata implements ClassMetadataInterface
                 #$field = trim($field, 's');
                 $identifierValues["{$field}_id"] = $value;
             } elseif ($this->isCollectionValuedAssociation($field)) {
-                $identifierValues[$field] = new PersistenceCollection($field, $value);
+                $identifierValues[$field] = new PersistentCollection($field, $value);
             }
         }
 

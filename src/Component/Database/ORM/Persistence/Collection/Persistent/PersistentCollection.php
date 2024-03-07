@@ -1,18 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\ORM\Persistence\Collection;
+namespace Laventure\Component\Database\ORM\Persistence\Collection\Persistent;
+
+use Laventure\Component\Database\ORM\Persistence\Collection\CollectionInterface;
+use Laventure\Component\Database\ORM\Persistence\PersistentInterface;
 
 /**
- * PersistenceCollection
+ * PersistentCollection
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\ORM\Persistence\Collection
+ * @package  Laventure\Component\Database\ORM\Persistence\Collection\Persistent
 */
-class PersistenceCollection implements PersistenceCollectionInterface
+class PersistentCollection implements PersistentCollectionInterface
 {
 
     /**
@@ -48,4 +51,15 @@ class PersistenceCollection implements PersistenceCollectionInterface
     {
         return $this->collections;
     }
+
+
+
+
+     /**
+      * @inheritDoc
+     */
+     public function persist(PersistentInterface $persistent): mixed
+     {
+
+     }
 }

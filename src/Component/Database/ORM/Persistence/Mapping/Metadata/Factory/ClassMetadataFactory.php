@@ -86,12 +86,6 @@ class ClassMetadataFactory implements ClassMetadataFactoryInterface
     */
     public function getMetadataFor($classname): ClassMetadataInterface
     {
-        if (is_string($classname)) {
-            if ($this->hasMetadataFor($classname)) {
-                return $this->metadata[$classname];
-            }
-        }
-
         return new ClassMetadata($classname);
     }
 
