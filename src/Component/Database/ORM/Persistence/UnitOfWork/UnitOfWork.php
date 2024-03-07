@@ -74,6 +74,16 @@ class UnitOfWork implements UnitOfWorkInterface
 
 
 
+
+    /**
+     * @var string|null
+    */
+    protected ?string $mappedClass = null;
+
+
+
+
+
     /**
      * @param EntityManagerInterface $em
     */
@@ -89,15 +99,34 @@ class UnitOfWork implements UnitOfWorkInterface
 
 
 
+    /**
+     * @inheritDoc
+    */
+    public function mappedClass($class): static
+    {
+        $this->mappedClass = $class;
+
+        return $this;
+    }
+
+
+
+
 
     /**
      * @inheritDoc
-     * //TODO implements correctly
     */
     public function find(int $id): ?object
     {
-        return $this->storage[$id] ?? null;
+        if (!$this->mappedClass) {
+            return null;
+        }
+
+        return $this->getPersistent($this->mappedClass)
+                    ->find($id);
     }
+
+
 
 
 
@@ -130,7 +159,7 @@ class UnitOfWork implements UnitOfWorkInterface
     */
     public function refresh(object $object): static
     {
-
+        //TODO implements
     }
 
 
@@ -339,6 +368,8 @@ class UnitOfWork implements UnitOfWorkInterface
         // add state
         return $this->addState($object, self::STATE_REMOVED);
     }
+
+
 
 
 

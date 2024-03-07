@@ -68,7 +68,7 @@ class EntityRepository implements EntityRepositoryInterface
     */
     public function findOneBy(array $criteria, array $orderBy = []): object|null|false
     {
-        return $this->createQueryBuilder($this->getTableAlias())
+        return $this->createQueryBuilder($this->getAlias())
                     ->criteria($criteria)
                     ->addOrderBy($orderBy)
                     ->getQuery()
@@ -84,7 +84,7 @@ class EntityRepository implements EntityRepositoryInterface
     */
     public function findAll(): array
     {
-        return $this->createQueryBuilder($this->getTableAlias())
+        return $this->createQueryBuilder($this->getAlias())
                     ->getQuery()
                     ->fetchAll();
     }
@@ -102,7 +102,7 @@ class EntityRepository implements EntityRepositoryInterface
         int $limit = null,
         int $offset = null
     ): array {
-         return $this->createQueryBuilder($this->getTableAlias())
+         return $this->createQueryBuilder($this->getAlias())
                      ->criteria($criteria)
                      ->addOrderBy($orderBy)
                      ->limit($limit)
@@ -141,7 +141,7 @@ class EntityRepository implements EntityRepositoryInterface
     /**
      * @return string
     */
-    private function getTableAlias(): string
+    private function getAlias(): string
     {
         return $this->getPersistent()->getTableAlias();
     }

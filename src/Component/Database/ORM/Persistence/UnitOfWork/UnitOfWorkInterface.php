@@ -71,6 +71,18 @@ interface UnitOfWorkInterface
 
 
 
+    /**
+     * map class
+     *
+     * @param $class
+     * @return $this
+    */
+    public function mappedClass($class): static;
+
+
+
+
+
 
     /**
      * Find storage object

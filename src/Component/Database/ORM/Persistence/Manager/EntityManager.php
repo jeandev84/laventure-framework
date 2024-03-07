@@ -449,7 +449,7 @@ class EntityManager implements EntityManagerInterface
     public function find(string $classname, $id): ?object
     {
         return $this->unitOfWork
-                    ->getPersistent($classname)
+                    ->mappedClass($classname)
                     ->find($id);
     }
 
