@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Http\Message\Server\Remote;
+namespace Laventure\Component\Http\Message\Request\Server\Remote;
 
 
 /**
- * ServerRemoteParamInterface
+ * ServerRemoteInterface
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -13,7 +13,7 @@ namespace Laventure\Component\Http\Message\Server\Remote;
  *
  * @package  Laventure\Component\Http\Message\Server\Remote
 */
-interface ServerRemoteParamInterface
+interface ServerRemoteInterface
 {
 
      /**

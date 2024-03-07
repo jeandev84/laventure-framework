@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Http\Message\Server\Protocol;
+namespace Laventure\Component\Http\Message\Request\Server\Protocol;
 
 
-use Laventure\Component\Http\Message\Server\ServerParamInterface;
+use Laventure\Component\Http\Message\Request\Server\ServerParamInterface;
 
 /**
  * ServerProtocol
@@ -15,7 +15,7 @@ use Laventure\Component\Http\Message\Server\ServerParamInterface;
  *
  * @package  Laventure\Component\Http\Message\Request\Server\Params
 */
-class ServerProtocolParams implements ServerProtocolParamInterface
+class ServerProtocol implements ServerProtocolInterface
 {
 
     /**
@@ -37,13 +37,15 @@ class ServerProtocolParams implements ServerProtocolParamInterface
 
 
 
+
+
     /**
      * @inheritDoc
     */
-    public function getVersion(): int
+    public function getVersion(): string
     {
         $protocol = $this->server->string('SERVER_PROTOCOL');
 
-        return intval(str_replace('HTTP/', '', $protocol));
+        return str_replace('HTTP/', '', $protocol);
     }
 }

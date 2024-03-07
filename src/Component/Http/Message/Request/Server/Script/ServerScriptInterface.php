@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Http\Message\Server\Script;
+namespace Laventure\Component\Http\Message\Request\Server\Script;
 
 
 /**
- * ServerScriptParamInterface
+ * ServerScriptInterface
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -13,7 +13,7 @@ namespace Laventure\Component\Http\Message\Server\Script;
  *
  * @package  Laventure\Component\Http\Message\Server\Script
 */
-interface ServerScriptParamInterface
+interface ServerScriptInterface
 {
     /**
      * Returns script name

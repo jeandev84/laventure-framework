@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Laventure\Foundation\Http\Message\Request;
 
+use Laventure\Component\Http\Message\Request\Server\ServerParamInterface;
 use Laventure\Component\Http\Message\Request\ServerRequest;
-use Laventure\Component\Http\Message\Server\ServerParamInterface;
 use Laventure\Component\Http\Storage\Cookie\Jar\CookieJar;
 use Laventure\Component\Http\Storage\Cookie\Jar\CookieJarInterface;
 use Laventure\Component\Http\Storage\Session\SessionInterface;

@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Http\Message\Server\Protocol;
+namespace Laventure\Component\Http\Message\Request\Server\Protocol;
 
 
 /**
- * ServerProtocolParamInterface
+ * ServerProtocolInterface
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -13,7 +13,7 @@ namespace Laventure\Component\Http\Message\Server\Protocol;
  *
  * @package  Laventure\Component\Http\Message\Request\Server\Protocol
 */
-interface ServerProtocolParamInterface
+interface ServerProtocolInterface
 {
 
     /**
@@ -30,7 +30,7 @@ interface ServerProtocolParamInterface
     /**
      * Returns value of version
      *
-     * @return int
+     * @return string
     */
-    public function getVersion(): int;
+    public function getVersion(): string;
 }

@@ -1,43 +1,58 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Http\Message\Server\Request;
+namespace Laventure\Component\Http\Message\Request\Server;
 
 
-use Laventure\Component\Http\Message\Request\Uri;
+use Laventure\Component\Http\Message\Request\Server\Headers\ServerHeaderInterface;
+use Laventure\Component\Http\Message\Request\Server\Protocol\ServerProtocolInterface;
+use Laventure\Component\Http\Message\Request\Server\Remote\ServerRemoteInterface;
+use Laventure\Component\Http\Message\Request\Server\Script\ServerScriptInterface;
+use Laventure\Contract\Parameter\ParameterInterface;
 use Psr\Http\Message\UriInterface;
 
 /**
- * ServerRequestParamInterface
+ * ServerParamInterface
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Http\Message\Request\Server\Request
-*/
-interface ServerRequestParamInterface
+ * @package  Laventure\Component\Http\Message\Request\Server
+ */
+interface ServerParamInterface extends ParameterInterface
 {
+    /**
+     * Returns name of server
+     *
+     * @return string
+    */
+    public function getName(): string;
 
-     /**
-      * Returns request method name
-      *
-      * @return string
+
+
+
+
+
+    /**
+     * Returns request method name
+     *
+     * @return string
      */
-     public function getMethod(): string;
+    public function getMethod(): string;
 
 
 
 
 
 
-     /**
-      * Set request method
-      *
-      * @param string $method
-      * @return $this
+    /**
+     * Set request method
+     *
+     * @param string $method
+     * @return $this
      */
-     public function setMethod(string $method): static;
+    public function setMethod(string $method): static;
 
 
 
@@ -46,12 +61,12 @@ interface ServerRequestParamInterface
 
 
 
-     /**
-      * Returns request uri from sever
-      *
-      * @return string
+    /**
+     * Returns request uri from sever
+     *
+     * @return string
      */
-     public function getRequestUri(): string;
+    public function getRequestUri(): string;
 
 
 
@@ -60,12 +75,12 @@ interface ServerRequestParamInterface
 
 
 
-     /**
-      * Returns request time
-      *
-      * @return int
+    /**
+     * Returns request time
+     *
+     * @return int
      */
-     public function getTime(): int;
+    public function getRequestTime(): int;
 
 
 
@@ -74,12 +89,12 @@ interface ServerRequestParamInterface
 
 
 
-     /**
-      * Returns request time as float
-      *
-      * @return float
+    /**
+     * Returns request time as float
+     *
+     * @return float
      */
-     public function getTimeAsFloat(): float;
+    public function getRequestTimeAsFloat(): float;
 
 
 
@@ -89,7 +104,7 @@ interface ServerRequestParamInterface
      * Returns referer
      *
      * @return string
-    */
+     */
     public function getReferer(): string;
 
 
@@ -99,7 +114,7 @@ interface ServerRequestParamInterface
      * Returns PHP SELF path
      *
      * @return string
-    */
+     */
     public function getSelfPath(): string;
 
 
@@ -109,7 +124,7 @@ interface ServerRequestParamInterface
 
     /**
      * @return string
-    */
+     */
     public function getBaseUrl(): string;
 
 
@@ -120,7 +135,7 @@ interface ServerRequestParamInterface
 
     /**
      * @return string
-    */
+     */
     public function getUrl(): string;
 
 
@@ -133,7 +148,7 @@ interface ServerRequestParamInterface
      * Returns scheme protocol
      *
      * @return string
-    */
+     */
     public function getScheme(): string;
 
 
@@ -145,7 +160,7 @@ interface ServerRequestParamInterface
      * Returns username
      *
      * @return string
-    */
+     */
     public function getUsername(): string;
 
 
@@ -158,7 +173,7 @@ interface ServerRequestParamInterface
      * Returns user password
      *
      * @return string
-    */
+     */
     public function getPassword(): string;
 
 
@@ -171,8 +186,10 @@ interface ServerRequestParamInterface
      * Returns authority
      *
      * @return string
-    */
+     */
     public function getAuthority(): string;
+
+
 
 
 
@@ -181,7 +198,7 @@ interface ServerRequestParamInterface
      * Returns port
      *
      * @return int
-    */
+     */
     public function getPort(): int;
 
 
@@ -193,7 +210,7 @@ interface ServerRequestParamInterface
      * Returns host
      *
      * @return string
-    */
+     */
     public function getHost(): string;
 
 
@@ -206,7 +223,7 @@ interface ServerRequestParamInterface
      * Returns query string
      *
      * @return string
-    */
+     */
     public function getQueryString(): string;
 
 
@@ -282,4 +299,65 @@ interface ServerRequestParamInterface
      * @return bool
     */
     public function isForwardedProto(): bool;
+
+
+
+
+
+    /**
+     * Returns headers information
+     *
+     * @return ServerHeaderInterface
+    */
+    public function getHeaders(): ServerHeaderInterface;
+
+
+
+
+
+
+    /**
+     * Returns information server protocol
+     *
+     * @return ServerProtocolInterface
+    */
+    public function getProtocol(): ServerProtocolInterface;
+
+
+
+
+
+
+
+
+    /**
+     * Returns document root
+     *
+     * @return string
+    */
+    public function getDocumentRoot(): string;
+
+
+
+
+
+
+    /**
+     * @return ServerScriptInterface
+    */
+    public function getScript(): ServerScriptInterface;
+
+
+
+
+
+
+
+
+    /**
+     * Returns remote information
+     *
+     * @return ServerRemoteInterface
+    */
+    public function getRemote(): ServerRemoteInterface;
 }

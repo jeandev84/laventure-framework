@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Http\Message\Server\Script;
+namespace Laventure\Component\Http\Message\Request\Server\Script;
 
-use Laventure\Component\Http\Message\Server\ServerParamInterface;
+use Laventure\Component\Http\Message\Request\Server\ServerParamInterface;
 
 /**
- * ServerScriptParams
+ * ServerScript
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -14,7 +14,7 @@ use Laventure\Component\Http\Message\Server\ServerParamInterface;
  *
  * @package  Laventure\Component\Http\Message\Server\Script
 */
-class ServerScriptParams implements ServerScriptParamInterface
+class ServerScript implements ServerScriptInterface
 {
 
 

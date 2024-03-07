@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Http\Message\Server\Headers;
+namespace Laventure\Component\Http\Message\Request\Server\Headers;
 
 
 /**
- * ServerHeaderParamInterface
+ * ServerHeaderInterface
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -13,7 +13,7 @@ namespace Laventure\Component\Http\Message\Server\Headers;
  *
  * @package  Laventure\Component\Http\Message\Request\Server\Headers
 */
-interface ServerHeaderParamInterface
+interface ServerHeaderInterface
 {
 
        /**

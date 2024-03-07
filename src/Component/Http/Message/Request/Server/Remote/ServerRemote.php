@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Http\Message\Server\Remote;
+namespace Laventure\Component\Http\Message\Request\Server\Remote;
 
-use Laventure\Component\Http\Message\Server\ServerParamInterface;
+use Laventure\Component\Http\Message\Request\Server\ServerParamInterface;
 
 /**
- * ServerRemoveParams
+ * ServerRemote
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -14,7 +14,7 @@ use Laventure\Component\Http\Message\Server\ServerParamInterface;
  *
  * @package  Laventure\Component\Http\Message\Server\Remote
 */
-class ServerRemoveParams implements ServerRemoteParamInterface
+class ServerRemote implements ServerRemoteInterface
 {
 
 
