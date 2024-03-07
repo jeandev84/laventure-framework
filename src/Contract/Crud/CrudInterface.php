@@ -1,8 +1,7 @@
 <?php
-
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\ORM\Persistence\Crud;
+namespace Laventure\Contract\Crud;
 
 /**
  * CrudInterface
@@ -11,12 +10,12 @@ namespace Laventure\Component\Database\ORM\Persistence\Crud;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\ORM\Crud
+ * @package  Laventure\Contract\Crud
 */
 interface CrudInterface
 {
     /**
-     * Create a new record and returns the last insert ID
+     * Create data from given $attributes
      *
      * @param array $attributes
      * @return int
@@ -25,8 +24,10 @@ interface CrudInterface
 
 
 
+
+
     /**
-     * Read a record by given $id
+     * Read some data from given $id
      *
      * @param $id
      *
@@ -39,7 +40,7 @@ interface CrudInterface
 
 
     /**
-     * PgsqlUpdateBuilder a record by given $id
+     * Update some data from given $attributes and $id
      *
      * @param array $attributes
      * @param $id
@@ -53,7 +54,7 @@ interface CrudInterface
 
 
     /**
-     * MysqlDeleteBuilder a record by given $id
+     * Delete some data from given $id
      *
      * @param $id
      * @return mixed
