@@ -102,4 +102,15 @@ class ClassFieldType implements ClassFieldTypeInterface
     {
         return ($this->isCollectionAssociate() || $this->isSingleAssociate());
     }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function isIdentifier(): bool
+    {
+
+    }
 }

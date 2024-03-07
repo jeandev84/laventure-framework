@@ -18,7 +18,7 @@ class Book
      /**
       * @var int|null
      */
-     private ?int $id;
+     private ?int $id = null;
 
 
      /**
@@ -47,7 +47,7 @@ class Book
      /**
       * @var User|null
      */
-     private ?User $user;
+     private ?User $user = null;
 
 
 

@@ -119,7 +119,7 @@ class ClassMetadata implements ClassMetadataInterface
     /**
      * @inheritDoc
     */
-    public function getReflector(): Reflector
+    public function getReflectionClass(): Reflector
     {
         return $this->reflection;
     }

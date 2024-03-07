@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\ORM\Persistence\Mapping\Metadata;
 
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Types\ClassFieldTypeInterface;
-use Reflector;
+use ReflectionClass;
 
 /**
  * ClassMetadataInterface
@@ -56,10 +56,10 @@ interface ClassMetadataInterface
 
 
 
-    /**
-     * @return Reflector
-    */
-    public function getReflector(): Reflector;
+     /**
+      * @return ReflectionClass
+     */
+     public function getReflectionClass(): ReflectionClass;
 
 
 
