@@ -221,6 +221,18 @@ class ClassMetadata implements ClassMetadataInterface
 
 
 
+
+    /**
+     * @return bool
+    */
+    public function isNew(): bool
+    {
+       return is_null($this->getIdentifierValue($this->identifier));
+    }
+
+
+
+
     
     
 

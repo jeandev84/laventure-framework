@@ -6,6 +6,7 @@ namespace Laventure\Component\Database\ORM\Persistence\Manager;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\ORM\Persistence\Manager\Config\Configuration;
 use Laventure\Component\Database\ORM\Persistence\Manager\Event\DefaultEventManager;
+use Laventure\Component\Database\ORM\Persistence\Manager\Event\EventManager;
 use Laventure\Component\Database\ORM\Persistence\Manager\Event\EventManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Factory\ClassMetadataFactory;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Factory\ClassMetadataFactoryInterface;
@@ -77,7 +78,7 @@ class Definition extends Configuration
          $this->connection        = $connection;
          $this->metadataFactory   = new ClassMetadataFactory();
          $this->unitOfWorkFactory = new UnitOfWorkFactory();
-         $this->eventManager      = new DefaultEventManager();
+         $this->eventManager      = new EventManager();
          $this->repositoryFactory = new EntityRepositoryFactory();
     }
 

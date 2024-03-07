@@ -37,6 +37,21 @@ interface PersistentInterface
 
 
       /**
+       * Find object by criteria
+       *
+       * @param array $criteria
+       * @return mixed
+      */
+      public function findOneBy(array $criteria): mixed;
+
+
+
+
+
+
+
+
+      /**
        * Add insert data
        *
        * @param array $attributes

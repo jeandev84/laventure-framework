@@ -5,6 +5,7 @@ namespace Laventure\Component\Database\ORM\Persistence\UnitOfWork;
 
 use Laventure\Component\Database\ORM\Persistence\Manager\EntityManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Manager\Event\EventManagerInterface;
+use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\ClassMetadata;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Factory\ClassMetadataFactoryInterface;
 use Laventure\Component\Database\ORM\Persistence\Persistent;
 use Laventure\Component\Database\ORM\Persistence\PersistentInterface;
@@ -71,88 +72,6 @@ class UnitOfWork implements UnitOfWorkInterface
         $this->eventManager = $em->getEventManager();
         $this->storage      = new ObjectStorage();
     }
-
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function getPersistent($class): PersistentInterface
-    {
-         return new Persistent($this->em, $class);
-    }
-
-
-
-
-
-
-    /**
-     * @inheritdoc
-    */
-    public function registerState(object $object, $state): static
-    {
-         $this->storage->attach($object, $state);
-
-         return $this;
-    }
-
-
-
-
-
-    /**
-     * @param object $object
-     * @return $this
-    */
-    public function registerPersistState(object $object): static
-    {
-
-    }
-
-
-
-
-
-    /**
-     * @param object $object
-     * @return $this
-    */
-    public function registerNewState(object $object): static
-    {
-
-    }
-
-
-
-
-
-    /**
-     * @param object $object
-     * @return $this
-    */
-    public function registerDetachedState(object $object): static
-    {
-
-    }
-
-
-
-
-
-
-    /**
-     * @param object $object
-     * @return $this
-    */
-    public function registerRemovedState(object $object): static
-    {
-         return $this;
-    }
-
 
 
 
@@ -251,8 +170,11 @@ class UnitOfWork implements UnitOfWorkInterface
     */
     public function isNew(object $object): bool
     {
-
+        $metadata = new ClassMetadata($object);
+        return $metadata->isNew();
     }
+
+
 
 
 
@@ -276,5 +198,93 @@ class UnitOfWork implements UnitOfWorkInterface
     public function clear(): void
     {
         $this->storage->clear();
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getPersistent($class): PersistentInterface
+    {
+        return new Persistent($this->em, $class);
+    }
+
+
+
+
+
+
+    /**
+     * @inheritdoc
+     */
+    public function addState(object $object, $state): static
+    {
+        $this->storage->attach($object, $state);
+
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @param object $object
+     * @return $this
+     */
+    public function addPersistState(object $object): static
+    {
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function addNewState(object $object): static
+    {
+        return $this;
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function addManagedState(object $object): static
+    {
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function addDetachedState(object $object): static
+    {
+        return $this;
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function addRemovedState(object $object): static
+    {
+        return $this;
     }
 }

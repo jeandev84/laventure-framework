@@ -3,6 +3,10 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Mapping\Service;
 
+use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Factory\ClassMetadataFactoryInterface;
+use ReflectionClass;
+use ReflectionException;
+
 /**
  * ReflectionService
  *
@@ -16,11 +20,39 @@ class ReflectionService implements ReflectionServiceInterface
 {
 
     /**
+     * @param ClassMetadataFactoryInterface $metadataFactory
+    */
+    public function __construct(
+        protected ClassMetadataFactoryInterface $metadataFactory
+    )
+    {
+    }
+
+
+
+
+
+    /**
+     * @param $class
+     * @return ReflectionClass
+    */
+    public function getReflectionClass($class): ReflectionClass
+    {
+        return $this->metadataFactory
+                    ->getMetadataFor($class)
+                   ->getReflectionClass();
+    }
+
+
+
+
+    /**
      * @inheritDoc
     */
     public function getParentClasses($class)
     {
-
+        return $this->getReflectionClass($class)
+                    ->getParentClass();
     }
 
 
@@ -30,7 +62,8 @@ class ReflectionService implements ReflectionServiceInterface
     */
     public function getClassShortName($class)
     {
-
+        return $this->getReflectionClass($class)
+                    ->getShortName();
     }
 
 
@@ -41,7 +74,8 @@ class ReflectionService implements ReflectionServiceInterface
     */
     public function getClassNamespace($class)
     {
-
+        return $this->getReflectionClass($class)
+                    ->getNamespaceName();
     }
 
 
@@ -51,7 +85,21 @@ class ReflectionService implements ReflectionServiceInterface
     */
     public function getClass($class)
     {
+        return $this->getReflectionClass($class)
+                    ->getName();
+    }
 
+
+
+
+    /**
+     * @inheritDoc
+     * @throws ReflectionException
+    */
+    public function getAccessibleProperty($class, $property)
+    {
+        return $this->getReflectionClass($class)
+                    ->getProperty($property);
     }
 
 
@@ -60,16 +108,9 @@ class ReflectionService implements ReflectionServiceInterface
     /**
      * @inheritDoc
     */
-    public function getAccessibleProperty($class, $property)
-    {
-
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function hasPublicMethod($class, $method)
     {
-        // TODO: Implement hasPublicMethod() method.
+        return $this->getReflectionClass($class)
+                    ->hasMethod($method);
     }
 }

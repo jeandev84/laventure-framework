@@ -24,8 +24,47 @@ interface UnitOfWorkInterface
      * @param $state
      * @return mixed
     */
-    public function registerState(object $object, $state): mixed;
+    public function addState(object $object, $state): mixed;
 
+
+
+
+
+    /**
+     * @param object $object
+     * @return $this
+    */
+    public function addNewState(object $object): static;
+
+
+
+
+    /**
+     * @param object $object
+     * @return $this
+     */
+    public function addManagedState(object $object): static;
+
+
+
+
+
+    /**
+     * @param object $object
+     * @return $this
+    */
+    public function addDetachedState(object $object): static;
+
+
+
+
+
+
+    /**
+     * @param object $object
+     * @return $this
+     */
+    public function addRemovedState(object $object): static;
 
 
 
