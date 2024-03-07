@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\ORM\UnitOfWork\Factory;
 
 
+use Laventure\Component\Database\ORM\Persistence\Manager\EntityManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Manager\ObjectManagerInterface;
 use Laventure\Component\Database\ORM\UnitOfWork\UnitOfWorkInterface;
 
@@ -20,8 +21,10 @@ interface UnitOfWorkFactoryInterface
 {
 
      /**
-      * @param ObjectManagerInterface|null $manager
+      * @param EntityManagerInterface|null $manager
       * @return UnitOfWorkInterface
      */
-     public function createUnitOfWork(ObjectManagerInterface $manager = null): UnitOfWorkInterface;
+     public function createUnitOfWork(
+         EntityManagerInterface $manager = null
+     ): UnitOfWorkInterface;
 }

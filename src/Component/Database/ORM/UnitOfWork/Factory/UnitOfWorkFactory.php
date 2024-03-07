@@ -3,6 +3,10 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\UnitOfWork\Factory;
 
+use Laventure\Component\Database\ORM\Persistence\Manager\ObjectManagerInterface;
+use Laventure\Component\Database\ORM\UnitOfWork\UnitOfWork;
+use Laventure\Component\Database\ORM\UnitOfWork\UnitOfWorkInterface;
+
 /**
  * UnitOfWorkFactory
  *
@@ -15,4 +19,13 @@ namespace Laventure\Component\Database\ORM\UnitOfWork\Factory;
 class UnitOfWorkFactory implements UnitOfWorkFactoryInterface
 {
 
+    /**
+     * @inheritDoc
+    */
+    public function createUnitOfWork(
+        ObjectManagerInterface $manager = null
+    ): UnitOfWorkInterface
+    {
+        return new UnitOfWork($manager);
+    }
 }

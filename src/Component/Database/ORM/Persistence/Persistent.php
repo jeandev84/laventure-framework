@@ -1,13 +1,11 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence;
 
-use Laventure\Component\Database\ORM\Mapper\IdentityMapperInterface;
-use Laventure\Component\Database\ORM\Persistence\Mapper\IdentityMapper;
-use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\ClassMetadata;
-use Laventure\Component\Database\ORM\Persistence\Query\Builder\QueryBuilder;
+use Laventure\Component\Database\ORM\Persistence\Manager\EntityManagerInterface;
+use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\ClassMetadataInterface;
+use Laventure\Component\Database\ORM\Persistence\Query\Builder\QueryBuilderInterface;
 
 /**
  * Persistent
@@ -17,53 +15,127 @@ use Laventure\Component\Database\ORM\Persistence\Query\Builder\QueryBuilder;
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
  * @package  Laventure\Component\Database\ORM\Persistence
-*/
-class Persistent
+ */
+class Persistent implements PersistentInterface
 {
-    /**
-     * @var QueryBuilder
-    */
-    protected QueryBuilder $queryBuilder;
 
 
     /**
-     * @var ClassMetadata
+     * @var EntityManagerInterface
     */
-    protected ClassMetadata $classMetadata;
-
-
-
-    /**
-     * @var IdentityMapperInterface
-    */
-    protected IdentityMapperInterface $identityMap;
+    protected EntityManagerInterface $em;
 
 
 
 
     /**
-     * @param QueryBuilder $queryBuilder
-     * @param ClassMetadata $classMetadata
+     * @var ClassMetadataInterface
     */
-    public function __construct(QueryBuilder $queryBuilder, ClassMetadata $classMetadata)
+    protected ClassMetadataInterface $classMetadata;
+
+
+
+
+
+    /**
+     * @var array
+    */
+    protected array $identityMap = [];
+
+
+
+
+    /**
+     * @var array
+    */
+    protected array $insert = [];
+
+
+
+    /**
+     * @var array
+    */
+    protected array $inserted = [];
+
+
+
+
+    /**
+     * @var array
+    */
+    protected array $update = [];
+
+
+
+
+    /**
+     * @var array
+    */
+    protected array $updated = [];
+
+
+
+
+
+    /**
+     * @var array
+    */
+    protected array $delete = [];
+
+
+
+
+
+    /**
+     * @var array
+    */
+    protected array $deleted = [];
+
+
+
+
+
+    /**
+     * @param EntityManagerInterface $em
+     * @param $entity
+    */
+    public function __construct(
+        EntityManagerInterface $em,
+        $entity
+    )
     {
-        $this->queryBuilder  = $queryBuilder;
-        $this->classMetadata = $classMetadata;
-        $this->identityMap   = new IdentityMapper();
+        $this->em = $em;
+        $this->classMetadata = $em->getClassMetadata($entity);
     }
 
 
 
 
     /**
-     * Find data by id
-     *
-     * @param $id
-     * @return mixed
+     * @inheritDoc
     */
     public function find($id): mixed
     {
-        return $id;
+        if (isset($this->identityMap[$id])) {
+            return $this->identityMap[$id];
+        }
+
+        return $this->identityMap["{$this->getClassName()}.{$id}"] = $id;
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function addInsert(array $attributes): static
+    {
+        $this->insert[$this->getClassName()][] = $attributes;
+
+        return $this;
     }
 
 
@@ -71,9 +143,7 @@ class Persistent
 
 
     /**
-     * PgsqlInsertBuilder data
-     *
-     * @return int
+     * @inheritDoc
     */
     public function insert(): int
     {
@@ -84,7 +154,18 @@ class Persistent
 
 
     /**
-     * @return mixed
+     * @inheritDoc
+    */
+    public function addUpdate($id, array $attributes): static
+    {
+
+    }
+
+
+
+
+    /**
+     * @inheritDoc
     */
     public function update(): mixed
     {
@@ -92,28 +173,68 @@ class Persistent
     }
 
 
+
+
+    /**
+     * @inheritDoc
+    */
+    public function addDelete($id): static
+    {
+
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
     public function delete(): mixed
     {
-
-    }
-
-
-    /**
-     * @return IdentityMapperInterface
-    */
-    public function getIdentityMap(): IdentityMapperInterface
-    {
-        return $this->identityMap;
+        return null;
     }
 
 
 
-    /**
-     * @param $id
-     * @return string
-    */
-    public function makeIdentity($id): string
-    {
 
+    /**
+     * @inheritDoc
+    */
+    public function createQueryBuilder(): QueryBuilderInterface
+    {
+        return $this->em->createQueryBuilder();
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getClassMetadata(): ClassMetadataInterface
+    {
+        return $this->classMetadata;
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getClassName(): string
+    {
+        return $this->classMetadata->getName();
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getTableName(): string
+    {
+        return '';
     }
 }

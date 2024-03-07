@@ -4,6 +4,9 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\ORM\Persistence;
 
 
+use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\ClassMetadataInterface;
+use Laventure\Component\Database\ORM\Persistence\Query\Builder\QueryBuilderInterface;
+
 /**
  * PersistentInterface
  *
@@ -15,7 +18,11 @@ namespace Laventure\Component\Database\ORM\Persistence;
 */
 interface PersistentInterface
 {
+
+
       /**
+       * Find object from database or from identity map
+       *
        * @param $id
        * @return mixed
       */
@@ -24,21 +31,55 @@ interface PersistentInterface
 
 
 
+
+
       /**
-       * @param $attributes
-       * @return mixed
+       * Add insert data
+       *
+       * @param array $attributes
+       * @return $this
       */
-      public function insert($attributes): mixed;
+      public function addInsert(array $attributes): static;
+
+
 
 
 
 
       /**
-       * @param $attributes
+       * Insert data to the table and returns last insert ID
+       *
+       * @return int
+      */
+      public function insert(): int;
+
+
+
+
+
+
+
+      /**
+       * @param array $attributes
        * @param $id
+       * @return static
+      */
+      public function addUpdate($id, array $attributes): static;
+
+
+
+
+
+
+
+      /**
+       * Update data
+       *
        * @return mixed
       */
-      public function update($attributes, $id): mixed;
+      public function update(): mixed;
+
+
 
 
 
@@ -46,7 +87,68 @@ interface PersistentInterface
 
       /**
        * @param $id
+       * @return $this
+      */
+      public function addDelete($id): static;
+
+
+
+
+
+
+
+      /**
+       * Delete data
+       *
        * @return mixed
       */
-      public function delete($id): mixed;
+      public function delete(): mixed;
+
+
+
+
+
+
+      /**
+       * Create an instance of  query builder
+       *
+       * @return QueryBuilderInterface
+      */
+      public function createQueryBuilder(): QueryBuilderInterface;
+
+
+
+
+
+
+      /**
+       * Returns class metadata
+       *
+       * @return ClassMetadataInterface
+      */
+      public function getClassMetadata(): ClassMetadataInterface;
+
+
+
+
+
+
+      /**
+       * Returns class name
+       *
+       * @return string
+      */
+      public function getClassName(): string;
+
+
+
+
+
+
+      /**
+       * Returns table name
+       *
+       * @return string
+      */
+      public function getTableName(): string;
 }

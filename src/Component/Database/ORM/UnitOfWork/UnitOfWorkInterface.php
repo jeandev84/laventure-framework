@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\UnitOfWork;
 
+use Laventure\Component\Database\ORM\Persistence\PersistentInterface;
+
 /**
  * UnitOfWorkInterface
  *
@@ -15,15 +17,6 @@ namespace Laventure\Component\Database\ORM\UnitOfWork;
 */
 interface UnitOfWorkInterface
 {
-
-    const STATE_MANAGED   = 1;
-    const STATE_NEW       = 2;
-    const STATE_DETACHED  = 3;
-    const STATE_REMOVED   = 4;
-
-
-
-
     /**
      * Register state
      *
@@ -164,6 +157,18 @@ interface UnitOfWorkInterface
 
 
 
+    /**
+     * @param object $object
+     * @return bool
+    */
+    public function isNew(object $object): bool;
+
+
+
+
+
+
+
 
     /**
      * Clear all object from the storage
@@ -177,10 +182,24 @@ interface UnitOfWorkInterface
 
 
 
+
+
     /**
      * Commit changes
      *
      * @return void
     */
     public function commit(): void;
+
+
+
+
+
+    /**
+     * Returns persistent object
+     *
+     * @param string|object $class
+     * @return PersistentInterface
+    */
+    public function getPersistent($class): PersistentInterface;
 }

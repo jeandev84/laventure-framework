@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Mapper;
 
-use Laventure\Component\Database\ORM\Mapper\DataMapperInterface;
+use Laventure\Component\Database\ORM\Mapper\Data\DataMapperInterface;
 
 /**
  * DataMapper
@@ -20,7 +20,7 @@ class DataMapper implements DataMapperInterface
     /**
      * @inheritDoc
     */
-    public function findById($id): ?object
+    public function find($id): ?object
     {
 
     }

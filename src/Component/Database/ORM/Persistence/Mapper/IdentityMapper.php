@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Mapper;
 
-use Laventure\Component\Database\ORM\Mapper\IdentityMapperInterface;
+use Laventure\Component\Database\ORM\Mapper\Identity\IdentityMapperInterface;
 
 /**
  * IdentityMapper

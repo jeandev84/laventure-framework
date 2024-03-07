@@ -270,19 +270,19 @@ class EntityManager implements EntityManagerInterface
     /**
      * @inheritDoc
     */
-    public function getRepository(string $classname): ObjectRepositoryInterface
+    public function getRepository(string $entity): ObjectRepositoryInterface
     {
         $this->abortIfIsClosed();
 
-        if ($this->hasRepository($classname)) {
-            return $this->repositories[$classname];
+        if ($this->hasRepository($entity)) {
+            return $this->repositories[$entity];
         }
 
-        if (!$repository = $this->repositoryFactory->createRepository($classname)) {
-            $repository = $this->repositoryFactory->createDefaultRepository($this, $classname);
+        if (!$repository = $this->repositoryFactory->createRepository($entity)) {
+            $repository = $this->repositoryFactory->createDefaultRepository($this, $entity);
         }
 
-        return $this->repositories[$classname] = $repository;
+        return $this->repositories[$entity] = $repository;
     }
 
 
@@ -293,11 +293,11 @@ class EntityManager implements EntityManagerInterface
     /**
      * @inheritDoc
     */
-    public function getClassMetadata(string $classname): ClassMetadataInterface
+    public function getClassMetadata(string $entity): ClassMetadataInterface
     {
         $this->abortIfIsClosed();
 
-        return $this->getMetadataFactory()->getMetadataFor($classname);
+        return $this->getMetadataFactory()->getMetadataFor($entity);
     }
 
 

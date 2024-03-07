@@ -1,8 +1,7 @@
 <?php
-
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\ORM\Mapper;
+namespace Laventure\Component\Database\ORM\Mapper\Data;
 
 /**
  * DataMapperInterface
@@ -11,7 +10,7 @@ namespace Laventure\Component\Database\ORM\Mapper;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\ORM\DataMapper
+ * @package  Laventure\Component\Database\ORM\Mapper\Data
 */
 interface DataMapperInterface
 {
@@ -22,7 +21,7 @@ interface DataMapperInterface
      *
      * @return object|null
     */
-    public function findById($id): ?object;
+    public function find($id): ?object;
 
 
 

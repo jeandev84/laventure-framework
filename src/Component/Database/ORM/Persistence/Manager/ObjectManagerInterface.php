@@ -156,10 +156,10 @@ interface ObjectManagerInterface
     /**
      * Returns entity repository
      *
-     * @param string $classname
+     * @param string $entity
      * @return ObjectRepositoryInterface
     */
-    public function getRepository(string $classname): ObjectRepositoryInterface;
+    public function getRepository(string $entity): ObjectRepositoryInterface;
 
 
 
@@ -170,10 +170,10 @@ interface ObjectManagerInterface
     /**
      * Returns class metadata
      *
-     * @param string $classname
+     * @param $entity
      * @return ClassMetadataInterface
     */
-    public function getClassMetadata(string $classname): ClassMetadataInterface;
+    public function getClassMetadata($entity): ClassMetadataInterface;
 
 
 

@@ -1,8 +1,7 @@
 <?php
-
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\ORM\Mapper;
+namespace Laventure\Component\Database\ORM\Mapper\Identity;
 
 /**
  * IdentityMapperInterface
@@ -11,7 +10,7 @@ namespace Laventure\Component\Database\ORM\Mapper;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\ORM\Mapper
+ * @package  Laventure\Component\Database\ORM\Mapper\Identity
 */
 interface IdentityMapperInterface
 {

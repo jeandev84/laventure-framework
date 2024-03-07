@@ -5,9 +5,12 @@ namespace Laventure\Component\Database\ORM\Persistence\Manager;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\ORM\Persistence\Manager\Config\Configuration;
+use Laventure\Component\Database\ORM\Persistence\Manager\Event\DefaultEventManager;
 use Laventure\Component\Database\ORM\Persistence\Manager\Event\EventManagerInterface;
+use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Factory\ClassMetadataFactory;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Factory\ClassMetadataFactoryInterface;
 use Laventure\Component\Database\ORM\Persistence\Repository\Factory\ObjectRepositoryFactoryInterface;
+use Laventure\Component\Database\ORM\UnitOfWork\Factory\UnitOfWorkFactory;
 use Laventure\Component\Database\ORM\UnitOfWork\Factory\UnitOfWorkFactoryInterface;
 
 /**
@@ -21,6 +24,20 @@ use Laventure\Component\Database\ORM\UnitOfWork\Factory\UnitOfWorkFactoryInterfa
  */
 class Definition extends Configuration
 {
+
+
+    /**
+     * @var ConnectionInterface
+    */
+    protected ConnectionInterface $connection;
+
+
+
+    /**
+     * @var UnitOfWorkFactoryInterface
+    */
+    protected UnitOfWorkFactoryInterface $unitOfWorkFactory;
+
 
 
     /**
@@ -42,11 +59,24 @@ class Definition extends Configuration
 
 
     /**
+     * @var EventManagerInterface
+    */
+    protected EventManagerInterface $eventManager;
+
+
+
+
+
+
+    /**
      * @param ConnectionInterface $connection
     */
-    public function __construct(protected  ConnectionInterface $connection)
+    public function __construct(ConnectionInterface $connection)
     {
-
+         $this->connection        = $connection;
+         $this->metadataFactory   = new ClassMetadataFactory();
+         $this->unitOfWorkFactory = new UnitOfWorkFactory();
+         $this->eventManager      = new DefaultEventManager();
     }
 
 
@@ -62,13 +92,52 @@ class Definition extends Configuration
 
 
 
+
+
+    /**
+     * @param UnitOfWorkFactoryInterface $unitOfWorkFactory
+     * @return $this
+    */
+    public function withUnitOfWorkFactory(UnitOfWorkFactoryInterface $unitOfWorkFactory): static
+    {
+        $this->unitOfWorkFactory = $unitOfWorkFactory;
+
+        return $this;
+    }
+
+
+
+
+
+
     /**
      * @inheritDoc
     */
     public function getUnitOfWorkFactory(): UnitOfWorkFactoryInterface
     {
-
+        return $this->unitOfWorkFactory;
     }
+
+
+
+
+
+
+
+    /**
+     * @param EventManagerInterface $eventManager
+     * @return $this
+    */
+    public function withEventManager(EventManagerInterface $eventManager): static
+    {
+        $this->eventManager = $eventManager;
+
+        return $this;
+    }
+
+
+
+
 
 
 
@@ -77,8 +146,11 @@ class Definition extends Configuration
     */
     public function getEventManager(): EventManagerInterface
     {
-
+        return $this->eventManager;
     }
+
+
+
 
 
 
@@ -88,8 +160,12 @@ class Definition extends Configuration
     */
     public function getClassMetadataFactory(): ClassMetadataFactoryInterface
     {
-
+         return $this->metadataFactory;
     }
+
+
+
+
 
 
 
@@ -100,6 +176,6 @@ class Definition extends Configuration
     */
     public function getRepositoryFactory(): ObjectRepositoryFactoryInterface
     {
-
+         return $this->repositoryFactory;
     }
 }
