@@ -165,9 +165,9 @@ interface QueryInterface
     /**
      * Execute query
      *
-     * @return mixed
+     * @return bool
     */
-    public function execute(): mixed;
+    public function execute(): bool;
 
 
 
@@ -178,9 +178,9 @@ interface QueryInterface
      * Execute simple query
      *
      * @param string $sql
-     * @return mixed
+     * @return int|false
     */
-    public function exec(string $sql): mixed;
+    public function exec(string $sql): int|false;
 
 
 

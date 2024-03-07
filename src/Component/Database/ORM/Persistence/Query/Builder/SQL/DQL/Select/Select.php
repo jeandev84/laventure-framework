@@ -22,6 +22,14 @@ use Laventure\Component\Database\Query\QueryInterface;
 class Select
 {
 
+
+    /**
+     * @var string
+    */
+    protected string $mappedClass;
+
+
+
     /**
      * @param EntityManagerInterface $em
      * @param null $columns

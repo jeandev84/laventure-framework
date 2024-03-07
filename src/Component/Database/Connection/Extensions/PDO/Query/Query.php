@@ -306,7 +306,6 @@ class Query implements QueryInterface
         try {
             return $this->pdo->exec($sql);
         } catch (PDOException $e) {
-            dd($e->getMessage());
             $this->abort($e);
         }
     }

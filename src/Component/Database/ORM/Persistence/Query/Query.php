@@ -5,6 +5,7 @@ namespace Laventure\Component\Database\ORM\Persistence\Query;
 
 use Laventure\Component\Database\ORM\Persistence\Manager\EntityManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\BuilderInterface;
+use Laventure\Component\Database\Query\Exception\QueryException;
 use Laventure\Component\Database\Query\Result\QueryResultInterface;
 
 /**
@@ -19,13 +20,25 @@ use Laventure\Component\Database\Query\Result\QueryResultInterface;
 class Query implements QueryInterface
 {
 
+
+    /**
+     * @var int
+    */
+    protected int $lastId = 0;
+
+
+
+
+
     /**
      * @param EntityManagerInterface $em
      * @param BuilderInterface $builder
+     * @param string|null $mappedClass
     */
     public function __construct(
         protected EntityManagerInterface $em,
-        protected BuilderInterface $builder
+        protected BuilderInterface $builder,
+        protected ?string $mappedClass = null
     )
     {
     }
@@ -61,7 +74,7 @@ class Query implements QueryInterface
     /**
      * @inheritDoc
     */
-    public function execute($fetchMode = null): mixed
+    public function execute($fetchMode = null): bool|int|array
     {
          $statement =  $this->em->createNativeQuery(
              $this->getSQL(),
@@ -69,23 +82,25 @@ class Query implements QueryInterface
          );
 
          if (!$fetchMode) {
-             return $statement->execute();
+
+             if(!$statement->execute()) {
+                 return false;
+             }
+
+             $this->lastId = $statement->lastInsertId();
+
+             return $this->lastId;
          }
 
-         return $statement->fetch()->all($fetchMode);
+         return $this->collectResults(
+             $statement->map($this->getMappedClass())
+                       ->fetch()
+                       ->all($fetchMode)
+         );
     }
 
 
 
-
-
-    /**
-     * @inheritDoc
-    */
-    public function fetch(): QueryResultInterface
-    {
-
-    }
 
 
 
@@ -94,7 +109,9 @@ class Query implements QueryInterface
     */
     public function fetchAll(): array
     {
-        return [];
+        return $this->collectResults(
+            $this->fetch()->all()
+        );
     }
 
 
@@ -105,8 +122,12 @@ class Query implements QueryInterface
     */
     public function fetchOne(): ?object
     {
-        return null;
+        return $this->collectResult(
+            $this->fetch()->one()
+        );
     }
+
+
 
 
 
@@ -115,8 +136,10 @@ class Query implements QueryInterface
     */
     public function fetchArray(): array
     {
-        return [];
+        return $this->fetch()->assoc();
     }
+
+
 
 
 
@@ -125,6 +148,97 @@ class Query implements QueryInterface
     */
     public function fetchColumns(): array
     {
-        return [];
+        return $this->fetch()->columns();
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function count(): int
+    {
+        return $this->fetch()->count();
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function lastId(): int
+    {
+        return $this->lastId;
+    }
+
+
+
+
+
+    /**
+     * @return QueryResultInterface
+     * @throws QueryException
+    */
+    private function fetch(): QueryResultInterface
+    {
+
+
+        return $this->em->createNativeQuery(
+            $this->getSQL(),
+            $this->getParameters()
+        )->map($this->getMappedClass())->fetch();
+    }
+
+
+
+
+    /**
+     * @param array $objects
+     * @return array
+    */
+    private function collectResults(array $objects): array
+    {
+         foreach ($objects as $object) {
+             $this->collectResult($object);
+         }
+
+         return $objects;
+    }
+
+
+
+
+
+    /**
+     * @param $object
+     * @return mixed
+    */
+    private function collectResult($object): mixed
+    {
+         if (is_object($object)) {
+             $this->em->persist($object);
+         }
+
+         return $object;
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getMappedClass(): ?string
+    {
+        if (!$this->mappedClass) {
+            throw new QueryException("No class mapped.", [
+                'context' => get_called_class()
+            ]);
+        }
+
+        return $this->mappedClass;
     }
 }

@@ -48,12 +48,15 @@ interface QueryInterface
 
 
 
+
+
+
      /**
-      * Fetch Result
+      * Returns mapped class
       *
-      * @return QueryResultInterface
+      * @return string|null
      */
-     public function fetch(): QueryResultInterface;
+     public function getMappedClass(): ?string;
 
 
 
@@ -65,6 +68,8 @@ interface QueryInterface
       * @return array
      */
      public function fetchAll(): array;
+
+
 
 
 
@@ -99,4 +104,30 @@ interface QueryInterface
      * @return array
     */
     public function fetchColumns(): array;
+
+
+
+
+
+
+
+
+    /**
+     * Returns rows count
+     *
+     * @return int
+    */
+    public function count(): int;
+
+
+
+
+
+
+    /**
+     * Returns last insert ID
+     *
+     * @return int
+    */
+    public function lastId(): int;
 }
