@@ -7,6 +7,7 @@ use Laventure\Component\Database\ORM\Persistence\Collection\PersistenceCollectio
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Exception\NotFoundClassFieldException;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Types\ClassFieldType;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Types\ClassFieldTypeInterface;
+use Laventure\Utils\Convertor\CamelCase\CamelCaseConvertorTrait;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionProperty;
@@ -23,6 +24,10 @@ use Reflector;
 */
 class ClassMetadata implements ClassMetadataInterface
 {
+
+    use CamelCaseConvertorTrait;
+
+
     /**
      * @var ReflectionClass
     */
@@ -191,7 +196,9 @@ class ClassMetadata implements ClassMetadataInterface
     public function getTypeOfField($field): ClassFieldTypeInterface
     {
         if (!$this->hasField($field)) {
-            throw new NotFoundClassFieldException($field, ["fromClass" => $this->getName()]);
+            throw new NotFoundClassFieldException($field, [
+                "Undefined field form class {$this->getName()}"
+            ]);
         }
 
         return new ClassFieldType($field, $this->getFieldValue($field));
@@ -202,14 +209,30 @@ class ClassMetadata implements ClassMetadataInterface
 
 
     /**
-     * @param $field
+     * @param string $field
      * @param $default
      * @return mixed
     */
-    public function getFieldValue($field, $default = null): mixed
+    public function getFieldValue(string $field, $default = null): mixed
     {
         return $this->fieldValues[$field] ?? $default;
     }
+
+
+
+
+
+    /**
+     * @param string $identifier
+     * @param $default
+     * @return mixed
+    */
+    public function getIdentifierValue(string $identifier, $default = null): mixed
+    {
+        return $this->identifierValues[$identifier] ?? $default;
+    }
+
+
 
 
     
@@ -270,11 +293,7 @@ class ClassMetadata implements ClassMetadataInterface
     /**
      * @inheritDoc
     */
-    public function getAssociationTargetClass($assocName): mixed
-    {
-
-    }
-
+    public function getAssociationTargetClass($assocName): mixed {}
 
 
 
@@ -282,10 +301,7 @@ class ClassMetadata implements ClassMetadataInterface
     /**
      * @inheritDoc
     */
-    public function isAssociationInverseSide($assocName): mixed
-    {
-
-    }
+    public function isAssociationInverseSide($assocName): mixed {}
 
 
 
@@ -295,11 +311,7 @@ class ClassMetadata implements ClassMetadataInterface
     /**
      * @inheritDoc
     */
-    public function getAssociationMappedByTargetField($assocName): mixed
-    {
-
-    }
-
+    public function getAssociationMappedByTargetField($assocName): mixed {}
 
 
 
@@ -312,7 +324,8 @@ class ClassMetadata implements ClassMetadataInterface
         $identifierValues = [];
 
         foreach ($this->getProperties() as $property) {
-            $field = $property->getName();
+            $propertyName = $property->getName();
+            $field        = $this->resolveFileName($propertyName);
             $value        = $property->getValue($object);
             if ($field === $this->identifier) {
                 $identifierValues[$field] = $value;
@@ -342,8 +355,9 @@ class ClassMetadata implements ClassMetadataInterface
 
         foreach ($this->getProperties() as $property) {
             $propertyName = $property->getName();
+            $field        = $this->resolveFileName($propertyName);
             $value        = $property->getValue($object);
-            $fieldValues[$propertyName] = $value;
+            $fieldValues[$field] = $value;
         }
 
         return $fieldValues;
@@ -360,5 +374,17 @@ class ClassMetadata implements ClassMetadataInterface
     private function getProperties(): array
     {
         return $this->reflection->getProperties();
+    }
+
+
+
+
+    /**
+     * @param string $field
+     * @return string
+    */
+    private function resolveFileName(string $field): string
+    {
+        return $this->camelCaseToUnderscore($field);
     }
 }
