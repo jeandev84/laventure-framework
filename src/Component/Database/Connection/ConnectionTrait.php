@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection;
@@ -15,7 +14,7 @@ use Laventure\Component\Database\Connection\Drivers\DriverException;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\PdoConnection\Traits
+ * @package  Laventure\Component\Database\Connection
  */
 trait ConnectionTrait
 {
