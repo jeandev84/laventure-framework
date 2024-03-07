@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Mapping\Metadata;
@@ -29,6 +28,8 @@ interface ClassMetadataInterface
 
 
 
+
+
     /**
      * Set identifier
      *
@@ -47,6 +48,10 @@ interface ClassMetadataInterface
      * @return mixed
     */
     public function getIdentifier(): mixed;
+
+
+
+
 
 
 

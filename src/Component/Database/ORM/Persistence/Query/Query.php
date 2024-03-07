@@ -92,6 +92,8 @@ class Query implements QueryInterface
              return $this->lastId;
          }
 
+
+         //TODO implements fetchMode ARRAY, OBJECT, COLUMNS, ...
          return $this->collectResults(
              $statement->map($this->getMappedClass())
                        ->fetch()
@@ -179,13 +181,10 @@ class Query implements QueryInterface
 
 
     /**
-     * @return QueryResultInterface
-     * @throws QueryException
+     * @inheritDoc
     */
-    private function fetch(): QueryResultInterface
+    public function fetch(): QueryResultInterface
     {
-
-
         return $this->em->createNativeQuery(
             $this->getSQL(),
             $this->getParameters()

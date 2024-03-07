@@ -5,6 +5,7 @@ namespace Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL;
 
 
 use Laventure\Component\Database\ORM\Persistence\Manager\EntityManagerInterface;
+use Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\Traits\BuilderTrait;
 use Laventure\Component\Database\ORM\Persistence\Query\Query;
 use Laventure\Component\Database\ORM\Persistence\Query\QueryInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Criteria\CriteriaInterface;
@@ -23,11 +24,9 @@ use Laventure\Component\Database\Query\Builder\SQL\SQLBuilderInterface;
 */
 abstract class Builder implements BuilderInterface
 {
-
-
     /**
      * @var EntityManagerInterface
-    */
+     */
     protected EntityManagerInterface $em;
 
 
@@ -36,7 +35,7 @@ abstract class Builder implements BuilderInterface
     /**
      * @var SQLBuilderInterface
     */
-    protected SQLBuilderInterface $builder;
+    protected $builder;
 
 
 
@@ -45,7 +44,7 @@ abstract class Builder implements BuilderInterface
     /**
      * @param EntityManagerInterface $em
      * @param SQLBuilderInterface $builder
-    */
+     */
     public function __construct(
         EntityManagerInterface $em,
         SQLBuilderInterface $builder
@@ -61,10 +60,10 @@ abstract class Builder implements BuilderInterface
 
     /**
      * @inheritDoc
-    */
+     */
     public function getSQL(): string
     {
-         return $this->builder->getSQL();
+        return $this->builder->getSQL();
     }
 
 
@@ -73,7 +72,7 @@ abstract class Builder implements BuilderInterface
 
     /**
      * @inheritDoc
-    */
+     */
     public function setParameters(array $parameters): static
     {
         $this->builder->setParameters($parameters);
@@ -87,12 +86,12 @@ abstract class Builder implements BuilderInterface
 
     /**
      * @inheritDoc
-    */
+     */
     public function setParameter($id, $value): static
     {
-         $this->builder->setParameter($id, $value);
+        $this->builder->setParameter($id, $value);
 
-         return $this;
+        return $this;
     }
 
 
@@ -100,7 +99,7 @@ abstract class Builder implements BuilderInterface
 
     /**
      * @inheritDoc
-    */
+     */
     public function getParameter($id): mixed
     {
         return $this->builder->getParameter($id);
@@ -112,7 +111,7 @@ abstract class Builder implements BuilderInterface
 
     /**
      * @inheritDoc
-    */
+     */
     public function getParameters(): array
     {
         return $this->builder->getParameters();
@@ -124,7 +123,7 @@ abstract class Builder implements BuilderInterface
 
     /**
      * @inheritDoc
-    */
+     */
     public function bindParam($id, $value, int $type = 0): static
     {
         $this->builder->bindParam($id, $value, $type);
@@ -137,7 +136,7 @@ abstract class Builder implements BuilderInterface
 
     /**
      * @inheritDoc
-    */
+     */
     public function bindValue($id, $value, int $type = 0): static
     {
         $this->builder->bindValue($id, $value, $type);
@@ -150,7 +149,7 @@ abstract class Builder implements BuilderInterface
 
     /**
      * @inheritDoc
-    */
+     */
     public function bindColumn($id, $value, int $type = 0): static
     {
         $this->builder->bindColumn($id, $value, $type);
@@ -163,10 +162,10 @@ abstract class Builder implements BuilderInterface
 
     /**
      * @inheritDoc
-    */
+     */
     public function getQuery(): QueryInterface
     {
-         return new Query($this->em, $this);
+        return new Query($this->em, $this);
     }
 
 
@@ -174,10 +173,10 @@ abstract class Builder implements BuilderInterface
 
     /**
      * @inheritDoc
-    */
+     */
     public function expr(): ExpressionBuilderInterface
     {
-       return $this->builder->expr();
+        return $this->builder->expr();
     }
 
 
@@ -185,10 +184,10 @@ abstract class Builder implements BuilderInterface
 
     /**
      * @return CriteriaInterface
-    */
+     */
     public function getCriteria(): CriteriaInterface
     {
-       return $this->builder->getCriteria();
+        return $this->builder->getCriteria();
     }
 
 
@@ -199,7 +198,7 @@ abstract class Builder implements BuilderInterface
 
     /**
      * @return array
-    */
+     */
     public function getBindingParams(): array
     {
         return $this->builder->getBindingParams();
@@ -213,7 +212,7 @@ abstract class Builder implements BuilderInterface
 
     /**
      * @return array
-    */
+     */
     public function getBindingValues(): array
     {
         return $this->builder->getBindingValues();
@@ -226,7 +225,7 @@ abstract class Builder implements BuilderInterface
 
     /**
      * @return array
-    */
+     */
     public function getBindingColumns(): array
     {
         return $this->builder->getBindingColumns();
@@ -241,6 +240,35 @@ abstract class Builder implements BuilderInterface
     */
     public function __toString(): string
     {
-         return $this->getSQL();
+        return $this->getSQL();
+    }
+
+
+
+
+
+
+    /**
+     * @param string $classname
+     * @return string
+    */
+    protected function getTableNameFromClass(string $classname): string
+    {
+        return $this->em->getUnitOfWork()
+                        ->getPersistent($classname)
+                        ->getTableName();
+    }
+
+
+
+
+
+    /**
+     * @param string $classname
+     * @return bool
+    */
+    protected function hasMappedClass(string $classname): bool
+    {
+        return class_exists($classname);
     }
 }

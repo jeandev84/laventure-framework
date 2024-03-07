@@ -5,9 +5,11 @@ namespace Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\DML\Ins
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\ORM\Persistence\Manager\EntityManagerInterface;
+use Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\Builder;
 use Laventure\Component\Database\Query\Builder\SQL\Criteria\CriteriaInterface;
 use Laventure\Component\Database\Query\Builder\SQL\DML\Insert\InsertBuilderInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionBuilderInterface;
+use Laventure\Component\Database\Query\Builder\SQL\SQLBuilderInterface;
 use Laventure\Component\Database\Query\QueryInterface;
 
 /**
@@ -19,173 +21,65 @@ use Laventure\Component\Database\Query\QueryInterface;
  *
  * @package  Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\DML
 */
-class Insert implements InsertBuilderInterface
+class Insert extends Builder
 {
+
+    /**
+     * @var InsertBuilderInterface
+    */
+    protected $builder;
+
+
     /**
      * @param EntityManagerInterface $em
-     * @param string $table
-     * @param array $attributes
+     * @param InsertBuilderInterface $builder
     */
-    public function __construct(
-        protected EntityManagerInterface $em,
-        protected string $table,
-        array $attributes = []
-    )
+    public function __construct(EntityManagerInterface $em, InsertBuilderInterface $builder)
     {
+        parent::__construct($em, $builder);
     }
 
 
 
-
     /**
-     * @inheritDoc
+     * @param string $table
+     * @return $this
     */
     public function insert(string $table): static
     {
+        $this->builder->insert($table);
 
+        return $this;
     }
 
+
+
+
     /**
-     * @inheritDoc
-     */
+     * @param array $values
+     * @return $this
+    */
     public function values(array $values): static
     {
-        // TODO: Implement values() method.
+        $this->builder->values($values);
+
+        return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function hasMultiple(array $values): bool
-    {
-        // TODO: Implement hasMultiple() method.
-    }
+
+
+
 
     /**
-     * @inheritDoc
-     */
-    public function addInsert(array $attributes, int $position = 0): static
-    {
-        // TODO: Implement addInsert() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function addMultipleInsert(array $values): static
-    {
-        // TODO: Implement addMultipleInsert() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
+     * @param string $column
+     * @param $value
+     * @param int $index
+     * @return $this
+    */
     public function setValue(string $column, $value, int $index = 0): static
     {
-        // TODO: Implement setValue() method.
-    }
+        $this->builder->setValue($column, $value, $index);
 
-    /**
-     * @inheritDoc
-     */
-    public function getSQL(): string
-    {
-        // TODO: Implement getSQL() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setParameters(array $parameters): static
-    {
-        // TODO: Implement setParameters() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setParameter($id, $value): static
-    {
-        // TODO: Implement setParameter() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getParameter($id): mixed
-    {
-        // TODO: Implement getParameter() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getParameters(): array
-    {
-        // TODO: Implement getParameters() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function bindParam($id, $value, int $type = 0): static
-    {
-        // TODO: Implement bindParam() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function bindValue($id, $value, int $type = 0): static
-    {
-        // TODO: Implement bindValue() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function bindColumn($id, $value, int $type = 0): static
-    {
-        // TODO: Implement bindColumn() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getConnection(): ConnectionInterface
-    {
-        // TODO: Implement getConnection() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getQuery(): QueryInterface
-    {
-        // TODO: Implement getQuery() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function expr(): ExpressionBuilderInterface
-    {
-        // TODO: Implement expr() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getCriteria(): CriteriaInterface
-    {
-        // TODO: Implement getCriteria() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function __toString()
-    {
-        // TODO: Implement __toString() method.
+        return $this;
     }
 }

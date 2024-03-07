@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\ORM\Persistence\Query;
 
 
+use Laventure\Component\Database\Query\Exception\QueryException;
 use Laventure\Component\Database\Query\Result\QueryResultInterface;
 
 /**
@@ -57,6 +58,22 @@ interface QueryInterface
       * @return string|null
      */
      public function getMappedClass(): ?string;
+
+
+
+
+
+
+
+    /**
+     * This result will not be managed by entity manager
+     *  because it used if you want to implement your custom manager data
+     *
+     * @return QueryResultInterface
+     * @throws QueryException
+    */
+    public function fetch(): QueryResultInterface;
+
 
 
 

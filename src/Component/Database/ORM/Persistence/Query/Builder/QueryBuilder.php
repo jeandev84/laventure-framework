@@ -9,6 +9,7 @@ use Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\DML\Delete\De
 use Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\DML\Insert\Insert;
 use Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\DML\Update\Update;
 use Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\DQL\Select\Select;
+use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
 
 /**
  * QueryBuilder
@@ -22,13 +23,29 @@ use Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\DQL\Select\Se
 class QueryBuilder implements QueryBuilderInterface
 {
 
+
+    /**
+     * @var EntityManagerInterface
+    */
+    protected EntityManagerInterface $em;
+
+
+
+
+    /**
+     * @var SQLQueryBuilderInterface
+    */
+    protected SQLQueryBuilderInterface $builder;
+
+
+
     /**
      * @param EntityManagerInterface $em
     */
-    public function __construct(
-        protected EntityManagerInterface $em
-    )
+    public function __construct(EntityManagerInterface $em)
     {
+           $this->em      = $em;
+           $this->builder = $em->createNativeQueryBuilder();
     }
 
 
@@ -39,7 +56,10 @@ class QueryBuilder implements QueryBuilderInterface
     */
     public function select($columns = null): Select
     {
-         return new Select($this->em, $columns);
+         return new Select(
+             $this->em,
+             $this->builder->select($columns)
+         );
     }
 
 
@@ -51,8 +71,13 @@ class QueryBuilder implements QueryBuilderInterface
     */
     public function insert(string $table, array $attributes): Insert
     {
-        return new Insert($this->em, $table, $attributes);
+        return new Insert(
+            $this->em,
+            $this->builder->insert($table)->values($attributes)
+        );
     }
+
+
 
 
 

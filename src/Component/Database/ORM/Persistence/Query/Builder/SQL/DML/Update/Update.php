@@ -5,6 +5,8 @@ namespace Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\DML\Upd
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\ORM\Persistence\Manager\EntityManagerInterface;
+use Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\BuilderHasConditions;
+use Laventure\Component\Database\Query\Builder\SQL\Conditions\SQLBuilderHasConditionInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Criteria\CriteriaInterface;
 use Laventure\Component\Database\Query\Builder\SQL\DML\Update\UpdateBuilderInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionBuilderInterface;
@@ -19,7 +21,7 @@ use Laventure\Component\Database\Query\QueryInterface;
  *
  * @package  Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\DML\Update
 */
-class Update implements UpdateBuilderInterface
+class Update extends BuilderHasConditions
 {
 
       /**
@@ -27,21 +29,41 @@ class Update implements UpdateBuilderInterface
         * @param string $table
         * @param array $attributes
        */
-       public function __construct(
-           protected EntityManagerInterface $em,
-           protected string $table,
+       public function ddd(
+           EntityManagerInterface $em,
+           string $table,
            array $attributes = []
        )
        {
        }
 
-      /**
-       * @inheritDoc
+
+
+
+       /**
+        * @param EntityManagerInterface $em
+        * @param string $table
+        * @param array $attributes
+       */
+       public function __construct(
+           EntityManagerInterface $em,
+           string $table,
+           array $attributes
+       )
+       {
+           parent::__construct($em, $builder);
+       }
+
+
+
+
+       /**
+        * @inheritDoc
        */
        public function criteria(array $conditions): static
-      {
-        // TODO: Implement criteria() method.
-      }
+       {
+
+       }
 
     /**
      * @inheritDoc

@@ -3,12 +3,12 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\DQL\Select;
 
-use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\ORM\Persistence\Manager\EntityManagerInterface;
-use Laventure\Component\Database\Query\Builder\SQL\Criteria\CriteriaInterface;
+use Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\BuilderHasConditions;
+use Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\BuilderInterface;
+use Laventure\Component\Database\ORM\Persistence\Query\Query;
+use Laventure\Component\Database\ORM\Persistence\Query\QueryInterface;
 use Laventure\Component\Database\Query\Builder\SQL\DQL\Select\SelectBuilderInterface;
-use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionBuilderInterface;
-use Laventure\Component\Database\Query\QueryInterface;
 
 /**
  * Select
@@ -19,7 +19,7 @@ use Laventure\Component\Database\Query\QueryInterface;
  *
  * @package  Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\DQL
 */
-class Select
+class Select extends BuilderHasConditions
 {
 
 
@@ -31,14 +31,83 @@ class Select
 
 
     /**
+     * @var SelectBuilderInterface
+    */
+    protected $builder;
+
+
+
+
+
+    /**
      * @param EntityManagerInterface $em
-     * @param null $columns
+     * @param SelectBuilderInterface $builder
     */
-    public function __construct(
-        protected EntityManagerInterface $em,
-        protected $columns = null
-    )
+    public function __construct(EntityManagerInterface $em, SelectBuilderInterface $builder)
     {
+        parent::__construct($em, $builder);
+    }
+
+
+
+
+    /**
+     * @param string $columns
+     * @return $this
+    */
+    public function select(string $columns): static
+    {
+        $this->builder->select($columns);
+
+        return $this;
+    }
+
+
+
+    /**
+     * @return $this
+    */
+    public function distinct(): static
+    {
+        $this->builder->distinct();
+
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @param string $columns
+     * @return $this
+    */
+    public function addSelect(string $columns): static
+    {
+        $this->builder->addSelect($columns);
+
+        return $this;
+    }
+
+
+
+
+    /**
+     * @param string $table
+     * @param string $alias
+     * @return $this
+    */
+    public function from(string $table, string $alias = ''): static
+    {
+        $this->builder->from($table, $alias);
+
+        if ($this->hasMappedClass($table)) {
+            $tableName = $this->getTableNameFromClass($table);
+            $this->builder->from($tableName, $alias);
+            $this->mappedClass = $table;
+        }
+
+        return $this;
     }
 
 
@@ -47,11 +116,49 @@ class Select
 
 
     /**
-     * @inheritDoc
+     * @param string $table
+     * @param string $condition
+     * @return $this
     */
-    public function getSQL(): string
+    public function join(string $table, string $condition): static
     {
+        $this->builder->join($table, $condition);
 
+        return $this;
+    }
+
+
+
+
+
+
+    /**
+     * @param string $table
+     * @param string $condition
+     * @return $this
+    */
+    public function leftJoin(string $table, string $condition): static
+    {
+        $this->builder->leftJoin($table, $condition);
+
+        return $this;
+    }
+
+
+
+
+
+
+    /**
+     * @param string $table
+     * @param string $condition
+     * @return $this
+    */
+    public function rightJoin(string $table, string $condition): static
+    {
+        $this->builder->rightJoin($table, $condition);
+
+        return $this;
     }
 
 
@@ -59,11 +166,32 @@ class Select
 
 
     /**
-     * @return string
+     * @param string $table
+     * @param string $condition
+     * @return $this
     */
-    public function getMappedClass(): string
+    public function innerJoin(string $table, string $condition): static
     {
-        return '';
+        $this->builder->innerJoin($table, $condition);
+
+        return $this;
+    }
+
+
+
+
+
+
+    /**
+     * @param string $table
+     * @param string $condition
+     * @return $this
+    */
+    public function fullJoin(string $table, string $condition): static
+    {
+        $this->builder->fullJoin($table, $condition);
+
+        return $this;
     }
 
 
@@ -71,88 +199,172 @@ class Select
 
 
     /**
-     * @inheritDoc
+     * @param string $join
+     * @return $this
     */
-    public function setParameters(array $parameters): static
+    public function addJoin(string $join): static
     {
+        $this->builder->addJoin($join);
 
+        return $this;
     }
+
 
 
 
 
     /**
-     * @inheritDoc
+     * @param string $columns
+     * @return $this
     */
-    public function setParameter($id, $value): static
+    public function groupBy(string $columns): static
     {
+        $this->builder->groupBy($columns);
 
+        return $this;
     }
+
+
 
 
 
 
     /**
-     * @inheritDoc
+     * @param string $columns
+     * @return $this
     */
-    public function getParameter($id): mixed
+    public function addGroupBy(string $columns): static
     {
+        $this->builder->addGroupBy($columns);
 
+        return $this;
     }
+
+
 
 
 
 
     /**
-     * @inheritDoc
+     * @param string $condition
+     * @param $type
+     * @return $this
     */
-    public function getParameters(): array
+    public function addHaving(string $condition, $type = null): static
     {
+        $this->builder->addHaving($condition, $type);
 
+        return $this;
     }
+
+
 
 
 
 
     /**
-     * @inheritDoc
+     * @param string $condition
+     * @return $this
     */
-    public function bindParam($id, $value, int $type = 0): static
+    public function having(string $condition): static
     {
+        $this->builder->having($condition);
 
+        return $this;
     }
+
 
 
 
 
     /**
-     * @inheritDoc
+     * @param string $condition
+     * @return $this
     */
-    public function bindValue($id, $value, int $type = 0): static
+    public function andHaving(string $condition): static
     {
+        $this->builder->addHaving($condition);
 
+        return $this;
     }
+
+
 
 
 
 
     /**
-     * @inheritDoc
+     * @param string $condition
+     * @return $this
     */
-    public function bindColumn($id, $value, int $type = 0): static
+    public function orHaving(string $condition): static
     {
+        $this->builder->orHaving($condition);
 
+        return $this;
     }
+
+
 
 
 
     /**
-     * @inheritDoc
+     * @param string $column
+     * @param string|null $direction
+     * @return $this
     */
-    public function getConnection(): ConnectionInterface
+    public function orderBy(string $column, string $direction = null): static
     {
+        $this->builder->orderBy($column, $direction);
 
+        return $this;
     }
+
+
+
+
+
+    /**
+     * @param array $orders
+     * @return $this
+    */
+    public function addOrderBy(array $orders): static
+    {
+        $this->builder->addOrderBy($orders);
+
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @param $limit
+     * @return $this
+    */
+    public function limit($limit): static
+    {
+        $this->builder->limit($limit);
+
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @param $offset
+     * @return $this
+    */
+    public function offset($offset): static
+    {
+        $this->builder->offset($offset);
+
+        return $this;
+    }
+
 
 
 
@@ -162,254 +374,6 @@ class Select
     */
     public function getQuery(): QueryInterface
     {
-        // TODO: Implement getQuery() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function expr(): ExpressionBuilderInterface
-    {
-        // TODO: Implement expr() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getCriteria(): CriteriaInterface
-    {
-        // TODO: Implement getCriteria() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function select(string $columns): static
-    {
-        // TODO: Implement select() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function distinct(): static
-    {
-        // TODO: Implement distinct() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function addSelect(string $columns): static
-    {
-        // TODO: Implement addSelect() method.
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function from(string $table, string $alias = ''): static
-    {
-
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function join(string $table, string $condition): static
-    {
-
-    }
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function leftJoin(string $table, string $condition): static
-    {
-        return $this;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function rightJoin(string $table, string $condition): static
-    {
-        // TODO: Implement rightJoin() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function innerJoin(string $table, string $condition): static
-    {
-        // TODO: Implement innerJoin() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function fullJoin(string $table, string $condition): static
-    {
-        // TODO: Implement fullJoin() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function addJoin(string $join): static
-    {
-        // TODO: Implement addJoin() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function groupBy(string $columns): static
-    {
-        // TODO: Implement groupBy() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function addGroupBy(string $columns): static
-    {
-        // TODO: Implement addGroupBy() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function addHaving(string $condition, $type = null): static
-    {
-        // TODO: Implement addHaving() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function having(string $condition): static
-    {
-        // TODO: Implement having() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function andHaving(string $condition): static
-    {
-        // TODO: Implement andHaving() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function orHaving(string $condition): static
-    {
-        // TODO: Implement orHaving() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function orderBy(string $column, string $direction = null): static
-    {
-        // TODO: Implement orderBy() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function addOrderBy(array $orders): static
-    {
-        // TODO: Implement addOrderBy() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function limit($limit): static
-    {
-        // TODO: Implement limit() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function offset($offset): static
-    {
-        // TODO: Implement offset() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function __toString()
-    {
-        // TODO: Implement __toString() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function where($condition): static
-    {
-        // TODO: Implement where() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function whereIn($column, array $value): static
-    {
-        // TODO: Implement whereIn() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function whereEqualTo($column, $value): static
-    {
-        // TODO: Implement whereEqualTo() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function andWhere($condition): static
-    {
-        // TODO: Implement andWhere() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function orWhere($condition): static
-    {
-        // TODO: Implement orWhere() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function addWhere($condition, $type = null): static
-    {
-        // TODO: Implement addWhere() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getWheres(): array
-    {
-        // TODO: Implement getWheres() method.
+        return new Query($this->em, $this, $this->mappedClass);
     }
 }
