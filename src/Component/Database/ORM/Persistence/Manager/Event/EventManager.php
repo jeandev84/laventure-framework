@@ -200,7 +200,7 @@ class EventManager implements EventManagerInterface
      */
     private function prePersist(PrePersistEvent $event): void
     {
-        $this->call($event, Event::prePersist);
+        $this->callObjectEvent($event, Event::prePersist);
     }
 
 
@@ -213,7 +213,7 @@ class EventManager implements EventManagerInterface
      */
     private function postPersist(PostPersistEvent $event): void
     {
-        $this->call($event, Event::postPersist);
+        $this->callObjectEvent($event, Event::postPersist);
     }
 
 
@@ -226,7 +226,7 @@ class EventManager implements EventManagerInterface
      */
     private function preUpdate(PreUpdateEvent $event): void
     {
-        $this->call($event, Event::preUpdate);
+        $this->callObjectEvent($event, Event::preUpdate);
     }
 
 
@@ -240,7 +240,7 @@ class EventManager implements EventManagerInterface
      */
     private function postUpdate(PostUpdateEvent $event): void
     {
-        $this->call($event, Event::postUpdate);
+        $this->callObjectEvent($event, Event::postUpdate);
     }
 
 
@@ -253,7 +253,7 @@ class EventManager implements EventManagerInterface
      */
     private function preRemove(PreRemoveEvent $event): void
     {
-        $this->call($event, Event::preRemove);
+        $this->callObjectEvent($event, Event::preRemove);
     }
 
 
@@ -266,7 +266,7 @@ class EventManager implements EventManagerInterface
      */
     private function postRemove(PostRemoveEvent $event): void
     {
-        $this->call($event, Event::postRemove);
+        $this->callObjectEvent($event, Event::postRemove);
     }
 
 
@@ -280,8 +280,12 @@ class EventManager implements EventManagerInterface
      *
      * @return void
     */
-    private function call(ObjectEvent $event, string $method): void
+    private function callObjectEvent(ObjectEvent $event, string $method): void
     {
         $object = $event->getSubject();
+
+        if ($this->reflectionService->hasPublicMethod($object, $method)) {
+            call_user_func([$object, $method], $event);
+        }
     }
 }
