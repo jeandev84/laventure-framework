@@ -63,9 +63,9 @@ class Definition extends Configuration
 
 
     /**
-     * @var EventManagerInterface
+     * @var EventManagerInterface|null
     */
-    protected EventManagerInterface $eventManager;
+    protected ?EventManagerInterface $eventManager;
 
 
 
@@ -80,7 +80,6 @@ class Definition extends Configuration
          $this->connection        = $connection;
          $this->metadataFactory   = new ClassMetadataFactory();
          $this->unitOfWorkFactory = new UnitOfWorkFactory();
-         $this->eventManager      = new EventManager();
          $this->repositoryFactory = new EntityRepositoryFactory();
     }
 
@@ -151,6 +150,12 @@ class Definition extends Configuration
     */
     public function getEventManager(): EventManagerInterface
     {
+        if (!$this->eventManager) {
+            $this->eventManager = new EventManager(
+                $this->getReflectionService()
+            );
+        }
+
         return $this->eventManager;
     }
 
