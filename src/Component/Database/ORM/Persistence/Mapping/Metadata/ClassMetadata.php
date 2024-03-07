@@ -74,6 +74,19 @@ class ClassMetadata implements ClassMetadataInterface
 
 
 
+    /**
+     * @param $class
+     * @return static
+     * @throws ReflectionException
+    */
+    public static function create($class): static
+    {
+        return new static($class);
+    }
+
+
+
+
 
     /**
      * @inheritDoc
@@ -222,12 +235,26 @@ class ClassMetadata implements ClassMetadataInterface
 
 
 
+
+    /**
+     * Returns identifier value
+     *
+     * @return mixed
+    */
+    public function getId(): mixed
+    {
+        return $this->getIdentifierValue($this->identifier);
+    }
+
+
+
+
     /**
      * @return bool
     */
     public function isNew(): bool
     {
-        return is_null($this->getIdentifierValue($this->identifier));
+        return is_null($this->getId());
     }
 
 

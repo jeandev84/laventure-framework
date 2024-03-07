@@ -9,6 +9,7 @@ use Laventure\Component\Database\ORM\Persistence\Manager\Config\Configuration;
 use Laventure\Component\Database\ORM\Persistence\Manager\Contract\EntityManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Manager\Event\EventManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Manager\Exception\EntityManagerException;
+use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\ClassMetadata;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\ClassMetadataInterface;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Factory\ClassMetadataFactoryInterface;
 use Laventure\Component\Database\ORM\Persistence\Query\Builder\QueryBuilder;
@@ -96,16 +97,6 @@ class EntityManager implements EntityManagerInterface
      * @var object[]
     */
     protected array $initialized = [];
-
-
-
-
-    /**
-     * @var object[]
-    */
-    protected array $managed = [];
-
-
 
 
 
@@ -364,8 +355,6 @@ class EntityManager implements EntityManagerInterface
 
 
 
-
-
     /**
      * @inheritDoc
     */
@@ -435,13 +424,19 @@ class EntityManager implements EntityManagerInterface
     /**
      * @inheritDoc
     */
-    public function initializeObject(object $object): static
+    public function initializeObject(object $object): object
     {
         $this->abortIfIsClosed($object);
 
-        $this->initialized[] = $object;
+        $class = ClassMetadata::create($object);
+        $id    = $class->getId();
+        $name  = $class->getName();
 
-        return $this;
+        if (!isset($this->initialized[$name][$id])) {
+            $this->initialized[$name][$id] = $object;
+        }
+
+        return $this->initialized[$name][$id];
     }
 
 

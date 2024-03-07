@@ -54,12 +54,14 @@ class Book
      public function __construct(
          string $title,
          string $description,
-         float $price
+         float $price,
+         int $id = null
      )
      {
          $this->title = $title;
          $this->description = $description;
          $this->price = $price;
+         $this->id  = $id;
      }
 
 
