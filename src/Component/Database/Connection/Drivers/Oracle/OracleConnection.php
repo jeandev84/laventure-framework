@@ -1,8 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Connection\Drivers\Pgsql;
+namespace Laventure\Component\Database\Connection\Drivers\Oracle;
 
+use Laventure\Component\Database\Connection\Drivers\Oracle\Table\OracleTable;
 use Laventure\Component\Database\Connection\Extensions\PDO\PdoConnection;
 use Laventure\Component\Database\Connection\Name\ConnectionName;
 use Laventure\Component\Database\DatabaseInterface;
@@ -10,15 +11,15 @@ use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
 use Laventure\Component\Database\Schema\Table\TableInterface;
 
 /**
- * PgsqlPdoConnection
+ * OracleConnection
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\PdoConnection\Drivers\Pgsql
+ * @package  Laventure\Component\Database\PdoConnection\Drivers\Oracle
 */
-class PgsqlPdoConnection extends PdoConnection
+class OracleConnection extends PdoConnection
 {
 
     /**
@@ -26,8 +27,19 @@ class PgsqlPdoConnection extends PdoConnection
     */
     public function getName(): string
     {
-        return ConnectionName::Pgsql;
+        return ConnectionName::Oracle;
     }
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getDatabase(): DatabaseInterface
+    {
+        return new OracleDatabase($this);
+    }
+
 
 
 
@@ -37,8 +49,9 @@ class PgsqlPdoConnection extends PdoConnection
     */
     public function createQueryBuilder(): SQLQueryBuilderInterface
     {
-        return new PgsqlQueryBuilder($this->createSQLBuilderFactory());
+        return new OracleQueryBuilder($this->createSQLBuilderFactory());
     }
+
 
 
 
@@ -46,10 +59,11 @@ class PgsqlPdoConnection extends PdoConnection
     /**
      * @inheritDoc
     */
-    public function getDatabase(): DatabaseInterface
+    public function createTable(string $name, string $schemaName = ''): TableInterface
     {
-        return new PgsqlDatabase($this);
+        return new OracleTable($this, $name, $schemaName);
     }
+
 
 
 
@@ -64,22 +78,12 @@ class PgsqlPdoConnection extends PdoConnection
 
 
 
+
     /**
      * @inheritDoc
     */
     public function disableTransaction(): void
     {
 
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function createTable(string $name, string $schemaName = ''): TableInterface
-    {
-        // TODO: Implement createTable() method.
     }
 }

@@ -12,7 +12,7 @@ use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
 use Laventure\Component\Database\Schema\Table\TableInterface;
 
 /**
- * SqlitePdoConnection
+ * SqliteConnection
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -20,7 +20,7 @@ use Laventure\Component\Database\Schema\Table\TableInterface;
  *
  * @package  Laventure\Component\Database\PdoConnection\Drivers\Sqlite
 */
-class SqlitePdoConnection extends PdoConnection
+class SqliteConnection extends PdoConnection
 {
 
     /**

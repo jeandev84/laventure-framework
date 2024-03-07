@@ -4,10 +4,10 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Manager;
 
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
-use Laventure\Component\Database\Connection\Drivers\Mysql\MysqlPdoConnection;
-use Laventure\Component\Database\Connection\Drivers\Oracle\OraclePdoConnection;
-use Laventure\Component\Database\Connection\Drivers\Pgsql\PgsqlPdoConnection;
-use Laventure\Component\Database\Connection\Drivers\Sqlite\SqlitePdoConnection;
+use Laventure\Component\Database\Connection\Drivers\Mysql\MysqlConnection;
+use Laventure\Component\Database\Connection\Drivers\Oracle\OracleConnection;
+use Laventure\Component\Database\Connection\Drivers\Pgsql\PgsqlConnection;
+use Laventure\Component\Database\Connection\Drivers\Sqlite\SqliteConnection;
 use Laventure\Component\Database\Manager\Config\ManagerConfiguration;
 use Laventure\Component\Database\Manager\Config\ManagerConfigurationInterface;
 use Laventure\Component\Database\Manager\Contract\ManagerInterface;
@@ -166,10 +166,10 @@ class Manager extends DatabaseManager implements ManagerInterface
     public function getDefaultConnections(): array
     {
         return [
-            new MysqlPdoConnection(),
-            new PgsqlPdoConnection(),
-            new SqlitePdoConnection(),
-            new OraclePdoConnection()
+            new MysqlConnection(),
+            new PgsqlConnection(),
+            new SqliteConnection(),
+            new OracleConnection()
         ];
     }
 

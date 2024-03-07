@@ -11,7 +11,7 @@ use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
 use Laventure\Component\Database\Schema\Table\TableInterface;
 
 /**
- * MysqlPdoConnection
+ * MysqlConnection
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -19,7 +19,7 @@ use Laventure\Component\Database\Schema\Table\TableInterface;
  *
  * @package  Laventure\Component\Database\PdoConnection\Drivers\Mysql
 */
-class MysqlPdoConnection extends PdoConnection
+class MysqlConnection extends PdoConnection
 {
 
     /**
