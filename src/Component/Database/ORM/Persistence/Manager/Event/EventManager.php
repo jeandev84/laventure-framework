@@ -11,6 +11,7 @@ use Laventure\Component\Database\ORM\Persistence\Manager\Events\PostUpdateEvent;
 use Laventure\Component\Database\ORM\Persistence\Manager\Events\PrePersistEvent;
 use Laventure\Component\Database\ORM\Persistence\Manager\Events\PreRemoveEvent;
 use Laventure\Component\Database\ORM\Persistence\Manager\Events\PreUpdateEvent;
+use Laventure\Component\Database\ORM\Persistence\Mapping\Service\ReflectionServiceInterface;
 
 /**
  * EventManager
@@ -28,6 +29,17 @@ class EventManager implements EventManagerInterface
      * @var array
     */
     protected array $listeners = [];
+
+
+
+    /**
+     * @param ReflectionServiceInterface $reflectionService
+    */
+    public function __construct(
+        protected ReflectionServiceInterface $reflectionService
+    )
+    {
+    }
 
 
 

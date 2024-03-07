@@ -10,6 +10,8 @@ use Laventure\Component\Database\ORM\Persistence\Manager\Event\EventManager;
 use Laventure\Component\Database\ORM\Persistence\Manager\Event\EventManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Factory\ClassMetadataFactory;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Factory\ClassMetadataFactoryInterface;
+use Laventure\Component\Database\ORM\Persistence\Mapping\Service\ReflectionService;
+use Laventure\Component\Database\ORM\Persistence\Mapping\Service\ReflectionServiceInterface;
 use Laventure\Component\Database\ORM\Persistence\Repository\Factory\EntityRepositoryFactory;
 use Laventure\Component\Database\ORM\Persistence\Repository\Factory\EntityRepositoryFactoryInterface;
 use Laventure\Component\Database\ORM\Persistence\UnitOfWork\Factory\UnitOfWorkFactory;
@@ -180,5 +182,17 @@ class Definition extends Configuration
     public function getRepositoryFactory(): EntityRepositoryFactoryInterface
     {
          return $this->repositoryFactory;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getReflectionService(): ReflectionServiceInterface
+    {
+        return new ReflectionService($this->metadataFactory);
     }
 }
