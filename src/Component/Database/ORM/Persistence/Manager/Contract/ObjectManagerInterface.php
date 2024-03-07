@@ -36,7 +36,7 @@ interface ObjectManagerInterface
      * @param $id
      * @return object|null
     */
-    public function find(string $classname, $id): ?object;
+    public function find(string $classname, $id): mixed;
 
 
 

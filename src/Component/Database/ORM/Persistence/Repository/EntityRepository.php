@@ -54,7 +54,7 @@ class EntityRepository implements EntityRepositoryInterface
     /**
      * @inheritDoc
     */
-    public function find($id): object|null|false
+    public function find($id): mixed
     {
         return $this->em->find($this->getClassName(), $id);
     }
@@ -66,7 +66,7 @@ class EntityRepository implements EntityRepositoryInterface
     /**
      * @inheritDoc
     */
-    public function findOneBy(array $criteria, array $orderBy = []): object|null|false
+    public function findOneBy(array $criteria, array $orderBy = []): mixed
     {
         return $this->createQueryBuilder($this->getAlias())
                     ->criteria($criteria)

@@ -63,21 +63,6 @@ interface QueryInterface
 
 
 
-
-    /**
-     * This result will not be managed by entity manager
-     *  because it used if you want to implement your custom manager data
-     *
-     * @return QueryResultInterface
-     * @throws QueryException
-    */
-    public function fetch(): QueryResultInterface;
-
-
-
-
-
-
     /**
      * Returns all results
      *

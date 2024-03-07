@@ -446,7 +446,7 @@ class EntityManager implements EntityManagerInterface
     /**
      * @inheritDoc
     */
-    public function find(string $classname, $id): ?object
+    public function find(string $classname, $id): mixed
     {
         return $this->unitOfWork
                     ->mappedClass($classname)
