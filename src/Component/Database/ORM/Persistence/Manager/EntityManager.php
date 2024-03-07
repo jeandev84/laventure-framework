@@ -6,6 +6,7 @@ namespace Laventure\Component\Database\ORM\Persistence\Manager;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\ORM\Persistence\Manager\Config\Configuration;
 use Laventure\Component\Database\ORM\Persistence\Manager\Event\EventManagerInterface;
+use Laventure\Component\Database\ORM\Persistence\Manager\Exception\EntityManagerException;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\ClassMetadataInterface;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Factory\ClassMetadataFactoryInterface;
 use Laventure\Component\Database\ORM\Persistence\Query\Builder\QueryBuilderInterface;
@@ -14,6 +15,7 @@ use Laventure\Component\Database\ORM\Persistence\Repository\ObjectRepositoryInte
 use Laventure\Component\Database\ORM\UnitOfWork\UnitOfWorkInterface;
 use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
 use Laventure\Component\Database\Query\QueryInterface;
+use Throwable;
 
 /**
  * EntityManager
@@ -110,7 +112,7 @@ class EntityManager implements EntityManagerInterface
     /**
      * @var bool
     */
-    protected bool $enabled = false;
+    protected bool $enabled = true;
 
 
 
@@ -138,6 +140,19 @@ class EntityManager implements EntityManagerInterface
     public function isOpen(): bool
     {
         return $this->enabled;
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function resetManager(): static
+    {
+        $this->enabled = true;
+
+        return $this;
     }
 
 
@@ -227,21 +242,6 @@ class EntityManager implements EntityManagerInterface
 
 
 
-    /**
-     * @inheritDoc
-    */
-    public function resetManager(): static
-    {
-        $this->enabled = true;
-
-        return $this;
-    }
-
-
-
-
-
-
 
     /**
      * @inheritDoc
@@ -250,6 +250,8 @@ class EntityManager implements EntityManagerInterface
     {
         return $this->connection->beginTransaction();
     }
+
+
 
 
 
@@ -275,13 +277,24 @@ class EntityManager implements EntityManagerInterface
 
 
 
+
+
     /**
      * @inheritDoc
     */
-    public function transaction(callable $func): mixed
+    public function transaction(callable $func): bool
     {
-
+        try {
+            $this->beginTransaction();
+            $func($this);
+            return $this->commit();
+        } catch (Throwable $e) {
+            $this->rollback();
+            $this->close();
+            throw new EntityManagerException($e->getMessage());
+        }
     }
+
 
 
 
@@ -291,7 +304,7 @@ class EntityManager implements EntityManagerInterface
     */
     public function createNativeQueryBuilder(): SQLQueryBuilderInterface
     {
-
+         return $this->connection->createQueryBuilder();
     }
 
 
@@ -324,9 +337,11 @@ class EntityManager implements EntityManagerInterface
     /**
      * @inheritDoc
     */
-    public function initializeObject(object $object): mixed
+    public function initializeObject(object $object): static
     {
+        $this->initialized[] = $object;
 
+        return $this;
     }
 
 
@@ -338,8 +353,9 @@ class EntityManager implements EntityManagerInterface
     */
     public function find(string $classname, $id): ?object
     {
-
+        return $this->getRepository($classname)->find($id);
     }
+
 
 
 
@@ -350,7 +366,9 @@ class EntityManager implements EntityManagerInterface
     */
     public function persist(object $object): void
     {
+        $this->abortIfIsClosed($object);
 
+        $this->unitOfWork->persist($object);
     }
 
 
@@ -362,7 +380,9 @@ class EntityManager implements EntityManagerInterface
     */
     public function remove(object $object): void
     {
+        $this->abortIfIsClosed($object);
 
+        $this->unitOfWork->remove($object);
     }
 
 
@@ -374,7 +394,9 @@ class EntityManager implements EntityManagerInterface
     */
     public function contains(object $object): bool
     {
+        $this->abortIfIsClosed($object);
 
+        return $this->unitOfWork->contains($object);
     }
 
 
@@ -386,8 +408,12 @@ class EntityManager implements EntityManagerInterface
     */
     public function detach(object $object): void
     {
+        $this->abortIfIsClosed($object);
 
+        $this->unitOfWork->detach($object);
     }
+
+
 
 
 
@@ -397,7 +423,9 @@ class EntityManager implements EntityManagerInterface
     */
     public function refresh(object $object): void
     {
+        $this->abortIfIsClosed($object);
 
+        $this->unitOfWork->refresh($object);
     }
 
 
@@ -409,7 +437,9 @@ class EntityManager implements EntityManagerInterface
     */
     public function flush(): void
     {
-
+        if ($this->isOpen()) {
+            $this->unitOfWork->commit();
+        }
     }
 
 
@@ -435,5 +465,20 @@ class EntityManager implements EntityManagerInterface
     public function close(): void
     {
         $this->enabled = false;
+    }
+
+
+
+
+    /**
+     * @param object $object
+     * @return void
+     * @throws EntityManagerException
+    */
+    private function abortIfIsClosed(object $object): void
+    {
+        if (!$this->enabled) {
+            throw new EntityManagerException("Entity manager closed");
+        }
     }
 }
