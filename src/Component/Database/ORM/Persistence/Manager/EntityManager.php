@@ -9,6 +9,7 @@ use Laventure\Component\Database\ORM\Persistence\Manager\Event\EventManagerInter
 use Laventure\Component\Database\ORM\Persistence\Manager\Exception\EntityManagerException;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\ClassMetadataInterface;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Factory\ClassMetadataFactoryInterface;
+use Laventure\Component\Database\ORM\Persistence\Query\Builder\QueryBuilder;
 use Laventure\Component\Database\ORM\Persistence\Query\Builder\QueryBuilderInterface;
 use Laventure\Component\Database\ORM\Persistence\Repository\Factory\ObjectRepositoryFactoryInterface;
 use Laventure\Component\Database\ORM\Persistence\Repository\ObjectRepositoryInterface;
@@ -163,6 +164,8 @@ class EntityManager implements EntityManagerInterface
     */
     public function getConfiguration(): Configuration
     {
+        $this->abortIfIsClosed();
+
         return $this->config;
     }
 
@@ -175,6 +178,8 @@ class EntityManager implements EntityManagerInterface
     */
     public function getConnection(): ConnectionInterface
     {
+        $this->abortIfIsClosed();
+
         return $this->connection;
     }
 
@@ -187,6 +192,8 @@ class EntityManager implements EntityManagerInterface
     */
     public function getUnitOfWork(): UnitOfWorkInterface
     {
+        $this->abortIfIsClosed();
+
         return $this->unitOfWork;
     }
 
@@ -198,8 +205,64 @@ class EntityManager implements EntityManagerInterface
     */
     public function getEventManager(): EventManagerInterface
     {
-       return $this->eventManager;
+        $this->abortIfIsClosed();
+
+        return $this->eventManager;
     }
+
+
+
+
+
+
+    /**
+     * Add repositories
+     *
+     * @param array $repositories
+     * @return $this
+    */
+    public function addRepositories(array $repositories): static
+    {
+       foreach ($repositories as $repository){
+           $this->addRepository($repository);
+       }
+
+       return $this;
+    }
+
+
+
+
+
+    /**
+     * Add repository
+     *
+     * @param ObjectRepositoryInterface $repository
+     * @return $this
+    */
+    public function addRepository(ObjectRepositoryInterface $repository): static
+    {
+         $this->repositories[$repository->getClassName()] = $repository;
+
+         return $this;
+    }
+
+
+
+
+
+
+    /**
+     * Determine if given class name has repository
+     *
+     * @param string $classname
+     * @return bool
+    */
+    public function hasRepository(string $classname): bool
+    {
+        return isset($this->repositories[$classname]);
+    }
+
 
 
 
@@ -209,7 +272,20 @@ class EntityManager implements EntityManagerInterface
     */
     public function getRepository(string $classname): ObjectRepositoryInterface
     {
-        return $this->repositoryFactory->createRepository($classname);
+        $this->abortIfIsClosed();
+
+        if ($this->hasRepository($classname)) {
+            return $this->repositories[$classname];
+        }
+
+        if (!$repository = $this->repositoryFactory->createRepository($classname)) {
+            $repository = $this->repositoryFactory->createDefaultRepository(
+                $this,
+                $classname
+            );
+        }
+
+        return $this->repositories[$classname] = $repository;
     }
 
 
@@ -222,6 +298,8 @@ class EntityManager implements EntityManagerInterface
     */
     public function getClassMetadata(string $classname): ClassMetadataInterface
     {
+        $this->abortIfIsClosed();
+
         return $this->getMetadataFactory()->getMetadataFor($classname);
     }
 
@@ -234,8 +312,56 @@ class EntityManager implements EntityManagerInterface
     */
     public function getMetadataFactory(): ClassMetadataFactoryInterface
     {
+        $this->abortIfIsClosed();
+
         return $this->metadataFactory;
     }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function createNativeQueryBuilder(): SQLQueryBuilderInterface
+    {
+        $this->abortIfIsClosed();
+
+        return $this->connection->createQueryBuilder();
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function createNativeQuery(string $sql, array $params = []): QueryInterface
+    {
+        $this->abortIfIsClosed();
+
+        return $this->connection->statement($sql)->setParameters($params);
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function createQueryBuilder(): QueryBuilderInterface
+    {
+        $this->abortIfIsClosed();
+
+        return new QueryBuilder($this);
+    }
+
+
+
 
 
 
@@ -248,6 +374,8 @@ class EntityManager implements EntityManagerInterface
     */
     public function beginTransaction(): bool
     {
+        $this->abortIfIsClosed();
+
         return $this->connection->beginTransaction();
     }
 
@@ -261,8 +389,12 @@ class EntityManager implements EntityManagerInterface
     */
     public function commit(): bool
     {
+        $this->abortIfIsClosed();
+
         return $this->connection->commit();
     }
+
+
 
 
 
@@ -272,7 +404,9 @@ class EntityManager implements EntityManagerInterface
     */
     public function rollback(): bool
     {
-         return $this->connection->rollback();
+        $this->abortIfIsClosed();
+
+        return $this->connection->rollback();
     }
 
 
@@ -299,39 +433,6 @@ class EntityManager implements EntityManagerInterface
 
 
 
-    /**
-     * @inheritDoc
-    */
-    public function createNativeQueryBuilder(): SQLQueryBuilderInterface
-    {
-         return $this->connection->createQueryBuilder();
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function createNativeQuery(string $sql, array $params = []): QueryInterface
-    {
-
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function createQueryBuilder(): QueryBuilderInterface
-    {
-
-    }
-
-
-
-
 
 
     /**
@@ -339,6 +440,8 @@ class EntityManager implements EntityManagerInterface
     */
     public function initializeObject(object $object): static
     {
+        $this->abortIfIsClosed($object);
+
         $this->initialized[] = $object;
 
         return $this;
@@ -451,7 +554,7 @@ class EntityManager implements EntityManagerInterface
     */
     public function clear(): void
     {
-
+        $this->unitOfWork->clear();
     }
 
 
@@ -464,18 +567,21 @@ class EntityManager implements EntityManagerInterface
     */
     public function close(): void
     {
-        $this->enabled = false;
+        if ($this->isOpen()) {
+            $this->enabled = false;
+        }
     }
 
 
 
 
+
     /**
-     * @param object $object
+     * @param object|null $object $object
      * @return void
      * @throws EntityManagerException
     */
-    private function abortIfIsClosed(object $object): void
+    private function abortIfIsClosed(object $object = null): void
     {
         if (!$this->enabled) {
             throw new EntityManagerException("Entity manager closed");

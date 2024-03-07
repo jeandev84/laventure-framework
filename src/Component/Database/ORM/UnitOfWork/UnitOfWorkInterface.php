@@ -164,6 +164,19 @@ interface UnitOfWorkInterface
 
 
 
+
+    /**
+     * Clear all object from the storage
+     *
+     * @return void
+    */
+    public function clear(): void;
+
+
+
+
+
+
     /**
      * Commit changes
      *

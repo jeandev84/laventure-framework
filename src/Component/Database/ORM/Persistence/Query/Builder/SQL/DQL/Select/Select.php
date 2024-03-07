@@ -24,9 +24,11 @@ class Select implements SelectBuilderInterface
 
     /**
      * @param EntityManagerInterface $em
+     * @param null $columns
     */
     public function __construct(
-        protected EntityManagerInterface $em
+        protected EntityManagerInterface $em,
+        protected $columns = null
     )
     {
     }

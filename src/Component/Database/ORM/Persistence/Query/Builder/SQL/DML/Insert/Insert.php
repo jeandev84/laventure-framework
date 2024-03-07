@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\DML\Insert;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
+use Laventure\Component\Database\ORM\Persistence\Manager\EntityManagerInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Criteria\CriteriaInterface;
 use Laventure\Component\Database\Query\Builder\SQL\DML\Insert\InsertBuilderInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionBuilderInterface;
@@ -20,6 +21,21 @@ use Laventure\Component\Database\Query\QueryInterface;
 */
 class Insert implements InsertBuilderInterface
 {
+    /**
+     * @param EntityManagerInterface $em
+     * @param string $table
+     * @param array $attributes
+    */
+    public function __construct(
+        protected EntityManagerInterface $em,
+        protected string $table,
+        array $attributes = []
+    )
+    {
+    }
+
+
+
 
     /**
      * @inheritDoc
