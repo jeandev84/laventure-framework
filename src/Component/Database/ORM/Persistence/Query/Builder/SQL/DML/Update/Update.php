@@ -24,31 +24,23 @@ use Laventure\Component\Database\Query\QueryInterface;
 class Update extends BuilderHasConditions
 {
 
-      /**
-        * @param EntityManagerInterface $em
-        * @param string $table
-        * @param array $attributes
+
+       /**
+        * @var UpdateBuilderInterface
        */
-       public function ddd(
-           EntityManagerInterface $em,
-           string $table,
-           array $attributes = []
-       )
-       {
-       }
+       protected $builder;
+
 
 
 
 
        /**
         * @param EntityManagerInterface $em
-        * @param string $table
-        * @param array $attributes
+        * @param UpdateBuilderInterface $builder
        */
        public function __construct(
            EntityManagerInterface $em,
-           string $table,
-           array $attributes
+           UpdateBuilderInterface $builder
        )
        {
            parent::__construct($em, $builder);
@@ -57,187 +49,32 @@ class Update extends BuilderHasConditions
 
 
 
-       /**
-        * @inheritDoc
-       */
-       public function criteria(array $conditions): static
-       {
 
+       /**
+        * @param string $table
+        * @return $this
+       */
+       public function update(string $table): static
+       {
+          $this->builder->update($table);
+
+           return $this;
        }
 
-    /**
-     * @inheritDoc
-     */
-    public function getSQL(): string
-    {
-        // TODO: Implement getSQL() method.
-    }
 
-    /**
-     * @inheritDoc
-     */
-    public function setParameters(array $parameters): static
-    {
-        // TODO: Implement setParameters() method.
-    }
 
-    /**
-     * @inheritDoc
-     */
-    public function setParameter($id, $value): static
-    {
-        // TODO: Implement setParameter() method.
-    }
 
-    /**
-     * @inheritDoc
-     */
-    public function getParameter($id): mixed
-    {
-        // TODO: Implement getParameter() method.
-    }
 
-    /**
-     * @inheritDoc
-     */
-    public function getParameters(): array
-    {
-        // TODO: Implement getParameters() method.
-    }
 
-    /**
-     * @inheritDoc
-     */
-    public function bindParam($id, $value, int $type = 0): static
-    {
-        // TODO: Implement bindParam() method.
-    }
+       /**
+        * @param $column
+        * @param $value
+        * @return $this
+       */
+       public function set($column, $value): static
+       {
+          $this->builder->set($column, $value);
 
-    /**
-     * @inheritDoc
-     */
-    public function bindValue($id, $value, int $type = 0): static
-    {
-        // TODO: Implement bindValue() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function bindColumn($id, $value, int $type = 0): static
-    {
-        // TODO: Implement bindColumn() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getConnection(): ConnectionInterface
-    {
-        // TODO: Implement getConnection() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getQuery(): QueryInterface
-    {
-        // TODO: Implement getQuery() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function expr(): ExpressionBuilderInterface
-    {
-        // TODO: Implement expr() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getCriteria(): CriteriaInterface
-    {
-        // TODO: Implement getCriteria() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function set($column, $value): static
-    {
-        // TODO: Implement set() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function __toString()
-    {
-        // TODO: Implement __toString() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function update(string $table): static
-    {
-        // TODO: Implement update() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function where($condition): static
-    {
-        // TODO: Implement where() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function whereIn($column, array $value): static
-    {
-        // TODO: Implement whereIn() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function whereEqualTo($column, $value): static
-    {
-        // TODO: Implement whereEqualTo() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function andWhere($condition): static
-    {
-        // TODO: Implement andWhere() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function orWhere($condition): static
-    {
-        // TODO: Implement orWhere() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function addWhere($condition, $type = null): static
-    {
-        // TODO: Implement addWhere() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getWheres(): array
-    {
-        // TODO: Implement getWheres() method.
-    }
+          return $this;
+       }
 }

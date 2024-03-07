@@ -87,7 +87,13 @@ class QueryBuilder implements QueryBuilderInterface
     */
     public function update(string $table, array $attributes): Update
     {
-        return new Update($this->em, $table, $attributes);
+        $qb = $this->builder->update($table);
+
+        foreach ($attributes as $column => $value) {
+            $qb->set($column, $value);
+        }
+
+        return new Update($this->em, $qb);
     }
 
 
@@ -98,6 +104,9 @@ class QueryBuilder implements QueryBuilderInterface
     */
     public function delete(string $table): Delete
     {
-        return new Delete($this->em, $table);
+        return new Delete(
+            $this->em,
+            $this->builder->delete($table)
+        );
     }
 }
