@@ -45,6 +45,14 @@ class Book
 
 
      /**
+      * @var User|null
+     */
+     private ?User $user;
+
+
+
+
+     /**
       * @return int|null
      */
      public function getId(): ?int
@@ -123,6 +131,32 @@ class Book
     public function setPrice(?float $price): static
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+
+
+
+    /**
+     * @return User|null
+    */
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+
+
+
+    /**
+     * @param User|null $user
+     *
+     * @return $this
+    */
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }

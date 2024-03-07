@@ -28,6 +28,19 @@ interface ClassMetadataInterface
 
 
 
+
+    /**
+     * Set identifier
+     *
+     * @param string $identifier
+     * @return $this
+    */
+    public function setIdentifier(string $identifier): static;
+
+
+
+
+
     /**
      * Returns class identifier
      *

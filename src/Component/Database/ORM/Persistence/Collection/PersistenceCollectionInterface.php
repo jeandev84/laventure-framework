@@ -4,8 +4,6 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\ORM\Persistence\Collection;
 
 
-use Laventure\Component\Database\ORM\Persistence\Collection\Storage\ObjectCollectionInterface;
-use Laventure\Component\Database\ORM\Persistence\Persistent;
 use Laventure\Component\Database\ORM\Persistence\PersistentInterface;
 
 /**

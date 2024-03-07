@@ -15,5 +15,38 @@ namespace Laventure\Component\Database\ORM\Persistence;
 */
 interface PersistentInterface
 {
+      /**
+       * @param $id
+       * @return mixed
+      */
+      public function find($id): mixed;
 
+
+
+
+      /**
+       * @param $attributes
+       * @return mixed
+      */
+      public function insert($attributes): mixed;
+
+
+
+
+      /**
+       * @param $attributes
+       * @param $id
+       * @return mixed
+      */
+      public function update($attributes, $id): mixed;
+
+
+
+
+
+      /**
+       * @param $id
+       * @return mixed
+      */
+      public function delete($id): mixed;
 }

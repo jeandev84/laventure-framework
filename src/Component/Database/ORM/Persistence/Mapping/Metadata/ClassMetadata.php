@@ -85,8 +85,7 @@ class ClassMetadata implements ClassMetadataInterface
 
 
     /**
-     * @param string $identifier
-     * @return $this
+     * @inheritDoc
     */
     public function setIdentifier(string $identifier): static
     {

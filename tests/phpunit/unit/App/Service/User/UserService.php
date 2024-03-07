@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace PHPUnitTest\App\Service\User;
 
-use PHPUnitTest\App\Entity\User\ValueObject\UserEmail;
+use PHPUnitTest\App\Entity\ValueObject\UserEmail;
 use PHPUnitTest\App\Service\Mailer\MailServiceInterface;
 
 /**

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PHPUnitTest\App\Entity\User\ValueObject;
+namespace PHPUnitTest\App\Entity\ValueObject;
 
 /**
  * UserEmail
