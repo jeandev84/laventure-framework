@@ -5,6 +5,8 @@ namespace Laventure\Component\Database\ORM\Persistence\Collection;
 
 
 use Laventure\Component\Database\ORM\Persistence\Collection\Storage\ObjectCollectionInterface;
+use Laventure\Component\Database\ORM\Persistence\Persistent;
+use Laventure\Component\Database\ORM\Persistence\PersistentInterface;
 
 /**
  * PersistenceCollectionInterface
@@ -29,4 +31,16 @@ interface PersistenceCollectionInterface
       * @return ObjectCollectionInterface
      */
      public function getCollection(): ObjectCollectionInterface;
+
+
+
+
+
+     /**
+      * Persist collection
+      *
+      * @param PersistentInterface $persistent
+      * @return mixed
+     */
+     public function persist(PersistentInterface $persistent): mixed;
 }

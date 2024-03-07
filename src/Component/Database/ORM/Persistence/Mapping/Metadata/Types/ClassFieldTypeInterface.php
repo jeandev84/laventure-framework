@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Field;
+namespace Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Types;
 
 
 /**

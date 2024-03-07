@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\ORM\Persistence\Mapper;
+namespace Laventure\Component\Database\ORM\Persistence;
 
 use Laventure\Component\Database\ORM\Mapper\IdentityMapperInterface;
+use Laventure\Component\Database\ORM\Persistence\Mapper\IdentityMapper;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\ClassMetadata;
 use Laventure\Component\Database\ORM\Query\QueryBuilder;
 

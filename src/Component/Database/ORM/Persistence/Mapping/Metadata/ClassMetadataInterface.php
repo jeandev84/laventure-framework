@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Mapping\Metadata;
 
-use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Field\ClassFieldTypeInterface;
+use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Types\ClassFieldTypeInterface;
 use Reflector;
 
 /**

@@ -5,8 +5,8 @@ namespace Laventure\Component\Database\ORM\Persistence\Mapping\Metadata;
 
 use Laventure\Component\Database\ORM\Persistence\Collection\PersistenceCollection;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Exception\NotFoundClassFieldException;
-use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Field\ClassFieldType;
-use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Field\ClassFieldTypeInterface;
+use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Types\ClassFieldType;
+use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Types\ClassFieldTypeInterface;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionProperty;
@@ -84,6 +84,20 @@ class ClassMetadata implements ClassMetadataInterface
 
 
 
+    /**
+     * @param string $identifier
+     * @return $this
+    */
+    public function setIdentifier(string $identifier): static
+    {
+        $this->identifier = $identifier;
+
+        return $this;
+    }
+
+
+
+
 
     /**
      * @inheritDoc
@@ -92,6 +106,8 @@ class ClassMetadata implements ClassMetadataInterface
     {
         return $this->reflection->getName();
     }
+
+
 
 
 
@@ -179,7 +195,21 @@ class ClassMetadata implements ClassMetadataInterface
             throw new NotFoundClassFieldException($field, ["fromClass" => $this->getName()]);
         }
 
-        return new ClassFieldType($field, $this->fieldValues[$field]);
+        return new ClassFieldType($field, $this->getFieldValue($field));
+    }
+
+
+
+
+
+    /**
+     * @param $field
+     * @param $default
+     * @return mixed
+    */
+    public function getFieldValue($field, $default = null): mixed
+    {
+        return $this->fieldValues[$field] ?? $default;
     }
 
 
@@ -206,6 +236,8 @@ class ClassMetadata implements ClassMetadataInterface
     {
         return $this->getTypeOfField($field)->isSingleAssociate();
     }
+
+
 
 
 
