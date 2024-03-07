@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\ORM\Metadata;
+namespace Laventure\Component\Database\ORM\Persistence\Mapping\Metadata;
 
 use Reflector;
 

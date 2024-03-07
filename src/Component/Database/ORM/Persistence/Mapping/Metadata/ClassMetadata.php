@@ -1,10 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\ORM\Metadata;
+namespace Laventure\Component\Database\ORM\Persistence\Mapping\Metadata;
 
 use ReflectionClass;
 use ReflectionException;
+use ReflectionProperty;
 use Reflector;
 
 /**
@@ -29,6 +30,17 @@ class ClassMetadata implements ClassMetadataInterface
      * @var string|object
     */
     protected $class;
+
+
+
+
+
+    /**
+     * @var string
+    */
+    protected string $identifier = 'id';
+
+
 
 
 
@@ -69,9 +81,9 @@ class ClassMetadata implements ClassMetadataInterface
     /**
      * @inheritDoc
     */
-    public function getIdentifier(): mixed
+    public function getIdentifier(): string
     {
-
+        return $this->identifier;
     }
 
 
@@ -82,8 +94,22 @@ class ClassMetadata implements ClassMetadataInterface
     */
     public function isIdentifier($field): bool
     {
-
+       return in_array($field, $this->getIdentifierFieldNames());
     }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getIdentifierFieldNames(): array
+    {
+        return [];
+    }
+
+
 
 
 
@@ -93,8 +119,23 @@ class ClassMetadata implements ClassMetadataInterface
     */
     public function hasField($field): bool
     {
-
+       return in_array($field, $this->getFieldNames());
     }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getFieldNames(): array
+    {
+        return array_map(function (ReflectionProperty $property) {
+            return $property->getName();
+        }, $this->getProperties());
+    }
+
+
 
 
 
@@ -125,30 +166,6 @@ class ClassMetadata implements ClassMetadataInterface
      * @inheritDoc
     */
     public function isCollectionValuedAssociation($field): bool
-    {
-
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function getFieldNames(): array
-    {
-
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function getIdentifierFieldNames(): array
     {
 
     }
@@ -225,5 +242,16 @@ class ClassMetadata implements ClassMetadataInterface
     public function getIdentifierValues(object $object): mixed
     {
 
+    }
+
+
+
+
+    /**
+     * @return ReflectionProperty[]
+    */
+    private function getProperties(): array
+    {
+        return $this->reflection->getProperties();
     }
 }

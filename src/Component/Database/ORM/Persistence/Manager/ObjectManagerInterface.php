@@ -3,7 +3,8 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Manager;
 
-use Laventure\Component\Database\ORM\Metadata\ClassMetadataInterface;
+use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\ClassMetadataInterface;
+use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Factory\ClassMetadataFactoryInterface;
 use Laventure\Component\Database\ORM\Persistence\Repository\ObjectRepositoryInterface;
 
 /**
@@ -32,11 +33,11 @@ interface ObjectManagerInterface
 
 
     /**
-     * @param string $class
+     * @param string $classname
      * @param $id
      * @return object|null
     */
-    public function find(string $class, $id): ?object;
+    public function find(string $classname, $id): ?object;
 
 
 
@@ -155,10 +156,10 @@ interface ObjectManagerInterface
     /**
      * Returns entity repository
      *
-     * @param string $entity
+     * @param string $classname
      * @return ObjectRepositoryInterface
     */
-    public function getRepository(string $entity): ObjectRepositoryInterface;
+    public function getRepository(string $classname): ObjectRepositoryInterface;
 
 
 
@@ -169,10 +170,10 @@ interface ObjectManagerInterface
     /**
      * Returns class metadata
      *
-     * @param string $entity
+     * @param string $classname
      * @return ClassMetadataInterface
     */
-    public function getClassMetadata(string $entity): ClassMetadataInterface;
+    public function getClassMetadata(string $classname): ClassMetadataInterface;
 
 
 
@@ -184,7 +185,7 @@ interface ObjectManagerInterface
     /**
      * Returns metadata factory
      *
-     * @return mixed
+     * @return ClassMetadataFactoryInterface
     */
-    public function getMetadataFactory(): mixed;
+    public function getMetadataFactory(): ClassMetadataFactoryInterface;
 }

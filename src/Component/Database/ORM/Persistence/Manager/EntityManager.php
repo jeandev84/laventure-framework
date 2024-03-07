@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\ORM\Persistence\Manager;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
-use Laventure\Component\Database\ORM\Metadata\ClassMetadataInterface;
+use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\ClassMetadataInterface;
 use Laventure\Component\Database\ORM\Persistence\Repository\ObjectRepositoryInterface;
 use Laventure\Component\Database\ORM\UnitOfWork\UnitOfWorkInterface;
 use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
@@ -81,7 +81,7 @@ class EntityManager implements EntityManagerInterface
     /**
      * @inheritDoc
     */
-    public function find(string $class, $id): ?object
+    public function find(string $classname, $id): ?object
     {
 
     }
@@ -166,7 +166,7 @@ class EntityManager implements EntityManagerInterface
     /**
      * @inheritDoc
     */
-    public function getRepository(string $entity): ObjectRepositoryInterface
+    public function getRepository(string $classname): ObjectRepositoryInterface
     {
 
     }
@@ -176,7 +176,7 @@ class EntityManager implements EntityManagerInterface
     /**
      * @inheritDoc
     */
-    public function getClassMetadata(string $entity): ClassMetadataInterface
+    public function getClassMetadata(string $classname): ClassMetadataInterface
     {
 
     }
