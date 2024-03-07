@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\ORM\Persistence\Manager;
+namespace Laventure\Component\Database\ORM\Persistence\Manager\Contract;
 
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\ClassMetadataInterface;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Factory\ClassMetadataFactoryInterface;
-use Laventure\Component\Database\ORM\Persistence\Repository\ObjectRepositoryInterface;
+use Laventure\Component\Database\ORM\Persistence\Repository\Contract\ObjectRepositoryInterface;
 
 /**
  * ObjectManagerInterface

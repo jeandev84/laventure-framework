@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\DQL\Select;
 
-use Laventure\Component\Database\ORM\Persistence\Manager\EntityManagerInterface;
+use Laventure\Component\Database\ORM\Persistence\Manager\Contract\EntityManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\BuilderHasConditions;
-use Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\BuilderInterface;
 use Laventure\Component\Database\ORM\Persistence\Query\Query;
 use Laventure\Component\Database\ORM\Persistence\Query\QueryInterface;
 use Laventure\Component\Database\Query\Builder\SQL\DQL\Select\SelectBuilderInterface;

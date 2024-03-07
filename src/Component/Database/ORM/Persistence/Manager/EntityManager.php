@@ -6,14 +6,15 @@ namespace Laventure\Component\Database\ORM\Persistence\Manager;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\ORM\Persistence\Manager\Config\Configuration;
+use Laventure\Component\Database\ORM\Persistence\Manager\Contract\EntityManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Manager\Event\EventManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Manager\Exception\EntityManagerException;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\ClassMetadataInterface;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Factory\ClassMetadataFactoryInterface;
 use Laventure\Component\Database\ORM\Persistence\Query\Builder\QueryBuilder;
 use Laventure\Component\Database\ORM\Persistence\Query\Builder\QueryBuilderInterface;
+use Laventure\Component\Database\ORM\Persistence\Repository\Contract\ObjectRepositoryInterface;
 use Laventure\Component\Database\ORM\Persistence\Repository\Factory\EntityRepositoryFactoryInterface;
-use Laventure\Component\Database\ORM\Persistence\Repository\ObjectRepositoryInterface;
 use Laventure\Component\Database\ORM\Persistence\UnitOfWork\UnitOfWorkInterface;
 use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
 use Laventure\Component\Database\Query\QueryInterface;
@@ -452,7 +453,9 @@ class EntityManager implements EntityManagerInterface
     */
     public function find(string $classname, $id): ?object
     {
-        return $this->getRepository($classname)->find($id);
+        return $this->unitOfWork
+                    ->getPersistent($classname)
+                    ->find($id);
     }
 
 

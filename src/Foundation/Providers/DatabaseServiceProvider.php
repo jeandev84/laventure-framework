@@ -7,12 +7,11 @@ namespace Laventure\Foundation\Providers;
 use Laventure\Component\Config\Config;
 use Laventure\Component\Container\Service\Provider\ServiceProvider;
 use Laventure\Component\Database\Connection\ConnectionInterface;
-use Laventure\Component\Database\Connection\Name\ConnectionName;
 use Laventure\Component\Database\Manager\Contract\ManagerInterface;
 use Laventure\Component\Database\Manager\Manager;
+use Laventure\Component\Database\ORM\Persistence\Manager\Contract\EntityManagerInterface;
+use Laventure\Component\Database\ORM\Persistence\Manager\Contract\ObjectManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Manager\EntityManager;
-use Laventure\Component\Database\ORM\Persistence\Manager\EntityManagerInterface;
-use Laventure\Component\Database\ORM\Persistence\Manager\ObjectManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Manager\Registry\ManagerRegistry;
 use Laventure\Component\Database\ORM\Persistence\Manager\Registry\ManagerRegistryInterface;
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\ORM\Persistence\Manager;
+namespace Laventure\Component\Database\ORM\Persistence\Manager\Contract;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\ORM\Persistence\Manager\Config\Configuration;

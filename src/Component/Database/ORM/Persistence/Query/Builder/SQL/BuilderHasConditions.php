@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL;
 
-use Laventure\Component\Database\ORM\Persistence\Manager\EntityManagerInterface;
+use Laventure\Component\Database\ORM\Persistence\Manager\Contract\EntityManagerInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Conditions\SQLBuilderHasConditionInterface;
-use Laventure\Component\Database\Query\Builder\SQL\SQLBuilderInterface;
 
 /**
  * BuilderHasConditions

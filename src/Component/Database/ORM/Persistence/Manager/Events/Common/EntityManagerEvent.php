@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Manager\Events\Common;
 
-use Laventure\Component\Database\ORM\Persistence\Manager\EntityManagerInterface;
+use Laventure\Component\Database\ORM\Persistence\Manager\Contract\EntityManagerInterface;
 
 /**
  * EntityManagerEvent

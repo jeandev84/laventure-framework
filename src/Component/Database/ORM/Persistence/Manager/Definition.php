@@ -64,7 +64,7 @@ class Definition extends Configuration
     /**
      * @var EventManagerInterface|null
     */
-    protected ?EventManagerInterface $eventManager;
+    protected ?EventManagerInterface $eventManager = null;
 
 
 

@@ -4,14 +4,9 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\DML\Insert;
 
-use Laventure\Component\Database\Connection\ConnectionInterface;
-use Laventure\Component\Database\ORM\Persistence\Manager\EntityManagerInterface;
+use Laventure\Component\Database\ORM\Persistence\Manager\Contract\EntityManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\Builder;
-use Laventure\Component\Database\Query\Builder\SQL\Criteria\CriteriaInterface;
 use Laventure\Component\Database\Query\Builder\SQL\DML\Insert\InsertBuilderInterface;
-use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionBuilderInterface;
-use Laventure\Component\Database\Query\Builder\SQL\SQLBuilderInterface;
-use Laventure\Component\Database\Query\QueryInterface;
 
 /**
  * Insert

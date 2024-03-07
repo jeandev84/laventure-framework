@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace PHPUnitTest\App\Repository;
 
-use Laventure\Component\Database\ORM\Persistence\Manager\EntityManagerInterface;
+use Laventure\Component\Database\ORM\Persistence\Manager\Contract\EntityManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Repository\ServiceRepository;
 use PHPUnitTest\App\Entity\Book;
 

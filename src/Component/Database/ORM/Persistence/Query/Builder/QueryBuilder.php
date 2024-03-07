@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Query\Builder;
 
-use Laventure\Component\Database\ORM\Persistence\Manager\EntityManagerInterface;
+use Laventure\Component\Database\ORM\Persistence\Manager\Contract\EntityManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\DML\Delete\Delete;
 use Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\DML\Insert\Insert;
 use Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\DML\Update\Update;

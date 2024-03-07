@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\ORM\Persistence\Repository;
+namespace Laventure\Component\Database\ORM\Persistence\Repository\Contract;
 
 /**
  * ObjectRepositoryInterface

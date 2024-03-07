@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Mapper\Data;
 
-use Laventure\Component\Database\ORM\Persistence\Manager\EntityManagerInterface;
-use Laventure\Component\Database\ORM\Persistence\Manager\Event\EventManagerInterface;
-use Laventure\Component\Database\ORM\Persistence\PersistentInterface;
+use Laventure\Component\Database\ORM\Persistence\Manager\Contract\EntityManagerInterface;
 
 /**
  * DataMapper

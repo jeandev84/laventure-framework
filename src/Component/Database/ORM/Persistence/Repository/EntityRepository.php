@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Repository;
 
-use Laventure\Component\Database\ORM\Persistence\Manager\EntityManagerInterface;
+use Laventure\Component\Database\ORM\Persistence\Manager\Contract\EntityManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\ClassMetadataInterface;
+use Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\DQL\Select\Select;
+use Laventure\Component\Database\ORM\Persistence\Repository\Contract\EntityRepositoryInterface;
 
 /**
  * EntityRepository
@@ -33,11 +35,27 @@ class EntityRepository implements EntityRepositoryInterface
 
 
     /**
+     * @param string $alias
+     * @return Select
+    */
+    public function createQueryBuilder(string $alias): Select
+    {
+         return $this->em->createQueryBuilder()
+                         ->select()
+                         ->from($this->getClassName(), $alias);
+    }
+
+
+
+
+
+
+    /**
      * @inheritDoc
     */
     public function find($id): mixed
     {
-
+        return $this->em->find($this->getClassName(), $id);
     }
 
 

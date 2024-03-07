@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\UnitOfWork;
 
-use Laventure\Component\Database\ORM\Persistence\Manager\EntityManagerInterface;
+use Laventure\Component\Database\ORM\Persistence\Manager\Contract\EntityManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Manager\Event\EventManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Manager\Events\OnClearEvent;
 use Laventure\Component\Database\ORM\Persistence\Mapper\Data\DataMapper;
@@ -92,6 +92,7 @@ class UnitOfWork implements UnitOfWorkInterface
 
     /**
      * @inheritDoc
+     * //TODO implements correctly
     */
     public function find(int $id): ?object
     {
@@ -101,15 +102,13 @@ class UnitOfWork implements UnitOfWorkInterface
 
 
 
-
     /**
      * @inheritDoc
-    */
+     * @throws ReflectionException
+     */
     public function persist(object $object): static
     {
-        $this->addPersistState($object);
-
-        return $this;
+        return $this->addPersistState($object);
     }
 
 
@@ -120,7 +119,7 @@ class UnitOfWork implements UnitOfWorkInterface
     */
     public function remove(object $object): static
     {
-
+       return $this->addRemovedState($object);
     }
 
 
@@ -339,5 +338,16 @@ class UnitOfWork implements UnitOfWorkInterface
 
         // add state
         return $this->addState($object, self::STATE_REMOVED);
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getDataMapper(): DataMapperInterface
+    {
+        return $this->dataMapper;
     }
 }

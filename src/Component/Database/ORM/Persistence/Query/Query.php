@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Query;
 
-use Laventure\Component\Database\ORM\Persistence\Manager\EntityManagerInterface;
+use Laventure\Component\Database\ORM\Persistence\Manager\Contract\EntityManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\BuilderInterface;
 use Laventure\Component\Database\Query\Exception\QueryException;
 use Laventure\Component\Database\Query\Result\QueryResultInterface;
