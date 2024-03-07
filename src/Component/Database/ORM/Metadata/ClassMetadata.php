@@ -62,4 +62,168 @@ class ClassMetadata implements ClassMetadataInterface
     {
         return $this->reflection;
     }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getIdentifier(): mixed
+    {
+
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function isIdentifier($field): bool
+    {
+
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function hasField($field): bool
+    {
+
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function hasAssociation($field): bool
+    {
+
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function isSingleValuedAssociation($field): bool
+    {
+
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function isCollectionValuedAssociation($field): bool
+    {
+
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getFieldNames(): array
+    {
+
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getIdentifierFieldNames(): array
+    {
+
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getAssociationNames(): array
+    {
+
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getTypeOfField($field): mixed
+    {
+
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getAssociationTargetClass($assocName): mixed
+    {
+
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function isAssociationInverseSide($assocName): mixed
+    {
+
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getAssociationMappedByTargetField($assocName): mixed
+    {
+
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getIdentifierValues(object $object): mixed
+    {
+
+    }
 }

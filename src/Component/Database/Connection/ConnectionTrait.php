@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Connection\Traits;
+namespace Laventure\Component\Database\Connection;
 
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Configuration\Null\NullConfiguration;
+use Laventure\Component\Database\Connection\Drivers\DriverException;
 
 /**
  * ConnectionTrait
@@ -32,16 +33,16 @@ trait ConnectionTrait
 
 
 
-
     /**
      * @param ConfigurationInterface $config
      * @return $this
+     * @throws DriverException
     */
     public function connect(ConfigurationInterface $config): static
     {
         $this->makeSureIfIsAvailable();
 
-        $this->connectDefault($config);
+        $this->connectWithoutDatabase($config);
 
         if ($this->getDatabase()->exists()) {
             $this->connectIfExistsDatabase($config);
@@ -112,16 +113,6 @@ trait ConnectionTrait
 
 
 
-    /**
-     * @return string
-    */
-    public function getDatabaseName(): string
-    {
-        return $this->config->getDatabase();
-    }
-
-
-
 
 
     /**
@@ -154,7 +145,7 @@ trait ConnectionTrait
      * @param ConfigurationInterface $config
      * @return mixed
     */
-    abstract public function connectDefault(ConfigurationInterface $config): mixed;
+    abstract public function connectWithoutDatabase(ConfigurationInterface $config): mixed;
 
 
 

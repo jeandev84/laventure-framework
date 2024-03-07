@@ -5,13 +5,13 @@ namespace Laventure\Component\Database\Connection\Extensions\Mysqli;
 
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Configuration\Null\NullConfiguration;
+use Laventure\Component\Database\Connection\ConnectionTrait;
 use Laventure\Component\Database\Connection\Drivers\Mysql\MysqlDatabase;
 use Laventure\Component\Database\Connection\Drivers\Mysql\Schema\Table\MysqlTable;
 use Laventure\Component\Database\Connection\Extensions\Mysqli\Factory\MysqliConnectionFactory;
 use Laventure\Component\Database\Connection\Extensions\Mysqli\Factory\MysqliConnectionFactoryInterface;
 use Laventure\Component\Database\Connection\Extensions\Mysqli\Query\Query;
 use Laventure\Component\Database\Connection\Name\ConnectionName;
-use Laventure\Component\Database\Connection\Traits\ConnectionTrait;
 use Laventure\Component\Database\DatabaseInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Factory\SQLQueryBuilderFactoryInterface;
 use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilder;
@@ -314,7 +314,7 @@ class MysqliConnection implements MysqliConnectionInterface
     /**
      * @inheritDoc
      */
-    public function connectDefault(ConfigurationInterface $config): mixed
+    public function connectWithoutDatabase(ConfigurationInterface $config): mixed
     {
         // TODO: Implement connectWithoutDatabase() method.
     }
