@@ -3,9 +3,13 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence;
 
+use Laventure\Component\Database\ORM\Mapper\Identity\IdentityMap;
+use Laventure\Component\Database\ORM\Mapper\Identity\IdentityMapperInterface;
 use Laventure\Component\Database\ORM\Persistence\Manager\EntityManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\ClassMetadataInterface;
 use Laventure\Component\Database\ORM\Persistence\Query\Builder\QueryBuilderInterface;
+use Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\DQL\Select\Select;
+use Laventure\Component\Database\ORM\Persistence\Storage\ObjectStorage;
 
 /**
  * Persistent
@@ -38,9 +42,9 @@ class Persistent implements PersistentInterface
 
 
     /**
-     * @var array
+     * @var IdentityMapperInterface
     */
-    protected array $identityMap = [];
+    protected IdentityMapperInterface $identityMap;
 
 
 
@@ -106,6 +110,7 @@ class Persistent implements PersistentInterface
     {
         $this->em = $em;
         $this->classMetadata = $em->getClassMetadata($entity);
+        $this->identityMap   = new IdentityMap(new ObjectStorage());
     }
 
 
@@ -116,12 +121,35 @@ class Persistent implements PersistentInterface
     */
     public function find($id): mixed
     {
-        if (isset($this->identityMap[$id])) {
-            return $this->identityMap[$id];
+        if ($this->identityMap->has($id)) {
+            return $this->identityMap->get($id);
         }
 
         return $this->identityMap["{$this->getClassName()}.{$id}"] = $id;
     }
+
+
+
+    public function findBy(array $criteria): mixed
+    {
+
+    }
+
+
+
+
+
+    /**
+     * @param string|null $columns
+     * @return Select
+    */
+    public function select(string $columns = null): Select
+    {
+        return $this->createQueryBuilder()
+                    ->select($columns)
+                    ->from($this->getClassName(), $this->getTableAlias());
+    }
+
 
 
 
@@ -236,5 +264,17 @@ class Persistent implements PersistentInterface
     public function getTableName(): string
     {
         return '';
+    }
+
+
+
+
+
+    /**
+     * @return string
+    */
+    public function getTableAlias(): string
+    {
+        return strtoupper($this->getClassName());
     }
 }

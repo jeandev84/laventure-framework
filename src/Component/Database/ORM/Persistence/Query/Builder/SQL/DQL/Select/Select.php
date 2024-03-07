@@ -194,28 +194,36 @@ class Select implements SelectBuilderInterface
         // TODO: Implement addSelect() method.
     }
 
+
+
+
     /**
      * @inheritDoc
-     */
+    */
     public function from(string $table, string $alias = ''): static
     {
-        // TODO: Implement from() method.
+
     }
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function join(string $table, string $condition): static
     {
-        // TODO: Implement join() method.
+
     }
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function leftJoin(string $table, string $condition): static
     {
-        // TODO: Implement leftJoin() method.
+        return $this;
     }
 
     /**

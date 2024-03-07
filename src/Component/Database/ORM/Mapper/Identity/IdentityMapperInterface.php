@@ -52,9 +52,11 @@ interface IdentityMapperInterface
 
 
     /**
+     * Returns identity ID
+     *
      * @param $class
      * @param $id
-     * @return string
+     * @return mixed
     */
-    public function createIdentity($class, $id): string;
+    public function getIdentityId($class, $id): mixed;
 }

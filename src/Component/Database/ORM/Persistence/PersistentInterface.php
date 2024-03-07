@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\ORM\Persistence;
 
 
+use Laventure\Component\Database\ORM\Mapper\Identity\IdentityMapperInterface;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\ClassMetadataInterface;
 use Laventure\Component\Database\ORM\Persistence\Query\Builder\QueryBuilderInterface;
 
@@ -27,6 +28,20 @@ interface PersistentInterface
        * @return mixed
       */
       public function find($id): mixed;
+
+
+
+
+
+
+      /**
+       * Find object by criteria
+       *
+       * @param array $criteria
+       * @return mixed
+      */
+      public function findOneBy(array $criteria): mixed;
+
 
 
 
@@ -128,6 +143,18 @@ interface PersistentInterface
       */
       public function getClassMetadata(): ClassMetadataInterface;
 
+
+
+
+
+
+
+      /**
+       * Returns identity mapper
+       *
+       * @return IdentityMapperInterface
+      */
+      public function getIdentityMap(): IdentityMapperInterface;
 
 
 
