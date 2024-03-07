@@ -80,7 +80,7 @@ class UnitOfWork implements UnitOfWorkInterface
     {
         $this->em           = $em;
         $this->eventManager = $em->getEventManager();
-        $this->dataMapper   = new DataMapper();
+        $this->dataMapper   = new DataMapper($this->em);
         $this->storage      = new ObjectStorage();
     }
 
