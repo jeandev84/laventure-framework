@@ -41,9 +41,9 @@ class EntityRepository implements EntityRepositoryInterface
     */
     public function createQueryBuilder(string $alias): Select
     {
-         return $this->em->createQueryBuilder()
-                         ->select()
-                         ->from($this->getClassName(), $alias);
+        return $this->em->createQueryBuilder()
+                        ->select()
+                        ->from($this->getClassName(), $alias);
     }
 
 
@@ -102,13 +102,13 @@ class EntityRepository implements EntityRepositoryInterface
         int $limit = null,
         int $offset = null
     ): array {
-         return $this->createQueryBuilder($this->getAlias())
-                     ->criteria($criteria)
-                     ->addOrderBy($orderBy)
-                     ->limit($limit)
-                     ->offset($offset)
-                     ->getQuery()
-                     ->fetchAll();
+        return $this->createQueryBuilder($this->getAlias())
+                    ->criteria($criteria)
+                    ->addOrderBy($orderBy)
+                    ->limit($limit)
+                    ->offset($offset)
+                    ->getQuery()
+                    ->fetchAll();
     }
 
 

@@ -22,7 +22,7 @@ class User
     /**
      * @var int|null
     */
-    private ?int $id;
+    private ?int $id = null;
 
 
 

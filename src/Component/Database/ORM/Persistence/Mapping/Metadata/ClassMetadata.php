@@ -1,11 +1,13 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Mapping\Metadata;
 
 use Laventure\Component\Database\ORM\Persistence\Collection\Persistent\PersistentCollection;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Exception\NotFoundClassFieldException;
+use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Field\ClassField;
+use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Field\CollectionField;
+use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Field\IdentifierField;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Types\ClassFieldType;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Types\ClassFieldTypeInterface;
 use Laventure\Utils\Convertor\CamelCase\CamelCaseConvertorTrait;
@@ -38,23 +40,23 @@ class ClassMetadata implements ClassMetadataInterface
     /**
      * @var string
     */
-    protected string $identifier = 'id';
+    public string $identifier = 'id';
 
 
 
 
     /**
-     * @var array
+     * @var ClassField[]
     */
-    protected array $fieldValues = [];
+    public array $fieldValues = [];
 
 
 
 
     /**
-     * @var array
+     * @var IdentifierField[]
     */
-    protected array $identifierValues = [];
+    public array $identifierValues = [];
 
 
 
@@ -209,12 +211,15 @@ class ClassMetadata implements ClassMetadataInterface
 
     /**
      * @param string $field
-     * @param $default
      * @return mixed
     */
-    public function getFieldValue(string $field, $default = null): mixed
+    public function getFieldValue(string $field): mixed
     {
-        return $this->fieldValues[$field] ?? $default;
+        if (!isset($this->fieldValues[$field])) {
+            return null;
+        }
+
+        return $this->fieldValues[$field]->getFieldValue();
     }
 
 
@@ -222,13 +227,16 @@ class ClassMetadata implements ClassMetadataInterface
 
 
     /**
-     * @param string $identifier
-     * @param $default
+     * @param string $field
      * @return mixed
     */
-    public function getIdentifierValue(string $identifier, $default = null): mixed
+    public function getIdentifierValue(string $field): mixed
     {
-        return $this->identifierValues[$identifier] ?? $default;
+        if (!isset($this->identifierValues[$field])) {
+            return null;
+        }
+
+        return $this->identifierValues[$field]->getFieldValue();
     }
 
 
@@ -352,23 +360,35 @@ class ClassMetadata implements ClassMetadataInterface
     */
     public function getIdentifierValues(object $object): array
     {
-        $identifierValues = [];
-
         foreach ($this->getProperties() as $property) {
-            $propertyName = $property->getName();
-            $field        = $this->resolveFieldName($propertyName);
-            $value        = $property->getValue($object);
-            if ($this->identifier === $field) {
-                $identifierValues[$field] = $value;
-            } elseif ($this->isSingleValuedAssociation($field)) {
+
+            $propertyName  = $property->getName();
+            $attributeName = $this->resolveFieldName($propertyName);
+            $value         = $property->getValue($object);
+
+            if ($this->identifier === $propertyName) {
+                $this->identifierValues[$propertyName] = new IdentifierField(
+                    $propertyName,
+                    $value,
+                    $attributeName
+                );
+            } elseif ($this->isSingleValuedAssociation($propertyName)) {
                 #$field = trim($field, 's');
-                $identifierValues["{$field}_id"] = $value;
-            } elseif ($this->isCollectionValuedAssociation($field)) {
-                $identifierValues[$field] = new PersistentCollection($field, $value);
+                $this->identifierValues[$propertyName] = new IdentifierField(
+                    $propertyName,
+                    $value,
+        "{$attributeName}_id"
+                );
+            } elseif ($this->isCollectionValuedAssociation($propertyName)) {
+                $this->identifierValues[$propertyName] = new CollectionField(
+                    $propertyName,
+                    $attributeName,
+                    new PersistentCollection($propertyName, $value)
+                );
             }
         }
 
-        return $identifierValues;
+        return $this->identifierValues;
     }
 
 
@@ -380,18 +400,18 @@ class ClassMetadata implements ClassMetadataInterface
      * @param object $object
      * @return array
     */
-    public function getFieldValues(object $object): array
+    public function mapFieldValues(object $object): array
     {
-        $fieldValues = [];
-
         foreach ($this->getProperties() as $property) {
             $propertyName = $property->getName();
-            $field        = $this->resolveFieldName($propertyName);
-            $value        = $property->getValue($object);
-            $fieldValues[$field] = $value;
+            $this->fieldValues[$propertyName] = new ClassField(
+                $propertyName,
+                $property->getValue($object),
+                $this->resolveFieldName($propertyName)
+            );
         }
 
-        return $fieldValues;
+        return $this->fieldValues;
     }
 
 
@@ -430,8 +450,8 @@ class ClassMetadata implements ClassMetadataInterface
     private function mapValues($class): void
     {
         if (is_object($class)) {
-            $this->fieldValues      = $this->getFieldValues($class);
-            $this->identifierValues = $this->getIdentifierValues($class);
+            $this->mapFieldValues($class);
+            $this->getIdentifierValues($class);
         }
     }
 }

@@ -148,7 +148,7 @@ class UnitOfWork implements UnitOfWorkInterface
     */
     public function remove(object $object): static
     {
-       return $this->addRemovedState($object);
+        return $this->addRemovedState($object);
     }
 
 
@@ -221,6 +221,7 @@ class UnitOfWork implements UnitOfWorkInterface
     public function isNew(object $object): bool
     {
         $metadata = new ClassMetadata($object);
+
         return $metadata->isNew();
     }
 
@@ -241,7 +242,7 @@ class UnitOfWork implements UnitOfWorkInterface
                     case self::STATE_NEW:
                         $this->dataMapper->save($object);
                         break;
-                    case self::STATE_REMOVED;
+                    case self::STATE_REMOVED:
                         $this->dataMapper->delete($object);
                         break;
                 endswitch;
