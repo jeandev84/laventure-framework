@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Laventure\Foundation\Http\Message\Request;
 
 use Laventure\Component\Http\Message\Request\Server\ServerParamInterface;
+use Laventure\Component\Http\Message\Request\Server\ServerParams;
 use Laventure\Component\Http\Message\Request\ServerRequest;
 use Laventure\Component\Http\Storage\Cookie\Jar\CookieJar;
 use Laventure\Component\Http\Storage\Cookie\Jar\CookieJarInterface;
@@ -73,7 +74,7 @@ final class Request extends ServerRequest
     */
     public function getServer(): ServerParamInterface
     {
-        return new Server($this->server->all());
+        return new ServerParams($this->server->all());
     }
 
 
