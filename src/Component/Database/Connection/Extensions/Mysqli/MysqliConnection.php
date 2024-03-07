@@ -314,7 +314,7 @@ class MysqliConnection implements MysqliConnectionInterface
     /**
      * @inheritDoc
      */
-    public function connectWithoutDatabase(ConfigurationInterface $config): mixed
+    public function connectDefault(ConfigurationInterface $config): mixed
     {
         // TODO: Implement connectWithoutDatabase() method.
     }

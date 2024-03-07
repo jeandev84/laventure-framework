@@ -52,6 +52,48 @@ abstract class Connection implements PdoConnectionInterface
 
 
 
+    /**
+     * @inheritdoc
+    */
+    public function checkIfIsAvailable(): void
+    {
+        if (!$this->isAvailable()) {
+            throw new DriverException("Unavailable driver {$this->getName()}");
+        }
+    }
+
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function connectDefault(ConfigurationInterface $config): static
+    {
+        if (!$config->has('dsn')) {
+            $config['dsn'] = $this->makeDefaultDsn($config);
+        }
+
+        return $this->connectToPdo($config);
+    }
+
+
+
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function connectIfExistsDatabase(ConfigurationInterface $config): static
+    {
+        $config['dsn'] = $this->makeDsnIfDatabaseExists($config);
+
+        return $this->connectToPdo($config);
+    }
+
+
+
 
 
     /**
@@ -329,37 +371,6 @@ abstract class Connection implements PdoConnectionInterface
     }
 
 
-
-
-
-
-
-    /**
-     * @inheritdoc
-    */
-    public function connectWithoutDatabase(ConfigurationInterface $config): static
-    {
-        if (!$config->has('dsn')) {
-            $config['dsn'] = $this->makeDefaultDsn($config);
-        }
-
-        return $this->connectToPdo($config);
-    }
-
-
-
-
-
-
-    /**
-     * @inheritdoc
-    */
-    public function connectIfExistsDatabase(ConfigurationInterface $config): static
-    {
-        $config['dsn'] = $this->makeDsnIfDatabaseExists($config);
-
-        return $this->connectToPdo($config);
-    }
 
 
 
