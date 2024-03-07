@@ -31,16 +31,7 @@ class ClassMetadata implements ClassMetadataInterface
     /**
      * @var ReflectionClass
     */
-    protected ReflectionClass $reflection;
-
-
-
-    /**
-     * @var string|object
-    */
-    protected $class;
-
-
+    protected ReflectionClass $class;
 
 
 
@@ -76,13 +67,8 @@ class ClassMetadata implements ClassMetadataInterface
     */
     public function __construct($class)
     {
-        $this->reflection = new ReflectionClass($class);
-        $this->class      = $class;
-
-        if (is_object($class)) {
-            $this->fieldValues      = $this->getFieldValues($class);
-            $this->identifierValues = $this->getIdentifierValues($class);
-        }
+        $this->class = new ReflectionClass($class);
+        $this->mapValues($class);
     }
 
 
@@ -108,7 +94,7 @@ class ClassMetadata implements ClassMetadataInterface
     */
     public function getName(): string
     {
-        return $this->reflection->getName();
+        return $this->class->getName();
     }
 
 
@@ -119,9 +105,9 @@ class ClassMetadata implements ClassMetadataInterface
     /**
      * @inheritDoc
     */
-    public function getReflectionClass(): Reflector
+    public function getReflectionClass():ReflectionClass
     {
-        return $this->reflection;
+        return $this->class;
     }
 
 
@@ -373,7 +359,7 @@ class ClassMetadata implements ClassMetadataInterface
     */
     private function getProperties(): array
     {
-        return $this->reflection->getProperties();
+        return $this->class->getProperties();
     }
 
 
@@ -386,5 +372,21 @@ class ClassMetadata implements ClassMetadataInterface
     private function resolveFieldName(string $field): string
     {
         return $this->camelCaseToUnderscore($field);
+    }
+
+
+
+
+
+    /**
+     * @param $class
+     * @return void
+    */
+    private function mapValues($class): void
+    {
+        if (is_object($class)) {
+            $this->fieldValues      = $this->getFieldValues($class);
+            $this->identifierValues = $this->getIdentifierValues($class);
+        }
     }
 }

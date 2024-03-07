@@ -5,6 +5,7 @@ namespace Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Factory;
 
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\ClassMetadata;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\ClassMetadataInterface;
+use RuntimeException;
 
 /**
  * ClassMetadataFactory
@@ -124,6 +125,6 @@ class ClassMetadataFactory implements ClassMetadataFactoryInterface
     */
     public function isTransient($classname): bool
     {
-        throw new \RuntimeException(__METHOD__ . ' not already implemented.');
+        throw new RuntimeException(__METHOD__ . ' not already implemented.');
     }
 }
