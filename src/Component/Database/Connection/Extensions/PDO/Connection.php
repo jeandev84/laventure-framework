@@ -55,7 +55,7 @@ abstract class Connection implements PdoConnectionInterface
     /**
      * @inheritdoc
     */
-    public function checkIfIsAvailable(): void
+    public function makeSureIfIsAvailable(): void
     {
         if (!$this->isAvailable()) {
             throw new DriverException("Unavailable driver {$this->getName()}");

@@ -39,7 +39,7 @@ trait ConnectionTrait
     */
     public function connect(ConfigurationInterface $config): static
     {
-        $this->checkIfIsAvailable();
+        $this->makeSureIfIsAvailable();
 
         $this->connectDefault($config);
 
@@ -141,7 +141,7 @@ trait ConnectionTrait
     /**
      * @return void
     */
-    abstract public function checkIfIsAvailable(): void;
+    abstract public function makeSureIfIsAvailable(): void;
 
 
 
