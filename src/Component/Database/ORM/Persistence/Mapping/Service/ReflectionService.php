@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Mapping\Service;
@@ -18,14 +19,12 @@ use ReflectionException;
 */
 class ReflectionService implements ReflectionServiceInterface
 {
-
     /**
      * @param ClassMetadataFactoryInterface $metadataFactory
     */
     public function __construct(
         protected ClassMetadataFactoryInterface $metadataFactory
-    )
-    {
+    ) {
     }
 
 

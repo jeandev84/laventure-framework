@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\ActiveRecord;
@@ -14,5 +15,4 @@ namespace Laventure\Component\Database\ORM\ActiveRecord;
 */
 abstract class ActiveRecord implements ActiveRecordInterface
 {
-
 }

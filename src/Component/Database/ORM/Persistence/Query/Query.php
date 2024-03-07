@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Query;
@@ -19,8 +20,6 @@ use Laventure\Component\Database\Query\Result\QueryResultInterface;
 */
 class Query implements QueryInterface
 {
-
-
     /**
      * @var int
     */
@@ -39,8 +38,7 @@ class Query implements QueryInterface
         protected EntityManagerInterface $em,
         protected BuilderInterface $builder,
         protected ?string $mappedClass = null
-    )
-    {
+    ) {
     }
 
 
@@ -51,7 +49,7 @@ class Query implements QueryInterface
     */
     public function getSQL(): string
     {
-       return $this->builder->getSQL();
+        return $this->builder->getSQL();
     }
 
 
@@ -76,29 +74,29 @@ class Query implements QueryInterface
     */
     public function execute($fetchMode = null): bool|int|array
     {
-         $statement =  $this->em->createNativeQuery(
-             $this->getSQL(),
-             $this->getParameters()
-         );
+        $statement =  $this->em->createNativeQuery(
+            $this->getSQL(),
+            $this->getParameters()
+        );
 
-         if (!$fetchMode) {
+        if (!$fetchMode) {
 
-             if(!$statement->execute()) {
-                 return false;
-             }
+            if(!$statement->execute()) {
+                return false;
+            }
 
-             $this->lastId = $statement->lastInsertId();
+            $this->lastId = $statement->lastInsertId();
 
-             return $this->lastId;
-         }
+            return $this->lastId;
+        }
 
 
-         //TODO implements fetchMode ARRAY, OBJECT, COLUMNS, ...
-         return $this->collectResults(
-             $statement->map($this->getMappedClass())
-                       ->fetch()
-                       ->all($fetchMode)
-         );
+        //TODO implements fetchMode ARRAY, OBJECT, COLUMNS, ...
+        return $this->collectResults(
+            $statement->map($this->getMappedClass())
+                      ->fetch()
+                      ->all($fetchMode)
+        );
     }
 
 
@@ -200,11 +198,11 @@ class Query implements QueryInterface
     */
     private function collectResults(array $objects): array
     {
-         foreach ($objects as $object) {
-             $this->collectResult($object);
-         }
+        foreach ($objects as $object) {
+            $this->collectResult($object);
+        }
 
-         return $objects;
+        return $objects;
     }
 
 
@@ -217,11 +215,11 @@ class Query implements QueryInterface
     */
     private function collectResult($object): mixed
     {
-         if (is_object($object)) {
-             $this->em->persist($object);
-         }
+        if (is_object($object)) {
+            $this->em->persist($object);
+        }
 
-         return $object;
+        return $object;
     }
 
 

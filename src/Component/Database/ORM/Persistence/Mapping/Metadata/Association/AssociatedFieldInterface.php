@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Association;
-
 
 /**
  * AssociatedFieldInterface
@@ -15,5 +15,4 @@ namespace Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Associat
  */
 interface AssociatedFieldInterface
 {
-
 }

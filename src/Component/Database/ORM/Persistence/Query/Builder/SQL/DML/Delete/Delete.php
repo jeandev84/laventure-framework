@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\DML\Delete;
@@ -23,8 +24,6 @@ use Laventure\Component\Database\Query\QueryInterface;
 */
 class Delete extends BuilderHasConditions
 {
-
-
     /**
      * @var DeleteBuilderInterface
     */
@@ -49,8 +48,8 @@ class Delete extends BuilderHasConditions
     */
     public function delete(string $table): static
     {
-         $this->builder->delete($table);
+        $this->builder->delete($table);
 
-         return $this;
+        return $this;
     }
 }

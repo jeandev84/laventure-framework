@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Factory;
@@ -18,7 +19,6 @@ use RuntimeException;
 */
 class ClassMetadataFactory implements ClassMetadataFactoryInterface
 {
-
     /**
      * @var ClassMetadataInterface[]
     */
@@ -61,11 +61,11 @@ class ClassMetadataFactory implements ClassMetadataFactoryInterface
     */
     public function addClassMetadataCollection(array $collections): static
     {
-         foreach ($collections as $metadata) {
-             $this->addMetadata($metadata);
-         }
+        foreach ($collections as $metadata) {
+            $this->addMetadata($metadata);
+        }
 
-         return $this;
+        return $this;
     }
 
 

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Mapping\Metadata;
@@ -56,10 +57,10 @@ interface ClassMetadataInterface
 
 
 
-     /**
-      * @return ReflectionClass
-     */
-     public function getReflectionClass(): ReflectionClass;
+    /**
+     * @return ReflectionClass
+    */
+    public function getReflectionClass(): ReflectionClass;
 
 
 

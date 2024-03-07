@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\PDO\Dsn\Reader;
@@ -16,7 +17,6 @@ use Laventure\Contract\Reader\ReaderInterface;
 */
 class PdoDsnReader implements ReaderInterface
 {
-
     /**
      * @var string
     */

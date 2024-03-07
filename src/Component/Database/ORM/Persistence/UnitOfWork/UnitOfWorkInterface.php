@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\UnitOfWork;
 
+use Laventure\Component\Database\ORM\Persistence\Mapper\Data\DataMapperInterface;
 use Laventure\Component\Database\ORM\Persistence\PersistentInterface;
 
 /**
@@ -84,20 +85,14 @@ interface UnitOfWorkInterface
 
 
 
-
-
-
     /**
      * Register state NEW or UPDATE
      *
      * @param object $object
      *
-     * @return void
-    */
-    public function persist(object $object): void;
-
-
-
+     * @return mixed
+     */
+    public function persist(object $object): mixed;
 
 
 
@@ -108,9 +103,9 @@ interface UnitOfWorkInterface
      *
      * @param object $object
      *
-     * @return void
+     * @return mixed
     */
-    public function remove(object $object): void;
+    public function remove(object $object): mixed;
 
 
 
@@ -123,9 +118,9 @@ interface UnitOfWorkInterface
      *
      * @param object $object
      *
-     * @return void
+     * @return mixed
     */
-    public function refresh(object $object): void;
+    public function refresh(object $object): mixed;
 
 
 
@@ -139,9 +134,9 @@ interface UnitOfWorkInterface
      *
      * @param object $object
      *
-     * @return void
+     * @return mixed
     */
-    public function attach(object $object): void;
+    public function attach(object $object): mixed;
 
 
 
@@ -154,9 +149,9 @@ interface UnitOfWorkInterface
      *
      * @param object $object
      *
-     * @return void
+     * @return mixed
     */
-    public function detach(object $object): void;
+    public function detach(object $object): mixed;
 
 
 
@@ -170,9 +165,9 @@ interface UnitOfWorkInterface
      *
      * @param object $object
      *
-     * @return void
+     * @return mixed
     */
-    public function merge(object $object): void;
+    public function merge(object $object): mixed;
 
 
 
@@ -226,9 +221,9 @@ interface UnitOfWorkInterface
     /**
      * Commit changes
      *
-     * @return void
+     * @return mixed
     */
-    public function commit(): void;
+    public function commit(): mixed;
 
 
 
@@ -237,8 +232,21 @@ interface UnitOfWorkInterface
     /**
      * Returns persistent object
      *
-     * @param string|object $class
+     * @param $class
      * @return PersistentInterface
     */
     public function getPersistent($class): PersistentInterface;
+
+
+
+
+
+
+
+    /**
+     * Returns data mapper
+     *
+     * @return DataMapperInterface
+    */
+    public function getDataMapper(): DataMapperInterface;
 }

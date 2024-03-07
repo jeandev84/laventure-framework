@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Drivers\Pgsql\Schema\Table;
@@ -17,7 +18,6 @@ use Laventure\Component\Database\Schema\Table\Table;
 */
 class PgsqlTable extends Table
 {
-
     /**
      * @inheritDoc
      */

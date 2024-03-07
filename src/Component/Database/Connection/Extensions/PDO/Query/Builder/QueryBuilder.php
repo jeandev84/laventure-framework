@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder;
@@ -27,7 +28,6 @@ use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
 */
 class QueryBuilder implements SQLQueryBuilderInterface
 {
-
     /**
      * @var SQLQueryBuilder
     */
@@ -65,7 +65,7 @@ class QueryBuilder implements SQLQueryBuilderInterface
     */
     public function select(string $selects = null): SelectBuilderInterface
     {
-         return new PdoSelectBuilder($this->builder->select($selects));
+        return new PdoSelectBuilder($this->builder->select($selects));
     }
 
 

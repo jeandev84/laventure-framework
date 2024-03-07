@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Http\Message\Request\Server\Headers;
@@ -16,8 +17,6 @@ use Laventure\Component\Http\Message\Request\Server\ServerParamInterface;
 */
 class ServerHeaderParams implements ServerHeaderInterface
 {
-
-
     /**
      * @param ServerParamInterface $server
     */

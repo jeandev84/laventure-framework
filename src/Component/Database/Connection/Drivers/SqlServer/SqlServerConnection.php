@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Drivers\SqlServer;
@@ -22,7 +23,6 @@ use Laventure\Component\Database\Schema\Table\TableInterface;
 */
 class SqlServerConnection implements ConnectionInterface
 {
-
     /**
      * @inheritDoc
     */

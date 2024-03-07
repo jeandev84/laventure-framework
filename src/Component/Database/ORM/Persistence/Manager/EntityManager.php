@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Manager;
@@ -29,8 +30,6 @@ use Throwable;
 */
 class EntityManager implements EntityManagerInterface
 {
-
-
     /**
      * @var ConnectionInterface
     */
@@ -223,11 +222,11 @@ class EntityManager implements EntityManagerInterface
     */
     public function addRepositories(array $repositories): static
     {
-       foreach ($repositories as $repository){
-           $this->addRepository($repository);
-       }
+        foreach ($repositories as $repository) {
+            $this->addRepository($repository);
+        }
 
-       return $this;
+        return $this;
     }
 
 
@@ -242,9 +241,9 @@ class EntityManager implements EntityManagerInterface
     */
     public function addRepository(ObjectRepositoryInterface $repository): static
     {
-         $this->repositories[$repository->getClassName()] = $repository;
+        $this->repositories[$repository->getClassName()] = $repository;
 
-         return $this;
+        return $this;
     }
 
 

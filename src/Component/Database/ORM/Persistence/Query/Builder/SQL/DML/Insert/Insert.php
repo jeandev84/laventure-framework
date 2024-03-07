@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\DML\Insert;
@@ -23,7 +24,6 @@ use Laventure\Component\Database\Query\QueryInterface;
 */
 class Insert extends Builder
 {
-
     /**
      * @var InsertBuilderInterface
     */

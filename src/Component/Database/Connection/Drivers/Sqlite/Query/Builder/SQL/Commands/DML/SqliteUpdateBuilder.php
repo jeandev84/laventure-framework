@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Drivers\Sqlite\Query\Builder\SQL\Commands\DML;
@@ -16,5 +17,4 @@ use Laventure\Component\Database\Query\Builder\SQL\DML\Update\UpdateBuilderDecor
  */
 class SqliteUpdateBuilder extends UpdateBuilderDecorator
 {
-
 }

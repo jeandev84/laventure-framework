@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Repository\Factory;
-
 
 use Laventure\Component\Database\ORM\Persistence\Manager\EntityManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Manager\ObjectManagerInterface;
@@ -19,22 +19,22 @@ use Laventure\Component\Database\ORM\Persistence\Repository\ObjectRepositoryInte
  */
 interface EntityRepositoryFactoryInterface
 {
-      /**
-       * @param string $classname
-       * @return ObjectRepositoryInterface|null
+    /**
+     * @param string $classname
+     * @return ObjectRepositoryInterface|null
      */
-     public function createRepository(string $classname): ?ObjectRepositoryInterface;
+    public function createRepository(string $classname): ?ObjectRepositoryInterface;
 
 
 
 
-     /**
-      * @param EntityManagerInterface $em
-      * @param string $classname
-      * @return ObjectRepositoryInterface
-     */
-     public function createEntityRepository(
-         EntityManagerInterface $em,
-         string $classname
-     ): ObjectRepositoryInterface;
+    /**
+     * @param EntityManagerInterface $em
+     * @param string $classname
+     * @return ObjectRepositoryInterface
+    */
+    public function createEntityRepository(
+        EntityManagerInterface $em,
+        string $classname
+    ): ObjectRepositoryInterface;
 }

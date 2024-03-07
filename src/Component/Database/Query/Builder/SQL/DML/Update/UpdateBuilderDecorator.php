@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder\SQL\DML\Update;
@@ -21,8 +22,6 @@ use Laventure\Component\Database\Query\QueryInterface;
 */
 class UpdateBuilderDecorator extends SQLBuilderDecorator implements UpdateBuilderInterface
 {
-
-
     /**
      * @var UpdateBuilderInterface
     */

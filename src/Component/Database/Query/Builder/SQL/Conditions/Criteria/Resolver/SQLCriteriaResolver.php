@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder\SQL\Conditions\Criteria\Resolver;
@@ -19,7 +20,6 @@ use Laventure\Component\Database\Query\Builder\SQL\SQLBuilderInterface;
 */
 class SQLCriteriaResolver implements SQLCriteriaResolverInterface
 {
-
     /**
      * @param SQLBuilder $builder
     */

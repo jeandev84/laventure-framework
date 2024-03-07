@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder\SQL\DML\Insert;
@@ -7,7 +8,6 @@ use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Commands\Insert;
 use Laventure\Component\Database\Query\Builder\SQL\Commands\Values;
 use Laventure\Component\Database\Query\Builder\SQL\SQLBuilder;
-
 
 /**
  * InsertBuilder
@@ -20,9 +20,6 @@ use Laventure\Component\Database\Query\Builder\SQL\SQLBuilder;
 */
 class InsertBuilder extends SQLBuilder implements InsertBuilderInterface
 {
-
-
-
     /**
      * @inheritDoc
     */
@@ -77,7 +74,7 @@ class InsertBuilder extends SQLBuilder implements InsertBuilderInterface
     public function addMultipleInsert(array $values): static
     {
         foreach ($values as $position => $attributes) {
-           $this->addInsert($attributes, $position);
+            $this->addInsert($attributes, $position);
         }
 
         return $this;
@@ -111,7 +108,9 @@ class InsertBuilder extends SQLBuilder implements InsertBuilderInterface
     */
     public function setValue(string $column, $value, int $index = 0): static
     {
-        if ($index < 0) { $index = 0; }
+        if ($index < 0) {
+            $index = 0;
+        }
 
         if (!isset($this->values[$index][$column])) {
             $this->criteria->values[$index][$column] = $value;

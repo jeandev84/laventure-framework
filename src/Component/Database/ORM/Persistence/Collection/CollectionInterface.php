@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Collection;
-
 
 use ArrayAccess;
 use Countable;
@@ -20,21 +20,20 @@ use Serializable;
 */
 interface CollectionInterface extends Countable, Iterator, Serializable, ArrayAccess
 {
-
-      /**
-       * @param object $object
-       * @return $this
-      */
-      public function add(object $object): static;
-
+    /**
+     * @param object $object
+     * @return $this
+    */
+    public function add(object $object): static;
 
 
 
 
-      /**
-       * @param object $object
-       *
-       * @return static
-      */
-      public function remove(object $object): static;
+
+    /**
+     * @param object $object
+     *
+     * @return static
+    */
+    public function remove(object $object): static;
 }

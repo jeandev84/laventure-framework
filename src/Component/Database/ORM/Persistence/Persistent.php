@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence;
@@ -21,8 +22,6 @@ use Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\DQL\Select\Se
  */
 class Persistent implements PersistentInterface
 {
-
-
     /**
      * @var EntityManagerInterface
     */
@@ -105,8 +104,7 @@ class Persistent implements PersistentInterface
     public function __construct(
         EntityManagerInterface $em,
         $entity
-    )
-    {
+    ) {
         $this->em            = $em;
         $this->classMetadata = $em->getClassMetadata($entity);
         $this->identityMap   = new IdentityMap();
@@ -144,11 +142,11 @@ class Persistent implements PersistentInterface
     */
     public function findOneBy(array $criteria): mixed
     {
-         return $this->select()
-                     ->from($this->getClassName(), $this->getTableAlias())
-                     ->criteria($criteria)
-                     ->getQuery()
-                     ->fetchOne();
+        return $this->select()
+                    ->from($this->getClassName(), $this->getTableAlias())
+                    ->criteria($criteria)
+                    ->getQuery()
+                    ->fetchOne();
     }
 
 

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder\SQL\DML\Insert\Null;
@@ -18,7 +19,6 @@ use Laventure\Component\Database\Query\QueryInterface;
 */
 class NullInsertBuilder extends InsertBuilder
 {
-
     /**
      * @return string
     */

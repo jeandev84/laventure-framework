@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder\SQL\DQL\Select;
@@ -30,7 +31,6 @@ use Laventure\Component\Database\Query\Builder\SQL\SQLBuilder;
 */
 class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
 {
-
     /**
      * @var string
     */

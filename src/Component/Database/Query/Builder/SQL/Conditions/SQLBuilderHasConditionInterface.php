@@ -1,13 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder\SQL\Conditions;
 
-
 use Laventure\Component\Database\Query\Builder\SQL\Conditions\Where\WhereInterface;
 use Laventure\Component\Database\Query\Builder\SQL\SQLBuilderInterface;
-
-
 
 /**
  * SQLBuilderHasConditionInterface
@@ -20,5 +18,4 @@ use Laventure\Component\Database\Query\Builder\SQL\SQLBuilderInterface;
 */
 interface SQLBuilderHasConditionInterface extends SQLBuilderInterface, WhereInterface
 {
-
 }

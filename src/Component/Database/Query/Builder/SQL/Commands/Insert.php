@@ -17,7 +17,6 @@ use Stringable;
 */
 class Insert implements Stringable
 {
-
     /**
      * @param string $table
      * @param array $columns
@@ -37,7 +36,8 @@ class Insert implements Stringable
     */
     public function __toString(): string
     {
-        return sprintf("INSERT INTO %s (%s)",
+        return sprintf(
+            "INSERT INTO %s (%s)",
             $this->table,
             $this->columns()
         );

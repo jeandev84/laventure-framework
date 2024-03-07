@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder\SQL\Decorator;
@@ -21,14 +22,14 @@ use Laventure\Component\Database\Query\QueryInterface;
 */
 abstract class SQLBuilderDecorator implements SQLBuilderInterface
 {
-     use SQLBuilderDecoratorTrait;
+    use SQLBuilderDecoratorTrait;
 
 
-     /**
-      * @param $builder
-     */
-     public function __construct($builder)
-     {
-         $this->withBuilder($builder);
-     }
+    /**
+     * @param $builder
+    */
+    public function __construct($builder)
+    {
+        $this->withBuilder($builder);
+    }
 }

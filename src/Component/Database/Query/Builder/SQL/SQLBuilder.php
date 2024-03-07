@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder\SQL;
@@ -16,7 +17,6 @@ use Laventure\Component\Database\Query\Builder\SQL\Set\SettableResolverInterface
 use Laventure\Component\Database\Query\QueryInterface;
 use Stringable;
 
-
 /**
  * SQLBuilder
  *
@@ -28,7 +28,6 @@ use Stringable;
 */
 abstract class SQLBuilder implements WhereInterface, SQLBuilderInterface, SettableInterface
 {
-
     /**
      * @var ConnectionInterface
     */
@@ -176,7 +175,7 @@ abstract class SQLBuilder implements WhereInterface, SQLBuilderInterface, Settab
     */
     public function whereEqualTo($column, $value): static
     {
-         return $this->andWhere($this->eq($column, $value));
+        return $this->andWhere($this->eq($column, $value));
     }
 
 

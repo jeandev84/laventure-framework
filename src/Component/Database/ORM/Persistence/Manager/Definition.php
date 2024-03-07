@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Manager;
@@ -28,8 +29,6 @@ use Laventure\Component\Database\ORM\Persistence\UnitOfWork\Factory\UnitOfWorkFa
  */
 class Definition extends Configuration
 {
-
-
     /**
      * @var ConnectionInterface
     */
@@ -77,10 +76,10 @@ class Definition extends Configuration
     */
     public function __construct(ConnectionInterface $connection)
     {
-         $this->connection        = $connection;
-         $this->metadataFactory   = new ClassMetadataFactory();
-         $this->unitOfWorkFactory = new UnitOfWorkFactory();
-         $this->repositoryFactory = new EntityRepositoryFactory();
+        $this->connection        = $connection;
+        $this->metadataFactory   = new ClassMetadataFactory();
+        $this->unitOfWorkFactory = new UnitOfWorkFactory();
+        $this->repositoryFactory = new EntityRepositoryFactory();
     }
 
 
@@ -170,7 +169,7 @@ class Definition extends Configuration
     */
     public function getClassMetadataFactory(): ClassMetadataFactoryInterface
     {
-         return $this->metadataFactory;
+        return $this->metadataFactory;
     }
 
 
@@ -186,7 +185,7 @@ class Definition extends Configuration
     */
     public function getRepositoryFactory(): EntityRepositoryFactoryInterface
     {
-         return $this->repositoryFactory;
+        return $this->repositoryFactory;
     }
 
 

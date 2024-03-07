@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Configuration;
@@ -17,7 +18,6 @@ use Laventure\Utils\Parameter\Parameter;
  */
 class Configuration extends Parameter implements ConfigurationInterface
 {
-
     /**
      * @inheritDoc
     */

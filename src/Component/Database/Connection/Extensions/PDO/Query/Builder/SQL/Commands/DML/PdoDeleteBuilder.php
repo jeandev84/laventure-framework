@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\SQL\Commands\DML;
@@ -17,5 +18,5 @@ use Laventure\Component\Database\Query\Builder\SQL\DML\Delete\DeleteBuilderDecor
 */
 class PdoDeleteBuilder extends DeleteBuilderDecorator
 {
-     use PdoSQLBuilderTrait;
+    use PdoSQLBuilderTrait;
 }

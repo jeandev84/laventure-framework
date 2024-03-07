@@ -1,11 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Mapper\Identity;
 
 use Laventure\Component\Database\ORM\Persistence\Storage\ObjectStorage;
 use SplObjectStorage;
-
 
 /**
  * IdentityMap
@@ -18,7 +18,6 @@ use SplObjectStorage;
 */
 class IdentityMap implements IdentityMapperInterface
 {
-
     /**
      * @var SplObjectStorage
      */

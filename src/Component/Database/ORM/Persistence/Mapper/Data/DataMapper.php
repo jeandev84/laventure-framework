@@ -1,8 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Mapper\Data;
 
+use Laventure\Component\Database\ORM\Persistence\Manager\EntityManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Manager\Event\EventManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\PersistentInterface;
 
@@ -17,35 +19,19 @@ use Laventure\Component\Database\ORM\Persistence\PersistentInterface;
 */
 class DataMapper implements DataMapperInterface
 {
+    /**
+     * @var EntityManagerInterface
+    */
+    protected EntityManagerInterface $em;
 
 
     /**
-     * @var PersistentInterface
+     * @param EntityManagerInterface $em
     */
-    protected PersistentInterface $persistent;
-
-
-    /**
-     * @var EventManagerInterface
-    */
-    protected EventManagerInterface $eventManager;
-
-
-
-
-    /**
-     * @param PersistentInterface $persistent
-     * @param EventManagerInterface $eventManager
-    */
-    public function __construct(
-       PersistentInterface $persistent,
-       EventManagerInterface $eventManager
-    )
+    public function __construct(EntityManagerInterface $em)
     {
-        $this->persistent = $persistent;
-        $this->eventManager = $eventManager;
+        $this->em = $em;
     }
-
 
 
 
@@ -54,10 +40,8 @@ class DataMapper implements DataMapperInterface
     */
     public function find($id): ?object
     {
-        return $this->persistent->find($id);
+        return $this->em->getUnitOfWork()->find($id);
     }
-
-
 
 
 
@@ -67,7 +51,7 @@ class DataMapper implements DataMapperInterface
     */
     public function save(object $object): int
     {
-
+        return 0;
     }
 
 
@@ -78,9 +62,8 @@ class DataMapper implements DataMapperInterface
     */
     public function delete(object $object): bool
     {
-
+        return false;
     }
-
 
 
 
@@ -91,9 +74,8 @@ class DataMapper implements DataMapperInterface
     */
     public function insert(object $object): int
     {
-
+        return 0;
     }
-
 
 
 
@@ -104,6 +86,18 @@ class DataMapper implements DataMapperInterface
     */
     public function update(object $object): mixed
     {
+        return $object;
+    }
 
+
+
+
+    /**
+     * @param object $object
+     * @return array
+    */
+    protected function mapRows(object $object): array
+    {
+        return [];
     }
 }

@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Query;
-
 
 use Laventure\Component\Database\Query\Exception\QueryException;
 use Laventure\Component\Database\Query\Result\QueryResultInterface;
@@ -18,46 +18,45 @@ use Laventure\Component\Database\Query\Result\QueryResultInterface;
  */
 interface QueryInterface
 {
-
-     /**
-      * @return string
-     */
-     public function getSQL(): string;
-
-
-
-
-
-
-     /**
-      * @return array
-     */
-     public function getParameters(): array;
-
-
-
-
-
-     /**
-      * Execute query
-      *
-      * @param null $fetchMode
-      * @return mixed
-     */
-     public function execute($fetchMode = null): mixed;
+    /**
+     * @return string
+    */
+    public function getSQL(): string;
 
 
 
 
 
 
+    /**
+     * @return array
+    */
+    public function getParameters(): array;
 
-     /**
-      * Returns mapped class
-      *
-      * @return string|null
-     */
-     public function getMappedClass(): ?string;
+
+
+
+
+    /**
+     * Execute query
+     *
+     * @param null $fetchMode
+     * @return mixed
+    */
+    public function execute($fetchMode = null): mixed;
+
+
+
+
+
+
+
+    /**
+     * Returns mapped class
+     *
+     * @return string|null
+    */
+    public function getMappedClass(): ?string;
 
 
 
@@ -79,12 +78,12 @@ interface QueryInterface
 
 
 
-     /**
-      * Returns all results
-      *
-      * @return array
-     */
-     public function fetchAll(): array;
+    /**
+     * Returns all results
+     *
+     * @return array
+    */
+    public function fetchAll(): array;
 
 
 
@@ -92,12 +91,12 @@ interface QueryInterface
 
 
 
-     /**
-      * Returns one result
-      *
-      * @return object|null
-     */
-     public function fetchOne(): ?object;
+    /**
+     * Returns one result
+     *
+     * @return object|null
+    */
+    public function fetchOne(): ?object;
 
 
 

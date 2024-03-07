@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder\SQL\Commands;
@@ -16,8 +17,6 @@ use Stringable;
 */
 class Values implements Stringable
 {
-
-
     /**
      * @param array $values
     */

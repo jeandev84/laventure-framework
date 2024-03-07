@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Manager;
@@ -18,8 +19,6 @@ use Laventure\Component\Database\ORM\Persistence\Repository\ObjectRepositoryInte
 */
 interface ObjectManagerInterface
 {
-
-
     /**
      * Initialize object
      *

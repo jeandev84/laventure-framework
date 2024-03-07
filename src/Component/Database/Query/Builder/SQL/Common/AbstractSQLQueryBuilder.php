@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder\SQL\Common;
@@ -18,28 +19,28 @@ use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
 */
 abstract class AbstractSQLQueryBuilder implements SQLQueryBuilderInterface
 {
-       /**
-        * @var SQLQueryBuilderInterface
-       */
-       protected SQLQueryBuilderInterface $builder;
+    /**
+     * @var SQLQueryBuilderInterface
+    */
+    protected SQLQueryBuilderInterface $builder;
 
 
-       /**
-        * @param SQLQueryBuilderFactoryInterface $builderFactory
-       */
-       public function __construct(SQLQueryBuilderFactoryInterface $builderFactory)
-       {
-            $this->builder = $builderFactory->createBuilder();
-       }
+    /**
+     * @param SQLQueryBuilderFactoryInterface $builderFactory
+    */
+    public function __construct(SQLQueryBuilderFactoryInterface $builderFactory)
+    {
+        $this->builder = $builderFactory->createBuilder();
+    }
 
 
 
 
-        /**
-         * @inheritDoc
-        */
-        public function expr(): ExpressionBuilderInterface
-        {
-            return $this->builder->expr();
-        }
+    /**
+     * @inheritDoc
+    */
+    public function expr(): ExpressionBuilderInterface
+    {
+        return $this->builder->expr();
+    }
 }

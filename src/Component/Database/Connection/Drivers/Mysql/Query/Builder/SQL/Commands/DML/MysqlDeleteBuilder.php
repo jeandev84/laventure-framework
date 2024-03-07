@@ -1,10 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Drivers\Mysql\Query\Builder\SQL\Commands\DML;
 
 use Laventure\Component\Database\Query\Builder\SQL\DML\Delete\DeleteBuilderDecorator;
-
 
 /**
  * MysqlDeleteBuilder
@@ -17,5 +17,4 @@ use Laventure\Component\Database\Query\Builder\SQL\DML\Delete\DeleteBuilderDecor
  */
 class MysqlDeleteBuilder extends DeleteBuilderDecorator
 {
-
 }

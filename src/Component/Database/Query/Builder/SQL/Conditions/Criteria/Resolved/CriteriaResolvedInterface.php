@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder\SQL\Conditions\Criteria\Resolved;
-
 
 /**
  * CriteriaResolvedInterface
@@ -15,26 +15,25 @@ namespace Laventure\Component\Database\Query\Builder\SQL\Conditions\Criteria\Res
 */
 interface CriteriaResolvedInterface
 {
-
-       /**
-        * @return string
-       */
-       public function getParam(): string;
-
-
-
-
-       /**
-        * @return mixed
-       */
-       public function getValue(): mixed;
+    /**
+     * @return string
+    */
+    public function getParam(): string;
 
 
 
 
+    /**
+     * @return mixed
+    */
+    public function getValue(): mixed;
 
-       /**
-        * @return string
-       */
-       public function getCondition(): string;
+
+
+
+
+    /**
+     * @return string
+    */
+    public function getCondition(): string;
 }

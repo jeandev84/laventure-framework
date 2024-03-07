@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Http\Message\Request\Server\Protocol;
-
 
 /**
  * ServerProtocolInterface
@@ -15,7 +15,6 @@ namespace Laventure\Component\Http\Message\Request\Server\Protocol;
 */
 interface ServerProtocolInterface
 {
-
     /**
      * Returns protocol version name
      *

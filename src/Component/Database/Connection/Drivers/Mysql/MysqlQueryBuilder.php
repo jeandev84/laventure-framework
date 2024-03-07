@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Drivers\Mysql;
-
 
 use Laventure\Component\Database\Connection\Drivers\Mysql\Query\Builder\SQL\Commands\DML\MysqlDeleteBuilder;
 use Laventure\Component\Database\Connection\Drivers\Mysql\Query\Builder\SQL\Commands\DML\MysqlInsertBuilder;
@@ -13,7 +13,6 @@ use Laventure\Component\Database\Query\Builder\SQL\DML\Delete\DeleteBuilderInter
 use Laventure\Component\Database\Query\Builder\SQL\DML\Insert\InsertBuilderInterface;
 use Laventure\Component\Database\Query\Builder\SQL\DML\Update\UpdateBuilderInterface;
 use Laventure\Component\Database\Query\Builder\SQL\DQL\Select\SelectBuilderInterface;
-
 
 /**
  * MysqlQueryBuilder
@@ -27,7 +26,6 @@ use Laventure\Component\Database\Query\Builder\SQL\DQL\Select\SelectBuilderInter
 */
 class MysqlQueryBuilder extends AbstractSQLQueryBuilder
 {
-
     /**
      * @inheritDoc
     */
@@ -67,6 +65,6 @@ class MysqlQueryBuilder extends AbstractSQLQueryBuilder
     */
     public function delete(string $table): DeleteBuilderInterface
     {
-         return new MysqlDeleteBuilder($this->builder->delete($table));
+        return new MysqlDeleteBuilder($this->builder->delete($table));
     }
 }

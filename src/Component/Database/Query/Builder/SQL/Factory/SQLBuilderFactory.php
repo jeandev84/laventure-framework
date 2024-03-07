@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder\SQL\Factory;
@@ -13,7 +14,6 @@ use Laventure\Component\Database\Query\Builder\SQL\DML\Update\UpdateBuilderInter
 use Laventure\Component\Database\Query\Builder\SQL\DQL\Select\SelectBuilder;
 use Laventure\Component\Database\Query\Builder\SQL\DQL\Select\SelectBuilderInterface;
 
-
 /**
  * SQLBuilderFactory
  *
@@ -25,8 +25,6 @@ use Laventure\Component\Database\Query\Builder\SQL\DQL\Select\SelectBuilderInter
 */
 class SQLBuilderFactory implements SQLBuilderFactoryInterface
 {
-
-
     /**
      * @param ConnectionInterface $connection
     */
@@ -68,7 +66,7 @@ class SQLBuilderFactory implements SQLBuilderFactoryInterface
     */
     public function createUpdateBuilder(): UpdateBuilderInterface
     {
-       return new UpdateBuilder($this->connection);
+        return new UpdateBuilder($this->connection);
     }
 
 

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Http\Message\Request;
@@ -246,9 +247,9 @@ class ServerRequest extends Request implements ServerRequestInterface
     */
     public function withoutAttribute(string $name): static
     {
-         $this->attributes->remove($name);
+        $this->attributes->remove($name);
 
-         return $this;
+        return $this;
     }
 
 

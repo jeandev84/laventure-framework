@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder\SQL\Expr\Factory;
@@ -17,11 +18,11 @@ use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionBuilderInterfa
 */
 class ExpressionBuilderFactory
 {
-       /**
-        * @return ExpressionBuilderInterface
-       */
-       public function createExpressionBuilder(): ExpressionBuilderInterface
-       {
-           return new Expr();
-       }
+    /**
+     * @return ExpressionBuilderInterface
+    */
+    public function createExpressionBuilder(): ExpressionBuilderInterface
+    {
+        return new Expr();
+    }
 }

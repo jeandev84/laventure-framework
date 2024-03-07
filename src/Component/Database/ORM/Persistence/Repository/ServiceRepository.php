@@ -18,12 +18,12 @@ use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\ClassMetadataI
 */
 class ServiceRepository extends EntityRepository
 {
-     /**
-      * @param EntityManagerInterface $em
-      * @param string $classname
-     */
-     public function __construct(EntityManagerInterface $em, string $classname)
-     {
-         parent::__construct($em, $em->getClassMetadata($classname));
-     }
+    /**
+     * @param EntityManagerInterface $em
+     * @param string $classname
+    */
+    public function __construct(EntityManagerInterface $em, string $classname)
+    {
+        parent::__construct($em, $em->getClassMetadata($classname));
+    }
 }

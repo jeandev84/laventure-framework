@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Query\Builder;
-
 
 use Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\DML\Delete\Delete;
 use Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\DML\Insert\Insert;
@@ -20,34 +20,32 @@ use Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\DQL\Select\Se
 */
 interface QueryBuilderInterface
 {
-
-     /**
-      * @param $columns
-     */
-     public function select($columns = null): Select;
-
-
-
-
-
-     /**
-      * @param string $table
-      * @param array $attributes
-     */
-     public function insert(string $table, array $attributes): Insert;
+    /**
+     * @param $columns
+    */
+    public function select($columns = null): Select;
 
 
 
 
 
+    /**
+     * @param string $table
+     * @param array $attributes
+    */
+    public function insert(string $table, array $attributes): Insert;
 
-     /**
-      * @param string $table
-      * @param array $attributes
-      * @return Update
-     */
-     public function update(string $table, array $attributes): Update;
 
+
+
+
+
+    /**
+     * @param string $table
+     * @param array $attributes
+     * @return Update
+    */
+    public function update(string $table, array $attributes): Update;
 
 
 
@@ -55,9 +53,10 @@ interface QueryBuilderInterface
 
 
 
-     /**
-      * @param string $table
-      * @return Delete
-     */
-     public function delete(string $table): Delete;
+
+    /**
+     * @param string $table
+     * @return Delete
+    */
+    public function delete(string $table): Delete;
 }

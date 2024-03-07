@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL;
@@ -18,23 +19,22 @@ use Laventure\Component\Database\Query\Builder\SQL\SQLBuilderInterface;
 */
 abstract class BuilderHasConditions extends Builder
 {
-
-     /**
-      * @var SQLBuilderHasConditionInterface
-     */
-     protected $builder;
-
+    /**
+     * @var SQLBuilderHasConditionInterface
+    */
+    protected $builder;
 
 
 
-     /**
-      * @param EntityManagerInterface $em
-      * @param SQLBuilderHasConditionInterface $builder
-     */
-     public function __construct(EntityManagerInterface $em, SQLBuilderHasConditionInterface $builder)
-     {
-         parent::__construct($em, $builder);
-     }
+
+    /**
+     * @param EntityManagerInterface $em
+     * @param SQLBuilderHasConditionInterface $builder
+    */
+    public function __construct(EntityManagerInterface $em, SQLBuilderHasConditionInterface $builder)
+    {
+        parent::__construct($em, $builder);
+    }
 
 
 

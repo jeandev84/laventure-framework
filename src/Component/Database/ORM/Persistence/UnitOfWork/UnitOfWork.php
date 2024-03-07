@@ -1,15 +1,19 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\UnitOfWork;
 
 use Laventure\Component\Database\ORM\Persistence\Manager\EntityManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Manager\Event\EventManagerInterface;
+use Laventure\Component\Database\ORM\Persistence\Mapper\Data\DataMapper;
+use Laventure\Component\Database\ORM\Persistence\Mapper\Data\DataMapperInterface;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\ClassMetadata;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Factory\ClassMetadataFactoryInterface;
 use Laventure\Component\Database\ORM\Persistence\Persistent;
 use Laventure\Component\Database\ORM\Persistence\PersistentInterface;
 use Laventure\Component\Database\ORM\Persistence\Storage\ObjectStorage;
+use ReflectionException;
 
 /**
  * UnitOfWork
@@ -61,6 +65,12 @@ class UnitOfWork implements UnitOfWorkInterface
 
 
 
+    /**
+     * @var DataMapperInterface
+    */
+    protected DataMapperInterface $dataMapper;
+
+
 
 
     /**
@@ -70,6 +80,7 @@ class UnitOfWork implements UnitOfWorkInterface
     {
         $this->em           = $em;
         $this->eventManager = $em->getEventManager();
+        $this->dataMapper   = new DataMapper();
         $this->storage      = new ObjectStorage();
     }
 
@@ -83,7 +94,21 @@ class UnitOfWork implements UnitOfWorkInterface
     */
     public function find(int $id): ?object
     {
+        return $this->storage[$id] ?? null;
+    }
 
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function persist(object $object): static
+    {
+        $this->addPersistState($object);
+
+        return $this;
     }
 
 
@@ -92,7 +117,7 @@ class UnitOfWork implements UnitOfWorkInterface
     /**
      * @inheritDoc
     */
-    public function persist(object $object): void
+    public function remove(object $object): static
     {
 
     }
@@ -103,7 +128,7 @@ class UnitOfWork implements UnitOfWorkInterface
     /**
      * @inheritDoc
     */
-    public function remove(object $object): void
+    public function refresh(object $object): static
     {
 
     }
@@ -114,9 +139,11 @@ class UnitOfWork implements UnitOfWorkInterface
     /**
      * @inheritDoc
     */
-    public function refresh(object $object): void
+    public function attach(object $object): static
     {
+        $this->storage->attach($object);
 
+        return $this;
     }
 
 
@@ -125,9 +152,11 @@ class UnitOfWork implements UnitOfWorkInterface
     /**
      * @inheritDoc
     */
-    public function attach(object $object): void
+    public function detach(object $object): static
     {
+        $this->storage->detach($object);
 
+        return $this;
     }
 
 
@@ -136,20 +165,9 @@ class UnitOfWork implements UnitOfWorkInterface
     /**
      * @inheritDoc
     */
-    public function detach(object $object): void
+    public function merge(object $object): static
     {
-
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function merge(object $object): void
-    {
-
+        return $this->attach($object);
     }
 
 
@@ -160,13 +178,16 @@ class UnitOfWork implements UnitOfWorkInterface
     */
     public function contains(object $object): bool
     {
-
+        return $this->storage->contains($object);
     }
+
+
 
 
 
     /**
      * @inheritDoc
+     * @throws ReflectionException
     */
     public function isNew(object $object): bool
     {
@@ -181,7 +202,7 @@ class UnitOfWork implements UnitOfWorkInterface
     /**
      * @inheritDoc
     */
-    public function commit(): void
+    public function commit(): static
     {
 
     }
@@ -234,7 +255,7 @@ class UnitOfWork implements UnitOfWorkInterface
     /**
      * @param object $object
      * @return $this
-     */
+    */
     public function addPersistState(object $object): static
     {
         return $this;

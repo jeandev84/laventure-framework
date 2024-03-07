@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder\SQL\Commands;
@@ -16,7 +17,6 @@ use Stringable;
 */
 class Select implements Stringable
 {
-
     /**
      * @param array $columns
      * @param string $suffix
@@ -52,7 +52,9 @@ class Select implements Stringable
     */
     private function resolveSelects(array $columns): string
     {
-        if (empty($columns)) { return "*"; }
+        if (empty($columns)) {
+            return "*";
+        }
 
         return join(', ', array_filter($columns));
     }

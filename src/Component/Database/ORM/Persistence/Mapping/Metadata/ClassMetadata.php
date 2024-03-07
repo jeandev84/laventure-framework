@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Mapping\Metadata;
@@ -24,7 +25,6 @@ use Reflector;
 */
 class ClassMetadata implements ClassMetadataInterface
 {
-
     use CamelCaseConvertorTrait;
 
 
@@ -105,7 +105,7 @@ class ClassMetadata implements ClassMetadataInterface
     /**
      * @inheritDoc
     */
-    public function getReflectionClass():ReflectionClass
+    public function getReflectionClass(): ReflectionClass
     {
         return $this->class;
     }
@@ -129,7 +129,7 @@ class ClassMetadata implements ClassMetadataInterface
     */
     public function isIdentifier($field): bool
     {
-       return in_array($field, $this->getIdentifierFieldNames());
+        return in_array($field, $this->getIdentifierFieldNames());
     }
 
 
@@ -154,12 +154,12 @@ class ClassMetadata implements ClassMetadataInterface
     */
     public function hasField($field): bool
     {
-       return in_array($field, $this->getFieldNames());
+        return in_array($field, $this->getFieldNames());
     }
 
 
-    
-    
+
+
 
 
     /**
@@ -173,8 +173,8 @@ class ClassMetadata implements ClassMetadataInterface
     }
 
 
-    
-    
+
+
 
     /**
      * @inheritDoc
@@ -227,14 +227,14 @@ class ClassMetadata implements ClassMetadataInterface
     */
     public function isNew(): bool
     {
-       return is_null($this->getIdentifierValue($this->identifier));
+        return is_null($this->getIdentifierValue($this->identifier));
     }
 
 
 
 
-    
-    
+
+
 
     /**
      * @inheritDoc
@@ -283,24 +283,6 @@ class ClassMetadata implements ClassMetadataInterface
             return $this->getTypeOfField($field)->isAssociation();
         });
     }
-    
-
-
-
-    
-    /**
-     * @inheritDoc
-    */
-    public function getAssociationTargetClass($assocName): mixed {}
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function isAssociationInverseSide($assocName): mixed {}
-
 
 
 
@@ -309,7 +291,31 @@ class ClassMetadata implements ClassMetadataInterface
     /**
      * @inheritDoc
     */
-    public function getAssociationMappedByTargetField($assocName): mixed {}
+    public function getAssociationTargetClass($assocName): mixed
+    {
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function isAssociationInverseSide($assocName): mixed
+    {
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getAssociationMappedByTargetField($assocName): mixed
+    {
+    }
 
 
 
@@ -338,8 +344,8 @@ class ClassMetadata implements ClassMetadataInterface
         return $identifierValues;
     }
 
-    
-    
+
+
 
 
 

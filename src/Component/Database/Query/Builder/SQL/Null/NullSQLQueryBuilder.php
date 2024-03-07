@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder\SQL\Null;
@@ -25,7 +26,6 @@ use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
 */
 class NullSQLQueryBuilder implements SQLQueryBuilderInterface
 {
-
     protected NullConnection $connection;
 
 
@@ -62,7 +62,7 @@ class NullSQLQueryBuilder implements SQLQueryBuilderInterface
     */
     public function insert(string $table): InsertBuilderInterface
     {
-         return new NullInsertBuilder($this->connection);
+        return new NullInsertBuilder($this->connection);
     }
 
 
@@ -73,7 +73,7 @@ class NullSQLQueryBuilder implements SQLQueryBuilderInterface
     */
     public function update(string $table): UpdateBuilderInterface
     {
-       return new NullUpdateBuilder($this->connection);
+        return new NullUpdateBuilder($this->connection);
     }
 
 

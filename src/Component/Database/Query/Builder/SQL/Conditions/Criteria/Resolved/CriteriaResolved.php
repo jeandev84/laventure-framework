@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder\SQL\Conditions\Criteria\Resolved;
@@ -14,8 +15,6 @@ namespace Laventure\Component\Database\Query\Builder\SQL\Conditions\Criteria\Res
 */
 class CriteriaResolved implements CriteriaResolvedInterface
 {
-
-
     /**
      * @param mixed $condition
      * @param string $param
@@ -25,8 +24,7 @@ class CriteriaResolved implements CriteriaResolvedInterface
         protected mixed $condition,
         protected string $param,
         protected mixed $value,
-    )
-    {
+    ) {
     }
 
 
@@ -36,7 +34,7 @@ class CriteriaResolved implements CriteriaResolvedInterface
     */
     public function getParam(): string
     {
-         return $this->param;
+        return $this->param;
     }
 
 

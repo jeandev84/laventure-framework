@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Http\Message\Request\Server\Script;
@@ -16,8 +17,6 @@ use Laventure\Component\Http\Message\Request\Server\ServerParamInterface;
 */
 class ServerScript implements ServerScriptInterface
 {
-
-
     /**
      * @param ServerParamInterface $server
     */

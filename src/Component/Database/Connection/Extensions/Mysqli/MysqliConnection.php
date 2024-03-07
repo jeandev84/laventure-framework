@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\Mysqli;
@@ -20,7 +21,6 @@ use Laventure\Component\Database\Query\QueryInterface;
 use Laventure\Component\Database\Schema\Table\TableInterface;
 use mysqli;
 
-
 /**
  * MysqliConnection
  *
@@ -32,7 +32,6 @@ use mysqli;
 */
 class MysqliConnection implements MysqliConnectionInterface
 {
-
     use ConnectionTrait;
 
     /**
@@ -277,21 +276,21 @@ class MysqliConnection implements MysqliConnectionInterface
 
 
 
-    
+
 
     /**
      * @inheritDoc
     */
     public function makeMysqli(ConfigurationInterface $config): mysqli
     {
-         return $this->factory->makeConnection($config);
+        return $this->factory->makeConnection($config);
     }
 
-    
-    
-    
-    
-    
+
+
+
+
+
     /**
      * @inheritDoc
     */
@@ -300,7 +299,7 @@ class MysqliConnection implements MysqliConnectionInterface
         return new MysqlTable($this, $name, $schemaName);
     }
 
-    
+
 
 
     /**

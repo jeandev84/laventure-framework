@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Manager\Contract;
@@ -17,9 +18,6 @@ use Laventure\Component\Database\Connection\ConnectionInterface;
  */
 interface DatabaseManagerInterface
 {
-
-
-
     /**
      * Set connection name
      *

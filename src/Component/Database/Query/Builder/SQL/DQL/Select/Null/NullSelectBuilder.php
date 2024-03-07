@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder\SQL\DQL\Select\Null;
@@ -18,22 +19,22 @@ use Laventure\Component\Database\Query\QueryInterface;
 */
 class NullSelectBuilder extends SelectBuilder
 {
-     /**
-      * @return string
-     */
-     public function getSQL(): string
-     {
-         return '';
-     }
+    /**
+     * @return string
+    */
+    public function getSQL(): string
+    {
+        return '';
+    }
 
 
 
 
-     /**
-      * @return QueryInterface
-     */
-     public function getQuery(): QueryInterface
-     {
-         return new NullQuery();
-     }
+    /**
+     * @return QueryInterface
+    */
+    public function getQuery(): QueryInterface
+    {
+        return new NullQuery();
+    }
 }

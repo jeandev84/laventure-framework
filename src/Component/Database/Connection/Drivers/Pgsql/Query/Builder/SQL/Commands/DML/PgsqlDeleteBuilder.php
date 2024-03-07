@@ -1,10 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Drivers\Pgsql\Query\Builder\SQL\Commands\DML;
 
 use Laventure\Component\Database\Query\Builder\SQL\DML\Delete\DeleteBuilderDecorator;
-
 
 /**
  * PgsqlDeleteBuilder
@@ -17,5 +17,4 @@ use Laventure\Component\Database\Query\Builder\SQL\DML\Delete\DeleteBuilderDecor
  */
 class PgsqlDeleteBuilder extends DeleteBuilderDecorator
 {
-
 }

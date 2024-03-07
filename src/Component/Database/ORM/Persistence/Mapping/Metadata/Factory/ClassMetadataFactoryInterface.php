@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Factory;
-
 
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\ClassMetadataInterface;
 
@@ -17,60 +17,59 @@ use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\ClassMetadataI
  */
 interface ClassMetadataFactoryInterface
 {
-
-       /**
-        * Returns all class meta data
-        *
-        * @return ClassMetadataInterface[]
-       */
-       public function getAllMetadata(): array;
-
-
-
-
-
-       /**
-        * Returns class metadata for given class
-        *
-        * @param $classname
-        * @return ClassMetadataInterface
-       */
-       public function getMetadataFor($classname): ClassMetadataInterface;
+    /**
+     * Returns all class meta data
+     *
+     * @return ClassMetadataInterface[]
+    */
+    public function getAllMetadata(): array;
 
 
 
 
 
-       /**
-        * Determine if  exists metadata for given class name
-        *
-        * @param $classname
-        * @return bool
-       */
-       public function hasMetadataFor($classname): bool;
+    /**
+     * Returns class metadata for given class
+     *
+     * @param $classname
+     * @return ClassMetadataInterface
+    */
+    public function getMetadataFor($classname): ClassMetadataInterface;
 
 
 
 
 
-       /**
-        * Add class metadata to storage
-        *
-        * @param $classname
-        * @param $class
-        * @return mixed
-       */
-       public function setMetadataFor($classname, $class): mixed;
+    /**
+     * Determine if  exists metadata for given class name
+     *
+     * @param $classname
+     * @return bool
+    */
+    public function hasMetadataFor($classname): bool;
 
 
 
 
 
-       /**
-        * Determine if is transient given classname
-        *
-        * @param $classname
-        * @return bool
-       */
-       public function isTransient($classname): bool;
+    /**
+     * Add class metadata to storage
+     *
+     * @param $classname
+     * @param $class
+     * @return mixed
+    */
+    public function setMetadataFor($classname, $class): mixed;
+
+
+
+
+
+    /**
+     * Determine if is transient given classname
+     *
+     * @param $classname
+     * @return bool
+    */
+    public function isTransient($classname): bool;
 }

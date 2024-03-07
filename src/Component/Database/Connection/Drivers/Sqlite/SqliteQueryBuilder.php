@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Drivers\Sqlite;
@@ -24,7 +25,6 @@ use Laventure\Component\Database\Query\Builder\SQL\DQL\Select\SelectBuilderInter
 */
 class SqliteQueryBuilder extends AbstractSQLQueryBuilder
 {
-
     /**
      * @inheritDoc
      */

@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\PDO;
-
 
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Configuration\Null\NullConfiguration;
@@ -20,7 +20,6 @@ use Laventure\Component\Database\Query\QueryInterface;
 use PDO;
 use PDOException;
 use RuntimeException;
-
 
 /**
  * PdoConnection
@@ -196,7 +195,7 @@ abstract class PdoConnection implements PdoConnectionInterface
     */
     public function createSQLBuilderFactory(): SQLQueryBuilderFactoryInterface
     {
-         return new PdoSQLQueryBuilderFactory($this);
+        return new PdoSQLQueryBuilderFactory($this);
     }
 
 
@@ -215,8 +214,8 @@ abstract class PdoConnection implements PdoConnectionInterface
 
 
 
-    
-    
+
+
 
     /**
      * @inheritdoc

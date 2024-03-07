@@ -18,8 +18,6 @@ use Laventure\Component\Database\Query\QueryInterface;
 */
 abstract class Database implements DatabaseInterface
 {
-
-
     /**
      * @var ConnectionInterface
     */
@@ -38,7 +36,8 @@ abstract class Database implements DatabaseInterface
     /**
      * @param ConnectionInterface $connection
     */
-    public function __construct(ConnectionInterface $connection) {
+    public function __construct(ConnectionInterface $connection)
+    {
         $this->connection = $connection;
         $this->name       = $connection->configuration()->getDatabase();
     }
@@ -68,7 +67,7 @@ abstract class Database implements DatabaseInterface
     {
         if (!$this->name) {
             throw new DatabaseException(
-      "Database name is not specified for ". get_called_class()
+                "Database name is not specified for ". get_called_class()
             );
         }
 

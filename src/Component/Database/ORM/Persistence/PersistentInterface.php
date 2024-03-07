@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence;
-
 
 use Laventure\Component\Database\ORM\Persistence\Mapper\Identity\IdentityMapperInterface;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\ClassMetadataInterface;
@@ -19,180 +19,178 @@ use Laventure\Component\Database\ORM\Persistence\Query\Builder\QueryBuilderInter
 */
 interface PersistentInterface
 {
+    /**
+     * Find object from database or from identity map
+     *
+     * @param $id
+     * @return mixed
+    */
+    public function find($id): mixed;
 
 
-      /**
-       * Find object from database or from identity map
-       *
-       * @param $id
-       * @return mixed
-      */
-      public function find($id): mixed;
 
 
 
 
 
 
+    /**
+     * Find object by criteria
+     *
+     * @param array $criteria
+     * @return mixed
+    */
+    public function findOneBy(array $criteria): mixed;
 
 
-      /**
-       * Find object by criteria
-       *
-       * @param array $criteria
-       * @return mixed
-      */
-      public function findOneBy(array $criteria): mixed;
 
 
 
 
 
 
+    /**
+     * Add insert data
+     *
+     * @param array $attributes
+     * @return $this
+    */
+    public function addInsert(array $attributes): static;
 
 
-      /**
-       * Add insert data
-       *
-       * @param array $attributes
-       * @return $this
-      */
-      public function addInsert(array $attributes): static;
 
 
 
 
 
 
+    /**
+     * Insert data to the table and returns last insert ID
+     *
+     * @return int
+    */
+    public function insert(): int;
 
 
-      /**
-       * Insert data to the table and returns last insert ID
-       *
-       * @return int
-      */
-      public function insert(): int;
 
 
 
 
 
+    /**
+     * @param array $attributes
+     * @param $id
+     * @return static
+    */
+    public function addUpdate($id, array $attributes): static;
 
 
-      /**
-       * @param array $attributes
-       * @param $id
-       * @return static
-      */
-      public function addUpdate($id, array $attributes): static;
 
 
 
 
 
+    /**
+     * Update data
+     *
+     * @return mixed
+    */
+    public function update(): mixed;
 
 
-      /**
-       * Update data
-       *
-       * @return mixed
-      */
-      public function update(): mixed;
 
 
 
 
 
+    /**
+     * @param $id
+     * @return $this
+    */
+    public function addDelete($id): static;
 
 
-      /**
-       * @param $id
-       * @return $this
-      */
-      public function addDelete($id): static;
 
 
 
 
 
+    /**
+     * Delete data
+     *
+     * @return mixed
+    */
+    public function delete(): mixed;
 
 
-      /**
-       * Delete data
-       *
-       * @return mixed
-      */
-      public function delete(): mixed;
 
 
 
 
+    /**
+     * Create an instance of  query builder
+     *
+     * @return QueryBuilderInterface
+    */
+    public function createQueryBuilder(): QueryBuilderInterface;
 
 
-      /**
-       * Create an instance of  query builder
-       *
-       * @return QueryBuilderInterface
-      */
-      public function createQueryBuilder(): QueryBuilderInterface;
 
 
 
 
+    /**
+     * Returns class metadata
+     *
+     * @return ClassMetadataInterface
+    */
+    public function getClassMetadata(): ClassMetadataInterface;
 
 
-      /**
-       * Returns class metadata
-       *
-       * @return ClassMetadataInterface
-      */
-      public function getClassMetadata(): ClassMetadataInterface;
 
 
 
 
 
+    /**
+     * Returns identity mapper
+     *
+     * @return IdentityMapperInterface
+    */
+    public function getIdentityMap(): IdentityMapperInterface;
 
 
-      /**
-       * Returns identity mapper
-       *
-       * @return IdentityMapperInterface
-      */
-      public function getIdentityMap(): IdentityMapperInterface;
 
 
 
 
+    /**
+     * Generate Identity storage data
+     *
+     * @param $id
+     * @return string
+    */
+    public function getIdentityId($id): mixed;
 
 
-      /**
-       * Generate Identity storage data
-       *
-       * @param $id
-       * @return string
-      */
-      public function getIdentityId($id): mixed;
 
 
+    /**
+     * Returns class name
+     *
+     * @return string
+    */
+    public function getClassName(): string;
 
 
-      /**
-       * Returns class name
-       *
-       * @return string
-      */
-      public function getClassName(): string;
 
 
 
 
-
-
-      /**
-       * Returns table name
-       *
-       * @return string
-      */
-      public function getTableName(): string;
+    /**
+     * Returns table name
+     *
+     * @return string
+    */
+    public function getTableName(): string;
 }

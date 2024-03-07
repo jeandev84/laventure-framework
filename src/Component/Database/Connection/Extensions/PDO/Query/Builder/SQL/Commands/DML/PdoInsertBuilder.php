@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\SQL\Commands\DML;
@@ -16,37 +17,36 @@ use Laventure\Component\Database\Query\Builder\SQL\DML\Insert\InsertBuilderDecor
  */
 class PdoInsertBuilder extends InsertBuilderDecorator
 {
+    /**
+      * @inheritdoc
+    */
+    public function addMultipleInsert(array $values): static
+    {
+        foreach ($values as $position => $attributes) {
+            foreach ($attributes as $column => $value) {
+                $this->setValue($column, ":{$column}_{$position}", $position);
+                $this->setParameter("{$column}_{$position}", $value);
+            }
+        }
 
-      /**
-        * @inheritdoc
-      */
-      public function addMultipleInsert(array $values): static
-      {
-          foreach ($values as $position => $attributes) {
-              foreach ($attributes as $column => $value) {
-                  $this->setValue($column, ":{$column}_{$position}", $position);
-                  $this->setParameter("{$column}_{$position}", $value);
-              }
-          }
-
-          return $this;
-      }
-
+        return $this;
+    }
 
 
 
-      /**
-       * @inheritdoc
-      */
-      public function addInsert(array $attributes, int $position = 0): static
-      {
-          foreach ($attributes as $column => $value) {
-              $this->setValue($column, ":$column");
-              $this->setParameter($column, $value);
-          }
+
+    /**
+     * @inheritdoc
+    */
+    public function addInsert(array $attributes, int $position = 0): static
+    {
+        foreach ($attributes as $column => $value) {
+            $this->setValue($column, ":$column");
+            $this->setParameter($column, $value);
+        }
 
 
-          return $this;
-      }
+        return $this;
+    }
 
 }

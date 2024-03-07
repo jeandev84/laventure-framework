@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Manager;
@@ -245,7 +246,9 @@ class DatabaseManager implements DatabaseManagerInterface
     {
         if (!$this->hasConfiguration($name)) {
             throw new ConfigurationException(
-        "empty params for connection ($name)", [], 409
+                "empty params for connection ($name)",
+                [],
+                409
             );
         }
 

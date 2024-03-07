@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\Mysqli;
-
 
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Connection\ConnectionInterface;
@@ -19,10 +19,9 @@ use mysqli;
 */
 interface MysqliConnectionInterface extends ConnectionInterface
 {
-
-     /**
-      * @param ConfigurationInterface $config
-      * @return mysqli
-     */
-     public function makeMysqli(ConfigurationInterface $config): mysqli;
+    /**
+     * @param ConfigurationInterface $config
+     * @return mysqli
+    */
+    public function makeMysqli(ConfigurationInterface $config): mysqli;
 }

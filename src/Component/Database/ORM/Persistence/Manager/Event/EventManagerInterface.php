@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Manager\Event;
-
 
 /**
  * EventManagerInterface
@@ -15,8 +15,6 @@ namespace Laventure\Component\Database\ORM\Persistence\Manager\Event;
 */
 interface EventManagerInterface
 {
-
-
     /**
      * @param $event
      *

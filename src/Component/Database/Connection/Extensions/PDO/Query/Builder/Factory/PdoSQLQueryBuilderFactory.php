@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\Factory;
@@ -19,7 +20,6 @@ use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
 */
 class PdoSQLQueryBuilderFactory implements SQLQueryBuilderFactoryInterface
 {
-
     /**
      * @param PdoConnection $connection
     */

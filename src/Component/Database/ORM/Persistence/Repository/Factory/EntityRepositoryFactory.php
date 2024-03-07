@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Repository\Factory;
@@ -18,13 +19,12 @@ use Laventure\Component\Database\ORM\Persistence\Repository\ObjectRepositoryInte
 */
 class EntityRepositoryFactory implements EntityRepositoryFactoryInterface
 {
-
     /**
      * @inheritDoc
     */
     public function createRepository(string $classname): ?ObjectRepositoryInterface
     {
-         return null;
+        return null;
     }
 
 
@@ -36,8 +36,7 @@ class EntityRepositoryFactory implements EntityRepositoryFactoryInterface
     public function createEntityRepository(
         ObjectManagerInterface $em,
         string $classname
-    ): ObjectRepositoryInterface
-    {
+    ): ObjectRepositoryInterface {
         return new EntityRepository($em, $em->getClassMetadata($classname));
     }
 }

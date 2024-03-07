@@ -1,11 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\SQL;
 
-
 use Laventure\Component\Database\Query\Builder\SQL\Decorator\SQLBuilderDecoratorTrait;
-
 
 /**
  * PdoSQLBuilderTrait
@@ -18,43 +17,43 @@ use Laventure\Component\Database\Query\Builder\SQL\Decorator\SQLBuilderDecorator
 */
 trait PdoSQLBuilderTrait
 {
-     use SQLBuilderDecoratorTrait;
+    use SQLBuilderDecoratorTrait;
 
 
-     /**
-      * @inheritdoc
-     */
-     public function set($column, $value): static
-     {
-         $this->set($column, ":$column");
-         $this->setParameter($column, $value);
+    /**
+     * @inheritdoc
+    */
+    public function set($column, $value): static
+    {
+        $this->set($column, ":$column");
+        $this->setParameter($column, $value);
 
-         return $this;
-     }
-
-
-     /**
-      * @inheritdoc
-     */
-     public function whereIn($column, array $value): static
-     {
-         $this->andWhere($this->expr()->in($column, ":$column"));
-         $this->setParameter($column, $value);
-
-         return $this;
-     }
+        return $this;
+    }
 
 
+    /**
+     * @inheritdoc
+    */
+    public function whereIn($column, array $value): static
+    {
+        $this->andWhere($this->expr()->in($column, ":$column"));
+        $this->setParameter($column, $value);
+
+        return $this;
+    }
 
 
-     /**
-      * @inheritdoc
-     */
-     public function whereEqualTo($column, $value): static
-     {
-         $this->andWhere($this->expr()->eq($column, ":$column"));
-         $this->setParameter($column, $value);
 
-         return $this;
-     }
+
+    /**
+     * @inheritdoc
+    */
+    public function whereEqualTo($column, $value): static
+    {
+        $this->andWhere($this->expr()->eq($column, ":$column"));
+        $this->setParameter($column, $value);
+
+        return $this;
+    }
 }

@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Manager\Event;
-
 
 use Laventure\Component\Database\ORM\Persistence\Manager\Events\Common\ObjectEvent;
 use Laventure\Component\Database\ORM\Persistence\Manager\Events\PostPersistEvent;
@@ -24,7 +24,6 @@ use Laventure\Component\Database\ORM\Persistence\Mapping\Service\ReflectionServi
 */
 class EventManager implements EventManagerInterface
 {
-
     /**
      * @var array
     */
@@ -37,8 +36,7 @@ class EventManager implements EventManagerInterface
     */
     public function __construct(
         protected ReflectionServiceInterface $reflectionService
-    )
-    {
+    ) {
     }
 
 

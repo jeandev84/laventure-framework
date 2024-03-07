@@ -1,6 +1,6 @@
 <?php
-namespace Laventure\Component\Database\ORM\Persistence\Manager\Events\Common;
 
+namespace Laventure\Component\Database\ORM\Persistence\Manager\Events\Common;
 
 /**
  * @ObjectEvent
@@ -13,22 +13,21 @@ namespace Laventure\Component\Database\ORM\Persistence\Manager\Events\Common;
 */
 abstract class ObjectEvent
 {
+    /**
+     * @param object $object
+    */
+    public function __construct(protected object $object)
+    {
 
-      /**
-       * @param object $object
-      */
-      public function __construct(protected object $object)
-      {
-
-      }
-
+    }
 
 
-      /**
-       * @return object
-      */
-      public function getSubject(): object
-      {
-           return $this->object;
-      }
+
+    /**
+     * @return object
+    */
+    public function getSubject(): object
+    {
+        return $this->object;
+    }
 }

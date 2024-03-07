@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Utils\Convertor\CamelCase;
-
 
 /**
  * CamelCaseConvertorTrait

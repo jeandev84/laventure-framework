@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder\SQL\DML\Update;
@@ -19,8 +20,6 @@ use Laventure\Component\Database\Query\Builder\SQL\SQLBuilder;
 */
 class UpdateBuilder extends SQLBuilder implements UpdateBuilderInterface
 {
-
-
     /**
      * @inheritDoc
     */

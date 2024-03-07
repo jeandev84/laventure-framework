@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder\SQL\Factory;
-
 
 use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
 
@@ -17,9 +17,8 @@ use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
 */
 interface SQLQueryBuilderFactoryInterface
 {
-
-     /**
-      * @return SQLQueryBuilderInterface
-     */
-     public function createBuilder(): SQLQueryBuilderInterface;
+    /**
+     * @return SQLQueryBuilderInterface
+    */
+    public function createBuilder(): SQLQueryBuilderInterface;
 }

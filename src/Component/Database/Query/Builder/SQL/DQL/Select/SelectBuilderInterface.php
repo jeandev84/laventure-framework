@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder\SQL\DQL\Select;
@@ -18,7 +19,6 @@ use Laventure\Component\Database\Query\Builder\SQL\SQLBuilderInterface;
 */
 interface SelectBuilderInterface extends SQLBuilderHasConditionInterface
 {
-    
     /**
      * PgsqlSelectBuilder columns
      *
@@ -68,8 +68,8 @@ interface SelectBuilderInterface extends SQLBuilderHasConditionInterface
     public function from(string $table, string $alias = ''): static;
 
 
-    
-    
+
+
 
 
 
@@ -156,10 +156,10 @@ interface SelectBuilderInterface extends SQLBuilderHasConditionInterface
 
 
 
-    
-    
-    
-    
+
+
+
+
 
 
     /**
@@ -183,10 +183,10 @@ interface SelectBuilderInterface extends SQLBuilderHasConditionInterface
     public function addGroupBy(string $columns): static;
 
 
-    
-    
-    
-    
+
+
+
+
 
 
 

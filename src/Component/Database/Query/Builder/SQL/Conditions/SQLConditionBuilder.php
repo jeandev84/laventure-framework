@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder\SQL\Conditions;
@@ -19,7 +20,6 @@ use RuntimeException;
 */
 class SQLConditionBuilder implements BuilderInterface
 {
-
     protected array $conditions = [];
 
 
@@ -39,7 +39,7 @@ class SQLConditionBuilder implements BuilderInterface
     */
     public function getConditions(): array
     {
-       return $this->conditions;
+        return $this->conditions;
     }
 
 
@@ -51,7 +51,7 @@ class SQLConditionBuilder implements BuilderInterface
     */
     public function empty(): bool
     {
-         return empty($this->conditions);
+        return empty($this->conditions);
     }
 
 
@@ -90,7 +90,7 @@ class SQLConditionBuilder implements BuilderInterface
                     ConditionType::AND => new andX($criteria),
                     ConditionType::OR  => new orX($criteria),
                     default            => new RuntimeException(
-              "Could not get criteria type ($type) ($criteriaAsString)"
+                        "Could not get criteria type ($type) ($criteriaAsString)"
                     )
                 };
                 if ($key !== $type) {

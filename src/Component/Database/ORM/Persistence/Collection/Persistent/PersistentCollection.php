@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Collection\Persistent;
@@ -17,7 +18,6 @@ use Laventure\Component\Database\ORM\Persistence\PersistentInterface;
 */
 class PersistentCollection implements PersistentCollectionInterface
 {
-
     /**
      * @param string $assocName
      * @param CollectionInterface $collections
@@ -25,8 +25,7 @@ class PersistentCollection implements PersistentCollectionInterface
     public function __construct(
         protected string $assocName,
         protected CollectionInterface $collections
-    )
-    {
+    ) {
     }
 
 
@@ -55,11 +54,11 @@ class PersistentCollection implements PersistentCollectionInterface
 
 
 
-     /**
-      * @inheritDoc
-     */
-     public function persist(PersistentInterface $persistent): mixed
-     {
+    /**
+     * @inheritDoc
+    */
+    public function persist(PersistentInterface $persistent): mixed
+    {
 
-     }
+    }
 }

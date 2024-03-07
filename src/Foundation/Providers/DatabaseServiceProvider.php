@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Providers;
@@ -61,7 +62,7 @@ class DatabaseServiceProvider extends ServiceProvider
                 return $database;
             },
             ConnectionInterface::class => function (ManagerInterface $manager) {
-               return $manager->connection();
+                return $manager->connection();
             },
             EntityManagerInterface::class => function (Manager $manager) {
                 return new EntityManager();

@@ -1,4 +1,5 @@
 <?php
+
 namespace Laventure\Component\Database\ORM\Persistence\Manager\Event;
 
 /**
@@ -12,15 +13,15 @@ namespace Laventure\Component\Database\ORM\Persistence\Manager\Event;
 */
 class Event
 {
-     const postLoad          = 'postLoad';
-     const prePersist        = 'prePersist';
-     const postPersist       = 'postPersist';
-     const preUpdate         = 'preUpdate';
-     const postUpdate        = 'postUpdate';
-     const preRemove         = 'preRemove';
-     const postRemove        = 'postRemove';
-     const preFlush          = 'preFlush';
-     const onFlush           = 'onFlush';
-     const postFlush         = 'postFlush';
-     const onClear           = 'onClear';
+    public const postLoad          = 'postLoad';
+    public const prePersist        = 'prePersist';
+    public const postPersist       = 'postPersist';
+    public const preUpdate         = 'preUpdate';
+    public const postUpdate        = 'postUpdate';
+    public const preRemove         = 'preRemove';
+    public const postRemove        = 'postRemove';
+    public const preFlush          = 'preFlush';
+    public const onFlush           = 'onFlush';
+    public const postFlush         = 'postFlush';
+    public const onClear           = 'onClear';
 }

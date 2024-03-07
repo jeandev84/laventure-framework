@@ -15,5 +15,4 @@ namespace Laventure\Component\Database\ORM\Persistence\Repository;
 */
 interface EntityRepositoryInterface extends ObjectRepositoryInterface
 {
-
 }

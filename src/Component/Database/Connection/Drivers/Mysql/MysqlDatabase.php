@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Drivers\Mysql;
@@ -22,12 +23,12 @@ class MysqlDatabase extends Database
     public function create(): bool
     {
         $this->exec(
-       "CREATE DATABASE IF NOT EXISTS {$this->getName()}",
+            "CREATE DATABASE IF NOT EXISTS {$this->getName()}",
             "DEFAULT CHARACTER SET {$this->charset()}",
             "DEFAULT COLLATE {$this->collation()};"
         );
 
-        $this->exec( "SET default_storage_engine = {$this->engine()};");
+        $this->exec("SET default_storage_engine = {$this->engine()};");
 
         return $this->exists();
     }

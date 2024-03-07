@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Configuration\Contract;
-
 
 /**
  * NamedConfigurationInterface
@@ -15,8 +15,8 @@ namespace Laventure\Component\Database\Configuration\Contract;
 */
 interface NamedConfigurationInterface extends ConfigurationInterface
 {
-      /**
-       * @return string
-      */
-      public function getName(): string;
+    /**
+     * @return string
+    */
+    public function getName(): string;
 }

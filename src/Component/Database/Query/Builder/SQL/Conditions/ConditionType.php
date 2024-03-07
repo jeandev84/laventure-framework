@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder\SQL\Conditions;
@@ -14,7 +15,7 @@ namespace Laventure\Component\Database\Query\Builder\SQL\Conditions;
 */
 enum ConditionType
 {
-    const DEFAULT = 'conditions';
-    const AND     = 'AND';
-    const OR      = 'OR';
+    public const DEFAULT = 'conditions';
+    public const AND     = 'AND';
+    public const OR      = 'OR';
 }

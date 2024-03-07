@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Exception;
@@ -17,7 +18,6 @@ use Throwable;
 */
 class UnavailableConnectionException extends BaseException
 {
-
     /**
      * @param string $connection
      * @param array $data

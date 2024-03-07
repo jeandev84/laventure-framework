@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Drivers\Pgsql;
@@ -20,7 +21,6 @@ use Laventure\Component\Database\Schema\Table\TableInterface;
 */
 class PgsqlConnection extends PdoConnection
 {
-
     /**
      * @inheritDoc
     */

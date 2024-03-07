@@ -6,7 +6,6 @@ namespace Laventure\Component\Database\Query\Builder\SQL\DML\Delete;
 
 use Laventure\Component\Database\Query\Builder\SQL\Conditions\SQLBuilderHasConditionInterface;
 
-
 /**
  * DeleteWhereBuilderInterface
  *

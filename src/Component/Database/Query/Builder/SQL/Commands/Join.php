@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder\SQL\Commands;
@@ -16,7 +17,6 @@ use Stringable;
 */
 class Join implements Stringable
 {
-
     /**
      * @param string $table
      * @param string $condition

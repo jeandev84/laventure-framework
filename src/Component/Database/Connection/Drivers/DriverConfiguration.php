@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Drivers;
@@ -16,17 +17,17 @@ use Laventure\Component\Database\Configuration\Configuration;
 */
 class DriverConfiguration extends Configuration
 {
-      protected array $params = [
-          'driver'     =>  null,
-          'database'   =>  null,
-          'host'       =>  null,
-          'port'       =>  null,
-          'username'   =>  null,
-          'password'   =>  null,
-          'collation'  =>  null,
-          'charset'    =>  null,
-          'prefix'     =>  null,
-          'engine'     =>  null,
-          'options'    => []
-      ];
+    protected array $params = [
+        'driver'     =>  null,
+        'database'   =>  null,
+        'host'       =>  null,
+        'port'       =>  null,
+        'username'   =>  null,
+        'password'   =>  null,
+        'collation'  =>  null,
+        'charset'    =>  null,
+        'prefix'     =>  null,
+        'engine'     =>  null,
+        'options'    => []
+    ];
 }

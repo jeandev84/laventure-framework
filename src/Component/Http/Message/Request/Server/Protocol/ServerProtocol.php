@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Http\Message\Request\Server\Protocol;
-
 
 use Laventure\Component\Http\Message\Request\Server\ServerParamInterface;
 
@@ -17,7 +17,6 @@ use Laventure\Component\Http\Message\Request\Server\ServerParamInterface;
 */
 class ServerProtocol implements ServerProtocolInterface
 {
-
     /**
      * @param ServerParamInterface $server
     */

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Http\Message\Request\Server\Remote;
@@ -16,8 +17,6 @@ use Laventure\Component\Http\Message\Request\Server\ServerParamInterface;
 */
 class ServerRemote implements ServerRemoteInterface
 {
-
-
     /**
      * @param ServerParamInterface $server
     */

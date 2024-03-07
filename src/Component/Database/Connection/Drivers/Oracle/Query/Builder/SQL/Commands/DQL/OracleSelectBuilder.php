@@ -1,10 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Drivers\Oracle\Query\Builder\SQL\Commands\DQL;
 
 use Laventure\Component\Database\Query\Builder\SQL\DQL\Select\SelectBuilderDecorator;
-
 
 /**
  * PgsqlSelectBuilder
@@ -17,5 +17,4 @@ use Laventure\Component\Database\Query\Builder\SQL\DQL\Select\SelectBuilderDecor
 */
 class OracleSelectBuilder extends SelectBuilderDecorator
 {
-
 }

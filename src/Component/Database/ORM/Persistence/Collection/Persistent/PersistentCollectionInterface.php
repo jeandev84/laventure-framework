@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Collection\Persistent;
-
 
 use Laventure\Component\Database\ORM\Persistence\Collection\CollectionInterface;
 use Laventure\Component\Database\ORM\Persistence\PersistentInterface;
@@ -18,28 +18,28 @@ use Laventure\Component\Database\ORM\Persistence\PersistentInterface;
 */
 interface PersistentCollectionInterface
 {
-     /**
-      * @return string
-     */
-     public function getAssocName(): string;
+    /**
+     * @return string
+    */
+    public function getAssocName(): string;
 
 
 
 
-     /**
-      * @return CollectionInterface
-     */
-     public function getCollection(): CollectionInterface;
+    /**
+     * @return CollectionInterface
+    */
+    public function getCollection(): CollectionInterface;
 
 
 
 
 
-     /**
-      * Persist collection
-      *
-      * @param PersistentInterface $persistent
-      * @return mixed
-     */
-     public function persist(PersistentInterface $persistent): mixed;
+    /**
+     * Persist collection
+     *
+     * @param PersistentInterface $persistent
+     * @return mixed
+    */
+    public function persist(PersistentInterface $persistent): mixed;
 }

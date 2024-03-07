@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Http\Message\Request\Server\Remote;
-
 
 /**
  * ServerRemoteInterface
@@ -15,26 +15,24 @@ namespace Laventure\Component\Http\Message\Request\Server\Remote;
 */
 interface ServerRemoteInterface
 {
-
-     /**
-      * Returns remote address
-      *
-      * @return string
-     */
-     public function getAddress(): string;
-
+    /**
+     * Returns remote address
+     *
+     * @return string
+    */
+    public function getAddress(): string;
 
 
 
 
 
-     /**
-      * Returns remote address port
-      *
-      * @return int
-     */
-     public function getPort(): int;
 
+    /**
+     * Returns remote address port
+     *
+     * @return int
+    */
+    public function getPort(): int;
 
 
 
@@ -42,10 +40,11 @@ interface ServerRemoteInterface
 
 
 
-     /**
-      * Returns remote IP
-      *
-      * @return int
-     */
-     public function getIp(): int;
+
+    /**
+     * Returns remote IP
+     *
+     * @return int
+    */
+    public function getIp(): int;
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Manager;
@@ -73,8 +74,8 @@ class Manager extends DatabaseManager implements ManagerInterface
         return $this;
     }
 
-    
-    
+
+
 
 
     /**

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Utils\Convertor\CamelCase;
@@ -14,5 +15,5 @@ namespace Laventure\Utils\Convertor\CamelCase;
 */
 class CamelCaseConvertor
 {
-   use CamelCaseConvertorTrait;
+    use CamelCaseConvertorTrait;
 }

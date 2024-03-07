@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Query\Builder;
-
 
 use Laventure\Component\Database\ORM\Persistence\Manager\EntityManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\DML\Delete\Delete;
@@ -22,8 +22,6 @@ use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
 */
 class QueryBuilder implements QueryBuilderInterface
 {
-
-
     /**
      * @var EntityManagerInterface
     */
@@ -44,8 +42,8 @@ class QueryBuilder implements QueryBuilderInterface
     */
     public function __construct(EntityManagerInterface $em)
     {
-           $this->em      = $em;
-           $this->builder = $em->createNativeQueryBuilder();
+        $this->em      = $em;
+        $this->builder = $em->createNativeQueryBuilder();
     }
 
 
@@ -56,10 +54,10 @@ class QueryBuilder implements QueryBuilderInterface
     */
     public function select($columns = null): Select
     {
-         return new Select(
-             $this->em,
-             $this->builder->select($columns)
-         );
+        return new Select(
+            $this->em,
+            $this->builder->select($columns)
+        );
     }
 
 

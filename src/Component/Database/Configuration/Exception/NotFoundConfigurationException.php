@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Configuration\Exception;
@@ -17,7 +18,6 @@ use Throwable;
 */
 class NotFoundConfigurationException extends BaseException
 {
-
     /**
      * @param array $data
      * @param Throwable|null $previous

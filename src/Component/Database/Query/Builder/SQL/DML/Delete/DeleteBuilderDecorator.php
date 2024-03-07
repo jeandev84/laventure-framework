@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder\SQL\DML\Delete;
@@ -18,33 +19,32 @@ use Laventure\Component\Database\Query\Builder\SQL\Decorator\SQLBuilderDecorator
 */
 class DeleteBuilderDecorator extends SQLBuilderDecorator implements DeleteBuilderInterface
 {
-
-       /**
-        * @var DeleteBuilderInterface
-       */
-       protected $builder;
-
-
-
-
-       /**
-        * @param DeleteBuilderInterface $builder
-       */
-       public function __construct(DeleteBuilderInterface $builder)
-       {
-           parent::__construct($builder);
-       }
+    /**
+     * @var DeleteBuilderInterface
+    */
+    protected $builder;
 
 
 
 
-       /**
-        * @inheritDoc
-       */
-       public function delete(string $table): static
-       {
-           $this->builder->delete($table);
+    /**
+     * @param DeleteBuilderInterface $builder
+    */
+    public function __construct(DeleteBuilderInterface $builder)
+    {
+        parent::__construct($builder);
+    }
 
-           return $this;
-       }
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function delete(string $table): static
+    {
+        $this->builder->delete($table);
+
+        return $this;
+    }
 }

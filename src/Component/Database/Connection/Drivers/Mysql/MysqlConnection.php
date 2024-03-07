@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Drivers\Mysql;
@@ -21,7 +22,6 @@ use Laventure\Component\Database\Schema\Table\TableInterface;
 */
 class MysqlConnection extends PdoConnection
 {
-
     /**
      * @inheritdoc
     */

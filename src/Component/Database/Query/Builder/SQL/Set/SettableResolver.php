@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder\SQL\Set;
@@ -16,8 +17,6 @@ use Laventure\Component\Database\Query\Builder\SQL\SQLBuilderInterface;
 */
 class SettableResolver implements SettableResolverInterface
 {
-
-
     /**
      * @param SQLBuilderInterface $builder
     */

@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder\SQL\Conditions\Criteria;
-
 
 /**
  * HasCriteriaInterface
@@ -15,7 +15,6 @@ namespace Laventure\Component\Database\Query\Builder\SQL\Conditions\Criteria;
 */
 interface HasCriteriaInterface
 {
-
     /**
      * Add WHERE conditions BY criteria
      *

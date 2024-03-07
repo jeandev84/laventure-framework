@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Repository;
@@ -17,8 +18,6 @@ use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\ClassMetadataI
 */
 class EntityRepository implements EntityRepositoryInterface
 {
-
-
     /**
      * @param EntityManagerInterface $em
      * @param ClassMetadataInterface $metadata
@@ -26,8 +25,7 @@ class EntityRepository implements EntityRepositoryInterface
     public function __construct(
         protected EntityManagerInterface $em,
         protected ClassMetadataInterface $metadata
-    )
-    {
+    ) {
     }
 
 
@@ -75,8 +73,7 @@ class EntityRepository implements EntityRepositoryInterface
         array $orderBy = [],
         int $limit = null,
         int $offset = null
-    ): mixed
-    {
+    ): mixed {
 
     }
 
@@ -87,6 +84,6 @@ class EntityRepository implements EntityRepositoryInterface
     */
     public function getClassName(): string
     {
-       return $this->metadata->getName();
+        return $this->metadata->getName();
     }
 }

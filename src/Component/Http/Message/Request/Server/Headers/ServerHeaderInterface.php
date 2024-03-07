@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Http\Message\Request\Server\Headers;
-
 
 /**
  * ServerHeaderInterface
@@ -15,16 +15,15 @@ namespace Laventure\Component\Http\Message\Request\Server\Headers;
 */
 interface ServerHeaderInterface
 {
-
-       /**
-        * @return array
-       */
-       public function all(): array;
-
+    /**
+     * @return array
+    */
+    public function all(): array;
 
 
-       /**
-        * @return array
-       */
-       public function map(): array;
+
+    /**
+     * @return array
+    */
+    public function map(): array;
 }

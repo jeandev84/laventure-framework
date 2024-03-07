@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder\SQL\Conditions\Criteria\Resolver;
-
 
 use Laventure\Component\Database\Query\Builder\SQL\Conditions\Criteria\Resolved\CriteriaResolvedInterface;
 
@@ -17,14 +17,12 @@ use Laventure\Component\Database\Query\Builder\SQL\Conditions\Criteria\Resolved\
 */
 interface SQLCriteriaResolverInterface
 {
-
-
-      /**
-       * @param $column
-       * @param array $value
-       * @return CriteriaResolvedInterface
-      */
-      public function resolveWhereIn($column, array $value): CriteriaResolvedInterface;
+    /**
+     * @param $column
+     * @param array $value
+     * @return CriteriaResolvedInterface
+    */
+    public function resolveWhereIn($column, array $value): CriteriaResolvedInterface;
 
 
 
@@ -32,10 +30,10 @@ interface SQLCriteriaResolverInterface
 
 
 
-      /**
-       * @param $column
-       * @param $value
-       * @return CriteriaResolvedInterface
-      */
-      public function resolveWhereEqualTo($column, $value): CriteriaResolvedInterface;
+    /**
+     * @param $column
+     * @param $value
+     * @return CriteriaResolvedInterface
+    */
+    public function resolveWhereEqualTo($column, $value): CriteriaResolvedInterface;
 }

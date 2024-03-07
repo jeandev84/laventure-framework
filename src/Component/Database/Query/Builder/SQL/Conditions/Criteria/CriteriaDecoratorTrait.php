@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder\SQL\Conditions\Criteria;
-
 
 /**
  * CriteriaDecoratorTrait
@@ -15,5 +15,4 @@ namespace Laventure\Component\Database\Query\Builder\SQL\Conditions\Criteria;
 */
 trait CriteriaDecoratorTrait
 {
-
 }

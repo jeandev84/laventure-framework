@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Drivers\Oracle;
@@ -24,13 +25,12 @@ use Laventure\Component\Database\Query\Builder\SQL\DQL\Select\SelectBuilderInter
 */
 class OracleQueryBuilder extends AbstractSQLQueryBuilder
 {
-
     /**
      * @inheritDoc
     */
     public function select(string $selects = null): SelectBuilderInterface
     {
-       return new OracleSelectBuilder($this->builder->select($selects));
+        return new OracleSelectBuilder($this->builder->select($selects));
     }
 
 

@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Drivers\Pgsql;
-
 
 use Laventure\Component\Database\Connection\Drivers\Pgsql\Query\Builder\SQL\Commands\DML\PgsqlDeleteBuilder;
 use Laventure\Component\Database\Connection\Drivers\Pgsql\Query\Builder\SQL\Commands\DML\PgsqlInsertBuilder;
@@ -25,8 +25,6 @@ use Laventure\Component\Database\Query\Builder\SQL\DQL\Select\SelectBuilderInter
 */
 class PgsqlQueryBuilder extends AbstractSQLQueryBuilder
 {
-
-
     /**
      * @inheritDoc
      */

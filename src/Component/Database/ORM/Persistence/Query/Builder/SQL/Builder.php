@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL;
-
 
 use Laventure\Component\Database\ORM\Persistence\Manager\EntityManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\Traits\BuilderTrait;
@@ -11,7 +11,6 @@ use Laventure\Component\Database\ORM\Persistence\Query\QueryInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Criteria\CriteriaInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionBuilderInterface;
 use Laventure\Component\Database\Query\Builder\SQL\SQLBuilderInterface;
-
 
 /**
  * Builder
@@ -48,8 +47,7 @@ abstract class Builder implements BuilderInterface
     public function __construct(
         EntityManagerInterface $em,
         SQLBuilderInterface $builder
-    )
-    {
+    ) {
         $this->em      = $em;
         $this->builder = $builder;
     }
