@@ -1,10 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\ORM\Persistence\Collection;
+namespace Laventure\Component\Database\ORM\Persistence\Collection\Storage;
+
 
 /**
- * ObjectCollection
+ * ObjectCollectionInterface
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -12,7 +13,7 @@ namespace Laventure\Component\Database\ORM\Persistence\Collection;
  *
  * @package  Laventure\Component\Database\ORM\Persistence\ObjectCollection
 */
-class ObjectCollection implements ObjectCollectionInterface
+interface ObjectCollectionInterface
 {
 
 }

@@ -31,6 +31,15 @@ interface ClassFieldTypeInterface
 
 
       /**
+       * @return bool
+      */
+      public function isIdentifier(): bool;
+
+
+
+
+
+      /**
        * Determine if associated value is instance of DatetimeInterface
        *
        * @return bool

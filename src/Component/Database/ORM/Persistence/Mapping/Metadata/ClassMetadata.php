@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Mapping\Metadata;
 
+use Laventure\Component\Database\ORM\Persistence\Collection\PersistenceCollection;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Exception\NotFoundClassFieldException;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Field\ClassFieldType;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Field\ClassFieldTypeInterface;
@@ -53,26 +54,12 @@ class ClassMetadata implements ClassMetadataInterface
 
 
 
-    /**
-     * @var array
-    */
-    protected array $identifiers = [];
-
-
-
 
     /**
      * @var array
     */
-    protected array $singleValuedAssociations = [];
+    protected array $identifierValues = [];
 
-
-
-
-    /**
-     * @var array
-    */
-    protected array $collectionAssociations = [];
 
 
 
@@ -88,9 +75,11 @@ class ClassMetadata implements ClassMetadataInterface
         $this->class      = $class;
 
         if (is_object($class)) {
-            $this->fieldValues = $this->getFieldValues($class);
+            $this->fieldValues      = $this->getFieldValues($class);
+            $this->identifierValues = $this->getIdentifierValues($class);
         }
     }
+
 
 
 
@@ -146,7 +135,7 @@ class ClassMetadata implements ClassMetadataInterface
     */
     public function getIdentifierFieldNames(): array
     {
-        return [];
+        return array_keys($this->identifierValues);
     }
 
 
@@ -289,17 +278,22 @@ class ClassMetadata implements ClassMetadataInterface
     */
     public function getIdentifierValues(object $object): array
     {
-        $fieldValues = [];
+        $identifierValues = [];
 
-        /*
         foreach ($this->getProperties() as $property) {
-            $propertyName = $property->getName();
+            $field = $property->getName();
             $value        = $property->getValue($object);
-            $fieldValues[$propertyName] = $value;
+            if ($field === $this->identifier) {
+                $identifierValues[$field] = $value;
+            } elseif ($this->isSingleValuedAssociation($field)) {
+                #$field = trim($field, 's');
+                $identifierValues["{$field}_id"] = $value;
+            } elseif ($this->isCollectionValuedAssociation($field)) {
+                $identifierValues[$field] = new PersistenceCollection($field, $value);
+            }
         }
-        */
 
-        return $fieldValues;
+        return $identifierValues;
     }
 
     

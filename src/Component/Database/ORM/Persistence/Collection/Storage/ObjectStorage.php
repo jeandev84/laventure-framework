@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\ORM\Persistence\Storage;
+namespace Laventure\Component\Database\ORM\Persistence\Collection\Storage;
 
 use SplObjectStorage;
 
