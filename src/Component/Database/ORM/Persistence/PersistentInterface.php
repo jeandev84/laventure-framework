@@ -49,6 +49,8 @@ interface PersistentInterface
 
 
 
+
+
       /**
        * Insert data to the table and returns last insert ID
        *
@@ -145,6 +147,17 @@ interface PersistentInterface
       public function getIdentityMap(): IdentityMapperInterface;
 
 
+
+
+
+
+      /**
+       * Generate Identity storage data
+       *
+       * @param $id
+       * @return string
+      */
+      public function getIdentityId($id): mixed;
 
 
 

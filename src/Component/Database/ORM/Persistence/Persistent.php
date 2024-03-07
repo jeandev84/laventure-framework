@@ -121,12 +121,17 @@ class Persistent implements PersistentInterface
     */
     public function find($id): mixed
     {
-        if ($this->identityMap->has($id)) {
-            return $this->identityMap->get($id);
+        $identityId = $this->getIdentityId($id);
+
+        if ($this->identityMap->has($identityId)) {
+            return $this->identityMap->get($identityId);
         }
 
-        return $this->identityMap["{$this->getClassName()}.{$id}"] = $id;
+        return $this->identityMap->map($identityId, []);
     }
+
+
+
 
 
 
@@ -138,7 +143,9 @@ class Persistent implements PersistentInterface
     */
     public function findOneBy(array $criteria): mixed
     {
-
+         return $this->select()
+                     ->criteria($criteria)
+                     ->getQuery();
     }
 
 
@@ -294,5 +301,18 @@ class Persistent implements PersistentInterface
     public function getTableAlias(): string
     {
         return strtoupper($this->getClassName());
+    }
+
+
+
+
+
+    /**
+     * @param $id
+     * @return string
+    */
+    public function getIdentityId($id): string
+    {
+        return $this->identityMap->getIdentityId($this->getClassName(), $id);
     }
 }

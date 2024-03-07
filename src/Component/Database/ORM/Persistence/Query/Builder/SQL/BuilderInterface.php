@@ -1,33 +1,27 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Query\Builder\SQL;
+namespace Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL;
 
-use Laventure\Component\Database\Connection\ConnectionInterface;
-use Laventure\Component\Database\Query\Builder\SQL\Criteria\CriteriaInterface;
+
+use Laventure\Component\Database\ORM\Persistence\Query\QueryInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionBuilderInterface;
-use Laventure\Component\Database\Query\QueryInterface;
-use Stringable;
 
 /**
- * SQLBuilderInterface
+ * BuilderInterface
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Builder\SQL
+ * @package  Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL
 */
-interface SQLBuilderInterface extends Stringable
+interface BuilderInterface
 {
     /**
      * @return string
     */
     public function getSQL(): string;
-
-
-
-
 
 
 
@@ -52,11 +46,7 @@ interface SQLBuilderInterface extends Stringable
 
 
 
-
-
     /**
-     * Returns parameter value
-     *
      * @param $id
      * @return mixed
     */
@@ -69,11 +59,11 @@ interface SQLBuilderInterface extends Stringable
 
 
     /**
-     * Returns parameters
-     *
      * @return array
     */
     public function getParameters(): array;
+
+
 
 
 
@@ -93,7 +83,6 @@ interface SQLBuilderInterface extends Stringable
 
 
 
-
     /**
      * @param $id
      * @param $value
@@ -107,7 +96,6 @@ interface SQLBuilderInterface extends Stringable
 
 
 
-
     /**
      * @param $id
      * @param $value
@@ -115,53 +103,6 @@ interface SQLBuilderInterface extends Stringable
      * @return $this
     */
     public function bindColumn($id, $value, int $type = 0): static;
-
-
-
-
-
-
-
-
-
-
-    /**
-     * @return array
-   */
-    public function getBindingParams(): array;
-
-
-
-
-
-
-
-    /**
-     * @return array
-    */
-    public function getBindingValues(): array;
-
-
-
-
-
-
-    /**
-     * @return array
-    */
-    public function getBindingColumns(): array;
-
-
-
-
-
-
-    /**
-     * @return ConnectionInterface
-    */
-    public function getConnection(): ConnectionInterface;
-
-
 
 
 
@@ -183,15 +124,4 @@ interface SQLBuilderInterface extends Stringable
      * @return ExpressionBuilderInterface
     */
     public function expr(): ExpressionBuilderInterface;
-
-
-
-
-
-
-
-    /**
-     * @return CriteriaInterface
-    */
-    public function getCriteria(): CriteriaInterface;
 }

@@ -359,4 +359,35 @@ trait SQLBuilderDecoratorTrait
     {
         return $this->builder->getWheres();
     }
+
+
+
+
+    /**
+     * @return array
+    */
+    public function getBindingParams(): array
+    {
+        return $this->builder->getBindingParams();
+    }
+
+
+    /**
+     * @return array
+    */
+    public function getBindingValues(): array
+    {
+        return $this->builder->getBindingValues();
+    }
+
+
+
+
+    /**
+     * @return array
+    */
+    public function getBindingColumns(): array
+    {
+        return $this->builder->getBindingColumns();
+    }
 }

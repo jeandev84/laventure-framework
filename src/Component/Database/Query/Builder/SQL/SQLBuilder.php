@@ -321,6 +321,39 @@ abstract class SQLBuilder implements WhereInterface, SQLBuilderInterface, Settab
 
 
     /**
+     * @inheritDoc
+     */
+    public function getBindingParams(): array
+    {
+        return $this->criteria->bindParams;
+    }
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function getBindingValues(): array
+    {
+        return $this->criteria->bindValues;
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getBindingColumns(): array
+    {
+        return $this->criteria->bindColumns;
+    }
+
+
+
+
+
+    /**
      * @inheritdoc
     */
     public function getQuery(): QueryInterface

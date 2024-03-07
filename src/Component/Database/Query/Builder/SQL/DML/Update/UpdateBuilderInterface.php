@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder\SQL\DML\Update;
 
-use Laventure\Component\Database\Query\Builder\SQL\Conditions\Where\WhereInterface;
+use Laventure\Component\Database\Query\Builder\SQL\Conditions\SQLBuilderHasConditionInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Set\SettableInterface;
-use Laventure\Component\Database\Query\Builder\SQL\SQLBuilderInterface;
+
 
 /**
  * UpdateBuilderInterface
@@ -16,7 +16,7 @@ use Laventure\Component\Database\Query\Builder\SQL\SQLBuilderInterface;
  *
  * @package  Laventure\Component\Database\Builder\SQL\DML\PgsqlUpdateBuilder
 */
-interface UpdateBuilderInterface extends SQLBuilderInterface, WhereInterface, SettableInterface
+interface UpdateBuilderInterface extends SQLBuilderHasConditionInterface, SettableInterface
 {
     /**
      * @param string $table

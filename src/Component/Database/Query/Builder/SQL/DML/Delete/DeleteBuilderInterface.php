@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Builder\SQL\DML\Delete;
 
-use Laventure\Component\Database\Query\Builder\SQL\Conditions\Where\WhereInterface;
-use Laventure\Component\Database\Query\Builder\SQL\SQLBuilderInterface;
+use Laventure\Component\Database\Query\Builder\SQL\Conditions\SQLBuilderHasConditionInterface;
+
 
 /**
  * DeleteWhereBuilderInterface
@@ -15,8 +15,8 @@ use Laventure\Component\Database\Query\Builder\SQL\SQLBuilderInterface;
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
  * @package  Laventure\Component\Database\Builder\SQL\DML\MysqlDeleteBuilder
- */
-interface DeleteBuilderInterface extends SQLBuilderInterface, WhereInterface
+*/
+interface DeleteBuilderInterface extends SQLBuilderHasConditionInterface
 {
     /**
      * @param string $table

@@ -26,6 +26,17 @@ interface QueryInterface
 
 
 
+
+
+     /**
+      * @return array
+     */
+     public function getParameters(): array;
+
+
+
+
+
      /**
       * Execute query
       *
@@ -49,26 +60,30 @@ interface QueryInterface
 
 
      /**
-      * Returns all result
+      * Returns all results
       *
-      * @return mixed
+      * @return array
      */
-     public function fetchAll(): mixed;
+     public function fetchAll(): array;
 
 
 
 
 
      /**
-      * @return mixed
+      * Returns one result
+      *
+      * @return object|null
      */
-     public function fetchOne(): mixed;
+     public function fetchOne(): ?object;
 
 
 
 
 
     /**
+     * Returns data as array
+     *
      * @return mixed
     */
     public function fetchArray(): mixed;
@@ -79,6 +94,8 @@ interface QueryInterface
 
 
     /**
+     * Returns columns
+     *
      * @return array
     */
     public function fetchColumns(): array;

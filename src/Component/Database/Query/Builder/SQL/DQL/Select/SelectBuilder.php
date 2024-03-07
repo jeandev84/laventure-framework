@@ -27,7 +27,7 @@ use Laventure\Component\Database\Query\Builder\SQL\SQLBuilder;
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
  * @package  Laventure\Component\Database\Builder\SQL\DQL\PgsqlSelectBuilder
- */
+*/
 class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
 {
 

@@ -19,7 +19,7 @@ use Laventure\Component\Database\Query\QueryInterface;
  *
  * @package  Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\DQL
 */
-class Select implements SelectBuilderInterface
+class Select
 {
 
     /**
@@ -35,14 +35,6 @@ class Select implements SelectBuilderInterface
 
 
 
-
-    /**
-     * @inheritDoc
-    */
-    public function criteria(array $conditions): static
-    {
-
-    }
 
 
 
@@ -119,36 +111,47 @@ class Select implements SelectBuilderInterface
     */
     public function bindParam($id, $value, int $type = 0): static
     {
-        // TODO: Implement bindParam() method.
+
     }
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function bindValue($id, $value, int $type = 0): static
     {
-        // TODO: Implement bindValue() method.
+
     }
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function bindColumn($id, $value, int $type = 0): static
     {
-        // TODO: Implement bindColumn() method.
+
     }
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function getConnection(): ConnectionInterface
     {
-        // TODO: Implement getConnection() method.
+
     }
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function getQuery(): QueryInterface
     {
         // TODO: Implement getQuery() method.
