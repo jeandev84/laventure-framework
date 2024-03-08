@@ -384,8 +384,8 @@ class Persistent implements PersistentInterface
         $identityId = $this->getIdentity($id);
 
         return $this->em->getUnitOfWork()
-            ->getIdentityMap()
-            ->has($identityId);
+                        ->getIdentityMap()
+                        ->has($identityId);
     }
 
 
@@ -531,7 +531,7 @@ class Persistent implements PersistentInterface
         if ($class->isNew()) {
             $this->addInsert($attributes);
         } else {
-            $this->addUpdate($class->getId(), $attributes);
+            $this->addUpdate($attributes, $class->getId());
         }
 
         return $this;

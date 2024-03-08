@@ -242,8 +242,12 @@ class DataMapper extends ObjectMapper
     */
     public function mapIdentity($id, object $object): static
     {
+        $identityId = $this->getPersistent($object)
+                           ->getIdentity($id);
+
         $this->em->getUnitOfWork()
-                 ->mapIdentityFromObject($id, $object);
+                 ->getIdentityMap()
+                 ->map($identityId, $object);
 
         return $this;
     }

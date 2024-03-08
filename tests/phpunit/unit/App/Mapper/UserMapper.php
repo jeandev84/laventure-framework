@@ -35,7 +35,7 @@ class UserMapper
       * @param int $id
       * @return User|null
      */
-     public function findUser(int $id): ?User
+     public function find(int $id): ?User
      {
          return $this->em->getDataMapper()
                          ->find($this->getClassName(), $id);
@@ -48,7 +48,7 @@ class UserMapper
       * @param User $user
       * @return int
      */
-     public function saveUser(User $user): int
+     public function save(User $user): int
      {
          return $this->em->getDataMapper()
                          ->save($user);
@@ -62,7 +62,7 @@ class UserMapper
       * @param User $user
       * @return bool
      */
-     public function removeUser(User $user): bool
+     public function delete(User $user): bool
      {
          return $this->em->getDataMapper()
                          ->delete($user);

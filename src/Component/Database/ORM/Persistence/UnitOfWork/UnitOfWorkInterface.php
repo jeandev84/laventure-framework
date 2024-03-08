@@ -296,20 +296,4 @@ interface UnitOfWorkInterface
      * @return IdentityMapperInterface
      */
     public function getIdentityMap(): IdentityMapperInterface;
-
-
-
-
-
-
-
-
-    /**
-     * Map identity
-     *
-     * @param $id
-     * @param object $object
-     * @return $this
-    */
-    public function mapIdentityFromObject($id, object $object): mixed;
 }

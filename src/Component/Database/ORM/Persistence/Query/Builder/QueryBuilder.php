@@ -91,6 +91,8 @@ class QueryBuilder implements QueryBuilderInterface
             $qb->set($column, $value);
         }
 
+        dd($qb);
+
         return new Update($this->em, $qb);
     }
 

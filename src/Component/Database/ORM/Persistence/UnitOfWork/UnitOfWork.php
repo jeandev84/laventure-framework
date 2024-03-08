@@ -119,6 +119,16 @@ class UnitOfWork implements UnitOfWorkInterface
 
 
 
+    /**
+     * @inheritDoc
+    */
+    public function getStorage(): ObjectStorage
+    {
+        return $this->storage;
+    }
+
+
+
 
     /**
      * @inheritDoc
@@ -132,22 +142,6 @@ class UnitOfWork implements UnitOfWorkInterface
         return $this->identityMap;
     }
 
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function mapIdentityFromObject($id, object $object): static
-    {
-        $identityId = $this->getPersistent($object)->getIdentity($id);
-        
-        $this->getIdentityMap()->map($identityId, $object);
-
-        return $this;
-    }
 
 
 
@@ -386,16 +380,5 @@ class UnitOfWork implements UnitOfWorkInterface
 
         $this->storage->clear();
         $this->getIdentityMap()->clear();
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function getStorage(): ObjectStorage
-    {
-        return $this->storage;
     }
 }
