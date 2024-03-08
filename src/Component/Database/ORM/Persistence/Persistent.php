@@ -453,7 +453,7 @@ class Persistent implements PersistentInterface
     */
     private function addPersistAttributes(ClassMetadataInterface $classMetadata): static
     {
-        $attributes = $this->filterAttributes($classMetadata->getAttributes());
+        $attributes = $this->filterAttributes($classMetadata->getPersistAttributes());
 
         dd($attributes);
 
