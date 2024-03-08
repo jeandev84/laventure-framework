@@ -154,7 +154,7 @@ class DataMapper implements DataMapperInterface
      * Example:
      *    $em->getUnitOfWork()
      *       ->getDataMapper()
-     *       ->save($user);
+     *       ->delete($user);
      * @inheritDoc
     */
     public function delete(object $object): bool
