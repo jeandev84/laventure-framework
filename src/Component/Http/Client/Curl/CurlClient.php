@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Http\Client\Curl;
@@ -41,14 +40,11 @@ class CurlClient extends Client
             $curlRequest->error()
         );
 
-        $response = new Response(
+        return new Response(
+            $curlResponse->getBody(),
             $curlResponse->getStatusCode(),
             $curlResponse->getHeaders()
         );
-
-        $response->getBody()->write($curlResponse->getBody());
-
-        return $response;
     }
 
 

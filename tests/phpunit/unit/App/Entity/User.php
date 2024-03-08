@@ -58,6 +58,11 @@ class User
 
 
 
+    /**
+     * @var User|null
+    */
+    private ?User $followedBy = null;
+
 
 
     /**
@@ -138,7 +143,13 @@ class User
     }
 
 
-
+    /**
+     * @return string|null
+     */
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
 
     /**
      * @param string|null $username
@@ -344,5 +355,23 @@ class User
         $this->deletedAt = $deletedAt;
 
         return $this;
+    }
+
+
+    /**
+     * @return User|null
+     */
+    public function getFollowedBy(): ?User
+    {
+        return $this->followedBy;
+    }
+
+
+    /**
+     * @param User|null $followedBy
+    */
+    public function setFollowedBy(?User $followedBy): void
+    {
+        $this->followedBy = $followedBy;
     }
 }

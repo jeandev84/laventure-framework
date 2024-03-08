@@ -77,7 +77,7 @@ class ClassFieldType implements ClassFieldTypeInterface
     */
     public function isSingleAssociate(): bool
     {
-        return is_object($this->value);
+        return is_object($this->value) && !$this->isDatetime();
     }
 
 
@@ -102,16 +102,5 @@ class ClassFieldType implements ClassFieldTypeInterface
     public function isAssociation(): bool
     {
         return ($this->isCollectionAssociate() || $this->isSingleAssociate());
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function isIdentifier(): bool
-    {
-
     }
 }

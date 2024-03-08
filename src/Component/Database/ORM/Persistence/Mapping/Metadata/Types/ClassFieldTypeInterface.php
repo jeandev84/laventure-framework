@@ -30,13 +30,6 @@ interface ClassFieldTypeInterface
 
 
 
-    /**
-     * @return bool
-    */
-    public function isIdentifier(): bool;
-
-
-
 
 
     /**

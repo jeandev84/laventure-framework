@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Http\Message\Response;
@@ -22,6 +21,6 @@ class RedirectResponse extends Response
     */
     public function __construct(string $resource, int $status = 302)
     {
-        parent::__construct($status, ['Location' => $resource]);
+        parent::__construct(null, $status, ['Location' => $resource]);
     }
 }

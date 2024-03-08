@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Http\Message\Response;
@@ -35,8 +34,6 @@ class JsonResponse extends Response
     {
         $headers = array_merge(self::$defaultHeaders, $headers);
 
-        parent::__construct($status, $headers);
-
-        $this->setContent(JsonEncoder::encode($data));
+        parent::__construct(JsonEncoder::encode($data), $status, $headers);
     }
 }

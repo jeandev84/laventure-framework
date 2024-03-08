@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Providers;
@@ -11,6 +10,7 @@ use Laventure\Component\Database\Manager\Contract\ManagerInterface;
 use Laventure\Component\Database\Manager\Manager;
 use Laventure\Component\Database\ORM\Persistence\Manager\Contract\EntityManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Manager\Contract\ObjectManagerInterface;
+use Laventure\Component\Database\ORM\Persistence\Manager\Definition;
 use Laventure\Component\Database\ORM\Persistence\Manager\EntityManager;
 use Laventure\Component\Database\ORM\Persistence\Manager\Registry\ManagerRegistry;
 use Laventure\Component\Database\ORM\Persistence\Manager\Registry\ManagerRegistryInterface;
@@ -63,8 +63,9 @@ class DatabaseServiceProvider extends ServiceProvider
             ConnectionInterface::class => function (ManagerInterface $manager) {
                 return $manager->connection();
             },
-            EntityManagerInterface::class => function (Manager $manager) {
-                return new EntityManager();
+            EntityManagerInterface::class => function (ConnectionInterface $connection) {
+                $config = new Definition($connection);
+                return new EntityManager($config);
             },
             ManagerRegistryInterface::class => function (EntityManagerInterface $em) {
                 $registry = new ManagerRegistry();

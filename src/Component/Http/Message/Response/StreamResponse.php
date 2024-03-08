@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Http\Message\Response;
@@ -26,6 +25,7 @@ class StreamResponse extends Response
     */
     public function __construct(mixed $resource, int $status = 200, array $headers = [])
     {
-        parent::__construct($status, $headers, new Stream($resource));
+        parent::__construct(null, $status, $headers);
+        $this->withBody(new Stream($resource));
     }
 }

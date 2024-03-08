@@ -429,14 +429,14 @@ class EntityManager implements EntityManagerInterface
         $this->abortIfIsClosed($object);
 
         $class = ClassMetadata::create($object);
-        $id    = $class->getId();
         $name  = $class->getName();
 
-        if (!isset($this->initialized[$name][$id])) {
-            $this->initialized[$name][$id] = $object;
+        if (!$this->contains($object)) {
+            $this->persist($object);
+            $this->initialized[$name][] = $object;
         }
 
-        return $this->initialized[$name][$id];
+        return $this;
     }
 
 
@@ -449,7 +449,7 @@ class EntityManager implements EntityManagerInterface
     public function find(string $classname, $id): mixed
     {
         return $this->unitOfWork
-                    ->mappedClass($classname)
+                    ->getPersistent($classname)
                     ->find($id);
     }
 

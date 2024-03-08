@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Mapping\Metadata;
@@ -6,8 +7,9 @@ namespace Laventure\Component\Database\ORM\Persistence\Mapping\Metadata;
 use Laventure\Component\Database\ORM\Persistence\Collection\Persistent\PersistentCollection;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Exception\NotFoundClassFieldException;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Field\ClassField;
-use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Field\CollectionField;
+use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Field\CollectionAssociationField;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Field\IdentifierField;
+use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Field\SingleAssociationField;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Types\ClassFieldType;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Types\ClassFieldTypeInterface;
 use Laventure\Utils\Convertor\CamelCase\CamelCaseConvertorTrait;
@@ -374,16 +376,16 @@ class ClassMetadata implements ClassMetadataInterface
                 );
             } elseif ($this->isSingleValuedAssociation($propertyName)) {
                 #$field = trim($field, 's');
-                $this->identifierValues[$propertyName] = new IdentifierField(
+                $this->identifierValues[$propertyName] = new SingleAssociationField(
                     $propertyName,
                     $value,
-        "{$attributeName}_id"
+                    "{$attributeName}_id"
                 );
             } elseif ($this->isCollectionValuedAssociation($propertyName)) {
-                $this->identifierValues[$propertyName] = new CollectionField(
+                $this->identifierValues[$propertyName] = new CollectionAssociationField(
                     $propertyName,
-                    $attributeName,
-                    new PersistentCollection($propertyName, $value)
+                    new PersistentCollection($propertyName, $value),
+                    $attributeName
                 );
             }
         }

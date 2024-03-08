@@ -1,15 +1,10 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Http\Client;
 
-use Laventure\Component\Http\Client\Contract\HasOptionInterface;
-use Laventure\Component\Http\Client\Options\QueryParams;
 use Laventure\Utils\Parameter\Parameter;
 use Psr\Http\Client\ClientInterface;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 
 /**
  * Client

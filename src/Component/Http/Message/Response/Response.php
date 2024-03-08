@@ -36,17 +36,18 @@ class Response extends Message implements ResponseInterface, Stringable
 
 
 
+
     /**
+     * @param string|null $content
      * @param int $status
      * @param array $headers
-     * @param StreamInterface|null $body
     */
-    public function __construct(int $status = 200, array $headers = [], StreamInterface $body = null)
+    public function __construct(string $content = null, int $status = 200, array $headers = [])
     {
         parent::__construct();
-        $this->withBody($body ?: new ResponseBody())
+        $this->withStatus($status)
              ->withHeaders($headers)
-             ->withStatus($status);
+             ->withBody($this->makeBody($content));
     }
 
 
@@ -62,6 +63,9 @@ class Response extends Message implements ResponseInterface, Stringable
 
         return $this;
     }
+
+
+
 
 
 
@@ -166,11 +170,31 @@ class Response extends Message implements ResponseInterface, Stringable
     }
 
 
+
+
     /**
      * @return void
     */
     protected function sendContent(): void
     {
         echo $this->getContent();
+    }
+
+
+
+
+    /**
+     * @param $content
+     * @return ResponseBody
+    */
+    private function makeBody($content): ResponseBody
+    {
+        $responseBody = new ResponseBody();
+
+        if ($content) {
+            $responseBody->write($content);
+        }
+
+        return $responseBody;
     }
 }

@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Http\Client;
 
+use Laventure\Component\Http\Client\Exception\ClientException;
 use Laventure\Component\Http\Client\Factory\HttpClientFactory;
 use Laventure\Component\Http\Client\Factory\HttpClientFactoryInterface;
 use Laventure\Component\Http\Message\Request\Factory\RequestFactory;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
+use Throwable;
 
 /**
  * HttpClient
@@ -61,9 +63,13 @@ class HttpClient implements HttpClientInterface
      */
     public function request(string $method, string $url, array $options = []): ResponseInterface
     {
-        $request = $this->requestFactory->createRequest($method, $url);
-        $client  = $this->clientFactory->createClient($options);
-        return $client->sendRequest($request);
+        try {
+            $request = $this->requestFactory->createRequest($method, $url);
+            $client  = $this->clientFactory->createClient($options);
+            return $client->sendRequest($request);
+        } catch (Throwable $e) {
+            throw new ClientException($e->getMessage(), intval($e->getCode()));
+        }
     }
 
 
@@ -74,7 +80,7 @@ class HttpClient implements HttpClientInterface
      * @param array $options
      * @return ResponseInterface
      * @throws ClientExceptionInterface
-     */
+    */
     public function get(string $url, array $options = []): ResponseInterface
     {
         return $this->request('GET', $url, $options);
