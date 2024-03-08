@@ -368,16 +368,6 @@ class EntityManager implements EntityManagerInterface
 
 
 
-    /**
-     * @inheritDoc
-    */
-    public function getObjectStorage(): ObjectStorage
-    {
-        return new ObjectStorage();
-    }
-
-
-
 
 
     /**

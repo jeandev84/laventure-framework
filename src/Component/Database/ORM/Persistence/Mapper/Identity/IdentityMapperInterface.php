@@ -74,4 +74,16 @@ interface IdentityMapperInterface
      * @return mixed
     */
     public function all(): mixed;
+
+
+
+
+
+
+    /**
+     * Remove all identity mapped
+     *
+     * @return void
+    */
+    public function clear(): void;
 }

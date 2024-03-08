@@ -47,17 +47,16 @@ class DataMapper implements DataMapperInterface
 
 
     /**
+     * Example:
+     * $em->getUnitOfWork()
+     *    ->getDataMapper()
+     *    ->find(User::class, 1)
+     *
      * @inheritDoc
     */
-    public function find($id): ?object
+    public function find($class, $id): ?object
     {
-        $data = $this->getIdentityMap()->get($id);
-
-        if (!$data) {
-            return null;
-        }
-
-        return $data;
+        return $this->em->find($class, $id);
     }
 
 
@@ -66,14 +65,17 @@ class DataMapper implements DataMapperInterface
 
 
     /**
+     * Example:
+     *  $em->getUnitOfWork()
+     *     ->getDataMapper()
+     *     ->insert($user)
+     *
      * @param object $object
      * @return int
     */
     public function insert(object $object): int
     {
-        $persistent = $this->getPersistent($object);
-
-        $id = $persistent->insert();
+        $id = $this->getPersistent($object)->insert();
 
         $this->dispatchEvent(new PostPersistEvent($object));
 
@@ -90,16 +92,19 @@ class DataMapper implements DataMapperInterface
 
 
     /**
+     * $em->getUnitOfWork()
+     *    ->getDataMapper()
+     *    ->update($user);
+     *
      * @param object $object
      * @return int
     */
     public function update(object $object): int
     {
-        $persistent      = $this->getPersistent($object);
         $preUpdateEvent  = new PreUpdateEvent($object);
         $this->dispatchEvent($preUpdateEvent);
         $object = $preUpdateEvent->getSubject();
-        $persistent->update();
+        $this->getPersistent($object)->update();
 
         $postUpdateEvent = new PostUpdateEvent($object);
         $this->dispatchEvent($postUpdateEvent);
@@ -118,6 +123,11 @@ class DataMapper implements DataMapperInterface
 
 
     /**
+     * Example:
+     *   $em->getUnitOfWork()
+     *      ->getDataMapper()
+     *      ->save($user);
+     *
      * @inheritDoc
     */
     public function save(object $object): int
@@ -141,6 +151,10 @@ class DataMapper implements DataMapperInterface
 
 
     /**
+     * Example:
+     *    $em->getUnitOfWork()
+     *       ->getDataMapper()
+     *       ->save($user);
      * @inheritDoc
     */
     public function delete(object $object): bool
@@ -234,17 +248,6 @@ class DataMapper implements DataMapperInterface
         return $this->getClassMetadata($object)->isNew();
     }
 
-
-
-
-    /**
-     * @return IdentityMapperInterface
-    */
-    public function getIdentityMap(): IdentityMapperInterface
-    {
-        return $this->em->getUnitOfWork()
-            ->getIdentityMap();
-    }
 
 
 

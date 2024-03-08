@@ -115,7 +115,93 @@ class Persistent implements PersistentInterface
     */
     public function find($id): mixed
     {
-        return $this->findOneBy([$this->getIdentifier() => $id]);
+        if ($this->hasIdentity($id)) {
+             return $this->loadFromIdentityMap($id);
+        }
+
+        $data = $this->findOneBy([
+            $this->getIdentifier() => $id
+        ]);
+
+        $this->mapIdentity($id, $data);
+
+        return $data;
+    }
+
+
+
+
+
+    /**
+     * @param $id
+     * @return bool
+    */
+    public function hasIdentity($id): bool
+    {
+        $identityId = $this->getIdentity($id);
+
+        return $this->em->getUnitOfWork()
+                        ->getIdentityMap()
+                        ->has($identityId);
+    }
+
+
+
+
+
+
+    /**
+     * Load data from identity map
+     *
+     * @param $id
+     * @return mixed
+    */
+    public function loadFromIdentityMap($id): mixed
+    {
+        $identityId = $this->getIdentity($id);
+
+        return $this->em->getUnitOfWork()
+                        ->getIdentityMap()
+                        ->get($identityId);
+    }
+
+
+
+
+
+
+    /**
+     * @param $recordId
+     * @param $data
+     * @return $this
+    */
+    public function mapIdentity($recordId, $data): static
+    {
+        $identityId = $this->getIdentity($recordId);
+
+        $this->em->getUnitOfWork()
+                 ->getIdentityMap()
+                 ->map($identityId, $data);
+
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function removeDataFromIdentityMap($recordId): static
+    {
+        $identityId = $this->getIdentity($recordId);
+
+        $this->em->getUnitOfWork()
+                 ->getIdentityMap()
+                 ->remove($identityId);
+
+        return $this;
     }
 
 
@@ -258,6 +344,8 @@ class Persistent implements PersistentInterface
                                        ->criteria([$this->getIdentifier(), $id])
                                        ->getQuery()
                                        ->execute();
+
+            $this->removeDataFromIdentityMap($id);
         }
 
         return !empty($this->deleted);

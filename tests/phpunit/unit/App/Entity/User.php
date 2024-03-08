@@ -95,21 +95,8 @@ class User
 
 
 
-
-    /**
-     * @param string $username
-     * @param string $email
-     * @param string $password
-    */
-    public function __construct(
-        string $username = '',
-        string $email = '',
-        string $password = ''
-    )
+    public function __construct()
     {
-        $this->username  = $username;
-        $this->email     = $email;
-        $this->password  = $password;
         $this->books     = new ArrayCollection();
         $this->createdAt = new DateTimeImmutable();
     }

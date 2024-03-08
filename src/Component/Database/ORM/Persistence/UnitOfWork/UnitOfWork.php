@@ -62,13 +62,6 @@ class UnitOfWork implements UnitOfWorkInterface
 
 
     /**
-     * @var ClassMetadataFactoryInterface
-    */
-    protected ClassMetadataFactoryInterface $metadataFactory;
-
-
-
-    /**
      * @var DataMapperInterface
     */
     protected DataMapperInterface $dataMapper;
@@ -78,9 +71,9 @@ class UnitOfWork implements UnitOfWorkInterface
 
 
     /**
-     * @var IdentityMapperInterface
+     * @var IdentityMapperInterface|null
     */
-    protected IdentityMapperInterface $identityMap;
+    protected ?IdentityMapperInterface $identityMap = null;
 
 
 
@@ -94,8 +87,7 @@ class UnitOfWork implements UnitOfWorkInterface
         $this->em           = $em;
         $this->eventManager = $em->getEventManager();
         $this->dataMapper   = $em->getDataMapper();
-        $this->storage      = $em->getObjectStorage();
-        $this->identityMap  = new IdentityMap();
+        $this->storage      = new ObjectStorage();;
     }
 
 
@@ -133,6 +125,10 @@ class UnitOfWork implements UnitOfWorkInterface
     */
     public function getIdentityMap(): IdentityMapperInterface
     {
+        if (!$this->identityMap) {
+            $this->identityMap  = new IdentityMap();
+        }
+
         return $this->identityMap;
     }
 
@@ -148,21 +144,9 @@ class UnitOfWork implements UnitOfWorkInterface
     {
         $identityId = $this->getPersistent($object)->getIdentity($id);
         
-        $this->identityMap->map($identityId, $object);
+        $this->getIdentityMap()->map($identityId, $object);
 
         return $this;
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function loadFromIdentityMap($id): mixed
-    {
-
     }
 
 
@@ -172,7 +156,7 @@ class UnitOfWork implements UnitOfWorkInterface
 
     /**
      * @inheritdoc
-     */
+    */
     public function registerObject(object $object, $state): static
     {
         $this->storage->attach($object, $state);
@@ -266,19 +250,6 @@ class UnitOfWork implements UnitOfWorkInterface
 
         // add state
         return $this->registerObject($object, self::STATE_REMOVED);
-    }
-
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function find($id): ?object
-    {
-        return $this->getDataMapper()->find($id);
     }
 
 
@@ -414,5 +385,17 @@ class UnitOfWork implements UnitOfWorkInterface
         );
 
         $this->storage->clear();
+        $this->getIdentityMap()->clear();
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getStorage(): ObjectStorage
+    {
+        return $this->storage;
     }
 }

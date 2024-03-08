@@ -83,8 +83,19 @@ class IdentityMap implements IdentityMapperInterface
     */
     public function remove($id): static
     {
-        unset($this->identity);
+        unset($this->identity[$id]);
 
         return $this;
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function clear(): void
+    {
+        $this->identity = [];
     }
 }

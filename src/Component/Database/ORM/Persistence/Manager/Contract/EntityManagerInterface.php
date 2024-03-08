@@ -215,18 +215,6 @@ interface EntityManagerInterface extends ObjectManagerInterface
 
 
 
-    /**
-     * Returns storage
-     *
-     * @return ObjectStorage
-    */
-    public function getObjectStorage(): ObjectStorage;
-
-
-
-
-
-
 
     /**
      * Close entity manager

@@ -7,6 +7,7 @@ namespace Laventure\Component\Database\ORM\Persistence\UnitOfWork;
 use Laventure\Component\Database\ORM\Persistence\Mapper\Data\DataMapperInterface;
 use Laventure\Component\Database\ORM\Persistence\Mapper\Identity\IdentityMapperInterface;
 use Laventure\Component\Database\ORM\Persistence\PersistentInterface;
+use Laventure\Component\Database\ORM\Persistence\Storage\ObjectStorage;
 
 /**
  * UnitOfWorkInterface
@@ -92,20 +93,6 @@ interface UnitOfWorkInterface
      * @return $this
     */
     public function registerPersist(object $object): static;
-
-
-
-
-
-
-
-    /**
-     * Find data from identity map
-     *
-     * @param $id
-     * @return mixed
-    */
-    public function find($id): mixed;
 
 
 
@@ -261,6 +248,19 @@ interface UnitOfWorkInterface
 
 
 
+
+    /**
+     * Returns storage
+     *
+     * @return ObjectStorage
+    */
+    public function getStorage(): ObjectStorage;
+
+
+
+
+
+
     /**
      * Returns persistent object
      *
@@ -302,6 +302,8 @@ interface UnitOfWorkInterface
 
 
 
+
+
     /**
      * Map identity
      *
@@ -310,18 +312,4 @@ interface UnitOfWorkInterface
      * @return $this
     */
     public function mapIdentityFromObject($id, object $object): mixed;
-
-
-
-
-
-
-
-    /**
-     * Load data from identity map
-     *
-     * @param $id
-     * @return mixed
-    */
-    public function loadFromIdentityMap($id): mixed;
 }

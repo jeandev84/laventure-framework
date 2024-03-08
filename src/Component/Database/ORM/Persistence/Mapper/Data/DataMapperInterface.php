@@ -17,15 +17,16 @@ use Laventure\Component\Database\ORM\Persistence\Mapper\Identity\IdentityMapperI
 interface DataMapperInterface
 {
 
-
     /**
-     * Find data by ID (SELECT BY ID)
+     * Retrieve data by given id
      *
+     * @param $class
      * @param $id
      *
      * @return object|null
     */
-    public function find($id): ?object;
+    public function find($class, $id): ?object;
+
 
 
 
@@ -47,7 +48,7 @@ interface DataMapperInterface
 
 
     /**
-     * MysqlDeleteBuilder data
+     * DELETE record
      *
      * @param object $object
      *

@@ -198,4 +198,28 @@ interface PersistentInterface
      * @return mixed
     */
     public function getIdentity($recordId): mixed;
+
+
+
+
+
+
+
+    /**
+     * @param $recordId
+     * @param $data
+     * @return $this
+    */
+    public function mapIdentity($recordId, $data): static;
+
+
+
+
+
+
+    /**
+     * @param $recordId
+     * @return mixed
+    */
+    public function removeDataFromIdentityMap($recordId): mixed;
 }
