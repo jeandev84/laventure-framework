@@ -1,10 +1,15 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Mapper\Data;
 
 use Laventure\Component\Database\ORM\Persistence\Manager\Contract\EntityManagerInterface;
+use Laventure\Component\Database\ORM\Persistence\Manager\Events\Common\ObjectEvent;
+use Laventure\Component\Database\ORM\Persistence\Manager\Events\PostPersistEvent;
+use Laventure\Component\Database\ORM\Persistence\Manager\Events\PostUpdateEvent;
+use Laventure\Component\Database\ORM\Persistence\Manager\Events\PreUpdateEvent;
+use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\ClassMetadata;
+use Laventure\Component\Database\ORM\Persistence\Persistent;
 
 /**
  * DataMapper
@@ -44,6 +49,46 @@ class DataMapper implements DataMapperInterface
 
 
 
+
+    /**
+     * @param object $object
+     * @return int
+    */
+    public function insert(object $object): int
+    {
+        $id = $this->persistent($object)->insert();
+
+        $this->dispatchEvent(new PostPersistEvent($object));
+
+        return $id;
+    }
+
+
+
+
+    /**
+     * @param object $object
+     * @return int
+    */
+    public function update(object $object): int
+    {
+        $preUpdateEvent  = new PreUpdateEvent($object);
+        $this->dispatchEvent($preUpdateEvent);
+        $object = $preUpdateEvent->getSubject();
+        $this->persistent($object)->update();
+
+        $postUpdateEvent = new PostUpdateEvent($object);
+        $this->dispatchEvent($postUpdateEvent);
+        $object = $postUpdateEvent->getSubject();
+        $this->dispatchEvent(new PostUpdateEvent($object));
+
+        return $this->getId($object);
+    }
+
+
+
+
+
     /**
      * @inheritDoc
     */
@@ -66,36 +111,42 @@ class DataMapper implements DataMapperInterface
 
 
 
+
+
+    /**
+     * @param ObjectEvent $event
+     * @return object
+    */
+    public function dispatchEvent(ObjectEvent $event): object
+    {
+         return $this->em->getEventManager()
+                         ->dispatchEvent($event);
+    }
+
+
+
+
+
+    /**
+     * @param object $object
+     * @return Persistent
+    */
+    public function persistent(object $object): Persistent
+    {
+         return $this->em->getUnitOfWork()
+                         ->getPersistent($object);
+    }
+
+
+
+
+
     /**
      * @param object $object
      * @return int
     */
-    public function insert(object $object): int
+    public function getId(object $object): int
     {
-        return 0;
-    }
-
-
-
-
-    /**
-     * @param object $object
-     * @return mixed
-    */
-    public function update(object $object): mixed
-    {
-        return $object;
-    }
-
-
-
-
-    /**
-     * @param object $object
-     * @return array
-    */
-    protected function mapRows(object $object): array
-    {
-        return [];
+        return $this->em->getClassMetadata($object)->getId();
     }
 }

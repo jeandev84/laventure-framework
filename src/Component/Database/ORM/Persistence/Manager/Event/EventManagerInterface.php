@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Manager\Event;
 
+use Laventure\Component\Database\ORM\Persistence\Manager\Events\Common\ObjectEvent;
+
 /**
  * EventManagerInterface
  *
