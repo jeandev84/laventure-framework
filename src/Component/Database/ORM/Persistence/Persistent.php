@@ -107,6 +107,7 @@ class Persistent implements PersistentInterface
     ) {
         $this->em            = $em;
         $this->classMetadata = $em->getClassMetadata($entity);
+        $this->addAttributes($this->classMetadata);
     }
 
 
@@ -175,7 +176,7 @@ class Persistent implements PersistentInterface
     */
     public function addInsert(array $attributes): static
     {
-        $this->insert[$this->getClassName()][] = $attributes;
+        $this->insert[] = $attributes;
 
         return $this;
     }
@@ -191,7 +192,14 @@ class Persistent implements PersistentInterface
     */
     public function insert(): int
     {
+        $id = $this->createQueryBuilder()
+                   ->insert($this->getTableName(), $this->insert)
+                   ->getQuery()
+                   ->execute();
 
+        $this->inserted[$this->getClassName()][] = $id;
+
+        return $id;
     }
 
 
@@ -202,8 +210,11 @@ class Persistent implements PersistentInterface
     */
     public function addUpdate($id, array $attributes): static
     {
+        $this->update[$id] = $attributes;
 
+        return $this;
     }
+
 
 
 
@@ -211,9 +222,20 @@ class Persistent implements PersistentInterface
     /**
      * @inheritDoc
     */
-    public function update(): mixed
+    public function update(): bool
     {
+        foreach ($this->update as $id => $attributes) {
+            $status = $this->createQueryBuilder()
+                           ->update($this->getTableName(), $attributes)
+                           ->criteria([$this->getIdentifier(), $id])
+                           ->getQuery()
+                           ->execute();
+            if ($status) {
+                $this->updated[$this->getClassName()][$id] = $status;
+            }
+        }
 
+        return !empty($this->updated);
     }
 
 
@@ -333,5 +355,12 @@ class Persistent implements PersistentInterface
     public function getIdentifier(): string
     {
         return $this->classMetadata->getIdentifier();
+    }
+
+
+
+    private function addAttributes(ClassMetadataInterface $classMetadata): static
+    {
+
     }
 }
