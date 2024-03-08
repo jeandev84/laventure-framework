@@ -195,7 +195,6 @@ class Persistent implements PersistentInterface
     */
     public function insert(): int
     {
-        dd($this->insert);
         $id = $this->createQueryBuilder()
                    ->insert($this->getTableName(), $this->insert)
                    ->getQuery()
