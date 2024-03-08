@@ -19,14 +19,12 @@ use Laventure\Component\Database\Query\Builder\SQL\SQLBuilder;
 */
 class DeleteBuilder extends SQLBuilder implements DeleteBuilderInterface
 {
-    protected $table = null;
-
     /**
      * @inheritDoc
     */
     public function delete(string $table): static
     {
-        $this->table = $table;
+        $this->criteria->table = $table;
 
         return $this;
     }
@@ -39,8 +37,8 @@ class DeleteBuilder extends SQLBuilder implements DeleteBuilderInterface
     protected function getCommands(): array
     {
         return [
-            new Delete($this->table),
-            new Where($this->wheres)
+            new Delete($this->criteria->table),
+            new Where($this->criteria->wheres)
         ];
     }
 }

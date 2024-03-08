@@ -100,7 +100,7 @@ class Persistent implements PersistentInterface
     public function __construct(EntityManagerInterface $em, $class) {
         $this->em            = $em;
         $this->classMetadata = $em->getClassMetadata($class);
-        $this->addPersistAttributes($this->classMetadata);
+        $this->initializeClass($this->classMetadata);
     }
 
 
@@ -117,7 +117,6 @@ class Persistent implements PersistentInterface
         }
 
         $data = $this->findOneBy([$this->getIdentifier() => $id]);
-
         $this->mapIdentity($id, $data);
 
         return $data;
@@ -254,16 +253,31 @@ class Persistent implements PersistentInterface
 
 
     /**
+     * @param array $criteria
+     * @return bool
+    */
+    public function delete(array $criteria): bool
+    {
+        return $this->createQueryBuilder()
+             ->delete($this->getTableName())
+             ->criteria($criteria)
+             ->getQuery()
+             ->execute();
+    }
+
+
+
+
+
+    /**
      * @inheritDoc
     */
     public function remove(): bool
     {
         foreach ($this->delete as $id) {
-            $this->deleted[$id] = $this->createQueryBuilder()
-                                       ->delete($this->getTableName())
-                                       ->criteria([$this->getIdentifier() => $id])
-                                       ->getQuery()
-                                       ->execute();
+            $this->deleted[$id] = $this->delete([
+                 $this->getIdentifier() => $id
+            ]);
 
             $this->removeDataFromIdentityMap($id);
         }
@@ -375,10 +389,12 @@ class Persistent implements PersistentInterface
 
 
 
+
+
     /**
      * @param $id
      * @return bool
-     */
+    */
     public function hasIdentity($id): bool
     {
         $identityId = $this->getIdentity($id);
@@ -524,7 +540,7 @@ class Persistent implements PersistentInterface
      * @return $this
      * @throws NotFoundTableException
     */
-    private function addPersistAttributes(ClassMetadataInterface $class): static
+    private function initializeClass(ClassMetadataInterface $class): static
     {
         $attributes = $this->filterAttributes($class->getPersistAttributes());
 
@@ -532,6 +548,7 @@ class Persistent implements PersistentInterface
             $this->addInsert($attributes);
         } else {
             $this->addUpdate($attributes, $class->getId());
+            $this->addRemove($class->getId());
         }
 
         return $this;
