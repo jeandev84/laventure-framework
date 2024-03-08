@@ -83,12 +83,11 @@ class ClassMetadata implements ClassMetadataInterface
 
 
 
-
     /**
-     * @param $class
+     * @param string|object $class
      * @throws ReflectionException
     */
-    public function __construct($class)
+    public function __construct(string|object $class)
     {
         $this->class = new ReflectionClass($class);
 
@@ -402,15 +401,15 @@ class ClassMetadata implements ClassMetadataInterface
 
         foreach ($this->getProperties() as $property) {
 
-            $propertyName = $property->getName();
+            $name         = $property->getName();
             $value        = $property->getValue($object);
-            $attribute    = $this->resolveAttribute($propertyName);
+            $attribute    = $this->resolveAttribute($name);
             $resolver     = new AttributeValueResolver(
                 new ClassFieldType($attribute, $value)
             );
 
-            $fieldValues[$propertyName] = new ClassField(
-                $propertyName,
+            $fieldValues[$name] = new ClassField(
+                $name,
                 $property->getValue($object),
                 $attribute
             );
@@ -434,26 +433,26 @@ class ClassMetadata implements ClassMetadataInterface
 
         foreach ($this->getProperties() as $property) {
 
-            $propertyName  = $property->getName();
-            $attributeName = $this->resolveAttribute($propertyName);
+            $name          = $property->getName();
+            $attribute     = $this->resolveAttribute($name);
             $value         = $property->getValue($object);
-            $fieldType     = new ClassFieldType($propertyName, $value);
+            $fieldType     = new ClassFieldType($name, $value);
 
-            if ($this->matchIdentifier($propertyName)) {
-                $identifierValues[$propertyName] = new IdentifierField($propertyName, $value, $attributeName);
+            if ($this->matchIdentifier($name)) {
+                $identifierValues[$name] = new IdentifierField($name, $value, $attribute);
             } elseif ($fieldType->isSingleAssociate()) {
-                $field   =  new SingleAssociationField($propertyName, $value, "{$attributeName}_id");
-                $this->singleAssociates[$propertyName] = $field;
-                $identifierValues[$propertyName] = $field;
+                $field   =  new SingleAssociationField($name, $value, "{$attribute}_id");
+                $this->singleAssociates[$name] = $field;
+                $identifierValues[$name] = $field;
             } elseif ($fieldType->isCollectionAssociate()) {
                 $field = new CollectionAssociationField(
-                    $propertyName,
+                    $name,
                     $value,
-                    $attributeName,
-                    new PersistentCollection($propertyName, $value)
+                    $attribute,
+                    new PersistentCollection($name, $value)
                 );
-                $this->collectionAssociates[$propertyName] = $field;
-                $identifierValues[$propertyName] = $field;
+                $this->collectionAssociates[$name] = $field;
+                $identifierValues[$name] = $field;
             }
         }
 
