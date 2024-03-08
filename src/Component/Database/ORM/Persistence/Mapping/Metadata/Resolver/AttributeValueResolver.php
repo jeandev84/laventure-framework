@@ -65,6 +65,8 @@ class AttributeValueResolver implements ResolverInterface
      {
          if ($this->type->isDatetime()) {
              return $this->getDatetime()->format('Y-m-d H:i:s');
+         } elseif ($this->type->isBoolean()) {
+             return intval($this->getValue());
          }
 
          return $this->getValue();

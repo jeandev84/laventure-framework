@@ -216,7 +216,9 @@ class Persistent implements PersistentInterface
     */
     public function addUpdate($id, array $attributes): static
     {
-        $this->update[$id] = $attributes;
+        if (!is_null($id)) {
+            $this->update[$id] = $attributes;
+        }
 
         return $this;
     }
@@ -435,6 +437,8 @@ class Persistent implements PersistentInterface
     }
 
 
+
+
     /**
      * @return array
     */
@@ -447,18 +451,18 @@ class Persistent implements PersistentInterface
 
 
     /**
-     * @param ClassMetadataInterface $classMetadata
+     * @param ClassMetadataInterface $class
      * @return $this
      * @throws NotFoundTableException
     */
-    private function addPersistAttributes(ClassMetadataInterface $classMetadata): static
+    private function addPersistAttributes(ClassMetadataInterface $class): static
     {
-        $attributes = $this->filterAttributes($classMetadata->getPersistAttributes());
+        $attributes = $this->filterAttributes($class->getPersistAttributes());
 
         dd($attributes);
 
         $this->addInsert($attributes);
-        $this->addUpdate($classMetadata->getId(), $attributes);
+        $this->addUpdate($class->getId(), $attributes);
 
         return $this;
     }
