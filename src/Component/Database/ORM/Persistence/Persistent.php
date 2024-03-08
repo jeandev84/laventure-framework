@@ -94,13 +94,10 @@ class Persistent implements PersistentInterface
 
     /**
      * @param EntityManagerInterface $em
-     * @param string|object $class
+     * @param $class
      * @throws NotFoundTableException
     */
-    public function __construct(
-        EntityManagerInterface $em,
-        string|object $class
-    ) {
+    public function __construct(EntityManagerInterface $em, $class) {
         $this->em            = $em;
         $this->classMetadata = $em->getClassMetadata($class);
         $this->addPersistAttributes($this->classMetadata);
@@ -119,90 +116,13 @@ class Persistent implements PersistentInterface
              return $this->loadFromIdentityMap($id);
         }
 
-        $data = $this->findOneBy([
-            $this->getIdentifier() => $id
-        ]);
+        $data = $this->findOneBy([$this->getIdentifier() => $id]);
 
         $this->mapIdentity($id, $data);
 
         return $data;
     }
 
-
-
-
-
-    /**
-     * @param $id
-     * @return bool
-    */
-    public function hasIdentity($id): bool
-    {
-        $identityId = $this->getIdentity($id);
-
-        return $this->em->getUnitOfWork()
-                        ->getIdentityMap()
-                        ->has($identityId);
-    }
-
-
-
-
-
-
-    /**
-     * Load data from identity map
-     *
-     * @param $id
-     * @return mixed
-    */
-    public function loadFromIdentityMap($id): mixed
-    {
-        $identityId = $this->getIdentity($id);
-
-        return $this->em->getUnitOfWork()
-                        ->getIdentityMap()
-                        ->get($identityId);
-    }
-
-
-
-
-
-
-    /**
-     * @param $recordId
-     * @param $data
-     * @return $this
-    */
-    public function mapIdentity($recordId, $data): static
-    {
-        $identityId = $this->getIdentity($recordId);
-
-        $this->em->getUnitOfWork()
-                 ->getIdentityMap()
-                 ->map($identityId, $data);
-
-        return $this;
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function removeDataFromIdentityMap($recordId): static
-    {
-        $identityId = $this->getIdentity($recordId);
-
-        $this->em->getUnitOfWork()
-                 ->getIdentityMap()
-                 ->remove($identityId);
-
-        return $this;
-    }
 
 
 
@@ -303,7 +223,7 @@ class Persistent implements PersistentInterface
         foreach ($this->update as $id => $attributes) {
             $status = $this->createQueryBuilder()
                            ->update($this->getTableName(), $attributes)
-                           ->criteria([$this->getIdentifier(), $id])
+                           ->criteria([$this->getIdentifier() => $id])
                            ->getQuery()
                            ->execute();
             $this->addUpdated($id, $status);
@@ -341,7 +261,7 @@ class Persistent implements PersistentInterface
         foreach ($this->delete as $id) {
             $this->deleted[$id] = $this->createQueryBuilder()
                                        ->delete($this->getTableName())
-                                       ->criteria([$this->getIdentifier(), $id])
+                                       ->criteria([$this->getIdentifier() => $id])
                                        ->getQuery()
                                        ->execute();
 
@@ -454,7 +374,83 @@ class Persistent implements PersistentInterface
 
 
 
-    
+
+    /**
+     * @param $id
+     * @return bool
+     */
+    public function hasIdentity($id): bool
+    {
+        $identityId = $this->getIdentity($id);
+
+        return $this->em->getUnitOfWork()
+            ->getIdentityMap()
+            ->has($identityId);
+    }
+
+
+
+
+
+
+    /**
+     * Load data from identity map
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function loadFromIdentityMap($id): mixed
+    {
+        $identityId = $this->getIdentity($id);
+
+        return $this->em->getUnitOfWork()
+            ->getIdentityMap()
+            ->get($identityId);
+    }
+
+
+
+
+
+
+    /**
+     * @param $recordId
+     * @param $data
+     * @return $this
+    */
+    public function mapIdentity($recordId, $data): static
+    {
+        $identityId = $this->getIdentity($recordId);
+
+        $this->em->getUnitOfWork()
+            ->getIdentityMap()
+            ->map($identityId, $data);
+
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function removeDataFromIdentityMap($recordId): static
+    {
+        $identityId = $this->getIdentity($recordId);
+
+        $this->em->getUnitOfWork()
+                ->getIdentityMap()
+                ->remove($identityId);
+
+        return $this;
+    }
+
+
+
+
+
 
     /**
      * @return array
