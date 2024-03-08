@@ -10,6 +10,7 @@ use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Field\ClassFie
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Field\Types\Association\CollectionAssociationField;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Field\Types\Association\SingleAssociationField;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Field\Types\IdentifierField;
+use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Resolver\AttributeValueResolver;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Types\ClassFieldType;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Types\ClassFieldTypeInterface;
 use Laventure\Utils\Convertor\CamelCase\CamelCaseConvertorTrait;
@@ -53,6 +54,11 @@ class ClassMetadata implements ClassMetadataInterface
 
 
 
+    /**
+     * @var array
+    */
+    protected array $attributes = [];
+
 
     /**
      * @var IdentifierField[]
@@ -85,7 +91,11 @@ class ClassMetadata implements ClassMetadataInterface
     public function __construct($class)
     {
         $this->class = new ReflectionClass($class);
-        $this->mapValues($class);
+
+        if (is_object($class)) {
+            $this->fields      = $this->getFieldValues($class);
+            $this->identifiers = $this->getIdentifierValues($class);
+        }
     }
 
 
@@ -225,8 +235,7 @@ class ClassMetadata implements ClassMetadataInterface
 
 
     /**
-     * @param string $field
-     * @return mixed
+     * @inheritDoc
     */
     public function getFieldValue(string $field): mixed
     {
@@ -242,8 +251,7 @@ class ClassMetadata implements ClassMetadataInterface
 
 
     /**
-     * @param string $field
-     * @return mixed
+     * @inheritDoc
     */
     public function getIdentifierValue(string $field): mixed
     {
@@ -260,9 +268,7 @@ class ClassMetadata implements ClassMetadataInterface
 
 
     /**
-     * Returns identifier value
-     *
-     * @return mixed
+     * @inheritDoc
     */
     public function getId(): mixed
     {
@@ -272,8 +278,11 @@ class ClassMetadata implements ClassMetadataInterface
 
 
 
+
+
+
     /**
-     * @return bool
+     * @inheritDoc
     */
     public function isNew(): bool
     {
@@ -385,20 +394,28 @@ class ClassMetadata implements ClassMetadataInterface
 
 
     /**
-     * @param object $object
-     * @return array
+     * @inheritdoc
     */
-    public function mapFieldValues(object $object): array
+    public function getFieldValues(object $object): array
     {
         $fieldValues = [];
 
         foreach ($this->getProperties() as $property) {
+
             $propertyName = $property->getName();
+            $value        = $property->getValue($object);
+            $attribute    = $this->resolveAttribute($propertyName);
+            $resolver     = new AttributeValueResolver(
+                new ClassFieldType($attribute, $value)
+            );
+
             $fieldValues[$propertyName] = new ClassField(
                 $propertyName,
                 $property->getValue($object),
-                $this->resolveFieldName($propertyName)
+                $attribute
             );
+
+            $this->attributes[$attribute] = $resolver->resolve();
         }
 
         return $fieldValues;
@@ -418,22 +435,14 @@ class ClassMetadata implements ClassMetadataInterface
         foreach ($this->getProperties() as $property) {
 
             $propertyName  = $property->getName();
-            $attributeName = $this->resolveFieldName($propertyName);
+            $attributeName = $this->resolveAttribute($propertyName);
             $value         = $property->getValue($object);
             $fieldType     = new ClassFieldType($propertyName, $value);
 
             if ($this->matchIdentifier($propertyName)) {
-                $identifierValues[$propertyName] = new IdentifierField(
-                    $propertyName,
-                    $value,
-                    $attributeName
-                );
+                $identifierValues[$propertyName] = new IdentifierField($propertyName, $value, $attributeName);
             } elseif ($fieldType->isSingleAssociate()) {
-                $field   =  new SingleAssociationField(
-                    $propertyName,
-                    $value,
-        "{$attributeName}_id"
-                );
+                $field   =  new SingleAssociationField($propertyName, $value, "{$attributeName}_id");
                 $this->singleAssociates[$propertyName] = $field;
                 $identifierValues[$propertyName] = $field;
             } elseif ($fieldType->isCollectionAssociate()) {
@@ -459,10 +468,50 @@ class ClassMetadata implements ClassMetadataInterface
     /**
      * @return ReflectionProperty[]
     */
-    private function getProperties(): array
+    public function getProperties(): array
     {
         return $this->class->getProperties();
     }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getAttributes(): array
+    {
+         return $this->attributes;
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function withoutAttribute($name): static
+    {
+         unset($this->attributes[$name]);
+
+         return $this;
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getAttributesWithoutIdentifier(): array
+    {
+         $this->withoutAttribute($this->identifier);
+         return $this->attributes;
+    }
+
+
 
 
 
@@ -471,23 +520,8 @@ class ClassMetadata implements ClassMetadataInterface
      * @param string $field
      * @return string
     */
-    private function resolveFieldName(string $field): string
+    protected function resolveAttribute(string $field): string
     {
         return $this->camelCaseToUnderscore($field);
-    }
-
-
-
-
-    /**
-     * @param $class
-     * @return void
-     */
-    private function mapValues($class): void
-    {
-        if (is_object($class)) {
-            $this->fields      = $this->mapFieldValues($class);
-            $this->identifiers = $this->getIdentifierValues($class);
-        }
     }
 }

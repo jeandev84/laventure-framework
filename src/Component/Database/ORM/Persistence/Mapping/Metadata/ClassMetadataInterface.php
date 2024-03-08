@@ -229,4 +229,106 @@ interface ClassMetadataInterface
      * @return mixed
     */
     public function getIdentifierValues(object $object): mixed;
+
+
+
+
+
+
+
+
+    /**
+     * Returns fields values
+     *
+     * @param object $object
+     * @return mixed
+    */
+    public function getFieldValues(object $object): mixed;
+
+
+
+
+
+
+
+    /**
+     * Returns field value
+     *
+     * @param string $field
+     * @return mixed
+    */
+    public function getFieldValue(string $field): mixed;
+
+
+
+
+
+
+    /**
+     * Returns identifier value
+     *
+     * @param string $field
+     * @return mixed
+    */
+    public function getIdentifierValue(string $field): mixed;
+
+
+
+
+
+
+
+    /**
+     * Returns all attributes
+     *
+     * @return array
+    */
+    public function getAttributes(): array;
+
+
+
+
+
+    /**
+     * Remove attribute
+     *
+     * @param $name
+     * @return $this
+    */
+    public function withoutAttribute($name): static;
+
+
+
+
+    /**
+     * Returns all attributes without class identifier
+     *
+     * @return array
+    */
+    public function getAttributesWithoutIdentifier(): array;
+
+
+
+
+
+    /**
+     * Returns value identifier class
+     *
+     * @return mixed
+    */
+    public function getId(): mixed;
+
+
+
+
+
+
+
+
+    /**
+     * Determine if object is new
+     *
+     * @return bool
+    */
+    public function isNew(): bool;
 }
