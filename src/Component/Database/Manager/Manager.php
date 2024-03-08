@@ -96,7 +96,7 @@ class Manager extends DatabaseManager implements ManagerInterface
     */
     public function table(string $name, string $connection = null): TableInterface
     {
-        return $this->connection($connection)->createTable($name);
+        return $this->connection($connection)->table($name);
     }
 
 

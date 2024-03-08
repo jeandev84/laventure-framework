@@ -10,6 +10,9 @@ use Laventure\Component\Database\ORM\Persistence\Mapper\Identity\IdentityMapperI
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\ClassMetadataInterface;
 use Laventure\Component\Database\ORM\Persistence\Query\Builder\QueryBuilderInterface;
 use Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\DQL\Select\Select;
+use Laventure\Component\Database\Schema\Table\Exceptions\NotFoundTableException;
+use Laventure\Component\Database\Schema\Table\Exceptions\TableException;
+use Laventure\Component\Database\Schema\Table\TableInterface;
 
 /**
  * Persistent
@@ -316,11 +319,24 @@ class Persistent implements PersistentInterface
 
 
     /**
+     * @return string
+    */
+    public function getClassShortName(): string
+    {
+       return $this->classMetadata->getReflectionClass()
+                                  ->getShortName();
+    }
+
+
+
+    /**
      * @inheritDoc
     */
     public function getTableName(): string
     {
-        return mb_strtolower($this->getClassName()) . 's';
+        $classShortName = $this->getClassShortName();
+
+        return mb_strtolower($classShortName) . 's';
     }
 
 
@@ -345,7 +361,9 @@ class Persistent implements PersistentInterface
     */
     public function getIdentityId($id): string
     {
-        return $this->identityMap->getIdentityId($this->getClassName(), $id);
+        return $this->identityMap->getIdentityId(
+            $this->getClassName(), $id
+        );
     }
 
 
@@ -431,12 +449,56 @@ class Persistent implements PersistentInterface
     /**
      * @param ClassMetadataInterface $classMetadata
      * @return $this
+     * @throws NotFoundTableException
     */
     private function addPersistAttributes(ClassMetadataInterface $classMetadata): static
     {
-        $this->addInsert($classMetadata->getPersistAttributes());
-        $this->addUpdate($classMetadata->getId(), $classMetadata->getPersistAttributes());
+        $attributes = $this->filterAttributes($classMetadata->getAttributes());
+
+        dd($attributes);
+
+        $this->addInsert($attributes);
+        $this->addUpdate($classMetadata->getId(), $attributes);
 
         return $this;
+    }
+
+
+
+
+    /**
+     * @return TableInterface
+    */
+    private function getTable(): TableInterface
+    {
+        return $this->em->getConnection()
+                        ->table($this->getTableName());
+    }
+
+
+
+
+    /**
+     * @param array $attributes
+     * @return array
+     * @throws NotFoundTableException
+    */
+    private function filterAttributes(array $attributes): array
+    {
+        $table = $this->getTable();
+
+        if (!$table->exists()) {
+            throw new NotFoundTableException($this->getTableName(), [
+                'context' => "Persistence class {$this->getClassShortName()}"
+            ]);
+        }
+
+        foreach (array_keys($attributes) as $column) {
+            if (!in_array($column, $table->getColumnNames())) {
+                 unset($attributes[$column]);
+            }
+        }
+
+        return $attributes;
     }
 }

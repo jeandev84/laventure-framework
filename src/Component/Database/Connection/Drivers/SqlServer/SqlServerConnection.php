@@ -124,7 +124,7 @@ class SqlServerConnection implements ConnectionInterface
     /**
      * @inheritDoc
     */
-    public function createTable(string $name, string $schemaName = ''): TableInterface
+    public function table(string $name, string $schemaName = ''): TableInterface
     {
 
     }

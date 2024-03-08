@@ -157,7 +157,7 @@ interface ConnectionInterface extends TransactionInterface
      * @param string $schemaName
      * @return TableInterface
     */
-    public function createTable(string $name, string $schemaName = ''): TableInterface;
+    public function table(string $name, string $schemaName = ''): TableInterface;
 
 
 

@@ -63,7 +63,7 @@ class Schema implements SchemaInterface
     */
     public function table(string $name): TableInterface
     {
-        return $this->connection->createTable(
+        return $this->connection->table(
             $name,
             $this->getName()
         );

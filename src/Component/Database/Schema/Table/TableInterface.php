@@ -624,10 +624,10 @@ interface TableInterface
     /**
      * Determine if column exist in table
      *
-     * @param string $name
+     * @param $name
      * @return bool
     */
-    public function hasColumn(string $name): bool;
+    public function hasColumn($name): bool;
 
 
 

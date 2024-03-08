@@ -48,7 +48,7 @@ class MysqlConnection extends PdoConnection
     /**
      * @inheritDoc
     */
-    public function createTable(string $name, string $schemaName = ''): TableInterface
+    public function table(string $name, string $schemaName = ''): TableInterface
     {
         return new MysqlTable($this, $name, $schemaName);
     }

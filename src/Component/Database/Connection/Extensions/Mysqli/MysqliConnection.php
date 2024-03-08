@@ -294,7 +294,7 @@ class MysqliConnection implements MysqliConnectionInterface
     /**
      * @inheritDoc
     */
-    public function createTable(string $name, string $schemaName = ''): TableInterface
+    public function table(string $name, string $schemaName = ''): TableInterface
     {
         return new MysqlTable($this, $name, $schemaName);
     }
