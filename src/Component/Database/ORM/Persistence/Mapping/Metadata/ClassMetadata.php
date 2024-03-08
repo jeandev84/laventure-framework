@@ -49,7 +49,7 @@ class ClassMetadata implements ClassMetadataInterface
     /**
      * @var ClassField[]
     */
-    public array $fieldValues = [];
+    public array $fields = [];
 
 
 
@@ -57,7 +57,7 @@ class ClassMetadata implements ClassMetadataInterface
     /**
      * @var IdentifierField[]
     */
-    public array $identifierValues = [];
+    public array $identifiers = [];
 
 
 
@@ -172,7 +172,7 @@ class ClassMetadata implements ClassMetadataInterface
     */
     public function getIdentifierFieldNames(): array
     {
-        return array_keys($this->identifierValues);
+        return array_keys($this->identifiers);
     }
 
 
@@ -198,7 +198,7 @@ class ClassMetadata implements ClassMetadataInterface
     */
     public function getFieldNames(): array
     {
-        return array_keys($this->fieldValues);
+        return array_keys($this->fields);
     }
 
 
@@ -230,11 +230,11 @@ class ClassMetadata implements ClassMetadataInterface
     */
     public function getFieldValue(string $field): mixed
     {
-        if (!isset($this->fieldValues[$field])) {
+        if (!isset($this->fields[$field])) {
             return null;
         }
 
-        return $this->fieldValues[$field]->getValue();
+        return $this->fields[$field]->getValue();
     }
 
 
@@ -247,11 +247,11 @@ class ClassMetadata implements ClassMetadataInterface
     */
     public function getIdentifierValue(string $field): mixed
     {
-        if (!isset($this->identifierValues[$field])) {
+        if (!isset($this->identifiers[$field])) {
             return null;
         }
 
-        return $this->identifierValues[$field]->getValue();
+        return $this->identifiers[$field]->getValue();
     }
 
 
@@ -389,8 +389,8 @@ class ClassMetadata implements ClassMetadataInterface
     private function mapValues($class): void
     {
         if (is_object($class)) {
-            $this->fieldValues      = $this->mapFieldValues($class);
-            $this->identifierValues = $this->getIdentifierValues($class);
+            $this->fields      = $this->mapFieldValues($class);
+            $this->identifiers = $this->getIdentifierValues($class);
         }
     }
 
