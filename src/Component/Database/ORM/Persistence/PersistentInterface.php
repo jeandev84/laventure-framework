@@ -49,6 +49,7 @@ interface PersistentInterface
 
 
 
+
     /**
      * Add insert data
      *
@@ -107,7 +108,7 @@ interface PersistentInterface
      * @param $id
      * @return $this
     */
-    public function addDelete($id): static;
+    public function addRemove($id): static;
 
 
 
@@ -120,7 +121,9 @@ interface PersistentInterface
      *
      * @return mixed
     */
-    public function delete(): mixed;
+    public function remove(): mixed;
+
+
 
 
 

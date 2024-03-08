@@ -184,6 +184,8 @@ class Persistent implements PersistentInterface
 
 
 
+
+
     /**
      * @inheritDoc
     */
@@ -220,7 +222,7 @@ class Persistent implements PersistentInterface
     /**
      * @inheritDoc
     */
-    public function addDelete($id): static
+    public function addRemove($id): static
     {
 
     }
@@ -231,7 +233,7 @@ class Persistent implements PersistentInterface
     /**
      * @inheritDoc
     */
-    public function delete(): mixed
+    public function remove(): mixed
     {
         return null;
     }

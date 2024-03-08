@@ -19,42 +19,38 @@ use Laventure\Component\Database\ORM\Persistence\PersistentInterface;
 interface UnitOfWorkInterface
 {
     /**
-     * Register state
+     * Register object state
      *
      * @param object $object
      * @param $state
      * @return mixed
     */
-    public function addState(object $object, $state): mixed;
+    public function registerObject(object $object, $state): mixed;
 
 
 
 
 
     /**
+     * Register NEW state
+     *
      * @param object $object
      * @return $this
     */
-    public function addNewState(object $object): static;
+    public function registerNew(object $object): static;
 
-
-
-
-    /**
-     * @param object $object
-     * @return $this
-     */
-    public function addManagedState(object $object): static;
 
 
 
 
 
     /**
+     * Register MANAGED state
+     *
      * @param object $object
      * @return $this
     */
-    public function addDetachedState(object $object): static;
+    public function registerManaged(object $object): static;
 
 
 
@@ -62,17 +58,46 @@ interface UnitOfWorkInterface
 
 
     /**
+     * Register DETACHED state
+     *
      * @param object $object
      * @return $this
-     */
-    public function addRemovedState(object $object): static;
+    */
+    public function registerDetached(object $object): static;
+
+
 
 
 
 
 
     /**
-     * map class
+     * Register REMOVED state
+     *
+     * @param object $object
+     * @return $this
+    */
+    public function registerRemoved(object $object): static;
+
+
+
+
+
+
+    /**
+     * Register NEW or MANAGED state object
+     *
+     * @param object $object
+     * @return $this
+    */
+    public function registerPersist(object $object): static;
+
+
+
+
+
+    /**
+     * Set mapped class
      *
      * @param $class
      * @return $this
@@ -97,6 +122,8 @@ interface UnitOfWorkInterface
 
 
 
+
+
     /**
      * Register state NEW or UPDATE
      *
@@ -105,6 +132,8 @@ interface UnitOfWorkInterface
      * @return mixed
      */
     public function persist(object $object): mixed;
+
+
 
 
 
@@ -236,6 +265,8 @@ interface UnitOfWorkInterface
      * @return mixed
     */
     public function commit(): mixed;
+
+
 
 
 
