@@ -91,18 +91,18 @@ class Select extends BuilderHasConditions
 
 
     /**
-     * @param string $table
+     * @param string $from
      * @param string $alias
      * @return $this
     */
-    public function from(string $table, string $alias = ''): static
+    public function from(string $from, string $alias = ''): static
     {
-        $this->builder->from($table, $alias);
+        $this->builder->from($from, $alias);
 
-        if ($this->hasMappedClass($table)) {
-            $tableName = $this->getTableNameFromClass($table);
+        if ($this->hasMappedClass($from)) {
+            $tableName = $this->getTableNameFromClass($from);
             $this->builder->from($tableName, $alias);
-            $this->mappedClass = $table;
+            $this->mappedClass = $from;
         }
 
         return $this;
