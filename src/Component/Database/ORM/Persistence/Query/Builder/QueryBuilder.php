@@ -91,7 +91,7 @@ class QueryBuilder implements QueryBuilderInterface
             $qb->set($column, $value);
         }
 
-        dd($qb->getSQL());
+        return $qb;
     }
 
 
