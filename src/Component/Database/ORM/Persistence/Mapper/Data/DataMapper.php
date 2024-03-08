@@ -64,12 +64,18 @@ class DataMapper implements DataMapperInterface
     */
     public function insert(object $object): int
     {
-        $id = $this->getPersistent($object)->insert();
+        $persistent = $this->getPersistent($object);
+
+        $id = $persistent->insert();
 
         $this->dispatchEvent(new PostPersistEvent($object));
 
+        $persistent->getIdentityMap()->map($id, $object);
+
         return $id;
     }
+
+
 
 
 
@@ -82,17 +88,21 @@ class DataMapper implements DataMapperInterface
     */
     public function update(object $object): int
     {
+        $persistent      = $this->getPersistent($object);
         $preUpdateEvent  = new PreUpdateEvent($object);
         $this->dispatchEvent($preUpdateEvent);
         $object = $preUpdateEvent->getSubject();
-        $this->getPersistent($object)->update();
+        $persistent->update();
 
         $postUpdateEvent = new PostUpdateEvent($object);
         $this->dispatchEvent($postUpdateEvent);
         $object = $postUpdateEvent->getSubject();
         $this->dispatchEvent(new PostUpdateEvent($object));
+        $id = $this->getId($object);
 
-        return $this->getId($object);
+        $persistent->getIdentityMap()->map($id, $object);
+
+        return $id;
     }
 
 
@@ -135,6 +145,9 @@ class DataMapper implements DataMapperInterface
 
         $postRemoveEvent = new PostRemoveEvent($object);
         $this->dispatchEvent($postRemoveEvent);
+
+        $this->em->detach($object);
+
         return $status;
     }
 

@@ -99,17 +99,17 @@ class Persistent implements PersistentInterface
 
 
 
-
     /**
      * @param EntityManagerInterface $em
-     * @param $entity
+     * @param string|object $class
+     * @throws NotFoundTableException
     */
     public function __construct(
         EntityManagerInterface $em,
-        $entity
+        string|object $class
     ) {
         $this->em            = $em;
-        $this->classMetadata = $em->getClassMetadata($entity);
+        $this->classMetadata = $em->getClassMetadata($class);
         $this->addPersistAttributes($this->classMetadata);
     }
 
@@ -233,11 +233,12 @@ class Persistent implements PersistentInterface
                            ->criteria([$this->getIdentifier(), $id])
                            ->getQuery()
                            ->execute();
-            $this->addUpdated($status, $id);
+            $this->addUpdated($id, $status);
         }
 
         return !empty($this->updated);
     }
+
 
 
 
@@ -249,8 +250,12 @@ class Persistent implements PersistentInterface
     */
     public function addRemove($id): static
     {
+       $this->delete[] = $id;
 
+       return $this;
     }
+
+
 
 
 
@@ -258,10 +263,20 @@ class Persistent implements PersistentInterface
     /**
      * @inheritDoc
     */
-    public function remove(): mixed
+    public function remove(): bool
     {
-        return null;
+        foreach ($this->delete as $id) {
+            $this->deleted[$id] = $this->createQueryBuilder()
+                                       ->delete($this->getTableName())
+                                       ->criteria([$this->getIdentifier(), $id])
+                                       ->getQuery()
+                                       ->execute();
+        }
+
+        return !empty($this->deleted);
     }
+
+
 
 
 
@@ -273,6 +288,9 @@ class Persistent implements PersistentInterface
     {
         return $this->em->createQueryBuilder();
     }
+
+
+
 
 
 
@@ -515,6 +533,8 @@ class Persistent implements PersistentInterface
 
         return $id;
     }
+
+
 
 
     /**
