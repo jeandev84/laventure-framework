@@ -16,23 +16,30 @@ namespace Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Field;
 interface ClassFieldInterface
 {
     /**
+     * Returns property name
+     *
      * @return string
     */
-    public function getFieldName(): string;
+    public function getName(): string;
 
 
 
 
     /**
+     * Returns property value
+     *
      * @return mixed
     */
-    public function getFieldValue(): mixed;
+    public function getValue(): mixed;
+
 
 
 
 
     /**
+     * Returns attribute name for persistence to the database
+     *
      * @return string
     */
-    public function getAttributeName(): string;
+    public function getAttribute(): string;
 }

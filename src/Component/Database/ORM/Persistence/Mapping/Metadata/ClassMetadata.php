@@ -7,16 +7,15 @@ namespace Laventure\Component\Database\ORM\Persistence\Mapping\Metadata;
 use Laventure\Component\Database\ORM\Persistence\Collection\Persistent\PersistentCollection;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Exception\NotFoundClassFieldException;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Field\ClassField;
-use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Field\CollectionAssociationField;
-use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Field\IdentifierField;
-use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Field\SingleAssociationField;
+use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Field\Types\Association\CollectionAssociationField;
+use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Field\Types\Association\SingleAssociationField;
+use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Field\Types\IdentifierField;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Types\ClassFieldType;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Types\ClassFieldTypeInterface;
 use Laventure\Utils\Convertor\CamelCase\CamelCaseConvertorTrait;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionProperty;
-use Reflector;
 
 /**
  * ClassMetadata
@@ -63,6 +62,20 @@ class ClassMetadata implements ClassMetadataInterface
 
 
 
+    /**
+     * @var SingleAssociationField[]
+    */
+    public array $singleAssociates = [];
+
+
+
+
+    /**
+     * @var CollectionAssociationField[]
+    */
+    public array $collectionAssociates = [];
+
+
 
 
     /**
@@ -74,6 +87,7 @@ class ClassMetadata implements ClassMetadataInterface
         $this->class = new ReflectionClass($class);
         $this->mapValues($class);
     }
+
 
 
 
@@ -221,7 +235,7 @@ class ClassMetadata implements ClassMetadataInterface
             return null;
         }
 
-        return $this->fieldValues[$field]->getFieldValue();
+        return $this->fieldValues[$field]->getValue();
     }
 
 
@@ -238,7 +252,7 @@ class ClassMetadata implements ClassMetadataInterface
             return null;
         }
 
-        return $this->identifierValues[$field]->getFieldValue();
+        return $this->identifierValues[$field]->getValue();
     }
 
 
@@ -271,14 +285,13 @@ class ClassMetadata implements ClassMetadataInterface
 
 
 
-
-
     /**
      * @inheritDoc
     */
     public function hasAssociation($field): bool
     {
-        return $this->getTypeOfField($field)->isAssociation();
+        return $this->isSingleValuedAssociation($field) ||
+               $this->isCollectionValuedAssociation($field);
     }
 
 
@@ -291,7 +304,7 @@ class ClassMetadata implements ClassMetadataInterface
     */
     public function isSingleValuedAssociation($field): bool
     {
-        return $this->getTypeOfField($field)->isSingleAssociate();
+        return array_key_exists($field, $this->singleAssociates);
     }
 
 
@@ -304,7 +317,7 @@ class ClassMetadata implements ClassMetadataInterface
     */
     public function isCollectionValuedAssociation($field): bool
     {
-        return $this->getTypeOfField($field)->isCollectionAssociate();
+        return array_key_exists($field, $this->collectionAssociates);
     }
 
 
@@ -358,42 +371,29 @@ class ClassMetadata implements ClassMetadataInterface
 
 
     /**
-     * @inheritDoc
+     * @param $field
+     * @return bool
     */
-    public function getIdentifierValues(object $object): array
+    public function matchIdentifier($field): bool
     {
-        foreach ($this->getProperties() as $property) {
-
-            $propertyName  = $property->getName();
-            $attributeName = $this->resolveFieldName($propertyName);
-            $value         = $property->getValue($object);
-
-            if ($this->identifier === $propertyName) {
-                $this->identifierValues[$propertyName] = new IdentifierField(
-                    $propertyName,
-                    $value,
-                    $attributeName
-                );
-            } elseif ($this->isSingleValuedAssociation($propertyName)) {
-                #$field = trim($field, 's');
-                $this->identifierValues[$propertyName] = new SingleAssociationField(
-                    $propertyName,
-                    $value,
-                    "{$attributeName}_id"
-                );
-            } elseif ($this->isCollectionValuedAssociation($propertyName)) {
-                $this->identifierValues[$propertyName] = new CollectionAssociationField(
-                    $propertyName,
-                    new PersistentCollection($propertyName, $value),
-                    $attributeName
-                );
-            }
-        }
-
-        return $this->identifierValues;
+        return $this->identifier === $field;
     }
 
 
+
+
+
+    /**
+     * @param $class
+     * @return void
+    */
+    private function mapValues($class): void
+    {
+        if (is_object($class)) {
+            $this->fieldValues      = $this->mapFieldValues($class);
+            $this->identifierValues = $this->getIdentifierValues($class);
+        }
+    }
 
 
 
@@ -404,16 +404,65 @@ class ClassMetadata implements ClassMetadataInterface
     */
     public function mapFieldValues(object $object): array
     {
+        $fieldValues = [];
+
         foreach ($this->getProperties() as $property) {
             $propertyName = $property->getName();
-            $this->fieldValues[$propertyName] = new ClassField(
+            $fieldValues[$propertyName] = new ClassField(
                 $propertyName,
                 $property->getValue($object),
                 $this->resolveFieldName($propertyName)
             );
         }
 
-        return $this->fieldValues;
+        return $fieldValues;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getIdentifierValues(object $object): array
+    {
+        $identifierValues = [];
+
+        foreach ($this->getProperties() as $property) {
+
+            $propertyName  = $property->getName();
+            $attributeName = $this->resolveFieldName($propertyName);
+            $value         = $property->getValue($object);
+            $fieldType     = new ClassFieldType($propertyName, $value);
+
+            if ($this->matchIdentifier($propertyName)) {
+                $identifierValues[$propertyName] = new IdentifierField(
+                    $propertyName,
+                    $value,
+                    $attributeName
+                );
+            } elseif ($fieldType->isSingleAssociate()) {
+                $field   =  new SingleAssociationField(
+                    $propertyName,
+                    $value,
+        "{$attributeName}_id"
+                );
+                $this->singleAssociates[$propertyName] = $field;
+                $identifierValues[$propertyName] = $field;
+            } elseif ($fieldType->isCollectionAssociate()) {
+                $field = new CollectionAssociationField(
+                    $propertyName,
+                    $value,
+                    $attributeName,
+                    new PersistentCollection($propertyName, $value)
+                );
+                $this->collectionAssociates[$propertyName] = $field;
+                $identifierValues[$propertyName] = $field;
+            }
+        }
+
+        return $identifierValues;
     }
 
 
@@ -439,21 +488,5 @@ class ClassMetadata implements ClassMetadataInterface
     private function resolveFieldName(string $field): string
     {
         return $this->camelCaseToUnderscore($field);
-    }
-
-
-
-
-
-    /**
-     * @param $class
-     * @return void
-    */
-    private function mapValues($class): void
-    {
-        if (is_object($class)) {
-            $this->mapFieldValues($class);
-            $this->getIdentifierValues($class);
-        }
     }
 }

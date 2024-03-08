@@ -40,9 +40,9 @@ class Persistent implements PersistentInterface
 
 
     /**
-     * @var IdentityMapperInterface
+     * @var IdentityMapperInterface|null
     */
-    protected IdentityMapperInterface $identityMap;
+    protected ?IdentityMapperInterface $identityMap = null;
 
 
 
@@ -107,7 +107,6 @@ class Persistent implements PersistentInterface
     ) {
         $this->em            = $em;
         $this->classMetadata = $em->getClassMetadata($entity);
-        $this->identityMap   = new IdentityMap();
     }
 
 
@@ -118,14 +117,15 @@ class Persistent implements PersistentInterface
     */
     public function find($id): mixed
     {
-        $identityId = $this->getIdentityId($id);
+        $identityId  = $this->getIdentityId($id);
+        $identityMap = $this->getIdentityMap();
 
-        if ($this->identityMap->has($identityId)) {
-            return $this->identityMap->get($identityId);
+        if ($identityMap->has($identityId)) {
+            return $identityMap->get($identityId);
         }
 
         $data = $this->findOneBy([$this->getIdentifier() => $id]);
-        $this->identityMap->map($identityId, $data);
+        $identityMap->map($identityId, $data);
         return $data;
     }
 
@@ -255,6 +255,10 @@ class Persistent implements PersistentInterface
     */
     public function getIdentityMap(): IdentityMapperInterface
     {
+        if (!$this->identityMap) {
+            $this->identityMap = new IdentityMap();
+        }
+
         return $this->identityMap;
     }
 

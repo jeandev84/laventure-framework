@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Association;
+namespace Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Field\Types\Association;
+
+use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Field\ClassFieldInterface;
 
 /**
  * AssociatedFieldInterface
@@ -13,6 +15,6 @@ namespace Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Associat
  *
  * @package  Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Association
  */
-interface AssociatedFieldInterface
+interface AssociatedFieldInterface extends ClassFieldInterface
 {
 }

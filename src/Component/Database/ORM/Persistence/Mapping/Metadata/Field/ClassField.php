@@ -32,7 +32,7 @@ class ClassField implements ClassFieldInterface
     /**
      * @inheritDoc
     */
-    public function getFieldName(): string
+    public function getName(): string
     {
         return $this->fieldName;
     }
@@ -42,7 +42,7 @@ class ClassField implements ClassFieldInterface
     /**
      * @inheritDoc
     */
-    public function getFieldValue(): mixed
+    public function getValue(): mixed
     {
         return $this->fieldValue;
     }
@@ -52,7 +52,7 @@ class ClassField implements ClassFieldInterface
     /**
      * @inheritDoc
     */
-    public function getAttributeName(): string
+    public function getAttribute(): string
     {
         return $this->attributeName;
     }
