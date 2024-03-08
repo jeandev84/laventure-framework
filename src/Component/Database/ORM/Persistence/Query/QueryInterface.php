@@ -81,7 +81,7 @@ interface QueryInterface
      *
      * @return object|null
     */
-    public function fetchOne(): ?object;
+    public function fetchOne(): mixed;
 
 
 

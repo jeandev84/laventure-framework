@@ -33,7 +33,6 @@ interface PersistentInterface
 
 
 
-
     /**
      * Find object by criteria
      *
@@ -104,12 +103,25 @@ interface PersistentInterface
 
 
 
+
+
     /**
      * @param $id
      * @return $this
     */
     public function addRemove($id): static;
 
+
+
+
+
+
+
+    /**
+     * @param array $criteria
+     * @return mixed
+    */
+    public function delete(array $criteria): mixed;
 
 
 
@@ -136,6 +148,8 @@ interface PersistentInterface
      * @return QueryBuilderInterface
     */
     public function createQueryBuilder(): QueryBuilderInterface;
+
+
 
 
 

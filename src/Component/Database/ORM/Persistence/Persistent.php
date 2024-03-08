@@ -254,15 +254,15 @@ class Persistent implements PersistentInterface
 
     /**
      * @param array $criteria
-     * @return bool
+     * @return mixed
     */
-    public function delete(array $criteria): bool
+    public function delete(array $criteria): mixed
     {
         return $this->createQueryBuilder()
-             ->delete($this->getTableName())
-             ->criteria($criteria)
-             ->getQuery()
-             ->execute();
+                    ->delete($this->getTableName())
+                    ->criteria($criteria)
+                    ->getQuery()
+                    ->execute();
     }
 
 
@@ -282,7 +282,7 @@ class Persistent implements PersistentInterface
             $this->removeDataFromIdentityMap($id);
         }
 
-        return !empty($this->deleted);
+        return isset($this->deleted[$this->getId()]);
     }
 
 
@@ -622,5 +622,17 @@ class Persistent implements PersistentInterface
         }
 
         return $this;
+    }
+
+
+
+
+
+    /**
+     * @return mixed
+    */
+    private function getId(): mixed
+    {
+        return $this->classMetadata->getId();
     }
 }

@@ -117,7 +117,7 @@ class Query implements QueryInterface
     /**
      * @inheritDoc
     */
-    public function fetchOne(): ?object
+    public function fetchOne(): mixed
     {
         return $this->collectResult(
             $this->fetch()->one()
