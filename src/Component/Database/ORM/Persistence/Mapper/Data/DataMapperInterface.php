@@ -25,7 +25,7 @@ interface DataMapperInterface
      *
      * @return object|null
     */
-    public function find($class, $id): ?object;
+    public function find($class, $id): mixed;
 
 
 

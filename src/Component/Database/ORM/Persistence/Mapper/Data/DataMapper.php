@@ -11,6 +11,7 @@ use Laventure\Component\Database\ORM\Persistence\Manager\Events\PostUpdateEvent;
 use Laventure\Component\Database\ORM\Persistence\Manager\Events\PrePersistEvent;
 use Laventure\Component\Database\ORM\Persistence\Manager\Events\PreRemoveEvent;
 use Laventure\Component\Database\ORM\Persistence\Manager\Events\PreUpdateEvent;
+use Laventure\Component\Database\ORM\Persistence\Mapper\Data\Common\ObjectMapper;
 use Laventure\Component\Database\ORM\Persistence\Mapper\Identity\IdentityMapperInterface;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\ClassMetadataInterface;
 use Laventure\Component\Database\ORM\Persistence\Persistent;
@@ -24,27 +25,8 @@ use Laventure\Component\Database\ORM\Persistence\Persistent;
  *
  * @package Laventure\Component\Database\ORM\Persistence\Mapper\Data
 */
-class DataMapper implements DataMapperInterface
+class DataMapper extends ObjectMapper
 {
-    /**
-     * @var EntityManagerInterface
-    */
-    protected EntityManagerInterface $em;
-
-
-
-
-    /**
-     * @param EntityManagerInterface $em
-    */
-    public function __construct(EntityManagerInterface $em)
-    {
-        $this->em = $em;
-    }
-
-
-
-
 
     /**
      * Example:
