@@ -6,9 +6,13 @@ namespace Laventure\Component\Database\ORM\Persistence\Mapper\Data;
 use Laventure\Component\Database\ORM\Persistence\Manager\Contract\EntityManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Manager\Events\Common\ObjectEvent;
 use Laventure\Component\Database\ORM\Persistence\Manager\Events\PostPersistEvent;
+use Laventure\Component\Database\ORM\Persistence\Manager\Events\PostRemoveEvent;
 use Laventure\Component\Database\ORM\Persistence\Manager\Events\PostUpdateEvent;
+use Laventure\Component\Database\ORM\Persistence\Manager\Events\PrePersistEvent;
+use Laventure\Component\Database\ORM\Persistence\Manager\Events\PreRemoveEvent;
 use Laventure\Component\Database\ORM\Persistence\Manager\Events\PreUpdateEvent;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\ClassMetadata;
+use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\ClassMetadataInterface;
 use Laventure\Component\Database\ORM\Persistence\Persistent;
 
 /**
@@ -38,6 +42,8 @@ class DataMapper implements DataMapperInterface
 
 
 
+
+
     /**
      * @inheritDoc
     */
@@ -50,18 +56,22 @@ class DataMapper implements DataMapperInterface
 
 
 
+
+
     /**
      * @param object $object
      * @return int
     */
     public function insert(object $object): int
     {
-        $id = $this->persistent($object)->insert();
+        $id = $this->getPersistent($object)->insert();
 
         $this->dispatchEvent(new PostPersistEvent($object));
 
         return $id;
     }
+
+
 
 
 
@@ -75,7 +85,7 @@ class DataMapper implements DataMapperInterface
         $preUpdateEvent  = new PreUpdateEvent($object);
         $this->dispatchEvent($preUpdateEvent);
         $object = $preUpdateEvent->getSubject();
-        $this->persistent($object)->update();
+        $this->getPersistent($object)->update();
 
         $postUpdateEvent = new PostUpdateEvent($object);
         $this->dispatchEvent($postUpdateEvent);
@@ -94,8 +104,20 @@ class DataMapper implements DataMapperInterface
     */
     public function save(object $object): int
     {
-        return 0;
+         $prePersistEvent = new PrePersistEvent($object);
+         $this->dispatchEvent($prePersistEvent);
+         $object = $prePersistEvent->getSubject();
+
+         if ($this->isNew($object)) {
+             $id = $this->insert($object);
+         } else {
+             $id = $this->update($object);
+         }
+
+         return $id;
     }
+
+
 
 
 
@@ -105,8 +127,18 @@ class DataMapper implements DataMapperInterface
     */
     public function delete(object $object): bool
     {
-        return false;
+        $preRemoveEvent = new PreRemoveEvent($object);
+        $this->dispatchEvent($preRemoveEvent);
+        $object = $preRemoveEvent->getSubject();
+
+        $status = $this->getPersistent($object)->remove();
+
+        $postRemoveEvent = new PostRemoveEvent($object);
+        $this->dispatchEvent($postRemoveEvent);
+        return $status;
     }
+
+
 
 
 
@@ -131,10 +163,23 @@ class DataMapper implements DataMapperInterface
      * @param object $object
      * @return Persistent
     */
-    public function persistent(object $object): Persistent
+    public function getPersistent(object $object): Persistent
     {
          return $this->em->getUnitOfWork()
                          ->getPersistent($object);
+    }
+
+
+
+
+
+    /**
+     * @param object $object
+     * @return ClassMetadataInterface
+    */
+    public function getClassMetadata(object $object): ClassMetadataInterface
+    {
+        return $this->em->getClassMetadata($object);
     }
 
 
@@ -147,6 +192,20 @@ class DataMapper implements DataMapperInterface
     */
     public function getId(object $object): int
     {
-        return $this->em->getClassMetadata($object)->getId();
+        return $this->getClassMetadata($object)->getId();
+    }
+
+
+
+
+
+
+    /**
+     * @param object $object
+     * @return bool
+    */
+    public function isNew(object $object): bool
+    {
+        return $this->getClassMetadata($object)->isNew();
     }
 }

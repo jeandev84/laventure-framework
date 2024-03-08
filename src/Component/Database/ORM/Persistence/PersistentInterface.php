@@ -73,17 +73,12 @@ interface PersistentInterface
     public function insert(): int;
 
 
-
-
-
-
-
     /**
      * @param array $attributes
      * @param $id
      * @return static
     */
-    public function addUpdate($id, array $attributes): static;
+    public function addUpdate(array $attributes, $id): static;
 
 
 

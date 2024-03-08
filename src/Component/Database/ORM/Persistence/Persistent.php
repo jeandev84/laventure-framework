@@ -200,9 +200,7 @@ class Persistent implements PersistentInterface
                    ->getQuery()
                    ->execute();
 
-        $this->inserted[$this->getClassName()][] = $id;
-
-        return $id;
+        return $this->addInserted($id);
     }
 
 
@@ -213,11 +211,9 @@ class Persistent implements PersistentInterface
     /**
      * @inheritDoc
     */
-    public function addUpdate($id, array $attributes): static
+    public function addUpdate(array $attributes, $id): static
     {
-        if (!is_null($id)) {
-            $this->update[$id] = $attributes;
-        }
+        $this->update[$id] = $attributes;
 
         return $this;
     }
@@ -237,13 +233,13 @@ class Persistent implements PersistentInterface
                            ->criteria([$this->getIdentifier(), $id])
                            ->getQuery()
                            ->execute();
-            if ($status) {
-                $this->updated[$this->getClassName()][$id] = $status;
-            }
+            $this->addUpdated($status, $id);
         }
 
         return !empty($this->updated);
     }
+
+
 
 
 
@@ -457,8 +453,12 @@ class Persistent implements PersistentInterface
     private function addPersistAttributes(ClassMetadataInterface $class): static
     {
         $attributes = $this->filterAttributes($class->getPersistAttributes());
-        $this->addInsert($attributes);
-        $this->addUpdate($class->getId(), $attributes);
+
+        if ($class->isNew()) {
+            $this->addInsert($attributes);
+        } else {
+            $this->addUpdate($class->getId(), $attributes);
+        }
 
         return $this;
     }
@@ -500,5 +500,34 @@ class Persistent implements PersistentInterface
         }
 
         return $attributes;
+    }
+
+
+
+
+    /**
+     * @param $id
+     * @return int
+     */
+    private function addInserted($id): int
+    {
+        $this->inserted[$this->getClassName()][] = $id;
+
+        return $id;
+    }
+
+
+    /**
+     * @param $id
+     * @param $status
+     * @return $this
+    */
+    private function addUpdated($id, $status): static
+    {
+        if ($status) {
+            $this->updated[$this->getClassName()][$id] = $status;
+        }
+
+        return $this;
     }
 }
