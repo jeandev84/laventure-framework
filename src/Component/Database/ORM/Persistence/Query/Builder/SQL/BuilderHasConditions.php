@@ -30,7 +30,10 @@ abstract class BuilderHasConditions extends Builder
      * @param EntityManagerInterface $em
      * @param SQLBuilderHasConditionInterface $builder
     */
-    public function __construct(EntityManagerInterface $em, SQLBuilderHasConditionInterface $builder)
+    public function __construct(
+        EntityManagerInterface $em,
+        SQLBuilderHasConditionInterface $builder
+    )
     {
         parent::__construct($em, $builder);
     }

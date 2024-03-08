@@ -85,15 +85,13 @@ class QueryBuilder implements QueryBuilderInterface
     */
     public function update(string $table, array $attributes): Update
     {
-        $qb = $this->builder->update($table);
+        $qb = new Update($this->em, $this->builder->update($table));
 
         foreach ($attributes as $column => $value) {
             $qb->set($column, $value);
         }
 
-        dd($qb);
-
-        return new Update($this->em, $qb);
+        dd($qb->getSQL());
     }
 
 

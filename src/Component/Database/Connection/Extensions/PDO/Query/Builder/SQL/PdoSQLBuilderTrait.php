@@ -25,7 +25,7 @@ trait PdoSQLBuilderTrait
     */
     public function set($column, $value): static
     {
-        $this->set($column, ":$column");
+        $this->builder->set($column, ":$column");
         $this->setParameter($column, $value);
 
         return $this;
