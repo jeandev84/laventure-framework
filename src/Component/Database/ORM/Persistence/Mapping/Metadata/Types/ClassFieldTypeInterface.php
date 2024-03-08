@@ -106,4 +106,18 @@ interface ClassFieldTypeInterface
      * @return bool
     */
     public function isNull(): bool;
+
+
+
+
+
+
+
+
+    /**
+     * Determine if given field is attribute valid
+     *
+     * @return bool
+    */
+    public function isAttribute(): bool;
 }

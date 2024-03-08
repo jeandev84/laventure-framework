@@ -409,7 +409,7 @@ class ClassMetadata implements ClassMetadataInterface
 
             $fieldValues[$name] = new ClassField($name, $value, $attribute);
 
-            if (!$fieldType->isObject()) {
+            if ($fieldType->isAttribute()) {
                 $this->attributes[$attribute] = $resolver->resolve();
             }
         }

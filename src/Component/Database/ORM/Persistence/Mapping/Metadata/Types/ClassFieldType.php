@@ -129,4 +129,19 @@ class ClassFieldType implements ClassFieldTypeInterface
     {
         return ($this->isCollectionAssociate() || $this->isSingleAssociate());
     }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function isAttribute(): bool
+    {
+        if ($this->isDatetime()) {
+            return true;
+        }
+
+        return !$this->isObject();
+    }
 }
