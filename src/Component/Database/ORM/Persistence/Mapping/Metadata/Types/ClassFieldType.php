@@ -76,7 +76,13 @@ class ClassFieldType implements ClassFieldTypeInterface
     */
     public function isSingleAssociate(): bool
     {
-        return is_object($this->value) && !$this->isDatetime();
+        if ($this->isDatetime()) {
+            return false;
+        } elseif ($this->isCollectionAssociate()) {
+            return false;
+        }
+
+        return is_object($this->value);
     }
 
 

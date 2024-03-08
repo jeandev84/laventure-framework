@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Field;
@@ -16,14 +15,14 @@ namespace Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Field;
 class ClassField implements ClassFieldInterface
 {
     /**
-     * @param string $fieldName
-     * @param $fieldValue
-     * @param string $attributeName
+     * @param string $name
+     * @param $value
+     * @param string $attribute
     */
     public function __construct(
-        protected string $fieldName,
-        protected $fieldValue,
-        protected string $attributeName
+        protected string $name,
+        protected        $value,
+        protected string $attribute
     ) {
     }
 
@@ -34,7 +33,7 @@ class ClassField implements ClassFieldInterface
     */
     public function getName(): string
     {
-        return $this->fieldName;
+        return $this->name;
     }
 
 
@@ -44,7 +43,7 @@ class ClassField implements ClassFieldInterface
     */
     public function getValue(): mixed
     {
-        return $this->fieldValue;
+        return $this->value;
     }
 
 
@@ -54,6 +53,6 @@ class ClassField implements ClassFieldInterface
     */
     public function getAttribute(): string
     {
-        return $this->attributeName;
+        return $this->attribute;
     }
 }

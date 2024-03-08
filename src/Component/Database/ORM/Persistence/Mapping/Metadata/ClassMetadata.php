@@ -382,19 +382,6 @@ class ClassMetadata implements ClassMetadataInterface
 
 
 
-    /**
-     * @param $class
-     * @return void
-    */
-    private function mapValues($class): void
-    {
-        if (is_object($class)) {
-            $this->fields      = $this->mapFieldValues($class);
-            $this->identifiers = $this->getIdentifierValues($class);
-        }
-    }
-
-
 
 
     /**
@@ -487,5 +474,20 @@ class ClassMetadata implements ClassMetadataInterface
     private function resolveFieldName(string $field): string
     {
         return $this->camelCaseToUnderscore($field);
+    }
+
+
+
+
+    /**
+     * @param $class
+     * @return void
+     */
+    private function mapValues($class): void
+    {
+        if (is_object($class)) {
+            $this->fields      = $this->mapFieldValues($class);
+            $this->identifiers = $this->getIdentifierValues($class);
+        }
     }
 }
