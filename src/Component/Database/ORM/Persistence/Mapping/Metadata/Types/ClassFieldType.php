@@ -82,9 +82,30 @@ class ClassFieldType implements ClassFieldTypeInterface
             return false;
         }
 
+        return $this->isObject();
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function isObject(): bool
+    {
         return is_object($this->value);
     }
 
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function isBoolean(): bool
+    {
+        return is_bool($this->value);
+    }
 
 
 

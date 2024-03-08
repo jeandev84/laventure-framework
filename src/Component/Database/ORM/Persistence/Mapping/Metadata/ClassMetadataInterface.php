@@ -300,12 +300,26 @@ interface ClassMetadataInterface
 
 
 
+
+    /**
+     * Remove attributes
+     *
+     * @param array $names
+     * @return $this
+    */
+    public function withoutAttributes(array $names): static;
+
+
+
+
+
+
     /**
      * Returns all attributes without class identifier
      *
      * @return array
     */
-    public function getAttributesWithoutIdentifier(): array;
+    public function getPersistAttributes(): array;
 
 
 

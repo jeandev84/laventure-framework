@@ -107,7 +107,7 @@ class Persistent implements PersistentInterface
     ) {
         $this->em            = $em;
         $this->classMetadata = $em->getClassMetadata($entity);
-        $this->addAttributes($this->classMetadata);
+        $this->addPersistAttributes($this->classMetadata);
     }
 
 
@@ -192,6 +192,7 @@ class Persistent implements PersistentInterface
     */
     public function insert(): int
     {
+        dd($this->insert);
         $id = $this->createQueryBuilder()
                    ->insert($this->getTableName(), $this->insert)
                    ->getQuery()
@@ -201,6 +202,8 @@ class Persistent implements PersistentInterface
 
         return $id;
     }
+
+
 
 
 
@@ -359,8 +362,81 @@ class Persistent implements PersistentInterface
 
 
 
-    private function addAttributes(ClassMetadataInterface $classMetadata): static
-    {
 
+    /**
+     * @return array
+    */
+    public function getDelete(): array
+    {
+        return $this->delete;
+    }
+
+
+
+
+
+    /**
+     * @return array
+    */
+    public function getDeleted(): array
+    {
+        return $this->deleted;
+    }
+
+
+
+
+
+    /**
+     * @return array
+    */
+    public function getInsert(): array
+    {
+        return $this->insert;
+    }
+
+
+
+
+    /**
+     * @return array
+    */
+    public function getInserted(): array
+    {
+        return $this->inserted;
+    }
+
+
+
+    /**
+     * @return array
+    */
+    public function getUpdate(): array
+    {
+        return $this->update;
+    }
+
+
+    /**
+     * @return array
+    */
+    public function getUpdated(): array
+    {
+        return $this->updated;
+    }
+
+
+
+
+    /**
+     * @param ClassMetadataInterface $classMetadata
+     * @return $this
+    */
+    private function addPersistAttributes(ClassMetadataInterface $classMetadata): static
+    {
+        $this->addInsert($classMetadata->getPersistAttributes());
+        $this->addUpdate($classMetadata->getId(), $classMetadata->getPersistAttributes());
+
+        return $this;
     }
 }

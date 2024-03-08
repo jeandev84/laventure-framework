@@ -57,7 +57,7 @@ class ClassMetadata implements ClassMetadataInterface
     /**
      * @var array
     */
-    protected array $attributes = [];
+    public array $attributes = [];
 
 
     /**
@@ -404,17 +404,14 @@ class ClassMetadata implements ClassMetadataInterface
             $name         = $property->getName();
             $value        = $property->getValue($object);
             $attribute    = $this->resolveAttribute($name);
-            $resolver     = new AttributeValueResolver(
-                new ClassFieldType($attribute, $value)
-            );
+            $fieldType    = new ClassFieldType($attribute, $value);
+            $resolver     = new AttributeValueResolver($fieldType);
 
-            $fieldValues[$name] = new ClassField(
-                $name,
-                $property->getValue($object),
-                $attribute
-            );
+            $fieldValues[$name] = new ClassField($name, $value, $attribute);
 
-            $this->attributes[$attribute] = $resolver->resolve();
+            if (!$fieldType->isObject()) {
+                $this->attributes[$attribute] = $resolver->resolve();
+            }
         }
 
         return $fieldValues;
@@ -441,7 +438,8 @@ class ClassMetadata implements ClassMetadataInterface
             if ($this->matchIdentifier($name)) {
                 $identifierValues[$name] = new IdentifierField($name, $value, $attribute);
             } elseif ($fieldType->isSingleAssociate()) {
-                $field   =  new SingleAssociationField($name, $value, "{$attribute}_id");
+                $attribute = "{$attribute}_id";
+                $field     =  new SingleAssociationField($name, $value, $attribute);
                 $this->singleAssociates[$name] = $field;
                 $identifierValues[$name] = $field;
             } elseif ($fieldType->isCollectionAssociate()) {
@@ -488,6 +486,8 @@ class ClassMetadata implements ClassMetadataInterface
 
 
 
+
+
     /**
      * @inheritDoc
     */
@@ -504,7 +504,22 @@ class ClassMetadata implements ClassMetadataInterface
     /**
      * @inheritDoc
     */
-    public function getAttributesWithoutIdentifier(): array
+    public function withoutAttributes(array $names): static
+    {
+        foreach ($names as $name) {
+            $this->withoutAttribute($name);
+        }
+
+        return $this;
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getPersistAttributes(): array
     {
          $this->withoutAttribute($this->identifier);
          return $this->attributes;

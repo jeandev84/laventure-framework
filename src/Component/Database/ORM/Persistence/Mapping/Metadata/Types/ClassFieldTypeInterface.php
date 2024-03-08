@@ -31,6 +31,22 @@ interface ClassFieldTypeInterface
 
 
 
+    /**
+     * @return bool
+    */
+    public function isObject(): bool;
+
+
+
+
+    /**
+     * @return bool
+    */
+    public function isBoolean(): bool;
+
+
+
+
 
     /**
      * Determine if associated value is instance of DatetimeInterface
