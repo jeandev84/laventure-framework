@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\UnitOfWork\Factory;
@@ -19,10 +18,10 @@ use Laventure\Component\Database\ORM\Persistence\UnitOfWork\UnitOfWorkInterface;
 interface UnitOfWorkFactoryInterface
 {
     /**
-     * @param EntityManagerInterface|null $manager
+     * @param EntityManagerInterface $manager
      * @return UnitOfWorkInterface
     */
     public function createUnitOfWork(
-        EntityManagerInterface $manager = null
+        EntityManagerInterface $manager
     ): UnitOfWorkInterface;
 }

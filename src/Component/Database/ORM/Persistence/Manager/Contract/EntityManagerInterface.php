@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Manager\Contract;
@@ -7,7 +6,9 @@ namespace Laventure\Component\Database\ORM\Persistence\Manager\Contract;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\ORM\Persistence\Manager\Config\Configuration;
 use Laventure\Component\Database\ORM\Persistence\Manager\Event\EventManagerInterface;
+use Laventure\Component\Database\ORM\Persistence\Mapper\Data\DataMapperInterface;
 use Laventure\Component\Database\ORM\Persistence\Query\Builder\QueryBuilderInterface;
+use Laventure\Component\Database\ORM\Persistence\Storage\ObjectStorage;
 use Laventure\Component\Database\ORM\Persistence\UnitOfWork\UnitOfWorkInterface;
 use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
 use Laventure\Component\Database\Query\QueryInterface;
@@ -196,6 +197,30 @@ interface EntityManagerInterface extends ObjectManagerInterface
     public function getEventManager(): EventManagerInterface;
 
 
+
+
+
+
+
+    /**
+     * Returns data mapper
+     *
+     * @return DataMapperInterface
+    */
+    public function getDataMapper(): DataMapperInterface;
+
+
+
+
+
+
+
+    /**
+     * Returns storage
+     *
+     * @return ObjectStorage
+    */
+    public function getObjectStorage(): ObjectStorage;
 
 
 

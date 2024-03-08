@@ -42,17 +42,11 @@ class Persistent implements PersistentInterface
 
 
     /**
-     * @var IdentityMapperInterface|null
-    */
-    protected ?IdentityMapperInterface $identityMap = null;
-
-
-
-
-    /**
      * @var array
     */
     protected array $insert = [];
+
+
 
 
 
@@ -121,15 +115,7 @@ class Persistent implements PersistentInterface
     */
     public function find($id): mixed
     {
-        if ($this->hasIdentity($id)) {
-            return $this->loadFromIdentityMap($id);
-        }
-
-        $data = $this->findOneBy([$this->getIdentifier() => $id]);
-
-        $this->mapIdentity($id, $data);
-
-        return $data;
+        return $this->findOneBy([$this->getIdentifier() => $id]);
     }
 
 
@@ -151,6 +137,8 @@ class Persistent implements PersistentInterface
                     ->getQuery()
                     ->fetchOne();
     }
+
+
 
 
 
@@ -293,87 +281,6 @@ class Persistent implements PersistentInterface
 
 
 
-
-    /**
-     * @inheritDoc
-    */
-    public function getIdentityMap(): IdentityMapperInterface
-    {
-        if (!$this->identityMap) {
-            $this->identityMap = new IdentityMap();
-        }
-
-        return $this->identityMap;
-    }
-
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function mapIdentity($id, $data): static
-    {
-        $this->getIdentityMap()->map(
-            $this->getIdentityId($id),
-            $data
-        );
-
-        return $data;
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function hasIdentity($id): bool
-    {
-        $identityId = $this->getIdentityId($id);
-
-        return $this->getIdentityMap()->has($identityId);
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function loadFromIdentityMap($id): mixed
-    {
-        $identityId  = $this->getIdentityId($id);
-
-        return $this->getIdentityMap()->get($identityId);
-    }
-
-
-
-
-
-
-
-    /**
-     * @param $id
-     * @return string
-    */
-    public function getIdentityId($id): string
-    {
-        return $this->getIdentityMap()->generateId(
-            $this->getClassName(), $id
-        );
-    }
-
-
-
-
-
-
     /**
      * @inheritDoc
     */
@@ -447,6 +354,19 @@ class Persistent implements PersistentInterface
 
 
 
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getIdentity($recordId): string
+    {
+        return "{$this->getClassName()}.{$recordId}";
+    }
+
+
+
+    
 
     /**
      * @return array

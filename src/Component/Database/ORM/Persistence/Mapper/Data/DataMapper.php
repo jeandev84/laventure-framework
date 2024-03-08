@@ -11,7 +11,7 @@ use Laventure\Component\Database\ORM\Persistence\Manager\Events\PostUpdateEvent;
 use Laventure\Component\Database\ORM\Persistence\Manager\Events\PrePersistEvent;
 use Laventure\Component\Database\ORM\Persistence\Manager\Events\PreRemoveEvent;
 use Laventure\Component\Database\ORM\Persistence\Manager\Events\PreUpdateEvent;
-use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\ClassMetadata;
+use Laventure\Component\Database\ORM\Persistence\Mapper\Identity\IdentityMapperInterface;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\ClassMetadataInterface;
 use Laventure\Component\Database\ORM\Persistence\Persistent;
 
@@ -32,6 +32,8 @@ class DataMapper implements DataMapperInterface
     protected EntityManagerInterface $em;
 
 
+
+
     /**
      * @param EntityManagerInterface $em
     */
@@ -49,9 +51,14 @@ class DataMapper implements DataMapperInterface
     */
     public function find($id): ?object
     {
-        return $this->em->getUnitOfWork()->find($id);
-    }
+        $data = $this->getIdentityMap()->get($id);
 
+        if (!$data) {
+            return null;
+        }
+
+        return $data;
+    }
 
 
 
@@ -70,7 +77,7 @@ class DataMapper implements DataMapperInterface
 
         $this->dispatchEvent(new PostPersistEvent($object));
 
-        $persistent->mapIdentity($id, $object);
+        $this->mapIdentity($id, $object);
 
         return $id;
     }
@@ -100,10 +107,11 @@ class DataMapper implements DataMapperInterface
         $this->dispatchEvent(new PostUpdateEvent($object));
         $id = $this->getId($object);
 
-        $persistent->mapIdentity($id, $object);
+        $this->mapIdentity($id, $object);
 
         return $id;
     }
+
 
 
 
@@ -172,14 +180,15 @@ class DataMapper implements DataMapperInterface
 
 
 
+
     /**
-     * @param object $object
+     * @param string|object $class
      * @return Persistent
     */
-    public function getPersistent(object $object): Persistent
+    public function getPersistent(string|object $class): Persistent
     {
          return $this->em->getUnitOfWork()
-                         ->getPersistent($object);
+                         ->getPersistent($class);
     }
 
 
@@ -194,6 +203,9 @@ class DataMapper implements DataMapperInterface
     {
         return $this->em->getClassMetadata($object);
     }
+
+
+
 
 
 
@@ -220,5 +232,34 @@ class DataMapper implements DataMapperInterface
     public function isNew(object $object): bool
     {
         return $this->getClassMetadata($object)->isNew();
+    }
+
+
+
+
+    /**
+     * @return IdentityMapperInterface
+    */
+    public function getIdentityMap(): IdentityMapperInterface
+    {
+        return $this->em->getUnitOfWork()
+            ->getIdentityMap();
+    }
+
+
+
+
+
+    /**
+     * @param $id
+     * @param object $object
+     * @return $this
+    */
+    public function mapIdentity($id, object $object): static
+    {
+        $this->em->getUnitOfWork()
+                 ->mapIdentityFromObject($id, $object);
+
+        return $this;
     }
 }

@@ -73,6 +73,11 @@ interface PersistentInterface
     public function insert(): int;
 
 
+
+
+
+
+
     /**
      * @param array $attributes
      * @param $id
@@ -150,75 +155,6 @@ interface PersistentInterface
 
 
 
-    /**
-     * Returns identity mapper
-     *
-     * @return IdentityMapperInterface
-    */
-    public function getIdentityMap(): IdentityMapperInterface;
-
-
-
-
-
-
-    /**
-     * Generate Identity storage data
-     *
-     * @param $id
-     * @return string
-    */
-    public function getIdentityId($id): mixed;
-
-
-
-
-
-
-
-
-    /**
-     * Map identity
-     *
-     * @param $id
-     * @param $data
-     * @return $this
-    */
-    public function mapIdentity($id, $data): static;
-
-
-
-
-
-
-
-
-
-    /**
-     * Determine if given identity exist
-     *
-     * @param $id
-     * @return bool
-    */
-    public function hasIdentity($id): bool;
-
-
-
-
-
-
-    /**
-     * Load data from identity map
-     *
-     * @param $id
-     * @return mixed
-    */
-    public function loadFromIdentityMap($id): mixed;
-
-
-
-
-
 
     /**
      * Returns class name
@@ -250,4 +186,16 @@ interface PersistentInterface
      * @return string
     */
     public function getTableAlias(): string;
+
+
+    
+    
+    
+    /**
+     * Returns identity data
+     *
+     * @param $recordId
+     * @return mixed
+    */
+    public function getIdentity($recordId): mixed;
 }

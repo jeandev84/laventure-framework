@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\UnitOfWork;
@@ -9,12 +8,15 @@ use Laventure\Component\Database\ORM\Persistence\Manager\Event\EventManagerInter
 use Laventure\Component\Database\ORM\Persistence\Manager\Events\OnClearEvent;
 use Laventure\Component\Database\ORM\Persistence\Mapper\Data\DataMapper;
 use Laventure\Component\Database\ORM\Persistence\Mapper\Data\DataMapperInterface;
+use Laventure\Component\Database\ORM\Persistence\Mapper\Identity\IdentityMap;
+use Laventure\Component\Database\ORM\Persistence\Mapper\Identity\IdentityMapperInterface;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\ClassMetadata;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Factory\ClassMetadataFactoryInterface;
 use Laventure\Component\Database\ORM\Persistence\Persistent;
 use Laventure\Component\Database\ORM\Persistence\PersistentInterface;
 use Laventure\Component\Database\ORM\Persistence\Storage\ObjectStorage;
 use ReflectionException;
+use SplObjectStorage;
 
 /**
  * UnitOfWork
@@ -76,9 +78,9 @@ class UnitOfWork implements UnitOfWorkInterface
 
 
     /**
-     * @var string|null
+     * @var IdentityMapperInterface
     */
-    protected ?string $mappedClass = null;
+    protected IdentityMapperInterface $identityMap;
 
 
 
@@ -91,8 +93,20 @@ class UnitOfWork implements UnitOfWorkInterface
     {
         $this->em           = $em;
         $this->eventManager = $em->getEventManager();
-        $this->dataMapper   = new DataMapper($this->em);
-        $this->storage      = new ObjectStorage();
+        $this->dataMapper   = $em->getDataMapper();
+        $this->storage      = $em->getObjectStorage();
+        $this->identityMap  = new IdentityMap();
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function getPersistent($class): PersistentInterface
+    {
+        return new Persistent($this->em, $class);
     }
 
 
@@ -104,9 +118,37 @@ class UnitOfWork implements UnitOfWorkInterface
     /**
      * @inheritDoc
     */
-    public function mappedClass($class): static
+    public function getDataMapper(): DataMapperInterface
     {
-        $this->mappedClass = $class;
+        return $this->dataMapper;
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getIdentityMap(): IdentityMapperInterface
+    {
+        return $this->identityMap;
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function mapIdentityFromObject($id, object $object): static
+    {
+        $identityId = $this->getPersistent($object)->getIdentity($id);
+        
+        $this->identityMap->map($identityId, $object);
 
         return $this;
     }
@@ -118,14 +160,125 @@ class UnitOfWork implements UnitOfWorkInterface
     /**
      * @inheritDoc
     */
-    public function find(int $id): ?object
+    public function loadFromIdentityMap($id): mixed
     {
-        if (!$this->mappedClass) {
-            return null;
+
+    }
+
+
+
+
+
+
+    /**
+     * @inheritdoc
+     */
+    public function registerObject(object $object, $state): static
+    {
+        $this->storage->attach($object, $state);
+
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+     * @throws ReflectionException
+     */
+    public function isNew(object $object): bool
+    {
+        return ClassMetadata::create($object)->isNew();
+    }
+
+    
+    
+    
+
+
+
+    /**
+     * @inheritDoc
+     * @throws ReflectionException
+     */
+    public function registerPersist(object $object): static
+    {
+        // add states
+        if ($this->isNew($object)) {
+            $this->registerNew($object);
+        } else {
+            $this->registerManaged($object);
         }
 
-        return $this->getPersistent($this->mappedClass)
-                    ->find($id);
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function registerNew(object $object): static
+    {
+        return $this->registerObject($object, self::STATE_NEW);
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function registerManaged(object $object): static
+    {
+        return $this->registerObject($object, self::STATE_MANAGED);
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function registerDetached(object $object): static
+    {
+        return $this->registerObject($object, self::STATE_DETACHED);
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function registerRemoved(object $object): static
+    {
+        // subscribe persist events
+        $this->eventManager->subscribeRemoveEvents();
+
+        // add state
+        return $this->registerObject($object, self::STATE_REMOVED);
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function find($id): ?object
+    {
+        return $this->getDataMapper()->find($id);
     }
 
 
@@ -136,7 +289,7 @@ class UnitOfWork implements UnitOfWorkInterface
     /**
      * @inheritDoc
      * @throws ReflectionException
-     */
+    */
     public function persist(object $object): static
     {
         // subscribe persist events
@@ -144,6 +297,8 @@ class UnitOfWork implements UnitOfWorkInterface
 
         return $this->registerPersist($object);
     }
+
+
 
 
 
@@ -164,7 +319,9 @@ class UnitOfWork implements UnitOfWorkInterface
     */
     public function refresh(object $object): static
     {
-        //TODO implements
+        $this->attach($object);
+
+        return $this;
     }
 
 
@@ -221,8 +378,6 @@ class UnitOfWork implements UnitOfWorkInterface
 
 
 
-
-
     /**
      * @inheritDoc
     */
@@ -259,130 +414,5 @@ class UnitOfWork implements UnitOfWorkInterface
         );
 
         $this->storage->clear();
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function getPersistent($class): PersistentInterface
-    {
-        return new Persistent($this->em, $class);
-    }
-
-
-
-
-
-
-    /**
-     * @inheritdoc
-     */
-    public function registerObject(object $object, $state): static
-    {
-        $this->storage->attach($object, $state);
-
-        return $this;
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-     * @throws ReflectionException
-    */
-    public function isNew(object $object): bool
-    {
-        return ClassMetadata::create($object)->isNew();
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-     * @throws ReflectionException
-    */
-    public function registerPersist(object $object): static
-    {
-        // add states
-        if ($this->isNew($object)) {
-            $this->registerNew($object);
-        } else {
-            $this->registerManaged($object);
-        }
-
-        return $this;
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function registerNew(object $object): static
-    {
-        return $this->registerObject($object, self::STATE_NEW);
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function registerManaged(object $object): static
-    {
-        return $this->registerObject($object, self::STATE_MANAGED);
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function registerDetached(object $object): static
-    {
-        return $this->registerObject($object, self::STATE_DETACHED);
-    }
-
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function registerRemoved(object $object): static
-    {
-        // subscribe persist events
-        $this->eventManager->subscribeRemoveEvents();
-
-        // add state
-        return $this->registerObject($object, self::STATE_REMOVED);
-    }
-
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function getDataMapper(): DataMapperInterface
-    {
-        return $this->dataMapper;
     }
 }

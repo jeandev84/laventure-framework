@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\ORM\Persistence\UnitOfWork;
 
 use Laventure\Component\Database\ORM\Persistence\Mapper\Data\DataMapperInterface;
+use Laventure\Component\Database\ORM\Persistence\Mapper\Identity\IdentityMapperInterface;
 use Laventure\Component\Database\ORM\Persistence\PersistentInterface;
 
 /**
@@ -96,27 +97,15 @@ interface UnitOfWorkInterface
 
 
 
-    /**
-     * Set mapped class
-     *
-     * @param $class
-     * @return $this
-    */
-    public function mappedClass($class): static;
-
-
-
-
 
 
     /**
-     * Find storage object
+     * Find data from identity map
      *
-     * @param int $id
-     *
-     * @return object|null
+     * @param $id
+     * @return mixed
     */
-    public function find(int $id): ?object;
+    public function find($id): mixed;
 
 
 
@@ -292,4 +281,47 @@ interface UnitOfWorkInterface
      * @return DataMapperInterface
     */
     public function getDataMapper(): DataMapperInterface;
+
+
+
+
+
+
+
+
+
+    /**
+     * Returns identity mapper
+     *
+     * @return IdentityMapperInterface
+     */
+    public function getIdentityMap(): IdentityMapperInterface;
+
+
+
+
+
+
+    /**
+     * Map identity
+     *
+     * @param $id
+     * @param object $object
+     * @return $this
+    */
+    public function mapIdentityFromObject($id, object $object): mixed;
+
+
+
+
+
+
+
+    /**
+     * Load data from identity map
+     *
+     * @param $id
+     * @return mixed
+    */
+    public function loadFromIdentityMap($id): mixed;
 }

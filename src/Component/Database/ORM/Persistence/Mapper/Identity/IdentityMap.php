@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Mapper\Identity;
@@ -18,20 +17,13 @@ use SplObjectStorage;
 */
 class IdentityMap implements IdentityMapperInterface
 {
-    /**
-     * @var SplObjectStorage
-     */
-    protected SplObjectStorage $storage;
-
-
 
     /**
-     * @param SplObjectStorage|null $storage
+     * @var array
     */
-    public function __construct(SplObjectStorage $storage = null)
-    {
-        $this->storage = $storage ?: new ObjectStorage();
-    }
+    protected array $identity = [];
+
+
 
 
 
@@ -40,10 +32,12 @@ class IdentityMap implements IdentityMapperInterface
     */
     public function map($id, $data): static
     {
-        $this->storage->attach($data, $id);
+        $this->identity[$id] = $data;
 
         return $this;
     }
+
+
 
 
 
@@ -52,8 +46,9 @@ class IdentityMap implements IdentityMapperInterface
     */
     public function has($id): bool
     {
-        return $this->storage->contains($id);
+        return isset($this->identity[$id]);
     }
+
 
 
 
@@ -62,8 +57,9 @@ class IdentityMap implements IdentityMapperInterface
     */
     public function get($id): mixed
     {
-        return $this->storage[$id] ?? null;
+        return $this->identity[$id] ?? null;
     }
+
 
 
 
@@ -73,9 +69,9 @@ class IdentityMap implements IdentityMapperInterface
     /**
      * @inheritDoc
     */
-    public function generateId($class, $id): string
+    public function all(): array
     {
-        return "{$class}.{$id}";
+        return $this->identity;
     }
 
 
@@ -85,8 +81,10 @@ class IdentityMap implements IdentityMapperInterface
     /**
      * @inheritDoc
     */
-    public function all(): SplObjectStorage
+    public function remove($id): static
     {
-        return $this->storage;
+        unset($this->identity);
+
+        return $this;
     }
 }

@@ -1,10 +1,8 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Mapper\Identity;
 
-use SplObjectStorage;
 
 /**
  * IdentityMapperInterface
@@ -43,6 +41,22 @@ interface IdentityMapperInterface
 
 
     /**
+     * Remove Identity
+     *
+     * @param $id
+     * @return mixed
+    */
+    public function remove($id): mixed;
+
+
+
+
+
+
+
+
+
+    /**
      * Returns data by given ID
      *
      * @param $id
@@ -57,22 +71,7 @@ interface IdentityMapperInterface
 
 
     /**
-     * @return SplObjectStorage
-    */
-    public function all(): SplObjectStorage;
-
-
-
-
-
-
-
-    /**
-     * Returns identity ID
-     *
-     * @param $class
-     * @param $id
      * @return mixed
     */
-    public function generateId($class, $id): mixed;
+    public function all(): mixed;
 }
