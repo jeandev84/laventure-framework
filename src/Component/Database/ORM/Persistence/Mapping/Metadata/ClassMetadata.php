@@ -198,10 +198,9 @@ class ClassMetadata implements ClassMetadataInterface
     */
     public function getFieldNames(): array
     {
-        return array_map(function (ReflectionProperty $property) {
-            return $property->getName();
-        }, $this->getProperties());
+        return array_keys($this->fieldValues);
     }
+
 
 
 
