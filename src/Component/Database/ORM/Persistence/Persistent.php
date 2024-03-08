@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence;
@@ -116,20 +115,20 @@ class Persistent implements PersistentInterface
 
 
 
+
     /**
      * @inheritDoc
     */
     public function find($id): mixed
     {
-        $identityId  = $this->getIdentityId($id);
-        $identityMap = $this->getIdentityMap();
-
-        if ($identityMap->has($identityId)) {
-            return $identityMap->get($identityId);
+        if ($this->hasIdentity($id)) {
+            return $this->loadFromIdentityMap($id);
         }
 
         $data = $this->findOneBy([$this->getIdentifier() => $id]);
-        $identityMap->map($identityId, $data);
+
+        $this->mapIdentity($id, $data);
+
         return $data;
     }
 
@@ -311,6 +310,70 @@ class Persistent implements PersistentInterface
 
 
 
+
+    /**
+     * @inheritDoc
+    */
+    public function mapIdentity($id, $data): static
+    {
+        $this->getIdentityMap()->map(
+            $this->getIdentityId($id),
+            $data
+        );
+
+        return $data;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function hasIdentity($id): bool
+    {
+        $identityId = $this->getIdentityId($id);
+
+        return $this->getIdentityMap()->has($identityId);
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function loadFromIdentityMap($id): mixed
+    {
+        $identityId  = $this->getIdentityId($id);
+
+        return $this->getIdentityMap()->get($identityId);
+    }
+
+
+
+
+
+
+
+    /**
+     * @param $id
+     * @return string
+    */
+    public function getIdentityId($id): string
+    {
+        return $this->getIdentityMap()->generateId(
+            $this->getClassName(), $id
+        );
+    }
+
+
+
+
+
+
     /**
      * @inheritDoc
     */
@@ -344,6 +407,8 @@ class Persistent implements PersistentInterface
 
 
 
+
+
     /**
      * @inheritDoc
     */
@@ -367,19 +432,6 @@ class Persistent implements PersistentInterface
     }
 
 
-
-
-
-    /**
-     * @param $id
-     * @return string
-    */
-    public function getIdentityId($id): string
-    {
-        return $this->identityMap->getIdentityId(
-            $this->getClassName(), $id
-        );
-    }
 
 
 

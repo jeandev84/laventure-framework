@@ -175,6 +175,51 @@ interface PersistentInterface
 
 
 
+
+
+    /**
+     * Map identity
+     *
+     * @param $id
+     * @param $data
+     * @return $this
+    */
+    public function mapIdentity($id, $data): static;
+
+
+
+
+
+
+
+
+
+    /**
+     * Determine if given identity exist
+     *
+     * @param $id
+     * @return bool
+    */
+    public function hasIdentity($id): bool;
+
+
+
+
+
+
+    /**
+     * Load data from identity map
+     *
+     * @param $id
+     * @return mixed
+    */
+    public function loadFromIdentityMap($id): mixed;
+
+
+
+
+
+
     /**
      * Returns class name
      *

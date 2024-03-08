@@ -74,5 +74,5 @@ interface IdentityMapperInterface
      * @param $id
      * @return mixed
     */
-    public function getIdentityId($class, $id): mixed;
+    public function generateId($class, $id): mixed;
 }

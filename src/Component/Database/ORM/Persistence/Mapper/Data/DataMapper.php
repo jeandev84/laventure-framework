@@ -70,7 +70,7 @@ class DataMapper implements DataMapperInterface
 
         $this->dispatchEvent(new PostPersistEvent($object));
 
-        $persistent->getIdentityMap()->map($id, $object);
+        $persistent->mapIdentity($id, $object);
 
         return $id;
     }
@@ -100,7 +100,7 @@ class DataMapper implements DataMapperInterface
         $this->dispatchEvent(new PostUpdateEvent($object));
         $id = $this->getId($object);
 
-        $persistent->getIdentityMap()->map($id, $object);
+        $persistent->mapIdentity($id, $object);
 
         return $id;
     }

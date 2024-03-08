@@ -73,7 +73,7 @@ class IdentityMap implements IdentityMapperInterface
     /**
      * @inheritDoc
     */
-    public function getIdentityId($class, $id): string
+    public function generateId($class, $id): string
     {
         return "{$class}.{$id}";
     }
