@@ -64,7 +64,7 @@ class ConsoleOutput implements OutputInterface
     */
     public function getMessagesAsString(): string
     {
-        return join($this->messages).PHP_EOL;
+        return join($this->messages);
     }
 
 
