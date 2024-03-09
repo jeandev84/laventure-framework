@@ -35,19 +35,6 @@ class ConsoleInputArgv extends InputArgv
 
 
 
-    /**
-     * @inheritDoc
-    */
-    public function parseTokens(array $tokens): void
-    {
-        foreach ($tokens as $token) {
-            $this->parseToken($token);
-        }
-    }
-
-
-
-
 
 
     /**
@@ -59,7 +46,7 @@ class ConsoleInputArgv extends InputArgv
      * @param $token
      * @return void
     */
-    private function parseToken($token): void
+    protected function parseToken($token): void
     {
         if (preg_match("/^(.+)=(.+)$/", $token)) {
             if (preg_match('#^--([^=]+)=(.*)$#i', $token, $options)) {

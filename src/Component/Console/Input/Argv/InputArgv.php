@@ -78,6 +78,8 @@ abstract class InputArgv implements InputInterface
 
 
 
+
+
     /**
      * @param $argument
      * @return $this
@@ -100,16 +102,6 @@ abstract class InputArgv implements InputInterface
         return $this->firstArgument;
     }
 
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function getTokens(): array
-    {
-        return $this->tokens;
-    }
 
 
 
@@ -136,7 +128,8 @@ abstract class InputArgv implements InputInterface
     public function getArgument($name = null): mixed
     {
         if (!$name) {
-            return $this->arguments[0] ?? $name;
+            // $this->arguments[0]
+            return array_shift($this->arguments);
         }
 
         return $this->arguments[$name];
@@ -170,6 +163,8 @@ abstract class InputArgv implements InputInterface
 
         return $this;
     }
+
+
 
 
 
@@ -255,17 +250,6 @@ abstract class InputArgv implements InputInterface
 
 
 
-    /**
-     * @param $name
-     * @return bool
-    */
-    public function hasFlag($name): bool
-    {
-        return $this->getOption($name) === $name;
-    }
-
-
-
 
 
 
@@ -293,10 +277,53 @@ abstract class InputArgv implements InputInterface
 
 
 
+
+    /**
+     * @inheritDoc
+     */
+    public function __toString()
+    {
+        unset($this->tokens[0]);
+
+        return join(' ', $this->tokens);
+    }
+
+
+
+
+
     /**
      * @inheritDoc
     */
-    public function validate(InputCollectionInterface $inputs): mixed
+    public function parseTokens(array $tokens): void
+    {
+        foreach ($tokens as $token) {
+            $this->parseToken($token);
+        }
+
+        dump($this, __METHOD__);
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getTokens(): array
+    {
+        return $this->tokens;
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function validate(InputCollectionInterface $inputs): bool
     {
         return $this->validateArguments($inputs->getArguments()) ||
                $this->validateOptions($inputs->getOptions());
@@ -310,33 +337,33 @@ abstract class InputArgv implements InputInterface
      * @param array $arguments
      * @return bool
     */
-    protected function validateArguments(array $arguments): bool
+    private function validateArguments(array $arguments): bool
     {
-
+        return false;
     }
+
+
 
 
 
     /**
      * @param array $options
      * @return bool
-     */
-    protected function validateOptions(array $options): bool
+    */
+    private function validateOptions(array $options): bool
     {
-
+        return false;
     }
+
+
 
 
 
 
 
     /**
-     * @inheritDoc
-     */
-    public function __toString()
-    {
-        unset($this->tokens[0]);
-
-        return join(' ', $this->tokens);
-    }
+     * @param $token
+     * @return void
+    */
+    abstract protected function parseToken($token): void;
 }
