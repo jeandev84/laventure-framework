@@ -57,8 +57,9 @@ abstract class InputArgv implements InputInterface
 
     /**
      * @var array
-    */
-    protected $shortcuts = [];
+     */
+    protected array $shortcuts = [];
+
 
 
 
@@ -116,6 +117,21 @@ abstract class InputArgv implements InputInterface
 
 
     /**
+     * @param $name
+     * @param $value
+     * @return $this
+    */
+    public function setArgument($name, $value): static
+    {
+         $this->arguments[$name] = $value;
+
+         return $this;
+    }
+
+
+
+
+    /**
      * @inheritDoc
     */
     public function getArgument($name = null): mixed
@@ -142,6 +158,22 @@ abstract class InputArgv implements InputInterface
 
 
 
+
+
+
+    /**
+     * @param $name
+     * @return $this
+    */
+    public function addArgument($name): static
+    {
+        $this->arguments[] = $name;
+
+        return $this;
+    }
+
+
+
     /**
      * @inheritDoc
     */
@@ -149,6 +181,24 @@ abstract class InputArgv implements InputInterface
     {
         return $this->arguments;
     }
+
+
+
+
+
+
+    /**
+     * @param $name
+     * @param $value
+     * @return $this
+    */
+    public function setOption($name, $value): static
+    {
+        $this->options[$name] = $value;
+
+        return $this;
+    }
+
 
 
 
@@ -177,6 +227,8 @@ abstract class InputArgv implements InputInterface
 
 
 
+
+
     /**
      * @inheritDoc
     */
@@ -184,6 +236,35 @@ abstract class InputArgv implements InputInterface
     {
         return $this->options;
     }
+
+
+
+
+
+    /**
+     * @param $name
+     * @param $value
+     * @return static
+     */
+    public function shortcutOption($name, $value): static
+    {
+        $this->shortcuts[$name] = $value;
+
+        return $this;
+    }
+
+
+
+
+    /**
+     * @param $name
+     * @return bool
+    */
+    public function hasFlag($name): bool
+    {
+        return $this->getOption($name) === $name;
+    }
+
 
 
 
@@ -244,4 +325,16 @@ abstract class InputArgv implements InputInterface
     {
         return false;
     }
+
+
+
+     /**
+      * @inheritDoc
+     */
+     public function __toString()
+     {
+         unset($this->tokens[0]);
+
+         return join(' ', $this->tokens);
+     }
 }

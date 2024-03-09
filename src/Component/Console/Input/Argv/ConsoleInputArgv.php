@@ -1,10 +1,8 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Console\Input\Argv;
 
-use Laventure\Component\Console\Input\Collection\InputCollectionInterface;
 
 /**
  * ConsoleInputArgv
@@ -31,9 +29,9 @@ class ConsoleInputArgv extends InputArgv
     /**
      * @inheritDoc
     */
-    public function parseTokens(array $tokens): void
+    public function count(): int
     {
-
+        return $_SERVER['argc'] ?? 0;
     }
 
 
@@ -41,8 +39,41 @@ class ConsoleInputArgv extends InputArgv
     /**
      * @inheritDoc
     */
-    public function count(): int
+    public function parseTokens(array $tokens): void
     {
-        return $_SERVER['argc'] ?? 0;
+        foreach ($tokens as $token) {
+            $this->parseToken($token);
+        }
+    }
+
+
+
+
+
+
+    /**
+     * Example:
+     * $ php console database:migrations:migrate create_new_users_table -table=users --refresh=users -t --test --foo
+     *
+     * @param $token
+     * @return void
+    */
+    private function parseToken($token): void
+    {
+        if (preg_match("/^(.+)=(.+)$/", $token)) {
+            if (preg_match('#^--([^=]+)=(.*)$#i', $token, $options)) {
+                $this->setOption($options[1], $options[2]);
+            } elseif (preg_match('#^-([^=]+)=(.*)$#i', $token, $options)) {
+                $this->shortcutOption($options[1], $options[2]);
+            } else {
+                $this->setArgument($options[1], $options[2]);
+            }
+        } elseif (preg_match('#^--([^=]+)$#i', $token,$flags)) {
+            $this->setOption($flags[1], true);
+        } elseif (preg_match('#^-([^=]+)$#i', $token,$flags)) {
+            $this->shortcutOption($flags[1], true);
+        } else {
+            $this->addArgument($token);
+        }
     }
 }

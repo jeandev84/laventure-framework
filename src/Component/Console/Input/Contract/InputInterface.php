@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Console\Input\Contract;
 
 use Laventure\Component\Console\Input\Collection\InputCollectionInterface;
+use Stringable;
 
 /**
  * InputInterface
@@ -15,7 +16,7 @@ use Laventure\Component\Console\Input\Collection\InputCollectionInterface;
  *
  * @package  Laventure\Component\Console\InputArgv\Contract
 */
-interface InputInterface
+interface InputInterface extends Stringable
 {
     /**
      * Parse input tokens

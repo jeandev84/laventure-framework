@@ -213,7 +213,9 @@ class Command implements CommandInterface
         string $default = null,
         array $rules = []
     ): static {
-        $this->inputs->addArgument(new InputArgument($name, $description, $default, $rules));
+        $this->inputs->addArgument(
+            new InputArgument($name, $description, $default, $rules)
+        );
 
         return $this;
     }
@@ -233,7 +235,9 @@ class Command implements CommandInterface
         $default = null,
         array $rules = []
     ): static {
-        $this->inputs->addOption(new InputOption($name, $description, $shortcut, $default, $rules));
+        $this->inputs->addOption(
+            new InputOption($name, $description, $shortcut, $default, $rules)
+        );
 
         return $this;
     }
