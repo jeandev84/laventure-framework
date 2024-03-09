@@ -128,7 +128,7 @@ abstract class InputArgv implements InputInterface
     */
     public function getArgument($name = null): mixed
     {
-        if (!$name) { $name = 0; }
+        $name = $name ?: 0;
 
         if (!$this->hasArgument($name)) {
             throw new InputArgumentException("Invalid argument ($name) parsed.");
