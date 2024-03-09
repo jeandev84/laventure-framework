@@ -105,8 +105,6 @@ class UnitOfWork implements UnitOfWorkInterface
 
 
 
-
-
     /**
      * @inheritDoc
     */
@@ -141,7 +139,6 @@ class UnitOfWork implements UnitOfWorkInterface
 
         return $this->identityMap;
     }
-
 
 
 
@@ -246,6 +243,18 @@ class UnitOfWork implements UnitOfWorkInterface
         return $this->registerObject($object, self::STATE_REMOVED);
     }
 
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function find($class, $id): mixed
+    {
+        return $this->getPersistent($class)->find($id);
+    }
 
 
 

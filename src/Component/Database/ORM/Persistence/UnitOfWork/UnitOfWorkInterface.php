@@ -99,6 +99,19 @@ interface UnitOfWorkInterface
 
 
 
+    /**
+     * Find record by given ID
+     *
+     * @param $class
+     * @param $id
+     * @return mixed
+    */
+    public function find($class, $id): mixed;
+
+
+
+
+
 
     /**
      * Register state NEW or UPDATE

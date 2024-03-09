@@ -183,8 +183,7 @@ class DataMapper extends ObjectMapper
     */
     public function getPersistent(string|object $class): Persistent
     {
-         return $this->em->getUnitOfWork()
-                         ->getPersistent($class);
+         return $this->em->getUnitOfWork()->getPersistent($class);
     }
 
 
@@ -199,9 +198,6 @@ class DataMapper extends ObjectMapper
     {
         return $this->em->getClassMetadata($object);
     }
-
-
-
 
 
 
