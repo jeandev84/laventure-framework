@@ -1,0 +1,99 @@
+<?php
+declare(strict_types=1);
+
+namespace Laventure\Component\Database\ORM\Persistence\Manager\Fixtures;
+
+use Laventure\Component\Database\ORM\Persistence\Manager\Contract\EntityManagerInterface;
+use Laventure\Component\Database\ORM\Persistence\Manager\Fixtures\Contract\FixtureInterface;
+use Laventure\Component\Database\ORM\Persistence\Manager\Fixtures\Contract\FixtureManagerInterface;
+
+
+/**
+ * FixtureManager
+ *
+ * @author Jean-Claude <jeanyao@ymail.com>
+ *
+ * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
+ *
+ * @package  Laventure\Component\Database\ORM\Persistence\Manager\Fixtures
+*/
+class FixtureManager implements FixtureManagerInterface
+{
+
+    /**
+     * Store fixtures
+     *
+     * @var FixtureInterface[]
+    */
+    protected $fixtures = [];
+
+
+
+
+    /**
+     * @param EntityManagerInterface $em
+    */
+    public function __construct(protected EntityManagerInterface $em)
+    {
+    }
+
+
+
+
+
+    /**
+     * @param FixtureInterface $fixture
+     * @return $this
+    */
+    public function addFixture(FixtureInterface $fixture): static
+    {
+        $this->fixtures[] = $fixture;
+
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @param FixtureInterface[] $fixtures
+     * @return $this
+    */
+    public function addFixtures(array $fixtures): static
+    {
+        foreach ($fixtures as $fixture) {
+            $this->addFixture($fixture);
+        }
+
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getFixtures(): array
+    {
+        return $this->fixtures;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function load(): bool
+    {
+       foreach ($this->fixtures as $fixture) {
+           $fixture->load($this->em);
+       }
+
+       return true;
+    }
+}
