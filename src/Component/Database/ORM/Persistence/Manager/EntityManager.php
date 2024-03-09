@@ -466,7 +466,7 @@ class EntityManager implements EntityManagerInterface
     */
     public function find(string $classname, $id): mixed
     {
-        return $this->getRepository($classname)->find($id);
+        return $this->unitOfWork->find($classname, $id);
     }
 
 
