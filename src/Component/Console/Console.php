@@ -134,7 +134,7 @@ class Console implements ConsoleInterface
     public function getCommand($name): CommandInterface
     {
         $defaultCommand = $this->getListCommand();
-        $matchNames     = ($defaultCommand->getName() === $name);
+        $matchNames     = ($name === $defaultCommand->getName());
 
         if (!$this->hasCommand($name) || $matchNames) {
             return $defaultCommand;
