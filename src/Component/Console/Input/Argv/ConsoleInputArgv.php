@@ -53,7 +53,9 @@ class ConsoleInputArgv extends InputArgv
 
     /**
      * Example:
-     * $ php console database:migrations:migrate create_new_users_table -table=users --refresh=users -t --test --foo
+     * $ php console
+     *       database:migrations:migrate
+     *       create_new_users_table -table=users --refresh=users -t --test --foo
      *
      * @param $token
      * @return void
