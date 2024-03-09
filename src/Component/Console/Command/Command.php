@@ -271,18 +271,24 @@ abstract class Command implements CommandInterface
     */
     public function run(InputInterface $input, OutputInterface $output): int
     {
+        // call help command
+
+
+        // validate inputs
         $input->validate($this->inputs);
 
+
+        // execute command
         $status = $this->execute($input, $output);
 
+        // make sure has valid status
         if ($this->hasValidStatus($status)) {
-            throw new InvalidCommandStatusException($status, get_called_class() . "::execute", $this->availableStatus);
+            throw new InvalidCommandStatusException($this, $status, "execute");
         }
 
+        // return status
         return $status;
     }
-
-
 
 
 
@@ -295,6 +301,19 @@ abstract class Command implements CommandInterface
     public function getInputs(): InputCollectionInterface
     {
         return $this->inputs;
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getAvailableStatus(): array
+    {
+        return $this->availableStatus;
     }
 
 

@@ -154,6 +154,19 @@ interface CommandInterface extends ExecutableCommandInterface
 
 
     /**
+     * Returns available status
+     *
+     * @return array
+    */
+    public function getAvailableStatus(): array;
+
+
+
+
+
+
+
+    /**
      * Run command and execute, terminate execution
      *
      * @param InputInterface $input

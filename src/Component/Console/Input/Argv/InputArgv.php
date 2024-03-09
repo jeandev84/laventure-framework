@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Console\Input\Argv;
 
-use Laventure\Component\Console\Input\Argument\InputArgumentException;
+use Laventure\Component\Console\Input\Argument\Exceptions\InputArgumentException;
+use Laventure\Component\Console\Input\Argument\Exceptions\RequiredArgumentException;
 use Laventure\Component\Console\Input\Argument\InputArgumentInterface;
 use Laventure\Component\Console\Input\Collection\InputCollectionInterface;
 use Laventure\Component\Console\Input\Contract\InputInterface;
 use Laventure\Component\Console\Input\Exception\InputException;
+use Laventure\Component\Console\Input\Option\Exceptions\RequiredOptionException;
 use Laventure\Component\Console\Input\Option\InputOptionInterface;
 
 /**
@@ -306,6 +308,29 @@ abstract class InputArgv implements InputInterface
 
 
 
+    /**
+     * @param $name
+     * @return bool
+    */
+    public function hasShortcut($name): bool
+    {
+        return isset($this->shortcuts[$name]);
+    }
+
+
+
+
+    /**
+     * @param $name
+     * @return string|null
+    */
+    public function getShortcut($name): ?string
+    {
+        return $this->shortcuts[$name] ?? null;
+    }
+
+
+
 
 
     /**
@@ -319,9 +344,10 @@ abstract class InputArgv implements InputInterface
 
 
 
-
     /**
      * @inheritDoc
+     * @throws RequiredArgumentException
+     * @throws InputArgumentException
     */
     public function validate(InputCollectionInterface $inputs): bool
     {
@@ -376,6 +402,8 @@ abstract class InputArgv implements InputInterface
     /**
      * @param InputArgumentInterface[] $arguments
      * @return bool
+     * @throws InputArgumentException
+     * @throws RequiredArgumentException
     */
     protected function validateArguments(array $arguments): bool
     {
@@ -383,7 +411,6 @@ abstract class InputArgv implements InputInterface
             foreach ($arguments as $argument) {
                 $this->validateArgument($argument);
             }
-            dump($arguments);
         }
 
         return true;
@@ -392,13 +419,21 @@ abstract class InputArgv implements InputInterface
 
 
 
-
     /**
      * @param InputArgumentInterface $argument
+     * @throws InputArgumentException
+     * @throws RequiredArgumentException
     */
     protected function validateArgument(InputArgumentInterface $argument): void
     {
-          dd($argument);
+          $default = $argument->getDefault();
+          $name    = $argument->getName();
+
+          if ($argument->isRequired() && !$this->hasArgument($name)) {
+               throw new RequiredArgumentException($name);
+          } elseif ($argument->isOptional()) {
+              $this->setArgument($name, $default ?: $this->getArgument($name));
+          }
     }
 
 
@@ -407,6 +442,7 @@ abstract class InputArgv implements InputInterface
     /**
      * @param InputOptionInterface[] $options
      * @return bool
+     * @throws RequiredArgumentException
     */
     protected function validateOptions(array $options): bool
     {
@@ -414,7 +450,6 @@ abstract class InputArgv implements InputInterface
             foreach ($options as $option) {
                $this->validateOption($option);
             }
-            dump($options);
         }
 
         return true;
@@ -426,10 +461,23 @@ abstract class InputArgv implements InputInterface
     /**
      * @param InputOptionInterface $option
      * @return void
+     * @throws RequiredOptionException
     */
     protected function validateOption(InputOptionInterface $option): void
     {
-          dump($option);
+        $default  = $option->getDefault();
+        $name     = $option->getName();
+        $shortcut = $option->getShortCut();
+
+        if($shortcut && $this->hasShortcut($shortcut)) {
+            $name = $shortcut;
+        }
+
+        if ($option->isRequired() && !$this->hasOption($name)) {
+            throw new RequiredOptionException($name);
+        } elseif ($option->isOptional()) {
+            $this->setOption($name, $default ?: $this->getOption($name));
+        }
     }
 
 

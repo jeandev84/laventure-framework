@@ -49,15 +49,7 @@ class ConsoleInputArgv extends InputArgv
     protected function parseToken($token): void
     {
         if (preg_match("/^(.+)=(.+)$/", $token)) {
-            if (preg_match('#^--([^=]+)=(.*)$#i', $token, $options)) {
-                $this->setOption($options[1], $options[2]);
-            } elseif (preg_match('#^-([^=]+)=(.*)$#i', $token, $options)) {
-                $this->shortcutOption($options[1], $options[2]);
-                $this->setOption($options[1], $options[2]);
-            } else {
-                list($name, $value) = explode('=', $token, 2);
-                $this->setArgument($name, $value);
-            }
+           $this->parseTokenAttributes($token);
         } elseif (preg_match('#^--([^=]+)$#i', $token, $flags)) {
             $this->setOption($flags[1], true);
         } elseif (preg_match('#^-([^=]+)$#i', $token, $flags)) {
@@ -65,6 +57,25 @@ class ConsoleInputArgv extends InputArgv
             $this->setOption($flags[1], true);
         } else {
             $this->addArgument($token);
+        }
+    }
+
+
+
+    /**
+     * @param $token
+     * @return void
+    */
+    private function parseTokenAttributes($token): void
+    {
+        if (preg_match('#^--([^=]+)=(.*)$#i', $token, $options)) {
+            $this->setOption($options[1], $options[2]);
+        } elseif (preg_match('#^-([^=]+)=(.*)$#i', $token, $options)) {
+            $this->shortcutOption($options[1], $options[2]);
+            $this->setOption($options[1], $options[2]);
+        } else {
+            list($name, $value) = explode('=', $token, 2);
+            $this->setArgument($name, $value);
         }
     }
 }
