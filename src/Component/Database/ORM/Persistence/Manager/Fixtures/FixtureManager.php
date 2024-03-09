@@ -27,6 +27,11 @@ class FixtureManager implements FixtureManagerInterface
 
 
 
+    /**
+     * @var array
+    */
+    protected array $loaded = [];
+
 
     /**
      * @param EntityManagerInterface $em
@@ -86,12 +91,13 @@ class FixtureManager implements FixtureManagerInterface
     /**
      * @inheritDoc
     */
-    public function load(): bool
+    public function load(): array
     {
        foreach ($this->fixtures as $fixture) {
            $fixture->load($this->em);
+           $this->loaded[] = get_class($fixture);
        }
 
-       return true;
+       return $this->loaded;
     }
 }
