@@ -112,7 +112,7 @@ interface CommandInterface extends ExecutableCommandInterface
      * @param array $rules
      * @return InputArgumentInterface
     */
-    public function addArgument(
+    public function argument(
         string $name,
         $description,
         string $default = null,
@@ -132,7 +132,7 @@ interface CommandInterface extends ExecutableCommandInterface
      * @param array $rules
      * @return InputOptionInterface
     */
-    public function addOption(
+    public function option(
         $name,
         $description,
         $shortcut = null,

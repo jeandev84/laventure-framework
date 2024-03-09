@@ -49,16 +49,16 @@ class MigrateCommand extends Command
       */
       public function configure(): void
       {
-          $this->addArgument('path', 'Indicate path of migrations', '', [
-                    InputArgument::REQUIRED
-               ])
-               ->addOption('table', 'Indicate current table to migrate', 't', '', [
-                   InputOption::REQUIRED
-               ])
-               ->addOption('refresh', 'Refresh migrations', 'r', '', [
-                   InputOption::OPTIONAL
-               ])
-               ->addOption('force', 'Force migrations', 'f');
+          $this->argument('path', 'Indicate path of migrations')
+               ->rules([InputArgument::REQUIRED]);
+
+          $this->option('table', 'Indicate current table to migrate', 't')
+               ->rules([InputOption::REQUIRED]);
+
+          $this->option('refresh', 'Refresh migrations', 'r')
+               ->rules([InputOption::OPTIONAL]);
+
+          $this->option('force', 'Force migrations', 'f');
       }
 
 

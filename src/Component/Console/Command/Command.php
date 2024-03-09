@@ -221,7 +221,7 @@ abstract class Command implements CommandInterface
     /**
      * @inheritDoc
     */
-    public function addArgument(
+    public function argument(
         string $name,
         $description,
         string $default = null,
@@ -240,7 +240,7 @@ abstract class Command implements CommandInterface
     /**
      * @inheritDoc
     */
-    public function addOption(
+    public function option(
         $name,
         $description,
         $shortcut = null,
@@ -282,8 +282,7 @@ abstract class Command implements CommandInterface
         $status = $this->execute($input, $output);
 
         if ($this->hasValidStatus($status)) {
-            throw new InvalidCommandStatusException(
-                  $status,
+            throw new InvalidCommandStatusException($status,
            get_called_class() . "::execute",
                   $this->availableStatus
             );
