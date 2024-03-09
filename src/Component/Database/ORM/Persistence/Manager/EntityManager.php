@@ -7,6 +7,7 @@ use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\ORM\Persistence\Manager\Config\Configuration;
 use Laventure\Component\Database\ORM\Persistence\Manager\Contract\EntityManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Manager\Event\EventManagerInterface;
+use Laventure\Component\Database\ORM\Persistence\Manager\Events\PreFlushEvent;
 use Laventure\Component\Database\ORM\Persistence\Manager\Exception\EntityManagerException;
 use Laventure\Component\Database\ORM\Persistence\Mapper\Data\DataMapper;
 use Laventure\Component\Database\ORM\Persistence\Mapper\Data\DataMapperInterface;
@@ -550,6 +551,7 @@ class EntityManager implements EntityManagerInterface
     public function flush(): void
     {
         if ($this->isOpen()) {
+            $this->eventManager->dispatchEvent(new PreFlushEvent($this));
             $this->unitOfWork->commit();
         }
     }
