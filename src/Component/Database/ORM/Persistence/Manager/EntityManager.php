@@ -460,11 +460,13 @@ class EntityManager implements EntityManagerInterface
 
 
     /**
+     *  Example: $em->find(User::class, 1)
+     *
      * @inheritDoc
     */
     public function find(string $classname, $id): mixed
     {
-        return $this->unitOfWork->find($classname, $id);
+        return $this->getRepository($classname)->find($id);
     }
 
 

@@ -249,6 +249,10 @@ class UnitOfWork implements UnitOfWorkInterface
 
 
     /**
+     * Example:
+     *
+     * $unitOfWork->find(User::class, 1)
+     *
      * @inheritDoc
     */
     public function find($class, $id): mixed

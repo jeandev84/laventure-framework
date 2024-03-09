@@ -30,15 +30,18 @@ class DataMapper extends ObjectMapper
 
     /**
      * Example:
-     * $em->getUnitOfWork()
-     *    ->getDataMapper()
-     *    ->find(User::class, 1)
+     *
+     * $em->getDataMapper()->find(User::class, 1)
+     *  $em->getUnitOfWork()
+     *     ->getDataMapper()
+     *     ->find(User::class, 1)
      *
      * @inheritDoc
     */
     public function find($class, $id): ?object
     {
-        return $this->em->find($class, $id);
+        return $this->em->getUnitOfWork()
+                        ->find($class, $id);
     }
 
 
