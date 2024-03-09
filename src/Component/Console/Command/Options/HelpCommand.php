@@ -2,10 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Console\Command\Defaults;
+namespace Laventure\Component\Console\Command\Options;
 
 use Laventure\Component\Console\Command\Command;
 use Laventure\Component\Console\Command\Contract\HelpCommandInterface;
+use Laventure\Component\Console\Input\InputInterface;
+use Laventure\Component\Console\Output\OutputInterface;
 
 /**
  * HelpCommand
@@ -18,8 +20,19 @@ use Laventure\Component\Console\Command\Contract\HelpCommandInterface;
 */
 class HelpCommand extends Command implements HelpCommandInterface
 {
+
     public function __construct()
     {
         parent::__construct('help');
+    }
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function execute(InputInterface $input, OutputInterface $output): int
+    {
+
     }
 }

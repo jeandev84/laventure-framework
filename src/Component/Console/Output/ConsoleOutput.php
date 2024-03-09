@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Console\Output;
 
-use Laventure\Component\Console\Output\Contract\OutputInterface;
-
 /**
  * ConsoleOutput
  *

@@ -6,9 +6,9 @@ namespace Laventure\Component\Console\Command\Contract;
 
 use Laventure\Component\Console\Input\Argument\InputArgumentInterface;
 use Laventure\Component\Console\Input\Collection\InputCollectionInterface;
-use Laventure\Component\Console\Input\Contract\InputInterface;
+use Laventure\Component\Console\Input\InputInterface;
 use Laventure\Component\Console\Input\Option\InputOptionInterface;
-use Laventure\Component\Console\Output\Contract\OutputInterface;
+use Laventure\Component\Console\Output\OutputInterface;
 
 /**
  * CommandInterface
@@ -56,6 +56,40 @@ interface CommandInterface extends ExecutableCommandInterface
 
 
 
+    /**
+     * @return string
+    */
+    public function getNameSeparator(): string;
+
+
+
+
+
+
+    /**
+     * Determine if given name has format example (database:migrations:migrate)
+     * Separator ':'
+     *
+     * @return bool
+    */
+    public function hasNameSeparated(): bool;
+
+
+
+
+
+
+
+    /**
+     * @return string
+    */
+    public function getFirstNameSeparated(): string;
+
+
+
+
+
+
 
     /**
      * @param array $description
@@ -64,25 +98,46 @@ interface CommandInterface extends ExecutableCommandInterface
     public function description(array $description): static;
 
 
+
+
     /**
      * Returns description of command
      *
-     * @param string|null $separator
+     * @return array
+    */
+    public function getDescription(): array;
+
+
+
+
+
+
+    /**
      * @return string
     */
-    public function getDescription(string $separator = null): string;
+    public function getDescriptionAsString(): string;
+
+
+
+
 
 
     /**
      * Returns help command
      *
-     * @param string|null $separator
+     * @return array
+    */
+    public function getHelp(): array;
+
+
+
+
+
+
+    /**
      * @return string
     */
-    public function getHelp(string $separator = null): string;
-
-
-
+    public function getHelpAsString(): string;
 
 
 
@@ -94,6 +149,10 @@ interface CommandInterface extends ExecutableCommandInterface
      * @return static
     */
     public function help(array $help): static;
+
+
+
+
 
 
     /**
@@ -174,4 +233,27 @@ interface CommandInterface extends ExecutableCommandInterface
      * @return int
     */
     public function run(InputInterface $input, OutputInterface $output): int;
+
+
+//
+//
+//
+//
+//
+//    /**
+//     * @return string
+//    */
+//    public function readAsString(): string;
+//
+//
+//
+//
+//
+//
+//
+//
+//    /**
+//     * @return string
+//    */
+//    public function readForList(): string;
 }

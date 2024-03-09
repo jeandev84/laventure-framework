@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Console\Input\Contract;
+namespace Laventure\Component\Console\Input;
 
 use Laventure\Component\Console\Input\Collection\InputCollectionInterface;
 use Stringable;

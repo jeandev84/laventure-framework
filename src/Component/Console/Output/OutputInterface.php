@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Console\Output\Contract;
+namespace Laventure\Component\Console\Output;
 
 use Stringable;
 

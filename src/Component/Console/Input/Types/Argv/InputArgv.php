@@ -1,15 +1,14 @@
 <?php
-
 declare(strict_types=1);
 
-namespace Laventure\Component\Console\Input\Argv;
+namespace Laventure\Component\Console\Input\Types\Argv;
 
 use Laventure\Component\Console\Input\Argument\Exceptions\InputArgumentException;
 use Laventure\Component\Console\Input\Argument\Exceptions\RequiredArgumentException;
 use Laventure\Component\Console\Input\Argument\InputArgumentInterface;
 use Laventure\Component\Console\Input\Collection\InputCollectionInterface;
-use Laventure\Component\Console\Input\Contract\InputInterface;
 use Laventure\Component\Console\Input\Exception\InputException;
+use Laventure\Component\Console\Input\InputInterface;
 use Laventure\Component\Console\Input\Option\Exceptions\RequiredOptionException;
 use Laventure\Component\Console\Input\Option\InputOptionInterface;
 
@@ -399,7 +398,7 @@ abstract class InputArgv implements InputInterface
      * @inheritDoc
      * @throws RequiredArgumentException
      * @throws InputArgumentException|RequiredOptionException
-     */
+    */
     public function validate(InputCollectionInterface $inputs): bool
     {
         return $this->validateArguments($inputs->getArguments()) && $this->validateOptions($inputs->getOptions());

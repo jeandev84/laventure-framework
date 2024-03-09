@@ -6,16 +6,14 @@ namespace Laventure\Component\Console\Command;
 
 use Laventure\Component\Console\Command\Contract\CommandInterface;
 use Laventure\Component\Console\Command\Exception\InvalidCommandStatusException;
-use Laventure\Component\Console\Command\Exception\NotExecutableCommandException;
 use Laventure\Component\Console\Input\Argument\InputArgument;
 use Laventure\Component\Console\Input\Argument\InputArgumentInterface;
 use Laventure\Component\Console\Input\Collection\InputCollection;
 use Laventure\Component\Console\Input\Collection\InputCollectionInterface;
-use Laventure\Component\Console\Input\Contract\InputInterface;
+use Laventure\Component\Console\Input\InputInterface;
 use Laventure\Component\Console\Input\Option\InputOption;
 use Laventure\Component\Console\Input\Option\InputOptionInterface;
-use Laventure\Component\Console\Output\Contract\OutputInterface;
-use RuntimeException;
+use Laventure\Component\Console\Output\OutputInterface;
 
 /**
  * Command
@@ -135,33 +133,62 @@ abstract class Command implements CommandInterface
 
 
 
+    /**
+     * @inheritDoc
+    */
+    public function getNameSeparator(): string
+    {
+         return ':';
+    }
+
+
+
 
     /**
      * @inheritDoc
     */
-    public function getNameAsArray(): array
+    public function hasNameSeparated(): bool
     {
-        $commandName = $this->getName();
+        return stripos($this->getName(), $this->getNameSeparator());
+    }
 
-        if (!stripos($commandName, ':')) {
-            return [];
-        }
 
-        return explode(':', $commandName);
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getFirstNameSeparated(): string
+    {
+        return $this->getNameAsArray()[0] ?? '';
     }
 
 
 
 
 
+    /**
+     * @inheritDoc
+    */
+    public function getNameAsArray(): array
+    {
+        if (!$this->hasNameSeparated()) {
+            return [];
+        }
+
+        return explode($this->getNameSeparator(), $this->getName());
+    }
+
+
+
 
 
     /**
      * @inheritDoc
     */
-    public function getDescription(string $separator = null): string
+    public function getDescription(): array
     {
-        return join($separator ?: '. ', $this->description);
+        return $this->description;
     }
 
 
@@ -183,13 +210,29 @@ abstract class Command implements CommandInterface
 
 
 
+
     /**
      * @inheritDoc
     */
-    public function getHelp(string $separator = null): string
+    public function getDescriptionAsString(): string
     {
-        return join($separator ?: '|', $this->help);
+        return join('. ', $this->description);
     }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getHelp(): array
+    {
+        return $this->help;
+    }
+
+
 
 
 
@@ -203,6 +246,18 @@ abstract class Command implements CommandInterface
         $this->help = $help;
 
         return $this;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getHelpAsString(): string
+    {
+        return join(', ', $this->help);
     }
 
 

@@ -1,17 +1,17 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Console;
 
+use Laventure\Component\Console\Command\Collection\CommandCollectionInterface;
 use Laventure\Component\Console\Command\Contract\CommandInterface;
-use Laventure\Component\Console\Command\Contract\HelpCommandInterface;
 use Laventure\Component\Console\Command\Contract\ListCommandInterface;
-use Laventure\Component\Console\Command\Defaults\HelpCommand;
-use Laventure\Component\Console\Command\Defaults\ListCommand;
+use Laventure\Component\Console\Command\Contract\OptionCommandInterface;
+use Laventure\Component\Console\Command\List\ListCommand;
 use Laventure\Component\Console\Command\Exception\EmptyCommandNameException;
-use Laventure\Component\Console\Input\Contract\InputInterface;
-use Laventure\Component\Console\Output\Contract\OutputInterface;
+use Laventure\Component\Console\Command\Usage\UsageCommandInterface;
+use Laventure\Component\Console\Input\InputInterface;
+use Laventure\Component\Console\Output\OutputInterface;
 
 /**
  * Console
@@ -21,25 +21,64 @@ use Laventure\Component\Console\Output\Contract\OutputInterface;
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
  * @package  Laventure\Component\Console
- */
-class Console implements ConsoleInterface
+*/
+class Console implements ConsoleInterface, CommandCollectionInterface
 {
+
     /**
      * @var CommandInterface[]
     */
     protected array $commands = [];
 
 
+    /**
+     * @var UsageCommandInterface[]
+    */
+    protected array $usageCommands = [];
+
+
 
 
     /**
-     * @param array $commands
-     * @throws EmptyCommandNameException
+     * @var OptionCommandInterface[]
     */
-    public function __construct(array $commands = [])
+    protected array $optionCommands = [];
+
+
+
+
+
+
+    public function __construct()
     {
-        $this->addCommands($commands);
+
     }
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function getInteractive(): false|string
+    {
+        return php_sapi_name();
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function isInteractive(): bool
+    {
+        $interactive = $this->getInteractive();
+
+        return ($interactive === 'cli' || $interactive === 'phpdbg');
+    }
+
 
 
 
@@ -49,19 +88,9 @@ class Console implements ConsoleInterface
     */
     public function getListCommand(): ListCommandInterface
     {
-        return new ListCommand($this->getCommands());
+        return new ListCommand($this);
     }
 
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function getHelpCommand(): HelpCommandInterface
-    {
-        return new HelpCommand();
-    }
 
 
 
@@ -163,12 +192,26 @@ class Console implements ConsoleInterface
 
 
 
+
     /**
      * @inheritDoc
     */
-    public function getInteractive(): false|string
+    public function addUsageCommand(UsageCommandInterface $command): static
     {
-        return php_sapi_name();
+        $this->usageCommands[$command->getName()] = $command;
+
+        return $this;
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function hasUsageCommand($name): bool
+    {
+        return isset($this->usageCommands[$name]);
     }
 
 
@@ -179,10 +222,85 @@ class Console implements ConsoleInterface
     /**
      * @inheritDoc
     */
-    public function isInteractive(): bool
+    public function getUsageCommand($name): UsageCommandInterface
     {
-        $interactive = $this->getInteractive();
+        return $this->usageCommands[$name];
+    }
 
-        return ($interactive === 'cli' || $interactive === 'phpdbg');
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getUsageCommands(): array
+    {
+        return $this->usageCommands;
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+     * @param OptionCommandInterface $command
+     * @return Console
+    */
+    public function addOptionCommand(OptionCommandInterface $command): static
+    {
+        $this->optionCommands[$command->getName()] = $command;
+
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getOptionCommands(): array
+    {
+        return $this->optionCommands;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function hasOptionCommand($name): bool
+    {
+        return isset($this->optionCommands[$name]);
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getOptionCommand($name): OptionCommandInterface
+    {
+        return $this->optionCommands[$name];
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getAvailableCommands(): array
+    {
+        return array_merge($this->commands, [$this->getListCommand()]);
     }
 }

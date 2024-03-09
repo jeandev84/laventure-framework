@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Console\Command\Contract;
 
-use Laventure\Component\Console\Input\Contract\InputInterface;
-use Laventure\Component\Console\Output\Contract\OutputInterface;
+use Laventure\Component\Console\Input\InputInterface;
+use Laventure\Component\Console\Output\OutputInterface;
 
 /**
  * ExecutableCommandInterface

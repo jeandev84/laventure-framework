@@ -7,8 +7,10 @@ namespace Laventure\Component\Console;
 use Laventure\Component\Console\Command\Contract\CommandInterface;
 use Laventure\Component\Console\Command\Contract\HelpCommandInterface;
 use Laventure\Component\Console\Command\Contract\ListCommandInterface;
-use Laventure\Component\Console\Input\Contract\InputInterface;
-use Laventure\Component\Console\Output\Contract\OutputInterface;
+use Laventure\Component\Console\Command\Contract\OptionCommandInterface;
+use Laventure\Component\Console\Command\Usage\UsageCommandInterface;
+use Laventure\Component\Console\Input\InputInterface;
+use Laventure\Component\Console\Output\OutputInterface;
 
 /**
  * ConsoleInterface
@@ -47,51 +49,10 @@ interface ConsoleInterface
 
 
 
-
     /**
      * @return ListCommandInterface
-     */
+    */
     public function getListCommand(): ListCommandInterface;
-
-
-
-
-
-    /**
-     * @return HelpCommandInterface
-     */
-    public function getHelpCommand(): HelpCommandInterface;
-
-
-
-    /**
-     * @return CommandInterface[]
-    */
-    public function getCommands(): array;
-
-
-
-
-
-    /**
-     * @param $name
-     * @return bool
-    */
-    public function hasCommand($name): bool;
-
-
-
-
-
-
-    /**
-     * Returns command to execute
-     *
-     * @param $name
-     * @return CommandInterface
-    */
-    public function getCommand($name): CommandInterface;
-
 
 
 

@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Console\Command\Contract;
 
+use Laventure\Component\Console\Command\Collection\CommandCollectionInterface;
+use Laventure\Contract\Builder\BuilderInterface;
+use Laventure\Contract\Lister\ListenableInterface;
+
 /**
  * ListCommandInterface
  *
@@ -13,10 +17,11 @@ namespace Laventure\Component\Console\Command\Contract;
  *
  * @package  Laventure\Component\Console\Command\Contract
 */
-interface ListCommandInterface extends CommandInterface
+interface ListCommandInterface extends CommandInterface, ListenableInterface
 {
-    /**
-     * @return CommandInterface[]
-    */
-    public function getCommands(): array;
+
+      /**
+       * @return CommandCollectionInterface
+      */
+      public function getCollection(): CommandCollectionInterface;
 }

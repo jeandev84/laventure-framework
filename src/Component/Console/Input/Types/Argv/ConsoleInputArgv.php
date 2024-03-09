@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Console\Input\Argv;
+namespace Laventure\Component\Console\Input\Types\Argv;
 
 /**
  * ConsoleInputArgv
