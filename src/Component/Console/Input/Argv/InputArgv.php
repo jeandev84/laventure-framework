@@ -283,7 +283,7 @@ abstract class InputArgv implements InputInterface
      */
     public function __toString()
     {
-        unset($this->tokens[0]);
+        array_shift($this->tokens);
 
         return join(' ', $this->tokens);
     }
