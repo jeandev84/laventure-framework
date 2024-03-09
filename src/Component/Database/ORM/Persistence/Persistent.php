@@ -279,7 +279,7 @@ class Persistent implements PersistentInterface
                  $this->getIdentifier() => $id
             ]);
 
-            $this->removeDataFromIdentityMap($id);
+            $this->removeIdentity($id);
         }
 
         return isset($this->deleted[$this->getId()]);
@@ -381,9 +381,9 @@ class Persistent implements PersistentInterface
     /**
      * @inheritDoc
     */
-    public function getIdentity($recordId): string
+    public function getIdentity($id): string
     {
-        return "{$this->getClassName()}.{$recordId}";
+        return "{$this->getClassName()}.{$id}";
     }
 
 
@@ -430,13 +430,11 @@ class Persistent implements PersistentInterface
 
 
     /**
-     * @param $recordId
-     * @param $data
-     * @return $this
+     * @inheritDoc
     */
-    public function mapIdentity($recordId, $data): static
+    public function mapIdentity($id, $data): static
     {
-        $identityId = $this->getIdentity($recordId);
+        $identityId = $this->getIdentity($id);
 
         $this->em->getUnitOfWork()
             ->getIdentityMap()
@@ -452,9 +450,9 @@ class Persistent implements PersistentInterface
     /**
      * @inheritDoc
     */
-    public function removeDataFromIdentityMap($recordId): static
+    public function removeIdentity($id): static
     {
-        $identityId = $this->getIdentity($recordId);
+        $identityId = $this->getIdentity($id);
 
         $this->em->getUnitOfWork()
                 ->getIdentityMap()

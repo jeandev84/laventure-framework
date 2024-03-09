@@ -202,16 +202,17 @@ interface PersistentInterface
     public function getTableAlias(): string;
 
 
+
     
     
     
     /**
      * Returns identity data
      *
-     * @param $recordId
+     * @param $id    // $id record
      * @return mixed
     */
-    public function getIdentity($recordId): mixed;
+    public function getIdentity($id): mixed;
 
 
 
@@ -219,11 +220,11 @@ interface PersistentInterface
 
 
     /**
-     * @param $recordId
-     * @param $data
+     * @param $id   // $id record
+     * @param $data // $data to map
      * @return $this
     */
-    public function mapIdentity($recordId, $data): static;
+    public function mapIdentity($id, $data): static;
 
 
 
@@ -231,8 +232,8 @@ interface PersistentInterface
 
 
     /**
-     * @param $recordId
+     * @param $id  // $id record
      * @return mixed
     */
-    public function removeDataFromIdentityMap($recordId): mixed;
+    public function removeIdentity($id): mixed;
 }
