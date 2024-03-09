@@ -337,4 +337,16 @@ abstract class InputArgv implements InputInterface
 
          return join(' ', $this->tokens);
      }
+
+
+
+
+     /**
+      * @param array $arguments
+      * @return bool
+     */
+     protected function validateArguments(array $arguments): bool
+     {
+
+     }
 }

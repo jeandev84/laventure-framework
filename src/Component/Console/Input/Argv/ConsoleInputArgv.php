@@ -67,6 +67,7 @@ class ConsoleInputArgv extends InputArgv
                 $this->setOption($options[1], $options[2]);
             } elseif (preg_match('#^-([^=]+)=(.*)$#i', $token, $options)) {
                 $this->shortcutOption($options[1], $options[2]);
+                $this->setOption($options[1], $options[2]);
             } else {
                 $this->setArgument($options[1], $options[2]);
             }
@@ -74,6 +75,7 @@ class ConsoleInputArgv extends InputArgv
             $this->setOption($flags[1], true);
         } elseif (preg_match('#^-([^=]+)$#i', $token,$flags)) {
             $this->shortcutOption($flags[1], true);
+            $this->setOption($flags[1], $flags[2]);
         } else {
             $this->addArgument($token);
         }
