@@ -18,7 +18,6 @@ use Laventure\Component\Console\Input\Contract\InputInterface;
 */
 abstract class InputArgv implements InputInterface
 {
-
     /**
      * @var string
     */
@@ -123,9 +122,9 @@ abstract class InputArgv implements InputInterface
     */
     public function setArgument($name, $value): static
     {
-         $this->arguments[$name] = $value;
+        $this->arguments[$name] = $value;
 
-         return $this;
+        return $this;
     }
 
 
@@ -152,7 +151,7 @@ abstract class InputArgv implements InputInterface
     */
     public function hasArgument($name): bool
     {
-       return isset($this->arguments[$name]);
+        return isset($this->arguments[$name]);
     }
 
 
@@ -273,30 +272,6 @@ abstract class InputArgv implements InputInterface
     /**
      * @inheritDoc
     */
-    public function getInteractive(): false|string
-    {
-       return php_sapi_name();
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function isInteractive(): bool
-    {
-        $interactive = $this->getInteractive();
-
-        return ($interactive === 'cli' || $interactive === 'phpdbg');
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
     public function getCompiledFile(): string
     {
         return $this->compiledFile;
@@ -323,30 +298,45 @@ abstract class InputArgv implements InputInterface
     */
     public function validate(InputCollectionInterface $inputs): mixed
     {
-        return false;
+        return $this->validateArguments($inputs->getArguments()) ||
+               $this->validateOptions($inputs->getOptions());
     }
 
 
 
-     /**
-      * @inheritDoc
+
+
+    /**
+     * @param array $arguments
+     * @return bool
+    */
+    protected function validateArguments(array $arguments): bool
+    {
+
+    }
+
+
+
+    /**
+     * @param array $options
+     * @return bool
      */
-     public function __toString()
-     {
-         unset($this->tokens[0]);
+    protected function validateOptions(array $options): bool
+    {
 
-         return join(' ', $this->tokens);
-     }
+    }
 
 
 
 
-     /**
-      * @param array $arguments
-      * @return bool
+
+    /**
+     * @inheritDoc
      */
-     protected function validateArguments(array $arguments): bool
-     {
+    public function __toString()
+    {
+        unset($this->tokens[0]);
 
-     }
+        return join(' ', $this->tokens);
+    }
 }

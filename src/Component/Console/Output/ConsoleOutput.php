@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Console\Output;
@@ -16,7 +17,6 @@ use Laventure\Component\Console\Output\Contract\OutputInterface;
 */
 class ConsoleOutput implements OutputInterface
 {
-
     /**
      * @var array
     */
@@ -92,7 +92,7 @@ class ConsoleOutput implements OutputInterface
 
 
 
-    
+
     /**
      * @inheritDoc
     */

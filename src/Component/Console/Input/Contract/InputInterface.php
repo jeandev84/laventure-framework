@@ -143,35 +143,6 @@ interface InputInterface extends Stringable
 
 
     /**
-     * Return name of compiled file interactive
-     *
-     * @return mixed
-    */
-    public function getInteractive(): mixed;
-
-
-
-
-
-
-    /**
-     * Determine if compiled file exist
-     *
-     *
-     * @return bool
-    */
-    public function isInteractive(): bool;
-
-
-
-
-
-
-
-
-
-
-    /**
      * Returns compiled file name or other
      *
      * @return mixed

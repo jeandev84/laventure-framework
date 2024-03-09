@@ -21,6 +21,35 @@ use Laventure\Component\Console\Output\Contract\OutputInterface;
 */
 interface ConsoleInterface
 {
+
+
+    /**
+     * Return the php_sapi_name() for example
+     *
+     * @return mixed
+    */
+    public function getInteractive(): mixed;
+
+
+
+
+
+
+    /**
+     * Determine mode interaction cli or STDOUT ...
+     *
+     *
+     * @return bool
+    */
+    public function isInteractive(): bool;
+
+
+
+
+
+
+
+
     /**
      * @return ListCommandInterface
      */

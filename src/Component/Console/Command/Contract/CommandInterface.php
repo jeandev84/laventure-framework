@@ -116,7 +116,7 @@ interface CommandInterface extends ExecutableCommandInterface
     */
     public function addArgument(
         string $name,
-               $description,
+        $description,
         string $default = null,
         array $rules = []
     ): static;

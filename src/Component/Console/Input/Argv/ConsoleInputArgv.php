@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Console\Input\Argv;
-
 
 /**
  * ConsoleInputArgv
@@ -15,7 +15,6 @@ namespace Laventure\Component\Console\Input\Argv;
 */
 class ConsoleInputArgv extends InputArgv
 {
-
     /**
      * @param array $tokens
     */
@@ -71,9 +70,9 @@ class ConsoleInputArgv extends InputArgv
             } else {
                 $this->setArgument($options[1], $options[2]);
             }
-        } elseif (preg_match('#^--([^=]+)$#i', $token,$flags)) {
+        } elseif (preg_match('#^--([^=]+)$#i', $token, $flags)) {
             $this->setOption($flags[1], true);
-        } elseif (preg_match('#^-([^=]+)$#i', $token,$flags)) {
+        } elseif (preg_match('#^-([^=]+)$#i', $token, $flags)) {
             $this->shortcutOption($flags[1], true);
             $this->setOption($flags[1], $flags[2]);
         } else {

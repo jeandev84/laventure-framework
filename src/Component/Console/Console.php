@@ -152,10 +152,37 @@ class Console implements ConsoleInterface
     */
     public function run(InputInterface $input, OutputInterface $output): int
     {
-         $command = $this->getCommand($input->getFirstArgument());
-         $status  = $command->run($input, $output);
-         $output->print();
-         return $status;
+        $command = $this->getCommand($input->getFirstArgument());
+        $status  = $command->run($input, $output);
+        $output->print();
+        return $status;
     }
 
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getInteractive(): false|string
+    {
+        return php_sapi_name();
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function isInteractive(): bool
+    {
+        $interactive = $this->getInteractive();
+
+        return ($interactive === 'cli' || $interactive === 'phpdbg');
+    }
 }

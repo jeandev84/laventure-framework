@@ -17,7 +17,6 @@ use Stringable;
 */
 interface OutputInterface extends Stringable
 {
-
     /**
      * @param $message
      * @return $this
