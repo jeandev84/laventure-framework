@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Exceptions;
@@ -16,8 +17,8 @@ use Laventure\Exceptions\BaseException;
 */
 class NotFoundMappedClass extends BaseException
 {
-     public function __construct(string $message = "", array $data = [])
-     {
-         parent::__construct($message, $data, 404);
-     }
+    public function __construct(string $message = "", array $data = [])
+    {
+        parent::__construct($message, $data, 404);
+    }
 }

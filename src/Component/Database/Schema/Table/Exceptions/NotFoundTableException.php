@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Table\Exceptions;
@@ -17,12 +18,12 @@ use Throwable;
  */
 class NotFoundTableException extends TableException
 {
-     /**
-      * @param string $tableName
-      * @param array $data
-     */
-     public function __construct(string $tableName, array $data = [])
-     {
-         parent::__construct("Table $tableName does not exist.", $data, 404);
-     }
+    /**
+     * @param string $tableName
+     * @param array $data
+    */
+    public function __construct(string $tableName, array $data = [])
+    {
+        parent::__construct("Table $tableName does not exist.", $data, 404);
+    }
 }

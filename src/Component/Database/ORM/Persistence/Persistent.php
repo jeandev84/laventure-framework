@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence;
@@ -97,7 +98,8 @@ class Persistent implements PersistentInterface
      * @param $class
      * @throws NotFoundTableException
     */
-    public function __construct(EntityManagerInterface $em, $class) {
+    public function __construct(EntityManagerInterface $em, $class)
+    {
         $this->em            = $em;
         $this->classMetadata = $em->getClassMetadata($class);
         $this->initializeClass($this->classMetadata);
@@ -113,7 +115,7 @@ class Persistent implements PersistentInterface
     public function find($id): mixed
     {
         if ($this->hasIdentity($id)) {
-             return $this->loadFromIdentityMap($id);
+            return $this->loadFromIdentityMap($id);
         }
 
         $data = $this->findOneBy([$this->getIdentifier() => $id]);
@@ -242,9 +244,9 @@ class Persistent implements PersistentInterface
     */
     public function addRemove($id): static
     {
-       $this->delete[] = $id;
+        $this->delete[] = $id;
 
-       return $this;
+        return $this;
     }
 
 
@@ -330,8 +332,8 @@ class Persistent implements PersistentInterface
     */
     public function getClassShortName(): string
     {
-       return $this->classMetadata->getReflectionClass()
-                                  ->getShortName();
+        return $this->classMetadata->getReflectionClass()
+                                   ->getShortName();
     }
 
 
@@ -578,7 +580,7 @@ class Persistent implements PersistentInterface
 
         foreach (array_keys($attributes) as $column) {
             if (!in_array($column, $table->getColumnNames())) {
-                 unset($attributes[$column]);
+                unset($attributes[$column]);
             }
         }
 

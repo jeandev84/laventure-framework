@@ -1,10 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Manager\Fixtures;
 
 use Laventure\Component\Database\ORM\Persistence\Manager\Contract\EntityManagerInterface;
-
 
 /**
  * FixtureManager
@@ -17,7 +17,6 @@ use Laventure\Component\Database\ORM\Persistence\Manager\Contract\EntityManagerI
 */
 class FixtureManager implements FixtureManagerInterface
 {
-
     /**
      * Store fixtures
      *
@@ -93,11 +92,11 @@ class FixtureManager implements FixtureManagerInterface
     */
     public function load(): array
     {
-       foreach ($this->fixtures as $fixture) {
-           $fixture->load($this->em);
-           $this->loaded[] = get_class($fixture);
-       }
+        foreach ($this->fixtures as $fixture) {
+            $fixture->load($this->em);
+            $this->loaded[] = get_class($fixture);
+        }
 
-       return $this->loaded;
+        return $this->loaded;
     }
 }

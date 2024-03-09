@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Manager\Fixtures;
-
 
 use Laventure\Contract\Loader\LoaderInterface;
 
@@ -17,7 +17,6 @@ use Laventure\Contract\Loader\LoaderInterface;
  */
 interface FixtureManagerInterface extends LoaderInterface
 {
-
     /**
      * Returns all fixtures
      *

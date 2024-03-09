@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Http\Client\Request\Curl;
@@ -6,7 +7,6 @@ namespace Laventure\Component\Http\Client\Request\Curl;
 use Laventure\Component\Http\Client\Request\ClientRequestInterface;
 use Laventure\Component\Http\Message\Request\Request;
 use Psr\Http\Message\ResponseInterface;
-
 
 /**
  * CurlRequest
@@ -19,7 +19,6 @@ use Psr\Http\Message\ResponseInterface;
 */
 class CurlRequest extends Request implements ClientRequestInterface
 {
-
     /**
      * @inheritDoc
     */

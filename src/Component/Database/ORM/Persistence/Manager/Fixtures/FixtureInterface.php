@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Manager\Fixtures;
-
 
 use Laventure\Component\Database\ORM\Persistence\Manager\Contract\EntityManagerInterface;
 
@@ -17,9 +17,9 @@ use Laventure\Component\Database\ORM\Persistence\Manager\Contract\EntityManagerI
  */
 interface FixtureInterface
 {
-     /**
-      * @param EntityManagerInterface $em
-      * @return mixed
-     */
-     public function load(EntityManagerInterface $em): mixed;
+    /**
+     * @param EntityManagerInterface $em
+     * @return mixed
+    */
+    public function load(EntityManagerInterface $em): mixed;
 }

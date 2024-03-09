@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\UnitOfWork;
@@ -87,7 +88,8 @@ class UnitOfWork implements UnitOfWorkInterface
         $this->em           = $em;
         $this->eventManager = $em->getEventManager();
         $this->dataMapper   = $em->getDataMapper();
-        $this->storage      = new ObjectStorage();;
+        $this->storage      = new ObjectStorage();
+        ;
     }
 
 
@@ -168,9 +170,9 @@ class UnitOfWork implements UnitOfWorkInterface
         return ClassMetadata::create($object)->isNew();
     }
 
-    
-    
-    
+
+
+
 
 
 

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Mapper\Data;
@@ -16,7 +17,6 @@ use Laventure\Component\Database\ORM\Persistence\Mapper\Identity\IdentityMapperI
 */
 interface DataMapperInterface
 {
-
     /**
      * Retrieve data by given id
      *

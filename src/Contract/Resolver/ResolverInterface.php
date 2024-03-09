@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Contract\Resolver;
-
 
 /**
  * ResolverInterface
@@ -15,10 +15,9 @@ namespace Laventure\Contract\Resolver;
  */
 interface ResolverInterface
 {
-
-      /**
-       * Resolve something
-       * @return mixed
-      */
-      public function resolve(): mixed;
+    /**
+     * Resolve something
+     * @return mixed
+    */
+    public function resolve(): mixed;
 }

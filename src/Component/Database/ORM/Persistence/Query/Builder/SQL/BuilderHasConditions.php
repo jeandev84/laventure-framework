@@ -33,8 +33,7 @@ abstract class BuilderHasConditions extends Builder
     public function __construct(
         EntityManagerInterface $em,
         SQLBuilderHasConditionInterface $builder
-    )
-    {
+    ) {
         parent::__construct($em, $builder);
     }
 

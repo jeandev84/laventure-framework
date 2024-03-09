@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Resolver;
@@ -20,55 +21,55 @@ use Laventure\Contract\Resolver\ResolverInterface;
 */
 class AttributeValueResolver implements ResolverInterface
 {
-     /**
-      * @var ClassFieldType
-     */
-     protected ClassFieldType $type;
+    /**
+     * @var ClassFieldType
+    */
+    protected ClassFieldType $type;
 
 
 
-     /**
-      * @param ClassFieldTypeInterface $type
-     */
-     public function __construct(ClassFieldTypeInterface $type)
-     {
-         $this->type = $type;
-     }
+    /**
+     * @param ClassFieldTypeInterface $type
+    */
+    public function __construct(ClassFieldTypeInterface $type)
+    {
+        $this->type = $type;
+    }
 
 
 
-     /**
-      * @return mixed
-     */
-     public function getValue(): mixed
-     {
-         return $this->type->getValue();
-     }
+    /**
+     * @return mixed
+    */
+    public function getValue(): mixed
+    {
+        return $this->type->getValue();
+    }
 
 
 
-     /**
-      * @return DateTimeInterface
-     */
-     public function getDatetime(): DateTimeInterface
-     {
-         return $this->getValue();
-     }
+    /**
+     * @return DateTimeInterface
+    */
+    public function getDatetime(): DateTimeInterface
+    {
+        return $this->getValue();
+    }
 
 
 
 
-     /**
-      * @inheritDoc
-     */
-     public function resolve(): mixed
-     {
-         if ($this->type->isDatetime()) {
-             return $this->getDatetime()->format('Y-m-d H:i:s');
-         } elseif ($this->type->isBoolean()) {
-             return intval($this->getValue());
-         }
+    /**
+     * @inheritDoc
+    */
+    public function resolve(): mixed
+    {
+        if ($this->type->isDatetime()) {
+            return $this->getDatetime()->format('Y-m-d H:i:s');
+        } elseif ($this->type->isBoolean()) {
+            return intval($this->getValue());
+        }
 
-         return $this->getValue();
-     }
+        return $this->getValue();
+    }
 }

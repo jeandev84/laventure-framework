@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Contract\Generator;
-
 
 /**
  * GeneratorInterface
@@ -15,7 +15,6 @@ namespace Laventure\Contract\Generator;
  */
 interface GeneratorInterface
 {
-
     /**
      * Generate something
      *

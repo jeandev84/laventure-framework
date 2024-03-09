@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Http\Client\Response\Curl;
@@ -16,5 +17,4 @@ use Laventure\Component\Http\Message\Response\Response;
  */
 class CurlResponse extends Response
 {
-
 }

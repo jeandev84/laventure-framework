@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Mapper\Data;
@@ -27,7 +28,6 @@ use Laventure\Component\Database\ORM\Persistence\Persistent;
 */
 class DataMapper extends ObjectMapper
 {
-
     /**
      * Example:
      *
@@ -117,17 +117,17 @@ class DataMapper extends ObjectMapper
     */
     public function save(object $object): int
     {
-         $prePersistEvent = new PrePersistEvent($object);
-         $this->dispatchEvent($prePersistEvent);
-         $object = $prePersistEvent->getSubject();
+        $prePersistEvent = new PrePersistEvent($object);
+        $this->dispatchEvent($prePersistEvent);
+        $object = $prePersistEvent->getSubject();
 
-         if ($this->isNew($object)) {
-             $id = $this->insert($object);
-         } else {
-             $id = $this->update($object);
-         }
+        if ($this->isNew($object)) {
+            $id = $this->insert($object);
+        } else {
+            $id = $this->update($object);
+        }
 
-         return $id;
+        return $id;
     }
 
 
@@ -171,8 +171,8 @@ class DataMapper extends ObjectMapper
     */
     public function dispatchEvent(ObjectEvent $event): object
     {
-         return $this->em->getEventManager()
-                         ->dispatchEvent($event);
+        return $this->em->getEventManager()
+                        ->dispatchEvent($event);
     }
 
 
@@ -186,7 +186,7 @@ class DataMapper extends ObjectMapper
     */
     public function getPersistent(string|object $class): Persistent
     {
-         return $this->em->getUnitOfWork()->getPersistent($class);
+        return $this->em->getUnitOfWork()->getPersistent($class);
     }
 
 

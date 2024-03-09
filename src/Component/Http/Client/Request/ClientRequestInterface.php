@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Http\Client\Request;
-
 
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -18,9 +18,8 @@ use Psr\Http\Message\ResponseInterface;
 */
 interface ClientRequestInterface extends RequestInterface
 {
-
-      /**
-       * @return ResponseInterface
-      */
-      public function send(): ResponseInterface;
+    /**
+     * @return ResponseInterface
+    */
+    public function send(): ResponseInterface;
 }

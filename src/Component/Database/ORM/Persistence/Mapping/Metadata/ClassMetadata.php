@@ -480,7 +480,7 @@ class ClassMetadata implements ClassMetadataInterface
     */
     public function getAttributes(): array
     {
-         return $this->attributes;
+        return $this->attributes;
     }
 
 
@@ -493,9 +493,9 @@ class ClassMetadata implements ClassMetadataInterface
     */
     public function withoutAttribute($name): static
     {
-         unset($this->attributes[$name]);
+        unset($this->attributes[$name]);
 
-         return $this;
+        return $this;
     }
 
 
@@ -521,8 +521,8 @@ class ClassMetadata implements ClassMetadataInterface
     */
     public function getPersistAttributes(): array
     {
-         $this->withoutAttribute($this->identifier);
-         return $this->attributes;
+        $this->withoutAttribute($this->identifier);
+        return $this->attributes;
     }
 
 

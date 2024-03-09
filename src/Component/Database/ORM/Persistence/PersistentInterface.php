@@ -203,9 +203,9 @@ interface PersistentInterface
 
 
 
-    
-    
-    
+
+
+
     /**
      * Returns identity data
      *

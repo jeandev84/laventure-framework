@@ -18,8 +18,6 @@ use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Field\Types\Id
 */
 class CollectionAssociationField extends IdentifierField
 {
-
-
     /**
      * @var PersistentCollectionInterface
     */
@@ -37,8 +35,7 @@ class CollectionAssociationField extends IdentifierField
         $fieldValue,
         string $attributeName,
         PersistentCollectionInterface $persistent
-    )
-    {
+    ) {
         parent::__construct($fieldName, $fieldValue, $attributeName);
         $this->persistent = $persistent;
     }

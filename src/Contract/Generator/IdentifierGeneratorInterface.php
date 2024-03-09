@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Contract\Generator;
-
 
 /**
  * IdentifierGeneratorInterface
@@ -15,8 +15,8 @@ namespace Laventure\Contract\Generator;
  */
 interface IdentifierGeneratorInterface
 {
-      /**
-       * @return mixed
-      */
-      public function generateId(): mixed;
+    /**
+     * @return mixed
+    */
+    public function generateId(): mixed;
 }
