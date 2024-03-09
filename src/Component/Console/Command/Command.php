@@ -282,7 +282,7 @@ abstract class Command implements CommandInterface
         $status = $this->execute($input, $output);
 
         // make sure has valid status
-        if ($this->hasValidStatus($status)) {
+        if (!$this->hasValidStatus($status)) {
             throw new InvalidCommandStatusException($this, $status, "execute");
         }
 
