@@ -402,8 +402,7 @@ abstract class InputArgv implements InputInterface
      */
     public function validate(InputCollectionInterface $inputs): bool
     {
-        return $this->validateArguments($inputs->getArguments())
-               && $this->validateOptions($inputs->getOptions());
+        return $this->validateArguments($inputs->getArguments()) && $this->validateOptions($inputs->getOptions());
     }
 
 
