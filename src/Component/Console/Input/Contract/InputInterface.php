@@ -54,7 +54,7 @@ interface InputInterface
      *
      * @return mixed
     */
-    public function getFirstArgument(): string;
+    public function getFirstArgument(): mixed;
 
 
 
@@ -140,6 +140,7 @@ interface InputInterface
 
 
 
+
     /**
      * Return name of compiled file interactive
      *
@@ -167,6 +168,8 @@ interface InputInterface
 
 
 
+
+
     /**
      * Returns compiled file name or other
      *
@@ -177,6 +180,13 @@ interface InputInterface
 
 
 
+
+    /**
+     * Count inputs
+     *
+     * @return int
+    */
+    public function count(): int;
 
 
 

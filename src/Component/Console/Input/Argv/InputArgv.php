@@ -19,7 +19,6 @@ use Laventure\Component\Console\Input\Contract\InputInterface;
 abstract class InputArgv implements InputInterface
 {
 
-
     /**
      * @var string
     */
@@ -28,9 +27,9 @@ abstract class InputArgv implements InputInterface
 
 
     /**
-     * @var string
+     * @var mixed
     */
-    protected string $firstArgument;
+    protected $firstArgument;
 
 
 
@@ -70,17 +69,35 @@ abstract class InputArgv implements InputInterface
     */
     public function __construct(array $tokens)
     {
-        $this->tokens = $tokens;
+        $this->tokens       = $tokens;
+        $this->compiledFile = array_shift($tokens);
+        $this->setFirstArgument(array_shift($tokens));
+        $this->parseTokens($tokens);
     }
+
+
+
+
+    /**
+     * @param $argument
+     * @return $this
+    */
+    public function setFirstArgument($argument): static
+    {
+        $this->firstArgument = $argument;
+
+        return $this;
+    }
+
 
 
 
     /**
      * @inheritDoc
     */
-    public function getFirstArgument(): string
+    public function getFirstArgument(): mixed
     {
-        return '';
+        return $this->firstArgument;
     }
 
 
@@ -177,7 +194,7 @@ abstract class InputArgv implements InputInterface
     */
     public function getInteractive(): mixed
     {
-
+       return '';
     }
 
 
@@ -188,7 +205,7 @@ abstract class InputArgv implements InputInterface
     */
     public function isInteractive(): bool
     {
-
+        return false;
     }
 
 
@@ -207,9 +224,12 @@ abstract class InputArgv implements InputInterface
 
 
     /**
-     * @return int
+     * @inheritDoc
     */
-    abstract public function count(): int;
+    public function count(): int
+    {
+        return count($this->tokens);
+    }
 
 
 

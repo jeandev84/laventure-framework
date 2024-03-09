@@ -35,4 +35,14 @@ class ConsoleInputArgv extends InputArgv
     {
 
     }
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function count(): int
+    {
+        return $_SERVER['argc'] ?? 0;
+    }
 }

@@ -43,9 +43,10 @@ class Console implements ConsoleInterface
 
 
 
+
     /**
      * @inheritDoc
-     */
+    */
     public function getListCommand(): ListCommandInterface
     {
         return new ListCommand($this->getCommands());
@@ -128,11 +129,17 @@ class Console implements ConsoleInterface
 
 
     /**
-     * @param $name
-     * @return CommandInterface
+     * @inheritDoc
     */
     public function getCommand($name): CommandInterface
     {
+        $defaultCommand = $this->getListCommand();
+        $matchNames     = ($defaultCommand->getName() === $name);
+
+        if (!$this->hasCommand($name) || $matchNames) {
+            return $defaultCommand;
+        }
+
         return $this->commands[$name];
     }
 
@@ -145,7 +152,9 @@ class Console implements ConsoleInterface
     */
     public function run(InputInterface $input, OutputInterface $output): int
     {
+         $command = $this->getCommand($input->getFirstArgument());
 
+         dd($command);
     }
 
 }
