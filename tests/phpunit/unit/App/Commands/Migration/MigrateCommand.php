@@ -21,6 +21,13 @@ class MigrateCommand extends Command
 
 
      /**
+      * @var string
+     */
+     protected $name = 'database:migrations:migrate';
+
+
+
+     /**
       * @var array|string[]
      */
       protected array $description = [
@@ -29,10 +36,25 @@ class MigrateCommand extends Command
 
 
 
-      public function __construct()
+
+
+      /**
+       * $ php console
+       *       database:migrations:migrate
+       *       create_new_users_table path='/database/migrations/' -table=users --refresh=users -t --r --force
+       *
+       * @return void
+      */
+      public function configure(): void
       {
-          parent::__construct('database:migrations:migrate');
+          $this->addArgument('path', 'Indicate path of migrations', '')
+               ->addOption('table', 'Indicate current table to migrate', 't')
+               ->addOption('refresh', 'Refresh migrations', 'r')
+               ->addOption('force', 'Force migrations', 'f');
       }
+
+
+
 
 
 

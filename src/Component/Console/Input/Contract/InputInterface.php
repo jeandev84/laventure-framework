@@ -61,6 +61,9 @@ interface InputInterface extends Stringable
 
 
 
+
+
+
     /**
      * Return given name argument or default argument.
      *
@@ -141,24 +144,14 @@ interface InputInterface extends Stringable
 
 
 
-
-    /**
-     * Returns compiled file name or other
-     *
-     * @return mixed
-    */
-    public function getCompiledFile(): mixed;
-
-
-
-
-
     /**
      * Count inputs
      *
      * @return int
     */
     public function count(): int;
+
+
 
 
 

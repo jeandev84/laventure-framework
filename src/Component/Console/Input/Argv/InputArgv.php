@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Console\Input\Argv;
 
+use Laventure\Component\Console\Input\Argument\InputArgumentException;
 use Laventure\Component\Console\Input\Collection\InputCollectionInterface;
 use Laventure\Component\Console\Input\Contract\InputInterface;
 
@@ -127,9 +128,10 @@ abstract class InputArgv implements InputInterface
     */
     public function getArgument($name = null): mixed
     {
-        if (!$name) {
-            // $this->arguments[0]
-            return array_shift($this->arguments);
+        if (!$name) { $name = 0; }
+
+        if (!$this->hasArgument($name)) {
+            throw new InputArgumentException("Invalid argument ($name) parsed.");
         }
 
         return $this->arguments[$name];
@@ -174,6 +176,17 @@ abstract class InputArgv implements InputInterface
     public function getArguments(): array
     {
         return $this->arguments;
+    }
+
+
+
+
+    /**
+     * @param array $arguments
+    */
+    public function setArguments(array $arguments): void
+    {
+        $this->arguments = $arguments;
     }
 
 
@@ -252,9 +265,8 @@ abstract class InputArgv implements InputInterface
 
 
 
-
     /**
-     * @inheritDoc
+     * @return string
     */
     public function getCompiledFile(): string
     {
@@ -292,29 +304,14 @@ abstract class InputArgv implements InputInterface
 
 
 
-    /**
-     * @inheritDoc
-    */
-    public function parseTokens(array $tokens): void
-    {
-        foreach ($tokens as $token) {
-            $this->parseToken($token);
-        }
-
-        dump($this, __METHOD__);
-    }
-
-
-
 
     /**
-     * @inheritDoc
+     * @return array
     */
-    public function getTokens(): array
+    public function getShortcuts(): array
     {
-        return $this->tokens;
+        return $this->shortcuts;
     }
-
 
 
 
@@ -360,8 +357,38 @@ abstract class InputArgv implements InputInterface
 
 
 
+    /**
+     * @inheritDoc
+    */
+    public function parseTokens(array $tokens): void
+    {
+        foreach ($tokens as $token) {
+            $this->parseToken($token);
+        }
+
+        dump($this, __METHOD__);
+    }
+
+
+
 
     /**
+     * @inheritDoc
+    */
+    public function getTokens(): array
+    {
+        return $this->tokens;
+    }
+
+
+
+
+
+    /**
+     *  $ php console
+     *        database:migrations:migrate
+     *        create_new_users_table path='/database/migrations/' -table=users --refresh=users -t --r --force
+     *
      * @param $token
      * @return void
     */

@@ -35,14 +35,14 @@ class Command implements CommandInterface
     /**
      * @var string
     */
-    protected string $defaultName = '';
+    protected $defaultName = '';
 
 
 
     /**
      * Command name
      *
-     * @var string|null
+     * @var string
     */
     protected $name;
 
