@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Console\Command\Defaults;
@@ -18,4 +17,8 @@ use Laventure\Component\Console\Command\Contract\HelpCommandInterface;
 */
 class HelpCommand extends Command implements HelpCommandInterface
 {
+    public function __construct()
+    {
+        parent::__construct('help');
+    }
 }

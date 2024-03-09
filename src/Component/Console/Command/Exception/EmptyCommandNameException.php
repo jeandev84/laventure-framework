@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Console\Command\Exception;
 
-use Throwable;
-
 /**
- * UnableCommandNameException
+ * EmptyCommandNameException
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -15,14 +13,14 @@ use Throwable;
  *
  * @package  Laventure\Component\Console\Command\Exception
 */
-class UnableCommandNameException extends CommandException
+class EmptyCommandNameException extends CommandException
 {
     /**
-     * @param string $message
+     * @param string $commandClass
      * @param array $data
     */
-    public function __construct(string $message, array $data = [])
+    public function __construct(string $commandClass, array $data = [])
     {
-        parent::__construct($message, $data, 404);
+        parent::__construct("Command ($commandClass) has empty name.", $data, 404);
     }
 }

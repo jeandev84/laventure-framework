@@ -69,8 +69,7 @@ abstract class InputParam implements InputParamInterface, InputRulesInterface
         $description,
         $default = null,
         array $rules = []
-    )
-    {
+    ) {
         $this->name        = $name;
         $this->description = $description;
         $this->default     = $default;

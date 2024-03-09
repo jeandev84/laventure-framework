@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Console\Input\Argv;
 
+use Laventure\Component\Console\Input\Collection\InputCollectionInterface;
+
 /**
  * ConsoleInputArgv
  *
@@ -15,6 +17,17 @@ namespace Laventure\Component\Console\Input\Argv;
 */
 class ConsoleInputArgv extends InputArgv
 {
+
+    /**
+     * @param array $tokens
+    */
+    public function __construct(array $tokens = [])
+    {
+        parent::__construct($tokens ?: $_SERVER['argv']);
+    }
+
+
+
     /**
      * @inheritDoc
     */

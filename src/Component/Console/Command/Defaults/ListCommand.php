@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Console\Command\Defaults;
 
 use Laventure\Component\Console\Command\Command;
+use Laventure\Component\Console\Command\Contract\CommandInterface;
 use Laventure\Component\Console\Command\Contract\ListCommandInterface;
 
 /**
@@ -19,12 +20,29 @@ use Laventure\Component\Console\Command\Contract\ListCommandInterface;
 class ListCommand extends Command implements ListCommandInterface
 {
     /**
+     * @var CommandInterface[]
+    */
+    protected array $commands = [];
+
+
+
+    /**
+     * @param CommandInterface[] $commands
+    */
+    public function __construct(array $commands)
+    {
+        parent::__construct('list');
+        $this->commands = $commands;
+    }
+
+
+
+
+    /**
      * @inheritDoc
     */
     public function getCommands(): array
     {
-        return [
 
-        ];
     }
 }

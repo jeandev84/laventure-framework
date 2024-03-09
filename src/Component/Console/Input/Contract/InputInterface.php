@@ -164,11 +164,28 @@ interface InputInterface
 
 
 
-     /**
-      *  Validate parsed inputs
-      *
-      * @param InputCollectionInterface $inputs
-      * @return mixed
-     */
+
+
+
+    /**
+     * Returns compiled file name or other
+     *
+     * @return mixed
+    */
+    public function getCompiledFile(): mixed;
+
+
+
+
+
+
+
+
+    /**
+     *  Validate parsed inputs
+     *
+     * @param InputCollectionInterface $inputs
+     * @return mixed
+    */
     public function validate(InputCollectionInterface $inputs): mixed;
 }

@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace Laventure\Component\Console\Command;
 
 use Laventure\Component\Console\Command\Contract\CommandInterface;
-use Laventure\Component\Console\Command\Exception\UnableCommandNameException;
+use Laventure\Component\Console\Input\Argument\InputArgument;
 use Laventure\Component\Console\Input\Collection\InputCollection;
 use Laventure\Component\Console\Input\Collection\InputCollectionInterface;
 use Laventure\Component\Console\Input\Contract\InputInterface;
+use Laventure\Component\Console\Input\Option\InputOption;
 use Laventure\Component\Console\Output\Contract\OutputInterface;
+use RuntimeException;
 
 /**
  * Command
@@ -25,17 +27,24 @@ class Command implements CommandInterface
     public const SUCCESS  = 0;
     public const FAILURE  = 1;
     public const INVALID  = 2;
-    public const INFO     = 4;
+    public const INFO     = 3;
 
+
+
+
+    /**
+     * @var string
+    */
+    protected string $defaultName = '';
 
 
 
     /**
      * Command name
      *
-     * @var string
+     * @var string|null
     */
-    protected string $name;
+    protected $name;
 
 
 
@@ -76,7 +85,7 @@ class Command implements CommandInterface
     /**
      * @param $name
     */
-    public function __construct($name)
+    public function __construct($name = null)
     {
         $this->inputs = new InputCollection();
         $this->name   = $name;
@@ -108,6 +117,10 @@ class Command implements CommandInterface
     */
     public function getName(): string
     {
+        if (!$this->name) {
+            return $this->defaultName;
+        }
+
         return $this->name;
     }
 
@@ -168,7 +181,7 @@ class Command implements CommandInterface
     */
     public function getHelp(): string
     {
-        return join(PHP_EOL, $this->help);
+        return join('|', $this->help);
     }
 
 
@@ -190,11 +203,69 @@ class Command implements CommandInterface
 
 
 
+
+
+
+    /**
+     * Add new input argument
+     *
+     * @param string $name
+     * @param $description
+     * @param string|null $default
+     * @param array $rules
+     * @return $this
+    */
+    public function addArgument(
+        string $name,
+        $description,
+        string $default = null,
+        array $rules = []
+    ): self {
+        $this->inputs->addArgument(new InputArgument($name, $description, $default, $rules));
+
+        return $this;
+    }
+
+
+
+
+
+
+    /**
+     * Add new input option
+     *
+     * @param $name
+     * @param $description
+     * @param $shortcut
+     * @param null $default
+     * @param array $rules
+     * @return $this
+     */
+    public function addOption(
+        $name,
+        $description,
+        $shortcut = null,
+        $default = null,
+        array $rules = []
+    ): static {
+        $this->inputs->addOption(new InputOption($name, $description, $shortcut, $default, $rules));
+
+        return $this;
+    }
+
+
+
+
+
+
+
     /**
      * @inheritDoc
     */
     public function run(InputInterface $input, OutputInterface $output): int
     {
+        $input->validate($this->inputs);
+
         return $this->execute($input, $output);
     }
 
@@ -209,7 +280,7 @@ class Command implements CommandInterface
     */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        return 0;
+        throw new RuntimeException("You must to return command status inside : ". get_called_class() . "::execute");
     }
 
 

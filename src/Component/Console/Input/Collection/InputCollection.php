@@ -18,7 +18,6 @@ use Laventure\Component\Console\Input\Option\InputOptionInterface;
 */
 class InputCollection implements InputCollectionInterface
 {
-
     /**
      * @var InputArgumentInterface[]
     */
@@ -67,7 +66,7 @@ class InputCollection implements InputCollectionInterface
     */
     public function hasArgument($name): bool
     {
-         return isset($this->arguments[$name]);
+        return isset($this->arguments[$name]);
     }
 
 
