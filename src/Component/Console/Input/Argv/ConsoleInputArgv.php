@@ -49,7 +49,7 @@ class ConsoleInputArgv extends InputArgv
     protected function parseToken($token): void
     {
         if (preg_match("/^(.+)=(.+)$/", $token)) {
-           $this->parseTokenAttributes($token);
+            $this->parseTokenAttributes($token);
         } elseif (preg_match('#^--([^=]+)$#i', $token, $flags)) {
             $this->setOption($flags[1], true);
         } elseif (preg_match('#^-([^=]+)$#i', $token, $flags)) {

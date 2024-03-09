@@ -17,7 +17,6 @@ use Laventure\Component\Console\Input\Rules\InputRulesInterface;
 */
 abstract class InputParam implements InputParamInterface, InputRulesInterface
 {
-
     public const REQUIRED = 0;
     public const OPTIONAL = 1;
 

@@ -49,8 +49,10 @@ class MigrateCommand extends Command
       */
       public function configure(): void
       {
+          /*
           $this->argument('path', 'Indicate path of migrations')
                ->rules([InputArgument::REQUIRED]);
+          */
 
           $this->option('table', 'Indicate current table to migrate', 't')
                ->rules([InputOption::REQUIRED]);
@@ -59,6 +61,7 @@ class MigrateCommand extends Command
                ->rules([InputOption::OPTIONAL]);
 
           $this->option('force', 'Force migrations', 'f');
+
       }
 
 
@@ -73,7 +76,13 @@ class MigrateCommand extends Command
       */
       public function execute(InputInterface $input, OutputInterface $output): int
       {
+          $argument = $input->getArgument();
+          dump('Argument0', $argument);
+          dump('-|--Options', $input->getOptions());
+          dump('--force', $input->getOption('force'));
+
          $output->writeln("Processing migrate to the database ...");
+
          return Command::SUCCESS;
       }
 }

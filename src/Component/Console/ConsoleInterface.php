@@ -21,8 +21,6 @@ use Laventure\Component\Console\Output\Contract\OutputInterface;
 */
 interface ConsoleInterface
 {
-
-
     /**
      * Return the php_sapi_name() for example
      *

@@ -18,8 +18,6 @@ use Laventure\Component\Console\Input\Rules\InputRulesInterface;
 */
 interface InputOptionInterface extends InputParamInterface, InputRulesInterface
 {
-
-
     /**
      * @param $shortcut
      * @return $this

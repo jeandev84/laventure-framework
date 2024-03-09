@@ -15,8 +15,6 @@ namespace Laventure\Component\Console\Input\Param;
  */
 interface InputParamInterface
 {
-
-
     /**
      * @param $name
      * @return $this

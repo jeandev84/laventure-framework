@@ -344,26 +344,19 @@ abstract class InputArgv implements InputInterface
 
 
 
-    /**
-     * @inheritDoc
-     * @throws RequiredArgumentException
-     * @throws InputArgumentException
-    */
-    public function validate(InputCollectionInterface $inputs): bool
-    {
-        return $this->validateArguments($inputs->getArguments()) ||
-               $this->validateOptions($inputs->getOptions());
-    }
-
-
-
-
-
-
 
     /**
+     *  Example: $ php console
+     *                 database:migrations:migrate
+     *                 create_new_users_table
+     *                 -table=users
+     *                 --refresh=users
+     *                 -t
+     *                 --test
+     *                 --foo
+     *
      * @inheritDoc
-    */
+     */
     public function parseTokens(array $tokens): void
     {
         foreach ($tokens as $token) {
@@ -376,7 +369,7 @@ abstract class InputArgv implements InputInterface
 
     /**
      * @inheritDoc
-    */
+     */
     public function getTokens(): array
     {
         return $this->tokens;
@@ -391,10 +384,30 @@ abstract class InputArgv implements InputInterface
      * @param array $context
      * @return mixed
      * @throws InputException
-    */
-    public function abortIf(string $message, int $code = 500, array $context = []): mixed {
+     */
+    public function abortIf(string $message, int $code = 500, array $context = []): mixed
+    {
         throw new InputException($message, $context, $code);
     }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+     * @throws RequiredArgumentException
+     * @throws InputArgumentException|RequiredOptionException
+     */
+    public function validate(InputCollectionInterface $inputs): bool
+    {
+        return $this->validateArguments($inputs->getArguments())
+               && $this->validateOptions($inputs->getOptions());
+    }
+
+
+
 
 
 
@@ -405,7 +418,7 @@ abstract class InputArgv implements InputInterface
      * @throws InputArgumentException
      * @throws RequiredArgumentException
     */
-    protected function validateArguments(array $arguments): bool
+    private function validateArguments(array $arguments): bool
     {
         if (!empty($arguments)) {
             foreach ($arguments as $argument) {
@@ -424,17 +437,18 @@ abstract class InputArgv implements InputInterface
      * @throws InputArgumentException
      * @throws RequiredArgumentException
     */
-    protected function validateArgument(InputArgumentInterface $argument): void
+    private function validateArgument(InputArgumentInterface $argument): void
     {
-          $default = $argument->getDefault();
-          $name    = $argument->getName();
+        $default = $argument->getDefault();
+        $name    = $argument->getName();
 
-          if ($argument->isRequired() && !$this->hasArgument($name)) {
-               throw new RequiredArgumentException($name);
-          } elseif ($argument->isOptional()) {
-              $this->setArgument($name, $default ?: $this->getArgument($name));
-          }
+        if ($argument->isRequired() && !$this->hasArgument($name)) {
+            throw new RequiredArgumentException($name);
+        } elseif ($argument->isOptional()) {
+            $this->setArgument($name, $default ?: $this->getArgument($name));
+        }
     }
+
 
 
 
@@ -442,13 +456,13 @@ abstract class InputArgv implements InputInterface
     /**
      * @param InputOptionInterface[] $options
      * @return bool
-     * @throws RequiredArgumentException
+     * @throws RequiredOptionException
     */
-    protected function validateOptions(array $options): bool
+    private function validateOptions(array $options): bool
     {
         if (!empty($options)) {
             foreach ($options as $option) {
-               $this->validateOption($option);
+                $this->validateOption($option);
             }
         }
 
@@ -463,7 +477,7 @@ abstract class InputArgv implements InputInterface
      * @return void
      * @throws RequiredOptionException
     */
-    protected function validateOption(InputOptionInterface $option): void
+    private function validateOption(InputOptionInterface $option): void
     {
         $default  = $option->getDefault();
         $name     = $option->getName();

@@ -277,7 +277,6 @@ abstract class Command implements CommandInterface
         // validate inputs
         $input->validate($this->inputs);
 
-
         // execute command
         $status = $this->execute($input, $output);
 
@@ -324,5 +323,7 @@ abstract class Command implements CommandInterface
      *
      * @return void
     */
-    protected function configure() {}
+    protected function configure()
+    {
+    }
 }

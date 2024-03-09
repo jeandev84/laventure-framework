@@ -1,10 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Console\Input\Option\Exceptions;
 
 use Laventure\Component\Console\Input\Exception\InputException;
-
 
 /**
  * InputOptionException
@@ -17,5 +17,4 @@ use Laventure\Component\Console\Input\Exception\InputException;
 */
 class InputOptionException extends InputException
 {
-
 }
