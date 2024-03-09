@@ -59,7 +59,7 @@ interface CommandInterface extends ExecutableCommandInterface
      * @param array $description
      * @return $this
     */
-    public function setDescription(array $description): static;
+    public function addDescription(array $description): static;
 
 
 
@@ -98,7 +98,7 @@ interface CommandInterface extends ExecutableCommandInterface
      * @param array $help
      * @return static
     */
-    public function setHelp(array $help): static;
+    public function addHelp(array $help): static;
 
 
 

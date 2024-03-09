@@ -3,7 +3,8 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Console\Input\Option;
 
-use Laventure\Exceptions\BaseException;
+use Laventure\Component\Console\Input\Exception\InputException;
+
 
 /**
  * InputOptionException
@@ -14,7 +15,7 @@ use Laventure\Exceptions\BaseException;
  *
  * @package  Laventure\Component\Console\Input\Option
 */
-class InputOptionException extends BaseException
+class InputOptionException extends InputException
 {
 
 }

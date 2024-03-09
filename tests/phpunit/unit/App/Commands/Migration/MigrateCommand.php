@@ -4,7 +4,9 @@ declare(strict_types=1);
 namespace PHPUnitTest\App\Commands\Migration;
 
 use Laventure\Component\Console\Command\Command;
+use Laventure\Component\Console\Input\Argument\InputArgument;
 use Laventure\Component\Console\Input\Contract\InputInterface;
+use Laventure\Component\Console\Input\Option\InputOption;
 use Laventure\Component\Console\Output\Contract\OutputInterface;
 
 /**
@@ -47,9 +49,15 @@ class MigrateCommand extends Command
       */
       public function configure(): void
       {
-          $this->addArgument('path', 'Indicate path of migrations', '')
-               ->addOption('table', 'Indicate current table to migrate', 't')
-               ->addOption('refresh', 'Refresh migrations', 'r')
+          $this->addArgument('path', 'Indicate path of migrations', '', [
+                    InputArgument::REQUIRED
+               ])
+               ->addOption('table', 'Indicate current table to migrate', 't', [
+                   InputOption::REQUIRED
+               ])
+               ->addOption('refresh', 'Refresh migrations', 'r', [
+                   InputOption::OPTIONAL
+               ])
                ->addOption('force', 'Force migrations', 'f');
       }
 

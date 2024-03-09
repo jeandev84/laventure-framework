@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Laventure\Component\Console\Command;
 
 use Laventure\Component\Console\Command\Contract\CommandInterface;
+use Laventure\Component\Console\Command\Exception\InvalidCommandStatusException;
+use Laventure\Component\Console\Command\Exception\NotExecutableCommandException;
 use Laventure\Component\Console\Input\Argument\InputArgument;
 use Laventure\Component\Console\Input\Collection\InputCollection;
 use Laventure\Component\Console\Input\Collection\InputCollectionInterface;
@@ -22,13 +24,23 @@ use RuntimeException;
  *
  * @package  Laventure\Component\Console\Command
 */
-class Command implements CommandInterface
+abstract class Command implements CommandInterface
 {
     public const SUCCESS  = 0;
     public const FAILURE  = 1;
     public const INVALID  = 2;
     public const INFO     = 3;
 
+
+    /**
+     * @var array|int[]
+    */
+    private array $availableStatus = [
+        self::SUCCESS,
+        self::INFO,
+        self::INVALID,
+        self::INFO
+    ];
 
 
 
@@ -164,7 +176,7 @@ class Command implements CommandInterface
     /**
      * @inheritDoc
     */
-    public function setDescription(array $description): static
+    public function addDescription(array $description): static
     {
         $this->description = $description;
 
@@ -190,7 +202,7 @@ class Command implements CommandInterface
     /**
      * @inheritDoc
     */
-    public function setHelp(array $help): static
+    public function addHelp(array $help): static
     {
         $this->help = $help;
 
@@ -247,6 +259,20 @@ class Command implements CommandInterface
 
 
 
+    /**
+     * @param int $status
+     * @return bool
+    */
+    public function hasValidStatus(int $status): bool
+    {
+        return in_array($status, $this->availableStatus);
+    }
+
+
+
+
+
+
 
     /**
      * @inheritDoc
@@ -255,22 +281,20 @@ class Command implements CommandInterface
     {
         $input->validate($this->inputs);
 
-        return $this->execute($input, $output);
+        $status = $this->execute($input, $output);
+
+        if ($this->hasValidStatus($status)) {
+            throw new InvalidCommandStatusException(
+                  $status,
+           get_called_class() . "::execute",
+                  $this->availableStatus
+            );
+        }
+
+        return $status;
     }
 
 
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function execute(InputInterface $input, OutputInterface $output): int
-    {
-        throw new RuntimeException("You must to return command status inside : ". get_called_class() . "::execute");
-    }
 
 
 
@@ -293,7 +317,5 @@ class Command implements CommandInterface
      *
      * @return void
     */
-    public function configure()
-    {
-    }
+    protected function configure() {}
 }

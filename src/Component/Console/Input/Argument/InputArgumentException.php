@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Console\Input\Argument;
 
+use Laventure\Component\Console\Input\Exception\InputException;
 use Laventure\Exceptions\BaseException;
 
 /**
@@ -14,7 +15,7 @@ use Laventure\Exceptions\BaseException;
  *
  * @package  Laventure\Component\Console\Input\Argument
 */
-class InputArgumentException extends BaseException
+class InputArgumentException extends InputException
 {
 
 }

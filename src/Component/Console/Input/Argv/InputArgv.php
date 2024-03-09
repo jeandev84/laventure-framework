@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace Laventure\Component\Console\Input\Argv;
 
 use Laventure\Component\Console\Input\Argument\InputArgumentException;
+use Laventure\Component\Console\Input\Argument\InputArgumentInterface;
 use Laventure\Component\Console\Input\Collection\InputCollectionInterface;
 use Laventure\Component\Console\Input\Contract\InputInterface;
+use Laventure\Component\Console\Input\Exception\InputException;
+use Laventure\Component\Console\Input\Option\InputOptionInterface;
 
 /**
  * InputArgv
@@ -330,31 +333,6 @@ abstract class InputArgv implements InputInterface
 
 
 
-    /**
-     * @param array $arguments
-     * @return bool
-    */
-    private function validateArguments(array $arguments): bool
-    {
-        return false;
-    }
-
-
-
-
-
-    /**
-     * @param array $options
-     * @return bool
-    */
-    private function validateOptions(array $options): bool
-    {
-        return false;
-    }
-
-
-
-
 
 
     /**
@@ -378,6 +356,82 @@ abstract class InputArgv implements InputInterface
     public function getTokens(): array
     {
         return $this->tokens;
+    }
+
+
+
+
+    /**
+     * @param string $message
+     * @param int $code
+     * @param array $context
+     * @return mixed
+     * @throws InputException
+    */
+    public function abortIf(string $message, int $code = 500, array $context = []): mixed {
+        throw new InputException($message, $context, $code);
+    }
+
+
+
+
+    /**
+     * @param InputArgumentInterface[] $arguments
+     * @return bool
+    */
+    protected function validateArguments(array $arguments): bool
+    {
+        if (!empty($arguments)) {
+            foreach ($arguments as $argument) {
+                $this->validateArgument($argument);
+            }
+            dump($arguments);
+        }
+
+        return true;
+    }
+
+
+
+
+
+    /**
+     * @param InputArgumentInterface $argument
+    */
+    protected function validateArgument(InputArgumentInterface $argument): void
+    {
+          dd($argument);
+    }
+
+
+
+
+    /**
+     * @param InputOptionInterface[] $options
+     * @return bool
+    */
+    protected function validateOptions(array $options): bool
+    {
+        if (!empty($options)) {
+            foreach ($options as $option) {
+               $this->validateOption($option);
+            }
+            dump($options);
+        }
+
+        return true;
+    }
+
+
+
+
+    /**
+     * @param InputOptionInterface $option
+     * @return void
+    */
+    protected function validateOption(InputOptionInterface $option): void
+    {
+          dump($option);
     }
 
 
