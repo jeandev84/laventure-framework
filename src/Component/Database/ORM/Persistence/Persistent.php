@@ -397,11 +397,9 @@ class Persistent implements PersistentInterface
     */
     public function hasIdentity($id): bool
     {
-        $identityId = $this->getIdentity($id);
-
         return $this->em->getUnitOfWork()
                         ->getIdentityMap()
-                        ->has($identityId);
+                        ->has($this->getIdentity($id));
     }
 
 
@@ -417,11 +415,9 @@ class Persistent implements PersistentInterface
      */
     public function loadFromIdentityMap($id): mixed
     {
-        $identityId = $this->getIdentity($id);
-
         return $this->em->getUnitOfWork()
-            ->getIdentityMap()
-            ->get($identityId);
+                        ->getIdentityMap()
+                        ->get($this->getIdentity($id));
     }
 
 
@@ -434,11 +430,9 @@ class Persistent implements PersistentInterface
     */
     public function mapIdentity($id, $data): static
     {
-        $identityId = $this->getIdentity($id);
-
         $this->em->getUnitOfWork()
-            ->getIdentityMap()
-            ->map($identityId, $data);
+                 ->getIdentityMap()
+                 ->map($this->getIdentity($id), $data);
 
         return $this;
     }
