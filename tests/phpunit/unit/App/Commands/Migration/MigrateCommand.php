@@ -33,7 +33,7 @@ class MigrateCommand extends Command
       * @var array|string[]
      */
       protected array $description = [
-        'This command used for migrate data tables to database'
+         'This command used for migrate data tables to database'
       ];
 
 

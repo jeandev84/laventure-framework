@@ -343,8 +343,6 @@ abstract class InputArgv implements InputInterface
         foreach ($tokens as $token) {
             $this->parseToken($token);
         }
-
-        dump($this, __METHOD__);
     }
 
 

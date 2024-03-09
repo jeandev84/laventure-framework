@@ -22,7 +22,7 @@ class HelloCommand extends Command
     /**
      * @var string
     */
-    protected $defaultName = 'hello';
+    protected $name = 'hello';
 
 
     protected array $description = [

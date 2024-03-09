@@ -46,19 +46,13 @@ abstract class Command implements CommandInterface
 
 
 
-    /**
-     * @var string
-    */
-    protected $defaultName = '';
-
-
 
     /**
      * Command name
      *
      * @var string
     */
-    protected $name;
+    protected $name = '';
 
 
 
@@ -80,7 +74,7 @@ abstract class Command implements CommandInterface
      *
      * @var mixed
     */
-    protected array $help = ['h', '--help'];
+    protected array $help = ['h', 'help'];
 
 
 
@@ -102,8 +96,12 @@ abstract class Command implements CommandInterface
     */
     public function __construct($name = null)
     {
+        if ($name) {
+            $this->name = $name;
+        }
+
         $this->inputs = new InputCollection();
-        $this->name   = $name;
+
         $this->configure();
     }
 
@@ -114,7 +112,7 @@ abstract class Command implements CommandInterface
     /**
      * @inheritDoc
     */
-    public function setName($name): static
+    public function name($name): static
     {
         $this->name = $name;
 
@@ -131,10 +129,6 @@ abstract class Command implements CommandInterface
     */
     public function getName(): string
     {
-        if (!$this->name) {
-            return $this->defaultName;
-        }
-
         return $this->name;
     }
 
@@ -165,9 +159,9 @@ abstract class Command implements CommandInterface
     /**
      * @inheritDoc
     */
-    public function getDescription(): string
+    public function getDescription(string $separator = null): string
     {
-        return join(PHP_EOL, $this->description);
+        return join($separator ?: '. ', $this->description);
     }
 
 
@@ -178,7 +172,7 @@ abstract class Command implements CommandInterface
     /**
      * @inheritDoc
     */
-    public function addDescription(array $description): static
+    public function description(array $description): static
     {
         $this->description = $description;
 
@@ -192,9 +186,9 @@ abstract class Command implements CommandInterface
     /**
      * @inheritDoc
     */
-    public function getHelp(): string
+    public function getHelp(string $separator = null): string
     {
-        return join('|', $this->help);
+        return join($separator ?: '|', $this->help);
     }
 
 
@@ -204,7 +198,7 @@ abstract class Command implements CommandInterface
     /**
      * @inheritDoc
     */
-    public function addHelp(array $help): static
+    public function help(array $help): static
     {
         $this->help = $help;
 
@@ -282,10 +276,7 @@ abstract class Command implements CommandInterface
         $status = $this->execute($input, $output);
 
         if ($this->hasValidStatus($status)) {
-            throw new InvalidCommandStatusException($status,
-           get_called_class() . "::execute",
-                  $this->availableStatus
-            );
+            throw new InvalidCommandStatusException($status, get_called_class() . "::execute", $this->availableStatus);
         }
 
         return $status;

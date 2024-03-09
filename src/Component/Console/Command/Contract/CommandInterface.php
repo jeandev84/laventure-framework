@@ -38,7 +38,7 @@ interface CommandInterface extends ExecutableCommandInterface
      * @param $name
      * @return $this
     */
-    public function setName($name): static;
+    public function name($name): static;
 
 
 
@@ -61,32 +61,25 @@ interface CommandInterface extends ExecutableCommandInterface
      * @param array $description
      * @return $this
     */
-    public function addDescription(array $description): static;
-
-
-
-
+    public function description(array $description): static;
 
 
     /**
      * Returns description of command
      *
+     * @param string|null $separator
      * @return string
     */
-    public function getDescription(): string;
-
-
-
-
-
+    public function getDescription(string $separator = null): string;
 
 
     /**
      * Returns help command
      *
+     * @param string|null $separator
      * @return string
     */
-    public function getHelp(): string;
+    public function getHelp(string $separator = null): string;
 
 
 
@@ -100,7 +93,7 @@ interface CommandInterface extends ExecutableCommandInterface
      * @param array $help
      * @return static
     */
-    public function addHelp(array $help): static;
+    public function help(array $help): static;
 
 
     /**

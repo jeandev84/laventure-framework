@@ -55,13 +55,14 @@ class ConsoleInputArgv extends InputArgv
                 $this->shortcutOption($options[1], $options[2]);
                 $this->setOption($options[1], $options[2]);
             } else {
-                $this->setArgument($options[1], $options[2]);
+                list($name, $value) = explode('=', $token, 2);
+                $this->setArgument($name, $value);
             }
         } elseif (preg_match('#^--([^=]+)$#i', $token, $flags)) {
             $this->setOption($flags[1], true);
         } elseif (preg_match('#^-([^=]+)$#i', $token, $flags)) {
             $this->shortcutOption($flags[1], true);
-            $this->setOption($flags[1], $flags[2]);
+            $this->setOption($flags[1], true);
         } else {
             $this->addArgument($token);
         }
