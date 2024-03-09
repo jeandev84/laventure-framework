@@ -4,8 +4,6 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\ORM\Persistence\Manager\Fixtures;
 
 use Laventure\Component\Database\ORM\Persistence\Manager\Contract\EntityManagerInterface;
-use Laventure\Component\Database\ORM\Persistence\Manager\Fixtures\Contract\FixtureInterface;
-use Laventure\Component\Database\ORM\Persistence\Manager\Fixtures\Contract\FixtureManagerInterface;
 
 
 /**
