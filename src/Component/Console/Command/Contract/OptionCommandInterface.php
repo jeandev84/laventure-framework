@@ -21,7 +21,7 @@ interface OptionCommandInterface extends CommandInterface
       *
       * @return string
      */
-     public function getShortcutName(): string;
+     public function getShortcutOption(): string;
 
 
 
@@ -29,5 +29,5 @@ interface OptionCommandInterface extends CommandInterface
      /**
       * @return string
      */
-     public function getLongOptions(): string;
+     public function getLongOption(): string;
 }

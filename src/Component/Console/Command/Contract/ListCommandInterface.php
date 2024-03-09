@@ -1,12 +1,11 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Console\Command\Contract;
 
-use Laventure\Component\Console\Command\Collection\CommandCollectionInterface;
-use Laventure\Contract\Builder\BuilderInterface;
+
 use Laventure\Contract\Lister\ListenableInterface;
+
 
 /**
  * ListCommandInterface
@@ -17,11 +16,75 @@ use Laventure\Contract\Lister\ListenableInterface;
  *
  * @package  Laventure\Component\Console\Command\Contract
 */
-interface ListCommandInterface extends CommandInterface
+interface ListCommandInterface extends CommandInterface, ListenableInterface
 {
 
+
       /**
-       * @return CommandCollectionInterface
+       * @param $usage
+       * @return $this
       */
-      public function getCollection(): CommandCollectionInterface;
+      public function withUsage($usage): static;
+
+
+
+
+
+
+      /**
+       * @param array $usages
+       * @return $this
+      */
+      public function withUsages(array $usages): static;
+
+
+
+
+
+
+
+      /**
+       * @param OptionCommandInterface $command
+       * @return $this
+      */
+      public function withOption(OptionCommandInterface $command): static;
+
+
+
+
+
+
+
+
+
+      /**
+       * @param OptionCommandInterface[] $options
+       * @return $this
+      */
+      public function withOptions(array $options): static;
+
+
+
+
+
+
+
+
+
+      /**
+       * @param CommandInterface $command
+      */
+      public function withAvailableCommand(CommandInterface $command): static;
+
+
+
+
+
+
+
+      /**
+       * @param array $commands
+       * @return $this
+      */
+      public function withAvailableCommands(array $commands): static;
 }

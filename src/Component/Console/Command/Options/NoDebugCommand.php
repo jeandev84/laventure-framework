@@ -31,7 +31,7 @@ class NoDebugCommand extends Command implements OptionCommandInterface
     /**
      * @inheritDoc
      */
-    public function getShortcutName(): string
+    public function getShortcutOption(): string
     {
         // TODO: Implement getShortcutName() method.
     }
@@ -39,7 +39,7 @@ class NoDebugCommand extends Command implements OptionCommandInterface
     /**
      * @inheritDoc
      */
-    public function getLongOptions(): string
+    public function getLongOption(): string
     {
         // TODO: Implement getLongOptions() method.
     }
