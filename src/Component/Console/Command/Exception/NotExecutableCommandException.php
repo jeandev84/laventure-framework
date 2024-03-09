@@ -23,6 +23,6 @@ class NotExecutableCommandException extends BaseException
       */
       public function __construct($command, array $context = [])
       {
-          parent::__construct("You must to return command status inside : ". get_called_class() . "::execute", 409);
+          parent::__construct("Could not execute command ($command)", $context, 409);
       }
 }

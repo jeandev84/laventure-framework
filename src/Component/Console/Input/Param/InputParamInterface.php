@@ -15,16 +15,50 @@ namespace Laventure\Component\Console\Input\Param;
  */
 interface InputParamInterface
 {
+
+
+    /**
+     * @param $name
+     * @return $this
+    */
+    public function name($name): static;
+
+
+
+
+
     /**
      * @return string
     */
     public function getName(): string;
 
 
+
+
+
+    /**
+     * @param $description
+     * @return $this
+    */
+    public function description($description): static;
+
+
+
+
     /**
      * @return string
     */
     public function getDescription(): string;
+
+
+
+
+    /**
+     * @param $default
+     * @return $this
+    */
+    public function default($default): static;
+
 
 
 

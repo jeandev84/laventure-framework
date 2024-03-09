@@ -14,12 +14,6 @@ namespace Laventure\Component\Console\Input\Rules;
 */
 interface InputRulesInterface
 {
-    public const REQUIRED = 1;
-    public const OPTIONAL = 2;
-
-
-
-
     /**
      * @return array
     */
@@ -32,6 +26,15 @@ interface InputRulesInterface
      * @return bool
     */
     public function hasRule($rule): bool;
+
+
+
+
+    /**
+     * @param array $rules
+     * @return $this
+    */
+    public function rules(array $rules): static;
 
 
 

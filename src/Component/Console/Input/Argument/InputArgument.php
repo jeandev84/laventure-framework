@@ -17,4 +17,7 @@ use Laventure\Component\Console\Input\Param\InputParam;
 */
 class InputArgument extends InputParam implements InputArgumentInterface
 {
+    public const REQUIRED = 2;
+    public const OPTIONAL = 3;
+
 }

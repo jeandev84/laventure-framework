@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Console\Command\Contract;
 
+use Laventure\Component\Console\Input\Argument\InputArgumentInterface;
 use Laventure\Component\Console\Input\Collection\InputCollectionInterface;
 use Laventure\Component\Console\Input\Contract\InputInterface;
+use Laventure\Component\Console\Input\Option\InputOptionInterface;
 use Laventure\Component\Console\Output\Contract\OutputInterface;
 
 /**
@@ -101,10 +103,6 @@ interface CommandInterface extends ExecutableCommandInterface
     public function addHelp(array $help): static;
 
 
-
-
-
-
     /**
      * Add new input argument
      *
@@ -112,16 +110,14 @@ interface CommandInterface extends ExecutableCommandInterface
      * @param $description
      * @param string|null $default
      * @param array $rules
-     * @return $this
+     * @return InputArgumentInterface
     */
     public function addArgument(
         string $name,
         $description,
         string $default = null,
         array $rules = []
-    ): static;
-
-
+    ): InputArgumentInterface;
 
 
 
@@ -131,10 +127,10 @@ interface CommandInterface extends ExecutableCommandInterface
      *
      * @param $name
      * @param $description
-     * @param $shortcut
+     * @param null $shortcut
      * @param null $default
      * @param array $rules
-     * @return $this
+     * @return InputOptionInterface
     */
     public function addOption(
         $name,
@@ -142,7 +138,7 @@ interface CommandInterface extends ExecutableCommandInterface
         $shortcut = null,
         $default = null,
         array $rules = []
-    ): static;
+    ): InputOptionInterface;
 
 
 

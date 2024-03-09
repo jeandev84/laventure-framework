@@ -17,6 +17,11 @@ use Laventure\Component\Console\Input\Rules\InputRulesInterface;
 */
 abstract class InputParam implements InputParamInterface, InputRulesInterface
 {
+
+    public const REQUIRED = 0;
+    public const OPTIONAL = 1;
+
+
     /**
      * @var string
     */
@@ -36,7 +41,7 @@ abstract class InputParam implements InputParamInterface, InputRulesInterface
     /**
      * @var string|null
     */
-    protected ?string $default = null;
+    protected $default = null;
 
 
 
@@ -70,10 +75,62 @@ abstract class InputParam implements InputParamInterface, InputRulesInterface
         $default = null,
         array $rules = []
     ) {
-        $this->name        = $name;
+        $this->name($name)
+             ->description($description)
+             ->default($default)
+             ->rules($rules);
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function name($name): static
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function description($description): static
+    {
         $this->description = $description;
-        $this->default     = $default;
-        $this->rules       = $rules;
+
+        return $this;
+    }
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function default($default): static
+    {
+        $this->default = $default;
+
+        return $this;
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function rules(array $rules): static
+    {
+        $this->rules = $rules;
+
+        return $this;
     }
 
 

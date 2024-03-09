@@ -8,10 +8,12 @@ use Laventure\Component\Console\Command\Contract\CommandInterface;
 use Laventure\Component\Console\Command\Exception\InvalidCommandStatusException;
 use Laventure\Component\Console\Command\Exception\NotExecutableCommandException;
 use Laventure\Component\Console\Input\Argument\InputArgument;
+use Laventure\Component\Console\Input\Argument\InputArgumentInterface;
 use Laventure\Component\Console\Input\Collection\InputCollection;
 use Laventure\Component\Console\Input\Collection\InputCollectionInterface;
 use Laventure\Component\Console\Input\Contract\InputInterface;
 use Laventure\Component\Console\Input\Option\InputOption;
+use Laventure\Component\Console\Input\Option\InputOptionInterface;
 use Laventure\Component\Console\Output\Contract\OutputInterface;
 use RuntimeException;
 
@@ -224,12 +226,10 @@ abstract class Command implements CommandInterface
         $description,
         string $default = null,
         array $rules = []
-    ): static {
-        $this->inputs->addArgument(
+    ): InputArgumentInterface {
+        return $this->inputs->addArgument(
             new InputArgument($name, $description, $default, $rules)
         );
-
-        return $this;
     }
 
 
@@ -246,12 +246,10 @@ abstract class Command implements CommandInterface
         $shortcut = null,
         $default = null,
         array $rules = []
-    ): static {
-        $this->inputs->addOption(
+    ): InputOptionInterface {
+        return $this->inputs->addOption(
             new InputOption($name, $description, $shortcut, $default, $rules)
         );
-
-        return $this;
     }
 
 

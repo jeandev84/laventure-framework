@@ -52,10 +52,10 @@ class MigrateCommand extends Command
           $this->addArgument('path', 'Indicate path of migrations', '', [
                     InputArgument::REQUIRED
                ])
-               ->addOption('table', 'Indicate current table to migrate', 't', [
+               ->addOption('table', 'Indicate current table to migrate', 't', '', [
                    InputOption::REQUIRED
                ])
-               ->addOption('refresh', 'Refresh migrations', 'r', [
+               ->addOption('refresh', 'Refresh migrations', 'r', '', [
                    InputOption::OPTIONAL
                ])
                ->addOption('force', 'Force migrations', 'f');

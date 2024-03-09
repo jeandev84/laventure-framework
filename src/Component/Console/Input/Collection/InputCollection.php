@@ -49,13 +49,11 @@ class InputCollection implements InputCollectionInterface
 
     /**
      * @param InputArgumentInterface $argument
-     * @return $this
+     * @return InputArgumentInterface
     */
-    public function addArgument(InputArgumentInterface $argument): static
+    public function addArgument(InputArgumentInterface $argument): InputArgumentInterface
     {
-        $this->arguments[$argument->getName()] = $argument;
-
-        return $this;
+        return $this->arguments[$argument->getName()] = $argument;
     }
 
 
@@ -97,16 +95,13 @@ class InputCollection implements InputCollectionInterface
 
 
 
-
     /**
      * @param InputOptionInterface $option
-     * @return $this
+     * @return InputOptionInterface
     */
-    public function addOption(InputOptionInterface $option): static
+    public function addOption(InputOptionInterface $option): InputOptionInterface
     {
-        $this->options[$option->getName()] = $option;
-
-        return $this;
+        return $this->options[$option->getName()] = $option;
     }
 
 

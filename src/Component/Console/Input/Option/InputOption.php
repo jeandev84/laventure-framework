@@ -17,8 +17,13 @@ use Laventure\Component\Console\Input\Param\InputParam;
 */
 class InputOption extends InputParam implements InputOptionInterface
 {
+
+    public const REQUIRED = 4;
+    public const OPTIONAL = 5;
+
+
     /**
-     * @var mixed|null
+     * @var null
     */
     protected $shortcut = null;
 
@@ -39,7 +44,7 @@ class InputOption extends InputParam implements InputOptionInterface
         array $rules = []
     ) {
         parent::__construct($name, $description, $default, $rules);
-        $this->shortcut = $shortcut;
+        $this->shortcut($shortcut);
     }
 
 
@@ -51,5 +56,18 @@ class InputOption extends InputParam implements InputOptionInterface
     public function getShortCut(): ?string
     {
         return $this->shortcut;
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function shortcut($shortcut): static
+    {
+        $this->shortcut = $shortcut;
+
+        return $this;
     }
 }
