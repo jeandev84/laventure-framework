@@ -192,9 +192,9 @@ abstract class InputArgv implements InputInterface
     /**
      * @inheritDoc
     */
-    public function getInteractive(): mixed
+    public function getInteractive(): false|string
     {
-       return '';
+       return php_sapi_name();
     }
 
 
@@ -205,7 +205,9 @@ abstract class InputArgv implements InputInterface
     */
     public function isInteractive(): bool
     {
-        return false;
+        $interactive = $this->getInteractive();
+
+        return ($interactive === 'cli' || $interactive === 'phpdbg');
     }
 
 
@@ -240,6 +242,6 @@ abstract class InputArgv implements InputInterface
     */
     public function validate(InputCollectionInterface $inputs): mixed
     {
-
+        return false;
     }
 }

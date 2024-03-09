@@ -19,6 +19,16 @@ use Laventure\Component\Console\Output\Contract\OutputInterface;
 class MigrateCommand extends Command
 {
 
+
+     /**
+      * @var array|string[]
+     */
+      protected array $description = [
+        'This command used for migrate data tables to database'
+      ];
+
+
+
       public function __construct()
       {
           parent::__construct('database:migrations:migrate');
@@ -26,14 +36,14 @@ class MigrateCommand extends Command
 
 
 
-     /**
-      * @param InputInterface $input
-      * @param OutputInterface $output
-      * @return int
-     */
-     public function execute(InputInterface $input, OutputInterface $output): int
-     {
-         echo "Processing migrate to the database ...\n";
+      /**
+       * @param InputInterface $input
+       * @param OutputInterface $output
+       * @return int
+      */
+      public function execute(InputInterface $input, OutputInterface $output): int
+      {
+         $output->writeln("Processing migrate to the database ...");
          return Command::SUCCESS;
-     }
+      }
 }

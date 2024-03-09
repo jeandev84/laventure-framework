@@ -29,6 +29,20 @@ interface CommandInterface extends ExecutableCommandInterface
 
 
 
+
+    /**
+     * Set command name
+     *
+     * @param $name
+     * @return $this
+    */
+    public function setName($name): static;
+
+
+
+
+
+
     /**
      * Read name as array
      *
@@ -36,6 +50,16 @@ interface CommandInterface extends ExecutableCommandInterface
     */
     public function getNameAsArray(): array;
 
+
+
+
+
+
+    /**
+     * @param array $description
+     * @return $this
+    */
+    public function setDescription(array $description): static;
 
 
 
@@ -61,6 +85,64 @@ interface CommandInterface extends ExecutableCommandInterface
      * @return string
     */
     public function getHelp(): string;
+
+
+
+
+
+
+
+    /**
+     * Set help commands
+     *
+     * @param array $help
+     * @return static
+    */
+    public function setHelp(array $help): static;
+
+
+
+
+
+
+    /**
+     * Add new input argument
+     *
+     * @param string $name
+     * @param $description
+     * @param string|null $default
+     * @param array $rules
+     * @return $this
+    */
+    public function addArgument(
+        string $name,
+               $description,
+        string $default = null,
+        array $rules = []
+    ): static;
+
+
+
+
+
+
+    /**
+     * Add new input option
+     *
+     * @param $name
+     * @param $description
+     * @param $shortcut
+     * @param null $default
+     * @param array $rules
+     * @return $this
+    */
+    public function addOption(
+        $name,
+        $description,
+        $shortcut = null,
+        $default = null,
+        array $rules = []
+    ): static;
 
 
 

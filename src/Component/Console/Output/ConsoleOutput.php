@@ -42,10 +42,11 @@ class ConsoleOutput implements OutputInterface
     */
     public function writeln($message): static
     {
-        $this->messages[] = "$message". PHP_EOL;
+        $this->messages[] = sprintf('%s%s', $message, PHP_EOL);
 
         return $this;
     }
+
 
 
 
@@ -63,9 +64,9 @@ class ConsoleOutput implements OutputInterface
     /**
      * @inheritDoc
     */
-    public function getMessageAsString(): string
+    public function getMessagesAsString(): string
     {
-        return join($this->messages);
+        return join($this->messages).PHP_EOL;
     }
 
 
@@ -74,10 +75,29 @@ class ConsoleOutput implements OutputInterface
     /**
      * @inheritDoc
     */
-    public function echo(): static
+    public function echo(): void
     {
-        echo $this->getMessageAsString();
+        echo $this->getMessagesAsString();
+    }
 
-        return $this;
+
+
+    /**
+     * @inheritDoc
+    */
+    public function print(): void
+    {
+        print($this->getMessagesAsString());
+    }
+
+
+
+    
+    /**
+     * @inheritDoc
+    */
+    public function __toString(): string
+    {
+        return $this->getMessagesAsString();
     }
 }

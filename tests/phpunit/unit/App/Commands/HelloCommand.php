@@ -25,6 +25,10 @@ class HelloCommand extends Command
     protected string $defaultName = 'hello';
 
 
+    protected array $description = [
+        'This command used to say hello users. Thanks you!'
+    ];
+
 
     /**
      * @param InputInterface $input
@@ -33,7 +37,7 @@ class HelloCommand extends Command
     */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-         echo "Hello! Friends.\n";
+         $output->writeln("Hello! Friends.");
          return Command::SUCCESS;
     }
 }

@@ -66,7 +66,8 @@ class Command implements CommandInterface
      *
      * @var mixed
     */
-    protected array $help = [];
+    protected array $help = ['h', '--help'];
+
 
 
 
@@ -97,10 +98,9 @@ class Command implements CommandInterface
 
 
     /**
-     * @param $name
-     * @return $this
+     * @inheritDoc
     */
-    public function name($name): static
+    public function setName($name): static
     {
         $this->name = $name;
 
@@ -162,8 +162,7 @@ class Command implements CommandInterface
 
 
     /**
-     * @param array $description
-     * @return $this
+     * @inheritDoc
     */
     public function setDescription(array $description): static
     {
@@ -177,7 +176,7 @@ class Command implements CommandInterface
 
 
     /**
-     * @return string
+     * @inheritDoc
     */
     public function getHelp(): string
     {
@@ -189,8 +188,7 @@ class Command implements CommandInterface
 
 
     /**
-     * @param array $help
-     * @return static
+     * @inheritDoc
     */
     public function setHelp(array $help): static
     {
@@ -207,20 +205,14 @@ class Command implements CommandInterface
 
 
     /**
-     * Add new input argument
-     *
-     * @param string $name
-     * @param $description
-     * @param string|null $default
-     * @param array $rules
-     * @return $this
+     * @inheritDoc
     */
     public function addArgument(
         string $name,
         $description,
         string $default = null,
         array $rules = []
-    ): self {
+    ): static {
         $this->inputs->addArgument(new InputArgument($name, $description, $default, $rules));
 
         return $this;
@@ -232,15 +224,8 @@ class Command implements CommandInterface
 
 
     /**
-     * Add new input option
-     *
-     * @param $name
-     * @param $description
-     * @param $shortcut
-     * @param null $default
-     * @param array $rules
-     * @return $this
-     */
+     * @inheritDoc
+    */
     public function addOption(
         $name,
         $description,

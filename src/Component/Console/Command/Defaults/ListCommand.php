@@ -7,6 +7,8 @@ namespace Laventure\Component\Console\Command\Defaults;
 use Laventure\Component\Console\Command\Command;
 use Laventure\Component\Console\Command\Contract\CommandInterface;
 use Laventure\Component\Console\Command\Contract\ListCommandInterface;
+use Laventure\Component\Console\Input\Contract\InputInterface;
+use Laventure\Component\Console\Output\Contract\OutputInterface;
 
 /**
  * ListCommand
@@ -43,6 +45,25 @@ class ListCommand extends Command implements ListCommandInterface
     */
     public function getCommands(): array
     {
+        return $this->commands;
+    }
 
+
+
+
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int
+    */
+    public function execute(InputInterface $input, OutputInterface $output): int
+    {
+        echo "Usage: \n";
+
+        foreach ($this->commands as $command) {
+            echo "{$command->getName()} :  {$command->getDescription()}\n";
+        }
+
+        return Command::SUCCESS;
     }
 }

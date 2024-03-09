@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Console\Output\Contract;
 
+use Stringable;
+
 /**
  * OutputInterface
  *
@@ -13,7 +15,7 @@ namespace Laventure\Component\Console\Output\Contract;
  *
  * @package  Laventure\Component\Console\Output\Contract
 */
-interface OutputInterface
+interface OutputInterface extends Stringable
 {
 
     /**
@@ -48,7 +50,7 @@ interface OutputInterface
     /**
      * @return string
     */
-    public function getMessageAsString(): string;
+    public function getMessagesAsString(): string;
 
 
 
@@ -56,7 +58,17 @@ interface OutputInterface
 
 
     /**
-     * @return mixed
+     * @return void
     */
-    public function echo(): mixed;
+    public function echo(): void;
+
+
+
+
+
+
+    /**
+     * @return void
+    */
+    public function print(): void;
 }
