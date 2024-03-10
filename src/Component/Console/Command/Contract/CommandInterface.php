@@ -115,7 +115,7 @@ interface CommandInterface extends ExecutableCommandInterface
     /**
      * @return string
     */
-    public function getDescriptionAsString(): string;
+    public function descriptionAsString(): string;
 
 
 

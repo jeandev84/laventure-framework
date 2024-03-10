@@ -8,7 +8,7 @@ use Laventure\Component\Console\Command\Collection\CommandCollectionInterface;
 use Laventure\Component\Console\Command\Contract\CommandInterface;
 use Laventure\Component\Console\Command\Contract\ListCommandInterface;
 use Laventure\Component\Console\Command\Contract\OptionCommandInterface;
-use Laventure\Component\Console\Command\List\ListCommand;
+use Laventure\Component\Console\Command\Defaults\List\ListCommand;
 use Laventure\Component\Console\Command\Exception\EmptyCommandNameException;
 use Laventure\Component\Console\Command\Usage\UsageCommandInterface;
 use Laventure\Component\Console\Input\InputInterface;
@@ -90,18 +90,20 @@ class Console implements ConsoleInterface, CommandCollectionInterface
 
 
 
+
     /**
-     * @param array $optionCommands
+     * @param array $commands
      * @return $this
+     * @throws EmptyCommandNameException
     */
-    public function addOptionCommands(array $optionCommands): static
+    public function addOptions(array $commands): static
     {
-        $this->listCommand->withOptions($optionCommands);
+        $this->addCommands($commands);
+
+        $this->listCommand->withOptions($commands);
 
         return $this;
     }
-
-
 
 
 

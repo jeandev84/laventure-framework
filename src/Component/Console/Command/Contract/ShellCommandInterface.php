@@ -15,4 +15,9 @@ namespace Laventure\Component\Console\Command\Contract;
 */
 interface ShellCommandInterface extends CommandInterface
 {
+      /**
+       * @param $command
+       * @return mixed
+      */
+      public function shellExec($command): mixed;
 }

@@ -214,7 +214,7 @@ abstract class Command implements CommandInterface
     /**
      * @inheritDoc
     */
-    public function getDescriptionAsString(): string
+    public function descriptionAsString(): string
     {
         return join('. ', $this->description);
     }

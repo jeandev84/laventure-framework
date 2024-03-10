@@ -13,6 +13,6 @@ namespace Laventure\Component\Console\Command\Contract;
  *
  * @package  Laventure\Component\Console\Command\Contract
 */
-interface HelpCommandInterface extends CommandInterface
+interface HelpCommandInterface extends OptionCommandInterface
 {
 }

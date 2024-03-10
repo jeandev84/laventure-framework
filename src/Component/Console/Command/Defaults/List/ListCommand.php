@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Console\Command\List;
+namespace Laventure\Component\Console\Command\Defaults\List;
 
-use Laventure\Component\Console\Command\Collection\CommandCollectionInterface;
 use Laventure\Component\Console\Command\Command;
 use Laventure\Component\Console\Command\Contract\CommandInterface;
 use Laventure\Component\Console\Command\Contract\ListCommandInterface;
 use Laventure\Component\Console\Command\Contract\OptionCommandInterface;
 use Laventure\Component\Console\Input\InputInterface;
 use Laventure\Component\Console\Output\OutputInterface;
+use Laventure\Component\Console\Output\Table\ConsoleTable;
 
 /**
  * ListCommand
@@ -184,7 +184,7 @@ class ListCommand extends Command implements ListCommandInterface
     {
         $shortcutOption = $command->getShortcutOption();
         $longOption     = $command->getLongOption();
-        $description    = $command->getDescriptionAsString();
+        $description    = $command->descriptionAsString();
 
         return $this->optionList($longOption, $description, $shortcutOption);
     }
@@ -317,14 +317,15 @@ class ListCommand extends Command implements ListCommandInterface
     */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $table = new \Laventure\Component\Console\Output\Table\ConsoleTable();
+        /*
+        $table = new ConsoleTable();
 
         $table->addRow(['-h, --help', 'Display help for the given command. When no command is given display help for the (list) command'])
-            ->addRow(['-q, --quiet', 'Do not output any message'])
-            ->addRow(['-V, --version', 'Display this application version'])
-            ->hideBorder()
-            ->display()
-        ;
+              ->addRow(['-q, --quiet', 'Do not output any message'])
+              ->addRow(['-V, --version', 'Display this application version'])
+              ->hideBorder()
+              ->display();
+        */
 
         foreach ($this->listHeaders as $header => $expressions) {
             $output->writeln("$header:");

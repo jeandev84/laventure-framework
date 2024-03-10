@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Console\Command\Options;
+namespace Laventure\Component\Console\Command\Defaults\Options;
 
 use Laventure\Component\Console\Command\Command;
 use Laventure\Component\Console\Command\Contract\OptionCommandInterface;
@@ -10,7 +10,7 @@ use Laventure\Component\Console\Input\InputInterface;
 use Laventure\Component\Console\Output\OutputInterface;
 
 /**
- * AnsiCommand
+ * NoDebugCommand
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -18,7 +18,7 @@ use Laventure\Component\Console\Output\OutputInterface;
  *
  * @package  Laventure\Component\Console\Command\Options
  */
-class AnsiCommand extends Command implements OptionCommandInterface
+class NoDebugCommand extends Command implements OptionCommandInterface
 {
     /**
      * @inheritDoc
@@ -26,5 +26,21 @@ class AnsiCommand extends Command implements OptionCommandInterface
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         // TODO: Implement execute() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getShortcutOption(): string
+    {
+        // TODO: Implement getShortcutName() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getLongOption(): string
+    {
+        // TODO: Implement getLongOptions() method.
     }
 }

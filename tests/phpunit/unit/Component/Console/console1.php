@@ -1,6 +1,6 @@
 <?php
 
-use Laventure\Component\Console\Command\Options\HelpCommand;
+use Laventure\Component\Console\Command\Defaults\Options\HelpCommand;
 use Laventure\Component\Console\Console;
 use Laventure\Component\Console\Input\Types\Argv\ConsoleInputArgv;
 use Laventure\Component\Console\Output\ConsoleOutput;

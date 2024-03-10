@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Console\Command\Options;
+namespace Laventure\Component\Console\Command\Defaults\Options;
 
 use Laventure\Component\Console\Command\Command;
 use Laventure\Component\Console\Command\Contract\OptionCommandInterface;
@@ -10,37 +10,44 @@ use Laventure\Component\Console\Input\InputInterface;
 use Laventure\Component\Console\Output\OutputInterface;
 
 /**
- * NoDebugCommand
+ * EnvironmentCommand
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
  * @package  Laventure\Component\Console\Command\Options
- */
-class NoDebugCommand extends Command implements OptionCommandInterface
+*/
+class EnvironmentCommand extends Command implements OptionCommandInterface
 {
     /**
      * @inheritDoc
-     */
+    */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        // TODO: Implement execute() method.
+        return Command::SUCCESS;
     }
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function getShortcutOption(): string
     {
-        // TODO: Implement getShortcutName() method.
+        return '-e';
     }
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function getLongOption(): string
     {
-        // TODO: Implement getLongOptions() method.
+        return '--env=ENV';
     }
 }
