@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Console\Command\Defaults\List;
+namespace Laventure\Component\Console\Command\Defaults;
 
 use Laventure\Component\Console\Command\Command;
 use Laventure\Component\Console\Command\Contract\CommandInterface;
