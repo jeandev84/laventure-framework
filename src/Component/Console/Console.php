@@ -8,7 +8,7 @@ use Laventure\Component\Console\Command\Collection\CommandCollectionInterface;
 use Laventure\Component\Console\Command\Command;
 use Laventure\Component\Console\Command\Contract\CommandInterface;
 use Laventure\Component\Console\Command\Contract\ListCommandInterface;
-use Laventure\Component\Console\Command\Defaults\DefaultListCommand;
+use Laventure\Component\Console\Command\Defaults\DefaultListCommands;
 use Laventure\Component\Console\Command\Defaults\List\ListCommand;
 use Laventure\Component\Console\Command\Exception\EmptyCommandNameException;
 use Laventure\Component\Console\Command\Usage\UsageCommandInterface;
@@ -48,7 +48,7 @@ class Console implements ConsoleInterface, CommandCollectionInterface
     */
     public function __construct()
     {
-        $this->withListCommand(new DefaultListCommand());
+        $this->addListCommand(new DefaultListCommands());
     }
 
 
@@ -84,7 +84,7 @@ class Console implements ConsoleInterface, CommandCollectionInterface
      * @inheritDoc
      * @throws EmptyCommandNameException
     */
-    public function withListCommand(ListCommandInterface $listCommand): static
+    public function addListCommand(ListCommandInterface $listCommand): static
     {
         $this->listCommand = $listCommand;
 

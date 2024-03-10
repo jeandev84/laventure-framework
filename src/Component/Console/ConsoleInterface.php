@@ -53,7 +53,7 @@ interface ConsoleInterface
      * @param ListCommandInterface $listCommand
      * @return $this
     */
-    public function withListCommand(ListCommandInterface $listCommand): static;
+    public function addListCommand(ListCommandInterface $listCommand): static;
 
 
 

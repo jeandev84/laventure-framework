@@ -22,7 +22,7 @@ use Laventure\Component\Console\Output\Table\ConsoleTable;
  *
  * @package  Laventure\Component\Console\Command\Defaults\List
 */
-class DefaultListCommand extends Command implements ListCommandInterface
+class DefaultListCommands extends Command implements ListCommandInterface
 {
     /**
      * @var string
