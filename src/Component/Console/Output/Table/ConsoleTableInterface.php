@@ -16,4 +16,5 @@ namespace Laventure\Component\Console\Output\Table;
 interface ConsoleTableInterface
 {
 
+
 }

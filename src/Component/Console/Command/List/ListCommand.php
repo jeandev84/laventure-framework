@@ -71,7 +71,6 @@ class ListCommand extends Command implements ListCommandInterface
      * @var array
     */
     protected array $optionList = [
-        /*
         "-h, --help               Display help for the given command. When no command is given display help for the (list) command",
         '-q, --quiet              Do not output any message',
         '-V, --version            Display this application version',
@@ -80,7 +79,6 @@ class ListCommand extends Command implements ListCommandInterface
         '-e, --env=ENV            The Environment name. [default: "dev"]',
         '    --no-debug           Switch off debug mode.',
         '-v|vv|vvv, --verbose     Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug'
-        */
     ];
 
 
@@ -168,11 +166,11 @@ class ListCommand extends Command implements ListCommandInterface
     */
     public function optionList($longOption, $description, $shortcutOption = null): static
     {
-        $command = $shortcutOption ? "$shortcutOption, $longOption" : $longOption;
+        $command = $shortcutOption ? "$shortcutOption, $longOption" : "   $longOption";
 
         $this->optionList[$command] = $description;
 
-        $this->optionLength[] = strlen($command);
+        $this->optionLength[] = mb_strlen($command);
 
         return $this;
     }
@@ -258,6 +256,62 @@ class ListCommand extends Command implements ListCommandInterface
 
 
 
+    /**
+     * @return int
+     */
+    public function getMaxlengthOfIndex(): int
+    {
+        return max($this->optionLength);
+    }
+
+
+
+
+    /**
+     * @return array
+     */
+    public function getOptionLength(): array
+    {
+        return $this->optionLength;
+    }
+
+
+
+    private function toReviews(): void
+    {
+        /*
+        dump($this->getMaxlengthOfIndex());
+
+        foreach ($this->list() as $header => $expressions) {
+            $output->writeln("$header:");
+            foreach ($expressions as $index => $expression) {
+                $message  = $expression;
+                $space = '';
+                for ($i = 0; $i <= $this->getMaxlengthOfIndex(); $i++) {
+                    $space .= ' ';
+                }
+                $space = '                   ';
+                #$lengthIndex = strlen($index);
+                #$lengthExpr  = strlen($expression);
+                #$space = str_repeat(' ', $this->getMaxlengthOfIndex());
+
+                if ($index) {
+                    #$message = "$index$space$expression";
+                    #$message = "$index". substr($expression, $position, strlen($expression) + $position);
+                    #$message  = "$index $expression";
+                    $message  = "$index$space$expression";
+                }
+
+                $output->writeln("  $message");
+            }
+            $output->writeln('');
+        }
+        */
+
+    }
+
+
+
 
 
     /**
@@ -265,19 +319,22 @@ class ListCommand extends Command implements ListCommandInterface
     */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-         foreach ($this->list() as $header => $expressions) {
-             $output->writeln("$header:");
-             foreach ($expressions as $index => $expression) {
-                 $message = $expression;
-                 if ($index) {
-                     $message = "$index     $expression";
-                 }
+        $table = new \Laventure\Component\Console\Output\Table\ConsoleTable();
 
-                 $output->writeln("  $message");
-             }
-             $output->writeln('');
-         }
+        $table->addRow(['-h, --help', 'Display help for the given command. When no command is given display help for the (list) command'])
+            ->addRow(['-q, --quiet', 'Do not output any message'])
+            ->addRow(['-V, --version', 'Display this application version'])
+            ->hideBorder()
+            ->display()
+        ;
 
-         return Command::SUCCESS;
+        foreach ($this->listHeaders as $header => $expressions) {
+            $output->writeln("$header:");
+            foreach ($expressions as $expression) {
+                $output->writeln("  $expression");
+            }
+            $output->writeln('');
+        }
+        return Command::SUCCESS;
     }
 }

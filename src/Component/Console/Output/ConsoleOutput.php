@@ -83,6 +83,15 @@ class ConsoleOutput implements OutputInterface
     /**
      * @inheritDoc
     */
+    public function tab($message, int $times = 0): static
+    {
+        return $this->writeln("\t$message");
+    }
+
+
+    /**
+     * @inheritDoc
+    */
     public function print(): void
     {
         print($this->getMessagesAsString());

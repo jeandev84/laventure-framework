@@ -36,6 +36,20 @@ interface OutputInterface extends Stringable
 
 
 
+
+    /**
+     * @param $message
+     * @param int $times
+     * @return $this
+    */
+    public function tab($message, int $times = 0): static;
+
+
+
+
+
+
+
     /**
      * @return array
     */
