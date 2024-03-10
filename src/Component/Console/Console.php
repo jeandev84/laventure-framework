@@ -137,11 +137,8 @@ class Console implements ConsoleInterface, CommandCollectionInterface
             throw new EmptyCommandNameException(get_class($command));
         }
 
-        if (!$this->hasCommand($name)) {
-            $command = $this->setCommandDefaultOptions($command);
-
-            $this->commands[$name] = $command;
-        }
+        $command = $this->setCommandDefaultOptions($command);
+        $this->commands[$name] = $command;
 
 
         return $this;
@@ -213,7 +210,7 @@ class Console implements ConsoleInterface, CommandCollectionInterface
             if ($this->hasHelp($option)) {
                  $output->printList($command->getHelpList());
                  return Command::INFO;
-            };
+            }
         }
 
         $status  = $command->run($input, $output);

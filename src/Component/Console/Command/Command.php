@@ -406,7 +406,7 @@ abstract class Command implements CommandInterface
     {
         return [
             'Usage'        => $this->getUsage(),
-            'Options'      => $this->getOptions(),
+            'Options'      => $this->getOptionList(),
         ];
     }
 
@@ -479,6 +479,9 @@ abstract class Command implements CommandInterface
 
         return $options;
     }
+
+
+
 
     /**
      * @inheritDoc

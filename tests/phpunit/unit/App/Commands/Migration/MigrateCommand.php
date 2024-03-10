@@ -74,13 +74,26 @@ class MigrateCommand extends Command
       */
       public function execute(InputInterface $input, OutputInterface $output): int
       {
+          /*
           $argument = $input->getArgument();
           dump('Argument0', $argument);
           dump('-|--Options', $input->getOptions());
           dump('--force', $input->getOption('force'));
+          */
 
-         $output->writeln("Processing migrate to the database ...");
+          $output->writeln("Processing migrate to the database ...");
 
          return Command::SUCCESS;
+      }
+
+
+
+
+      /**
+       * @inheritDoc
+      */
+      public function getUsage(): array
+      {
+          return ["{$this->getName()} [options] [arguments]"];
       }
 }

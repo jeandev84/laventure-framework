@@ -8,6 +8,8 @@ use Laventure\Component\Console\Command\Command;
 use Laventure\Component\Console\Command\Contract\CommandInterface;
 use Laventure\Component\Console\Command\Contract\ListCommandInterface;
 use Laventure\Component\Console\Input\InputInterface;
+use Laventure\Component\Console\Input\Option\InputOption;
+use Laventure\Component\Console\Input\Option\InputOptionInterface;
 use Laventure\Component\Console\Output\OutputInterface;
 use Laventure\Component\Console\Output\Table\ConsoleTable;
 
@@ -34,6 +36,14 @@ class DefaultListCommand extends Command implements ListCommandInterface
      * @var CommandInterface[]
     */
     protected array $availableCommands = [];
+
+
+
+    /**
+     * @var array
+    */
+    protected array $defaultOptions = [];
+
 
 
 
@@ -65,9 +75,10 @@ class DefaultListCommand extends Command implements ListCommandInterface
 
 
 
+
     /**
      * @inheritDoc
-     */
+    */
     public function getAvailableCommands(): array
     {
         return $this->availableCommands;
@@ -79,10 +90,32 @@ class DefaultListCommand extends Command implements ListCommandInterface
 
     /**
      * @inheritDoc
+     */
+    public function list(): array
+    {
+        return array_merge($this->getDefaultList(), [
+            'AvailableCommands'  => $this->getAvailableCommandList()
+        ]);
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
     */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $output->printList($this->list());
+        $consoleTable = $output->getConsoleTable();
+        $output->printList($this->getDefaultList());
+        $output->writeln("Available commands:");
+        foreach ($this->getAvailableCommandList() as $name => $description) {
+            $consoleTable->addRow([$name, $description]);
+        }
+        $consoleTable->hideBorder();
+        $output->writeln($consoleTable->getTable());
+        $output->print();
         return Command::SUCCESS;
     }
 
@@ -104,25 +137,11 @@ class DefaultListCommand extends Command implements ListCommandInterface
                     $availableCommands[$prefix] = '';
                 }
             }
-            $availableCommands[$command->getName()] = $command->getDescriptionAsString() ?: 'No Description.';
+            $descriptionName = $command->getDescriptionAsString() ?: 'No Description.';
+            $availableCommands[$command->getName()] = $descriptionName;
         }
 
 
         return $availableCommands;
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function list(): mixed
-    {
-       return [
-           'Usage'              => $this->getUsage(),
-           'Options'            => $this->getOptionList(),
-           'Available commands' => $this->getAvailableCommandList()
-       ];
     }
 }

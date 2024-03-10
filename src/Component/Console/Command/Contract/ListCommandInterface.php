@@ -28,7 +28,6 @@ interface ListCommandInterface extends CommandInterface, ListenableInterface
 
 
 
-
     /**
      * Returns all available commands
      *

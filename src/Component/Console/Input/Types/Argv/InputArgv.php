@@ -136,7 +136,7 @@ abstract class InputArgv implements InputInterface
         $name = $name ?: 0;
 
         if (!$this->hasArgument($name)) {
-            throw new InputArgumentException("Invalid argument ($name) parsed.");
+            return null;
         }
 
         return $this->arguments[$name];

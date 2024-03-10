@@ -155,7 +155,6 @@ class ConsoleOutput implements OutputInterface
     */
     public function printList(array $list): void
     {
-        #$data = [];
         $consoleTable = $this->getConsoleTable();
         foreach ($list as $header => $context) {
             $this->writeln("$header:");
@@ -166,17 +165,15 @@ class ConsoleOutput implements OutputInterface
                      } else {
                         $this->writeln("\x20$value");
                      }
-                     #$data[$header][$index] = $value;
                 }
                 $consoleTable->hideBorder();
                 $this->writeln($consoleTable->getTable());
+            } else {
+                $this->writeln('');
             }
-            $this->writeln('');
         }
 
-        #dd($this->output());
         $this->print();
-        #dump($data);
     }
 
 
