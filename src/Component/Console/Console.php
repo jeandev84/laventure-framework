@@ -210,26 +210,8 @@ class Console implements ConsoleInterface, CommandCollectionInterface
         // display help
         foreach ($command->getOptions() as $option) {
             if ($this->hasHelp($option)) {
-                 foreach ($command->getHelpList() as $header => $data) {
-                     $output->writeln("$header:");
-                     if (is_string($data)) {
-                        $output->writeln("\x20$data");
-                     } elseif (is_array($data)) {
-                        foreach ($data as $index => $value) {
-                            if (is_string($index)) {
-                                $consoleTable->addRow([$index, $value]);
-                            } else {
-                                $output->writeln("\x20$value");
-                            }
-                        }
-                        if ($consoleTable->getTable()) {
-                            $consoleTable->hideBorder();
-                            $output->writeln($consoleTable->getTable());
-                        }
-                     }
-                     $output->writeln('');
-                 }
-                 $output->print();
+                 $list = $command->buildList($output, $command->getHelpList());
+                 $list->print();
                  return Command::INFO;
             };
         }

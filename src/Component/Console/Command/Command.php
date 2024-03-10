@@ -479,4 +479,37 @@ abstract class Command implements CommandInterface
 
         return $options;
     }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function buildList(OutputInterface $output, array $list): OutputInterface
+    {
+        $consoleTable = $output->getConsoleTable();
+
+        foreach ($list as $header => $context) {
+            $output->writeln("$header:");
+            if (is_string($context)) {
+                $output->writeln("\x20$context");
+            } elseif (is_array($context)) {
+                foreach ($context as $index => $value) {
+                    if (is_string($index)) {
+                        $consoleTable->addRow([$index, $value]);
+                    } else {
+                        $output->writeln("\x20$value");
+                    }
+                }
+                if ($consoleTable->getTable()) {
+                    $consoleTable->hideBorder();
+                    $output->writeln($consoleTable->getTable());
+                }
+            }
+            $output->writeln('');
+        }
+
+        return $output;
+    }
 }
