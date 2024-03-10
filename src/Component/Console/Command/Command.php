@@ -192,9 +192,9 @@ abstract class Command implements CommandInterface
     /**
      * @inheritDoc
     */
-    public function getDescription(): string
+    public function getDescription(): array
     {
-        return join('. ', $this->description);
+        return $this->description;
     }
 
 
@@ -222,9 +222,9 @@ abstract class Command implements CommandInterface
     /**
      * @inheritDoc
     */
-    public function getHelp(): string
+    public function getHelp(): array
     {
-        return join('. ', $this->help);
+        return $this->help;
     }
 
 
@@ -478,5 +478,25 @@ abstract class Command implements CommandInterface
         }
 
         return $options;
+    }
+
+    /**
+     * @inheritDoc
+    */
+    public function getDescriptionAsString(): string
+    {
+        return join('. ', $this->description);
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getHelpAsString(): string
+    {
+        return join(PHP_EOL, $this->help);
     }
 }

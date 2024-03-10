@@ -39,22 +39,12 @@ class DefaultListCommand extends Command implements ListCommandInterface
 
     /**
      * @inheritDoc
-    */
-    public function execute(InputInterface $input, OutputInterface $output): int
-    {
-        $output->printList($this->list());
-        return Command::SUCCESS;
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
+     */
     public function withAvailableCommands(array $commands): static
     {
-        $this->availableCommands = $commands;
+        foreach ($commands as $command) {
+            $this->withAvailableCommand($command);
+        }
 
         return $this;
     }
@@ -63,8 +53,21 @@ class DefaultListCommand extends Command implements ListCommandInterface
 
 
     /**
-     * @inheritDoc
+     * @param CommandInterface $command
+     * @return $this
     */
+    public function withAvailableCommand(CommandInterface $command): static
+    {
+        $this->availableCommands[$command->getName()] = $command;
+
+        return $this;
+    }
+
+
+
+    /**
+     * @inheritDoc
+     */
     public function getAvailableCommands(): array
     {
         return $this->availableCommands;
@@ -75,26 +78,37 @@ class DefaultListCommand extends Command implements ListCommandInterface
 
 
     /**
+     * @inheritDoc
+    */
+    public function execute(InputInterface $input, OutputInterface $output): int
+    {
+        $output->printList($this->list());
+        return Command::SUCCESS;
+    }
+
+
+
+
+
+    /**
      * @return array
     */
-    private function getListAvailableCommands(): array
+    private function getAvailableCommandList(): array
     {
-        /*
-        $defaultCommands = [];
-        $namedCommands   = [];
+        $availableCommands = [];
 
         foreach ($this->availableCommands as $command) {
             if ($command->hasNameSeparated()) {
                 $prefix = $command->getFirstNameSeparated();
-                $namedCommands[$prefix][$command->getName()] = $command->descriptionAsString();
-            } else {
-                $defaultCommands[$command->getName()] = $command->descriptionAsString();
+                if (!isset($availableCommands[$prefix])) {
+                    $availableCommands[$prefix] = '';
+                }
             }
+            $availableCommands[$command->getName()] = $command->getDescriptionAsString() ?: 'No Description.';
         }
 
-        return [$defaultCommands, $namedCommands];
-        */
-        return [];
+
+        return $availableCommands;
     }
 
 
@@ -108,7 +122,7 @@ class DefaultListCommand extends Command implements ListCommandInterface
        return [
            'Usage'              => $this->getUsage(),
            'Options'            => $this->getOptionList(),
-           'Available commands' => []
+           'Available commands' => $this->getAvailableCommandList()
        ];
     }
 }

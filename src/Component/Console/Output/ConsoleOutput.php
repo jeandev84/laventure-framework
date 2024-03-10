@@ -46,9 +46,7 @@ class ConsoleOutput implements OutputInterface
     */
     public function writeln($message): static
     {
-        $this->messages[] = sprintf('%s%s', $message, PHP_EOL);
-
-        return $this;
+        return $this->write($message.PHP_EOL);
     }
 
 
@@ -70,7 +68,9 @@ class ConsoleOutput implements OutputInterface
     */
     public function output(): string
     {
-        return join($this->messages);
+        $output = join($this->messages);
+        $this->clear();
+        return $output;
     }
 
 
@@ -155,30 +155,28 @@ class ConsoleOutput implements OutputInterface
     */
     public function printList(array $list): void
     {
+        #$data = [];
         $consoleTable = $this->getConsoleTable();
-
         foreach ($list as $header => $context) {
             $this->writeln("$header:");
-            if (is_string($context)) {
-                $this->writeln("\x20$context");
-            } elseif (is_array($context) && !empty($context)) {
+            if (!empty($context)) {
                 foreach ($context as $index => $value) {
-                    if (is_string($index)) {
-                        $consoleTable->addRow([$index, $value]);
-                    } else {
+                     if (is_string($index)) {
+                         $consoleTable->addRow([$index, $value]);
+                     } else {
                         $this->writeln("\x20$value");
-                    }
+                     }
+                     #$data[$header][$index] = $value;
                 }
-                if ($consoleTable->getTable()) {
-                    $consoleTable->hideBorder();
-                    $this->writeln($consoleTable->getTable());
-                }
+                $consoleTable->hideBorder();
+                $this->writeln($consoleTable->getTable());
             }
             $this->writeln('');
         }
 
+        #dd($this->output());
         $this->print();
-        $this->clear();
+        #dump($data);
     }
 
 

@@ -101,12 +101,20 @@ interface CommandInterface extends ExecutableCommandInterface
 
 
     /**
-     * Returns description of command
+     * Returns descriptions of command
      *
+     * @return array
+    */
+    public function getDescription(): array;
+
+
+
+
+
+    /**
      * @return string
     */
-    public function getDescription(): string;
-
+    public function getDescriptionAsString(): string;
 
 
 
@@ -114,11 +122,22 @@ interface CommandInterface extends ExecutableCommandInterface
 
 
     /**
-     * Returns help command
+     * Returns Returns help descriptions
+     *
+     * @return array
+    */
+    public function getHelp(): array;
+
+
+
+
+
+    /**
+     * Returns help description as string
      *
      * @return string
     */
-    public function getHelp(): string;
+    public function getHelpAsString(): string;
 
 
 
