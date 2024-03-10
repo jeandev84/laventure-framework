@@ -97,9 +97,7 @@ abstract class Command implements CommandInterface
         if ($name) {
             $this->name = $name;
         }
-
         $this->inputs = new InputCollection();
-
         $this->configure();
     }
 

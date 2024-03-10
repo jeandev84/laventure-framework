@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Console\Command\Defaults\Options;
@@ -19,7 +20,6 @@ use Laventure\Component\Console\Output\OutputInterface;
 */
 class QuietCommand extends Command implements OptionCommandInterface
 {
-
     /**
      * @param $name
     */
@@ -35,7 +35,7 @@ class QuietCommand extends Command implements OptionCommandInterface
     */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-          return Command::SUCCESS;
+        return Command::SUCCESS;
     }
 
 
@@ -55,6 +55,6 @@ class QuietCommand extends Command implements OptionCommandInterface
     */
     public function getLongOption(): string
     {
-         return '--quiet';
+        return '--quiet';
     }
 }

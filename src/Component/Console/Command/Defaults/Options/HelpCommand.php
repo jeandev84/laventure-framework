@@ -32,7 +32,7 @@ class HelpCommand extends Command implements HelpCommandInterface
     */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-         return Command::SUCCESS;
+        return Command::SUCCESS;
     }
 
 

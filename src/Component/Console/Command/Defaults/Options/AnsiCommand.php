@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Console\Command\Defaults\Options;
@@ -45,6 +46,6 @@ class AnsiCommand extends Command implements OptionCommandInterface
     */
     public function getLongOption(): string
     {
-         return '--ansi|--no-ansi';
+        return '--ansi|--no-ansi';
     }
 }

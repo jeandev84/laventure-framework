@@ -17,7 +17,6 @@ use Laventure\Contract\Lister\ListenableInterface;
 */
 interface ListCommandInterface extends CommandInterface
 {
-
     /**
      * @param CommandInterface[] $commands
      * @return $this

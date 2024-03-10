@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Console\Command\Defaults\List;
@@ -21,7 +22,6 @@ use Laventure\Component\Console\Output\Table\ConsoleTable;
 */
 class DefaultListCommand extends Command implements ListCommandInterface
 {
-
     /**
      * @var string
     */
@@ -42,47 +42,40 @@ class DefaultListCommand extends Command implements ListCommandInterface
     */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-         $table = new ConsoleTable();
+        $table = new ConsoleTable();
 
-         $output->writeln("Usage:");
+        $output->writeln("Usage:");
 
-         foreach ($this->getUsage() as $usage) {
-             $output->writeln("\x20$usage");
-         }
+        foreach ($this->getUsage() as $usage) {
+            $output->writeln("\x20$usage");
+        }
 
-         $output->writeln('');
-         $output->writeln("Options:");
+        $output->writeln('');
+        $output->writeln("Options:");
 
-         foreach ($this->getOptions() as $option) {
-             $output->writeln("\x20$option");
-         }
+        foreach ($this->getOptions() as $option) {
+            $output->writeln("\x20$option");
+        }
 
-         $output->writeln('');
-         $output->writeln("Available commands:");
-         #dd($this->getListAvailableCommands());
-         [$defaultCommands, $namedCommands] = $this->getListAvailableCommands();
+        $output->writeln('');
+        $output->writeln("Available commands:");
+        [$defaultCommands, $namedCommands] = $this->getListAvailableCommands();
 
-         foreach ($defaultCommands as $command => $description) {
-            #$output->writeln("\x20$defaultCommand");
-             $table->addRow(["\x20$command", $description ?: 'No description.']);
-             #$output->writeln("\x20$command\x20\x20\x20\x20\x20$description");
-         }
+        foreach ($defaultCommands as $command => $description) {
+            $table->addRow(["\x20$command", $description ?: 'No description.']);
+        }
 
-         foreach ($namedCommands as $groupName => $namedCommand) {
-             #$output->writeln("\x20$groupName");
-             $table->addRow([$groupName, '']);
-             foreach ($namedCommand as $command => $description) {
-                 $table->addRow(["\x20$command", $description]);
-                 #$output->writeln("\x20\x20$command\x20\x20\x20\x20\x20$description");
-             }
-         }
+        foreach ($namedCommands as $groupName => $namedCommand) {
+            $table->addRow([$groupName, '']);
+            foreach ($namedCommand as $command => $description) {
+                $table->addRow([$command, $description]);
+            }
+        }
 
-         $table->hideBorder();
-         $output->writeln($table->getTable());
-         #dd($table->getTable());
-         #$table->display();
+        $table->hideBorder();
+        $output->writeln($table->getTable());
 
-         return Command::SUCCESS;
+        return Command::SUCCESS;
     }
 
 
@@ -148,18 +141,18 @@ class DefaultListCommand extends Command implements ListCommandInterface
     */
     private function getListAvailableCommands(): array
     {
-         $defaultCommands = [];
-         $namedCommands   = [];
+        $defaultCommands = [];
+        $namedCommands   = [];
 
-         foreach ($this->availableCommands as $command) {
-             if ($command->hasNameSeparated()) {
-                 $prefix = $command->getFirstNameSeparated();
-                 $namedCommands[$prefix][$command->getName()] = $command->descriptionAsString();
-             } else {
-                 $defaultCommands[$command->getName()] = $command->descriptionAsString();
-             }
-         }
+        foreach ($this->availableCommands as $command) {
+            if ($command->hasNameSeparated()) {
+                $prefix = $command->getFirstNameSeparated();
+                $namedCommands[$prefix][$command->getName()] = $command->descriptionAsString();
+            } else {
+                $defaultCommands[$command->getName()] = $command->descriptionAsString();
+            }
+        }
 
-         return [$defaultCommands, $namedCommands];
+        return [$defaultCommands, $namedCommands];
     }
 }

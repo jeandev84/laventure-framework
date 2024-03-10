@@ -17,9 +17,6 @@ use Laventure\Contract\Builder\Table\TableBuilderInterface;
 */
 interface ConsoleTableInterface extends TableBuilderInterface
 {
-
-
-
     /**
      * @param int $padding
      * @return $this

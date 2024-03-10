@@ -25,7 +25,7 @@ class VerboseCommand extends Command implements OptionCommandInterface
     */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-          return Command::SUCCESS;
+        return Command::SUCCESS;
     }
 
 
@@ -35,7 +35,7 @@ class VerboseCommand extends Command implements OptionCommandInterface
     */
     public function getShortcutOption(): string
     {
-          return '-v|vv|vvv';
+        return '-v|vv|vvv';
     }
 
 
@@ -45,6 +45,6 @@ class VerboseCommand extends Command implements OptionCommandInterface
     */
     public function getLongOption(): string
     {
-         return '--verbose';
+        return '--verbose';
     }
 }
