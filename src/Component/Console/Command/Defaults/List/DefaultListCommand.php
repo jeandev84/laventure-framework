@@ -64,18 +64,22 @@ class DefaultListCommand extends Command implements ListCommandInterface
 
          foreach ($defaultCommands as $command => $description) {
             #$output->writeln("\x20$defaultCommand");
-            #$table->addRow([$command, $description]);
-             $output->writeln("\x20$command\x20\x20\x20\x20\x20$description");
+             $table->addRow(["\x20$command", $description ?: 'No description.']);
+             #$output->writeln("\x20$command\x20\x20\x20\x20\x20$description");
          }
 
          foreach ($namedCommands as $groupName => $namedCommand) {
-             $output->writeln("\x20$groupName");
+             #$output->writeln("\x20$groupName");
+             $table->addRow([$groupName, '']);
              foreach ($namedCommand as $command => $description) {
-                 #$table->addRow([$command, $description]);
-                 $output->writeln("\x20\x20$command\x20\x20\x20\x20\x20$description");
+                 $table->addRow(["\x20$command", $description]);
+                 #$output->writeln("\x20\x20$command\x20\x20\x20\x20\x20$description");
              }
          }
 
+         $table->hideBorder();
+         $output->writeln($table->getTable());
+         #dd($table->getTable());
          #$table->display();
 
          return Command::SUCCESS;
