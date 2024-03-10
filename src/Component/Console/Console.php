@@ -8,6 +8,7 @@ use Laventure\Component\Console\Command\Collection\CommandCollectionInterface;
 use Laventure\Component\Console\Command\Contract\CommandInterface;
 use Laventure\Component\Console\Command\Contract\ListCommandInterface;
 use Laventure\Component\Console\Command\Contract\OptionCommandInterface;
+use Laventure\Component\Console\Command\Defaults\List\DefaultListCommand;
 use Laventure\Component\Console\Command\Defaults\List\ListCommand;
 use Laventure\Component\Console\Command\Exception\EmptyCommandNameException;
 use Laventure\Component\Console\Command\Usage\UsageCommandInterface;
@@ -36,15 +37,21 @@ class Console implements ConsoleInterface, CommandCollectionInterface
     /**
      * @var ListCommandInterface
     */
-    protected ListCommandInterface $listCommand;
+    private ListCommandInterface $listCommand;
 
 
 
 
+    /**
+     * @throws EmptyCommandNameException
+    */
     public function __construct()
     {
-        $this->listCommand = new ListCommand();
+        $this->listCommand = new DefaultListCommand();
+
+        $this->addCommand($this->listCommand);
     }
+
 
 
 
@@ -76,34 +83,18 @@ class Console implements ConsoleInterface, CommandCollectionInterface
 
 
 
+
     /**
-     * @param array $usages
-     * @return $this
+     * @inheritDoc
     */
-    public function addUsages(array $usages): static
+    public function withListCommand(ListCommandInterface $listCommand): static
     {
-        $this->listCommand->withUsages($usages);
+        $this->listCommand = $listCommand;
 
         return $this;
     }
 
 
-
-
-
-    /**
-     * @param array $commands
-     * @return $this
-     * @throws EmptyCommandNameException
-    */
-    public function addOptions(array $commands): static
-    {
-        $this->addCommands($commands);
-
-        $this->listCommand->withOptions($commands);
-
-        return $this;
-    }
 
 
 

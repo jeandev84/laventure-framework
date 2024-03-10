@@ -15,72 +15,52 @@ use Laventure\Contract\Lister\ListenableInterface;
  *
  * @package  Laventure\Component\Console\Command\Contract
 */
-interface ListCommandInterface extends CommandInterface, ListenableInterface
+interface ListCommandInterface extends CommandInterface
 {
-    /**
-     * @param $usage
-     * @return $this
-    */
-    public function withUsage($usage): static;
-
-
-
-
-
 
     /**
-     * @param array $usages
-     * @return $this
-    */
-    public function withUsages(array $usages): static;
-
-
-
-
-
-
-
-    /**
-     * @param OptionCommandInterface $command
-     * @return $this
-    */
-    public function withOption(OptionCommandInterface $command): static;
-
-
-
-
-
-
-
-
-    /**
-     * @param OptionCommandInterface[] $options
-     * @return $this
-    */
-    public function withOptions(array $options): static;
-
-
-
-
-
-
-
-
-
-    /**
-     * @param CommandInterface $command
-    */
-    public function withAvailableCommand(CommandInterface $command): static;
-
-
-
-
-
-
-
-    /**
-     * @param array $commands
+     * @param CommandInterface[] $commands
      * @return $this
     */
     public function withAvailableCommands(array $commands): static;
+
+
+
+
+
+
+
+    /**
+     * Returns all available commands
+     *
+     * @return CommandInterface[]
+    */
+    public function getAvailableCommands(): array;
+
+
+
+
+
+
+
+    /**
+     * Returns usage commands
+     *
+     * @return array
+    */
+    public function getUsage(): array;
+
+
+
+
+
+
+
+
+    /**
+     * Returns command options
+     *
+     * @return array
+    */
+    public function getOptions(): array;
 }

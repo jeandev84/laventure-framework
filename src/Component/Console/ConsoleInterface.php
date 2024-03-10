@@ -48,11 +48,23 @@ interface ConsoleInterface
 
 
 
+    /**
+     * @param ListCommandInterface $listCommand
+     * @return $this
+    */
+    public function withListCommand(ListCommandInterface $listCommand): static;
+
+
+
+
+
+
 
     /**
      * @return ListCommandInterface
     */
     public function getListCommand(): ListCommandInterface;
+
 
 
 
