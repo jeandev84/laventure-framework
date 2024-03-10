@@ -25,7 +25,7 @@ use Throwable;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Foundation\Web\Http\Kernel
+ * @package  Laventure\Foundation\Web\Http\ConsoleKernel
  */
 class HttpKernel implements HttpKernelInterface
 {

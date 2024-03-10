@@ -19,7 +19,6 @@ use Laventure\Component\Console\Output\OutputInterface;
 class MigrateCommand extends Command
 {
 
-
      /**
       * @var string
      */

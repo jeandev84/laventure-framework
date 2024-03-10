@@ -14,7 +14,7 @@ use Psr\Http\Message\ServerRequestInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Http\Message\Kernel
+ * @package  Laventure\Component\Http\Message\ConsoleKernel
 */
 interface HttpKernelInterface extends TerminableInterface
 {

@@ -208,8 +208,8 @@ class Console implements ConsoleInterface, CommandCollectionInterface
         // display help
         foreach ($input->getOptions() as $option) {
             if ($this->hasHelp($option)) {
-                 $output->printList($command->getHelpList());
-                 return Command::INFO;
+                $output->printList($command->getHelpList());
+                return Command::INFO;
             }
         }
 

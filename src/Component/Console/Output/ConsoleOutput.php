@@ -29,6 +29,14 @@ class ConsoleOutput implements OutputInterface
 
 
     /**
+     * @var array
+    */
+    protected array $space = [];
+
+
+
+
+    /**
      * @inheritDoc
     */
     public function write($message): static
@@ -47,6 +55,70 @@ class ConsoleOutput implements OutputInterface
     public function writeln($message): static
     {
         return $this->write($message.PHP_EOL);
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function tab($message, int $times = 0): static
+    {
+        # $this->writeln("\x20$message");
+        return $this->writeln("\t$message");
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function success($message): void
+    {
+        $this->writeln($message);
+        $this->echo();
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function failure($message): void
+    {
+        $this->writeln($message);
+        $this->echo();
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function invalid($message): void
+    {
+        $this->writeln($message);
+        $this->echo();
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function info($message): void
+    {
+        $this->writeln($message);
+        $this->echo();
     }
 
 
@@ -85,14 +157,6 @@ class ConsoleOutput implements OutputInterface
     }
 
 
-
-    /**
-     * @inheritDoc
-    */
-    public function tab($message, int $times = 0): static
-    {
-        return $this->writeln("\t$message");
-    }
 
 
     /**
@@ -134,7 +198,7 @@ class ConsoleOutput implements OutputInterface
     */
     public function getTable(): ConsoleTableInterface
     {
-       return new DefaultConsoleTable();
+        return new DefaultConsoleTable();
     }
 
 
@@ -144,7 +208,7 @@ class ConsoleOutput implements OutputInterface
     */
     public function getConsoleTable(): ConsoleTable
     {
-       return new ConsoleTable();
+        return new ConsoleTable();
     }
 
 
@@ -160,11 +224,11 @@ class ConsoleOutput implements OutputInterface
             $this->writeln("$header:");
             if (!empty($context)) {
                 foreach ($context as $index => $value) {
-                     if (is_string($index)) {
-                         $consoleTable->addRow([$index, $value]);
-                     } else {
+                    if (is_string($index)) {
+                        $consoleTable->addRow([$index, $value]);
+                    } else {
                         $this->writeln("\x20$value");
-                     }
+                    }
                 }
                 $consoleTable->hideBorder();
                 $this->writeln($consoleTable->getTable());

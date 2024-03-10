@@ -17,6 +17,12 @@ class Autoloader
 {
     /**
      * @var string
+    */
+    private string $loaderFile = 'laventure.json';
+
+
+    /**
+     * @var string
      */
     protected string $root;
 
@@ -224,7 +230,7 @@ class Autoloader
      */
     private function loadParams(): array
     {
-        $path = $this->path('laventure.json');
+        $path = $this->path($this->loaderFile);
 
         if (! file_exists($path)) {
             return [];

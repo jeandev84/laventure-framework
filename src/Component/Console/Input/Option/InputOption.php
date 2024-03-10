@@ -82,10 +82,10 @@ class InputOption extends InputParam implements InputOptionInterface
         return sprintf('%s %s', $this->getOptionsAsString(), $this->description);
     }
 
-    
-    
-    
-    
+
+
+
+
     /**
      * @inheritDoc
     */
@@ -94,7 +94,7 @@ class InputOption extends InputParam implements InputOptionInterface
         if ($this->shortcut) {
             $this->shortcut = "-{$this->shortcut},";
         }
-        
+
         return sprintf('%s --%s', $this->shortcut, $this->name);
     }
 }

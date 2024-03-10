@@ -39,6 +39,46 @@ interface OutputInterface extends Stringable
 
 
 
+    /**
+     * @param $message
+     * @return void
+    */
+    public function success($message): void;
+
+
+
+
+
+    /**
+     * @param $message
+     * @return void
+    */
+    public function failure($message): void;
+
+
+
+
+
+    /**
+     * @param $message
+     * @return void
+    */
+    public function invalid($message): void;
+
+
+
+
+
+    /**
+     * @param $message
+     * @return void
+    */
+    public function info($message): void;
+
+
+
+
+
 
     /**
      * @param $message

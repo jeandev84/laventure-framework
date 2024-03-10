@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Console\Output\Table;
@@ -14,7 +15,6 @@ namespace Laventure\Component\Console\Output\Table;
 */
 class DefaultConsoleTable implements ConsoleTableInterface
 {
-
     /**
      * @inheritDoc
      */

@@ -27,7 +27,7 @@ class FileLocatorTest extends TestCase
             'database' => [
                 'driver' => 'mysql',
                 'host' => '127.0.0.1',
-                'dbname' => 'laventure',
+                'dbname' => 'laventure.php',
                 'user' => 'root',
                 'password' => 'secret'
             ]
