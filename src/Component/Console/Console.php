@@ -77,6 +77,20 @@ class Console implements ConsoleInterface, CommandCollectionInterface
 
 
     /**
+     * @param array $usages
+     * @return $this
+    */
+    public function addUsages(array $usages): static
+    {
+        $this->listCommand->withUsages($usages);
+
+        return $this;
+    }
+
+
+
+
+    /**
      * @param array $optionCommands
      * @return $this
     */
@@ -92,11 +106,14 @@ class Console implements ConsoleInterface, CommandCollectionInterface
 
 
 
+
     /**
      * @inheritDoc
     */
     public function getListCommand(): ListCommandInterface
     {
+        $this->listCommand->withAvailableCommands($this->commands);
+
         return $this->listCommand;
     }
 
