@@ -53,7 +53,7 @@ class DefaultListCommand extends Command implements ListCommandInterface
         $output->writeln('');
         $output->writeln("Options:");
 
-        foreach ($this->getOptions() as $option) {
+        foreach ($this->getOptionsDescription() as $option) {
             $output->writeln("\x20$option");
         }
 
@@ -104,22 +104,11 @@ class DefaultListCommand extends Command implements ListCommandInterface
 
 
 
-    /**
-     * @inheritDoc
-    */
-    public function getUsage(): array
-    {
-        return [
-            'command [options] [arguments]'
-        ];
-    }
-
-
 
     /**
      * @inheritDoc
     */
-    public function getOptions(): array
+    public function getOptionsDescription(): array
     {
         return [
             "-h, --help               Display help for the given command. When no command is given display help for the ($this->name) command",

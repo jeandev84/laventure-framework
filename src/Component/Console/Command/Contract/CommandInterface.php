@@ -217,7 +217,7 @@ interface CommandInterface extends ExecutableCommandInterface
      *
      * @return array
     */
-    public function getAvailableStatus(): array;
+    public function getAvailableStatuses(): array;
 
 
 
@@ -235,25 +235,56 @@ interface CommandInterface extends ExecutableCommandInterface
     public function run(InputInterface $input, OutputInterface $output): int;
 
 
-    //
-    //
-    //
-    //
-    //
-    //    /**
-    //     * @return string
-    //    */
-    //    public function readAsString(): string;
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //    /**
-    //     * @return string
-    //    */
-    //    public function readForList(): string;
+
+
+
+
+
+
+    /**
+     * Returns usage commands for listing
+     *
+     * @return array
+    */
+    public function getUsage(): array;
+
+
+
+
+
+
+
+
+    /**
+     * Returns command options for listing
+     *
+     * @return array
+    */
+    public function getOptionsDescription(): array;
+
+
+
+
+
+
+
+    /**
+     * Returns arguments for listing
+     *
+     * @return array
+    */
+    public function getArgumentsDescription(): array;
+
+
+
+
+
+
+
+    /**
+     * Returns help description
+     *
+     * @return array
+    */
+    public function getHelpDescription(): array;
 }

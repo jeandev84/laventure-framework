@@ -35,31 +35,4 @@ interface ListCommandInterface extends CommandInterface
      * @return CommandInterface[]
     */
     public function getAvailableCommands(): array;
-
-
-
-
-
-
-
-    /**
-     * Returns usage commands
-     *
-     * @return array
-    */
-    public function getUsage(): array;
-
-
-
-
-
-
-
-
-    /**
-     * Returns command options
-     *
-     * @return array
-    */
-    public function getOptions(): array;
 }

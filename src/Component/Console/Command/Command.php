@@ -214,7 +214,7 @@ abstract class Command implements CommandInterface
     */
     public function descriptionAsString(): string
     {
-        return join('. ', $this->description);
+        return join('. ', $this->getDescription());
     }
 
 
@@ -255,7 +255,7 @@ abstract class Command implements CommandInterface
     */
     public function getHelpAsString(): string
     {
-        return join(', ', $this->help);
+        return join(', ', $this->getHelp());
     }
 
 
@@ -325,6 +325,13 @@ abstract class Command implements CommandInterface
     public function run(InputInterface $input, OutputInterface $output): int
     {
         // call help command
+        $help    = false;
+        $options = $input->getOptions();
+        foreach (array_keys($options) as $name) {
+             if (in_array($name, $this->help)) {
+
+             }
+        }
 
 
         // validate inputs
@@ -363,7 +370,7 @@ abstract class Command implements CommandInterface
     /**
      * @inheritDoc
     */
-    public function getAvailableStatus(): array
+    public function getAvailableStatuses(): array
     {
         return $this->availableStatus;
     }
@@ -378,5 +385,14 @@ abstract class Command implements CommandInterface
     */
     protected function configure()
     {
+    }
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getUsage(): array
+    {
+        return ['command [options] [arguments]'];
     }
 }

@@ -29,7 +29,7 @@ class InvalidCommandStatusException extends BaseException
     public function __construct(CommandInterface $command, int $status, string $methodName, array $data = [])
     {
         $methodName   = get_class($command) . "::{$methodName}";
-        $statuses = $command->getAvailableStatus();
+        $statuses = $command->getAvailableStatuses();
         $lookFor  = join(', ', $statuses);
 
         parent::__construct("Unavailable status ($status) from ($methodName). Use next ($lookFor)", $data, 409);
