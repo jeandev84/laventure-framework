@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Console\Output\Progressbar;
-
 
 /**
  * ConsoleProgressbarInterface
@@ -15,5 +15,4 @@ namespace Laventure\Component\Console\Output\Progressbar;
  */
 interface ConsoleProgressbarInterface
 {
-
 }

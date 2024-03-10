@@ -51,6 +51,8 @@ interface OutputInterface extends Stringable
 
 
     /**
+     * Returns all messages
+     *
      * @return array
     */
     public function getMessages(): array;
@@ -61,9 +63,11 @@ interface OutputInterface extends Stringable
 
 
     /**
+     * Returns all message as string
+     *
      * @return string
     */
-    public function messagesAsString(): string;
+    public function output(): string;
 
 
 

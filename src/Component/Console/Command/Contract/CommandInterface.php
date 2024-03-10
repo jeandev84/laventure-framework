@@ -235,25 +235,25 @@ interface CommandInterface extends ExecutableCommandInterface
     public function run(InputInterface $input, OutputInterface $output): int;
 
 
-//
-//
-//
-//
-//
-//    /**
-//     * @return string
-//    */
-//    public function readAsString(): string;
-//
-//
-//
-//
-//
-//
-//
-//
-//    /**
-//     * @return string
-//    */
-//    public function readForList(): string;
+    //
+    //
+    //
+    //
+    //
+    //    /**
+    //     * @return string
+    //    */
+    //    public function readAsString(): string;
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //    /**
+    //     * @return string
+    //    */
+    //    public function readForList(): string;
 }

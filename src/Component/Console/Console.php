@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Console;
@@ -24,7 +25,6 @@ use Laventure\Component\Console\Output\OutputInterface;
 */
 class Console implements ConsoleInterface, CommandCollectionInterface
 {
-
     /**
      * @var CommandInterface[]
     */
@@ -43,7 +43,7 @@ class Console implements ConsoleInterface, CommandCollectionInterface
 
     public function __construct()
     {
-         $this->listCommand = new ListCommand();
+        $this->listCommand = new ListCommand();
     }
 
 
@@ -96,9 +96,9 @@ class Console implements ConsoleInterface, CommandCollectionInterface
     */
     public function addOptionCommands(array $optionCommands): static
     {
-         $this->listCommand->withOptions($optionCommands);
+        $this->listCommand->withOptions($optionCommands);
 
-         return $this;
+        return $this;
     }
 
 

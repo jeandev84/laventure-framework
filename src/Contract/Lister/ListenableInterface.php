@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Contract\Lister;
-
 
 /**
  * ListenableInterface
@@ -15,10 +15,10 @@ namespace Laventure\Contract\Lister;
  */
 interface ListenableInterface
 {
-     /**
-      * List something
-      *
-      * @return mixed
-     */
-     public function list(): mixed;
+    /**
+     * List something
+     *
+     * @return mixed
+    */
+    public function list(): mixed;
 }

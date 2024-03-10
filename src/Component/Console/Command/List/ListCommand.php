@@ -23,8 +23,6 @@ use Laventure\Component\Console\Output\OutputInterface;
 */
 class ListCommand extends Command implements ListCommandInterface
 {
-
-
     /**
      * @var string
     */
@@ -114,7 +112,7 @@ class ListCommand extends Command implements ListCommandInterface
         $this->optionList(
             "--help",
             "Display help for the given command. When no command is given display help for the ($this->name) command",
-         "-h"
+            "-h"
         )->optionList("--quiet", "Do not output any message", '-q')
          ->optionList('--version', 'Display this application version', '-V')
          ->optionList('--ansi|--no-ansi', 'Force (or disable --no-ansi) ANSI output')
@@ -124,7 +122,7 @@ class ListCommand extends Command implements ListCommandInterface
          ->optionList(
              '-v|vv|vvv',
              "Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug",
-          '--verbose'
+             '--verbose'
          );
     }
 

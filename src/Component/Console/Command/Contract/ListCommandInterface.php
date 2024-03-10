@@ -1,11 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Console\Command\Contract;
 
-
 use Laventure\Contract\Lister\ListenableInterface;
-
 
 /**
  * ListCommandInterface
@@ -18,24 +17,22 @@ use Laventure\Contract\Lister\ListenableInterface;
 */
 interface ListCommandInterface extends CommandInterface, ListenableInterface
 {
-
-
-      /**
-       * @param $usage
-       * @return $this
-      */
-      public function withUsage($usage): static;
+    /**
+     * @param $usage
+     * @return $this
+    */
+    public function withUsage($usage): static;
 
 
 
 
 
 
-      /**
-       * @param array $usages
-       * @return $this
-      */
-      public function withUsages(array $usages): static;
+    /**
+     * @param array $usages
+     * @return $this
+    */
+    public function withUsages(array $usages): static;
 
 
 
@@ -43,11 +40,11 @@ interface ListCommandInterface extends CommandInterface, ListenableInterface
 
 
 
-      /**
-       * @param OptionCommandInterface $command
-       * @return $this
-      */
-      public function withOption(OptionCommandInterface $command): static;
+    /**
+     * @param OptionCommandInterface $command
+     * @return $this
+    */
+    public function withOption(OptionCommandInterface $command): static;
 
 
 
@@ -56,11 +53,11 @@ interface ListCommandInterface extends CommandInterface, ListenableInterface
 
 
 
-      /**
-       * @param OptionCommandInterface[] $options
-       * @return $this
-      */
-      public function withOptions(array $options): static;
+    /**
+     * @param OptionCommandInterface[] $options
+     * @return $this
+    */
+    public function withOptions(array $options): static;
 
 
 
@@ -70,10 +67,10 @@ interface ListCommandInterface extends CommandInterface, ListenableInterface
 
 
 
-      /**
-       * @param CommandInterface $command
-      */
-      public function withAvailableCommand(CommandInterface $command): static;
+    /**
+     * @param CommandInterface $command
+    */
+    public function withAvailableCommand(CommandInterface $command): static;
 
 
 
@@ -81,9 +78,9 @@ interface ListCommandInterface extends CommandInterface, ListenableInterface
 
 
 
-      /**
-       * @param array $commands
-       * @return $this
-      */
-      public function withAvailableCommands(array $commands): static;
+    /**
+     * @param array $commands
+     * @return $this
+    */
+    public function withAvailableCommands(array $commands): static;
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Console\Output\Table;
@@ -12,10 +13,10 @@ namespace Laventure\Component\Console\Output\Table;
  *
  * @package  Laventure\Component\Console\Table
 */
-class ConsoleTable implements ConsoleTableInterface
+class ConsoleTable
 {
-    const HEADER_INDEX = -1;
-    const HR = 'HR';
+    public const HEADER_INDEX = -1;
+    public const HR = 'HR';
 
     /** @var array Array of table data */
     protected $data = array();

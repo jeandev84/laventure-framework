@@ -20,7 +20,6 @@ use Laventure\Component\Console\Output\OutputInterface;
 */
 class HelpCommand extends Command implements HelpCommandInterface
 {
-
     public function __construct()
     {
         parent::__construct('help');

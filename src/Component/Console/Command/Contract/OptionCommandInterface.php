@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Console\Command\Contract;
-
 
 /**
  * OptionCommandInterface
@@ -15,19 +15,18 @@ namespace Laventure\Component\Console\Command\Contract;
 */
 interface OptionCommandInterface extends CommandInterface
 {
-
-     /**
-      * Returns option shortcut name
-      *
-      * @return string
-     */
-     public function getShortcutOption(): string;
-
+    /**
+     * Returns option shortcut name
+     *
+     * @return string
+    */
+    public function getShortcutOption(): string;
 
 
 
-     /**
-      * @return string
-     */
-     public function getLongOption(): string;
+
+    /**
+     * @return string
+    */
+    public function getLongOption(): string;
 }

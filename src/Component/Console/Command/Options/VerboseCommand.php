@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Console\Command\Options;
@@ -19,7 +20,6 @@ use Laventure\Component\Console\Output\OutputInterface;
  */
 class VerboseCommand extends Command implements OptionCommandInterface
 {
-
     /**
      * @inheritDoc
     */

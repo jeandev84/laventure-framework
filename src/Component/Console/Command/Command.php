@@ -138,7 +138,7 @@ abstract class Command implements CommandInterface
     */
     public function getNameSeparator(): string
     {
-         return ':';
+        return ':';
     }
 
 

@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Console\Command\Collection;
-
 
 use Laventure\Component\Console\Command\Contract\CommandInterface;
 use Laventure\Component\Console\Command\Contract\ListCommandInterface;
@@ -20,10 +20,6 @@ use Laventure\Component\Console\Command\Usage\UsageCommandInterface;
  */
 interface CommandCollectionInterface
 {
-
-
-
-
     /**
      * @param CommandInterface $command
      * @return $this

@@ -10,7 +10,7 @@ use Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\DML\Update\Up
 use Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\DQL\Select\Select;
 
 /**
- * QueryBuilderInterface
+ * SQLQueryBuilderInterface
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
