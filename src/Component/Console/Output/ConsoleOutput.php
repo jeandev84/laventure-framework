@@ -62,7 +62,7 @@ class ConsoleOutput implements OutputInterface
     /**
      * @inheritDoc
     */
-    public function getMessagesAsString(): string
+    public function messagesAsString(): string
     {
         return join($this->messages);
     }
@@ -75,7 +75,7 @@ class ConsoleOutput implements OutputInterface
     */
     public function echo(): void
     {
-        echo $this->getMessagesAsString();
+        echo $this->messagesAsString();
     }
 
 
@@ -94,7 +94,7 @@ class ConsoleOutput implements OutputInterface
     */
     public function print(): void
     {
-        print($this->getMessagesAsString());
+        print($this->messagesAsString());
     }
 
 
@@ -105,6 +105,6 @@ class ConsoleOutput implements OutputInterface
     */
     public function __toString(): string
     {
-        return $this->getMessagesAsString();
+        return $this->messagesAsString();
     }
 }

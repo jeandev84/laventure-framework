@@ -63,7 +63,7 @@ interface OutputInterface extends Stringable
     /**
      * @return string
     */
-    public function getMessagesAsString(): string;
+    public function messagesAsString(): string;
 
 
 
