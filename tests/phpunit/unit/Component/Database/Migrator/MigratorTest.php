@@ -5,7 +5,7 @@ namespace PHPUnitTest\Component\Database\Migrator;
 
 use Laventure\Component\Database\Schema\Migrator\Migrator;
 use PHPUnit\Framework\TestCase;
-use PHPUnitTest\App\Service\Connection\Connection;
+use PHPUnitTest\App\Service\Database\Connection\TestConnection;
 use PHPUnitTest\App\Service\Migration\MigrationStack;
 
 /**
@@ -24,7 +24,7 @@ class MigratorTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->migrator = new Migrator(Connection::make());
+        $this->migrator = new Migrator(TestConnection::make());
 
         $this->migrator->addMigrations(MigrationStack::getMigrations());
     }

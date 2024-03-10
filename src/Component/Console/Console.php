@@ -227,7 +227,7 @@ class Console implements ConsoleInterface, CommandCollectionInterface
     */
     public function getDefaultOptions(): array
     {
-        $listCommandName = $this->listCommand->getName();
+        $listCommandName = $this->getListCommand()->getName();
 
         return [
             ["help",    "Display help for the given command. When no command is given display help for the ($listCommandName) command", "h"],
@@ -237,7 +237,7 @@ class Console implements ConsoleInterface, CommandCollectionInterface
             ["no-interaction", 'Do not ask any interactive question', "n"],
             ["env=ENV", 'The Environment name. [default: "dev"]', "e"],
             ["no-debug", 'Switch off debug mode.', ''],
-            ["verbose", 'Switch off debug mode.', 'v|vv|vvv'],
+            ["verbose", 'Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug', 'v|vv|vvv'],
         ];
     }
 
