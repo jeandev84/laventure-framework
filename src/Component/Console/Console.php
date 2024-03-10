@@ -206,8 +206,9 @@ class Console implements ConsoleInterface, CommandCollectionInterface
         $command = $this->getCommand($input->getFirstArgument());
 
         // display help
-        foreach ($command->getOptions() as $option) {
+        foreach ($input->getOptions() as $option) {
             if ($this->hasHelp($option)) {
+                 dd('OK');
                  $output->printList($command->getHelpList());
                  return Command::INFO;
             };
@@ -245,6 +246,18 @@ class Console implements ConsoleInterface, CommandCollectionInterface
 
 
     /**
+     * @param $name
+     * @return bool
+    */
+    protected function hasHelp($name): bool
+    {
+        return in_array($name, ['help', 'h']);
+    }
+
+
+
+
+    /**
      * @param CommandInterface $command
      * @return CommandInterface
     */
@@ -256,21 +269,5 @@ class Console implements ConsoleInterface, CommandCollectionInterface
         }
 
         return $command;
-    }
-
-
-
-
-
-    /**
-     * @param InputOptionInterface $option
-     * @return bool
-    */
-    protected function hasHelp(InputOptionInterface $option): bool
-    {
-        $name     = $option->getName();
-        $shortcut = $option->getShortCut();
-
-        return ($name === 'help') || ($shortcut === 'h');
     }
 }
