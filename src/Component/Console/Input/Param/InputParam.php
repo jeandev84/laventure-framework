@@ -22,17 +22,17 @@ abstract class InputParam implements InputParamInterface, InputRulesInterface
 
 
     /**
-     * @var string
+     * @var null
     */
-    protected string $name;
+    protected $name;
 
 
 
 
     /**
-     * @var string
+     * @var null
     */
-    protected string $description;
+    protected $description = null;
 
 
 
@@ -85,7 +85,7 @@ abstract class InputParam implements InputParamInterface, InputRulesInterface
 
     /**
      * @inheritDoc
-     */
+    */
     public function name($name): static
     {
         $this->name = $name;
@@ -97,7 +97,7 @@ abstract class InputParam implements InputParamInterface, InputRulesInterface
 
     /**
      * @inheritDoc
-     */
+    */
     public function description($description): static
     {
         $this->description = $description;
@@ -208,5 +208,26 @@ abstract class InputParam implements InputParamInterface, InputRulesInterface
     public function isOptional(): bool
     {
         return $this->hasRule(static::OPTIONAL);
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function readAsString(): string
+    {
+        return sprintf('%s %s', $this->name, $this->description);
+    }
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function __toString()
+    {
+        return $this->readAsString();
     }
 }

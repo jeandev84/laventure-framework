@@ -103,19 +103,10 @@ interface CommandInterface extends ExecutableCommandInterface
     /**
      * Returns description of command
      *
-     * @return array
-    */
-    public function getDescription(): array;
-
-
-
-
-
-
-    /**
      * @return string
     */
-    public function descriptionAsString(): string;
+    public function getDescription(): string;
+
 
 
 
@@ -125,19 +116,11 @@ interface CommandInterface extends ExecutableCommandInterface
     /**
      * Returns help command
      *
-     * @return array
-    */
-    public function getHelp(): array;
-
-
-
-
-
-
-    /**
      * @return string
     */
-    public function getHelpAsString(): string;
+    public function getHelp(): string;
+
+
 
 
 
@@ -148,7 +131,7 @@ interface CommandInterface extends ExecutableCommandInterface
      * @param array $help
      * @return static
     */
-    public function help(array $help): static;
+    public function addHelp(array $help): static;
 
 
 
@@ -164,7 +147,7 @@ interface CommandInterface extends ExecutableCommandInterface
      * @param array $rules
      * @return InputArgumentInterface
     */
-    public function argument(
+    public function addArgument(
         string $name,
         $description,
         string $default = null,
@@ -184,7 +167,7 @@ interface CommandInterface extends ExecutableCommandInterface
      * @param array $rules
      * @return InputOptionInterface
     */
-    public function option(
+    public function addOption(
         $name,
         $description,
         $shortcut = null,
@@ -223,30 +206,27 @@ interface CommandInterface extends ExecutableCommandInterface
 
 
 
-
-
-    /**
-     * Run command and execute, terminate execution
-     *
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return int
-    */
-    public function run(InputInterface $input, OutputInterface $output): int;
-
-
-
-
-
-
-
-
     /**
      * Returns usage commands for listing
      *
      * @return array
-    */
+     */
     public function getUsage(): array;
+
+
+
+
+
+
+
+
+
+    /**
+     * Returns arguments
+     *
+     * @return InputArgumentInterface[]
+    */
+    public function getArguments(): array;
 
 
 
@@ -258,9 +238,10 @@ interface CommandInterface extends ExecutableCommandInterface
     /**
      * Returns command options for listing
      *
-     * @return array
+     * @return InputOptionInterface[]
     */
-    public function getOptionsDescription(): array;
+    public function getOptions(): array;
+
 
 
 
@@ -269,11 +250,22 @@ interface CommandInterface extends ExecutableCommandInterface
 
 
     /**
-     * Returns arguments for listing
+     * Returns command as array
      *
      * @return array
     */
-    public function getArgumentsDescription(): array;
+    public function toArray(): array;
+
+
+
+
+
+    /**
+     * Returns default list
+     *
+     * @return array
+    */
+    public function getDefaultList(): array;
 
 
 
@@ -282,9 +274,24 @@ interface CommandInterface extends ExecutableCommandInterface
 
 
     /**
-     * Returns help description
+     * Returns help list
      *
      * @return array
     */
-    public function getHelpDescription(): array;
+    public function getHelpList(): array;
+
+
+
+
+
+
+
+    /**
+     * Run command and execute, terminate execution
+     *
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int
+    */
+    public function run(InputInterface $input, OutputInterface $output): int;
 }

@@ -32,6 +32,15 @@ abstract class Command implements CommandInterface
     public const INFO     = 3;
 
 
+
+    /**
+     * @var InputCollectionInterface
+    */
+    protected InputCollectionInterface $inputs;
+
+
+
+
     /**
      * @var array|int[]
     */
@@ -48,9 +57,9 @@ abstract class Command implements CommandInterface
     /**
      * Command name
      *
-     * @var string
+     * @var string|null
     */
-    protected $name = '';
+    protected $name = null;
 
 
 
@@ -67,22 +76,21 @@ abstract class Command implements CommandInterface
 
 
 
+
     /**
-     * Help command name
+     * @var array
+    */
+    protected array $usage = ['command [options] [arguments]'];
+
+
+
+
+    /**
+     * Help description
      *
      * @var mixed
     */
-    protected array $help = ['h', 'help'];
-
-
-
-
-
-
-    /**
-     * @var InputCollectionInterface
-    */
-    protected InputCollectionInterface $inputs;
+    protected array $help = [];
 
 
 
@@ -184,9 +192,9 @@ abstract class Command implements CommandInterface
     /**
      * @inheritDoc
     */
-    public function getDescription(): array
+    public function getDescription(): string
     {
-        return $this->description;
+        return join('. ', $this->description);
     }
 
 
@@ -209,25 +217,14 @@ abstract class Command implements CommandInterface
 
 
 
-    /**
-     * @inheritDoc
-    */
-    public function descriptionAsString(): string
-    {
-        return join('. ', $this->getDescription());
-    }
-
-
-
-
 
 
     /**
      * @inheritDoc
     */
-    public function getHelp(): array
+    public function getHelp(): string
     {
-        return $this->help;
+        return join('. ', $this->help);
     }
 
 
@@ -239,7 +236,7 @@ abstract class Command implements CommandInterface
     /**
      * @inheritDoc
     */
-    public function help(array $help): static
+    public function addHelp(array $help): static
     {
         $this->help = $help;
 
@@ -250,25 +247,12 @@ abstract class Command implements CommandInterface
 
 
 
-    /**
-     * @inheritDoc
-    */
-    public function getHelpAsString(): string
-    {
-        return join(', ', $this->getHelp());
-    }
-
-
-
-
-
-
 
 
     /**
      * @inheritDoc
     */
-    public function argument(
+    public function addArgument(
         string $name,
         $description,
         string $default = null,
@@ -287,7 +271,7 @@ abstract class Command implements CommandInterface
     /**
      * @inheritDoc
     */
-    public function option(
+    public function addOption(
         $name,
         $description,
         $shortcut = null,
@@ -324,16 +308,6 @@ abstract class Command implements CommandInterface
     */
     public function run(InputInterface $input, OutputInterface $output): int
     {
-        // call help command
-        $help    = false;
-        $options = $input->getOptions();
-        foreach (array_keys($options) as $name) {
-             if (in_array($name, $this->help)) {
-
-             }
-        }
-
-
         // validate inputs
         $input->validate($this->inputs);
 
@@ -365,6 +339,28 @@ abstract class Command implements CommandInterface
 
 
 
+    /**
+     * @inheritDoc
+    */
+    public function getArguments(): array
+    {
+        return $this->inputs->getArguments();
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getOptions(): array
+    {
+        return $this->inputs->getOptions();
+    }
+
+
+
+
 
 
     /**
@@ -388,11 +384,99 @@ abstract class Command implements CommandInterface
     }
 
 
+
+
     /**
      * @inheritDoc
     */
     public function getUsage(): array
     {
-        return ['command [options] [arguments]'];
+        return $this->usage;
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getDefaultList(): array
+    {
+        return [
+            'Usage'        => $this->getUsage(),
+            'Options'      => $this->getOptions(),
+        ];
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getHelpList(): array
+    {
+        return [
+           'Description' => $this->getDescription(),
+           'Usage'       => $this->getUsage(),
+           'Arguments'   => $this->getArgumentList(),
+           'Options'     => $this->getOptionList(),
+           'Help'        => $this->getHelp()
+        ];
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function toArray(): array
+    {
+        return [
+            'Usage'        => $this->getUsage(),
+            'Description'  => $this->getDescription(),
+            'Help'         => $this->getHelp(),
+            'Arguments'    => $this->getArguments(),
+            'Options'      => $this->getOptions(),
+        ];
+    }
+
+
+
+
+
+
+    /**
+     * @return array
+    */
+    protected function getArgumentList(): array
+    {
+        $arguments = [];
+
+        foreach ($this->getArguments() as $argument) {
+            $arguments[$argument->getName()] = $argument->getDescription();
+        }
+
+        return $arguments;
+    }
+
+
+
+
+    /**
+     * @return array
+    */
+    protected function getOptionList(): array
+    {
+        $options = [];
+
+        foreach ($this->getOptions() as $option) {
+            $options[$option->getOptionsAsString()] = $option->getDescription();
+        }
+
+        return $options;
     }
 }

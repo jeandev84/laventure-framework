@@ -69,6 +69,16 @@ interface ConsoleInterface
 
 
 
+    /**
+     * Returns default options
+     *
+     * @return array
+    */
+    public function getDefaultOptions(): array;
+
+
+
+
 
 
 

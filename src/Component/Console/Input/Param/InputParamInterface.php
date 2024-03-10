@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Console\Input\Param;
 
+use Stringable;
+
 /**
  * InputParamInterface
  *
@@ -13,7 +15,7 @@ namespace Laventure\Component\Console\Input\Param;
  *
  * @package  Laventure\Component\Console\Input
  */
-interface InputParamInterface
+interface InputParamInterface extends Stringable
 {
     /**
      * @param $name
@@ -29,6 +31,8 @@ interface InputParamInterface
      * @return string
     */
     public function getName(): string;
+
+
 
 
 
@@ -65,4 +69,13 @@ interface InputParamInterface
      * @return string|null
     */
     public function getDefault(): ?string;
+
+
+
+
+
+    /**
+     * @return string
+    */
+    public function readAsString(): string;
 }

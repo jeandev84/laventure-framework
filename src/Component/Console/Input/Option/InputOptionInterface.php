@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Console\Input\Option;
@@ -30,4 +29,13 @@ interface InputOptionInterface extends InputParamInterface, InputRulesInterface
      * @return string|null
     */
     public function getShortCut(): ?string;
+
+
+
+
+
+    /**
+     * @return string
+    */
+    public function getOptionsAsString(): string;
 }

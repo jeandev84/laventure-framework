@@ -69,4 +69,32 @@ class InputOption extends InputParam implements InputOptionInterface
 
         return $this;
     }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function readAsString(): string
+    {
+        return sprintf('%s %s', $this->getOptionsAsString(), $this->description);
+    }
+
+    
+    
+    
+    
+    /**
+     * @inheritDoc
+    */
+    public function getOptionsAsString(): string
+    {
+        if ($this->shortcut) {
+            $this->shortcut = "-{$this->shortcut},";
+        }
+        
+        return sprintf('%s --%s', $this->shortcut, $this->name);
+    }
 }

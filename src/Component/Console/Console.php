@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Console;
 
 use Laventure\Component\Console\Command\Collection\CommandCollectionInterface;
+use Laventure\Component\Console\Command\Command;
 use Laventure\Component\Console\Command\Contract\CommandInterface;
 use Laventure\Component\Console\Command\Contract\ListCommandInterface;
 use Laventure\Component\Console\Command\Defaults\DefaultListCommand;
@@ -12,7 +13,9 @@ use Laventure\Component\Console\Command\Defaults\List\ListCommand;
 use Laventure\Component\Console\Command\Exception\EmptyCommandNameException;
 use Laventure\Component\Console\Command\Usage\UsageCommandInterface;
 use Laventure\Component\Console\Input\InputInterface;
+use Laventure\Component\Console\Input\Option\InputOptionInterface;
 use Laventure\Component\Console\Output\OutputInterface;
+use Laventure\Component\Console\Output\Table\ConsoleTable;
 
 /**
  * Console
@@ -40,15 +43,12 @@ class Console implements ConsoleInterface, CommandCollectionInterface
 
 
 
-
     /**
      * @throws EmptyCommandNameException
     */
     public function __construct()
     {
-        $this->listCommand = new DefaultListCommand();
-
-        $this->addCommand($this->listCommand);
+        $this->withListCommand(new DefaultListCommand());
     }
 
 
@@ -80,17 +80,15 @@ class Console implements ConsoleInterface, CommandCollectionInterface
 
 
 
-
-
-
     /**
      * @inheritDoc
+     * @throws EmptyCommandNameException
     */
     public function withListCommand(ListCommandInterface $listCommand): static
     {
         $this->listCommand = $listCommand;
 
-        return $this;
+        return $this->addCommand($this->listCommand);
     }
 
 
@@ -138,6 +136,8 @@ class Console implements ConsoleInterface, CommandCollectionInterface
         if(!$name = $command->getName()) {
             throw new EmptyCommandNameException(get_class($command));
         }
+
+        $command = $this->setCommandDefaultOptions($command);
 
         $this->commands[$name] = $command;
 
@@ -202,9 +202,96 @@ class Console implements ConsoleInterface, CommandCollectionInterface
     */
     public function run(InputInterface $input, OutputInterface $output): int
     {
+        $consoleTable = $output->getConsoleTable();
+
+        // find command
         $command = $this->getCommand($input->getFirstArgument());
+
+        // display help
+        foreach ($command->getOptions() as $option) {
+            if ($this->hasHelp($option)) {
+                 foreach ($command->getHelpList() as $header => $data) {
+                     $output->writeln("$header:");
+                     if (is_string($data)) {
+                        $output->writeln("\x20$data");
+                     } elseif (is_array($data)) {
+                        foreach ($data as $index => $value) {
+                            if (is_string($index)) {
+                                $consoleTable->addRow([$index, $value]);
+                            } else {
+                                $output->writeln("\x20$value");
+                            }
+                        }
+                        if ($consoleTable->getTable()) {
+                            $consoleTable->hideBorder();
+                            $output->writeln($consoleTable->getTable());
+                        }
+                     }
+                     $output->writeln('');
+                 }
+                 $output->print();
+                 return Command::INFO;
+            };
+        }
+
         $status  = $command->run($input, $output);
         $output->print();
         return $status;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getDefaultOptions(): array
+    {
+        $listCommandName = $this->listCommand->getName();
+
+        return [
+            ["help",    "Display help for the given command. When no command is given display help for the ($listCommandName) command", "h"],
+            ["quiet",   "Do not output any message", "q"],
+            ["version", "Display this application version", "V"],
+            /*[['ansi', 'no-ansi'], "Force (or disable --no-ansi) ANSI output", ''],*/
+            ["no-interaction", 'Do not ask any interactive question', "n"],
+            ["env=ENV", 'The Environment name. [default: "dev"]', "e"],
+            ["no-debug", 'Switch off debug mode.', ''],
+            ["verbose", 'Switch off debug mode.', 'v|vv|vvv'],
+        ];
+    }
+
+
+
+
+    /**
+     * @param CommandInterface $command
+     * @return CommandInterface
+    */
+    protected function setCommandDefaultOptions(CommandInterface $command): CommandInterface
+    {
+        foreach ($this->getDefaultOptions() as $options) {
+            [$name, $description, $shortcut] = $options;
+            $command->addOption($name, $description, $shortcut);
+        }
+
+        return $command;
+    }
+
+
+
+
+
+    /**
+     * @param InputOptionInterface $option
+     * @return bool
+    */
+    protected function hasHelp(InputOptionInterface $option): bool
+    {
+        $name     = $option->getName();
+        $shortcut = $option->getShortCut();
+
+        return ($name === 'help') || ($shortcut === 'h');
     }
 }

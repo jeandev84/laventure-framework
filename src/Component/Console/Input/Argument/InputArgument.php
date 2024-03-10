@@ -20,4 +20,13 @@ class InputArgument extends InputParam implements InputArgumentInterface
     public const REQUIRED = 2;
     public const OPTIONAL = 3;
 
+
+
+    /**
+     * @inheritDoc
+    */
+    public function readAsString(): string
+    {
+        return sprintf('%s %s', $this->name, $this->description);
+    }
 }

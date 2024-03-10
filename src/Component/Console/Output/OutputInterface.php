@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Console\Output;
 
+use Laventure\Component\Console\Output\Style\ConsoleStyleInterface;
+use Laventure\Component\Console\Output\Table\ConsoleTable;
+use Laventure\Component\Console\Output\Table\ConsoleTableInterface;
 use Stringable;
 
 /**
@@ -88,4 +91,37 @@ interface OutputInterface extends Stringable
      * @return void
     */
     public function print(): void;
+
+
+
+
+
+
+
+
+    /**
+     * @return ConsoleStyleInterface
+    */
+    public function getStyle(): ConsoleStyleInterface;
+
+
+
+
+
+
+    /**
+     * @return ConsoleTableInterface
+    */
+    public function getTable(): ConsoleTableInterface;
+
+
+
+
+
+
+
+    /**
+     * @return ConsoleTable
+    */
+    public function getConsoleTable(): ConsoleTable;
 }

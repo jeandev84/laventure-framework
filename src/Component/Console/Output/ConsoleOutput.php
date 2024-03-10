@@ -4,6 +4,12 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Console\Output;
 
+use Laventure\Component\Console\Output\Style\ConsoleStyle;
+use Laventure\Component\Console\Output\Style\ConsoleStyleInterface;
+use Laventure\Component\Console\Output\Table\ConsoleTable;
+use Laventure\Component\Console\Output\Table\ConsoleTableInterface;
+use Laventure\Component\Console\Output\Table\DefaultConsoleTable;
+
 /**
  * ConsoleOutput
  *
@@ -106,5 +112,38 @@ class ConsoleOutput implements OutputInterface
     public function __toString(): string
     {
         return $this->output();
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getStyle(): ConsoleStyleInterface
+    {
+        return new ConsoleStyle();
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getTable(): ConsoleTableInterface
+    {
+       return new DefaultConsoleTable();
+    }
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getConsoleTable(): ConsoleTable
+    {
+       return new ConsoleTable();
     }
 }
