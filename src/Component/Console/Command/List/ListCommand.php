@@ -8,6 +8,7 @@ use Laventure\Component\Console\Command\Collection\CommandCollectionInterface;
 use Laventure\Component\Console\Command\Command;
 use Laventure\Component\Console\Command\Contract\CommandInterface;
 use Laventure\Component\Console\Command\Contract\ListCommandInterface;
+use Laventure\Component\Console\Command\Contract\OptionCommandInterface;
 use Laventure\Component\Console\Input\InputInterface;
 use Laventure\Component\Console\Output\OutputInterface;
 
@@ -70,6 +71,7 @@ class ListCommand extends Command implements ListCommandInterface
      * @var array
     */
     protected array $optionList = [
+        /*
         "-h, --help               Display help for the given command. When no command is given display help for the (list) command",
         '-q, --quiet              Do not output any message',
         '-V, --version            Display this application version',
@@ -78,8 +80,16 @@ class ListCommand extends Command implements ListCommandInterface
         '-e, --env=ENV            The Environment name. [default: "dev"]',
         '    --no-debug           Switch off debug mode.',
         '-v|vv|vvv, --verbose     Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug'
+        */
     ];
 
+
+
+
+    /**
+     * @var array
+    */
+    protected array $optionLength = [];
 
 
 
@@ -93,13 +103,45 @@ class ListCommand extends Command implements ListCommandInterface
 
 
 
+    public function __construct($name = null)
+    {
+        parent::__construct($name);
+    }
+
+
+
+
+    protected function configure(): void
+    {
+        $this->optionList(
+            "--help",
+            "Display help for the given command. When no command is given display help for the ($this->name) command",
+         "-h"
+        )->optionList("--quiet", "Do not output any message", '-q')
+         ->optionList('--version', 'Display this application version', '-V')
+         ->optionList('--ansi|--no-ansi', 'Force (or disable --no-ansi) ANSI output')
+         ->optionList('--no-interaction', 'Do not ask any interactive question', '-n')
+         ->optionList('--env=ENV', 'The Environment name. [default: "dev"]', '-e')
+         ->optionList('--no-debug', "Switch off debug mode.")
+         ->optionList(
+             '-v|vv|vvv',
+             "Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug",
+          '--verbose'
+         );
+    }
+
+
+
+
 
     /**
      * @inheritDoc
     */
     public function withUsage($usage): static
     {
+        $this->usage[] = $usage;
 
+        return $this;
     }
 
 
@@ -110,9 +152,30 @@ class ListCommand extends Command implements ListCommandInterface
     */
     public function withUsages(array $usages): static
     {
+        $this->usage = array_merge($this->usage, $usages);
 
+        return $this;
     }
 
+
+
+
+    /**
+     * @param $longOption
+     * @param $description
+     * @param $shortcutOption
+     * @return $this
+    */
+    public function optionList($longOption, $description, $shortcutOption = null): static
+    {
+        $command = $shortcutOption ? "$shortcutOption, $longOption" : $longOption;
+
+        $this->optionList[$command] = $description;
+
+        $this->optionLength[] = strlen($command);
+
+        return $this;
+    }
 
 
 
@@ -121,10 +184,15 @@ class ListCommand extends Command implements ListCommandInterface
     /**
      * @inheritDoc
     */
-    public function withOption($longOption, $description, string $shortcutOption = ''): static
+    public function withOption(OptionCommandInterface $command): static
     {
+        $shortcutOption = $command->getShortcutOption();
+        $longOption     = $command->getLongOption();
+        $description    = $command->getDescriptionAsString();
 
+        return $this->optionList($longOption, $description, $shortcutOption);
     }
+
 
 
 
@@ -135,7 +203,11 @@ class ListCommand extends Command implements ListCommandInterface
     */
     public function withOptions(array $options): static
     {
+        foreach ($options as $option) {
+            $this->withOption($option);
+        }
 
+        return $this;
     }
 
 
@@ -143,11 +215,13 @@ class ListCommand extends Command implements ListCommandInterface
 
 
     /**
-     * @param CommandInterface $command
+     * @inheritDoc
     */
-    public function withAvailableCommand(CommandInterface $command): void
+    public function withAvailableCommand(CommandInterface $command): static
     {
-        $this->availableCommandList[] = '';
+        $this->availableCommandList[] = $command;
+
+        return $this;
     }
 
 
@@ -174,8 +248,14 @@ class ListCommand extends Command implements ListCommandInterface
     */
     public function list(): array
     {
-
+        return [
+           'Usage'              => $this->usage,
+           'Options'            => $this->optionList,
+           'Available commands' => $this->availableCommandList
+        ];
     }
+
+
 
 
 
@@ -185,38 +265,19 @@ class ListCommand extends Command implements ListCommandInterface
     */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
+         foreach ($this->list() as $header => $expressions) {
+             $output->writeln("$header:");
+             foreach ($expressions as $index => $expression) {
+                 $message = $expression;
+                 if ($index) {
+                     $message = "$index     $expression";
+                 }
+
+                 $output->writeln("  $message");
+             }
+             $output->writeln('');
+         }
+
          return Command::SUCCESS;
-    }
-
-    
-
-
-    private function toReviews(): void
-    {
-        /*
-        foreach ($this->listHeaders as $header => $expressions) {
-            $output->writeln("$header:");
-            foreach ($expressions as $expression) {
-                $output->writeln("  $expression");
-            }
-            $output->writeln('');
-        }
-
-        $availableCommands = $this->collection->getAvailableCommands();
-
-        if (!empty($availableCommands)) {
-            $output->writeln("Available commands:");
-            foreach ($availableCommands as $command) {
-                if ($command->hasNameSeparated()) {
-                    $name = $command->getFirstNameSeparated();
-                    $output->writeln($name);
-                    $output->writeln("  {$command->getName()}  {$command->getDescriptionAsString()}");
-                } else {
-                    $output->writeln("  {$command->getName()}  {$command->getDescriptionAsString()}");
-                }
-
-            }
-        }
-        */
     }
 }

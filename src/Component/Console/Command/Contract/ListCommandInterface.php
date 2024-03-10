@@ -56,7 +56,6 @@ interface ListCommandInterface extends CommandInterface, ListenableInterface
 
 
 
-
       /**
        * @param OptionCommandInterface[] $options
        * @return $this

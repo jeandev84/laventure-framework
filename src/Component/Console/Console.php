@@ -33,12 +33,19 @@ class Console implements ConsoleInterface, CommandCollectionInterface
 
 
 
+    /**
+     * @var ListCommandInterface
+    */
+    protected ListCommandInterface $listCommand;
+
+
 
 
     public function __construct()
     {
-
+         $this->listCommand = new ListCommand();
     }
+
 
 
 
@@ -70,11 +77,27 @@ class Console implements ConsoleInterface, CommandCollectionInterface
 
 
     /**
+     * @param array $optionCommands
+     * @return $this
+    */
+    public function addOptionCommands(array $optionCommands): static
+    {
+         $this->listCommand->withOptions($optionCommands);
+
+         return $this;
+    }
+
+
+
+
+
+
+    /**
      * @inheritDoc
     */
     public function getListCommand(): ListCommandInterface
     {
-        return new ListCommand($this);
+        return $this->listCommand;
     }
 
 
@@ -89,6 +112,9 @@ class Console implements ConsoleInterface, CommandCollectionInterface
     {
         return $this->commands;
     }
+
+
+
 
 
 
