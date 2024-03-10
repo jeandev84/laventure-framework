@@ -146,4 +146,37 @@ class ConsoleOutput implements OutputInterface
     {
        return new ConsoleTable();
     }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function printList(array $list): void
+    {
+        $consoleTable = $this->getConsoleTable();
+
+        foreach ($list as $header => $context) {
+            $this->writeln("$header:");
+            if (is_string($context)) {
+                $this->writeln("\x20$context");
+            } elseif (is_array($context)) {
+                foreach ($context as $index => $value) {
+                    if (is_string($index)) {
+                        $consoleTable->addRow([$index, $value]);
+                    } else {
+                        $this->writeln("\x20$value");
+                    }
+                }
+                if ($consoleTable->getTable()) {
+                    $consoleTable->hideBorder();
+                    $this->writeln($consoleTable->getTable());
+                }
+            }
+            $this->writeln('');
+        }
+
+        $this->print();
+    }
 }

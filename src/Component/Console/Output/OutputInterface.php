@@ -96,6 +96,14 @@ interface OutputInterface extends Stringable
 
 
 
+    /**
+     * @param array $list
+     * @return void
+    */
+    public function printList(array $list): void;
+
+
+
 
 
 

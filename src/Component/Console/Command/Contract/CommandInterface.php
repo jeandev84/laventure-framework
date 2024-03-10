@@ -286,17 +286,6 @@ interface CommandInterface extends ExecutableCommandInterface
 
 
     /**
-     * @param OutputInterface $output
-     * @param array $list
-     * @return mixed
-    */
-    public function buildList(OutputInterface $output, array $list): OutputInterface;
-
-
-
-
-
-    /**
      * Run command and execute, terminate execution
      *
      * @param InputInterface $input

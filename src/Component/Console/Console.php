@@ -202,16 +202,13 @@ class Console implements ConsoleInterface, CommandCollectionInterface
     */
     public function run(InputInterface $input, OutputInterface $output): int
     {
-        $consoleTable = $output->getConsoleTable();
-
         // find command
         $command = $this->getCommand($input->getFirstArgument());
 
         // display help
         foreach ($command->getOptions() as $option) {
             if ($this->hasHelp($option)) {
-                 $list = $command->buildList($output, $command->getHelpList());
-                 $list->print();
+                 $output->printList($command->getHelpList());
                  return Command::INFO;
             };
         }
