@@ -132,4 +132,15 @@ interface OutputInterface extends Stringable
      * @return ConsoleTable
     */
     public function getConsoleTable(): ConsoleTable;
+
+
+
+
+
+
+
+    /**
+     * @return void
+    */
+    public function clear(): void;
 }

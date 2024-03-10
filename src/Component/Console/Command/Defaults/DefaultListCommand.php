@@ -42,39 +42,7 @@ class DefaultListCommand extends Command implements ListCommandInterface
     */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $table = new ConsoleTable();
-
-        $output->writeln("Usage:");
-
-        foreach ($this->getUsage() as $usage) {
-            $output->writeln("\x20$usage");
-        }
-
-        $output->writeln('');
-        $output->writeln("Options:");
-
-        foreach ($this->getOptionsDescription() as $option) {
-            $output->writeln("\x20$option");
-        }
-
-        $output->writeln('');
-        $output->writeln("Available commands:");
-        [$defaultCommands, $namedCommands] = $this->getListAvailableCommands();
-
-        foreach ($defaultCommands as $command => $description) {
-            $table->addRow(["\x20$command", $description ?: 'No description.']);
-        }
-
-        foreach ($namedCommands as $groupName => $namedCommand) {
-            $table->addRow([$groupName, '']);
-            foreach ($namedCommand as $command => $description) {
-                $table->addRow([$command, $description]);
-            }
-        }
-
-        $table->hideBorder();
-        $output->writeln($table->getTable());
-
+        $output->printList($this->list());
         return Command::SUCCESS;
     }
 
@@ -105,31 +73,13 @@ class DefaultListCommand extends Command implements ListCommandInterface
 
 
 
-    /**
-     * @inheritDoc
-    */
-    public function getOptionsDescription(): array
-    {
-        return [
-            "-h, --help               Display help for the given command. When no command is given display help for the ($this->name) command",
-            '-q, --quiet              Do not output any message',
-            '-V, --version            Display this application version',
-            '    --ansi|--no-ansi     Force (or disable --no-ansi) ANSI output',
-            '-n, --no-interaction     Do not ask any interactive question',
-            '-e, --env=ENV            The Environment name. [default: "dev"]',
-            '    --no-debug           Switch off debug mode.',
-            '-v|vv|vvv, --verbose     Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug'
-        ];
-    }
-
-
-
 
     /**
      * @return array
     */
     private function getListAvailableCommands(): array
     {
+        /*
         $defaultCommands = [];
         $namedCommands   = [];
 
@@ -143,5 +93,22 @@ class DefaultListCommand extends Command implements ListCommandInterface
         }
 
         return [$defaultCommands, $namedCommands];
+        */
+        return [];
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function list(): mixed
+    {
+       return [
+           'Usage'              => $this->getUsage(),
+           'Options'            => $this->getOptionList(),
+           'Available commands' => []
+       ];
     }
 }

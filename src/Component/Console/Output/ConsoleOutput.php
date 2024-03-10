@@ -161,7 +161,7 @@ class ConsoleOutput implements OutputInterface
             $this->writeln("$header:");
             if (is_string($context)) {
                 $this->writeln("\x20$context");
-            } elseif (is_array($context)) {
+            } elseif (is_array($context) && !empty($context)) {
                 foreach ($context as $index => $value) {
                     if (is_string($index)) {
                         $consoleTable->addRow([$index, $value]);
@@ -178,5 +178,17 @@ class ConsoleOutput implements OutputInterface
         }
 
         $this->print();
+        $this->clear();
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function clear(): void
+    {
+        $this->messages = [];
     }
 }

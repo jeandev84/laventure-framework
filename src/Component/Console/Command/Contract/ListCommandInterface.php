@@ -15,7 +15,7 @@ use Laventure\Contract\Lister\ListenableInterface;
  *
  * @package  Laventure\Component\Console\Command\Contract
 */
-interface ListCommandInterface extends CommandInterface
+interface ListCommandInterface extends CommandInterface, ListenableInterface
 {
     /**
      * @param CommandInterface[] $commands
