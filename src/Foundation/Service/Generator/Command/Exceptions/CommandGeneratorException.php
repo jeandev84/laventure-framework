@@ -1,0 +1,20 @@
+<?php
+declare(strict_types=1);
+
+namespace Laventure\Foundation\Service\Generator\Command\Exceptions;
+
+use Laventure\Exceptions\BaseException;
+
+/**
+ * CommandGeneratorException
+ *
+ * @author Jean-Claude <jeanyao@ymail.com>
+ *
+ * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
+ *
+ * @package  Laventure\Foundation\Service\Generator\Command\Exceptions
+*/
+class CommandGeneratorException extends BaseException
+{
+
+}

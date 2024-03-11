@@ -16,12 +16,12 @@ namespace Laventure\Component\Console\Input\Argument\Exceptions;
 class RequiredArgumentException extends InputArgumentException
 {
     /**
-     * @param string $optionName
+     * @param string $argumentName
      * @param array $data
      * @param int $code
     */
-    public function __construct(string $optionName, array $data = [], int $code = 409)
+    public function __construct(string $argumentName, array $data = [], int $code = 409)
     {
-        parent::__construct("Argument name ($optionName) is required.", $data, $code);
+        parent::__construct("Argument <$argumentName> is required.", $data, $code);
     }
 }

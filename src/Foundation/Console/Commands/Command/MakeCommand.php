@@ -7,6 +7,7 @@ use Laventure\Component\Console\Command\Command;
 use Laventure\Component\Console\Input\Argument\InputArgument;
 use Laventure\Component\Console\Input\InputInterface;
 use Laventure\Component\Console\Output\OutputInterface;
+use Laventure\Foundation\Service\Generator\Command\CommandGenerator;
 
 /**
  * MakeCommand
@@ -35,7 +36,12 @@ class MakeCommand extends Command
 
 
 
-    public function __construct()
+
+
+    /**
+     * @param CommandGenerator $commandGenerator
+    */
+    public function __construct(protected CommandGenerator $commandGenerator)
     {
         parent::__construct($this->name);
     }
@@ -62,6 +68,18 @@ class MakeCommand extends Command
     */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
+         $commandName = $input->getArgument('name');
+         $commandParams = [$commandName];
+
+         if ($this->nameSeparated($commandName)) {
+             $commandParams = explode($this->getNameSeparator(), $commandName);
+         }
+
+         $this->commandGenerator->withCommandParams($commandParams)
+                                ->generate();
+
+         $output->writeln("For [$commandName], command {$this->commandGenerator->getTargetPath()} successfully generated.");
+
          return Command::SUCCESS;
     }
 

@@ -10,6 +10,7 @@ use Laventure\Component\Filesystem\File\Factory\FileCollectionFactory;
 use Laventure\Component\Filesystem\File\Factory\FileFactory;
 use Laventure\Component\Filesystem\File\File;
 use Laventure\Component\Filesystem\File\Locator\FileLocator;
+use Laventure\Component\Filesystem\File\Locator\FileLocatorInterface;
 use Laventure\Component\Filesystem\Stream\DTO\StreamParams;
 use Laventure\Component\Filesystem\Stream\Factory\StreamFactory;
 use Laventure\Component\Filesystem\Stream\Stream;
@@ -194,11 +195,9 @@ class Filesystem implements FilesystemInterface
 
 
     /**
-     * @param string $directory
-     * @param string $extension
-     * @return FileCollection
+     * @inheritDoc
     */
-    public function directoryFileCollection(string $directory, string $extension = 'php'): FileCollection
+    public function directoryFiles(string $directory, string $extension = 'php'): FileCollection
     {
         $files = $this->dir($directory)->getFiles($extension);
 
@@ -212,56 +211,10 @@ class Filesystem implements FilesystemInterface
 
 
     /**
-     * @return FileLocator
+     * @inheritDoc
     */
-    public function getFileLocator(): FileLocator
+    public function getFileLocator(): FileLocatorInterface
     {
         return $this->fileLocator;
-    }
-
-
-
-
-
-    /**
-     * @return FileFactory
-    */
-    public function getFileFactory(): FileFactory
-    {
-        return $this->fileFactory;
-    }
-
-
-
-
-
-    /**
-     * @return DirectoryFactory
-    */
-    public function getDirectoryFactory(): DirectoryFactory
-    {
-        return $this->directoryFactory;
-    }
-
-
-
-
-    /**
-     * @return FileCollectionFactory
-    */
-    public function getFileCollectionFactory(): FileCollectionFactory
-    {
-        return $this->fileCollectionFactory;
-    }
-
-
-
-
-    /**
-     * @return StreamFactory
-    */
-    public function getStreamFactory(): StreamFactory
-    {
-        return $this->streamFactory;
     }
 }

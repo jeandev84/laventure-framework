@@ -3,7 +3,10 @@ declare(strict_types=1);
 
 namespace Laventure\Foundation\Service\Generator;
 
+use Laventure\Component\Config\ConfigInterface;
+use Laventure\Component\Filesystem\File\File;
 use Laventure\Component\Filesystem\Filesystem;
+use Laventure\Component\Filesystem\FilesystemInterface;
 
 /**
  * FileGenerator
@@ -14,83 +17,18 @@ use Laventure\Component\Filesystem\Filesystem;
  *
  * @package  Laventure\Foundation\Service\Generator
 */
-class FileGenerator implements FileGeneratorInterface
+abstract class FileGenerator implements FileGeneratorInterface
 {
-
-
-    /**
-     * Target path
-     *
-     * @var string|null
-    */
-    protected ?string $targetPath = null;
-
-
-
-
-    /**
-     * File content
-     *
-     * @var string|null
-    */
-    protected ?string $content = null;
-
-
-
 
     /**
      * @param Filesystem $filesystem
-    */
-    public function __construct(protected Filesystem $filesystem)
-    {
-    }
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function withTargetPath($path): static
-    {
-         $this->targetPath = $path;
-
-         return $this;
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function withContent($content): static
-    {
-         $this->content = $content;
-
-         return $this;
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function getTargetPath(): string
-    {
-        return $this->targetPath;
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
+     * @param ConfigInterface $config
      */
-    public function getContent(): string
+    public function __construct(
+        protected FilesystemInterface $filesystem,
+        protected ConfigInterface $config
+    )
     {
-        // TODO: Implement getContent() method.
     }
 
 
@@ -99,10 +37,61 @@ class FileGenerator implements FileGeneratorInterface
     /**
      * @inheritDoc
     */
-    public function generate(): mixed
+    public function generate(): bool
     {
-
+        return boolval($this->write());
     }
 
 
+
+
+
+
+
+    /**
+     * @return false|int
+    */
+    public function write(): false|int
+    {
+        return $this->filesystem
+                    ->file($this->getTargetPath())
+                    ->write($this->getContent());
+    }
+
+
+
+
+
+    /**
+     * @return false|int
+    */
+    public function append(): false|int
+    {
+        return $this->filesystem
+                    ->file($this->getTargetPath())
+                    ->append($this->getContent());
+    }
+
+
+
+
+
+
+    /**
+     * @param array $patterns
+     * @return string
+    */
+    public function generateStub(array $patterns): string
+    {
+        $file = new File($this->getStubPath());
+        return $file->stub($patterns);
+    }
+
+
+
+
+     /**
+      * @return string
+     */
+     abstract public function getStubPath(): string;
 }

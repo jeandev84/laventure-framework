@@ -92,10 +92,12 @@ interface CommandInterface extends ExecutableCommandInterface
 
 
     /**
-     * @param array $description
+     * @param string $description
      * @return $this
     */
-    public function description(array $description): static;
+    public function description(string $description): static;
+
+
 
 
 

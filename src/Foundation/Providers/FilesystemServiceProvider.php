@@ -40,7 +40,7 @@ class FilesystemServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singletons([
-           Filesystem::class => Filesystem::class,
+           FilesystemInterface::class => Filesystem::class,
            FileLocatorInterface::class => function (Filesystem $filesystem) {
                return $filesystem->getFileLocator();
            }

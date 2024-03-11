@@ -59,7 +59,9 @@ class ControllerLoader implements LoaderInterface
     */
     public function getCollection(): FileCollection
     {
-        return $this->filesystem->directoryFileCollection($this->controllerPath);
+        return $this->filesystem->directoryFiles(
+            $this->controllerPath
+        );
     }
 
 

@@ -4,7 +4,13 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Filesystem;
 
+use Laventure\Component\Filesystem\Directory\Contract\DirectoryInterface;
+use Laventure\Component\Filesystem\File\Collection\FileCollection;
+use Laventure\Component\Filesystem\File\File;
+use Laventure\Component\Filesystem\File\Locator\FileLocator;
+use Laventure\Component\Filesystem\File\Locator\FileLocatorInterface;
 use Laventure\Component\Filesystem\Stream\DTO\StreamParams;
+use Laventure\Component\Filesystem\Stream\Stream;
 
 /**
  * FilesystemInterface
@@ -24,7 +30,7 @@ interface FilesystemInterface
      *
      * @return mixed
     */
-    public function setRoot(string $path): mixed;
+    public function setRoot(string $path): static;
 
 
 
@@ -45,9 +51,9 @@ interface FilesystemInterface
      * locate path
      *
      * @param string $path
-     * @return mixed
+     * @return string
     */
-    public function locate(string $path): mixed;
+    public function locate(string $path): string;
 
 
 
@@ -59,7 +65,7 @@ interface FilesystemInterface
      *
      * @return array
     */
-    public function resources(string $pattern): mixed;
+    public function resources(string $pattern): array;
 
 
 
@@ -67,9 +73,10 @@ interface FilesystemInterface
 
     /**
      * @param string $filename
-     * @return mixed
+     * @return File
     */
-    public function file(string $filename): mixed;
+    public function file(string $filename): File;
+
 
 
 
@@ -78,9 +85,9 @@ interface FilesystemInterface
 
     /**
      * @param string $directory
-     * @return mixed
+     * @return DirectoryInterface
     */
-    public function dir(string $directory): mixed;
+    public function dir(string $directory): DirectoryInterface;
 
 
 
@@ -92,7 +99,7 @@ interface FilesystemInterface
      *
      * @return mixed
     */
-    public function stream(StreamParams $dto): mixed;
+    public function stream(StreamParams $dto): Stream;
 
 
 
@@ -101,11 +108,20 @@ interface FilesystemInterface
 
     /**
      * @param string $pattern
-     * @return mixed
+     * @return FileCollection
     */
-    public function collection(string $pattern): mixed;
+    public function collection(string $pattern): FileCollection;
 
 
+
+
+
+    /**
+     * @param string $directory
+     * @param string $extension
+     * @return FileCollection
+    */
+    public function directoryFiles(string $directory, string $extension = 'php'): FileCollection;
 
 
 
@@ -113,7 +129,18 @@ interface FilesystemInterface
     /**
      * @param string $filename
      * @param string $content
-     * @return mixed
+     * @return string
      */
-    public function dump(string $filename, string $content): mixed;
+    public function dump(string $filename, string $content): string;
+
+
+
+
+
+
+
+    /**
+     * @return FileLocatorInterface
+     */
+    public function getFileLocator(): FileLocatorInterface;
 }

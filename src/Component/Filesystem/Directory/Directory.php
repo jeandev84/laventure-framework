@@ -47,7 +47,7 @@ class Directory implements DirectoryInterface
 
 
     /**
-     * @return SplFileInfo
+     * @inheritDoc
     */
     public function info(): SplFileInfo
     {
@@ -57,9 +57,7 @@ class Directory implements DirectoryInterface
 
 
     /**
-     * @param string $extension
-     *
-     * @return DirectoryIterator
+     * @inheritDoc
     */
     public function iterate(string $extension): DirectoryIterator
     {
@@ -68,9 +66,12 @@ class Directory implements DirectoryInterface
 
 
 
+
+
+
     /**
      * @inheritDoc
-     */
+    */
     public function getFiles(string $extension = 'php'): array
     {
         $iterator  = $this->iterate($extension);
@@ -86,6 +87,9 @@ class Directory implements DirectoryInterface
 
         return $files;
     }
+
+
+
 
 
     /**
@@ -133,7 +137,7 @@ class Directory implements DirectoryInterface
 
 
     /**
-     * @return mixed
+     * @inheritDoc
     */
     public function read(): mixed
     {
@@ -144,7 +148,7 @@ class Directory implements DirectoryInterface
 
 
     /**
-     * @return string
+     * @inheritDoc
     */
     public function getPath(): string
     {

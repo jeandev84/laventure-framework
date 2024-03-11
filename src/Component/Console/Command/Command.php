@@ -155,8 +155,11 @@ abstract class Command implements CommandInterface
     */
     public function hasNameSeparator(): bool
     {
-        return stripos($this->getName(), $this->getNameSeparator()) !== false;
+        return $this->nameSeparated($this->getName());
     }
+
+
+
 
 
 
@@ -205,9 +208,9 @@ abstract class Command implements CommandInterface
     /**
      * @inheritDoc
     */
-    public function description(array $description): static
+    public function description(string $description): static
     {
-        $this->description = $description;
+        $this->description[] = $description;
 
         return $this;
     }
@@ -501,5 +504,17 @@ abstract class Command implements CommandInterface
     public function getHelpAsString(): string
     {
         return join(PHP_EOL, $this->help);
+    }
+
+
+
+
+    /**
+     * @param $name
+     * @return bool
+    */
+    protected function nameSeparated($name): bool
+    {
+        return stripos($name, $this->getNameSeparator()) !== false;
     }
 }

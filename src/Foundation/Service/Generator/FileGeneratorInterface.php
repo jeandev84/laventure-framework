@@ -17,24 +17,6 @@ use Laventure\Contract\Generator\GeneratorInterface;
 */
 interface FileGeneratorInterface extends GeneratorInterface
 {
-      /**
-       * @param $path
-       * @return $this
-      */
-      public function withTargetPath($path): static;
-
-
-
-
-      /**
-       * @param $content
-       * @return $this
-      */
-      public function withContent($content): static;
-
-
-
-
 
       /**
        * Returns target path
@@ -42,8 +24,6 @@ interface FileGeneratorInterface extends GeneratorInterface
        * @return string|null
       */
       public function getTargetPath(): ?string;
-
-
 
 
 

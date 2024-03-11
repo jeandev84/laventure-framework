@@ -306,9 +306,13 @@ class File implements FileInterface
     }
 
 
+
+
+
+
     /**
      * @return FileLoader
-     */
+    */
     public function getLoader(): FileLoader
     {
         return $this->loader;
@@ -317,13 +321,16 @@ class File implements FileInterface
 
 
 
+
     /**
      * @return FileReader
-     */
+    */
     public function getReader(): FileReader
     {
         return $this->reader;
     }
+
+
 
 
     /**
@@ -333,6 +340,8 @@ class File implements FileInterface
     {
         return $this->uploader;
     }
+
+
 
 
     /**

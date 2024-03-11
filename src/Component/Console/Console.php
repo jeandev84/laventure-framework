@@ -219,29 +219,6 @@ class Console implements ConsoleInterface, CommandCollectionInterface, OptionSta
 
 
 
-    /**
-     * @inheritDoc
-    */
-    public function getDefaultOptions(): array
-    {
-        $listCommandName = $this->getListCommand()->getName();
-
-        return [
-            ["help",    "Display help for the given command. When no command is given display help for the ($listCommandName) command", "h"],
-            ["quiet",   "Do not output any message", "q"],
-            ["version", "Display this application version", "V"],
-            /*[['ansi', 'no-ansi'], "Force (or disable --no-ansi) ANSI output", ''],*/
-            ["no-interaction", 'Do not ask any interactive question', "n"],
-            ["env=ENV", 'The Environment name. [default: "dev"]', "e"],
-            ["no-debug", 'Switch off debug mode.', ''],
-            ["verbose", 'Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug', 'v|vv|vvv'],
-        ];
-    }
-
-
-
-
-
 
 
     /**
@@ -323,12 +300,15 @@ class Console implements ConsoleInterface, CommandCollectionInterface, OptionSta
 
 
 
+
+
+
     /**
      * @param $name
      * @param array $options
      * @return bool
     */
-    protected function hasInputOption($name, array $options): bool
+    private function hasInputOption($name, array $options): bool
     {
         return in_array($name, $options);
     }
@@ -340,7 +320,7 @@ class Console implements ConsoleInterface, CommandCollectionInterface, OptionSta
      * @param CommandInterface $command
      * @return CommandInterface
     */
-    protected function setCommandDefaultOptions(CommandInterface $command): CommandInterface
+    private function setCommandDefaultOptions(CommandInterface $command): CommandInterface
     {
         foreach ($this->getDefaultOptions() as $options) {
             [$name, $description, $shortcut] = $options;
@@ -348,5 +328,27 @@ class Console implements ConsoleInterface, CommandCollectionInterface, OptionSta
         }
 
         return $command;
+    }
+
+
+
+
+    /**
+     * @return array[]
+    */
+    private function getDefaultOptions(): array
+    {
+        $listCommandName = $this->getListCommand()->getName();
+
+        return [
+            ["help",    "Display help for the given command. When no command is given display help for the ($listCommandName) command", "h"],
+            ["quiet",   "Do not output any message", "q"],
+            ["version", "Display this application version", "V"],
+            /*[['ansi', 'no-ansi'], "Force (or disable --no-ansi) ANSI output", ''],*/
+            ["no-interaction", 'Do not ask any interactive question', "n"],
+            ["env=ENV", 'The Environment name. [default: "dev"]', "e"],
+            ["no-debug", 'Switch off debug mode.', ''],
+            ["verbose", 'Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug', 'v|vv|vvv'],
+        ];
     }
 }

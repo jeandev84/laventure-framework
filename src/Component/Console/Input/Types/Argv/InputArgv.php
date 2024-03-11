@@ -441,8 +441,12 @@ abstract class InputArgv implements InputInterface
         $default = $argument->getDefault();
         $name    = $argument->getName();
 
-        if ($argument->isRequired() && !$this->hasArgument($name)) {
-            throw new RequiredArgumentException($name);
+        if ($argument->isRequired()) {
+            if (!$this->hasArgument($name) && isset($this->arguments[0])) {
+                 $this->setArgument($name, $this->arguments[0]);
+            } else {
+                throw new RequiredArgumentException($name);
+            }
         } elseif ($argument->isOptional()) {
             $this->setArgument($name, $default ?: $this->getArgument($name));
         }

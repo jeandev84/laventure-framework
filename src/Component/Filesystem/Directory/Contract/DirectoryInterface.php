@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Filesystem\Directory\Contract;
 
+use Laventure\Component\Filesystem\Directory\Iterator\DirectoryIterator;
 use Laventure\Contract\Scanner\ScannerInterface;
+use SplFileInfo;
 
 /**
  * DirectoryInterface
@@ -18,9 +20,36 @@ use Laventure\Contract\Scanner\ScannerInterface;
 interface DirectoryInterface extends ScannerInterface
 {
     /**
-     * @return mixed
+     * @return SplFileInfo
     */
-    public function info(): mixed;
+    public function info(): SplFileInfo;
+
+
+
+
+    /**
+     * @param string $extension
+     *
+     * @return DirectoryIterator
+    */
+    public function iterate(string $extension): DirectoryIterator;
+
+
+
+
+
+
+
+
+    /**
+     * Returns all files in directory
+     *
+     * @param string $extension
+     * @return array
+    */
+    public function getFiles(string $extension = 'php'): array;
+
+
 
 
 
@@ -33,12 +62,6 @@ interface DirectoryInterface extends ScannerInterface
 
 
 
-    /**
-     * @param string $extension
-     *
-     * @return mixed
-    */
-    public function iterate(string $extension): mixed;
 
 
 
@@ -61,19 +84,7 @@ interface DirectoryInterface extends ScannerInterface
 
 
     /**
-     * @return mixed
+     * @return bool
     */
     public function make(): mixed;
-
-
-
-
-
-    /**
-     * Returns all files in directory
-     *
-     * @param string $extension
-     * @return array
-    */
-    public function getFiles(string $extension = 'php'): array;
 }
