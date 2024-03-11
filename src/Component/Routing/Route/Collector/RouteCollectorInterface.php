@@ -24,6 +24,33 @@ use Laventure\Component\Routing\Route\RouteInterface;
 */
 interface RouteCollectorInterface extends RouteCollectionInterface
 {
+
+
+    /**
+     * @param string $controller
+     * @return $this
+    */
+    public function addControllerRoutes(string $controller): static;
+
+
+
+
+
+    /**
+     * Add route from controller attributes for example
+     *
+     * @param array $controllers
+     *
+     * @return $this
+    */
+    public function addRoutesByController(array $controllers): static;
+
+
+
+
+
+
+
     /**
      *  Collect route called by each kind methods
      *  Example : $this->map('GET|POST|PUT|DELETE', '/any', [], 'any');

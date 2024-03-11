@@ -82,7 +82,7 @@ class RouterTest extends TestCase
 
         $router->patterns(['id' => '\d+']);
 
-        $router->registerControllers([
+        $router->addRoutesByController([
             OrderController::class
         ]);
 
