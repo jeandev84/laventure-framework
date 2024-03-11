@@ -71,13 +71,13 @@ class MakeCommand extends Command
          $commandName = $input->getArgument('name');
          $commandParams = [$commandName];
 
-         if ($this->hasSeparatedName($commandName)) {
+         if ($this->separatedName($commandName)) {
              $commandParams = explode($this->getNameSeparator(), $commandName);
          }
 
          $this->commandGenerator->withCommand($commandName, $commandParams)->generate();
 
-         $output->writeln("Command {$this->commandGenerator->getTargetPath()} successfully generated.");
+         $output->writeln("Command {$this->getTargetPath()} successfully generated.");
 
          return Command::SUCCESS;
     }
@@ -94,5 +94,17 @@ class MakeCommand extends Command
         return [
            "{$this->getName()} [<name>]"
         ];
+    }
+
+
+
+
+
+    /**
+     * @return string
+    */
+    private function getTargetPath(): string
+    {
+        return $this->commandGenerator->getTargetPath();
     }
 }
