@@ -14,6 +14,7 @@
 */
 
 
+use Laventure\Component\Config\Config;
 use Laventure\Foundation\Application;
 
 if (! function_exists('app')) {
@@ -36,11 +37,31 @@ if(! function_exists('app_name')) {
 
     function app_name(): string
     {
-        return app()->get('app.name');
+        return config()->get('app.name');
     }
 }
 
 
+/*
+|------------------------------------------------------------------
+|   Get Configuration
+|   config()->get('demo', 'default')
+|------------------------------------------------------------------
+*/
+
+if(! function_exists('config')) {
+
+    /**
+     * @return Config
+     * @throws ReflectionException
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+    */
+    function config(): Config
+    {
+        return app()->get('config');
+    }
+}
 
 
 /*

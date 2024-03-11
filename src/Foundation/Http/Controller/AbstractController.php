@@ -70,9 +70,11 @@ abstract class AbstractController implements ContainerAwareInterface
 
 
     /**
+     * Returns manager registry
+     *
      * @return ManagerRegistryInterface
     */
-    public function getManagerRegistry(): ManagerRegistryInterface
+    public function getRegistry(): ManagerRegistryInterface
     {
         return $this->container['db.manager.registry'];
     }
