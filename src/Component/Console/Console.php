@@ -9,13 +9,10 @@ use Laventure\Component\Console\Command\Command;
 use Laventure\Component\Console\Command\Contract\CommandInterface;
 use Laventure\Component\Console\Command\Contract\ListCommandInterface;
 use Laventure\Component\Console\Command\Defaults\DefaultListCommands;
-use Laventure\Component\Console\Command\Defaults\List\ListCommand;
 use Laventure\Component\Console\Command\Exception\EmptyCommandNameException;
-use Laventure\Component\Console\Command\Usage\UsageCommandInterface;
 use Laventure\Component\Console\Input\InputInterface;
-use Laventure\Component\Console\Input\Option\InputOptionInterface;
+use Laventure\Component\Console\Input\Option\OptionStatusInterface;
 use Laventure\Component\Console\Output\OutputInterface;
-use Laventure\Component\Console\Output\Table\ConsoleTable;
 
 /**
  * Console
@@ -26,7 +23,7 @@ use Laventure\Component\Console\Output\Table\ConsoleTable;
  *
  * @package  Laventure\Component\Console
 */
-class Console implements ConsoleInterface, CommandCollectionInterface
+class Console implements ConsoleInterface, CommandCollectionInterface, OptionStatusInterface
 {
     /**
      * @var CommandInterface[]
@@ -244,13 +241,96 @@ class Console implements ConsoleInterface, CommandCollectionInterface
 
 
 
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function hasVersion($name): bool
+    {
+        return $this->hasInputOption($name, ['version', 'V']);
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function hasHelp($name): bool
+    {
+        return $this->hasInputOption($name, ['help', 'h']);
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function hasQuiet($name): bool
+    {
+        return $this->hasInputOption($name, ['quiet', 'q']);
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function hasNoInteraction($name): bool
+    {
+        return $this->hasInputOption($name, ['no-interaction', 'n']);
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function hasEnvironment($name): bool
+    {
+        return $this->hasInputOption($name, ['env=ENV', 'e']);
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function hasNoDebug($name): bool
+    {
+        return $this->hasInputOption($name, ['no-debug']);
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function hasVerbose($name): bool
+    {
+        return $this->hasInputOption($name, ['verbose', 'v', 'vv', 'vvv']);
+    }
+
+
+
     /**
      * @param $name
+     * @param array $options
      * @return bool
     */
-    protected function hasHelp($name): bool
+    protected function hasInputOption($name, array $options): bool
     {
-        return in_array($name, ['help', 'h']);
+        return in_array($name, $options);
     }
 
 
