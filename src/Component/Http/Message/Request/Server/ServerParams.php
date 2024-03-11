@@ -389,4 +389,15 @@ class ServerParams extends Parameter implements ServerParamInterface
     {
         return new ServerRemote($this);
     }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function isValidHost($host): bool
+    {
+        return boolval(preg_match('#^'. $host .'$#', $this->getHost()));
+    }
 }

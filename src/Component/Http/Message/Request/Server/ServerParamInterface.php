@@ -256,6 +256,19 @@ interface ServerParamInterface extends ParameterInterface
 
 
 
+    /**
+     * Determine if the given host is valid
+     *
+     * @param $host
+     * @return bool
+    */
+    public function isValidHost($host): bool;
+
+
+
+
+
+
 
     /**
      * Determine if the HTTP protocol is secure

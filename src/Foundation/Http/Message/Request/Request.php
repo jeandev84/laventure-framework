@@ -10,6 +10,7 @@ use Laventure\Component\Http\Message\Request\ServerRequest;
 use Laventure\Component\Http\Storage\Cookie\Jar\CookieJar;
 use Laventure\Component\Http\Storage\Cookie\Jar\CookieJarInterface;
 use Laventure\Component\Http\Storage\Session\SessionInterface;
+use Laventure\Foundation\Http\Message\Request\Constract\CustomRequestInterface;
 use Psr\Http\Message\UriInterface;
 
 /**
@@ -21,7 +22,7 @@ use Psr\Http\Message\UriInterface;
  *
  * @package  Laventure\Foundation\Web\Http\Request
 */
-final class Request extends ServerRequest
+final class Request extends ServerRequest implements CustomRequestInterface
 {
     /**
      * @var SessionInterface|null
@@ -45,10 +46,9 @@ final class Request extends ServerRequest
 
 
     /**
-     * @param SessionInterface|null $session
-     * @return $this
+     * @inheritDoc
     */
-    public function withSession(?SessionInterface $session): static
+    public function withSession(SessionInterface $session): static
     {
         $this->session = $session;
 
@@ -60,7 +60,7 @@ final class Request extends ServerRequest
 
 
     /**
-     * @return SessionInterface|null
+     * @inheritDoc
     */
     public function getSession(): ?SessionInterface
     {
@@ -70,8 +70,10 @@ final class Request extends ServerRequest
 
 
 
+
+
     /**
-     * @return ServerParamInterface
+     * @inheritDoc
     */
     public function getServer(): ServerParamInterface
     {
@@ -83,10 +85,21 @@ final class Request extends ServerRequest
 
 
     /**
-     * @return CookieJarInterface
+     * @inheritDoc
     */
     public function getCookieJar(): CookieJarInterface
     {
         return new CookieJar($this->getCookieParams());
+    }
+
+
+
+
+    /**
+     * @return bool
+    */
+    public function hasSession(): bool
+    {
+         return $this->session instanceof SessionInterface;
     }
 }

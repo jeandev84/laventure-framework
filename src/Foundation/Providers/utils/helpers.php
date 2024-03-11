@@ -15,7 +15,10 @@
 
 
 use Laventure\Component\Config\Config;
+use Laventure\Component\Routing\Router\RouterInterface;
 use Laventure\Foundation\Application;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 if (! function_exists('app')) {
 
@@ -54,8 +57,8 @@ if(! function_exists('config')) {
     /**
      * @return Config
      * @throws ReflectionException
-     * @throws \Psr\Container\ContainerExceptionInterface
-     * @throws \Psr\Container\NotFoundExceptionInterface
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
     */
     function config(): Config
     {
@@ -102,5 +105,30 @@ if(! function_exists('env')) {
         }
 
         return $value;
+    }
+}
+
+
+/*
+|-----------------------------------------------------------------------------
+|   Route
+|   route('home')                => /page/home
+|   route('demo', ['id' => 1])   => /page/demo/1
+|-----------------------------------------------------------------------------
+*/
+
+if (! function_exists('route')) {
+
+    /**
+     * @param string $name
+     * @param array $parameters
+     * @return string
+     * @throws ReflectionException
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+    */
+    function route(string $name, array $parameters = []): string
+    {
+        return app()->get(RouterInterface::class)->generate($name, $parameters);
     }
 }
