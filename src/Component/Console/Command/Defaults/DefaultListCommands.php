@@ -94,7 +94,7 @@ class DefaultListCommands extends Command implements ListCommandInterface
     public function list(): array
     {
         return array_merge($this->getDefaultList(), [
-            'AvailableCommands'  => $this->getAvailableCommandList()
+            'Available Commands'  => $this->getAvailableCommandList()
         ]);
     }
 
@@ -107,15 +107,8 @@ class DefaultListCommands extends Command implements ListCommandInterface
     */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $consoleTable = $output->getConsoleTable();
-        $output->printList($this->getDefaultList());
-        $output->writeln("Available commands:");
-        foreach ($this->getAvailableCommandList() as $name => $description) {
-            $consoleTable->addRow([$name, $description]);
-        }
-        $consoleTable->hideBorder();
-        $output->writeln($consoleTable->getTable());
-        $output->print();
+        $output->printList($this->list());
+
         return Command::SUCCESS;
     }
 
