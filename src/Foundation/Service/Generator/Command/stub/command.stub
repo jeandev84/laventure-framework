@@ -21,14 +21,14 @@ class DummyClassName extends Command
     /**
      * @var string
     */
-    protected $CommandName = 'commandName';
+    protected $CommandNameProperty = 'commandName';
 
 
 
     /**
-     * @var string
+     * @var array
     */
-    protected $description = [];
+    protected array $description = [];
 
 
 
@@ -41,7 +41,7 @@ class DummyClassName extends Command
     {
         // put your logic here
 
-        $output->success('You are ready for execution commandName');
+        $output->success("You are ready for execution <commandName>");
 
         return Command::SUCCESS;
     }

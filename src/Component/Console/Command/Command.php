@@ -155,7 +155,7 @@ abstract class Command implements CommandInterface
     */
     public function hasNameSeparator(): bool
     {
-        return $this->nameSeparated($this->getName());
+        return $this->hasSeparatedName($this->getName());
     }
 
 
@@ -513,7 +513,7 @@ abstract class Command implements CommandInterface
      * @param $name
      * @return bool
     */
-    protected function nameSeparated($name): bool
+    protected function hasSeparatedName($name): bool
     {
         return stripos($name, $this->getNameSeparator()) !== false;
     }

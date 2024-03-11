@@ -20,6 +20,15 @@ use Laventure\Foundation\Service\Generator\FileGenerator;
 class CommandGenerator extends FileGenerator
 {
 
+
+    /**
+     * @var string|null
+    */
+    protected ?string $commandName = null;
+
+
+
+
     /**
      * @var array
     */
@@ -29,12 +38,15 @@ class CommandGenerator extends FileGenerator
 
 
     /**
-     * @param array $commandParams
+     * @param $commandName
+     * @param array $commandAsArray
      * @return $this
     */
-    public function withCommandParams(array $commandParams): static
+    public function withCommand($commandName, array $commandAsArray): static
     {
-        foreach ($commandParams as $commandParam) {
+        $this->commandName = $commandName;
+
+        foreach ($commandAsArray as $commandParam) {
             $this->commandParams[] = ucfirst($commandParam);
         }
 
@@ -52,9 +64,7 @@ class CommandGenerator extends FileGenerator
     public function getClassName(): string
     {
          if (empty($this->commandParams)) {
-              throw new CommandException(
-          "Unavailable command name for generator.". get_called_class()
-              );
+              throw new CommandException("Unavailable command name for generator.". get_called_class());
          }
 
          return sprintf('%sCommand', join($this->commandParams));
@@ -86,12 +96,30 @@ class CommandGenerator extends FileGenerator
 
 
 
+    /**
+     * @inheritDoc
+     * @throws CommandException
+    */
+    public function getContent(): ?string
+    {
+        // CommandStub
+        return $this->generateStub([
+            "DummyNamespace"      => $this->config['console.commands.prefix'],
+            "DummyClassName"      => $this->getClassName(),
+            "CommandNameProperty" => "name",
+            "commandName"         => $this->commandName
+        ]);
+    }
+
+
+
+
 
     /**
      * @inheritDoc
     */
-    public function getContent(): ?string
+    public function getStubPath(): string
     {
-         #dd($this->getClassName(), $this->getTargetPath());
+        return __DIR__.'/stub/command.stub';
     }
 }

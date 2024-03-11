@@ -7,6 +7,7 @@ use Laventure\Component\Config\ConfigInterface;
 use Laventure\Component\Filesystem\File\File;
 use Laventure\Component\Filesystem\Filesystem;
 use Laventure\Component\Filesystem\FilesystemInterface;
+use Laventure\Foundation\Application;
 
 /**
  * FileGenerator
@@ -21,10 +22,12 @@ abstract class FileGenerator implements FileGeneratorInterface
 {
 
     /**
+     * @param Application $app
      * @param Filesystem $filesystem
      * @param ConfigInterface $config
-     */
+    */
     public function __construct(
+        protected Application $app,
         protected FilesystemInterface $filesystem,
         protected ConfigInterface $config
     )
@@ -83,9 +86,14 @@ abstract class FileGenerator implements FileGeneratorInterface
     */
     public function generateStub(array $patterns): string
     {
-        $file = new File($this->getStubPath());
+        $file    = new File($this->getStubPath());
+        $patterns["ApplicationName"] = $this->app->getName();
+        $patterns["GenerateTime"]    = date('d/m/Y H:i:s');
+
         return $file->stub($patterns);
     }
+
+
 
 
 
