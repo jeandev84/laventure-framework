@@ -131,13 +131,13 @@ class DefaultListCommands extends Command implements ListCommandInterface
         $availableCommands = [];
 
         foreach ($this->availableCommands as $command) {
-            if ($command->hasNameSeparated()) {
-                $prefix = $command->getFirstNameSeparated();
+            if ($command->hasNameSeparator()) {
+                $prefix = $command->getFirstName();
                 if (!isset($availableCommands[$prefix])) {
                     $availableCommands[$prefix] = '';
                 }
             }
-            $descriptionName = $command->getDescriptionAsString() ?: 'No Description.';
+            $descriptionName = $command->getDescription() ?: 'No Description.';
             $availableCommands[$command->getName()] = $descriptionName;
         }
 

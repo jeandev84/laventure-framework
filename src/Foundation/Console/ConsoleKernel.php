@@ -13,6 +13,7 @@ use Laventure\Component\Console\Kernel\ConsoleKernelInterface;
 use Laventure\Component\Console\Kernel\TerminateInterface;
 use Laventure\Component\Console\Output\OutputInterface;
 use Laventure\Foundation\Application;
+use Laventure\Foundation\Console\Commands\Command\MakeCommand;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use ReflectionException;
@@ -48,7 +49,7 @@ class ConsoleKernel implements ConsoleKernelInterface, TerminateInterface
      * @var array
     */
     private array $defaultCommands = [
-
+        MakeCommand::class
     ];
 
 

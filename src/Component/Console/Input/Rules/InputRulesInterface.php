@@ -39,6 +39,27 @@ interface InputRulesInterface
 
 
 
+
+
+    /**
+     * @return $this
+    */
+    public function required(): static;
+
+
+
+
+
+    /**
+     * @return $this
+    */
+    public function optional(): static;
+
+
+
+
+
+
     /**
      * @return bool
     */

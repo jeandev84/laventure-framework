@@ -158,7 +158,7 @@ interface FileInterface
 
 
     /**
-     * Replace patterns in stub file
+     * Replace patterns in stubs file
      *
      * @param array $patterns
      *

@@ -219,10 +219,10 @@ class ConsoleOutput implements OutputInterface
     */
     public function printList(array $list): void
     {
-        $consoleTable = $this->getConsoleTable();
         foreach ($list as $header => $context) {
             $this->writeln("$header:");
             if (!empty($context)) {
+                $consoleTable = $this->getConsoleTable();
                 foreach ($context as $index => $value) {
                     if (is_string($index)) {
                         $consoleTable->addRow([$index, $value]);

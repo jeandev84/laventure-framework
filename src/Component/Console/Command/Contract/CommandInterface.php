@@ -72,7 +72,7 @@ interface CommandInterface extends ExecutableCommandInterface
      *
      * @return bool
     */
-    public function hasNameSeparated(): bool;
+    public function hasNameSeparator(): bool;
 
 
 
@@ -83,7 +83,7 @@ interface CommandInterface extends ExecutableCommandInterface
     /**
      * @return string
     */
-    public function getFirstNameSeparated(): string;
+    public function getFirstName(): string;
 
 
 
@@ -105,7 +105,7 @@ interface CommandInterface extends ExecutableCommandInterface
      *
      * @return array
     */
-    public function getDescription(): array;
+    public function getDescriptions(): array;
 
 
 
@@ -114,7 +114,7 @@ interface CommandInterface extends ExecutableCommandInterface
     /**
      * @return string
     */
-    public function getDescriptionAsString(): string;
+    public function getDescription(): string;
 
 
 

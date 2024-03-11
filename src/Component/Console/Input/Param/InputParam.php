@@ -194,6 +194,27 @@ abstract class InputParam implements InputParamInterface, InputRulesInterface
     /**
      * @inheritDoc
     */
+    public function required(): static
+    {
+        return $this->rules([static::REQUIRED]);
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function optional(): static
+    {
+        return $this->rules([static::OPTIONAL]);
+    }
+
+
+    /**
+     * @inheritDoc
+    */
     public function isRequired(): bool
     {
         return $this->hasRule(static::REQUIRED);

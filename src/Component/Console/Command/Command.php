@@ -153,7 +153,7 @@ abstract class Command implements CommandInterface
     /**
      * @inheritDoc
     */
-    public function hasNameSeparated(): bool
+    public function hasNameSeparator(): bool
     {
         return stripos($this->getName(), $this->getNameSeparator()) !== false;
     }
@@ -164,7 +164,7 @@ abstract class Command implements CommandInterface
     /**
      * @inheritDoc
     */
-    public function getFirstNameSeparated(): string
+    public function getFirstName(): string
     {
         return $this->getNameAsArray()[0] ?? '';
     }
@@ -178,7 +178,7 @@ abstract class Command implements CommandInterface
     */
     public function getNameAsArray(): array
     {
-        if (!$this->hasNameSeparated()) {
+        if (!$this->hasNameSeparator()) {
             return [];
         }
 
@@ -192,7 +192,7 @@ abstract class Command implements CommandInterface
     /**
      * @inheritDoc
     */
-    public function getDescription(): array
+    public function getDescriptions(): array
     {
         return $this->description;
     }
@@ -419,7 +419,7 @@ abstract class Command implements CommandInterface
     public function getHelpList(): array
     {
         return [
-           'Description' => $this->getDescription(),
+           'Description' => $this->getDescriptions(),
            'Usage'       => $this->getUsage(),
            'Arguments'   => $this->getArgumentList(),
            'Options'     => $this->getOptionList(),
@@ -437,7 +437,7 @@ abstract class Command implements CommandInterface
     {
         return [
             'Usage'        => $this->getUsage(),
-            'Description'  => $this->getDescription(),
+            'Description'  => $this->getDescriptions(),
             'Help'         => $this->getHelp(),
             'Arguments'    => $this->getArguments(),
             'Options'      => $this->getOptions(),
@@ -486,7 +486,7 @@ abstract class Command implements CommandInterface
     /**
      * @inheritDoc
     */
-    public function getDescriptionAsString(): string
+    public function getDescription(): string
     {
         return join('. ', $this->description);
     }
