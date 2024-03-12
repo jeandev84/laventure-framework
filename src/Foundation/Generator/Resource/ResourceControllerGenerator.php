@@ -18,15 +18,62 @@ use Laventure\Foundation\Generator\Controller\ControllerGenerator;
 */
 abstract class ResourceControllerGenerator extends ControllerGenerator
 {
+
+      /**
+       * @var string
+      */
+      protected string $resource;
+
+
+//    /**
+//     * @param Resource $resource
+//     * @return $this
+//    */
+//    public function withResource(Resource $resource): static
+//    {
+//        return $this->withController(
+//            $resource->getController(),
+//            $resource->getInfo()->getMethods()
+//        );
+//    }
+
+
+
+
+
+      /**
+       * @param string $resource
+       * @return $this
+      */
+      public function withResource(string $resource): static
+      {
+           $this->resource = $resource;
+
+           return $this->withClassName($resource);
+      }
+
+
+
+
+
+
+//    /**
+//     * @param string $entity
+//     * @return string
+//    */
+//    protected function generateControllerName(string $entity): string
+//    {
+//        $entity = str_replace(['/'], ["\\"], $entity);
+//
+//        return sprintf('%sController', strtoupper($entity));
+//    }
+
+
+
+
+
     /**
-     * @param Resource $resource
-     * @return $this
+     * @return Resource
     */
-    public function withResource(Resource $resource): static
-    {
-        return $this->withController(
-            $resource->getController(),
-            $resource->getInfo()->getMethods()
-        );
-    }
+    abstract public function getResource(): Resource;
 }

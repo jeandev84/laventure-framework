@@ -25,7 +25,7 @@ class ControllerGenerator extends ClassGenerator implements ControllerGeneratorI
     */
     public function withController(string $controller, array $actions = []): static
     {
-        return $this->withClass($controller)->withMethods($actions);
+        return $this->withClassName($controller)->withMethods($actions);
     }
 
 

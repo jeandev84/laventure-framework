@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Laventure\Foundation\Generator\Resource\Api;
 
+use Laventure\Component\Routing\Route\Resource\Resource;
 use Laventure\Component\Routing\Route\Resource\Types\ApiResource;
 use Laventure\Foundation\Generator\Resource\ResourceControllerGenerator;
 
@@ -17,24 +18,12 @@ use Laventure\Foundation\Generator\Resource\ResourceControllerGenerator;
 */
 class ApiResourceGenerator extends ResourceControllerGenerator
 {
-       /**
-        * @var ApiResource|null
-       */
-       protected ?ApiResource $apiResource = null;
 
-
-
-
-       /**
-        * @param string $entity
-        * @return $this
-       */
-       public function withApiResource(string $entity): static
-       {
-           $this->apiResource = new ApiResource("books", $entity);
-
-           dd($this->apiResource);
-
-           return $this->withResource($this->apiResource);
-       }
+      /**
+       * @inheritDoc
+      */
+      public function getResource(): Resource
+      {
+         return new ApiResource('api.books', $this->getClassName());
+      }
 }

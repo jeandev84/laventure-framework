@@ -74,10 +74,20 @@ class MakeResourceCommand extends Command
     */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        # Check controller name we want to create
-        $entity = $input->getArgument('name');
+        # Check resource classname we want to create that must be entity
+        # (e.g, Book|User ...)
+        $resource = $input->getArgument('name');
 
-        dd($entity);
+        # Set controller name an action we want to generate
+        if ($input->hasOption('api')) {
+            $this->apiResourceGenerator->withResource($resource);
+        } else {
+            $this->webResourceGenerator->withResource($resource);
+        }
+
+        dd($this->webResourceGenerator);
+
+        // here we will be generated resource
 
         return Command::SUCCESS;
     }

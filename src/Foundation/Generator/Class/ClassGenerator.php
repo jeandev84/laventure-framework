@@ -33,16 +33,19 @@ abstract class ClassGenerator extends FileGenerator implements ClassGeneratorInt
 
 
 
+
+
     /**
      * @param string $classname
      * @return $this
     */
-    public function withClass(string $classname): static
+    public function withClassName(string $classname): static
     {
-        $this->classNames  = explode("/", $classname);
+        $this->classNames = $this->convertPathToArray($classname);
 
         return $this;
     }
+
 
 
 
@@ -112,7 +115,7 @@ abstract class ClassGenerator extends FileGenerator implements ClassGeneratorInt
     */
     public function getClassName(): string
     {
-        return end($this->classNames);
+        return $this->getLastFromArray($this->classNames);
     }
 
 

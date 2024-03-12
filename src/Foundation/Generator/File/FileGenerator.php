@@ -171,12 +171,52 @@ abstract class FileGenerator implements FileGeneratorInterface
     {
         return trim($path, DIRECTORY_SEPARATOR);
     }
-    
-    
 
 
 
-     /**
+
+    /**
+     * @param string $path
+     * @return array
+    */
+    public function convertPathToArray(string $path): array
+    {
+        return explode("/", $path);
+    }
+
+
+
+
+
+    /**
+     * @param string $path
+     * @return string
+    */
+    public function getLastPartOfPath(string $path): string
+    {
+        return $this->getLastFromArray(
+            $this->convertPathToArray($path)
+        );
+    }
+
+
+
+
+    /**
+     * @param array $array
+     * @return string
+    */
+    public function getLastFromArray(array $array): string
+    {
+        return end($array);
+    }
+
+
+
+
+
+
+    /**
       * @inheritDoc
      */
      abstract public function getStubPath(): string;
