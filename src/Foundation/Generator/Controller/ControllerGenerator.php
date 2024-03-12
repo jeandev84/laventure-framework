@@ -35,7 +35,7 @@ class ControllerGenerator extends ClassGenerator implements ControllerGeneratorI
     */
     public function getBaseDir(): string
     {
-        return $this->trimPath($this->config['http.controllers.dir']);
+        return $this->trimPath($this->config['routes.controllers.dir']);
     }
 
 
@@ -46,7 +46,7 @@ class ControllerGenerator extends ClassGenerator implements ControllerGeneratorI
     */
     public function getBaseNamespace(): string
     {
-        return $this->config['http.controllers.prefix'];
+        return $this->config['routes.controllers.prefix'];
     }
 
 

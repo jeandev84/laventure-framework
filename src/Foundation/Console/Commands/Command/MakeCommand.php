@@ -99,12 +99,9 @@ class MakeCommand extends Command
     }
 
 
-
-
     /**
      * @return string
-     * @throws CommandGeneratorException
-    */
+     */
     private function getTargetPath(): string
     {
         return $this->commandGenerator->getTargetPath();

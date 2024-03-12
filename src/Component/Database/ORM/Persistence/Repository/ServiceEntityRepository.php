@@ -15,7 +15,7 @@ use Laventure\Component\Database\ORM\Persistence\Manager\Contract\EntityManagerI
  *
  * @package  Laventure\Component\Database\ORM\Repository
 */
-class ServiceRepository extends EntityRepository
+class ServiceEntityRepository extends EntityRepository
 {
     /**
      * @param EntityManagerInterface $em

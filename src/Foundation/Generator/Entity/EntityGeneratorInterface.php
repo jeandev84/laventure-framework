@@ -1,0 +1,27 @@
+<?php
+declare(strict_types=1);
+
+namespace Laventure\Foundation\Generator\Entity;
+
+
+use Laventure\Foundation\Generator\Class\ClassGeneratorInterface;
+
+/**
+ * EntityGeneratorInterface
+ *
+ * @author Jean-Claude <jeanyao@ymail.com>
+ *
+ * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
+ *
+ * @package  Laventure\Foundation\Generator\Entity
+ */
+interface EntityGeneratorInterface extends ClassGeneratorInterface
+{
+
+       /**
+        * Generate entity repository
+        *
+        * @return bool
+       */
+       public function generateRepository(): bool;
+}

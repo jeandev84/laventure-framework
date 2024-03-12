@@ -25,6 +25,12 @@ abstract class ClassGenerator extends FileGenerator implements ClassGeneratorInt
     protected string $parsedName = '';
 
 
+    /**
+     * @var string
+    */
+    protected string $module = '';
+
+
 
     /**
      * @var array
@@ -43,13 +49,15 @@ abstract class ClassGenerator extends FileGenerator implements ClassGeneratorInt
 
 
     /**
-     * @param string $classname
-     * @return $this
+     * @inheritDoc
     */
     public function withClassName(string $classname): static
     {
+        $classNames       = $this->convertPathToArray($classname);
+        $this->classNames = $classNames;
         $this->parsedName = $classname;
-        $this->classNames = $this->convertPathToArray($classname);
+        array_pop($classNames);
+        $this->module = join("\\", $classNames);
 
         return $this;
     }
@@ -93,11 +101,7 @@ abstract class ClassGenerator extends FileGenerator implements ClassGeneratorInt
     */
     public function getModule(): string
     {
-        # remove the last items of class names
-        array_pop($this->classNames);
-
-        # rebuilding part
-        return join("/", $this->classNames);
+        return $this->module;
     }
 
 
@@ -146,9 +150,11 @@ abstract class ClassGenerator extends FileGenerator implements ClassGeneratorInt
 
 
 
+
     /**
      * @inheritDoc
-     */
+     * @throws ClassGeneratorException
+    */
     public function getContent(): string
     {
         return $this->generateStub([
@@ -162,10 +168,9 @@ abstract class ClassGenerator extends FileGenerator implements ClassGeneratorInt
 
 
 
-
-
     /**
      * @inheritDoc
+     * @throws ClassGeneratorException
     */
     public function generateStubMethods(): string
     {

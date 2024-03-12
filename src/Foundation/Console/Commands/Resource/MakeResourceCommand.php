@@ -58,9 +58,9 @@ class MakeResourceCommand extends Command
      */
     protected function configure(): void
     {
-        $this->addArgument('name', "Choose a controller name (e.g. Books/Book or User)")
+        $this->addArgument('name', "Choose a resource name (e.g. Books/Book or User)")
             ->required();
-        $this->addOption('api', "This option mean that we want to create an [API] resource)")
+        $this->addOption('api', "This option mean that we want to create an [API] resource.)")
              ->optional();
     }
 

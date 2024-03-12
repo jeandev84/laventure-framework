@@ -7,7 +7,7 @@ use Laventure\Component\Database\ORM\Persistence\Manager\EntityManager;
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\ClassMetadata;
 use PHPUnitTest\App\Entity\Book;
 use PHPUnitTest\App\Entity\User;
-use PHPUnitTest\App\Repository\UserRepository;
+use PHPUnitTest\App\Repository\UserEntityRepository;
 use PHPUnitTest\App\Service\Hash\EncryptedPassword;
 
 
@@ -51,7 +51,7 @@ $definition = new Definition($connection);
 $em         = new EntityManager($definition);
 
 
-$em->addRepository(new UserRepository($em));
+$em->addRepository(new UserEntityRepository($em));
 
 $repository = $em->getRepository(User::class);
 

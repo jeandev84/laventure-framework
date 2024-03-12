@@ -24,7 +24,7 @@ class ApiResourceGenerator extends ResourceGenerator
      * @param string $resource
      * @return $this
     */
-    public function withResource(string $resource): static
+    public function withResource($resource): static
     {
         return parent::withResource($resource);
     }
@@ -38,10 +38,10 @@ class ApiResourceGenerator extends ResourceGenerator
     */
     public function getResource(): Resource
     {
-        $resourceName   = $this->getResourceName();
-        $controllerName = $this->controllerGenerator->generateControllerName();
-
-        return new ApiResource($resourceName, $controllerName);
+        return new ApiResource(
+            $this->getResourceName(),
+            $this->getControllerName()
+        );
     }
 
 
@@ -54,5 +54,16 @@ class ApiResourceGenerator extends ResourceGenerator
     public function getResourceName(): string
     {
         return strtolower($this->getClassName());
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function generateController(): bool
+    {
+
     }
 }

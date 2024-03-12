@@ -17,7 +17,7 @@ use Laventure\Foundation\Generator\Resource\ResourceGenerator;
  *
  * @package  Laventure\Foundation\Generator\Resource\Web
 */
-class WebResourceGenerator extends ResourceGenerator
+class WebResourceGenerator extends ResourceGenerator implements WebResourceGeneratorInterface
 {
     /**
      * @inheritDoc
@@ -25,5 +25,27 @@ class WebResourceGenerator extends ResourceGenerator
     public function getResource(): Resource
     {
         return new WebResource('books', $this->getClassName());
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function generateTemplates(): bool
+    {
+
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function generateController(): bool
+    {
+
     }
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace PHPUnitTest\App\Repository;
 
 use Laventure\Component\Database\ORM\Persistence\Manager\Contract\EntityManagerInterface;
-use Laventure\Component\Database\ORM\Persistence\Repository\ServiceRepository;
+use Laventure\Component\Database\ORM\Persistence\Repository\ServiceEntityRepository;
 use PHPUnitTest\App\Entity\Book;
 
 /**
@@ -16,7 +16,7 @@ use PHPUnitTest\App\Entity\Book;
  *
  * @package  PHPUnitTest\App\Repository
 */
-class BookRepository extends ServiceRepository
+class BookEntityRepository extends ServiceEntityRepository
 {
 
     /**

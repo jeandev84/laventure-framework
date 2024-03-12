@@ -12,6 +12,7 @@ use Laventure\Foundation\Application;
 use Laventure\Foundation\Generator\Class\ClassGenerator;
 use Laventure\Foundation\Generator\Class\Exception\ClassGeneratorException;
 use Laventure\Foundation\Generator\Controller\ControllerGenerator;
+use Laventure\Foundation\Generator\Resource\Exception\ResourceGeneratorException;
 
 /**
  * ResourceGenerator
@@ -22,7 +23,7 @@ use Laventure\Foundation\Generator\Controller\ControllerGenerator;
  *
  * @package  Laventure\Foundation\Generator\Resource
 */
-abstract class ResourceGenerator extends ClassGenerator
+abstract class ResourceGenerator extends ClassGenerator implements ResourceGeneratorInterface
 {
     /**
      * @param Application $app
@@ -44,10 +45,9 @@ abstract class ResourceGenerator extends ClassGenerator
 
 
     /**
-     * @param string $resource
-     * @return $this
+     * @inheritDoc
     */
-    public function withResource(string $resource): static
+    public function withResource($resource): static
     {
         $this->controllerGenerator->withController($resource);
 
@@ -63,12 +63,37 @@ abstract class ResourceGenerator extends ClassGenerator
     */
     public function generate(): bool
     {
-        #dd($this->getResource()->getInfo()->getActions());
-        #dd($this->getResource()->getRoutes());
+       $generatedController = $this->generateController();
+       $generatedEntity     = $this->generateEntity();
 
-        dd($this->getResource()->getController());
+       return $generatedController && $generatedEntity;
     }
 
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function generateEntity(): bool
+    {
+
+    }
+
+
+
+
+
+    /**
+     * Returns name of controller
+     *
+     * @return string
+    */
+    public function getControllerName(): string
+    {
+       return $this->controllerGenerator
+                   ->generateControllerName();
+    }
 
 
 
@@ -79,10 +104,9 @@ abstract class ResourceGenerator extends ClassGenerator
     */
     public function getBaseNamespace(): string
     {
-        return $this->controllerGenerator->getBaseNamespace();
+        return $this->controllerGenerator
+                   ->getBaseNamespace();
     }
-
-
 
 
 

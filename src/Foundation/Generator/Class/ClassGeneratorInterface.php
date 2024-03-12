@@ -17,12 +17,27 @@ use Laventure\Component\Filesystem\File\Generator\FileGeneratorInterface;
  */
 interface ClassGeneratorInterface extends FileGeneratorInterface
 {
+
+
+    /**
+     * Map classname
+     *
+     * @param string $classname
+     * @return $this
+    */
+    public function withClassName(string $classname): static;
+
+
+
+
     /**
      * Returns class namespace
      *
      * @return string
     */
     public function getNamespace(): string;
+
+
 
 
 

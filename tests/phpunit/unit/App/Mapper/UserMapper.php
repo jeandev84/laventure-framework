@@ -13,7 +13,7 @@ use PHPUnitTest\App\Entity\User;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  PHPUnitTest\App\Mapper
+ * @package  PHPUnitTest\App\Persistence
 */
 class UserMapper
 {

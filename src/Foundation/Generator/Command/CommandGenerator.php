@@ -77,7 +77,7 @@ class CommandGenerator extends ClassGenerator implements CommandGeneratorInterfa
     */
     public function getBaseDir(): string
     {
-        return $this->trimPath($this->config['console.commands.dir']);
+        return $this->trimPath($this->config['console.mapper.dir']);
     }
 
 

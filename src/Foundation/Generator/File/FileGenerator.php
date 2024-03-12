@@ -203,11 +203,11 @@ abstract class FileGenerator implements FileGeneratorInterface
 
     /**
      * @param array $array
-     * @return string
+     * @return mixed
     */
     public function getLastFromArray(array $array): string
     {
-        return end($array);
+        return strval(end($array));
     }
 
 

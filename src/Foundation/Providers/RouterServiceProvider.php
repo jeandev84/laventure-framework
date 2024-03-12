@@ -47,8 +47,8 @@ class RouterServiceProvider extends ServiceProvider implements BootableServicePr
         $this->app->singleton(ControllerLoader::class, function (Filesystem $fs, Config $config) {
             return new ControllerLoader(
                 $fs,
-                $config['http.controllers.prefix'] ,
-                $config['http.controllers.dir']);
+                $config['routes.controllers.prefix'] ,
+                $config['routes.controllers.dir']);
         });
 
     }
@@ -63,7 +63,7 @@ class RouterServiceProvider extends ServiceProvider implements BootableServicePr
     public function register(): void
     {
         $this->app->singleton(RouterInterface::class, function (Config $config) {
-            $router = new Router($config['http.controllers.prefix']);
+            $router = new Router($config['routes.controllers.prefix']);
             $router->addControllers($this->loadControllers());
             return $router;
         });

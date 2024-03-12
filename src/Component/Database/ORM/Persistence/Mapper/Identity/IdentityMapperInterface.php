@@ -11,7 +11,7 @@ namespace Laventure\Component\Database\ORM\Persistence\Mapper\Identity;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\ORM\Mapper\Identity
+ * @package  Laventure\Component\Database\ORM\Persistence\Identity
 */
 interface IdentityMapperInterface
 {

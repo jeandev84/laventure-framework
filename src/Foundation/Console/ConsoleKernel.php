@@ -23,6 +23,7 @@ use Laventure\Foundation\Console\Commands\Database\Schema\Migration\MigrationMig
 use Laventure\Foundation\Console\Commands\Database\Schema\Migration\MigrationRefreshCommand;
 use Laventure\Foundation\Console\Commands\Database\Schema\Migration\MigrationResetCommand;
 use Laventure\Foundation\Console\Commands\Database\Schema\Migration\MigrationRollbackCommand;
+use Laventure\Foundation\Console\Commands\Entity\MakeEntityCommand;
 use Laventure\Foundation\Console\Commands\Resource\MakeResourceCommand;
 use Laventure\Foundation\Console\Commands\Server\ServerStartCommand;
 use Laventure\Foundation\Console\Commands\Server\ServerStopCommand;
@@ -68,6 +69,7 @@ class ConsoleKernel implements ConsoleKernelInterface
         // make commands
         MakeCommand::class,
         MakeControllerCommand::class,
+        MakeEntityCommand::class,
         MakeResourceCommand::class,
         MakeMigrationCommand::class,
         // database commands
