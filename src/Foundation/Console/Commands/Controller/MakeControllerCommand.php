@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Console\Commands\Controller;
@@ -20,7 +21,6 @@ use Laventure\Foundation\Generator\Resource\Api\ApiResourceGenerator;
 */
 class MakeControllerCommand extends Command
 {
-
     /**
      * @var string
      */
@@ -46,8 +46,7 @@ class MakeControllerCommand extends Command
     public function __construct(
         protected ControllerGenerator $controllerGenerator,
         protected ApiResourceGenerator $apiResourceControllerGenerator
-    )
-    {
+    ) {
         parent::__construct($this->name);
     }
 

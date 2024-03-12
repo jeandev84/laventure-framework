@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Console\Commands\Command;
@@ -21,7 +22,6 @@ use Laventure\Foundation\Generator\Command\Exception\CommandGeneratorException;
 */
 class MakeCommand extends Command
 {
-
     /**
      * @var string
     */
@@ -67,23 +67,23 @@ class MakeCommand extends Command
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-         $commandName   = $input->getArgument('name');
-         $commandParams = [$commandName];
+        $commandName   = $input->getArgument('name');
+        $commandParams = [$commandName];
 
-         if ($this->hasSeparator($commandName)) {
-             $commandParams = explode($this->getNameSeparator(), $commandName);
-         }
+        if ($this->hasSeparator($commandName)) {
+            $commandParams = explode($this->getNameSeparator(), $commandName);
+        }
 
-          $this->commandGenerator->withCommand($commandName, $commandParams);
+        $this->commandGenerator->withCommand($commandName, $commandParams);
 
-         if (!$this->commandGenerator->generated()) {
-             $this->commandGenerator->generate();
-             $output->success("Command {$this->getTargetPath()} successfully generated.");
-         } else {
-             $output->info("Command [$commandName] where target path [{$this->getTargetPath()}] already generated");
-         }
+        if (!$this->commandGenerator->generated()) {
+            $this->commandGenerator->generate();
+            $output->success("Command {$this->getTargetPath()} successfully generated.");
+        } else {
+            $output->info("Command [$commandName] where target path [{$this->getTargetPath()}] already generated");
+        }
 
-         return Command::SUCCESS;
+        return Command::SUCCESS;
     }
 
 

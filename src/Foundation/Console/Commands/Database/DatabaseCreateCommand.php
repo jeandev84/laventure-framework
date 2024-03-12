@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Console\Commands\Database;
@@ -18,7 +19,6 @@ use Laventure\Component\Console\Output\OutputInterface;
 */
 class DatabaseCreateCommand extends Command
 {
-
     /**
      * @var string
     */
@@ -42,7 +42,7 @@ class DatabaseCreateCommand extends Command
     */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-          return Command::SUCCESS;
+        return Command::SUCCESS;
     }
 
 

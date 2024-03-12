@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Generator\Command\Exception;
@@ -14,10 +15,10 @@ namespace Laventure\Foundation\Generator\Command\Exception;
 */
 class UnavailableCommandParamsException extends GeneratorCommandParamsException
 {
-        public function __construct(string $classname)
-        {
-            parent::__construct("Unavailable command names from method class ($classname)", [
-                'context' => $classname . " has not command name params detected."
-            ], 409);
-        }
+    public function __construct(string $classname)
+    {
+        parent::__construct("Unavailable command names from method class ($classname)", [
+            'context' => $classname . " has not command name params detected."
+        ], 409);
+    }
 }

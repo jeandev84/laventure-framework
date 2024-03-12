@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Generator\Command;
@@ -19,8 +20,6 @@ use Laventure\Foundation\Generator\Command\Exception\UnavailableCommandParamsExc
 */
 class CommandGenerator extends ClassGenerator implements CommandGeneratorInterface
 {
-
-
     /**
      * @var string
     */
@@ -63,11 +62,11 @@ class CommandGenerator extends ClassGenerator implements CommandGeneratorInterfa
     */
     public function getClassName(): string
     {
-         if (empty($this->commandNameParams)) {
-             throw new UnavailableCommandParamsException(get_called_class());
-         }
+        if (empty($this->commandNameParams)) {
+            throw new UnavailableCommandParamsException(get_called_class());
+        }
 
-         return sprintf('%sCommand', join($this->commandNameParams));
+        return sprintf('%sCommand', join($this->commandNameParams));
     }
 
 

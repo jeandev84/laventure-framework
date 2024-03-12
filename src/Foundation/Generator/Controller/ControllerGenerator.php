@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Generator\Controller;
@@ -17,7 +18,6 @@ use Laventure\Foundation\Generator\Class\ClassGenerator;
 */
 class ControllerGenerator extends ClassGenerator implements ControllerGeneratorInterface
 {
-
     /**
      * @param string $controller
      * @param array $actions
@@ -71,5 +71,21 @@ class ControllerGenerator extends ClassGenerator implements ControllerGeneratorI
     public function getMethodStubPath(): string
     {
         return __DIR__.'/stub/action/default.stub';
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function generateControllerName(): string
+    {
+        if ($module = $this->getModule()) {
+            //TODO implements
+        }
+
+        return sprintf('%sController', $this->getClassName());
     }
 }

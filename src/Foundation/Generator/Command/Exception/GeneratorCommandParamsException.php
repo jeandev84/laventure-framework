@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Generator\Command\Exception;
@@ -16,8 +17,8 @@ use Throwable;
  */
 class GeneratorCommandParamsException extends CommandGeneratorException
 {
-      public function __construct(string $message, array $data = [], int $code = 400)
-      {
-          parent::__construct($message, $data, $code);
-      }
+    public function __construct(string $message, array $data = [], int $code = 400)
+    {
+        parent::__construct($message, $data, $code);
+    }
 }

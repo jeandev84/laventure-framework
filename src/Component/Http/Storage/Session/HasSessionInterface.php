@@ -15,7 +15,6 @@ namespace Laventure\Component\Http\Storage\Session;
 */
 interface HasSessionInterface
 {
-
     /**
      * @param SessionInterface $session
      * @return $this

@@ -123,9 +123,9 @@ class ConsoleKernel implements ConsoleKernelInterface
     */
     public function terminate(InputInterface $input, $status): void
     {
-           // clear $input      []
-           // check something  with $status
-           exit($status);
+        // clear $input      []
+        // check something  with $status
+        exit($status);
     }
 
 
@@ -139,13 +139,13 @@ class ConsoleKernel implements ConsoleKernelInterface
     */
     private function loadCommands(): array
     {
-         $availableCommands = array_map(function ($commandClass) {
+        $availableCommands = array_map(function ($commandClass) {
             return $this->app->get($commandClass);
-         }, $this->getAvailableCommands());
+        }, $this->getAvailableCommands());
 
-         return array_filter($availableCommands, function ($command) {
+        return array_filter($availableCommands, function ($command) {
             return $command instanceof CommandInterface;
-         });
+        });
     }
 
 

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Generator\File;
@@ -21,7 +22,6 @@ use Laventure\Foundation\Application;
 */
 abstract class FileGenerator implements FileGeneratorInterface
 {
-
     /**
      * @param Application $app
      * @param Filesystem $filesystem
@@ -31,8 +31,7 @@ abstract class FileGenerator implements FileGeneratorInterface
         protected Application $app,
         protected FilesystemInterface $filesystem,
         protected ConfigInterface $config
-    )
-    {
+    ) {
     }
 
 
@@ -219,5 +218,5 @@ abstract class FileGenerator implements FileGeneratorInterface
     /**
       * @inheritDoc
      */
-     abstract public function getStubPath(): string;
+    abstract public function getStubPath(): string;
 }

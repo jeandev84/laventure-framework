@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Generator\Controller;
-
 
 use Laventure\Foundation\Generator\Class\ClassGeneratorInterface;
 
@@ -17,4 +17,8 @@ use Laventure\Foundation\Generator\Class\ClassGeneratorInterface;
 */
 interface ControllerGeneratorInterface extends ClassGeneratorInterface
 {
+    /**
+     * @return string
+    */
+    public function generateControllerName(): string;
 }

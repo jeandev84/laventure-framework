@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Generator\Class;
-
 
 use Laventure\Component\Filesystem\File\Generator\FileGeneratorInterface;
 
@@ -17,8 +17,6 @@ use Laventure\Component\Filesystem\File\Generator\FileGeneratorInterface;
  */
 interface ClassGeneratorInterface extends FileGeneratorInterface
 {
-
-
     /**
      * Returns class namespace
      *
@@ -33,7 +31,7 @@ interface ClassGeneratorInterface extends FileGeneratorInterface
      *
      * @return string
      */
-     public function getClassName(): string;
+    public function getClassName(): string;
 
 
 

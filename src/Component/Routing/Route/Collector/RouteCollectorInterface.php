@@ -24,8 +24,6 @@ use Laventure\Component\Routing\Route\RouteInterface;
 */
 interface RouteCollectorInterface extends RouteCollectionInterface
 {
-
-
     /**
      * @param string $controller
      * @return $this

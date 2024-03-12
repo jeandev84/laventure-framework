@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Generator\Stub;
-
 
 use Laventure\Component\Filesystem\File\Generator\FileGeneratorInterface;
 
@@ -17,9 +17,9 @@ use Laventure\Component\Filesystem\File\Generator\FileGeneratorInterface;
 */
 interface StubGeneratorInterface extends FileGeneratorInterface
 {
-     /**
-      * @param array $patterns
-      * @return $this
-     */
-     public function withPatterns(array $patterns): static;
+    /**
+     * @param array $patterns
+     * @return $this
+    */
+    public function withPatterns(array $patterns): static;
 }

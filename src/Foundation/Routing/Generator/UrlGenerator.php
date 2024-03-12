@@ -19,7 +19,6 @@ use Laventure\Foundation\Http\Message\Request\Constract\CustomRequestInterface;
 */
 class UrlGenerator implements UrlGeneratorInterface
 {
-
     /**
      * @param RouterInterface $router
      * @param CustomRequestInterface $request
@@ -44,8 +43,7 @@ class UrlGenerator implements UrlGeneratorInterface
         array $parameters = [],
         array $queries = [],
         string $fragment = null
-    ): string
-    {
+    ): string {
         return $this->generateUri($name, $parameters, $queries, $fragment);
     }
 

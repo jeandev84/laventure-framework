@@ -100,6 +100,6 @@ class Request extends ServerRequest implements CustomRequestInterface
     */
     public function hasSession(): bool
     {
-         return $this->session instanceof SessionInterface;
+        return $this->session instanceof SessionInterface;
     }
 }

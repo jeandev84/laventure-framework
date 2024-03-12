@@ -1,11 +1,12 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Generator\Resource\Web;
 
 use Laventure\Component\Routing\Route\Resource\Resource;
 use Laventure\Component\Routing\Route\Resource\Types\WebResource;
-use Laventure\Foundation\Generator\Resource\ResourceControllerGenerator;
+use Laventure\Foundation\Generator\Resource\ResourceGenerator;
 
 /**
  * WebResourceControllerGenerator
@@ -16,14 +17,13 @@ use Laventure\Foundation\Generator\Resource\ResourceControllerGenerator;
  *
  * @package  Laventure\Foundation\Generator\Resource\Web
 */
-class WebResourceGenerator extends ResourceControllerGenerator
+class WebResourceGenerator extends ResourceGenerator
 {
-
-        /**
-         * @inheritDoc
-        */
-        public function getResource(): Resource
-        {
-            return new WebResource('books', $this->getClassName());
-        }
+    /**
+     * @inheritDoc
+    */
+    public function getResource(): Resource
+    {
+        return new WebResource('books', $this->getClassName());
+    }
 }

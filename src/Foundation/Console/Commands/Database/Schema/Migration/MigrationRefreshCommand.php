@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Console\Commands\Database\Schema\Migration;
@@ -18,7 +19,6 @@ use Laventure\Component\Console\Output\OutputInterface;
  */
 class MigrationRefreshCommand extends Command
 {
-
     /**
      * @var string
     */

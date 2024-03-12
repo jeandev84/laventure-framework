@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Console\Commands\Resource;
@@ -21,7 +22,6 @@ use Laventure\Foundation\Generator\Resource\Web\WebResourceGenerator;
 */
 class MakeResourceCommand extends Command
 {
-
     /**
      * @var string
      */
@@ -48,8 +48,7 @@ class MakeResourceCommand extends Command
     public function __construct(
         protected ApiResourceGenerator $apiResourceGenerator,
         protected WebResourceGenerator $webResourceGenerator
-    )
-    {
+    ) {
         parent::__construct($this->name);
     }
 
@@ -80,13 +79,12 @@ class MakeResourceCommand extends Command
 
         # generate resource
         if ($input->hasOption('api')) {
-            $status = $this->apiResourceGenerator->withResource($resource)->getResource();
+            $status = $this->apiResourceGenerator->withResource($resource)->generate();
         } else {
-            $status = $this->webResourceGenerator->withResource($resource)->getResource();
+            $status = $this->webResourceGenerator->withResource($resource)->generate();
         }
 
-        dd($status);
-
+        #$status ? $output->success("Resource [$resource] created successfully.") : $output->failure('Resource not created');
         return Command::SUCCESS;
     }
 

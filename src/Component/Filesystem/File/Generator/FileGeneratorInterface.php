@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Filesystem\File\Generator;
-
 
 use Laventure\Contract\Generator\GeneratorInterface;
 
@@ -17,48 +17,46 @@ use Laventure\Contract\Generator\GeneratorInterface;
 */
 interface FileGeneratorInterface extends GeneratorInterface
 {
-
-
-      /**
-       * Returns base directory
-       *
-       * @return string
-      */
-      public function getBaseDir(): string;
-
-
-
-
-      /**
-       * Returns target path
-       *
-       * @return string
-      */
-      public function getTargetPath(): string;
+    /**
+     * Returns base directory
+     *
+     * @return string
+    */
+    public function getBaseDir(): string;
 
 
 
 
-
-
-       /**
-        * Returns content
-        *
-        * @return string
-       */
-       public function getContent(): string;
+    /**
+     * Returns target path
+     *
+     * @return string
+    */
+    public function getTargetPath(): string;
 
 
 
 
 
 
-       /**
-        * Determine if file successfully generated
-        *
-        * @return bool
-       */
-       public function generated(): bool;
+    /**
+     * Returns content
+     *
+     * @return string
+    */
+    public function getContent(): string;
+
+
+
+
+
+
+    /**
+     * Determine if file successfully generated
+     *
+     * @return bool
+    */
+    public function generated(): bool;
 
 
 
@@ -67,47 +65,34 @@ interface FileGeneratorInterface extends GeneratorInterface
 
 
 
-       /**
-        * Make only the file [create a directory if not exists]
-        *
-        * @return bool
-       */
-       public function make(): bool;
+    /**
+     * Make only the file [create a directory if not exists]
+     *
+     * @return bool
+    */
+    public function make(): bool;
 
 
 
 
 
-      /**
-       * Make file and put content inside file
-       *
-       * @return bool
-      */
-      public function dump(): bool;
+    /**
+     * Make file and put content inside file
+     *
+     * @return bool
+    */
+    public function dump(): bool;
 
 
 
 
 
-      /**
-       * Make only file in existent directory
-       *
-       * @return false|int
-      */
-      public function write(): false|int;
-
-
-
-
-
-
-
-      /**
-       * Add content to the previous
-       *
-       * @return false|int
-      */
-      public function append(): false|int;
+    /**
+     * Make only file in existent directory
+     *
+     * @return false|int
+    */
+    public function write(): false|int;
 
 
 
@@ -115,12 +100,12 @@ interface FileGeneratorInterface extends GeneratorInterface
 
 
 
-      /**
-       * Returns stub path
-       *
-       * @return string
-      */
-      public function getStubPath(): string;
+    /**
+     * Add content to the previous
+     *
+     * @return false|int
+    */
+    public function append(): false|int;
 
 
 
@@ -128,11 +113,24 @@ interface FileGeneratorInterface extends GeneratorInterface
 
 
 
-     /**
-      * Generate stub
-      *
-      * @param array $patterns
-      * @return string
-     */
-     public function generateStub(array $patterns): string;
+    /**
+     * Returns stub path
+     *
+     * @return string
+    */
+    public function getStubPath(): string;
+
+
+
+
+
+
+
+    /**
+     * Generate stub
+     *
+     * @param array $patterns
+     * @return string
+    */
+    public function generateStub(array $patterns): string;
 }

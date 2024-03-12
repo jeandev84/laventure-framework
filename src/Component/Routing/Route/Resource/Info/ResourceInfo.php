@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Routing\Route\Resource\Info;
@@ -16,14 +17,12 @@ use Laventure\Component\Routing\Route\Resource\Resource;
  */
 class ResourceInfo implements ResourceInfoInterface
 {
-
     /**
      * @param Resource $resource
     */
     public function __construct(
         protected Resource $resource
-    )
-    {
+    ) {
     }
 
 

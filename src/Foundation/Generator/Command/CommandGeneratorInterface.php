@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Generator\Command;
-
 
 use Laventure\Foundation\Generator\Class\ClassGeneratorInterface;
 

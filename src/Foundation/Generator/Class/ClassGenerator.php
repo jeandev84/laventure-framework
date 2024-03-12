@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Generator\Class;
-
 
 use Laventure\Component\Filesystem\File\File;
 use Laventure\Foundation\Generator\Class\Exception\ClassGeneratorException;
@@ -19,6 +19,13 @@ use Laventure\Foundation\Generator\File\FileGenerator;
 */
 abstract class ClassGenerator extends FileGenerator implements ClassGeneratorInterface
 {
+    /**
+     * @var string
+    */
+    protected string $parsedName = '';
+
+
+
     /**
      * @var array
     */
@@ -41,6 +48,7 @@ abstract class ClassGenerator extends FileGenerator implements ClassGeneratorInt
     */
     public function withClassName(string $classname): static
     {
+        $this->parsedName = $classname;
         $this->classNames = $this->convertPathToArray($classname);
 
         return $this;
@@ -85,11 +93,11 @@ abstract class ClassGenerator extends FileGenerator implements ClassGeneratorInt
     */
     public function getModule(): string
     {
-        $module = str_replace($this->getClassName(), '',
-            $this->getParsedClassName()
-        );
+        # remove the last items of class names
+        array_pop($this->classNames);
 
-        return trim($module, "\\/");
+        # rebuilding part
+        return join("/", $this->classNames);
     }
 
 
@@ -161,7 +169,9 @@ abstract class ClassGenerator extends FileGenerator implements ClassGeneratorInt
     */
     public function generateStubMethods(): string
     {
-        if (empty($this->methods)) { return ''; }
+        if (empty($this->methods)) {
+            return '';
+        }
 
         $methodStubs = [];
 
@@ -195,13 +205,30 @@ abstract class ClassGenerator extends FileGenerator implements ClassGeneratorInt
 
 
 
-
     /**
      * @return string
+     * @throws ClassGeneratorException
     */
     public function getParsedClassName(): string
     {
-        return join('/', $this->classNames);
+        if (!$this->parsedName) {
+            throw new ClassGeneratorException("No classname parsed inside ". get_called_class());
+        }
+
+        return $this->parsedName;
+    }
+
+
+
+
+
+    /**
+     * @return string
+     * @throws ClassGeneratorException
+    */
+    public function getResolvedParsedClassName(): string
+    {
+        return str_replace(['/'], ["\\"], $this->getParsedClassName());
     }
 
 
@@ -276,6 +303,6 @@ abstract class ClassGenerator extends FileGenerator implements ClassGeneratorInt
     */
     public function getMethodStubPath(): string
     {
-         throw new ClassGeneratorException("You needs implements ". __METHOD__);
+        throw new ClassGeneratorException("You needs implements ". __METHOD__);
     }
 }

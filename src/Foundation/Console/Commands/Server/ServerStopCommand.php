@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Console\Commands\Server;
@@ -18,7 +19,6 @@ use Laventure\Component\Console\Output\OutputInterface;
 */
 class ServerStopCommand extends Command
 {
-
     /**
      * @var string
      */
