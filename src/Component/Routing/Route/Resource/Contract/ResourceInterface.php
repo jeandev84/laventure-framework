@@ -91,6 +91,16 @@ interface ResourceInterface
 
 
     /**
+     * @return RouteInterface[]
+    */
+    public function getRoutes(): array;
+
+
+
+
+
+
+    /**
      * Returns Web as array
      *
      * @return array

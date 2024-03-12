@@ -19,13 +19,6 @@ use Laventure\Foundation\Generator\Resource\ResourceGenerator;
 */
 class ApiResourceGenerator extends ResourceGenerator
 {
-    /**
-     * @var string
-    */
-    protected string $modulePrefix = "Api";
-
-
-
 
     /**
      * @param string $resource
@@ -33,7 +26,7 @@ class ApiResourceGenerator extends ResourceGenerator
     */
     public function withResource(string $resource): static
     {
-        return parent::withResource($this->resolveResource($resource));
+        return parent::withResource($resource);
     }
 
 
@@ -61,19 +54,5 @@ class ApiResourceGenerator extends ResourceGenerator
     public function getResourceName(): string
     {
         return strtolower($this->getClassName());
-    }
-
-
-
-
-
-
-    /**
-     * @param $resource
-     * @return string
-    */
-    private function resolveResource($resource): string
-    {
-        return $this->modulePrefix . "/". trim($resource, "\\/");
     }
 }

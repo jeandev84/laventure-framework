@@ -57,7 +57,13 @@ class ApiResource extends Resource
     */
     public function path(string $suffix = ''): string
     {
-        return parent::path("{$this->prefix()}/". rtrim($suffix, "\\/"));
+        $prefix = "{$this->prefix()}/{$this->name}";
+
+        if ($suffix) {
+            $prefix .= "/";
+        }
+
+        return $prefix. trim($suffix, "\\/");
     }
 
 

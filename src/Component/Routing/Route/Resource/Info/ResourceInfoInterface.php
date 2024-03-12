@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Routing\Route\Resource\Info;
 
+use Laventure\Component\Routing\Route\RouteInterface;
+
 /**
  * ResourceInfoInterface
  *
@@ -19,4 +21,13 @@ interface ResourceInfoInterface
      * @return array
     */
     public function getMethods(): array;
+
+
+
+
+
+    /**
+     * @return RouteInterface[]
+    */
+    public function getRoutes(): array;
 }

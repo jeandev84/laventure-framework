@@ -175,4 +175,15 @@ abstract class Resource implements ResourceInterface
     {
         return new ResourceInfo($this);
     }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getRoutes(): array
+    {
+        return $this->getInfo()->getRoutes();
+    }
 }
