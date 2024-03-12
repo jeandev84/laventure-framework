@@ -22,7 +22,7 @@ use Psr\Http\Message\UriInterface;
  *
  * @package  Laventure\Foundation\Web\Http\Request
 */
-final class Request extends ServerRequest implements CustomRequestInterface
+class Request extends ServerRequest implements CustomRequestInterface
 {
     /**
      * @var SessionInterface|null

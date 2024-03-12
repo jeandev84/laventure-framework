@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Http;
@@ -16,6 +15,7 @@ use Laventure\Foundation\Http\Middlewares\GuestMiddleware;
 use Laventure\Foundation\Http\Middlewares\MethodOverrideMiddleware;
 use Laventure\Foundation\Http\Middlewares\RouteDispatcherMiddleware;
 use Laventure\Foundation\Http\Middlewares\SessionStartingMiddleware;
+use Psr\Http\Message\ResponseInterface;
 use Throwable;
 
 /**
@@ -86,6 +86,7 @@ class HttpKernel implements HttpKernelInterface
         }
 
         // TODO load events before returns response
+
         return $response;
     }
 
@@ -115,11 +116,10 @@ class HttpKernel implements HttpKernelInterface
     */
     private function exceptionResponse(Throwable $e): Response
     {
-        // TODO refactoring
-        $response = new Response();
-        $response->setContent($e->getMessage());
-        return $response;
+        return new Response($e->getMessage());
     }
+
+
 
 
 
@@ -130,7 +130,7 @@ class HttpKernel implements HttpKernelInterface
     */
     public function terminate($request, $response): void
     {
-        //TODO terminate application
+
     }
 
 
