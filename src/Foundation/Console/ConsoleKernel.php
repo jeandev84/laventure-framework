@@ -23,6 +23,7 @@ use Laventure\Foundation\Console\Commands\Database\Schema\Migration\MigrationMig
 use Laventure\Foundation\Console\Commands\Database\Schema\Migration\MigrationRefreshCommand;
 use Laventure\Foundation\Console\Commands\Database\Schema\Migration\MigrationResetCommand;
 use Laventure\Foundation\Console\Commands\Database\Schema\Migration\MigrationRollbackCommand;
+use Laventure\Foundation\Console\Commands\Resource\MakeResourceCommand;
 use Laventure\Foundation\Console\Commands\Server\ServerStartCommand;
 use Laventure\Foundation\Console\Commands\Server\ServerStopCommand;
 use PHPUnitTest\App\Commands\Migration\MigrateCommand;
@@ -61,13 +62,14 @@ class ConsoleKernel implements ConsoleKernelInterface
      * @var array
     */
     private array $defaultCommands = [
-        // make commands
-        MakeCommand::class,
-        MakeControllerCommand::class,
-        MakeMigrationCommand::class,
         // server commands
         ServerStartCommand::class,
         ServerStopCommand::class,
+        // make commands
+        MakeCommand::class,
+        MakeControllerCommand::class,
+        MakeResourceCommand::class,
+        MakeMigrationCommand::class,
         // database commands
         DatabaseCreateCommand::class,
         DatabaseDropCommand::class,

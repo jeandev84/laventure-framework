@@ -22,7 +22,7 @@ class MigrationMigrateCommand extends Command
     /**
      * @var string
     */
-    protected $name = 'migrations:migrate';
+    protected $name = 'migration:migrate';
 
 
 
