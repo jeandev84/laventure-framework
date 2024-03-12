@@ -64,7 +64,7 @@ class RouterServiceProvider extends ServiceProvider implements BootableServicePr
     {
         $this->app->singleton(RouterInterface::class, function (Config $config) {
             $router = new Router($config['http.controllers.prefix']);
-            $router->addRoutesByController($this->loadControllers());
+            $router->addControllers($this->loadControllers());
             return $router;
         });
     }

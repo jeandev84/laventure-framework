@@ -653,10 +653,10 @@ class RouteCollector extends RouteCollection implements RouteCollectorInterface
     /**
      * @inheritDoc
     */
-    public function addRoutesByController(array $controllers): static
+    public function addControllers(array $controllers): static
     {
         foreach ($controllers as $controller) {
-            $this->addControllerRoutes($controller);
+            $this->addController($controller);
         }
 
         return $this;
@@ -670,7 +670,7 @@ class RouteCollector extends RouteCollection implements RouteCollectorInterface
     /**
      * @inheritDoc
     */
-    public function addControllerRoutes(string $controller): static
+    public function addController(string $controller): static
     {
         $reflection = new ReflectionClass($controller);
         $routeAttributes = $reflection->getAttributes(Route::class);

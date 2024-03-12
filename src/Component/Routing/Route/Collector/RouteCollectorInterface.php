@@ -28,7 +28,7 @@ interface RouteCollectorInterface extends RouteCollectionInterface
      * @param string $controller
      * @return $this
     */
-    public function addControllerRoutes(string $controller): static;
+    public function addController(string $controller): static;
 
 
 
@@ -41,7 +41,7 @@ interface RouteCollectorInterface extends RouteCollectionInterface
      *
      * @return $this
     */
-    public function addRoutesByController(array $controllers): static;
+    public function addControllers(array $controllers): static;
 
 
 
