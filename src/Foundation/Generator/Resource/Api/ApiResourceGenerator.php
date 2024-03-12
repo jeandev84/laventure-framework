@@ -22,7 +22,7 @@ class ApiResourceGenerator extends ResourceGenerator
     /**
      * @var string
     */
-    protected string $modulePrefix = 'Api';
+    protected string $modulePrefix = "Api";
 
 
 
