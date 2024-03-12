@@ -76,9 +76,11 @@ class MakeEntityCommand extends Command
         $this->entityGenerator->withClassName($entity);
 
         if (!$this->entityGenerator->generated()) {
-            $this->entityGenerator->generate();
-            $output->success("New entity [$entity] successfully generated.");
-            $output->success("See path [{$this->entityGenerator->getTargetPath()}].");
+            if($this->entityGenerator->generate()) {
+                $output->success("New entity [$entity] successfully generated.");
+                $output->success("Entity path <{$this->entityGenerator->getTargetPath()}>.");
+                $output->success("Repository path <{$this->entityGenerator->getRepositoryPath()}>.");
+            }
         } else {
             $output->success("Entity [$entity] already exists.");
         }

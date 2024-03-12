@@ -4,50 +4,50 @@ declare(strict_types=1);
 namespace DummyNamespace;
 
 
-use DummyFullEntityClassName;
+use DummyFullEntityName;
 use Laventure\Component\Database\ORM\Persistence\Manager\Contract\EntityManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Repository\ServiceEntityRepository;
 
 
 
 /**
- * @extends ServiceEntityRepository<DummyEntityClass>
+ * @extends ServiceEntityRepository<DummyEntity>
  *
- * @method DummyEntityClass|null find($id, $lockMode = null, $lockVersion = null)
- * @method DummyEntityClass|null findOneBy(array $criteria, array $orderBy = null)
- * @method DummyEntityClass[]    findAll()
- * @method DummyEntityClass[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method DummyEntity|null find($id, $lockMode = null, $lockVersion = null)
+ * @method DummyEntity|null findOneBy(array $criteria, array $orderBy = null)
+ * @method DummyEntity[]    findAll()
+ * @method DummyEntity[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
 */
-class DummyEntityClassRepository extends ServiceEntityRepository
+class DummyEntityRepository extends ServiceEntityRepository
 {
           /**
            * @param EntityManagerInterface $em
           */
           public function __construct(EntityManagerInterface $em)
           {
-              parent::__construct($em, DummyEntityClass::class);
+              parent::__construct($em, DummyEntity::class);
           }
 
 
     //    /**
-    //     * @return DummyEntityClass[] Returns an array of DummyEntityClass objects
+    //     * @return DummyEntity[] Returns an array of DummyEntity objects
     //    */
     //    public function findByExampleField($value): array
     //    {
-    //        return $this->createQueryBuilder('DummyEntityClassAlias')
-    //            ->andWhere('DummyEntityClassAlias.exampleField = :val')
+    //        return $this->createQueryBuilder('DummyEntityAlias')
+    //            ->andWhere('DummyEntityAlias.exampleField = :val')
     //            ->setParameter('val', $value)
-    //            ->orderBy('DummyEntityClassAlias.id', 'ASC')
+    //            ->orderBy('DummyEntityAlias.id', 'ASC')
     //            ->limit(10)
     //            ->getQuery()
     //            ->fetchAll()
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?DummyEntityClass
+    //    public function findOneBySomeField($value): ?DummyEntity
     //    {
-    //        return $this->createQueryBuilder('DummyEntityClassAlias')
-    //            ->andWhere('DummyEntityClassAlias.exampleField = :val')
+    //        return $this->createQueryBuilder('DummyEntityAlias')
+    //            ->andWhere('DummyEntityAlias.exampleField = :val')
     //            ->setParameter('val', $value)
     //            ->getQuery()
     //            ->fetchOne();

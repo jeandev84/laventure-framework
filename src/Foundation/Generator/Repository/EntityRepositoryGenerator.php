@@ -27,7 +27,7 @@ class EntityRepositoryGenerator extends ClassGenerator implements EntityReposito
     /**
      * @var string
     */
-    protected string $entityClass;
+    protected string $entityClass = '';
 
 
 
@@ -50,20 +50,6 @@ class EntityRepositoryGenerator extends ClassGenerator implements EntityReposito
 
 
     /**
-     * @param string $classname
-     * @return $this
-     */
-    public function withClassName(string $classname): static
-    {
-        $this->entityRepositoryGenerator->withClassName($classname);
-
-        return parent::withClassName($classname);
-    }
-
-
-
-
-    /**
      * @inheritDoc
     */
     public function getBaseDir(): string
@@ -76,7 +62,7 @@ class EntityRepositoryGenerator extends ClassGenerator implements EntityReposito
 
     /**
      * @inheritDoc
-     */
+    */
     public function getBaseNamespace(): string
     {
         return $this->config['database.orm.mapper.repository.prefix'];
@@ -105,10 +91,10 @@ class EntityRepositoryGenerator extends ClassGenerator implements EntityReposito
     {
         # "DummyEntityClass" => $this->getClassName() or $this->getEntityShortName();
         return $this->generateStub([
-            "DummyNamespace" => $this->getNamespace(),
-            "DummyFullEntityClassName" => $this->getEntityFullName(),
-            "DummyEntityClass" => $this->getEntityShortName(),
-            "DummyEntityClassAlias" => "u"
+            "DummyNamespace"      => $this->getNamespace(),
+            "DummyFullEntityName" => $this->getEntityFullName(),
+            "DummyEntity"         => $this->getEntityShortName(),
+            "DummyEntityAlias"    => "u"
         ]);
     }
 
@@ -153,7 +139,6 @@ class EntityRepositoryGenerator extends ClassGenerator implements EntityReposito
 
 
     /**
-     * @inheritDoc
      * @throws ReflectionException
     */
     public function getEntityFullName(): string

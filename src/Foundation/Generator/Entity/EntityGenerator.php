@@ -7,7 +7,10 @@ use Laventure\Component\Config\ConfigInterface;
 use Laventure\Component\Filesystem\FilesystemInterface;
 use Laventure\Foundation\Application;
 use Laventure\Foundation\Generator\Class\ClassGenerator;
+use Laventure\Foundation\Generator\Class\Exception\ClassGeneratorException;
 use Laventure\Foundation\Generator\Repository\EntityRepositoryGenerator;
+use Laventure\Foundation\Generator\Repository\EntityRepositoryGeneratorInterface;
+use ReflectionException;
 
 /**
  * EntityGenerator
@@ -32,10 +35,9 @@ class EntityGenerator extends ClassGenerator implements EntityGeneratorInterface
         Application $app,
         FilesystemInterface $filesystem,
         ConfigInterface $config,
-        EntityRepositoryGenerator $entityRepositoryGenerator
+        protected EntityRepositoryGenerator $entityRepositoryGenerator
     )
     {
-        dd($entityRepositoryGenerator);
         parent::__construct($app, $filesystem, $config);
     }
 
@@ -48,7 +50,7 @@ class EntityGenerator extends ClassGenerator implements EntityGeneratorInterface
     */
     public function withClassName(string $classname): static
     {
-        #$this->entityRepositoryGenerator->withClassName($classname);
+        $this->entityRepositoryGenerator->withClassName($classname);
 
         return parent::withClassName($classname);
     }
@@ -85,10 +87,7 @@ class EntityGenerator extends ClassGenerator implements EntityGeneratorInterface
     */
     public function generateRepository(): bool
     {
-         //
-         #return $this->entityRepositoryGenerator->generate();
-
-        return false;
+        return $this->entityRepositoryGenerator->generate();
     }
 
 
@@ -121,18 +120,63 @@ class EntityGenerator extends ClassGenerator implements EntityGeneratorInterface
 
 
 
+    /**
+     * @return string
+    */
+    public function getEntityFullName(): string
+    {
+        $classname = $this->getClassName();
+
+        return sprintf("%s\\%s", $this->getNamespace(), $classname);
+    }
+
+
+
 
     /**
      * @return bool
     */
     public function generate(): bool
     {
-        #dd($this->entityRepositoryGenerator->getContent());
+        // Generate entity
+        parent::generate();
+        $this->entityRepositoryGenerator
+             ->withEntity($this->getEntityFullName())
+             ->generate();
 
-        dd($this->getContent());
-        #$genEntity = parent::generate();
-        #$genRepo   = $this->generateRepository();
+       return $this->generated() && $this->generateRepository();
+    }
 
-        #return $genEntity && $genRepo;
+
+
+
+    /**
+     * @return bool
+    */
+    public function hasRepository(): bool
+    {
+        return $this->entityRepositoryGenerator->generated();
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getRepositoryPath(): string
+    {
+        return $this->entityRepositoryGenerator->getTargetPath();
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getEntityRepositoryGenerator(): EntityRepositoryGeneratorInterface
+    {
+        return $this->entityRepositoryGenerator;
     }
 }

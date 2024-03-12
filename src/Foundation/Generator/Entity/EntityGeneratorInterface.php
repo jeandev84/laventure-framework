@@ -5,6 +5,7 @@ namespace Laventure\Foundation\Generator\Entity;
 
 
 use Laventure\Foundation\Generator\Class\ClassGeneratorInterface;
+use Laventure\Foundation\Generator\Repository\EntityRepositoryGeneratorInterface;
 
 /**
  * EntityGeneratorInterface
@@ -24,4 +25,24 @@ interface EntityGeneratorInterface extends ClassGeneratorInterface
         * @return bool
        */
        public function generateRepository(): bool;
+
+
+
+
+       /**
+        * Returns entity repository target path
+        *
+        * @return string
+       */
+       public function getRepositoryPath(): string;
+
+
+
+
+       /**
+        * Returns entity repository generator
+        *
+        * @return EntityRepositoryGeneratorInterface
+       */
+       public function getEntityRepositoryGenerator(): EntityRepositoryGeneratorInterface;
 }
