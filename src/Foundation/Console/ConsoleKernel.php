@@ -14,6 +14,17 @@ use Laventure\Component\Console\Kernel\TerminateInterface;
 use Laventure\Component\Console\Output\OutputInterface;
 use Laventure\Foundation\Application;
 use Laventure\Foundation\Console\Commands\Command\MakeCommand;
+use Laventure\Foundation\Console\Commands\Database\DatabaseCreateCommand;
+use Laventure\Foundation\Console\Commands\Database\DatabaseDropCommand;
+use Laventure\Foundation\Console\Commands\Database\Schema\Migration\MakeMigrationCommand;
+use Laventure\Foundation\Console\Commands\Database\Schema\Migration\MigrationInstallCommand;
+use Laventure\Foundation\Console\Commands\Database\Schema\Migration\MigrationMigrateCommand;
+use Laventure\Foundation\Console\Commands\Database\Schema\Migration\MigrationRefreshCommand;
+use Laventure\Foundation\Console\Commands\Database\Schema\Migration\MigrationResetCommand;
+use Laventure\Foundation\Console\Commands\Database\Schema\Migration\MigrationRollbackCommand;
+use Laventure\Foundation\Console\Commands\Server\ServerStartCommand;
+use Laventure\Foundation\Console\Commands\Server\ServerStopCommand;
+use PHPUnitTest\App\Commands\Migration\MigrateCommand;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use ReflectionException;
@@ -49,7 +60,21 @@ class ConsoleKernel implements ConsoleKernelInterface, TerminateInterface
      * @var array
     */
     private array $defaultCommands = [
-        MakeCommand::class
+        // make commands
+        MakeCommand::class,
+        // server
+        ServerStartCommand::class,
+        ServerStopCommand::class,
+        // database commands
+        DatabaseCreateCommand::class,
+        DatabaseDropCommand::class,
+        // migrations commands
+        MakeMigrationCommand::class,
+        MigrationInstallCommand::class,
+        MigrationMigrateCommand::class,
+        MigrationRollbackCommand::class,
+        MigrationResetCommand::class,
+        MigrationRefreshCommand::class
     ];
 
 
@@ -94,7 +119,7 @@ class ConsoleKernel implements ConsoleKernelInterface, TerminateInterface
     */
     public function terminate(InputInterface $input, $status)
     {
-        exit($status);
+           exit($status);
     }
 
 

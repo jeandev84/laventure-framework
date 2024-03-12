@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Foundation\Service\Generator\Command\Exceptions;
+namespace Laventure\Foundation\Generator\Command\Exceptions;
 
 use Laventure\Exceptions\BaseException;
 
@@ -12,7 +12,7 @@ use Laventure\Exceptions\BaseException;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Foundation\Service\Generator\Command\Exceptions
+ * @package  Laventure\Foundation\Generator\Command\Exceptions
 */
 class CommandGeneratorException extends BaseException
 {

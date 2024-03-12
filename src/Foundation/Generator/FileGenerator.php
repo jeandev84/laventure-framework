@@ -1,10 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Foundation\Service\Generator;
+namespace Laventure\Foundation\Generator;
 
 use Laventure\Component\Config\ConfigInterface;
 use Laventure\Component\Filesystem\File\File;
+use Laventure\Component\Filesystem\File\Generator\FileGeneratorInterface;
 use Laventure\Component\Filesystem\Filesystem;
 use Laventure\Component\Filesystem\FilesystemInterface;
 use Laventure\Foundation\Application;

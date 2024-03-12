@@ -4,10 +4,9 @@ declare(strict_types=1);
 namespace Laventure\Foundation\Console\Commands\Command;
 
 use Laventure\Component\Console\Command\Command;
-use Laventure\Component\Console\Input\Argument\InputArgument;
 use Laventure\Component\Console\Input\InputInterface;
 use Laventure\Component\Console\Output\OutputInterface;
-use Laventure\Foundation\Service\Generator\Command\CommandGenerator;
+use Laventure\Foundation\Generator\Command\CommandGenerator;
 
 /**
  * MakeCommand

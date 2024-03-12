@@ -1,12 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Foundation\Service\Generator\Command;
+namespace Laventure\Foundation\Generator\Command;
 
 use Laventure\Component\Console\Command\Exception\CommandException;
-use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
-use Laventure\Component\Filesystem\FilesystemInterface;
-use Laventure\Foundation\Service\Generator\FileGenerator;
+use Laventure\Foundation\Generator\ClassGenerator;
+use Laventure\Foundation\Generator\FileGenerator;
 
 /**
  * CommandGenerator
@@ -17,7 +16,7 @@ use Laventure\Foundation\Service\Generator\FileGenerator;
  *
  * @package  Laventure\Foundation\Service\Generator\Command
 */
-class CommandGenerator extends FileGenerator
+class CommandGenerator extends ClassGenerator
 {
 
 
@@ -58,7 +57,7 @@ class CommandGenerator extends FileGenerator
 
 
     /**
-     * @return string
+     * @inheritDoc
      * @throws CommandException
     */
     public function getClassName(): string
@@ -84,9 +83,9 @@ class CommandGenerator extends FileGenerator
 
 
 
-
     /**
      * @inheritDoc
+     * @throws CommandException
     */
     public function getTargetPath(): ?string
     {
