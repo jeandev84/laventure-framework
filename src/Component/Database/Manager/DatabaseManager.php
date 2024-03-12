@@ -246,7 +246,7 @@ class DatabaseManager implements DatabaseManagerInterface
     {
         if (!$this->hasConfiguration($name)) {
             throw new ConfigurationException(
-                "empty params for connection ($name)",
+                "empty main for connection ($name)",
                 [],
                 409
             );

@@ -74,7 +74,7 @@ class Query implements QueryInterface
         'bindParams'   => [],
         'bindValues'   => [],
         'bindColumns'  => [],
-        'params'       => []
+        'main'       => []
     ];
 
 

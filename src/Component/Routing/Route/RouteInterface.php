@@ -97,7 +97,7 @@ interface RouteInterface extends RouteMatcherInterface
 
 
     /**
-     * Returns matches params from url
+     * Returns matches main from url
      *
      * @return array
     */

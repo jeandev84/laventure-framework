@@ -31,7 +31,7 @@ interface ParameterInterface extends ArrayAccess
 
 
     /**
-     * Add params
+     * Add main
      *
      * @param array $params
      *
@@ -59,7 +59,7 @@ interface ParameterInterface extends ArrayAccess
 
 
     /**
-     * Returns count of params
+     * Returns count of main
      *
      * @return int
     */
@@ -93,7 +93,7 @@ interface ParameterInterface extends ArrayAccess
 
 
     /**
-     * Returns all params
+     * Returns all main
      *
      * @return array
     */

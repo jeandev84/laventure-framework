@@ -112,7 +112,7 @@ interface QueryInterface
 
 
     /**
-     * Set query params
+     * Set query main
      *
      * @param array $parameters
      * @return $this

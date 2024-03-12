@@ -74,7 +74,7 @@ class Route implements RouteInterface, \ArrayAccess
 
 
     /**
-     * route params indexed
+     * route main indexed
      *
      * @var array
     */
@@ -83,7 +83,7 @@ class Route implements RouteInterface, \ArrayAccess
 
 
     /**
-     * matches params
+     * matches main
      *
      * @var array
     */

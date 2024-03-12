@@ -33,7 +33,7 @@ class ConfigLoader extends FileLoader
     public function __construct(Filesystem $filesystem)
     {
         $this->filesystem = $filesystem;
-        parent::__construct('/config/params/*.php');
+        parent::__construct('/config/main/*.php');
     }
 
 

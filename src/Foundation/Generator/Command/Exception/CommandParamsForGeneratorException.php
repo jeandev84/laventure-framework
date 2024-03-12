@@ -14,10 +14,10 @@ use Throwable;
  *
  * @package  Laventure\Foundation\Generator\Command\Exception
  */
-class UnavailableCommandParamsForGeneratorException extends CommandGeneratorException
+class CommandParamsForGeneratorException extends CommandGeneratorException
 {
-      public function __construct(string $classGenerator, array $data = [])
+      public function __construct(string $message, array $data = [], int $code = 400)
       {
-          parent::__construct("Unavailable command params for generator. ($classGenerator)", $data, 409);
+          parent::__construct($message, $data, $code);
       }
 }

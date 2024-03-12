@@ -21,9 +21,9 @@ interface FileGeneratorInterface extends GeneratorInterface
       /**
        * Returns target path
        *
-       * @return string|null
+       * @return string
       */
-      public function getTargetPath(): ?string;
+      public function getTargetPath(): string;
 
 
 
