@@ -129,9 +129,9 @@ interface FilesystemInterface
     /**
      * @param string $filename
      * @param string $content
-     * @return string
+     * @return bool
      */
-    public function dump(string $filename, string $content): string;
+    public function dump(string $filename, string $content): bool;
 
 
 

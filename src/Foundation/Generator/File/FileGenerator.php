@@ -43,7 +43,7 @@ abstract class FileGenerator implements FileGeneratorInterface
     */
     public function generate(): bool
     {
-        return boolval($this->write());
+        return $this->dump();
     }
 
 
@@ -59,6 +59,32 @@ abstract class FileGenerator implements FileGeneratorInterface
     }
 
 
+
+
+
+    /**
+     * @return mixed
+    */
+    public function make(): mixed
+    {
+        return $this->filesystem
+                    ->file($this->getTargetPath())
+                    ->make();
+    }
+
+
+
+
+
+    /**
+     * @return mixed
+    */
+    public function dump(): mixed
+    {
+        return $this->filesystem
+                    ->file($this->getTargetPath())
+                    ->dump($this->getContent());
+    }
 
 
 
@@ -119,6 +145,18 @@ abstract class FileGenerator implements FileGeneratorInterface
     }
 
 
+
+
+
+
+    /**
+     * @param array $parts
+     * @return string
+    */
+    public function generatePathPHP(array $parts): string
+    {
+        return join(DIRECTORY_SEPARATOR, $parts). ".php";
+    }
 
 
 

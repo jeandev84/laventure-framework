@@ -19,6 +19,13 @@ class ControllerGenerator extends ClassGenerator implements ControllerGeneratorI
 
 
     /**
+     * @var string
+    */
+    protected string $controllerName = '';
+
+
+
+    /**
      * @var array
     */
     protected array $actions = [];
@@ -27,12 +34,14 @@ class ControllerGenerator extends ClassGenerator implements ControllerGeneratorI
 
 
     /**
+     * @param string $controller
      * @param array $actions
      * @return $this
     */
-    public function withActions(array $actions): static
+    public function withController(string $controller, array $actions = []): static
     {
-        $this->actions = array_merge($this->actions, $actions);
+        $this->controllerName   = $controller;
+        $this->actions          = array_merge($this->actions, $actions);
 
         return $this;
     }
@@ -46,7 +55,18 @@ class ControllerGenerator extends ClassGenerator implements ControllerGeneratorI
     */
     public function getClassName(): string
     {
+        return $this->controllerName;
+    }
 
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getControllerDir(): string
+    {
+        return trim($this->config['http.controllers.dir'], DIRECTORY_SEPARATOR);
     }
 
 
@@ -57,7 +77,10 @@ class ControllerGenerator extends ClassGenerator implements ControllerGeneratorI
     */
     public function getTargetPath(): string
     {
-
+        return $this->generatePathPHP([
+            $this->getControllerDir(),
+            $this->getClassName()
+        ]);
     }
 
 
@@ -68,7 +91,11 @@ class ControllerGenerator extends ClassGenerator implements ControllerGeneratorI
     */
     public function getContent(): string
     {
-
+        return $this->generateStub([
+            "DummyNamespace" => $this->config['http.controllers.prefix'],
+            "DummyClassName" => $this->controllerName,
+            "DummyActions"   => $this->generateActions()
+        ]);
     }
 
 
@@ -79,7 +106,7 @@ class ControllerGenerator extends ClassGenerator implements ControllerGeneratorI
     */
     public function getStubPath(): string
     {
-
+        return __DIR__.'/stub/controller.stub';
     }
 
 
@@ -90,7 +117,7 @@ class ControllerGenerator extends ClassGenerator implements ControllerGeneratorI
     */
     public function getActions(): array
     {
-        return [];
+        return $this->actions;
     }
 
 
@@ -101,6 +128,22 @@ class ControllerGenerator extends ClassGenerator implements ControllerGeneratorI
     */
     public function generateActions(): string
     {
-        return '';
+        if (empty($this->actions)) {
+            return '';
+        }
+
+
+        return $this->processGenerateActions();
+    }
+
+
+
+
+    /**
+     * @return string
+    */
+    private function processGenerateActions(): string
+    {
+         return '';
     }
 }

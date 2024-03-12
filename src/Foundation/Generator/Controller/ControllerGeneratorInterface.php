@@ -28,4 +28,12 @@ interface ControllerGeneratorInterface extends ClassGeneratorInterface
       * @return string
      */
      public function generateActions(): string;
+
+
+
+
+     /**
+      * @return string
+     */
+     public function getControllerDir(): string;
 }

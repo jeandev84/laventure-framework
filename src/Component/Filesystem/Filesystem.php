@@ -138,7 +138,7 @@ class Filesystem implements FilesystemInterface
     /**
      * @inheritdoc
     */
-    public function dump(string $filename, string $content): string
+    public function dump(string $filename, string $content): bool
     {
         return $this->file($filename)->dump($content);
     }

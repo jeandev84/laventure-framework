@@ -264,11 +264,11 @@ class File implements FileInterface
     /**
      * @inheritDoc
     */
-    public function dump(string $content): string
+    public function dump(string $content): bool
     {
         $this->make();
         $this->write($content);
-        return $this->path;
+        return !empty($this->read());
     }
 
 

@@ -65,12 +65,16 @@ class MakeControllerCommand extends Command
     */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->controllerGenerator->generate();
+        $controllerName = $input->getArgument('name');
 
-        if ($this->controllerGenerator->generatedFile()) {
-            $output->success("Controller generated.");
+        $this->controllerGenerator
+             ->withController($controllerName)
+             ->generate();
+
+        if (!$this->controllerGenerator->generatedFile()) {
+            $output->success("Controller [$controllerName] successfully generated.");
         } else {
-            $output->info("Controller already generated.");
+            $output->info("Controller [$controllerName] already generated.");
         }
 
         return Command::SUCCESS;

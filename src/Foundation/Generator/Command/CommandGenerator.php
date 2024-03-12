@@ -95,10 +95,10 @@ class CommandGenerator extends ClassGenerator implements CommandGeneratorInterfa
     */
     public function getTargetPath(): string
     {
-        return join(DIRECTORY_SEPARATOR, [
+        return $this->generatePathPHP([
             $this->getCommandsDir(),
             $this->getClassName()
-        ]). ".php";
+        ]);
     }
 
 
