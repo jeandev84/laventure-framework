@@ -64,7 +64,9 @@ abstract class ResourceGenerator extends ClassGenerator
     public function generate(): bool
     {
         #dd($this->getResource()->getInfo()->getActions());
-        dd($this->getResource()->getRoutes());
+        #dd($this->getResource()->getRoutes());
+
+        dd($this->getResource()->getController());
     }
 
 
