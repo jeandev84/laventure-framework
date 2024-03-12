@@ -72,8 +72,22 @@ abstract class ResourceControllerGenerator extends ControllerGenerator
 
 
 
-    /**
-     * @return Resource
-    */
-    abstract public function getResource(): Resource;
+       /**
+        * @return bool
+       */
+       public function generateResource(): bool
+       {
+
+           dd($this->getResource());
+
+
+           return $this->generate();
+       }
+
+
+
+       /**
+        * @return Resource
+       */
+       abstract public function getResource(): Resource;
 }

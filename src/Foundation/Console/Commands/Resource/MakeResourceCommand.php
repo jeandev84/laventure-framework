@@ -78,16 +78,14 @@ class MakeResourceCommand extends Command
         # (e.g, Book|User ...)
         $resource = $input->getArgument('name');
 
-        # Set controller name an action we want to generate
+        # generate resource
         if ($input->hasOption('api')) {
-            $this->apiResourceGenerator->withResource($resource);
+            $status = $this->apiResourceGenerator->withResource($resource)->getResource();
         } else {
-            $this->webResourceGenerator->withResource($resource);
+            $status = $this->webResourceGenerator->withResource($resource)->getResource();
         }
 
-        dd($this->webResourceGenerator);
-
-        // here we will be generated resource
+        dd($status);
 
         return Command::SUCCESS;
     }

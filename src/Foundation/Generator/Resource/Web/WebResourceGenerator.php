@@ -20,13 +20,10 @@ class WebResourceGenerator extends ResourceControllerGenerator
 {
 
         /**
-         * @param $entity
-         * @return $this
+         * @inheritDoc
         */
-        public function webResource($entity): static
+        public function getResource(): Resource
         {
-             dd('entity: '. $entity, 'from: '. get_called_class());
-
-            return $this->withResource(new WebResource('books', $entity));
+            return new WebResource('books', $this->getClassName());
         }
 }
