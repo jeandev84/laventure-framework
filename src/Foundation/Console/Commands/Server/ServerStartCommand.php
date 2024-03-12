@@ -19,11 +19,43 @@ use Laventure\Component\Console\Output\OutputInterface;
 class ServerStartCommand extends Command
 {
 
+
+    /**
+     * @var string
+    */
+    protected $name = 'server:start';
+
+
+    /**
+     * @var array|string[]
+    */
+    protected array $description = [
+        'This command permit to [START] internal server of application.'
+    ];
+
+
+
+
+
     /**
      * @inheritDoc
     */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
+        $output->success("Server starting ...");
+
         return Command::SUCCESS;
+    }
+
+
+
+
+
+    /**
+     * @return string[]
+    */
+    public function getUsage(): array
+    {
+        return ["{$this->getName()} [options]"];
     }
 }

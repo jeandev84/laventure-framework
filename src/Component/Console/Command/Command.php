@@ -102,10 +102,12 @@ abstract class Command implements CommandInterface
     */
     public function __construct($name = null)
     {
+        $this->inputs = new InputCollection();
+
         if ($name) {
             $this->name = $name;
         }
-        $this->inputs = new InputCollection();
+
         $this->configure();
     }
 
@@ -133,7 +135,7 @@ abstract class Command implements CommandInterface
     */
     public function getName(): string
     {
-        return $this->name;
+        return strval($this->name);
     }
 
 
@@ -155,7 +157,7 @@ abstract class Command implements CommandInterface
     */
     public function hasNameSeparator(): bool
     {
-        return $this->separatedName($this->getName());
+        return $this->hasSeparator($this->getName());
     }
 
 
@@ -513,7 +515,7 @@ abstract class Command implements CommandInterface
      * @param $name
      * @return bool
     */
-    protected function separatedName($name): bool
+    protected function hasSeparator($name): bool
     {
         return stripos($name, $this->getNameSeparator()) !== false;
     }

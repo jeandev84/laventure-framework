@@ -20,10 +20,39 @@ class ServerStopCommand extends Command
 {
 
     /**
-     * @inheritDoc
+     * @var string
      */
+    protected $name = 'server:stop';
+
+
+    /**
+     * @var array|string[]
+    */
+    protected array $description = [
+        'This command permit to [STOP] internal server of application.'
+    ];
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
+        $output->success("Server stopping ...");
+
         return Command::SUCCESS;
+    }
+
+
+
+    /**
+     * @return string[]
+    */
+    public function getUsage(): array
+    {
+        return ["{$this->getName()} [options]"];
     }
 }

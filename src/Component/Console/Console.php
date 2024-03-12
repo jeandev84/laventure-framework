@@ -180,11 +180,11 @@ class Console implements ConsoleInterface, CommandCollectionInterface, OptionSta
     */
     public function getCommand($name): CommandInterface
     {
-        $defaultCommand = $this->getListCommand();
-        $matchedName    = ($name === $defaultCommand->getName());
+        $listCommand = $this->getListCommand();
+        $matchedName = ($name === $listCommand->getName());
 
         if (!$this->hasCommand($name) || $matchedName) {
-            return $defaultCommand;
+            return $listCommand;
         }
 
         return $this->commands[$name];

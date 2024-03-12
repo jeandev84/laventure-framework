@@ -90,16 +90,11 @@ class ConsoleKernel implements ConsoleKernelInterface
     /**
      * @param Application $app
      * @param Console $console
-     * @throws ContainerExceptionInterface
-     * @throws EmptyCommandNameException
-     * @throws NotFoundExceptionInterface
-     * @throws ReflectionException
     */
     public function __construct(Application $app, Console $console)
     {
         $this->app     = $app;
         $this->console = $console;
-        $this->console->addCommands($this->loadCommands($this->app));
     }
 
 
@@ -110,7 +105,7 @@ class ConsoleKernel implements ConsoleKernelInterface
     public function handle(InputInterface $input, OutputInterface $output): int
     {
         try {
-            return $this->console->run($input, $output);
+            return $this->console->addCommands($this->loadCommands())->run($input, $output);
         } catch (Throwable $e) {
             $output->failure($e->getMessage());
             return Command::FAILURE;
@@ -122,7 +117,7 @@ class ConsoleKernel implements ConsoleKernelInterface
     /**
      * @inheritDoc
     */
-    public function terminate(InputInterface $input, $status)
+    public function terminate(InputInterface $input, $status): void
     {
            // clear $input      []
            // check something  with $status
@@ -138,10 +133,10 @@ class ConsoleKernel implements ConsoleKernelInterface
      * @throws NotFoundExceptionInterface
      * @throws ReflectionException
     */
-    private function loadCommands(Application $app): array
+    private function loadCommands(): array
     {
-         $availableCommands = array_map(function ($commandClass) use ($app) {
-            return $app->get($commandClass);
+         $availableCommands = array_map(function ($commandClass) {
+            return $this->app->get($commandClass);
          }, $this->getAvailableCommands());
 
          return array_filter($availableCommands, function ($command) {

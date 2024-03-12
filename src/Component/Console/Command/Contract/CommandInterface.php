@@ -307,7 +307,7 @@ interface CommandInterface extends ExecutableCommandInterface
 
 
     /**
-     * Run command and execute, terminate execution
+     * Run command and execute
      *
      * @param InputInterface $input
      * @param OutputInterface $output

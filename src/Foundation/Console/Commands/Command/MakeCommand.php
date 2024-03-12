@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Laventure\Foundation\Console\Commands\Command;
 
 use Laventure\Component\Console\Command\Command;
+use Laventure\Component\Console\Command\Exception\CommandException;
 use Laventure\Component\Console\Input\InputInterface;
 use Laventure\Component\Console\Output\OutputInterface;
 use Laventure\Foundation\Generator\Command\CommandGenerator;
@@ -23,7 +24,7 @@ class MakeCommand extends Command
     /**
      * @var string
     */
-    protected $name = 'app:make:command';
+    protected $name = 'make:command';
 
 
     /**
@@ -67,10 +68,10 @@ class MakeCommand extends Command
     */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-         $commandName = $input->getArgument('name');
+         $commandName   = $input->getArgument('name');
          $commandParams = [$commandName];
 
-         if ($this->separatedName($commandName)) {
+         if ($this->hasSeparator($commandName)) {
              $commandParams = explode($this->getNameSeparator(), $commandName);
          }
 
@@ -90,17 +91,15 @@ class MakeCommand extends Command
     */
     public function getUsage(): array
     {
-        return [
-           "{$this->getName()} [<name>]"
-        ];
+        return ["{$this->getName()} [<name>]"];
     }
-
 
 
 
 
     /**
      * @return string
+     * @throws CommandException
     */
     private function getTargetPath(): string
     {
