@@ -47,5 +47,5 @@ interface FileGeneratorInterface extends GeneratorInterface
         *
         * @return bool
        */
-       public function generated(): bool;
+       public function generatedFile(): bool;
 }

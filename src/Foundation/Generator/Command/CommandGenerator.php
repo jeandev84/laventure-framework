@@ -6,6 +6,7 @@ namespace Laventure\Foundation\Generator\Command;
 use Laventure\Component\Console\Command\Exception\CommandException;
 use Laventure\Foundation\Generator\Class\ClassGenerator;
 use Laventure\Foundation\Generator\Command\Exception\CommandGeneratorException;
+use Laventure\Foundation\Generator\Command\Exception\UnavailableCommandParamsForGeneratorException;
 
 /**
  * CommandGenerator
@@ -53,6 +54,9 @@ class CommandGenerator extends ClassGenerator
     }
 
 
+
+
+
     /**
      * @inheritDoc
      * @throws CommandGeneratorException
@@ -60,7 +64,9 @@ class CommandGenerator extends ClassGenerator
     public function getClassName(): string
     {
          if (empty($this->commandParams)) {
-              throw new CommandGeneratorException("Unavailable command name for generator.". get_called_class());
+              throw new UnavailableCommandParamsForGeneratorException(
+                  get_called_class()
+              );
          }
 
          return sprintf('%sCommand', join($this->commandParams));
@@ -78,13 +84,18 @@ class CommandGenerator extends ClassGenerator
     }
 
 
+
+
     /**
      * @inheritDoc
      * @throws CommandGeneratorException
      */
     public function getTargetPath(): ?string
     {
-        return sprintf('%s/%s.php', $this->getCommandsDir(), $this->getClassName());
+        return join(DIRECTORY_SEPARATOR, [
+            $this->getCommandsDir(),
+            $this->getClassName()
+        ]). ".php";
     }
 
 

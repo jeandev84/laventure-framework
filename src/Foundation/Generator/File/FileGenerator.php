@@ -52,9 +52,10 @@ abstract class FileGenerator implements FileGeneratorInterface
     /**
      * @inheritDoc
     */
-    public function generated(): bool
+    public function generatedFile(): bool
     {
-
+        return $this->file($this->getTargetPath())
+                    ->exists();
     }
 
 

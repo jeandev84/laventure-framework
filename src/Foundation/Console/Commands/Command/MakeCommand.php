@@ -74,8 +74,13 @@ class MakeCommand extends Command
              $commandParams = explode($this->getNameSeparator(), $commandName);
          }
 
-         if($this->commandGenerator->withCommand($commandName, $commandParams)->generate()) {
+          $this->commandGenerator->withCommand($commandName, $commandParams);
+
+         if (!$this->commandGenerator->generatedFile()) {
+             $this->commandGenerator->generate();
              $output->writeln("Command {$this->getTargetPath()} successfully generated.");
+         } else {
+             $output->writeln("Command [$commandName] where target path [{$this->getTargetPath()}] already generated");
          }
 
          return Command::SUCCESS;
