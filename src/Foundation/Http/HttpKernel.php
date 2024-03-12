@@ -9,13 +9,11 @@ use Laventure\Foundation\Application;
 use Laventure\Foundation\Http\Handlers\Pipeline;
 use Laventure\Foundation\Http\Message\Request\Request;
 use Laventure\Foundation\Http\Middlewares\AuthenticatedMiddleware;
-use Laventure\Foundation\Http\Middlewares\BufferMiddleware;
 use Laventure\Foundation\Http\Middlewares\CsrfTokenMiddleware;
 use Laventure\Foundation\Http\Middlewares\GuestMiddleware;
 use Laventure\Foundation\Http\Middlewares\MethodOverrideMiddleware;
 use Laventure\Foundation\Http\Middlewares\RouteDispatcherMiddleware;
 use Laventure\Foundation\Http\Middlewares\SessionStartingMiddleware;
-use Psr\Http\Message\ResponseInterface;
 use Throwable;
 
 /**
@@ -42,7 +40,6 @@ class HttpKernel implements HttpKernelInterface
      * @var string[]
     */
     private array $middlewarePriority = [
-        BufferMiddleware::class,
         SessionStartingMiddleware::class,
         MethodOverrideMiddleware::class,
         CsrfTokenMiddleware::class,
@@ -58,7 +55,10 @@ class HttpKernel implements HttpKernelInterface
      *
      * @var string[]
     */
-    protected array $routeMiddlewares = [];
+    protected array $routeMiddlewares = [
+
+    ];
+
 
 
 
@@ -70,6 +70,8 @@ class HttpKernel implements HttpKernelInterface
     {
         $this->app = $app;
     }
+
+
 
 
 
@@ -130,6 +132,20 @@ class HttpKernel implements HttpKernelInterface
     */
     public function terminate($request, $response): void
     {
+         $this->terminateProcess($request, $response);
+    }
+
+
+
+
+
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @return void
+    */
+    private function terminateProcess(Request $request, Response $response): void
+    {
 
     }
 
@@ -137,11 +153,13 @@ class HttpKernel implements HttpKernelInterface
 
 
 
+
+
+    /**
+     * @return array
+    */
     private function middlewares(): array
     {
-        return array_merge(
-            $this->middlewarePriority,
-            $this->routeMiddlewares
-        );
+        return array_merge($this->middlewarePriority, $this->routeMiddlewares);
     }
 }
