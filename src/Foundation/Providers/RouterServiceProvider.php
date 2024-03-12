@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Foundation\Providers;
 
+use Laventure\Component\Config\Config;
 use Laventure\Component\Container\Service\Provider\Contract\BootableServiceProvider;
 use Laventure\Component\Container\Service\Provider\ServiceProvider;
 use Laventure\Component\Filesystem\Filesystem;
@@ -49,12 +50,11 @@ class RouterServiceProvider extends ServiceProvider implements BootableServicePr
     */
     public function boot(): void
     {
-        $this->app->singleton(ControllerLoader::class, function () {
+        $this->app->singleton(ControllerLoader::class, function (Filesystem $fs, Config $config) {
             return new ControllerLoader(
-                $this->app[Filesystem::class],
-                $this->namespace,
-                $this->controllerPath
-            );
+                $fs,
+                $config['http.controllers.prefix'] ,
+                $config['http.controllers.dir']);
         });
 
     }
@@ -65,8 +65,8 @@ class RouterServiceProvider extends ServiceProvider implements BootableServicePr
     */
     public function register(): void
     {
-        $this->app->singleton(RouterInterface::class, function () {
-            $router = new Router($this->namespace);
+        $this->app->singleton(RouterInterface::class, function (Config $config) {
+            $router = new Router($config['http.controllers.prefix']);
             $router->addRoutesByController($this->loadControllers());
             return $router;
         });

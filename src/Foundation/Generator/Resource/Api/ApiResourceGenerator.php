@@ -39,7 +39,7 @@ class ApiResourceGenerator extends ResourceGenerator
     public function getResource(): Resource
     {
         $resourceName   = $this->getResourceName();
-        $controllerName = $this->controllerGenerator->generateControllerName();
+        $controllerName = $this->controllerGenerator->getControllerName();
 
         return new ApiResource($resourceName, $controllerName);
     }

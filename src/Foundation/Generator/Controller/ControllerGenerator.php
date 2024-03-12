@@ -80,12 +80,14 @@ class ControllerGenerator extends ClassGenerator implements ControllerGeneratorI
     /**
      * @inheritDoc
     */
-    public function generateControllerName(): string
+    public function getControllerName(): string
     {
+        $controller = $this->getClassName();
+
         if ($module = $this->getModule()) {
-            //TODO implements
+            $controller = "$module\\$controller";
         }
 
-        return sprintf('%sController', $this->getClassName());
+        return sprintf('%sController', $controller);
     }
 }
