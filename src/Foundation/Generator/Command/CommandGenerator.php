@@ -78,7 +78,7 @@ class CommandGenerator extends ClassGenerator implements CommandGeneratorInterfa
     */
     public function getBaseDir(): string
     {
-        return trim($this->config['console.commands.dir'], DIRECTORY_SEPARATOR);
+        return $this->trimPath($this->config['console.commands.dir']);
     }
 
 
@@ -145,16 +145,5 @@ class CommandGenerator extends ClassGenerator implements CommandGeneratorInterfa
     public function getCommandNameAsArray(): array
     {
         return $this->commandNameParams;
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    protected function processGenerateMethodsStub(): string
-    {
-
     }
 }

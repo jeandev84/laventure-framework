@@ -32,7 +32,7 @@ class MakeControllerCommand extends Command
      * @var array
     */
     protected array $description = [
-        "Creates new controller, with actions has optional."
+        "Creates new controller, with action has optional."
     ];
 
 

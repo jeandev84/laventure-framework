@@ -162,11 +162,15 @@ abstract class FileGenerator implements FileGeneratorInterface
 
 
 
-//
-//    /**
-//     * @return string
-//    */
-//    abstract public function getBasePath(): string;
+
+    /**
+     * @param $path
+     * @return string
+    */
+    public function trimPath($path): string
+    {
+        return trim($path, DIRECTORY_SEPARATOR);
+    }
     
     
 

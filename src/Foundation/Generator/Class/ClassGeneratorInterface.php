@@ -82,6 +82,19 @@ interface ClassGeneratorInterface extends FileGeneratorInterface
 
 
     /**
+     * Determine if class in module
+     *
+     * @return bool
+    */
+    public function hasModule(): bool;
+
+
+
+
+
+
+
+    /**
      * Generate class methods stub
      *
      * @return string

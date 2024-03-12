@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Laventure\Foundation\Generator\Controller;
 
+use Laventure\Component\Filesystem\File\File;
 use Laventure\Foundation\Generator\Class\ClassGenerator;
 
 /**
@@ -34,7 +35,7 @@ class ControllerGenerator extends ClassGenerator implements ControllerGeneratorI
     */
     public function getBaseDir(): string
     {
-        return trim($this->config['http.controllers.dir'], DIRECTORY_SEPARATOR);
+        return $this->trimPath($this->config['http.controllers.dir']);
     }
 
 
@@ -55,21 +56,6 @@ class ControllerGenerator extends ClassGenerator implements ControllerGeneratorI
     /**
      * @inheritDoc
     */
-    public function getContent(): string
-    {
-        return $this->generateStub([
-            "DummyNamespace" => $this->getNamespace(),
-            "DummyClassName" => $this->getClassName(),
-            "DummyActions"   => $this->generateStubMethods()
-        ]);
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
     public function getStubPath(): string
     {
         return __DIR__.'/stub/controller.stub';
@@ -80,11 +66,10 @@ class ControllerGenerator extends ClassGenerator implements ControllerGeneratorI
 
 
     /**
-     * @inheritDoc
+     * @return string
     */
-    protected function processGenerateMethodsStub(): string
+    public function getMethodStubPath(): string
     {
-        return '';
+        return __DIR__.'/stub/action/default.stub';
     }
-
 }
