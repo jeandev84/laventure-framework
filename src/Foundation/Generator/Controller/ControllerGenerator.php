@@ -17,22 +17,6 @@ use Laventure\Foundation\Generator\Class\ClassGenerator;
 class ControllerGenerator extends ClassGenerator implements ControllerGeneratorInterface
 {
 
-
-    /**
-     * @var string
-    */
-    protected string $controllerName = '';
-
-
-
-    /**
-     * @var array
-    */
-    protected array $actions = [];
-
-
-
-
     /**
      * @param string $controller
      * @param array $actions
@@ -40,31 +24,15 @@ class ControllerGenerator extends ClassGenerator implements ControllerGeneratorI
     */
     public function withController(string $controller, array $actions = []): static
     {
-        $this->controllerName   = $controller;
-        $this->actions          = array_merge($this->actions, $actions);
-
-        return $this;
+        return $this->withClass($controller)->withMethods($actions);
     }
-
-
 
 
 
     /**
      * @inheritDoc
     */
-    public function getClassName(): string
-    {
-        return $this->controllerName;
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function getControllerDir(): string
+    public function getBaseDir(): string
     {
         return trim($this->config['http.controllers.dir'], DIRECTORY_SEPARATOR);
     }
@@ -72,16 +40,16 @@ class ControllerGenerator extends ClassGenerator implements ControllerGeneratorI
 
 
 
+
+
     /**
      * @inheritDoc
     */
-    public function getTargetPath(): string
+    public function getNamespace(): string
     {
-        return $this->generatePathPHP([
-            $this->getControllerDir(),
-            $this->getClassName()
-        ]);
+        return $this->config['http.controllers.prefix'];
     }
+
 
 
 
@@ -92,9 +60,9 @@ class ControllerGenerator extends ClassGenerator implements ControllerGeneratorI
     public function getContent(): string
     {
         return $this->generateStub([
-            "DummyNamespace" => $this->config['http.controllers.prefix'],
-            "DummyClassName" => $this->controllerName,
-            "DummyActions"   => $this->generateActions()
+            "DummyNamespace" => $this->getNamespaceWithModule(),
+            "DummyClassName" => $this->getClassName(),
+            "DummyActions"   => $this->generateStubMethods()
         ]);
     }
 
@@ -112,38 +80,13 @@ class ControllerGenerator extends ClassGenerator implements ControllerGeneratorI
 
 
 
-    /**
-     * @inheritDoc
-    */
-    public function getActions(): array
-    {
-        return $this->actions;
-    }
-
-
-
 
     /**
      * @inheritDoc
     */
-    public function generateActions(): string
+    protected function processGenerateMethodsStub(): string
     {
-        if (empty($this->actions)) {
-            return '';
-        }
 
-
-        return $this->processGenerateActions();
     }
 
-
-
-
-    /**
-     * @return string
-    */
-    private function processGenerateActions(): string
-    {
-         return '';
-    }
 }

@@ -52,7 +52,7 @@ abstract class FileGenerator implements FileGeneratorInterface
     /**
      * @inheritDoc
     */
-    public function generatedFile(): bool
+    public function generated(): bool
     {
         return $this->file($this->getTargetPath())
                     ->exists();
@@ -63,9 +63,9 @@ abstract class FileGenerator implements FileGeneratorInterface
 
 
     /**
-     * @return mixed
+     * @inheritDoc
     */
-    public function make(): mixed
+    public function make(): bool
     {
         return $this->filesystem
                     ->file($this->getTargetPath())
@@ -77,9 +77,9 @@ abstract class FileGenerator implements FileGeneratorInterface
 
 
     /**
-     * @return mixed
+     * @inheritDoc
     */
-    public function dump(): mixed
+    public function dump(): bool
     {
         return $this->filesystem
                     ->file($this->getTargetPath())
@@ -89,8 +89,10 @@ abstract class FileGenerator implements FileGeneratorInterface
 
 
 
+
+
     /**
-     * @return false|int
+     * @inheritDoc
     */
     public function write(): false|int
     {
@@ -104,7 +106,7 @@ abstract class FileGenerator implements FileGeneratorInterface
 
 
     /**
-     * @return false|int
+     * @inheritDoc
     */
     public function append(): false|int
     {
@@ -119,8 +121,7 @@ abstract class FileGenerator implements FileGeneratorInterface
 
 
     /**
-     * @param array $patterns
-     * @return string
+     * @inheritDoc
     */
     public function generateStub(array $patterns): string
     {
@@ -161,8 +162,18 @@ abstract class FileGenerator implements FileGeneratorInterface
 
 
 
+//
+//    /**
+//     * @return string
+//    */
+//    abstract public function getBasePath(): string;
+    
+    
+
+
+
      /**
-      * @return string
+      * @inheritDoc
      */
      abstract public function getStubPath(): string;
 }

@@ -18,6 +18,17 @@ use Laventure\Contract\Generator\GeneratorInterface;
 interface FileGeneratorInterface extends GeneratorInterface
 {
 
+
+      /**
+       * Returns base directory
+       *
+       * @return string
+      */
+      public function getBaseDir(): string;
+
+
+
+
       /**
        * Returns target path
        *
@@ -47,5 +58,81 @@ interface FileGeneratorInterface extends GeneratorInterface
         *
         * @return bool
        */
-       public function generatedFile(): bool;
+       public function generated(): bool;
+
+
+
+
+
+
+
+
+       /**
+        * Make only the file [create a directory if not exists]
+        *
+        * @return bool
+       */
+       public function make(): bool;
+
+
+
+
+
+      /**
+       * Make file and put content inside file
+       *
+       * @return bool
+      */
+      public function dump(): bool;
+
+
+
+
+
+      /**
+       * Make only file in existent directory
+       *
+       * @return false|int
+      */
+      public function write(): false|int;
+
+
+
+
+
+
+
+      /**
+       * Add content to the previous
+       *
+       * @return false|int
+      */
+      public function append(): false|int;
+
+
+
+
+
+
+
+      /**
+       * Returns stub path
+       *
+       * @return string
+      */
+      public function getStubPath(): string;
+
+
+
+
+
+
+
+     /**
+      * Generate stub
+      *
+      * @param array $patterns
+      * @return string
+     */
+     public function generateStub(array $patterns): string;
 }

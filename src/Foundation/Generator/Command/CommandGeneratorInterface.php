@@ -32,14 +32,4 @@ interface CommandGeneratorInterface extends ClassGeneratorInterface
      * @return array
     */
     public function getCommandNameAsArray(): array;
-
-
-
-
-    /**
-     * Returns command directory
-     *
-     * @return string
-    */
-    public function getCommandsDir(): string;
 }

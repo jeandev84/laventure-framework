@@ -81,7 +81,7 @@ class CommandGenerator extends ClassGenerator implements CommandGeneratorInterfa
     /**
      * @inheritDoc
     */
-    public function getCommandsDir(): string
+    public function getBaseDir(): string
     {
         return trim($this->config['console.commands.dir'], DIRECTORY_SEPARATOR);
     }
@@ -89,16 +89,13 @@ class CommandGenerator extends ClassGenerator implements CommandGeneratorInterfa
 
 
 
+
     /**
      * @inheritDoc
-     * @throws CommandGeneratorException
     */
-    public function getTargetPath(): string
+    public function getNamespace(): string
     {
-        return $this->generatePathPHP([
-            $this->getCommandsDir(),
-            $this->getClassName()
-        ]);
+        return $this->config['console.commands.prefix'];
     }
 
 
@@ -114,10 +111,10 @@ class CommandGenerator extends ClassGenerator implements CommandGeneratorInterfa
     {
         // CommandStub
         return $this->generateStub([
-            "DummyNamespace"      => $this->config['console.commands.prefix'],
+            "DummyNamespace"      => $this->getNamespace(),
             "DummyClassName"      => $this->getClassName(),
             "CommandNameProperty" => "name",
-            "commandName"         => $this->commandName
+            "commandName"         => $this->getCommandName()
         ]);
     }
 
@@ -153,5 +150,16 @@ class CommandGenerator extends ClassGenerator implements CommandGeneratorInterfa
     public function getCommandNameAsArray(): array
     {
         return $this->commandNameParams;
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    protected function processGenerateMethodsStub(): string
+    {
+
     }
 }
