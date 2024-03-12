@@ -157,7 +157,7 @@ abstract class ClassGenerator extends FileGenerator implements ClassGeneratorInt
         $namespace = $this->getBaseNamespace();
         $module    = $this->getModule();
 
-        return $module ? "$module\\$namespace" : $namespace;
+        return $module ? "$namespace\\$module" : $namespace;
     }
 
 
