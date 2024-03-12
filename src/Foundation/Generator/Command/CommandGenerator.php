@@ -99,11 +99,10 @@ class CommandGenerator extends ClassGenerator
     }
 
 
-
-
     /**
      * @inheritDoc
-    */
+     * @throws CommandGeneratorException
+     */
     public function getContent(): ?string
     {
         // CommandStub
