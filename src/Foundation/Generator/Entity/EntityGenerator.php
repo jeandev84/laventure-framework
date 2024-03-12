@@ -32,9 +32,10 @@ class EntityGenerator extends ClassGenerator implements EntityGeneratorInterface
         Application $app,
         FilesystemInterface $filesystem,
         ConfigInterface $config,
-        protected EntityRepositoryGenerator $entityRepositoryGenerator
+        EntityRepositoryGenerator $entityRepositoryGenerator
     )
     {
+        dd($entityRepositoryGenerator);
         parent::__construct($app, $filesystem, $config);
     }
 
@@ -47,7 +48,7 @@ class EntityGenerator extends ClassGenerator implements EntityGeneratorInterface
     */
     public function withClassName(string $classname): static
     {
-        $this->entityRepositoryGenerator->withClassName($classname);
+        #$this->entityRepositoryGenerator->withClassName($classname);
 
         return parent::withClassName($classname);
     }
@@ -60,7 +61,9 @@ class EntityGenerator extends ClassGenerator implements EntityGeneratorInterface
     */
     public function getBaseDir(): string
     {
-        return $this->trimPath($this->config['database.orm.mapper.entity.dir']);
+        return $this->trimPath(
+            $this->config['database.orm.mapper.entity.dir']
+        );
     }
 
 
@@ -82,8 +85,10 @@ class EntityGenerator extends ClassGenerator implements EntityGeneratorInterface
     */
     public function generateRepository(): bool
     {
-         return $this->entityRepositoryGenerator
-                     ->generate();
+         //
+         #return $this->entityRepositoryGenerator->generate();
+
+        return false;
     }
 
 
@@ -118,25 +123,16 @@ class EntityGenerator extends ClassGenerator implements EntityGeneratorInterface
 
 
     /**
-     * @inheritDoc
+     * @return bool
     */
     public function generate(): bool
     {
+        #dd($this->entityRepositoryGenerator->getContent());
+
         dd($this->getContent());
+        #$genEntity = parent::generate();
+        #$genRepo   = $this->generateRepository();
+
+        #return $genEntity && $genRepo;
     }
-
-
-
-
-
-//    /**
-//     * @return bool
-//    */
-//    public function generate(): bool
-//    {
-//        $genEntity = $this->generateEntity();
-//        $genRepo   = $this->generateRepository();
-//
-//        return $genEntity && $genRepo;
-//    }
 }

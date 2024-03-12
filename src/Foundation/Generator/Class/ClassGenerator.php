@@ -57,7 +57,7 @@ abstract class ClassGenerator extends FileGenerator implements ClassGeneratorInt
         $this->classNames = $classNames;
         $this->parsedName = $classname;
         array_pop($classNames);
-        $this->module = join("\\", $classNames);
+        $this->module     = join("\\", $classNames);
 
         return $this;
     }
@@ -217,25 +217,16 @@ abstract class ClassGenerator extends FileGenerator implements ClassGeneratorInt
     public function getParsedClassName(): string
     {
         if (!$this->parsedName) {
-            throw new ClassGeneratorException("No classname parsed inside ". get_called_class());
+            throw new ClassGeneratorException(
+        "No classname parsed inside ". get_called_class()
+            );
         }
 
         return $this->parsedName;
     }
 
 
-
-
-
-    /**
-     * @return string
-     * @throws ClassGeneratorException
-    */
-    public function getResolvedParsedClassName(): string
-    {
-        return str_replace(['/'], ["\\"], $this->getParsedClassName());
-    }
-
+    
 
 
 

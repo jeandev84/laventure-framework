@@ -29,6 +29,14 @@ interface ClassMetadataInterface
 
 
 
+    /**
+     * @return string
+    */
+    public function getShortName(): string;
+
+
+
+
 
 
     /**

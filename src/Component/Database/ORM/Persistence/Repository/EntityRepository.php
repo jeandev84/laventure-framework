@@ -54,7 +54,7 @@ class EntityRepository implements EntityRepositoryInterface
     /**
      * @inheritDoc
     */
-    public function find($id): mixed
+    public function find($id, $lockMode = null, $lockVersion = null): mixed
     {
         return $this->em->find($this->getClassName(), $id);
     }

@@ -19,10 +19,11 @@ interface ObjectRepositoryInterface
      * Returns one record by given id
      *
      * @param $id
-     *
+     * @param null $lockMode
+     * @param null $lockVersion
      * @return object|null
-     */
-    public function find($id): mixed;
+    */
+    public function find($id, $lockMode = null, $lockVersion = null): mixed;
 
 
 

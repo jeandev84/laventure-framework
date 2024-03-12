@@ -141,6 +141,17 @@ class ClassMetadata implements ClassMetadataInterface
 
 
 
+    /**
+     * @inheritDoc
+    */
+    public function getShortName(): string
+    {
+        return $this->class->getShortName();
+    }
+
+
+
+
 
     /**
      * @inheritDoc
