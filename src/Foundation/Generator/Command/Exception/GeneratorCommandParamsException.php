@@ -14,7 +14,7 @@ use Throwable;
  *
  * @package  Laventure\Foundation\Generator\Command\Exception
  */
-class CommandParamsForGeneratorException extends CommandGeneratorException
+class GeneratorCommandParamsException extends CommandGeneratorException
 {
       public function __construct(string $message, array $data = [], int $code = 400)
       {

@@ -5,7 +5,8 @@ namespace Laventure\Foundation\Generator\Command;
 
 use Laventure\Foundation\Generator\Class\ClassGenerator;
 use Laventure\Foundation\Generator\Command\Exception\CommandGeneratorException;
-use Laventure\Foundation\Generator\Command\Exception\CommandParamsForGeneratorException;
+use Laventure\Foundation\Generator\Command\Exception\GeneratorCommandParamsException;
+use Laventure\Foundation\Generator\Command\Exception\UnavailableCommandParamsException;
 
 /**
  * CommandGenerator
@@ -63,13 +64,7 @@ class CommandGenerator extends ClassGenerator implements CommandGeneratorInterfa
     public function getClassName(): string
     {
          if (empty($this->commandNameParams)) {
-              throw new CommandParamsForGeneratorException(
-          "Unavailable command main for generator",
-                  [
-                      'context' => get_called_class() . " has not command name params detected."
-                  ],
-            409
-              );
+             throw new UnavailableCommandParamsException(get_called_class());
          }
 
          return sprintf('%sCommand', join($this->commandNameParams));
