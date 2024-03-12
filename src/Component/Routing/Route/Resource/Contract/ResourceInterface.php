@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Routing\Route\Resource\Contract;
 
 use Laventure\Component\Routing\Route\Collector\RouteCollectorInterface;
+use Laventure\Component\Routing\Route\Resource\Info\ResourceInfoInterface;
 use Laventure\Component\Routing\Route\RouteInterface;
 
 /**
@@ -14,7 +15,7 @@ use Laventure\Component\Routing\Route\RouteInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Routing\Route\Resource\Writer
+ * @package  Laventure\Component\Routing\Route\Web\Writer
  */
 interface ResourceInterface
 {
@@ -48,6 +49,8 @@ interface ResourceInterface
 
 
 
+
+
     /**
      * @param RouteCollectorInterface $collector
      *
@@ -65,7 +68,8 @@ interface ResourceInterface
      *
      * @return array
     */
-    public function getRoutes(): array;
+    public function getMappedRoutes(): array;
+
 
 
 
@@ -74,7 +78,20 @@ interface ResourceInterface
 
 
     /**
-     * Returns Resource as array
+     * Returns some meta information about resource
+     *
+     * @return ResourceInfoInterface
+    */
+    public function getInfo(): ResourceInfoInterface;
+
+
+
+
+
+
+
+    /**
+     * Returns Web as array
      *
      * @return array
     */

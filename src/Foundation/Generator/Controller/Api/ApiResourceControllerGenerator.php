@@ -3,7 +3,10 @@ declare(strict_types=1);
 
 namespace Laventure\Foundation\Generator\Controller\Api;
 
+use Laventure\Component\Routing\Route\Resource\Resource;
+use Laventure\Component\Routing\Route\Resource\Types\ApiResource;
 use Laventure\Foundation\Generator\Controller\ControllerGenerator;
+use Laventure\Foundation\Generator\Controller\ResourceControllerGenerator;
 
 /**
  * ApiResourceControllerGenerator
@@ -14,7 +17,24 @@ use Laventure\Foundation\Generator\Controller\ControllerGenerator;
  *
  * @package  Laventure\Foundation\Generator\Controller\Api
 */
-class ApiResourceControllerGenerator extends ControllerGenerator
+class ApiResourceControllerGenerator extends ResourceControllerGenerator
 {
+       /**
+        * @var ApiResource|null
+       */
+       protected ?ApiResource $apiResource = null;
 
+
+
+
+       /**
+        * @param string $controller
+        * @return $this
+       */
+       public function withApiController(string $controller): static
+       {
+           $this->apiResource = new ApiResource('', $controller);
+
+           return $this->withResource($this->apiResource);
+       }
 }

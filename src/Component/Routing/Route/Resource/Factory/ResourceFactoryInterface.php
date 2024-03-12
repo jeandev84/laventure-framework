@@ -13,7 +13,7 @@ use Laventure\Component\Routing\Route\Resource\Contract\ResourceInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Routing\Route\Resource\Factory
+ * @package  Laventure\Component\Routing\Route\Web\Factory
 */
 interface ResourceFactoryInterface
 {

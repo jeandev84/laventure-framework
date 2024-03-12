@@ -15,7 +15,7 @@ use Laventure\Component\Routing\Route\RouteInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Routing\Route\Resource\Decorator
+ * @package  Laventure\Component\Routing\Route\Web\Decorator
  */
 class ResourceCollectorDecorator
 {

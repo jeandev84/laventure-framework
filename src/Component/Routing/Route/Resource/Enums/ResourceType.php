@@ -11,7 +11,7 @@ namespace Laventure\Component\Routing\Route\Resource\Enums;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Routing\Resource\Bindings
+ * @package  Laventure\Component\Routing\Web\Bindings
 */
 enum ResourceType: string
 {

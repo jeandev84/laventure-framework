@@ -16,7 +16,7 @@ use Laventure\Component\Routing\Route\Resource\Resource;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Routing\Route\Resource\Drivers
+ * @package  Laventure\Component\Routing\Route\Web\Drivers
 */
 class WebResource extends Resource
 {
@@ -36,7 +36,7 @@ class WebResource extends Resource
     /**
      * @inheritDoc
     */
-    public function getRoutes(): array
+    public function getMappedRoutes(): array
     {
         return [
             ['GET|HEAD', $this->path(), $this->action('index'), $this->name('index')] ,

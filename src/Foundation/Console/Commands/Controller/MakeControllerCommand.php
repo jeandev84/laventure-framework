@@ -6,6 +6,8 @@ namespace Laventure\Foundation\Console\Commands\Controller;
 use Laventure\Component\Console\Command\Command;
 use Laventure\Component\Console\Input\InputInterface;
 use Laventure\Component\Console\Output\OutputInterface;
+use Laventure\Component\Routing\Route\Resource\Types\ApiResource;
+use Laventure\Foundation\Generator\Controller\Api\ApiResourceControllerGenerator;
 use Laventure\Foundation\Generator\Controller\ControllerGenerator;
 
 /**
@@ -40,8 +42,12 @@ class MakeControllerCommand extends Command
 
     /**
      * @param ControllerGenerator $controllerGenerator
+     * @param ApiResourceControllerGenerator $apiResourceControllerGenerator
     */
-    public function __construct(protected ControllerGenerator $controllerGenerator)
+    public function __construct(
+        protected ControllerGenerator $controllerGenerator,
+        protected ApiResourceControllerGenerator $apiResourceControllerGenerator
+    )
     {
         parent::__construct($this->name);
     }
@@ -73,13 +79,19 @@ class MakeControllerCommand extends Command
         # Check controller name we want to create
         $controllerName = $input->getArgument('name');
 
-
-        # Set controller name an action we want to generate
-        $this->controllerGenerator->withController($controllerName, ['index']);
-
-
         # Check api option
-        dd($input->getOption('api'));
+        if ($input->hasOption('api')) {
+            $this->apiResourceControllerGenerator->withApiController($controllerName);
+        } elseif ($input->hasOption('resource')) {
+
+        } else {
+            # Set controller name an action we want to generate
+            $this->controllerGenerator->withController($controllerName, ['index']);
+        }
+
+
+
+        dd($this->controllerGenerator);
 
 
         # Generate controller
@@ -102,6 +114,6 @@ class MakeControllerCommand extends Command
     */
     public function getUsage(): array
     {
-        return ["{$this->getName()} [<name>]"];
+        return ["{$this->getName()} [<name>] [options]"];
     }
 }

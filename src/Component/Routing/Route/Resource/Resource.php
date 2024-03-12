@@ -5,16 +5,18 @@ namespace Laventure\Component\Routing\Route\Resource;
 
 use Laventure\Component\Routing\Route\Collector\RouteCollectorInterface;
 use Laventure\Component\Routing\Route\Resource\Contract\ResourceInterface;
+use Laventure\Component\Routing\Route\Resource\Info\ResourceInfo;
+use Laventure\Component\Routing\Route\Resource\Info\ResourceInfoInterface;
 use Laventure\Component\Routing\Route\RouteInterface;
 
 /**
- * Resource
+ * Web
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Routing\Route\Resource
+ * @package  Laventure\Component\Routing\Route\Web
 */
 abstract class Resource implements ResourceInterface
 {
@@ -153,11 +155,23 @@ abstract class Resource implements ResourceInterface
     */
     public function map(RouteCollectorInterface $collector): RouteCollectorInterface
     {
-        foreach ($this->getRoutes() as $route) {
+        foreach ($this->getMappedRoutes() as $route) {
             [$methods, $path, $action, $name] = $route;
             $collector->map($methods, $path, $action, $name);
         }
 
         return $collector;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getInfo(): ResourceInfoInterface
+    {
+        return new ResourceInfo($this);
     }
 }
