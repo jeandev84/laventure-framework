@@ -43,6 +43,13 @@ abstract class Resource implements ResourceInterface
 
 
 
+    /**
+     * @var ResourceInfoInterface
+    */
+    protected ResourceInfoInterface $info;
+
+
+
 
     /**
      * @param string $type
@@ -55,6 +62,7 @@ abstract class Resource implements ResourceInterface
         $this->type       = $type;
         $this->name       = strtolower($name);
         $this->controller = $controller;
+        $this->info       = new ResourceInfo($this);
     }
 
 
@@ -173,7 +181,7 @@ abstract class Resource implements ResourceInterface
     */
     public function getInfo(): ResourceInfoInterface
     {
-        return new ResourceInfo($this);
+        return $this->info;
     }
 
 

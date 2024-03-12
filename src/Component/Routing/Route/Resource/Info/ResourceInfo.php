@@ -19,12 +19,21 @@ use Laventure\Component\Routing\Route\RouteInterface;
 */
 class ResourceInfo implements ResourceInfoInterface
 {
+
+    /**
+     * @var array
+    */
+    protected array $routes = [];
+
+
     /**
      * @param Resource $resource
     */
-    public function __construct(
-        protected Resource $resource
-    ) {
+    public function __construct(Resource $resource)
+    {
+        $this->routes = $this->mapRoutes(
+            $resource->getMappedRoutes()
+        );
     }
 
 
@@ -48,14 +57,7 @@ class ResourceInfo implements ResourceInfoInterface
     */
     public function getRoutes(): array
     {
-        $routes = [];
-
-        foreach ($this->resource->getMappedRoutes() as $route) {
-            $route   = $this->createRouteFromArray($route);
-            $routes[$route->getController()][$route->getActionName()] = $route;
-        }
-
-        return $routes;
+        return $this->routes;
     }
 
 
@@ -73,5 +75,25 @@ class ResourceInfo implements ResourceInfoInterface
             $route[2],
             $route[3]
         );
+    }
+
+
+
+
+
+    /**
+     * @param array $mappedRoutes
+     * @return array
+    */
+    protected function mapRoutes(array $mappedRoutes): array
+    {
+        $routes = [];
+
+        foreach ($mappedRoutes as $route) {
+            $route  = $this->createRouteFromArray($route);
+            $routes[$route->getController()][$route->getActionName()] = $route;
+        }
+
+        return $routes;
     }
 }
