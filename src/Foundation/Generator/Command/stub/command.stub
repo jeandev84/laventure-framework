@@ -28,7 +28,9 @@ class DummyClassName extends Command
     /**
      * @var array
     */
-    protected array $description = [];
+    protected array $description = [
+       "commandName description ..."
+    ];
 
 
 
