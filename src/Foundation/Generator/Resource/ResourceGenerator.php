@@ -6,6 +6,7 @@ namespace Laventure\Foundation\Generator\Resource;
 
 use Laventure\Component\Config\ConfigInterface;
 use Laventure\Component\Filesystem\FilesystemInterface;
+use Laventure\Component\Routing\Route\Resource\Contract\ResourceInterface;
 use Laventure\Component\Routing\Route\Resource\Resource;
 use Laventure\Foundation\Application;
 use Laventure\Foundation\Generator\Class\ClassGenerator;
@@ -62,6 +63,7 @@ abstract class ResourceGenerator extends ClassGenerator
     */
     public function generate(): bool
     {
+        #dd($this->getResource()->getInfo()->getActions());
         dd($this->getResource()->getRoutes());
     }
 
@@ -107,7 +109,7 @@ abstract class ResourceGenerator extends ClassGenerator
 
 
     /**
-     * @return Resource
+     * @return ResourceInterface
     */
-    abstract public function getResource(): Resource;
+    abstract public function getResource(): ResourceInterface;
 }

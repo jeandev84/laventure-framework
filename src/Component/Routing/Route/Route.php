@@ -162,6 +162,16 @@ class Route implements RouteInterface, \ArrayAccess
 
 
 
+    /**
+     * @inheritDoc
+    */
+    public function getActionName(): ?string
+    {
+        return $this->getOption('action');
+    }
+
+
+
 
     /**
      * @inheritDoc
@@ -232,6 +242,9 @@ class Route implements RouteInterface, \ArrayAccess
     {
         return $this->middlewares;
     }
+
+
+
 
 
 
@@ -602,13 +615,6 @@ class Route implements RouteInterface, \ArrayAccess
 
 
 
-    /**
-     * @return int
-    */
-    public function getPatternCount(): int
-    {
-        return count($this->patterns);
-    }
 
 
 

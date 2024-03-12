@@ -20,7 +20,7 @@ interface ResourceInfoInterface
     /**
      * @return array
     */
-    public function getMethods(): array;
+    public function getActions(): array;
 
 
 

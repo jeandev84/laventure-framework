@@ -6,6 +6,7 @@ namespace Laventure\Component\Routing\Route\Resource\Info;
 
 use Laventure\Component\Routing\Route\Resource\Resource;
 use Laventure\Component\Routing\Route\Route;
+use Laventure\Component\Routing\Route\RouteInterface;
 
 /**
  * ResourceInfo
@@ -32,9 +33,11 @@ class ResourceInfo implements ResourceInfoInterface
     /**
      * @inheritDoc
     */
-    public function getMethods(): array
+    public function getActions(): array
     {
+       return array_map(function (RouteInterface $route) {
 
+       }, $this->getRoutes());
     }
 
 
@@ -48,9 +51,27 @@ class ResourceInfo implements ResourceInfoInterface
         $routes = [];
 
         foreach ($this->resource->getMappedRoutes() as $route) {
-            $routes[] = new Route(explode('|', $route[0]), $route[1], $route[2], $route[3]);
+            $route   = $this->createRouteFromArray($route);
+            $routes[$route->getController()][$route->getActionName()] = $route;
         }
 
         return $routes;
+    }
+
+
+
+
+    /**
+     * @param array $route
+     * @return RouteInterface
+    */
+    public function createRouteFromArray(array $route): RouteInterface
+    {
+        return new Route(
+            explode('|', $route[0]),
+            $route[1],
+            $route[2],
+            $route[3]
+        );
     }
 }

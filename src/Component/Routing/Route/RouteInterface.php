@@ -350,6 +350,20 @@ interface RouteInterface extends RouteMatcherInterface
 
 
     /**
+     * Returns controller action or other
+     *
+     * @return string|null
+    */
+    public function getActionName(): ?string;
+
+
+
+
+
+
+
+
+    /**
      * Determine if the given action is callable
      *
      * @return bool
