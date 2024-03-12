@@ -90,11 +90,16 @@ class ConsoleKernel implements ConsoleKernelInterface, TerminateInterface
     /**
      * @param Application $app
      * @param Console $console
-     */
+     * @throws ContainerExceptionInterface
+     * @throws EmptyCommandNameException
+     * @throws NotFoundExceptionInterface
+     * @throws ReflectionException
+    */
     public function __construct(Application $app, Console $console)
     {
         $this->app     = $app;
         $this->console = $console;
+        $this->console->addCommands($this->loadCommands($this->app));
     }
 
 
@@ -105,7 +110,7 @@ class ConsoleKernel implements ConsoleKernelInterface, TerminateInterface
     public function handle(InputInterface $input, OutputInterface $output): int
     {
         try {
-            return $this->console->addCommands($this->loadCommands())->run($input, $output);
+            return $this->console->run($input, $output);
         } catch (Throwable $e) {
             $output->failure($e->getMessage());
             return Command::FAILURE;
@@ -119,6 +124,8 @@ class ConsoleKernel implements ConsoleKernelInterface, TerminateInterface
     */
     public function terminate(InputInterface $input, $status)
     {
+           // clear $input      []
+           // check something  with $status
            exit($status);
     }
 
@@ -131,15 +138,15 @@ class ConsoleKernel implements ConsoleKernelInterface, TerminateInterface
      * @throws NotFoundExceptionInterface
      * @throws ReflectionException
     */
-    private function loadCommands(): array
+    private function loadCommands(Application $app): array
     {
-        $availableCommands = array_map(function ($commandClass) {
-            return $this->app->get($commandClass);
-        }, $this->getAvailableCommands());
+         $availableCommands = array_map(function ($commandClass) use ($app) {
+            return $app->get($commandClass);
+         }, $this->getAvailableCommands());
 
-        return array_filter($availableCommands, function ($command) {
+         return array_filter($availableCommands, function ($command) {
             return $command instanceof CommandInterface;
-        });
+         });
     }
 
 
