@@ -48,6 +48,20 @@ interface ClassGeneratorInterface extends FileGeneratorInterface
 
 
 
+
+    /**
+     * Returns base namespace
+     *
+     * @return string
+    */
+    public function getBaseNamespace(): string;
+
+
+
+
+
+
+
     /**
      * Returns class module
      * e.g "App\Http\Api\Books\BookController
@@ -65,21 +79,12 @@ interface ClassGeneratorInterface extends FileGeneratorInterface
 
 
 
-    /**
-     * @return string
-    */
-    public function generateStubMethods(): string;
-
-
-
 
 
     /**
-     * Returns namespace with module
-     * (e.g, if exists module Api\Books namespace will be App\Http\Api\Books)
-     * (e.g, if exists module Api namespace wille be App\Http\Api)
+     * Generate class methods stub
      *
      * @return string
     */
-    public function getNamespaceWithModule(): string;
+    public function generateStubMethods(): string;
 }

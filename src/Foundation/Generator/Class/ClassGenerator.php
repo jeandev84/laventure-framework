@@ -145,13 +145,16 @@ abstract class ClassGenerator extends FileGenerator implements ClassGeneratorInt
 
 
 
-
     /**
-     * @return string
+     *  Returns namespace with module
+     *  (e.g, if exists module Api\Books namespace will be App\Http\Api\Books)
+     *  (e.g, if exists module Api namespace wille be App\Http\Api)
+     *
+     * @inheritDoc
     */
-    public function getNamespaceWithModule(): string
+    public function getNamespace(): string
     {
-        $namespace = $this->getNamespace();
+        $namespace = $this->getBaseNamespace();
         $module    = $this->getModule();
 
         return $module ? "$module\\$namespace" : $namespace;
@@ -176,5 +179,8 @@ abstract class ClassGenerator extends FileGenerator implements ClassGeneratorInt
     /**
      * @return string
     */
-    abstract protected function processGenerateMethodsStub(): string;
+    protected function processGenerateMethodsStub(): string
+    {
+        return '';
+    }
 }

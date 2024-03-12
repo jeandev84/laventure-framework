@@ -40,12 +40,10 @@ class ControllerGenerator extends ClassGenerator implements ControllerGeneratorI
 
 
 
-
-
     /**
      * @inheritDoc
     */
-    public function getNamespace(): string
+    public function getBaseNamespace(): string
     {
         return $this->config['http.controllers.prefix'];
     }
@@ -60,7 +58,7 @@ class ControllerGenerator extends ClassGenerator implements ControllerGeneratorI
     public function getContent(): string
     {
         return $this->generateStub([
-            "DummyNamespace" => $this->getNamespaceWithModule(),
+            "DummyNamespace" => $this->getNamespace(),
             "DummyClassName" => $this->getClassName(),
             "DummyActions"   => $this->generateStubMethods()
         ]);
@@ -86,7 +84,7 @@ class ControllerGenerator extends ClassGenerator implements ControllerGeneratorI
     */
     protected function processGenerateMethodsStub(): string
     {
-
+        return '';
     }
 
 }
