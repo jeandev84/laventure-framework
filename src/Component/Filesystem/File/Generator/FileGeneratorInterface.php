@@ -36,4 +36,16 @@ interface FileGeneratorInterface extends GeneratorInterface
         * @return string|null
        */
        public function getContent(): ?string;
+
+
+
+
+
+
+       /**
+        * Determine if file successfully generated
+        *
+        * @return bool
+       */
+       public function generated(): bool;
 }

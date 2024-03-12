@@ -8,6 +8,7 @@ use Laventure\Component\Console\Command\Exception\CommandException;
 use Laventure\Component\Console\Input\InputInterface;
 use Laventure\Component\Console\Output\OutputInterface;
 use Laventure\Foundation\Generator\Command\CommandGenerator;
+use Laventure\Foundation\Generator\Command\Exception\CommandGeneratorException;
 
 /**
  * MakeCommand
@@ -60,12 +61,10 @@ class MakeCommand extends Command
     }
 
 
-
-
-
     /**
      * @inheritDoc
-    */
+     * @throws CommandGeneratorException
+     */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
          $commandName   = $input->getArgument('name');
@@ -75,9 +74,9 @@ class MakeCommand extends Command
              $commandParams = explode($this->getNameSeparator(), $commandName);
          }
 
-         $this->commandGenerator->withCommand($commandName, $commandParams)->generate();
-
-         $output->writeln("Command {$this->getTargetPath()} successfully generated.");
+         if($this->commandGenerator->withCommand($commandName, $commandParams)->generate()) {
+             $output->writeln("Command {$this->getTargetPath()} successfully generated.");
+         }
 
          return Command::SUCCESS;
     }
@@ -99,7 +98,7 @@ class MakeCommand extends Command
 
     /**
      * @return string
-     * @throws CommandException
+     * @throws CommandGeneratorException
     */
     private function getTargetPath(): string
     {

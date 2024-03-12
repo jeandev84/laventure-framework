@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Foundation\Generator;
+namespace Laventure\Foundation\Generator\File;
 
 use Laventure\Component\Config\ConfigInterface;
 use Laventure\Component\Filesystem\File\File;
@@ -17,7 +17,7 @@ use Laventure\Foundation\Application;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Foundation\Service\Generator
+ * @package  Laventure\Foundation\Service\Generator\Common
 */
 abstract class FileGenerator implements FileGeneratorInterface
 {
@@ -46,6 +46,16 @@ abstract class FileGenerator implements FileGeneratorInterface
         return boolval($this->write());
     }
 
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function generated(): bool
+    {
+
+    }
 
 
 
@@ -87,11 +97,24 @@ abstract class FileGenerator implements FileGeneratorInterface
     */
     public function generateStub(array $patterns): string
     {
-        $file    = new File($this->getStubPath());
+        $file    = $this->file($this->getStubPath());
         $patterns["ApplicationName"] = $this->app->getName();
         $patterns["GenerateTime"]    = date('d/m/Y H:i:s');
 
         return $file->stub($patterns);
+    }
+
+
+
+
+
+    /**
+     * @param $path
+     * @return File
+    */
+    public function file($path): File
+    {
+        return new File($path);
     }
 
 

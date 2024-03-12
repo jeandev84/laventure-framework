@@ -1,8 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Foundation\Generator;
+namespace Laventure\Foundation\Generator\Class;
 
+
+use Laventure\Foundation\Generator\File\FileGenerator;
 
 /**
  * ClassGenerator
@@ -11,7 +13,7 @@ namespace Laventure\Foundation\Generator;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Foundation\Generator
+ * @package  Laventure\Foundation\Generator\Common
 */
 abstract class ClassGenerator extends FileGenerator
 {

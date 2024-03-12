@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Foundation\Generator\Command\Exceptions;
+namespace Laventure\Foundation\Generator\Command\Exception;
 
 use Laventure\Exceptions\BaseException;
 
