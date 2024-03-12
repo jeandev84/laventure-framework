@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Laventure\Foundation\Generator\Command;
 
-use Laventure\Component\Console\Command\Exception\CommandException;
 use Laventure\Foundation\Generator\Class\ClassGenerator;
 use Laventure\Foundation\Generator\Command\Exception\CommandGeneratorException;
 use Laventure\Foundation\Generator\Command\Exception\UnavailableCommandParamsForGeneratorException;
@@ -17,14 +16,14 @@ use Laventure\Foundation\Generator\Command\Exception\UnavailableCommandParamsFor
  *
  * @package  Laventure\Foundation\Service\Generator\Command
 */
-class CommandGenerator extends ClassGenerator
+class CommandGenerator extends ClassGenerator implements CommandGeneratorInterface
 {
 
 
     /**
-     * @var string|null
+     * @var string
     */
-    protected ?string $commandName = null;
+    protected string $commandName = '';
 
 
 
@@ -32,22 +31,22 @@ class CommandGenerator extends ClassGenerator
     /**
      * @var array
     */
-    protected array $commandParams = [];
+    protected array $commandNameParams = [];
 
 
 
 
     /**
      * @param $commandName
-     * @param array $commandAsArray
+     * @param array $commandNameAsArray
      * @return $this
     */
-    public function withCommand($commandName, array $commandAsArray): static
+    public function withCommand($commandName, array $commandNameAsArray): static
     {
         $this->commandName = $commandName;
 
-        foreach ($commandAsArray as $commandParam) {
-            $this->commandParams[] = ucfirst($commandParam);
+        foreach ($commandNameAsArray as $commandParam) {
+            $this->commandNameParams[] = ucfirst($commandParam);
         }
 
         return $this;
@@ -63,20 +62,20 @@ class CommandGenerator extends ClassGenerator
     */
     public function getClassName(): string
     {
-         if (empty($this->commandParams)) {
+         if (empty($this->commandNameParams)) {
               throw new UnavailableCommandParamsForGeneratorException(
                   get_called_class()
               );
          }
 
-         return sprintf('%sCommand', join($this->commandParams));
+         return sprintf('%sCommand', join($this->commandNameParams));
     }
 
 
 
 
     /**
-     * @return string
+     * @inheritDoc
     */
     public function getCommandsDir(): string
     {
@@ -89,7 +88,7 @@ class CommandGenerator extends ClassGenerator
     /**
      * @inheritDoc
      * @throws CommandGeneratorException
-     */
+    */
     public function getTargetPath(): ?string
     {
         return join(DIRECTORY_SEPARATOR, [
@@ -99,11 +98,15 @@ class CommandGenerator extends ClassGenerator
     }
 
 
+
+
+
+
     /**
      * @inheritDoc
      * @throws CommandGeneratorException
      */
-    public function getContent(): ?string
+    public function getContent(): string
     {
         // CommandStub
         return $this->generateStub([
@@ -124,5 +127,27 @@ class CommandGenerator extends ClassGenerator
     public function getStubPath(): string
     {
         return __DIR__.'/stub/command.stub';
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getCommandName(): string
+    {
+        return $this->commandName;
+    }
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getCommandNameAsArray(): array
+    {
+        return $this->commandNameParams;
     }
 }

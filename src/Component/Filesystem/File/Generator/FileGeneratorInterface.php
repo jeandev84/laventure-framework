@@ -33,9 +33,9 @@ interface FileGeneratorInterface extends GeneratorInterface
        /**
         * Returns content
         *
-        * @return string|null
+        * @return string
        */
-       public function getContent(): ?string;
+       public function getContent(): string;
 
 
 
