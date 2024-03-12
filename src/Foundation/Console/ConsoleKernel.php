@@ -14,6 +14,7 @@ use Laventure\Component\Console\Kernel\TerminateInterface;
 use Laventure\Component\Console\Output\OutputInterface;
 use Laventure\Foundation\Application;
 use Laventure\Foundation\Console\Commands\Command\MakeCommand;
+use Laventure\Foundation\Console\Commands\Controller\MakeControllerCommand;
 use Laventure\Foundation\Console\Commands\Database\DatabaseCreateCommand;
 use Laventure\Foundation\Console\Commands\Database\DatabaseDropCommand;
 use Laventure\Foundation\Console\Commands\Database\Schema\Migration\MakeMigrationCommand;
@@ -62,14 +63,15 @@ class ConsoleKernel implements ConsoleKernelInterface
     private array $defaultCommands = [
         // make commands
         MakeCommand::class,
-        // server
+        MakeControllerCommand::class,
+        MakeMigrationCommand::class,
+        // server commands
         ServerStartCommand::class,
         ServerStopCommand::class,
         // database commands
         DatabaseCreateCommand::class,
         DatabaseDropCommand::class,
         // migrations commands
-        MakeMigrationCommand::class,
         MigrationInstallCommand::class,
         MigrationMigrateCommand::class,
         MigrationRollbackCommand::class,

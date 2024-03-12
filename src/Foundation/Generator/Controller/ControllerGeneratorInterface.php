@@ -17,5 +17,15 @@ use Laventure\Foundation\Generator\Class\ClassGeneratorInterface;
 */
 interface ControllerGeneratorInterface extends ClassGeneratorInterface
 {
+     /**
+      * @return array
+     */
+     public function getActions(): array;
 
+
+
+     /**
+      * @return string
+     */
+     public function generateActions(): string;
 }

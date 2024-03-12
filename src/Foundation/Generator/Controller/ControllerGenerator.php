@@ -17,6 +17,30 @@ use Laventure\Foundation\Generator\Class\ClassGenerator;
 class ControllerGenerator extends ClassGenerator implements ControllerGeneratorInterface
 {
 
+
+    /**
+     * @var array
+    */
+    protected array $actions = [];
+
+
+
+
+    /**
+     * @param array $actions
+     * @return $this
+    */
+    public function withActions(array $actions): static
+    {
+        $this->actions = array_merge($this->actions, $actions);
+
+        return $this;
+    }
+
+
+
+
+
     /**
      * @inheritDoc
     */
@@ -56,5 +80,27 @@ class ControllerGenerator extends ClassGenerator implements ControllerGeneratorI
     public function getStubPath(): string
     {
 
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getActions(): array
+    {
+        return [];
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function generateActions(): string
+    {
+        return '';
     }
 }

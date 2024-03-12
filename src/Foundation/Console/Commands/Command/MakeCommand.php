@@ -78,9 +78,9 @@ class MakeCommand extends Command
 
          if (!$this->commandGenerator->generatedFile()) {
              $this->commandGenerator->generate();
-             $output->writeln("Command {$this->getTargetPath()} successfully generated.");
+             $output->success("Command {$this->getTargetPath()} successfully generated.");
          } else {
-             $output->writeln("Command [$commandName] where target path [{$this->getTargetPath()}] already generated");
+             $output->info("Command [$commandName] where target path [{$this->getTargetPath()}] already generated");
          }
 
          return Command::SUCCESS;
