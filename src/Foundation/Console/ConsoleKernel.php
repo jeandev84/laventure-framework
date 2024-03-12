@@ -93,7 +93,7 @@ class ConsoleKernel implements ConsoleKernelInterface, TerminateInterface
      */
     public function __construct(Application $app, Console $console)
     {
-        $this->app = $app;
+        $this->app     = $app;
         $this->console = $console;
     }
 
