@@ -25,12 +25,6 @@ use Laventure\Foundation\Http\Controller\Loader\ControllerLoader;
  */
 class RouterServiceProvider extends ServiceProvider implements BootableServiceProvider
 {
-    /**
-     * @var string
-    */
-    protected string $namespace = "App\\Http\\Controllers";
-
-    protected string $controllerPath = "app/Http/Controllers";
 
     /**
      * @var array
@@ -58,6 +52,9 @@ class RouterServiceProvider extends ServiceProvider implements BootableServicePr
         });
 
     }
+
+
+
 
 
     /**
