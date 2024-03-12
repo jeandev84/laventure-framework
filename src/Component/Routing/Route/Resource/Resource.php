@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Routing\Route\Resource;
@@ -39,6 +38,9 @@ abstract class Resource implements ResourceInterface
     protected string $controller;
 
 
+
+
+
     /**
      * @param string $type
      * @param string $name
@@ -60,7 +62,7 @@ abstract class Resource implements ResourceInterface
      *
      * @return string
     */
-    protected function path(string $suffix = ''): string
+    public function path(string $suffix = ''): string
     {
         return sprintf('%s%s', $this->name, $suffix);
     }
@@ -75,7 +77,7 @@ abstract class Resource implements ResourceInterface
      *
      * @return array
     */
-    protected function action(string $action): array
+    public function action(string $action): array
     {
         return [$this->controller, $action];
     }
@@ -91,7 +93,7 @@ abstract class Resource implements ResourceInterface
      *
      * @return string
     */
-    protected function name(string $name): string
+    public function name(string $name): string
     {
         return sprintf('%s.%s', $this->name, $name);
     }
@@ -129,5 +131,33 @@ abstract class Resource implements ResourceInterface
     public function getType(): string
     {
         return $this->type;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function toArray(): array
+    {
+        return get_object_vars($this);
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function map(RouteCollectorInterface $collector): RouteCollectorInterface
+    {
+        foreach ($this->getRoutes() as $route) {
+            [$methods, $path, $action, $name] = $route;
+            $collector->map($methods, $path, $action, $name);
+        }
+
+        return $collector;
     }
 }

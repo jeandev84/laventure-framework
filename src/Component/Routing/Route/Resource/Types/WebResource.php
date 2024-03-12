@@ -32,17 +32,19 @@ class WebResource extends Resource
 
 
 
+
     /**
      * @inheritDoc
     */
-    public function map(RouteCollectorInterface $collector): RouteCollectorInterface
+    public function getRoutes(): array
     {
-        $collector->get($this->path(), $this->action('index'), $this->name('index'));
-        $collector->get($this->path('/{id}'), $this->action('show'), $this->name('show'));
-        $collector->get($this->path(), $this->action('create'), $this->name('create'));
-        $collector->post($this->path(), $this->action('store'), $this->name('store'));
-        $collector->map('PUT|PATCH', $this->path('/{id}'), $this->action('update'), $this->name('update'));
-        $collector->delete($this->path('/{id}'), $this->action('destroy'), $this->name('destroy'));
-        return $collector;
+        return [
+            ['GET|HEAD', $this->path(), $this->action('index'), $this->name('index')] ,
+            ['GET', $this->path('/{id}'), $this->action('show'), $this->name('show')],
+            ['GET', $this->path(), $this->action('create'), $this->name('create')],
+            ['POST', $this->path(), $this->action('store'), $this->name('store')],
+            ['PUT|PATCH', 'PUT|PATCH', $this->path('/{id}'), $this->action('update'), $this->name('update')],
+            ["DELETE", $this->path('/{id}'), $this->action('destroy'), $this->name('destroy')]
+        ];
     }
 }

@@ -54,4 +54,29 @@ interface ResourceInterface
      * @return RouteCollectorInterface
     */
     public function map(RouteCollectorInterface $collector): RouteCollectorInterface;
+
+
+
+
+
+
+    /**
+     * Returns routes has array
+     *
+     * @return array
+    */
+    public function getRoutes(): array;
+
+
+
+
+
+
+
+    /**
+     * Returns Resource as array
+     *
+     * @return array
+    */
+    public function toArray(): array;
 }

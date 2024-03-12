@@ -35,13 +35,14 @@ class ApiResource extends Resource
     /**
      * @inheritDoc
     */
-    public function map(RouteCollectorInterface $collector): RouteCollectorInterface
+    public function getRoutes(): array
     {
-        $collector->map('GET|HEAD', $this->path(), $this->action('index'), $this->name('index'));
-        $collector->get($this->path('/{id}'), $this->action('show'), $this->name('show'));
-        $collector->post($this->path(), $this->action('store'), $this->name('store'));
-        $collector->map('PUT|PATCH', $this->path('/{id}'), $this->action('update'), $this->name('update'));
-        $collector->delete($this->path('/{id}'), $this->action('destroy'), $this->name('destroy'));
-        return $collector;
+        return [
+           ['GET|HEAD', $this->path(), $this->action('index'), $this->name('index')] ,
+           ['GET', $this->path('/{id}'), $this->action('show'), $this->name('show')],
+           ['POST', $this->path(), $this->action('store'), $this->name('store')],
+           ['PUT|PATCH', $this->path('/{id}'), $this->action('update'), $this->name('update')],
+           ["DELETE", $this->path('/{id}'), $this->action('destroy'), $this->name('destroy')]
+        ];
     }
 }
