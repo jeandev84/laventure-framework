@@ -54,6 +54,11 @@ class MakeControllerCommand extends Command
     {
         $this->addArgument('name', "Choose a controller name (e.g. FooController)")
              ->required();
+        $this->addOption('api', "This option mean that we want to create an [API] resource controller.")
+            ->optional();
+        $this->addOption('resource', "This option mean that we want to create an [WEB] resource controller.")
+             ->shortcut('r')
+             ->optional();
     }
 
 
@@ -65,9 +70,19 @@ class MakeControllerCommand extends Command
     */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
+        # Check controller name we want to create
         $controllerName = $input->getArgument('name');
-        $this->controllerGenerator->withController($controllerName);
 
+
+        # Set controller name an action we want to generate
+        $this->controllerGenerator->withController($controllerName, ['index']);
+
+
+        # Check api option
+        dd($input->getOption('api'));
+
+
+        # Generate controller
         if (!$this->controllerGenerator->generated()) {
             $this->controllerGenerator->generate();
             $output->success("Controller [$controllerName] successfully generated.");

@@ -203,8 +203,8 @@ class Console implements ConsoleInterface, CommandCollectionInterface, OptionSta
         $command = $this->getCommand($input->getFirstArgument());
 
         // display help
-        foreach ($input->getOptions() as $option) {
-            if ($this->hasHelp($option)) {
+        foreach ($input->getOptions() as $name => $option) {
+            if ($this->hasHelp($name)) {
                 $output->printList($command->getHelpList());
                 return Command::INFO;
             }
