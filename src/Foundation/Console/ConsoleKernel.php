@@ -39,7 +39,7 @@ use Throwable;
  *
  * @package  Laventure\Foundation\Console
 */
-class ConsoleKernel implements ConsoleKernelInterface, TerminateInterface
+class ConsoleKernel implements ConsoleKernelInterface
 {
     /**
      * @var Application

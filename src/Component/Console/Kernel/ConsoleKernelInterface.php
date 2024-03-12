@@ -16,7 +16,7 @@ use Laventure\Component\Console\Output\OutputInterface;
  *
  * @package  Laventure\Component\Console\ConsoleKernel
 */
-interface ConsoleKernelInterface
+interface ConsoleKernelInterface extends TerminateInterface
 {
     /**
      * Console ConsoleKernel handle
