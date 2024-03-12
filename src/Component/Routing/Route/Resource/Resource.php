@@ -24,7 +24,7 @@ abstract class Resource implements ResourceInterface
     /**
      * @var string
     */
-    private string $type;
+    protected string $type;
 
 
 

@@ -26,7 +26,9 @@ class ApiResource extends Resource
     */
     public function __construct(string $name, string $controller)
     {
-        parent::__construct(ResourceType::API, $name, $controller);
+        $type = ResourceType::API;
+
+        parent::__construct($type, $name, ucfirst($type) . "\\". $controller);
     }
 
 
@@ -44,5 +46,43 @@ class ApiResource extends Resource
            ['PUT|PATCH', $this->path('/{id}'), $this->action('update'), $this->name('update')],
            ["DELETE", $this->path('/{id}'), $this->action('destroy'), $this->name('destroy')]
         ];
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function path(string $suffix = ''): string
+    {
+        return parent::path("{$this->prefix()}/". rtrim($suffix, "\\/"));
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function name(string $name): string
+    {
+        return strtolower($this->type) . ".". parent::name($name);
+    }
+
+
+
+
+
+
+
+    /**
+     * @return string
+    */
+    public function prefix(): string
+    {
+        return strtolower($this->type);
     }
 }
