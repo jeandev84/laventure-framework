@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Generator\Entity;
@@ -23,8 +24,6 @@ use ReflectionException;
 */
 class EntityGenerator extends ClassGenerator implements EntityGeneratorInterface
 {
-
-
     /**
      * @param Application $app
      * @param FilesystemInterface $filesystem
@@ -36,8 +35,7 @@ class EntityGenerator extends ClassGenerator implements EntityGeneratorInterface
         FilesystemInterface $filesystem,
         ConfigInterface $config,
         protected EntityRepositoryGenerator $entityRepositoryGenerator
-    )
-    {
+    ) {
         parent::__construct($app, $filesystem, $config);
     }
 

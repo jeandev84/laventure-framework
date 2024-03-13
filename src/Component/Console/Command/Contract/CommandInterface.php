@@ -56,13 +56,6 @@ interface CommandInterface extends ExecutableCommandInterface
 
 
 
-    /**
-     * @return string
-    */
-    public function getNameSeparator(): string;
-
-
-
 
 
 

@@ -6,6 +6,7 @@ namespace Laventure\Component\Console\Command;
 
 use Laventure\Component\Console\Command\Contract\CommandInterface;
 use Laventure\Component\Console\Command\Exception\InvalidCommandStatusException;
+use Laventure\Component\Console\Command\Resolver\CommandNameResolver;
 use Laventure\Component\Console\Input\Argument\InputArgument;
 use Laventure\Component\Console\Input\Argument\InputArgumentInterface;
 use Laventure\Component\Console\Input\Collection\InputCollection;
@@ -142,12 +143,14 @@ abstract class Command implements CommandInterface
 
 
     /**
-     * @inheritDoc
+     * @return CommandNameResolver
     */
-    public function getNameSeparator(): string
+    public function getCommandNameResolver(): CommandNameResolver
     {
-        return ':';
+        return new CommandNameResolver($this->getName());
     }
+
+
 
 
 
@@ -157,11 +160,8 @@ abstract class Command implements CommandInterface
     */
     public function hasNameSeparator(): bool
     {
-        return $this->hasSeparator($this->getName());
+        return $this->separatedName($this->getName());
     }
-
-
-
 
 
 
@@ -183,11 +183,7 @@ abstract class Command implements CommandInterface
     */
     public function getNameAsArray(): array
     {
-        if (!$this->hasNameSeparator()) {
-            return [];
-        }
-
-        return explode($this->getNameSeparator(), $this->getName());
+         return $this->getCommandNameResolver()->loadNameAsArray();
     }
 
 
@@ -453,7 +449,6 @@ abstract class Command implements CommandInterface
 
 
 
-
     /**
      * @return array
     */
@@ -515,8 +510,8 @@ abstract class Command implements CommandInterface
      * @param $name
      * @return bool
     */
-    protected function hasSeparator($name): bool
+    protected function separatedName($name): bool
     {
-        return stripos($name, $this->getNameSeparator()) !== false;
+        return $this->getCommandNameResolver()->separated($name);
     }
 }

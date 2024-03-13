@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Generator\Repository;
@@ -24,7 +25,6 @@ use ReflectionException;
  */
 class EntityRepositoryGenerator extends ClassGenerator implements EntityRepositoryGeneratorInterface
 {
-
     /**
      * @var string
     */
@@ -42,8 +42,7 @@ class EntityRepositoryGenerator extends ClassGenerator implements EntityReposito
         Application $app,
         FilesystemInterface $filesystem,
         ConfigInterface $config
-    )
-    {
+    ) {
         parent::__construct($app, $filesystem, $config);
     }
 
@@ -151,7 +150,7 @@ class EntityRepositoryGenerator extends ClassGenerator implements EntityReposito
 
         if (!$classname) {
             throw new EntityRepositoryGeneratorException(
-        "Empty full class name from ". get_called_class()
+                "Empty full class name from ". get_called_class()
             );
         }
 
@@ -173,7 +172,7 @@ class EntityRepositoryGenerator extends ClassGenerator implements EntityReposito
 
         if (!$classname) {
             throw new EntityRepositoryGeneratorException(
-        "Empty full class name from ". get_called_class()
+                "Empty full class name from ". get_called_class()
             );
         }
 

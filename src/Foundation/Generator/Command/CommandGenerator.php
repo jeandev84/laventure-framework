@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Laventure\Foundation\Generator\Command;
 
+use Laventure\Component\Config\ConfigInterface;
+use Laventure\Component\Console\Command\Resolver\CommandNameResolver;
+use Laventure\Component\Filesystem\FilesystemInterface;
+use Laventure\Foundation\Application;
 use Laventure\Foundation\Generator\Class\ClassGenerator;
 use Laventure\Foundation\Generator\Command\Exception\CommandGeneratorException;
 use Laventure\Foundation\Generator\Command\Exception\GeneratorCommandParamsException;
@@ -21,32 +25,43 @@ use Laventure\Foundation\Generator\Command\Exception\UnavailableCommandParamsExc
 class CommandGenerator extends ClassGenerator implements CommandGeneratorInterface
 {
     /**
-     * @var string
+     * @var array
     */
-    protected string $commandName = '';
-
-
+    protected array $commandParams = [];
 
 
     /**
-     * @var array
+     * @param Application $app
+     * @param FilesystemInterface $filesystem
+     * @param ConfigInterface $config
+     * @param CommandNameResolver $commandNameResolver
     */
-    protected array $commandNameParams = [];
-
-
+    public function __construct(
+        Application $app,
+        FilesystemInterface $filesystem,
+        ConfigInterface $config,
+        protected CommandNameResolver $commandNameResolver
+    )
+    {
+        parent::__construct($app, $filesystem, $config);
+    }
 
 
     /**
      * @param $commandName
-     * @param array $commandNameAsArray
      * @return $this
     */
-    public function withCommand($commandName, array $commandNameAsArray): static
+    public function withCommand($commandName): static
     {
-        $this->commandName = $commandName;
+        $this->commandNameResolver->withName($commandName);
+        $commandParams = [$commandName];
 
-        foreach ($commandNameAsArray as $commandParam) {
-            $this->commandNameParams[] = ucfirst($commandParam);
+        if ($this->commandNameResolver->hasSeparator()) {
+            $commandParams = $this->commandNameResolver->loadNameAsArray();
+        }
+
+        foreach ($commandParams as $commandParam) {
+            $this->commandParams[] = ucfirst($commandParam);
         }
 
         return $this;
@@ -62,11 +77,11 @@ class CommandGenerator extends ClassGenerator implements CommandGeneratorInterfa
     */
     public function getClassName(): string
     {
-        if (empty($this->commandNameParams)) {
+        if (empty($this->commandParams)) {
             throw new UnavailableCommandParamsException(get_called_class());
         }
 
-        return sprintf('%sCommand', join($this->commandNameParams));
+        return sprintf('%sCommand', join($this->commandParams));
     }
 
 
@@ -133,7 +148,7 @@ class CommandGenerator extends ClassGenerator implements CommandGeneratorInterfa
     */
     public function getCommandName(): string
     {
-        return $this->commandName;
+        return $this->commandNameResolver->getName();
     }
 
 
@@ -143,6 +158,6 @@ class CommandGenerator extends ClassGenerator implements CommandGeneratorInterfa
     */
     public function getCommandNameAsArray(): array
     {
-        return $this->commandNameParams;
+        return $this->commandParams;
     }
 }

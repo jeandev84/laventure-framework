@@ -6,6 +6,7 @@ namespace Laventure\Foundation\Console\Commands\Command;
 
 use Laventure\Component\Console\Command\Command;
 use Laventure\Component\Console\Command\Exception\CommandException;
+use Laventure\Component\Console\Command\Resolver\CommandNameResolver;
 use Laventure\Component\Console\Input\InputInterface;
 use Laventure\Component\Console\Output\OutputInterface;
 use Laventure\Foundation\Generator\Command\CommandGenerator;
@@ -63,24 +64,23 @@ class MakeCommand extends Command
 
     /**
      * @inheritDoc
-     * @throws CommandGeneratorException
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $commandName   = $input->getArgument('name');
-        $commandParams = [$commandName];
-
-        if ($this->hasSeparator($commandName)) {
-            $commandParams = explode($this->getNameSeparator(), $commandName);
-        }
-
-        $this->commandGenerator->withCommand($commandName, $commandParams);
+        $this->commandGenerator->withCommand(
+            $commandName = $input->getArgument('name')
+        );
 
         if (!$this->commandGenerator->generated()) {
             $this->commandGenerator->generate();
-            $output->success("Command {$this->getTargetPath()} successfully generated.");
+            $output->success("Command {$commandName} successfully generated.");
+            $output->success("Generated path {$this->getTargetPath()} successfully generated.");
         } else {
-            $output->info("Command [$commandName] where target path [{$this->getTargetPath()}] already generated");
+            $output->info("Command [ $commandName ] already exists.");
+            $output->info("Target path '{$this->getTargetPath()}'");
         }
 
         return Command::SUCCESS;
@@ -99,9 +99,11 @@ class MakeCommand extends Command
     }
 
 
+
+
     /**
      * @return string
-     */
+    */
     private function getTargetPath(): string
     {
         return $this->commandGenerator->getTargetPath();

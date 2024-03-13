@@ -1,11 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Generator\Resource;
 
-
 use Laventure\Foundation\Generator\Class\ClassGeneratorInterface;
-
 
 /**
  * ResourceGeneratorInterface
@@ -18,33 +17,31 @@ use Laventure\Foundation\Generator\Class\ClassGeneratorInterface;
 */
 interface ResourceGeneratorInterface extends ClassGeneratorInterface
 {
-
-
-      /**
-       * @param $resource
-       * @return $this
-      */
-      public function withResource($resource): static;
+    /**
+     * @param $resource
+     * @return $this
+    */
+    public function withResource($resource): static;
 
 
 
 
 
 
-      /**
-       * Generate controller
-       *
-       * @return bool
-      */
-      public function generateController(): bool;
+    /**
+     * Generate controller
+     *
+     * @return bool
+    */
+    public function generateController(): bool;
 
 
 
 
-      /**
-       * Generate Entity
-       *
-       * @return bool
-      */
-      public function generateEntity(): bool;
+    /**
+     * Generate Entity
+     *
+     * @return bool
+    */
+    public function generateEntity(): bool;
 }

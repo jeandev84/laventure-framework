@@ -63,10 +63,10 @@ abstract class ResourceGenerator extends ClassGenerator implements ResourceGener
     */
     public function generate(): bool
     {
-       $generatedController = $this->generateController();
-       $generatedEntity     = $this->generateEntity();
+        $generatedController = $this->generateController();
+        $generatedEntity     = $this->generateEntity();
 
-       return $generatedController && $generatedEntity;
+        return $generatedController && $generatedEntity;
     }
 
 
@@ -91,8 +91,8 @@ abstract class ResourceGenerator extends ClassGenerator implements ResourceGener
     */
     public function getControllerName(): string
     {
-       return $this->controllerGenerator
-                   ->generateControllerName();
+        return $this->controllerGenerator
+                    ->generateControllerName();
     }
 
 

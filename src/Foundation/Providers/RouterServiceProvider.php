@@ -25,7 +25,6 @@ use Laventure\Foundation\Http\Controller\Loader\ControllerLoader;
  */
 class RouterServiceProvider extends ServiceProvider implements BootableServiceProvider
 {
-
     /**
      * @var array
     */
@@ -47,8 +46,9 @@ class RouterServiceProvider extends ServiceProvider implements BootableServicePr
         $this->app->singleton(ControllerLoader::class, function (Filesystem $fs, Config $config) {
             return new ControllerLoader(
                 $fs,
-                $config['routes.controllers.prefix'] ,
-                $config['routes.controllers.dir']);
+                $config['routes.controllers.prefix'],
+                $config['routes.controllers.dir']
+            );
         });
 
     }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Console\Commands\Entity;
@@ -8,7 +9,6 @@ use Laventure\Component\Console\Input\InputInterface;
 use Laventure\Component\Console\Output\OutputInterface;
 use Laventure\Foundation\Generator\Entity\EntityGenerator;
 use Laventure\Foundation\Generator\Entity\EntityGeneratorInterface;
-
 
 /**
  * MakeEntityCommand
@@ -21,7 +21,6 @@ use Laventure\Foundation\Generator\Entity\EntityGeneratorInterface;
  */
 class MakeEntityCommand extends Command
 {
-
     /**
      * @var string
     */

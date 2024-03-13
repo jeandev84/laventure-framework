@@ -19,7 +19,6 @@ use Laventure\Component\Routing\Route\RouteInterface;
 */
 class ResourceInfo implements ResourceInfoInterface
 {
-
     /**
      * @var array
     */
@@ -44,9 +43,9 @@ class ResourceInfo implements ResourceInfoInterface
     */
     public function getActions(): array
     {
-       return array_map(function (RouteInterface $route) {
+        return array_map(function (RouteInterface $route) {
 
-       }, $this->getRoutes());
+        }, $this->getRoutes());
     }
 
 

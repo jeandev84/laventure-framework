@@ -233,7 +233,7 @@ abstract class ClassGenerator extends FileGenerator implements ClassGeneratorInt
     {
         if (!$this->parsedName) {
             throw new ClassGeneratorException(
-        "No classname parsed inside ". get_called_class()
+                "No classname parsed inside ". get_called_class()
             );
         }
 
@@ -241,7 +241,7 @@ abstract class ClassGenerator extends FileGenerator implements ClassGeneratorInt
     }
 
 
-    
+
 
 
 

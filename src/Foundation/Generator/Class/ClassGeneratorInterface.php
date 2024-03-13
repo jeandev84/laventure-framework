@@ -17,8 +17,6 @@ use Laventure\Component\Filesystem\File\Generator\FileGeneratorInterface;
  */
 interface ClassGeneratorInterface extends FileGeneratorInterface
 {
-
-
     /**
      * Map classname
      *

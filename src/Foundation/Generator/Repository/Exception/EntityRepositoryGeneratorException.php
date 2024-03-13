@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Generator\Repository\Exception;
@@ -16,5 +17,4 @@ use Laventure\Foundation\Generator\Class\Exception\ClassGeneratorException;
  */
 class EntityRepositoryGeneratorException extends ClassGeneratorException
 {
-
 }

@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Generator\Resource\Web;
-
 
 use Laventure\Foundation\Generator\Resource\ResourceGeneratorInterface;
 
@@ -17,7 +17,6 @@ use Laventure\Foundation\Generator\Resource\ResourceGeneratorInterface;
  */
 interface WebResourceGeneratorInterface extends ResourceGeneratorInterface
 {
-
     /**
      * Generate template engine
      *

@@ -344,7 +344,7 @@ class Persistent implements PersistentInterface
     */
     public function getTableName(): string
     {
-       return $this->classMetadata->getTableName();
+        return $this->classMetadata->getTableName();
     }
 
 

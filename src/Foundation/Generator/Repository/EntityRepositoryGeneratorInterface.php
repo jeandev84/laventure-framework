@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Generator\Repository;
-
 
 use Laventure\Foundation\Generator\Class\ClassGeneratorInterface;
 
@@ -17,12 +17,11 @@ use Laventure\Foundation\Generator\Class\ClassGeneratorInterface;
  */
 interface EntityRepositoryGeneratorInterface extends ClassGeneratorInterface
 {
-
-      /**
-       * Needs tou specified full path namespace of class
-       *
-       * @param string $entityClass
-       * @return $this
-      */
-      public function withEntity(string $entityClass): static;
+    /**
+     * Needs tou specified full path namespace of class
+     *
+     * @param string $entityClass
+     * @return $this
+    */
+    public function withEntity(string $entityClass): static;
 }

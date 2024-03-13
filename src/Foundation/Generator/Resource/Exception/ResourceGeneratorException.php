@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Generator\Resource\Exception;
@@ -16,5 +17,4 @@ use Laventure\Exceptions\BaseException;
  */
 class ResourceGeneratorException extends BaseException
 {
-
 }

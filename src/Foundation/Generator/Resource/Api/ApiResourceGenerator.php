@@ -19,7 +19,6 @@ use Laventure\Foundation\Generator\Resource\ResourceGenerator;
 */
 class ApiResourceGenerator extends ResourceGenerator
 {
-
     /**
      * @param string $resource
      * @return $this
