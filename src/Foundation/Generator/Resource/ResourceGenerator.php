@@ -81,6 +81,8 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
      */
     public function getResourceName(): string
     {
+        $this->withClassSuffix('');
+
         return strtolower($this->getClassName());
     }
 
@@ -124,10 +126,8 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
     */
     public function generate(): bool
     {
-        dd($this->getContent());
-
         if ($status = $this->generateEntity()) {
-            $status = $this->generateResourceController();
+            $status = parent::generate();
         }
 
         return $status;
