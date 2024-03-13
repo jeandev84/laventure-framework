@@ -161,75 +161,21 @@ abstract class ClassGenerator extends FileGenerator implements ClassGeneratorInt
 
 
 
+
+
+
     /**
      * @inheritDoc
     */
     public function generateFullClassName(string $suffix = ''): string
     {
-        $namespace = $this->getNamespace();
         $className = $this->getClassName();
 
         if ($module = $this->getModule()) {
             $className = "$module\\$className";
         }
 
-        return sprintf('%s\\%s%s', $namespace, $className, $suffix);
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function getTargetPath(): string
-    {
-        if ($this->hasModule()) {
-            return $this->generatePathPHPWithModule();
-        }
-
-        return $this->generatePathPHPWithoutModule();
-    }
-
-
-
-
-
-
-    /**
-     * @inheritDoc
-     * @throws ClassGeneratorException
-    */
-    public function getContent(): string
-    {
-        return $this->generateStub([
-            "DummyNamespace" => $this->getNamespace(),
-            "DummyClassName" => $this->getClassName(),
-            "DummyActions"   => $this->generateStubMethods()
-        ]);
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-     * @throws ClassGeneratorException
-    */
-    public function generateStubMethods(): string
-    {
-        if (empty($this->methods)) {
-            return '';
-        }
-
-        $methodStubs = [];
-
-        foreach ($this->methods as $method) {
-            $methodStubs[] = $this->generateDefaultStubForMethod($method);
-        }
-
-        return join(array_filter($methodStubs));
+        return sprintf('%s%s', $className, $suffix);
     }
 
 
@@ -266,6 +212,64 @@ abstract class ClassGenerator extends FileGenerator implements ClassGeneratorInt
 
         return sprintf("%s\\%s", $this->getNamespace(), $classname);
     }
+
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function getTargetPath(): string
+    {
+        if ($this->hasModule()) {
+            return $this->generatePathPHPWithModule();
+        }
+
+        return $this->generatePathPHPWithoutModule();
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+     * @throws ClassGeneratorException
+     */
+    public function getContent(): string
+    {
+        return $this->generateStub([
+            "DummyNamespace" => $this->getNamespace(),
+            "DummyClassName" => $this->getClassName(),
+            "DummyActions"   => $this->generateStubMethods()
+        ]);
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+     * @throws ClassGeneratorException
+    */
+    public function generateStubMethods(): string
+    {
+        if (empty($this->methods)) {
+            return '';
+        }
+
+        $methodStubs = [];
+
+        foreach ($this->methods as $method) {
+            $methodStubs[] = $this->generateDefaultStubForMethod($method);
+        }
+
+        return join(array_filter($methodStubs));
+    }
+
 
 
 

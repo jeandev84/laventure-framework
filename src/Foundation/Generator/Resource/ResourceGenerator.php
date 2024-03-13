@@ -82,6 +82,9 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
     }
 
 
+
+
+
     /**
      * @return string
      * @throws ResourceGeneratorException
@@ -110,7 +113,9 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
     */
     public function getResourcePrefix(): string
     {
-        return $this->getResource()->getPrefix();
+        return ucfirst(
+            $this->getResource()->getPrefix()
+        );
     }
 
 
@@ -140,7 +145,7 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
     */
     public function generateEntity(): bool
     {
-        if ($this->entityGenerator->generated()) {
+        if (!$this->entityGenerator->generated()) {
             return true;
         }
 
@@ -159,10 +164,7 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
     {
         $methodStubs = [];
 
-        dd($this->getResourceRoutes());
-
         foreach ($this->getResourceRoutes() as $action => $route) {
-            $route->action([$this->getControllerName(), $action]);
             $methodStubs[] = $this->generateStubMethod($action, $route);
         }
 
@@ -180,7 +182,9 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
     {
        $routes = [];
        foreach ($this->getResource()->getRoutes() as $route) {
-           $routes[$route->getActionName()] = $route;
+           $action = $route->getActionName();
+           $route->action([$this->getControllerName(), $action]);
+           $routes[$action] = $route;
        }
        return $routes;
     }
@@ -206,6 +210,23 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
             "DummyActionName"   => $action
         ]);
     }
+
+
+
+    /**
+     * @return string
+    */
+    public function getBaseNamespace(): string
+    {
+        $namespace = parent::getBaseNamespace();
+
+        if ($prefix = $this->getResourcePrefix()) {
+            $namespace = sprintf('%s\\%s', $namespace, $prefix);
+        }
+
+        return $namespace;
+    }
+
 
 
 

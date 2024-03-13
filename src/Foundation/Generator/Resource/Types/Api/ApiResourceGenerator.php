@@ -28,12 +28,13 @@ class ApiResourceGenerator extends ResourceGenerator
      */
     public function getResource(): Resource
     {
-        dd($this->getResourcePrefix());
         return new ApiResource(
             $this->getResourceName(),
             $this->getClassName()
         );
     }
+
+
 
 
 

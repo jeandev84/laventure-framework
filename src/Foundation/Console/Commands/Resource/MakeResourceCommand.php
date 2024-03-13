@@ -80,13 +80,14 @@ class MakeResourceCommand extends Command
         # (e.g, Book|User ...)
         $resourceEntity   = $input->getArgument('name');
         $resourceGenerator = $this->createResourceGenerator();
-        $resourceGenerator->withResource($resourceEntity);
-        $generatorType     = $resourceGenerator->getResource()->getType();
 
-        if ($input->hasOption($generatorType)) {
-             $resourceGenerator = $this->createResourceGenerator($generatorType);
+        if ($input->hasOption(ResourceType::API)) {
+             $resourceGenerator = $this->createResourceGenerator(ResourceType::API);
         }
 
+        #dd(get_class($resourceGenerator));
+        $resourceGenerator->withResource($resourceEntity);
+        $generatorType = $resourceGenerator->getResource()->getType();
 
         if (!$resourceGenerator->generated()) {
              if ($resourceGenerator->generate()) {
