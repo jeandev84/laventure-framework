@@ -60,6 +60,7 @@ class CommandGenerator extends ClassGenerator implements CommandGeneratorInterfa
             $commandParams = $this->commandNameResolver->loadNameAsArray();
         }
 
+
         foreach ($commandParams as $commandParam) {
             $this->commandParams[] = ucfirst($commandParam);
         }
@@ -92,7 +93,7 @@ class CommandGenerator extends ClassGenerator implements CommandGeneratorInterfa
     */
     public function getBaseDir(): string
     {
-        return $this->trimPath($this->config['console.mapper.dir']);
+        return $this->trimPath($this->config['console.commands.dir']);
     }
 
 
