@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Foundation\Generator\Resource;
 
+use Laventure\Component\Routing\Route\Resource\Contract\ResourceInterface;
 use Laventure\Foundation\Generator\Class\ClassGeneratorInterface;
 use Laventure\Foundation\Generator\Controller\ControllerGeneratorInterface;
 
@@ -35,4 +36,14 @@ interface ResourceGeneratorInterface extends ControllerGeneratorInterface
      * @return bool
     */
     public function generateEntity(): bool;
+
+
+
+
+
+
+    /**
+     * @return ResourceInterface
+    */
+    public function getResource(): ResourceInterface;
 }

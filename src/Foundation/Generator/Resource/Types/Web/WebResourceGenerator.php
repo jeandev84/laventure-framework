@@ -6,6 +6,7 @@ namespace Laventure\Foundation\Generator\Resource\Types\Web;
 
 use Laventure\Component\Routing\Route\Resource\Resource;
 use Laventure\Component\Routing\Route\Resource\Types\WebResource;
+use Laventure\Foundation\Generator\Resource\Exception\ResourceGeneratorException;
 use Laventure\Foundation\Generator\Resource\ResourceGenerator;
 
 /**
@@ -21,10 +22,10 @@ class WebResourceGenerator extends ResourceGenerator implements WebResourceGener
 {
     /**
      * @inheritDoc
+     * @throws ResourceGeneratorException
     */
     public function getResource(): Resource
     {
-        /* return new WebResource('books', $this->getClassName()); */
         return new WebResource(
             $this->getResourceName(),
             $this->getControllerName()

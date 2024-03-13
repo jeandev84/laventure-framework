@@ -2,7 +2,7 @@
 
 
         #[Route('DummyRoutePath', methods: [DummyRouteMethods], name: 'DummyRouteName')]
-        public function DummyActionName(Request $request): Response
+        public function DummyActionName(Request $request): JsonResponse
         {
-            return new Response([]);
+               // TODO some logic here
         }

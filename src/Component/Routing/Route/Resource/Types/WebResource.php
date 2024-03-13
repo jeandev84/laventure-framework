@@ -8,6 +8,7 @@ use Laventure\Component\Routing\Route\Collector\RouteCollectorInterface;
 use Laventure\Component\Routing\Route\Resource\Decorator\ResourceCollectorDecorator;
 use Laventure\Component\Routing\Route\Resource\Enums\ResourceType;
 use Laventure\Component\Routing\Route\Resource\Resource;
+use Laventure\Component\Routing\Route\Route;
 
 /**
  * WebResource
@@ -39,12 +40,12 @@ class WebResource extends Resource
     public function getMappedRoutes(): array
     {
         return [
-            ['GET|HEAD', $this->path(), $this->action('index'), $this->name('index')] ,
-            ['GET', $this->path('/{id}'), $this->action('show'), $this->name('show')],
-            ['GET', $this->path(), $this->action('create'), $this->name('create')],
-            ['POST', $this->path(), $this->action('store'), $this->name('store')],
-            ['PUT|PATCH', 'PUT|PATCH', $this->path('/{id}'), $this->action('update'), $this->name('update')],
-            ["DELETE", $this->path('/{id}'), $this->action('destroy'), $this->name('destroy')]
+            new Route(['GET|HEAD'], $this->path(), $this->action('index'), $this->name('index')),
+            new Route(['GET'], $this->path('/{id}'), $this->action('show'), $this->name('show')),
+            new Route(['GET'], $this->path(), $this->action('create'), $this->name('create')),
+            new Route(['POST'], $this->path(), $this->action('store'), $this->name('store')),
+            new Route(['PUT|PATCH'], $this->path('/{id}'), $this->action('update'), $this->name('update')),
+            new Route(['DELETE'], $this->path('/{id}'), $this->action('destroy'), $this->name('destroy')),
         ];
     }
 }

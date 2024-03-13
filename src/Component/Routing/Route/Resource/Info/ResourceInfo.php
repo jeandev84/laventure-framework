@@ -68,6 +68,8 @@ class ResourceInfo implements ResourceInfoInterface
     */
     public function createRouteFromArray(array $route): RouteInterface
     {
+        #dd($route);
+        dd($route[0]);
         return new Route(
             explode('|', $route[0]),
             $route[1],

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Routing\Route\Resource;
 
 use Laventure\Component\Routing\Route\Collector\RouteCollectorInterface;
+use Laventure\Component\Routing\Route\Factory\RouteFactory;
 use Laventure\Component\Routing\Route\Resource\Contract\ResourceInterface;
 use Laventure\Component\Routing\Route\Resource\Info\ResourceInfo;
 use Laventure\Component\Routing\Route\Resource\Info\ResourceInfoInterface;
@@ -43,6 +44,10 @@ abstract class Resource implements ResourceInterface
 
 
 
+    /**
+     * @var RouteFactory
+    */
+    protected RouteFactory $routeFactory;
 
 
     /**
@@ -61,10 +66,11 @@ abstract class Resource implements ResourceInterface
     */
     public function __construct(string $type, string $name, string $controller)
     {
-        $this->type       = $type;
-        $this->name       = strtolower($name);
-        $this->controller = $controller;
-        $this->info       = new ResourceInfo($this);
+        $this->type         = $type;
+        $this->name         = strtolower($name);
+        $this->controller   = $controller;
+        $this->routeFactory = new RouteFactory();
+        $this->info         = new ResourceInfo($this);
     }
 
 
@@ -182,8 +188,12 @@ abstract class Resource implements ResourceInterface
     public function map(RouteCollectorInterface $collector): RouteCollectorInterface
     {
         foreach ($this->getMappedRoutes() as $route) {
-            [$methods, $path, $action, $name] = $route;
-            $collector->map($methods, $path, $action, $name);
+            $collector->map(
+                $route->getMethods(),
+                $route->getPath(),
+                $route->getAction(),
+                $route->getName()
+            );
         }
 
         return $collector;

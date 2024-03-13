@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Laventure\Foundation\Generator\Resource;
 
 use Laventure\Component\Config\ConfigInterface;
+use Laventure\Component\Console\Input\Option\Exceptions\RequiredOptionException;
 use Laventure\Component\Filesystem\FilesystemInterface;
 use Laventure\Component\Routing\Route\Resource\Contract\ResourceInterface;
 use Laventure\Component\Routing\Route\Resource\Resource;
@@ -80,17 +81,23 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
     }
 
 
-
-
-
     /**
      * @return string
+     * @throws ResourceGeneratorException
     */
     public function getResourceName(): string
     {
         $this->removeClassSuffix();
 
-        return strtolower($this->getClassName());
+        $resourceName = strtolower($this->getClassName());
+
+        if (!$resourceName) {
+             throw new ResourceGeneratorException(
+                "Empty resource name inside ". get_called_class()
+             );
+        }
+
+        return $resourceName;
     }
 
 
@@ -105,22 +112,6 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
         return $this->getResource()->getPrefix();
     }
 
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function getControllerName(): string
-    {
-        $controllerName = parent::getControllerName();
-
-        if($prefix = $this->getResourcePrefix()) {
-            return sprintf('%s\\%s', $prefix, $controllerName);
-        }
-
-        return $controllerName;
-    }
 
 
 
@@ -191,7 +182,7 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
 
         return $methodStub->stub([
             "DummyRoutePath"    => $route->getPath(),
-            "DummyRouteMethods" => $route->getMethodsAsString(', '),
+            "DummyRouteMethods" => $this->normalizeRoutMethodsForStub($route->getMethods()),
             "DummyRouteName"    => $route->getName(),
             "DummyActionName"   => $action
         ]);
@@ -200,9 +191,12 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
 
 
 
-
     /**
-     * @return ResourceInterface
+     * @param array $methods
+     * @return string
     */
-    abstract public function getResource(): ResourceInterface;
+    private function normalizeRoutMethodsForStub(array $methods): string
+    {
+        return "'". join("', '", $methods) . "'";
+    }
 }

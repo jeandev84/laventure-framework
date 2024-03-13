@@ -7,7 +7,11 @@ namespace Laventure\Foundation\Console\Commands\Resource;
 use Laventure\Component\Console\Command\Command;
 use Laventure\Component\Console\Input\InputInterface;
 use Laventure\Component\Console\Output\OutputInterface;
+use Laventure\Component\Routing\Route\Resource\Enums\ResourceType;
 use Laventure\Foundation\Generator\Entity\Exception\EntityGeneratorException;
+use Laventure\Foundation\Generator\Resource\Exception\ResourceGeneratorException;
+use Laventure\Foundation\Generator\Resource\Factory\ResourceGeneratorFactory;
+use Laventure\Foundation\Generator\Resource\ResourceGeneratorInterface;
 use Laventure\Foundation\Generator\Resource\Types\Api\ApiResourceGenerator;
 use Laventure\Foundation\Generator\Resource\Types\Web\WebResourceGenerator;
 
@@ -42,12 +46,10 @@ class MakeResourceCommand extends Command
 
 
     /**
-     * @param ApiResourceGenerator $apiResourceGenerator
-     * @param WebResourceGenerator $webResourceGenerator
+     * @param ResourceGeneratorFactory $resourceGeneratorFactory
     */
     public function __construct(
-        protected ApiResourceGenerator $apiResourceGenerator,
-        protected WebResourceGenerator $webResourceGenerator
+        protected ResourceGeneratorFactory $resourceGeneratorFactory
     ) {
         parent::__construct($this->name);
     }
@@ -65,44 +67,53 @@ class MakeResourceCommand extends Command
     }
 
 
-
-
-
     /**
      * @inheritDoc
-     * @throws EntityGeneratorException
-     */
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int
+    */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         # Check resource classname we want to create that must be entity
         # (e.g, Book|User ...)
-        $resource = $input->getArgument('name');
+        $resourceEntity   = $input->getArgument('name');
+        $resourceGenerator = $this->createResourceGenerator();
+        $resourceGenerator->withResource($resourceEntity);
+        dd($resourceGenerator->getResource());
+        $generatorType     = ResourceType::WEB;
 
-        # generate resource
-        # TODO refactoring will do it more clear
-        if ($input->hasOption('api')) {
-            if (!$this->apiResourceGenerator->generated()) {
-                if($this->apiResourceGenerator->withResource($resource)->generate()) {
-                    $output->success("API Resource [$resource] created successfully.");
-                }
-            } else {
-                $output->info("API Resource [$resource] already created!");
-                return Command::INFO;
-            }
+        if ($input->hasOption($generatorType)) {
+             $resourceGenerator = $this->createResourceGenerator($generatorType);
+        }
+
+
+
+        if (!$resourceGenerator->generated()) {
+             if ($resourceGenerator->generate()) {
+                 $output->success("[$generatorType] resource [$resourceEntity] created successfully.");
+             }
         } else {
-            if (!$this->webResourceGenerator->generated()) {
-                if($this->webResourceGenerator->withResource($resource)->generate()) {
-                    $output->success("Web Resource [$resource] created successfully.");
-                }
-            } else {
-                $output->info("Web Resource [$resource] already created!");
-                return Command::INFO;
-            }
+            $output->info("[$generatorType] resource [$resourceEntity] already created!");
+            return Command::INFO;
         }
 
         return Command::SUCCESS;
     }
 
+
+
+
+
+    /**
+     * @param null $type
+     * @return ResourceGeneratorInterface
+     * @throws ResourceGeneratorException
+    */
+    protected function createResourceGenerator($type = null): ResourceGeneratorInterface
+    {
+        return $this->resourceGeneratorFactory->createResourceGenerator($type ?: ResourceType::WEB);
+    }
 
 
 
