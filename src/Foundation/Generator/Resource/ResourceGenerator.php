@@ -71,6 +71,13 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
 
 
 
+    /**
+     * @return $this
+    */
+    public function removeClassSuffix(): static
+    {
+        return $this->withClassSuffix('');
+    }
 
 
 
@@ -78,10 +85,10 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
 
     /**
      * @return string
-     */
+    */
     public function getResourceName(): string
     {
-        $this->withClassSuffix('');
+        $this->removeClassSuffix();
 
         return strtolower($this->getClassName());
     }
@@ -118,11 +125,9 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
 
 
 
-
-
-
     /**
      * @inheritDoc
+     * @throws EntityGeneratorException
     */
     public function generate(): bool
     {
