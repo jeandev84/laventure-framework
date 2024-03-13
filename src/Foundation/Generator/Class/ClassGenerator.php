@@ -135,7 +135,7 @@ abstract class ClassGenerator extends FileGenerator implements ClassGeneratorInt
     /**
      * @inheritDoc
     */
-    public function getFullClassName(string $suffix = ''): string
+    public function generateFullClassName(string $suffix = ''): string
     {
         $className = $this->getClassName();
 

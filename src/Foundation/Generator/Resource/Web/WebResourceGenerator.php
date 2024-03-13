@@ -44,7 +44,7 @@ class WebResourceGenerator extends ResourceGenerator implements WebResourceGener
     /**
      * @inheritDoc
     */
-    public function generateController(): bool
+    public function generateResourceController(): bool
     {
 
     }

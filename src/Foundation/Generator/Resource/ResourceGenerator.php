@@ -12,6 +12,7 @@ use Laventure\Foundation\Generator\Class\ClassGenerator;
 use Laventure\Foundation\Generator\Class\Exception\ClassGeneratorException;
 use Laventure\Foundation\Generator\Controller\ControllerGenerator;
 use Laventure\Foundation\Generator\Entity\EntityGenerator;
+use Laventure\Foundation\Generator\Entity\Exception\EntityGeneratorException;
 use Laventure\Foundation\Generator\Resource\Exception\ResourceGeneratorException;
 
 /**
@@ -23,21 +24,29 @@ use Laventure\Foundation\Generator\Resource\Exception\ResourceGeneratorException
  *
  * @package  Laventure\Foundation\Generator\Resource
 */
-abstract class ResourceGenerator extends ClassGenerator implements ResourceGeneratorInterface
+abstract class ResourceGenerator extends ControllerGenerator implements ResourceGeneratorInterface
 {
+
+
+    /**
+     * @var string|null
+    */
+    protected ?string $resource = null;
+
+
+
+
 
     /**
      * @param Application $app
      * @param FilesystemInterface $filesystem
      * @param ConfigInterface $config
-     * @param ControllerGenerator $controllerGenerator
      * @param EntityGenerator $entityGenerator
     */
     public function __construct(
         Application $app,
         FilesystemInterface $filesystem,
         ConfigInterface $config,
-        protected ControllerGenerator $controllerGenerator,
         protected EntityGenerator $entityGenerator
     ) {
         parent::__construct($app, $filesystem, $config);
@@ -49,14 +58,16 @@ abstract class ResourceGenerator extends ClassGenerator implements ResourceGener
 
     /**
      * @inheritDoc
-     */
+    */
     public function withResource($resource): static
     {
-        $this->controllerGenerator->withController("{$resource}Controller");
         $this->entityGenerator->withClassName($resource);
 
-        return $this->withClassName($resource);
+        return $this->withController("{$resource}Controller");
     }
+
+
+
 
 
 
@@ -64,21 +75,28 @@ abstract class ResourceGenerator extends ClassGenerator implements ResourceGener
 
     /**
      * @inheritDoc
-     */
+     * @throws EntityGeneratorException
+    */
     public function generate(): bool
     {
+        /*
         if ($status = $this->generateEntity()) {
-            $status = $this->generateController();
+            $status = $this->generateResourceController();
         }
 
         return $status;
+        */
+
+        return $this->generateResourceController();
     }
+
 
 
 
 
     /**
      * @inheritDoc
+     * @throws EntityGeneratorException
     */
     public function generateEntity(): bool
     {
@@ -86,69 +104,36 @@ abstract class ResourceGenerator extends ClassGenerator implements ResourceGener
     }
 
 
-    /**
-     * @inheritDoc
-    */
-    public function generateController(): bool
-    {
-        dd($this->controllerGenerator->getContent());
-        return $this->controllerGenerator->generate();
-    }
-
-
-
 
 
     /**
-     * Returns name of controller
-     *
      * @return string
     */
-    public function getControllerName(): string
+    public function getResourceName(): string
     {
-        return $this->controllerGenerator->getControllerName();
+        return strtolower($this->getClassName());
     }
 
 
 
 
 
-    /**
-     * @inheritDoc
-    */
-    public function getBaseNamespace(): string
-    {
-        return $this->controllerGenerator->getBaseNamespace();
-    }
+
+
+      /**
+       * Generate resource controller
+       *
+       * @return bool
+      */
+      abstract public function generateResourceController(): bool;
 
 
 
 
 
-    /**
-     * @inheritDoc
-    */
-    public function getStubPath(): string
-    {
-        return $this->controllerGenerator->getStubPath();
-    }
 
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function getBaseDir(): string
-    {
-        return $this->getBaseDir();
-    }
-
-
-
-
-    /**
-     * @return ResourceInterface
-    */
-    abstract public function getResource(): ResourceInterface;
+     /**
+      * @return ResourceInterface
+     */
+     abstract public function getResource(): ResourceInterface;
 }

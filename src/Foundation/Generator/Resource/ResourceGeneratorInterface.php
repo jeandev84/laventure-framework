@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laventure\Foundation\Generator\Resource;
 
 use Laventure\Foundation\Generator\Class\ClassGeneratorInterface;
+use Laventure\Foundation\Generator\Controller\ControllerGeneratorInterface;
 
 /**
  * ResourceGeneratorInterface
@@ -15,7 +16,7 @@ use Laventure\Foundation\Generator\Class\ClassGeneratorInterface;
  *
  * @package  Laventure\Foundation\Generator\Resource
 */
-interface ResourceGeneratorInterface extends ClassGeneratorInterface
+interface ResourceGeneratorInterface extends ControllerGeneratorInterface
 {
     /**
      * @param $resource
@@ -24,16 +25,6 @@ interface ResourceGeneratorInterface extends ClassGeneratorInterface
     public function withResource($resource): static;
 
 
-
-
-
-
-    /**
-     * Generate controller
-     *
-     * @return bool
-    */
-    public function generateController(): bool;
 
 
 
