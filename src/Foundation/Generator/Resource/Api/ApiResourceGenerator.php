@@ -98,6 +98,8 @@ class ApiResourceGenerator extends ResourceGenerator
     */
     public function generateStubMethod(Route $route): string
     {
+         dd($route);
+
          return $this->generateStub([
 
          ]);
