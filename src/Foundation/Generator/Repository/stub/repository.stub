@@ -20,37 +20,37 @@ use Laventure\Component\Database\ORM\Persistence\Repository\ServiceEntityReposit
 */
 class DummyEntityRepository extends ServiceEntityRepository
 {
-          /**
-           * @param EntityManagerInterface $em
-          */
-          public function __construct(EntityManagerInterface $em)
-          {
-              parent::__construct($em, DummyEntity::class);
-          }
+      /**
+       * @param EntityManagerInterface $em
+      */
+      public function __construct(EntityManagerInterface $em)
+      {
+          parent::__construct($em, DummyEntity::class);
+      }
 
 
-    //    /**
-    //     * @return DummyEntity[] Returns an array of DummyEntity objects
-    //    */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('DummyAlias')
-    //            ->andWhere('DummyAlias.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('DummyAlias.id', 'ASC')
-    //            ->limit(10)
-    //            ->getQuery()
-    //            ->fetchAll()
-    //        ;
-    //    }
+//    /**
+//     * @return DummyEntity[] Returns an array of DummyEntity objects
+//    */
+//    public function findByExampleField($value): array
+//    {
+//        return $this->createQueryBuilder('DummyAlias')
+//            ->andWhere('DummyAlias.exampleField = :val')
+//            ->setParameter('val', $value)
+//            ->orderBy('DummyAlias.id', 'ASC')
+//            ->limit(10)
+//            ->getQuery()
+//            ->fetchAll()
+//        ;
+//    }
 
-    //    public function findOneBySomeField($value): ?DummyEntity
-    //    {
-    //        return $this->createQueryBuilder('DummyAlias')
-    //            ->andWhere('DummyAlias.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->fetchOne();
-    //
-    //    }
+//    public function findOneBySomeField($value): ?DummyEntity
+//    {
+//        return $this->createQueryBuilder('DummyAlias')
+//            ->andWhere('DummyAlias.exampleField = :val')
+//            ->setParameter('val', $value)
+//            ->getQuery()
+//            ->fetchOne();
+//
+//    }
 }

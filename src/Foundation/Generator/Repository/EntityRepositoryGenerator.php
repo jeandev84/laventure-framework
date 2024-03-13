@@ -91,14 +91,25 @@ class EntityRepositoryGenerator extends ClassGenerator implements EntityReposito
     public function getContent(): string
     {
         return $this->generateStub([
-            "DummyNamespace"      => $this->getNamespace(),
-            "DummyFullEntityName" => $this->getEntityFullName(),
-            "DummyEntity"         => $this->getEntityShortName(),
-            "DummyAlias"          => $this->getEntity()->getTableAlias()
+            "DummyNamespace"        => $this->getNamespace(),
+            "DummyFullEntityName"   => $this->getEntityFullName(),
+            "DummyEntity"           => $this->getEntityShortName(),
+            "DummyEntityRepository" => $this->getClassName(),
+            "DummyAlias"            => $this->getEntity()->getTableAlias()
         ]);
     }
 
 
+
+
+
+    /**
+     * @return string
+    */
+    public function getClassName(): string
+    {
+        return sprintf('%sRepository', parent::getClassName());
+    }
 
 
 

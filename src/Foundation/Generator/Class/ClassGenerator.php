@@ -211,6 +211,21 @@ abstract class ClassGenerator extends FileGenerator implements ClassGeneratorInt
 
 
     /**
+     * Returns entity full name
+     *
+     * @return string
+    */
+    public function getEntityFullName(): string
+    {
+        $classname = $this->getClassName();
+
+        return sprintf("%s\\%s", $this->getNamespace(), $classname);
+    }
+
+
+
+
+    /**
      * @return string
      * @throws ClassGeneratorException
     */
