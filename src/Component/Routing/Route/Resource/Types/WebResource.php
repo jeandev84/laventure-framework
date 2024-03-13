@@ -37,15 +37,15 @@ class WebResource extends Resource
     /**
      * @inheritDoc
     */
-    public function getMappedRoutes(): array
+    public function getRoutes(): array
     {
         return [
-            new Route(['GET|HEAD'], $this->path(), $this->action('index'), $this->name('index')),
-            new Route(['GET'], $this->path('/{id}'), $this->action('show'), $this->name('show')),
-            new Route(['GET'], $this->path(), $this->action('create'), $this->name('create')),
-            new Route(['POST'], $this->path(), $this->action('store'), $this->name('store')),
-            new Route(['PUT|PATCH'], $this->path('/{id}'), $this->action('update'), $this->name('update')),
-            new Route(['DELETE'], $this->path('/{id}'), $this->action('destroy'), $this->name('destroy')),
+            $this->route(['GET|HEAD'], '', 'index', 'index'),
+            $this->route(['GET'], '/{id}', 'show', 'show'),
+            $this->route(['GET'], '', 'create', 'create'),
+            $this->route(['POST'], '', 'store', 'store'),
+            $this->route(['PUT|PATCH'], '/{id}', 'update', 'update'),
+            $this->route(['DELETE'], '/{id}', 'destroy', 'destroy')
         ];
     }
 }

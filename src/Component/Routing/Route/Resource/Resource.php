@@ -7,8 +7,6 @@ namespace Laventure\Component\Routing\Route\Resource;
 use Laventure\Component\Routing\Route\Collector\RouteCollectorInterface;
 use Laventure\Component\Routing\Route\Factory\RouteFactory;
 use Laventure\Component\Routing\Route\Resource\Contract\ResourceInterface;
-use Laventure\Component\Routing\Route\Resource\Info\ResourceInfo;
-use Laventure\Component\Routing\Route\Resource\Info\ResourceInfoInterface;
 use Laventure\Component\Routing\Route\RouteInterface;
 
 /**
@@ -50,11 +48,6 @@ abstract class Resource implements ResourceInterface
     protected RouteFactory $routeFactory;
 
 
-    /**
-     * @var ResourceInfoInterface
-    */
-    protected ResourceInfoInterface $info;
-
 
 
 
@@ -70,8 +63,65 @@ abstract class Resource implements ResourceInterface
         $this->name         = strtolower($name);
         $this->controller   = $controller;
         $this->routeFactory = new RouteFactory();
-        $this->info         = new ResourceInfo($this);
     }
+
+
+
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function getController(): string
+    {
+        return $this->controller;
+    }
+
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function map(RouteCollectorInterface $collector): RouteCollectorInterface
+    {
+        foreach ($this->getRoutes() as $route) {
+            $collector->map(
+                $route->getMethods(),
+                $route->getPath(),
+                $route->getAction(),
+                $route->getName()
+            );
+        }
+
+        return $collector;
+    }
+
 
 
 
@@ -87,9 +137,10 @@ abstract class Resource implements ResourceInterface
 
         if ($prefixed = $this->prefixed()) {
             $path = "$prefixed/$path";
-            if ($suffix) {
-                $path .= "/";
-            }
+        }
+
+        if ($suffix) {
+            $path .= "/";
         }
 
         return sprintf('%s%s', $path, trim($suffix, "\\/"));
@@ -135,92 +186,24 @@ abstract class Resource implements ResourceInterface
 
 
 
-
     /**
-     * @inheritdoc
+     * @param $methods
+     * @param $path
+     * @param $action
+     * @param $name
+     * @return RouteInterface
     */
-    public function getName(): string
+    public function route($methods, $path, $action, $name): RouteInterface
     {
-        return $this->name;
+        return $this->routeFactory->createRoute(
+            $methods,
+            $this->path($path),
+            $this->action($action),
+            $this->name($name)
+        );
     }
 
 
-
-
-
-    /**
-     * @inheritdoc
-    */
-    public function getController(): string
-    {
-        return $this->controller;
-    }
-
-
-
-
-    /**
-     * @inheritdoc
-    */
-    public function getType(): string
-    {
-        return $this->type;
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function toArray(): array
-    {
-        return get_object_vars($this);
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function map(RouteCollectorInterface $collector): RouteCollectorInterface
-    {
-        foreach ($this->getMappedRoutes() as $route) {
-            $collector->map(
-                $route->getMethods(),
-                $route->getPath(),
-                $route->getAction(),
-                $route->getName()
-            );
-        }
-
-        return $collector;
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function getInfo(): ResourceInfoInterface
-    {
-        return $this->info;
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function getRoutes(): array
-    {
-        return $this->info->getRoutes();
-    }
 
 
 
@@ -242,5 +225,16 @@ abstract class Resource implements ResourceInterface
     public function prefixed(): string
     {
         return '';
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function toArray(): array
+    {
+        return get_object_vars($this);
     }
 }

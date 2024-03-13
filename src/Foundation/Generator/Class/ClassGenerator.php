@@ -166,13 +166,14 @@ abstract class ClassGenerator extends FileGenerator implements ClassGeneratorInt
     */
     public function generateFullClassName(string $suffix = ''): string
     {
+        $namespace = $this->getNamespace();
         $className = $this->getClassName();
 
         if ($module = $this->getModule()) {
             $className = "$module\\$className";
         }
 
-        return sprintf('%s%s', $className, $suffix);
+        return sprintf('%s\\%s%s', $namespace, $className, $suffix);
     }
 
 

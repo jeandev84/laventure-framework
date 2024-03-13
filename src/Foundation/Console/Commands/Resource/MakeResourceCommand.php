@@ -72,6 +72,7 @@ class MakeResourceCommand extends Command
      * @param InputInterface $input
      * @param OutputInterface $output
      * @return int
+     * @throws ResourceGeneratorException
     */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -80,13 +81,11 @@ class MakeResourceCommand extends Command
         $resourceEntity   = $input->getArgument('name');
         $resourceGenerator = $this->createResourceGenerator();
         $resourceGenerator->withResource($resourceEntity);
-        dd($resourceGenerator->getResource());
-        $generatorType     = ResourceType::WEB;
+        $generatorType     = $resourceGenerator->getResource()->getType();
 
         if ($input->hasOption($generatorType)) {
              $resourceGenerator = $this->createResourceGenerator($generatorType);
         }
-
 
 
         if (!$resourceGenerator->generated()) {

@@ -7,6 +7,7 @@ namespace Laventure\Foundation\Generator\Resource\Types\Api;
 use Laventure\Component\Routing\Route\Resource\Resource;
 use Laventure\Component\Routing\Route\Resource\Types\ApiResource;
 use Laventure\Component\Routing\Route\Route;
+use Laventure\Foundation\Generator\Resource\Exception\ResourceGeneratorException;
 use Laventure\Foundation\Generator\Resource\ResourceGenerator;
 
 /**
@@ -23,15 +24,30 @@ class ApiResourceGenerator extends ResourceGenerator
 
     /**
      * @inheritDoc
-    */
+     * @throws ResourceGeneratorException
+     */
     public function getResource(): Resource
     {
+        dd($this->getResourcePrefix());
         return new ApiResource(
             $this->getResourceName(),
             $this->getClassName()
         );
     }
 
+
+
+
+    /**
+     * @return string
+    */
+    public function getBaseDir(): string
+    {
+        return join(DIRECTORY_SEPARATOR, [
+            parent::getBaseDir(),
+            $this->getResourcePrefix()
+        ]);
+    }
 
 
 

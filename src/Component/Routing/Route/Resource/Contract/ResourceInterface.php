@@ -78,36 +78,13 @@ interface ResourceInterface
 
 
     /**
-     * Returns routes has array
+     * Returns mapped routes
      *
-     * @return RouteInterface[]
-    */
-    public function getMappedRoutes(): array;
-
-
-
-
-
-
-
-
-    /**
-     * Returns some meta information about resource
-     *
-     * @return ResourceInfoInterface
-    */
-    public function getInfo(): ResourceInfoInterface;
-
-
-
-
-
-
-
-    /**
      * @return RouteInterface[]
     */
     public function getRoutes(): array;
+
+
 
 
 

@@ -9,6 +9,7 @@ use Laventure\Component\Filesystem\FilesystemInterface;
 use Laventure\Component\Routing\Route\Resource\Contract\ResourceInterface;
 use Laventure\Component\Routing\Route\Resource\Resource;
 use Laventure\Component\Routing\Route\Route;
+use Laventure\Component\Routing\Route\RouteInterface;
 use Laventure\Foundation\Application;
 use Laventure\Foundation\Generator\Class\ClassGenerator;
 use Laventure\Foundation\Generator\Class\Exception\ClassGeneratorException;
@@ -106,7 +107,7 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
 
     /**
      * @return string
-     */
+    */
     public function getResourcePrefix(): string
     {
         return $this->getResource()->getPrefix();
@@ -158,12 +159,30 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
     {
         $methodStubs = [];
 
-        foreach ($this->getResource()->getRoutes() as $action => $route) {
+        dd($this->getResourceRoutes());
+
+        foreach ($this->getResourceRoutes() as $action => $route) {
             $route->action([$this->getControllerName(), $action]);
             $methodStubs[] = $this->generateStubMethod($action, $route);
         }
 
         return join($methodStubs);
+    }
+
+
+
+
+
+    /**
+     * @return RouteInterface[]
+    */
+    public function getResourceRoutes(): array
+    {
+       $routes = [];
+       foreach ($this->getResource()->getRoutes() as $route) {
+           $routes[$route->getActionName()] = $route;
+       }
+       return $routes;
     }
 
 
@@ -187,6 +206,19 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
             "DummyActionName"   => $action
         ]);
     }
+
+
+
+
+
+    /**
+     * @return string
+    */
+    public function getResourceType(): string
+    {
+        return $this->getResource()->getType();
+    }
+
 
 
 
