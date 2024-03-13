@@ -70,15 +70,13 @@ interface RouteInterface extends RouteMatcherInterface
     public function getMethods(): array;
 
 
-
-
-
     /**
      * Returns methods as string
      *
+     * @param null $separator
      * @return string
     */
-    public function getMethodsAsString(): string;
+    public function getMethodsAsString($separator = null): string;
 
 
 

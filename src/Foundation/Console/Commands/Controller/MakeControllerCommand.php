@@ -8,7 +8,7 @@ use Laventure\Component\Console\Command\Command;
 use Laventure\Component\Console\Input\InputInterface;
 use Laventure\Component\Console\Output\OutputInterface;
 use Laventure\Foundation\Generator\Controller\ControllerGenerator;
-use Laventure\Foundation\Generator\Resource\Api\ApiResourceGenerator;
+use Laventure\Foundation\Generator\Resource\Types\Api\ApiResourceGenerator;
 
 /**
  * MakeControllerCommand

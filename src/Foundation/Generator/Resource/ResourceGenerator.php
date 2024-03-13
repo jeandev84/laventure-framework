@@ -7,6 +7,7 @@ use Laventure\Component\Config\ConfigInterface;
 use Laventure\Component\Filesystem\FilesystemInterface;
 use Laventure\Component\Routing\Route\Resource\Contract\ResourceInterface;
 use Laventure\Component\Routing\Route\Resource\Resource;
+use Laventure\Component\Routing\Route\Route;
 use Laventure\Foundation\Application;
 use Laventure\Foundation\Generator\Class\ClassGenerator;
 use Laventure\Foundation\Generator\Class\Exception\ClassGeneratorException;
@@ -50,6 +51,7 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
         protected EntityGenerator $entityGenerator
     ) {
         parent::__construct($app, $filesystem, $config);
+        $this->withClassSuffix(static::CONTROLLER_SUFFIX);
     }
 
 
@@ -62,8 +64,57 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
     public function withResource($resource): static
     {
         $this->entityGenerator->withClassName($resource);
+
         return $this->withController($resource);
     }
+
+
+
+
+
+
+
+
+
+    /**
+     * @return string
+     */
+    public function getResourceName(): string
+    {
+        return strtolower($this->getClassName());
+    }
+
+
+
+
+
+    /**
+     * @return string
+     */
+    public function getResourcePrefix(): string
+    {
+        return $this->getResource()->getPrefix();
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getControllerName(): string
+    {
+        $controllerName = parent::getControllerName();
+
+        if($prefix = $this->getResourcePrefix()) {
+            return sprintf('%s\\%s', $prefix, $controllerName);
+        }
+
+        return $controllerName;
+    }
+
+
+
 
 
 
@@ -73,8 +124,6 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
     */
     public function generate(): bool
     {
-        $this->withClassSuffix(static::CONTROLLER_SUFFIX);
-
         dd($this->getContent());
 
         if ($status = $this->generateEntity()) {
@@ -101,14 +150,42 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
 
 
 
+
     /**
-     * @return string
-    */
-    public function getResourceName(): string
+     * @inheritDoc
+     */
+    public function generateStubMethods(): string
     {
-        return strtolower($this->getClassName());
+        $methodStubs = [];
+
+        foreach ($this->getResource()->getRoutes() as $action => $route) {
+            $route->action([$this->getControllerName(), $action]);
+            $methodStubs[] = $this->generateStubMethod($action, $route);
+        }
+
+        return join($methodStubs);
     }
 
+
+
+
+
+    /**
+     * @param string $action
+     * @param Route $route
+     * @return string
+    */
+    public function generateStubMethod(string $action, Route $route): string
+    {
+        $methodStub = $this->file($this->getMethodStubPath());
+
+        return $methodStub->stub([
+            "DummyRoutePath"    => $route->getPath(),
+            "DummyRouteMethods" => $route->getMethodsAsString(', '),
+            "DummyRouteName"    => $route->getName(),
+            "DummyActionName"   => $action
+        ]);
+    }
 
 
 

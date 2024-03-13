@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Foundation\Generator\Resource\Web;
+namespace Laventure\Foundation\Generator\Resource\Types\Web;
 
 use Laventure\Foundation\Generator\Resource\ResourceGeneratorInterface;
 

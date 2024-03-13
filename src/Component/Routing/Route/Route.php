@@ -196,9 +196,9 @@ class Route implements RouteInterface, \ArrayAccess
     /**
      * @inheritDoc
     */
-    public function getMethodsAsString(): string
+    public function getMethodsAsString($separator = null): string
     {
-        return join('|', $this->methods);
+        return join($separator ?: '|', $this->methods);
     }
 
 

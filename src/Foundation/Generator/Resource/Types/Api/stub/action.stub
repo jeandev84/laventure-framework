@@ -1,0 +1,8 @@
+
+
+
+        #[Route('DummyRoutePath', methods: [DummyRouteMethods], name: 'DummyRouteName')]
+        public function DummyActionName(Request $request): Response
+        {
+            return new Response([]);
+        }
