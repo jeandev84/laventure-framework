@@ -143,6 +143,10 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
     */
     public function generateEntity(): bool
     {
+        if ($this->entityGenerator->generated()) {
+            return true;
+        }
+
         return $this->entityGenerator->generate();
     }
 
@@ -174,10 +178,11 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
      * @param string $action
      * @param Route $route
      * @return string
+     * @throws ClassGeneratorException
     */
     public function generateStubMethod(string $action, Route $route): string
     {
-        $methodStub = $this->file($this->getMethodStubPath());
+        $methodStub = $this->getMethodStubFile();
 
         return $methodStub->stub([
             "DummyRoutePath"    => $route->getPath(),
