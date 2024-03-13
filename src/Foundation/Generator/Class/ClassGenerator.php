@@ -32,10 +32,19 @@ abstract class ClassGenerator extends FileGenerator implements ClassGeneratorInt
 
 
 
+
+    /**
+     * @var string
+    */
+    protected string $suffix = '';
+
+
+
     /**
      * @var array
     */
     protected array $classNames = [];
+
 
 
 
@@ -78,6 +87,20 @@ abstract class ClassGenerator extends FileGenerator implements ClassGeneratorInt
         return $this;
     }
 
+
+
+
+
+    /**
+     * @param string $suffix
+     * @return $this
+    */
+    public function withClassSuffix(string $suffix): static
+    {
+        $this->suffix = $suffix;
+
+        return $this;
+    }
 
 
 
@@ -196,7 +219,7 @@ abstract class ClassGenerator extends FileGenerator implements ClassGeneratorInt
         $methodStubs = [];
 
         foreach ($this->methods as $method) {
-            $methodStubs[] = $this->generateStubForMethod($method);
+            $methodStubs[] = $this->generateDefaultStubForMethod($method);
         }
 
         return join(array_filter($methodStubs));
@@ -265,7 +288,7 @@ abstract class ClassGenerator extends FileGenerator implements ClassGeneratorInt
      * @return string
      * @throws ClassGeneratorException
     */
-    public function generateStubForMethod(string $method): string
+    public function generateDefaultStubForMethod(string $method): string
     {
         $methodStub                  = $this->getMethodStubFile();
         $patterns["DummyClassName"]  = $this->getClassName();

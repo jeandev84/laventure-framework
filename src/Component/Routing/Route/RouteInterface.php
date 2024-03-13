@@ -129,6 +129,69 @@ interface RouteInterface extends RouteMatcherInterface
 
 
 
+
+    /**
+     * Set route methods
+     *
+     * @param array $methods
+     * @return $this
+    */
+    public function methods(array $methods): static;
+
+
+
+
+
+
+    /**
+     * Set route path
+     *
+     * @param string $path
+     * @return $this
+    */
+    public function path(string $path): static;
+
+
+
+
+
+
+    /**
+     * Set route action
+     *
+     * @param mixed $action
+     * @return $this
+    */
+    public function action(mixed $action): static;
+
+
+
+
+
+    /**
+     * Set route name
+     *
+     * @param string $name
+     * @return $this
+    */
+    public function name(string $name): static;
+
+
+
+
+
+
+    /**
+     * Set route pattern
+     *
+     * @param string $pattern
+     * @return $this
+    */
+    public function pattern(string $pattern): static;
+
+
+
+
     /**
      * Route patterns
      *

@@ -22,5 +22,5 @@ interface ControllerGeneratorInterface extends ClassGeneratorInterface
      *
      * @return string
     */
-    public function generateControllerName(): string;
+    public function getControllerName(): string;
 }

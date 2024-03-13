@@ -18,6 +18,10 @@ use Laventure\Foundation\Generator\Class\ClassGenerator;
 */
 class ControllerGenerator extends ClassGenerator implements ControllerGeneratorInterface
 {
+
+    const CONTROLLER_SUFFIX = 'Controller';
+
+
     /**
      * @param string $controller
      * @param array $actions
@@ -27,6 +31,22 @@ class ControllerGenerator extends ClassGenerator implements ControllerGeneratorI
     {
         return $this->withClassName($controller)->withMethods($actions);
     }
+
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getControllerName(): string
+    {
+        return $this->generateFullClassName(static::CONTROLLER_SUFFIX);
+    }
+
+
 
 
 
@@ -71,17 +91,5 @@ class ControllerGenerator extends ClassGenerator implements ControllerGeneratorI
     public function getMethodStubPath(): string
     {
         return __DIR__.'/stub/action/default.stub';
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function generateControllerName(): string
-    {
-        return $this->generateFullClassName('Controller');
     }
 }

@@ -285,8 +285,7 @@ class Route implements RouteInterface, \ArrayAccess
 
 
     /**
-     * @param array $methods
-     * @return $this
+     * @inheritDoc
     */
     public function methods(array $methods): static
     {
@@ -299,8 +298,7 @@ class Route implements RouteInterface, \ArrayAccess
 
 
     /**
-     * @param string $path
-     * @return $this
+     * @inheritDoc
     */
     public function path(string $path): static
     {
@@ -315,8 +313,7 @@ class Route implements RouteInterface, \ArrayAccess
 
 
     /**
-     * @param mixed $action
-     * @return $this
+     * @inheritDoc
     */
     public function action(mixed $action): static
     {
@@ -334,8 +331,7 @@ class Route implements RouteInterface, \ArrayAccess
 
 
     /**
-     * @param string $name
-     * @return $this
+     * @inheritDoc
     */
     public function name(string $name): static
     {
@@ -348,8 +344,7 @@ class Route implements RouteInterface, \ArrayAccess
 
 
     /**
-     * @param string $pattern
-     * @return $this
+     * @inheritDoc
     */
     public function pattern(string $pattern): static
     {

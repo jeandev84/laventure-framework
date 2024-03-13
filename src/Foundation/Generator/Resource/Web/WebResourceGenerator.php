@@ -24,7 +24,11 @@ class WebResourceGenerator extends ResourceGenerator implements WebResourceGener
     */
     public function getResource(): Resource
     {
-        return new WebResource('books', $this->getClassName());
+        /* return new WebResource('books', $this->getClassName()); */
+        return new WebResource(
+            $this->getResourceName(),
+            $this->getControllerName()
+        );
     }
 
 
@@ -35,17 +39,6 @@ class WebResourceGenerator extends ResourceGenerator implements WebResourceGener
     */
     public function generateTemplates(): bool
     {
-
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function generateResourceController(): bool
-    {
-
+        return false;
     }
 }

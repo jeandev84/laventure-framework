@@ -62,32 +62,26 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
     public function withResource($resource): static
     {
         $this->entityGenerator->withClassName($resource);
-
-        return $this->withController("{$resource}Controller");
+        return $this->withController($resource);
     }
-
-
-
-
 
 
 
 
     /**
      * @inheritDoc
-     * @throws EntityGeneratorException
     */
     public function generate(): bool
     {
-        /*
+        $this->withClassSuffix(static::CONTROLLER_SUFFIX);
+
+        dd($this->getContent());
+
         if ($status = $this->generateEntity()) {
             $status = $this->generateResourceController();
         }
 
         return $status;
-        */
-
-        return $this->generateResourceController();
     }
 
 
@@ -106,6 +100,7 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
 
 
 
+
     /**
      * @return string
     */
@@ -119,21 +114,8 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
 
 
 
-
-      /**
-       * Generate resource controller
-       *
-       * @return bool
-      */
-      abstract public function generateResourceController(): bool;
-
-
-
-
-
-
-     /**
-      * @return ResourceInterface
-     */
-     abstract public function getResource(): ResourceInterface;
+    /**
+     * @return ResourceInterface
+    */
+    abstract public function getResource(): ResourceInterface;
 }
