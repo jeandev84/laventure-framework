@@ -138,13 +138,30 @@ class EntityGenerator extends ClassGenerator implements EntityGeneratorInterface
     */
     public function generate(): bool
     {
-        // Generate entity
-        parent::generate();
-        $this->entityRepositoryGenerator
-             ->withEntity($this->getEntityFullName())
-             ->generate();
+        if(parent::generate()) {
+            $repo = $this->entityRepositoryGenerator
+                         ->withEntity($this->getEntityFullName());
 
-       return $this->generated() && $this->generateRepository();
+            dd($repo->getContent());
+        }
+
+        dd('NO');
+
+        /*
+        $repo = $this->entityRepositoryGenerator
+                     ->withEntity($this->getEntityFullName());
+
+        dd($repo->getContent());
+
+        // Generate entity
+        if(parent::generate()) {
+            $this->entityRepositoryGenerator
+                ->withEntity($this->getEntityFullName())
+                ->generate();
+        }
+
+        return $this->generated() && $this->generateRepository();
+        */
     }
 
 

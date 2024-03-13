@@ -9,6 +9,7 @@ use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\ClassMetadataI
 use Laventure\Component\Filesystem\FilesystemInterface;
 use Laventure\Foundation\Application;
 use Laventure\Foundation\Generator\Class\ClassGenerator;
+use Laventure\Foundation\Generator\Repository\Exception\EntityRepositoryGeneratorException;
 use ReflectionClass;
 use ReflectionException;
 
@@ -89,14 +90,16 @@ class EntityRepositoryGenerator extends ClassGenerator implements EntityReposito
     */
     public function getContent(): string
     {
-        # "DummyEntityClass" => $this->getClassName() or $this->getEntityShortName();
         return $this->generateStub([
             "DummyNamespace"      => $this->getNamespace(),
             "DummyFullEntityName" => $this->getEntityFullName(),
             "DummyEntity"         => $this->getEntityShortName(),
-            "DummyEntityAlias"    => "u"
+            "DummyAlias"          => "u"
         ]);
     }
+
+
+
 
 
 
@@ -128,21 +131,41 @@ class EntityRepositoryGenerator extends ClassGenerator implements EntityReposito
 
     /**
      * @return string
+     * @throws EntityRepositoryGeneratorException
      * @throws ReflectionException
     */
     public function getEntityShortName(): string
     {
-        return $this->getEntity()->getName();
+        $classname =  $this->getEntity()->getShortName();
+
+        if (!$classname) {
+            throw new EntityRepositoryGeneratorException(
+        "Empty full class name from ". get_called_class()
+            );
+        }
+
+        return $classname;
     }
 
 
 
 
+
     /**
+     * @return string
+     * @throws EntityRepositoryGeneratorException
      * @throws ReflectionException
     */
     public function getEntityFullName(): string
     {
-        return $this->getEntity()->getName();
+        $classname = $this->getEntity()->getName();
+
+        if (!$classname) {
+            throw new EntityRepositoryGeneratorException(
+        "Empty full class name from ". get_called_class()
+            );
+        }
+
+        return $classname;
     }
 }

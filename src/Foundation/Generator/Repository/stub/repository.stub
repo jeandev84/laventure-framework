@@ -34,10 +34,10 @@ class DummyEntityRepository extends ServiceEntityRepository
     //    */
     //    public function findByExampleField($value): array
     //    {
-    //        return $this->createQueryBuilder('DummyEntityAlias')
-    //            ->andWhere('DummyEntityAlias.exampleField = :val')
+    //        return $this->createQueryBuilder('DummyAlias')
+    //            ->andWhere('DummyAlias.exampleField = :val')
     //            ->setParameter('val', $value)
-    //            ->orderBy('DummyEntityAlias.id', 'ASC')
+    //            ->orderBy('DummyAlias.id', 'ASC')
     //            ->limit(10)
     //            ->getQuery()
     //            ->fetchAll()
@@ -46,8 +46,8 @@ class DummyEntityRepository extends ServiceEntityRepository
 
     //    public function findOneBySomeField($value): ?DummyEntity
     //    {
-    //        return $this->createQueryBuilder('DummyEntityAlias')
-    //            ->andWhere('DummyEntityAlias.exampleField = :val')
+    //        return $this->createQueryBuilder('DummyAlias')
+    //            ->andWhere('DummyAlias.exampleField = :val')
     //            ->setParameter('val', $value)
     //            ->getQuery()
     //            ->fetchOne();
