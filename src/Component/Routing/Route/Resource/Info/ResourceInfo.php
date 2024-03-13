@@ -90,7 +90,7 @@ class ResourceInfo implements ResourceInfoInterface
 
         foreach ($mappedRoutes as $route) {
             $route  = $this->createRouteFromArray($route);
-            $routes[$route->getController()][$route->getActionName()] = $route;
+            $routes[$route->getActionName()] = $route;
         }
 
         return $routes;

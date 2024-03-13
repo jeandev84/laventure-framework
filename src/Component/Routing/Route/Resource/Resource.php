@@ -43,6 +43,8 @@ abstract class Resource implements ResourceInterface
 
 
 
+
+
     /**
      * @var ResourceInfoInterface
     */
@@ -75,7 +77,16 @@ abstract class Resource implements ResourceInterface
     */
     public function path(string $suffix = ''): string
     {
-        return sprintf('%s%s', $this->name, $suffix);
+        $path = $this->name;
+
+        if ($prefixed = $this->prefixed()) {
+            $path = "$prefixed/$path";
+            if ($suffix) {
+                $path .= "/";
+            }
+        }
+
+        return sprintf('%s%s', $path, trim($suffix, "\\/"));
     }
 
 
@@ -106,7 +117,13 @@ abstract class Resource implements ResourceInterface
     */
     public function name(string $name): string
     {
-        return sprintf('%s.%s', $this->name, $name);
+        $name = sprintf('%s.%s', $this->name, $name);
+
+        if ($prefixed = $this->prefixed()) {
+            return "{$prefixed}.{$name}";
+        }
+
+        return $name;
     }
 
 
@@ -192,6 +209,28 @@ abstract class Resource implements ResourceInterface
     */
     public function getRoutes(): array
     {
-        return $this->getInfo()->getRoutes();
+        return $this->info->getRoutes();
+    }
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getPrefix(): string
+    {
+        return '';
+    }
+
+
+
+
+
+    /**
+     * @return string
+    */
+    public function prefixed(): string
+    {
+        return '';
     }
 }

@@ -26,9 +26,7 @@ class ApiResource extends Resource
     */
     public function __construct(string $name, string $controller)
     {
-        $type = ResourceType::API;
-
-        parent::__construct($type, $name, ucfirst($type) . "\\". $controller);
+        parent::__construct(ResourceType::API, $name, $controller);
     }
 
 
@@ -52,43 +50,23 @@ class ApiResource extends Resource
 
 
 
-    /**
-     * @inheritDoc
-    */
-    public function path(string $suffix = ''): string
-    {
-        $prefix = "{$this->prefix()}/{$this->name}";
-
-        if ($suffix) {
-            $prefix .= "/";
-        }
-
-        return $prefix. trim($suffix, "\\/");
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function name(string $name): string
-    {
-        return strtolower($this->type) . ".". parent::name($name);
-    }
-
-
-
-
-
-
 
     /**
      * @return string
     */
-    public function prefix(): string
+    public function prefixed(): string
     {
         return strtolower($this->type);
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getPrefix(): string
+    {
+        return ucfirst($this->type);
     }
 }

@@ -51,6 +51,20 @@ interface ResourceInterface
 
 
 
+
+    /**
+     * Returns namespace prefix
+     *
+     * @return string
+    */
+    public function getPrefix(): string;
+
+
+
+
+
+
+
     /**
      * @param RouteCollectorInterface $collector
      *
@@ -66,7 +80,7 @@ interface ResourceInterface
     /**
      * Returns routes has array
      *
-     * @return array
+     * @return RouteInterface[]
     */
     public function getMappedRoutes(): array;
 

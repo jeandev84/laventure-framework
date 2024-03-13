@@ -34,6 +34,32 @@ class ApiResourceGenerator extends ResourceGenerator
     }
 
 
+    /**
+     * @return string
+    */
+    public function getResourcePrefix(): string
+    {
+        return $this->getResource()->getPrefix();
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getControllerName(): string
+    {
+        $controllerName = parent::getControllerName();
+
+        if($prefix = $this->getResourcePrefix()) {
+            return sprintf('%s\\%s', $prefix, $controllerName);
+        }
+
+        return $controllerName;
+    }
+
+
 
 
 
@@ -44,11 +70,12 @@ class ApiResourceGenerator extends ResourceGenerator
     {
         $methodStubs = [];
 
-        foreach ($this->getResource()->getRoutes() as $route) {
-            $methodStubs[] = $route;
+        foreach ($this->getResource()->getRoutes() as $action => $route) {
+            $route->action([$this->getControllerName(), $action]);
+            $methodStubs[] = $this->generateStubMethod($route);
         }
 
-        dd($methodStubs);
+        return join($methodStubs);
     }
 
 
