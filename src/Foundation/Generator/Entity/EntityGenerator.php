@@ -9,6 +9,7 @@ use Laventure\Component\Filesystem\FilesystemInterface;
 use Laventure\Foundation\Application;
 use Laventure\Foundation\Generator\Class\ClassGenerator;
 use Laventure\Foundation\Generator\Class\Exception\ClassGeneratorException;
+use Laventure\Foundation\Generator\Entity\Exception\EntityGeneratorException;
 use Laventure\Foundation\Generator\Repository\EntityRepositoryGenerator;
 use Laventure\Foundation\Generator\Repository\EntityRepositoryGeneratorInterface;
 use ReflectionException;
@@ -118,9 +119,19 @@ class EntityGenerator extends ClassGenerator implements EntityGeneratorInterface
 
     /**
      * @return bool
+     * @throws EntityGeneratorException
     */
     public function generate(): bool
     {
+        if (empty($this->getClassName())) {
+             throw new EntityGeneratorException(
+         "Empty class name given from (". get_called_class() . ")",
+                 [
+                     'context' => "Actually has full name ". $this->getEntityFullName()
+                 ]
+             );
+        }
+
         if($status = parent::generate()) {
             $status = $this->entityRepositoryGenerator
                          ->withEntity($this->getEntityFullName())

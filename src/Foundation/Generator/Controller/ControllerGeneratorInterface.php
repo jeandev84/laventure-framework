@@ -18,7 +18,9 @@ use Laventure\Foundation\Generator\Class\ClassGeneratorInterface;
 interface ControllerGeneratorInterface extends ClassGeneratorInterface
 {
     /**
+     * Generate controller name
+     *
      * @return string
     */
-    public function generateControllerName(): string;
+    public function getControllerName(): string;
 }

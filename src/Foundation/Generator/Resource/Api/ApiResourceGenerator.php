@@ -54,15 +54,4 @@ class ApiResourceGenerator extends ResourceGenerator
     {
         return strtolower($this->getClassName());
     }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function generateController(): bool
-    {
-
-    }
 }

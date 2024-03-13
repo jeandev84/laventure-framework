@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Generator\Resource;
@@ -12,6 +11,7 @@ use Laventure\Foundation\Application;
 use Laventure\Foundation\Generator\Class\ClassGenerator;
 use Laventure\Foundation\Generator\Class\Exception\ClassGeneratorException;
 use Laventure\Foundation\Generator\Controller\ControllerGenerator;
+use Laventure\Foundation\Generator\Entity\EntityGenerator;
 use Laventure\Foundation\Generator\Resource\Exception\ResourceGeneratorException;
 
 /**
@@ -25,17 +25,20 @@ use Laventure\Foundation\Generator\Resource\Exception\ResourceGeneratorException
 */
 abstract class ResourceGenerator extends ClassGenerator implements ResourceGeneratorInterface
 {
+
     /**
      * @param Application $app
      * @param FilesystemInterface $filesystem
      * @param ConfigInterface $config
      * @param ControllerGenerator $controllerGenerator
+     * @param EntityGenerator $entityGenerator
     */
     public function __construct(
         Application $app,
         FilesystemInterface $filesystem,
         ConfigInterface $config,
-        protected ControllerGenerator $controllerGenerator
+        protected ControllerGenerator $controllerGenerator,
+        protected EntityGenerator $entityGenerator
     ) {
         parent::__construct($app, $filesystem, $config);
     }
@@ -46,10 +49,11 @@ abstract class ResourceGenerator extends ClassGenerator implements ResourceGener
 
     /**
      * @inheritDoc
-    */
+     */
     public function withResource($resource): static
     {
-        $this->controllerGenerator->withController($resource);
+        $this->controllerGenerator->withController("{$resource}Controller");
+        $this->entityGenerator->withClassName($resource);
 
         return $this->withClassName($resource);
     }
@@ -60,13 +64,14 @@ abstract class ResourceGenerator extends ClassGenerator implements ResourceGener
 
     /**
      * @inheritDoc
-    */
+     */
     public function generate(): bool
     {
-        $generatedController = $this->generateController();
-        $generatedEntity     = $this->generateEntity();
+        if ($status = $this->generateEntity()) {
+            $status = $this->generateController();
+        }
 
-        return $generatedController && $generatedEntity;
+        return $status;
     }
 
 
@@ -77,7 +82,17 @@ abstract class ResourceGenerator extends ClassGenerator implements ResourceGener
     */
     public function generateEntity(): bool
     {
+        return $this->entityGenerator->generate();
+    }
 
+
+    /**
+     * @inheritDoc
+    */
+    public function generateController(): bool
+    {
+        dd($this->controllerGenerator->getContent());
+        return $this->controllerGenerator->generate();
     }
 
 
@@ -91,8 +106,7 @@ abstract class ResourceGenerator extends ClassGenerator implements ResourceGener
     */
     public function getControllerName(): string
     {
-        return $this->controllerGenerator
-                    ->generateControllerName();
+        return $this->controllerGenerator->getControllerName();
     }
 
 
@@ -104,8 +118,7 @@ abstract class ResourceGenerator extends ClassGenerator implements ResourceGener
     */
     public function getBaseNamespace(): string
     {
-        return $this->controllerGenerator
-                   ->getBaseNamespace();
+        return $this->controllerGenerator->getBaseNamespace();
     }
 
 

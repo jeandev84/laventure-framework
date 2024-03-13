@@ -193,7 +193,7 @@ abstract class FileGenerator implements FileGeneratorInterface
     */
     public function getLastPartOfPath(string $path): string
     {
-        return $this->getLastFromArray(
+        return $this->getLastElementOfArray(
             $this->convertPathToArray($path)
         );
     }
@@ -205,7 +205,7 @@ abstract class FileGenerator implements FileGeneratorInterface
      * @param array $array
      * @return mixed
     */
-    public function getLastFromArray(array $array): string
+    public function getLastElementOfArray(array $array): string
     {
         return strval(end($array));
     }
