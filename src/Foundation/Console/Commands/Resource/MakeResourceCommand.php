@@ -85,7 +85,6 @@ class MakeResourceCommand extends Command
              $resourceGenerator = $this->createResourceGenerator(ResourceType::API);
         }
 
-        #dd(get_class($resourceGenerator));
         $resourceGenerator->withResource($resourceEntity);
         $generatorType = $resourceGenerator->getResource()->getType();
 

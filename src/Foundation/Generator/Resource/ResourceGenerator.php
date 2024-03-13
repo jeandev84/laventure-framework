@@ -164,6 +164,8 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
     {
         $methodStubs = [];
 
+        dd($this->getResourceRoutes());
+
         foreach ($this->getResourceRoutes() as $action => $route) {
             $methodStubs[] = $this->generateStubMethod($action, $route);
         }
