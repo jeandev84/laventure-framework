@@ -94,7 +94,7 @@ class EntityRepositoryGenerator extends ClassGenerator implements EntityReposito
             "DummyNamespace"      => $this->getNamespace(),
             "DummyFullEntityName" => $this->getEntityFullName(),
             "DummyEntity"         => $this->getEntityShortName(),
-            "DummyAlias"          => "u"
+            "DummyAlias"          => $this->getEntity()->getTableAlias()
         ]);
     }
 

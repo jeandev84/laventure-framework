@@ -38,6 +38,28 @@ interface ClassMetadataInterface
 
 
 
+    /**
+     * Returns class table name
+     *
+     * @return string
+    */
+    public function getTableName(): string;
+
+
+
+
+
+    /**
+     * Returns table alias
+     *
+     * @return string
+    */
+    public function getTableAlias(): string;
+
+
+
+
+
 
     /**
      * Set identifier

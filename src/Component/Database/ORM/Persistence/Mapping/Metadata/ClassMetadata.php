@@ -156,6 +156,33 @@ class ClassMetadata implements ClassMetadataInterface
     /**
      * @inheritDoc
     */
+    public function getTableName(): string
+    {
+        $classShortName = $this->getShortName();
+
+        return mb_strtolower($classShortName) . 's';
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getTableAlias(): string
+    {
+        return $this->getTableName()[0];
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
     public function getReflectionClass(): ReflectionClass
     {
         return $this->class;

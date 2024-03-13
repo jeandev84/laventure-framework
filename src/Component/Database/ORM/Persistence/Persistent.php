@@ -332,8 +332,7 @@ class Persistent implements PersistentInterface
     */
     public function getClassShortName(): string
     {
-        return $this->classMetadata->getReflectionClass()
-                                   ->getShortName();
+        return $this->classMetadata->getShortName();
     }
 
 
@@ -345,9 +344,7 @@ class Persistent implements PersistentInterface
     */
     public function getTableName(): string
     {
-        $classShortName = $this->getClassShortName();
-
-        return mb_strtolower($classShortName) . 's';
+       return $this->classMetadata->getTableName();
     }
 
 
@@ -359,9 +356,8 @@ class Persistent implements PersistentInterface
     */
     public function getTableAlias(): string
     {
-        return $this->getTableName()[0];
+        return $this->classMetadata->getTableAlias();
     }
-
 
 
 
