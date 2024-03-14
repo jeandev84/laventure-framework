@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Providers;
@@ -15,6 +14,7 @@ use Laventure\Component\Database\ORM\Persistence\Manager\Definition;
 use Laventure\Component\Database\ORM\Persistence\Manager\EntityManager;
 use Laventure\Component\Database\ORM\Persistence\Manager\Registry\ManagerRegistry;
 use Laventure\Component\Database\ORM\Persistence\Manager\Registry\ManagerRegistryInterface;
+use Laventure\Component\Database\Schema\Migrator\MigratorInterface;
 
 /**
  * DatabaseServiceProvider
@@ -72,6 +72,9 @@ class DatabaseServiceProvider extends ServiceProvider
                 $registry = new ManagerRegistry();
                 $registry->setManager($em);
                 return $registry;
+            },
+            MigratorInterface::class => function (ManagerInterface $manager) {
+                 return $manager->migration();
             }
         ]);
     }

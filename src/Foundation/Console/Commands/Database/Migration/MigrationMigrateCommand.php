@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Foundation\Console\Commands\Database\Schema\Migration;
+namespace Laventure\Foundation\Console\Commands\Database\Migration;
 
 use Laventure\Component\Console\Command\Command;
 use Laventure\Component\Console\Input\InputInterface;
 use Laventure\Component\Console\Output\OutputInterface;
 
 /**
- * MigrationResetCommand
+ * MigrationMigrateCommand
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -17,21 +17,21 @@ use Laventure\Component\Console\Output\OutputInterface;
  *
  * @package  Laventure\Foundation\Console\Commands\Database\Schema\Migration
 */
-class MigrationResetCommand extends Command
+class MigrationMigrateCommand extends Command
 {
     /**
      * @var string
-     */
-    protected $name = 'migration:reset';
+    */
+    protected $name = 'migration:migrate';
 
 
 
 
     /**
      * @var array
-     */
+    */
     protected array $description = [
-        "Drop all table and remove the version table."
+        "Migrate all tables"
     ];
 
 
@@ -51,7 +51,7 @@ class MigrationResetCommand extends Command
 
     /**
      * @return string[]
-     */
+    */
     public function getUsage(): array
     {
         return ["$this->name [options]"];

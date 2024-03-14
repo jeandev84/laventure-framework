@@ -1,9 +1,8 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Foundation\Console\Commands\Database\Schema\Migration;
+namespace Laventure\Foundation\Console\Commands\Database\Migration;
 
-use Laventure\Component\Config\ConfigInterface;
 use Laventure\Component\Console\Command\Command;
 use Laventure\Component\Console\Input\InputInterface;
 use Laventure\Component\Console\Output\OutputInterface;

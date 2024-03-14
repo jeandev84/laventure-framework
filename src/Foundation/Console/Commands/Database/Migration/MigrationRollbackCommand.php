@@ -2,27 +2,27 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Foundation\Console\Commands\Database\Schema\Migration;
+namespace Laventure\Foundation\Console\Commands\Database\Migration;
 
 use Laventure\Component\Console\Command\Command;
 use Laventure\Component\Console\Input\InputInterface;
 use Laventure\Component\Console\Output\OutputInterface;
 
 /**
- * MigrationRefreshCommand
+ * MigrationRollbackCommand
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Foundation\Console\Commands\Database\Schema\Migration
- */
-class MigrationRefreshCommand extends Command
+ * @package  Laventure\Foundation\Console\Commands\Database\Migration
+*/
+class MigrationRollbackCommand extends Command
 {
     /**
      * @var string
     */
-    protected $name = 'migration:refresh';
+    protected $name = 'migration:rollback';
 
 
 
@@ -33,6 +33,14 @@ class MigrationRefreshCommand extends Command
     protected array $description = [
         "Drop all tables without version table."
     ];
+
+
+
+    public function __construct($name = null)
+    {
+        parent::__construct($this->name);
+    }
+
 
 
 

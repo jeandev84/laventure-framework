@@ -205,7 +205,7 @@ class Console implements ConsoleInterface, CommandCollectionInterface, OptionSta
         // display help
         foreach ($input->getOptions() as $name => $option) {
             if ($this->hasHelp($name)) {
-                $output->printList($command->getHelpList());
+                $output->printTableList($command->getHelpList());
                 return Command::INFO;
             }
         }

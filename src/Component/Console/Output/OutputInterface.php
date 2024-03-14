@@ -140,7 +140,7 @@ interface OutputInterface extends Stringable
      * @param array $list
      * @return void
     */
-    public function printList(array $list): void;
+    public function printTableList(array $list): void;
 
 
 

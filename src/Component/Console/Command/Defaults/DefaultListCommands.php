@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Console\Command\Defaults;
@@ -8,10 +7,8 @@ use Laventure\Component\Console\Command\Command;
 use Laventure\Component\Console\Command\Contract\CommandInterface;
 use Laventure\Component\Console\Command\Contract\ListCommandInterface;
 use Laventure\Component\Console\Input\InputInterface;
-use Laventure\Component\Console\Input\Option\InputOption;
-use Laventure\Component\Console\Input\Option\InputOptionInterface;
 use Laventure\Component\Console\Output\OutputInterface;
-use Laventure\Component\Console\Output\Table\ConsoleTable;
+
 
 /**
  * DefaultListCommand
@@ -20,7 +17,7 @@ use Laventure\Component\Console\Output\Table\ConsoleTable;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Console\Command\Defaults\List
+ * @package  Laventure\Component\Console\Command\Defaults
 */
 class DefaultListCommands extends Command implements ListCommandInterface
 {
@@ -107,7 +104,7 @@ class DefaultListCommands extends Command implements ListCommandInterface
     */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $output->printList($this->list());
+        $output->printTableList($this->list());
 
         return Command::SUCCESS;
     }

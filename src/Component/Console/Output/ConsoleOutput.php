@@ -217,7 +217,7 @@ class ConsoleOutput implements OutputInterface
     /**
      * @inheritDoc
     */
-    public function printList(array $list): void
+    public function printTableList(array $list): void
     {
         foreach ($list as $header => $context) {
             $this->writeln("$header:");

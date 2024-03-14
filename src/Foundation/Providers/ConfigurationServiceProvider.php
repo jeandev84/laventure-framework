@@ -11,7 +11,7 @@ use Laventure\Component\Container\Service\Provider\ServiceProvider;
 use Laventure\Component\Filesystem\Filesystem;
 use Laventure\Dotenv\Dotenv;
 use Laventure\Dotenv\DotenvInterface;
-use Laventure\Foundation\Config\Loader\ConfigLoader;
+use Laventure\Foundation\Loader\Config\ConfigLoader;
 
 /**
  * ConfigurationServiceProvider

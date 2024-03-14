@@ -12,7 +12,7 @@ use Laventure\Component\Routing\Route\Collector\RouteCollector;
 use Laventure\Component\Routing\Route\Collector\RouteCollectorInterface;
 use Laventure\Component\Routing\Router\Router;
 use Laventure\Component\Routing\Router\RouterInterface;
-use Laventure\Foundation\Http\Controller\Loader\ControllerLoader;
+use Laventure\Foundation\Loader\Controller\ControllerDirectoryLoader;
 
 /**
  * RouterServiceProvider
@@ -38,17 +38,14 @@ class RouterServiceProvider extends ServiceProvider implements BootableServicePr
     ];
 
 
+
     /**
      * @inheritDoc
     */
     public function boot(): void
     {
-        $this->app->singleton(ControllerLoader::class, function (Filesystem $fs, Config $config) {
-            return new ControllerLoader(
-                $fs,
-                $config['routes.controllers.prefix'],
-                $config['routes.controllers.dir']
-            );
+        $this->app->singleton(ControllerDirectoryLoader::class, function (Filesystem $fs, Config $config) {
+            return new ControllerDirectoryLoader($fs, $config);
         });
 
     }
@@ -77,6 +74,6 @@ class RouterServiceProvider extends ServiceProvider implements BootableServicePr
     */
     private function loadControllers(): array
     {
-        return $this->app[ControllerLoader::class]->load();
+        return $this->app[ControllerDirectoryLoader::class]->load();
     }
 }

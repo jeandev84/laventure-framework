@@ -33,7 +33,7 @@ class MakeCommand extends Command
      * @var array|string[]
     */
     protected array $description = [
-        'Permit to create a new command.'
+        'make:command permit to create a new command.'
     ];
 
 

@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Foundation\Console\Commands\Database\Schema\Migration;
+namespace Laventure\Foundation\Console\Commands\Database\Migration;
 
 use Laventure\Component\Console\Command\Command;
 use Laventure\Component\Console\Input\InputInterface;
 use Laventure\Component\Console\Output\OutputInterface;
 
 /**
- * MigrationMigrateCommand
+ * MigrationInstallCommand
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -17,12 +17,12 @@ use Laventure\Component\Console\Output\OutputInterface;
  *
  * @package  Laventure\Foundation\Console\Commands\Database\Schema\Migration
 */
-class MigrationMigrateCommand extends Command
+class MigrationInstallCommand extends Command
 {
     /**
      * @var string
     */
-    protected $name = 'migration:migrate';
+    protected $name = 'migration:install';
 
 
 
@@ -31,7 +31,7 @@ class MigrationMigrateCommand extends Command
      * @var array
     */
     protected array $description = [
-        "Migrate all tables"
+        "Create migrations version table"
     ];
 
 
@@ -51,7 +51,7 @@ class MigrationMigrateCommand extends Command
 
     /**
      * @return string[]
-    */
+     */
     public function getUsage(): array
     {
         return ["$this->name [options]"];

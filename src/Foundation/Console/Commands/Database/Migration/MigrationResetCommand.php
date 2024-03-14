@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Foundation\Console\Commands\Database\Schema\Migration;
+namespace Laventure\Foundation\Console\Commands\Database\Migration;
 
 use Laventure\Component\Console\Command\Command;
 use Laventure\Component\Console\Input\InputInterface;
 use Laventure\Component\Console\Output\OutputInterface;
 
 /**
- * MigrationInstallCommand
+ * MigrationResetCommand
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -17,21 +17,21 @@ use Laventure\Component\Console\Output\OutputInterface;
  *
  * @package  Laventure\Foundation\Console\Commands\Database\Schema\Migration
 */
-class MigrationInstallCommand extends Command
+class MigrationResetCommand extends Command
 {
     /**
      * @var string
-    */
-    protected $name = 'migration:install';
+     */
+    protected $name = 'migration:reset';
 
 
 
 
     /**
      * @var array
-    */
+     */
     protected array $description = [
-        "Create migrations version table"
+        "Drop all table and remove the version table."
     ];
 
 
