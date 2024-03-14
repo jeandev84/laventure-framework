@@ -21,7 +21,7 @@ use Laventure\Component\Database\Schema\Table\TableInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\ORM\Persistence
+ * @package  Laventure\Component\Database\ORM\Mapper
  */
 class Persistent implements PersistentInterface
 {
@@ -570,7 +570,7 @@ class Persistent implements PersistentInterface
 
         if (!$table->exists()) {
             throw new NotFoundTableException($this->getTableName(), [
-                'context' => "Persistence class {$this->getClassShortName()}"
+                'context' => "Mapper class {$this->getClassShortName()}"
             ]);
         }
 

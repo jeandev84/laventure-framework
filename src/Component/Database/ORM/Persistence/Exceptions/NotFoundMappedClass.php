@@ -13,7 +13,7 @@ use Laventure\Exceptions\BaseException;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\ORM\Persistence\Persistence\Exceptions
+ * @package  Laventure\Component\Database\ORM\Mapper\Mapper\Exceptions
 */
 class NotFoundMappedClass extends BaseException
 {

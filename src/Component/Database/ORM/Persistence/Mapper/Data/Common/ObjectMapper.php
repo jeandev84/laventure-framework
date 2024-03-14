@@ -14,7 +14,7 @@ use Laventure\Component\Database\ORM\Persistence\Mapper\Data\DataMapperInterface
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\ORM\Persistence\Persistence\Data\Common
+ * @package  Laventure\Component\Database\ORM\Mapper\Mapper\Data\Common
 */
 abstract class ObjectMapper implements DataMapperInterface
 {

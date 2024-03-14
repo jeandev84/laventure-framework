@@ -15,7 +15,7 @@ use Laventure\Component\Database\ORM\Persistence\Repository\Contract\ObjectRepos
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\ORM\Persistence\Manager
+ * @package  Laventure\Component\Database\ORM\Mapper\Manager
 */
 interface ObjectManagerInterface
 {

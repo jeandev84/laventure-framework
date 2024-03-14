@@ -13,7 +13,7 @@ use Laventure\Contract\Loader\LoaderInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\ORM\Persistence\Manager\Fixtures
+ * @package  Laventure\Component\Database\ORM\Mapper\Manager\Fixtures
  */
 interface FixtureManagerInterface extends LoaderInterface
 {

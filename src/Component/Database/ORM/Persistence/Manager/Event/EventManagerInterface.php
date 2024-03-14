@@ -13,7 +13,7 @@ use Laventure\Component\Database\ORM\Persistence\Manager\Events\Common\ObjectEve
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\ORM\Persistence\Manager\Event
+ * @package  Laventure\Component\Database\ORM\Mapper\Manager\Event
 */
 interface EventManagerInterface
 {

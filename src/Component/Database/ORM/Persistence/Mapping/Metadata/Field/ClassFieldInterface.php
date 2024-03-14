@@ -11,7 +11,7 @@ namespace Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Field;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Field
+ * @package  Laventure\Component\Database\ORM\Mapper\Mapping\Metadata\Field
  */
 interface ClassFieldInterface
 {

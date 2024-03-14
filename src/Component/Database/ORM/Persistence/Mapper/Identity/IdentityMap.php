@@ -14,7 +14,7 @@ use SplObjectStorage;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\ORM\Persistence\Identity
+ * @package  Laventure\Component\Database\ORM\Mapper\Identity
 */
 class IdentityMap implements IdentityMapperInterface
 {

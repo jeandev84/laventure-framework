@@ -13,7 +13,7 @@ use Laventure\Component\Database\ORM\Persistence\Storage\ObjectStorage;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\ORM\Persistence\ObjectCollection
+ * @package  Laventure\Component\Database\ORM\Mapper\ObjectCollection
 */
 class ArrayCollection extends ObjectStorage implements CollectionInterface
 {

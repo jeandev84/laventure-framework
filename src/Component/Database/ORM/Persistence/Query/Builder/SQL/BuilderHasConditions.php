@@ -14,7 +14,7 @@ use Laventure\Component\Database\Query\Builder\SQL\Conditions\SQLBuilderHasCondi
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL
+ * @package  Laventure\Component\Database\ORM\Mapper\Query\Builder\SQL
 */
 abstract class BuilderHasConditions extends Builder
 {

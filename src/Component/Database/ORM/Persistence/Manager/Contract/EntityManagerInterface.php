@@ -21,7 +21,7 @@ use Laventure\Component\Database\Query\QueryInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\ORM\Persistence\Manager
+ * @package  Laventure\Component\Database\ORM\Mapper\Manager
 */
 interface EntityManagerInterface extends ObjectManagerInterface
 {

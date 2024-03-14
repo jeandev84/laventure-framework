@@ -15,7 +15,7 @@ use Laventure\Component\Database\Query\Builder\SQL\DML\Delete\DeleteBuilderInter
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\DML\Delete
+ * @package  Laventure\Component\Database\ORM\Mapper\Query\Builder\SQL\DML\Delete
 */
 class Delete extends BuilderHasConditions
 {

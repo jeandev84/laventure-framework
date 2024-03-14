@@ -14,7 +14,7 @@ use Laventure\Component\Database\ORM\Persistence\Repository\Contract\ObjectRepos
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\ORM\Persistence\Manager\Registry
+ * @package  Laventure\Component\Database\ORM\Mapper\Manager\Registry
 */
 class ManagerRegistry implements ManagerRegistryInterface
 {

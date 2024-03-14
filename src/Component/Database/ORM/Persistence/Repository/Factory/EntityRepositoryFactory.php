@@ -15,7 +15,7 @@ use Laventure\Component\Database\ORM\Persistence\Repository\EntityRepository;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\ORM\Persistence\Repository\Factory
+ * @package  Laventure\Component\Database\ORM\Mapper\Repository\Factory
 */
 class EntityRepositoryFactory implements EntityRepositoryFactoryInterface
 {

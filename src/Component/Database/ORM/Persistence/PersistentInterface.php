@@ -15,7 +15,7 @@ use Laventure\Component\Database\ORM\Persistence\Query\Builder\QueryBuilderInter
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\ORM\Persistence
+ * @package  Laventure\Component\Database\ORM\Mapper
 */
 interface PersistentInterface
 {

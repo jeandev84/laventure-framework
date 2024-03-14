@@ -24,7 +24,7 @@ use Laventure\Component\Database\ORM\Persistence\Persistent;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package Laventure\Component\Database\ORM\Persistence\Persistence\Data
+ * @package Laventure\Component\Database\ORM\Mapper\Mapper\Data
 */
 class DataMapper extends ObjectMapper
 {

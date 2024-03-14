@@ -13,7 +13,7 @@ use SplObjectStorage;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\ORM\Persistence\Storage
+ * @package  Laventure\Component\Database\ORM\Mapper\Storage
 */
 class ObjectStorage extends SplObjectStorage
 {

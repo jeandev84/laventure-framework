@@ -13,7 +13,7 @@ use Laventure\Exceptions\BaseException;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\ORM\Persistence\UnitOfWork\Exception
+ * @package  Laventure\Component\Database\ORM\Mapper\UnitOfWork\Exception
 */
 class UnitOfWorkException extends BaseException
 {

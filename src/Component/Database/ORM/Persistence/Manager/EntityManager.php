@@ -33,7 +33,7 @@ use Throwable;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\ORM\Persistence\Manager
+ * @package  Laventure\Component\Database\ORM\Mapper\Manager
 */
 class EntityManager implements EntityManagerInterface
 {

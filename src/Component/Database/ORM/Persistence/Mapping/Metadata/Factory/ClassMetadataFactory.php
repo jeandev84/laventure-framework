@@ -15,7 +15,7 @@ use RuntimeException;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\Factory
+ * @package  Laventure\Component\Database\ORM\Mapper\Mapping\Metadata\Factory
 */
 class ClassMetadataFactory implements ClassMetadataFactoryInterface
 {
