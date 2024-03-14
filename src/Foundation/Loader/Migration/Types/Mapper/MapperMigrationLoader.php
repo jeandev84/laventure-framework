@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Laventure\Foundation\Loader\Migration\Types\Mapper;
 
 use Laventure\Foundation\Loader\FilesDirectory\FilesDirectoryLoader;
+use Laventure\Foundation\Loader\Migration\Types\AbstractMigrationLoader;
 
 /**
  * MapperMigrationLoader
@@ -14,7 +15,7 @@ use Laventure\Foundation\Loader\FilesDirectory\FilesDirectoryLoader;
  *
  * @package  Laventure\Foundation\Loader\Migration\Mapper
 */
-class MapperMigrationLoader extends FilesDirectoryLoader implements MapperMigrationLoaderInterface
+class MapperMigrationLoader extends AbstractMigrationLoader implements MapperMigrationLoaderInterface
 {
     /**
      * @inheritDoc

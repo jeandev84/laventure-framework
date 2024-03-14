@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Laventure\Foundation\Loader\Migration;
 
 
+use Laventure\Component\Database\Schema\Migration\MigrationInterface;
 use Laventure\Foundation\Loader\FilesDirectory\FilesDirectoryLoaderInterface;
 
 /**
@@ -17,5 +18,8 @@ use Laventure\Foundation\Loader\FilesDirectory\FilesDirectoryLoaderInterface;
 */
 interface MigrationLoaderInterface extends FilesDirectoryLoaderInterface
 {
-
+    /**
+     * @return MigrationInterface[]
+    */
+    public function loadMigrations(): array;
 }

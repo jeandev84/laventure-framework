@@ -7,6 +7,7 @@ namespace Laventure\Foundation\Console\Commands\Database\Migration;
 use Laventure\Component\Console\Command\Command;
 use Laventure\Component\Console\Input\InputInterface;
 use Laventure\Component\Console\Output\OutputInterface;
+use Laventure\Component\Database\Schema\Migrator\MigratorInterface;
 use Laventure\Foundation\Loader\Migration\MigrationLoaderInterface;
 
 /**
@@ -38,11 +39,12 @@ class MigrationMigrateCommand extends Command
 
 
 
+
     /**
-     * @param MigrationLoaderInterface $migrationLoader
+     * @param MigratorInterface $migrator
     */
     public function __construct(
-        protected MigrationLoaderInterface $migrationLoader
+        protected MigratorInterface $migrator
     )
     {
         parent::__construct($this->name);
@@ -55,16 +57,7 @@ class MigrationMigrateCommand extends Command
     */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        dd($this->migrationLoader->load());
-//        # dd($this->migrationLoader->getCollection()->getPaths());
-//
-//        $files = [];
-//
-//        foreach ($this->migrationLoader->getCollection()->getFiles() as $file) {
-//            $files[] = $file->getPath();
-//        }
-//
-//        dd($files);
+        dd($this->migrator->getMigrations());
 
         return Command::SUCCESS;
     }

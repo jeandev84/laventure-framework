@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Laventure\Foundation\Loader\Migration\Types\Model;
 
-use Laventure\Foundation\Loader\FilesDirectory\FilesDirectoryLoader;
+use Laventure\Foundation\Loader\Migration\Types\AbstractMigrationLoader;
 
 /**
  * ModelMigrationLoader
@@ -14,7 +14,7 @@ use Laventure\Foundation\Loader\FilesDirectory\FilesDirectoryLoader;
  *
  * @package  Laventure\Foundation\Loader\Migration
  */
-class ModelMigrationLoader extends FilesDirectoryLoader implements ModelMigrationLoaderInterface
+class ModelMigrationLoader extends AbstractMigrationLoader implements ModelMigrationLoaderInterface
 {
 
     /**

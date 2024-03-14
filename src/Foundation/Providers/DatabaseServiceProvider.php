@@ -108,7 +108,7 @@ class DatabaseServiceProvider extends ServiceProvider
                 MigrationLoaderInterface $migrationLoader
             ) {
                 $migrator = $manager->migration();
-                $migrator->addMigrations($migrationLoader->load());
+                $migrator->addMigrations($migrationLoader->loadMigrations());
                 return $migrator;
             }
         ]);
