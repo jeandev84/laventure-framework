@@ -43,8 +43,8 @@ class ControllerGenerator extends ClassGenerator implements ControllerGeneratorI
     */
     public function getControllerName(): string
     {
-        dd($this->getEntityFullName());
-        // return $this->generateFullClassName(self::CONTROLLER_SUFFIX);
+        return $this->withClassSuffix(self::CONTROLLER_SUFFIX)
+                    ->getClassFullName();
     }
 
 

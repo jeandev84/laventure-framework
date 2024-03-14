@@ -145,6 +145,8 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
     */
     public function generateEntity(): bool
     {
+        dd($this->entityGenerator->getClassFullName());
+
         if (!$this->entityGenerator->generated()) {
             return true;
         }

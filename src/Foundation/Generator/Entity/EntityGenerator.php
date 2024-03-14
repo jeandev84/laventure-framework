@@ -127,14 +127,14 @@ class EntityGenerator extends ClassGenerator implements EntityGeneratorInterface
              throw new EntityGeneratorException(
          "Empty class name given from (". get_called_class() . ")",
                  [
-                     'context' => "Actually has full name ". $this->getEntityFullName()
+                     'context' => "Actually has full name ". $this->getClassFullName()
                  ]
              );
         }
 
         if($status = parent::generate()) {
             $status = $this->entityRepositoryGenerator
-                         ->withEntity($this->getEntityFullName())
+                         ->withEntity($this->getClassFullName())
                          ->generate();
         }
 
