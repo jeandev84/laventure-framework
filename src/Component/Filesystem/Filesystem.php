@@ -7,6 +7,7 @@ namespace Laventure\Component\Filesystem;
 use Laventure\Component\Filesystem\Directory\Directory;
 use Laventure\Component\Filesystem\Directory\Factory\DirectoryFactory;
 use Laventure\Component\Filesystem\File\Collection\FileCollection;
+use Laventure\Component\Filesystem\File\Collection\FileCollectionInterface;
 use Laventure\Component\Filesystem\File\Contract\FileInterface;
 use Laventure\Component\Filesystem\File\Factory\FileCollectionFactory;
 use Laventure\Component\Filesystem\File\Factory\FileFactory;
@@ -18,13 +19,13 @@ use Laventure\Component\Filesystem\Stream\Factory\StreamFactory;
 use Laventure\Component\Filesystem\Stream\Stream;
 
 /**
- * Config
+ * Common
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Config
+ * @package  Laventure\Component\Common
 */
 class Filesystem implements FilesystemInterface
 {
@@ -182,8 +183,8 @@ class Filesystem implements FilesystemInterface
 
     /**
      * @inheritDoc
-     */
-    public function collection(string $pattern): FileCollection
+    */
+    public function files(string $pattern): FileCollectionInterface
     {
         $files = $this->fileFactory->createFromArray(
             $this->resources($pattern)
@@ -199,7 +200,7 @@ class Filesystem implements FilesystemInterface
     /**
      * @inheritDoc
     */
-    public function directoryFiles(string $directory, string $extension = 'php'): FileCollection
+    public function directoryFiles(string $directory, string $extension = 'php'): FileCollectionInterface
     {
         $files = $this->dir($directory)->getFiles($extension);
 

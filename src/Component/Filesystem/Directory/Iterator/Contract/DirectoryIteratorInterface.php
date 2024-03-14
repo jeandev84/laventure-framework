@@ -11,7 +11,7 @@ namespace Laventure\Component\Filesystem\Directory\Iterator\Contract;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Config\Directory\Iterator\Writer
+ * @package  Laventure\Component\Common\Directory\Iterator\Writer
 */
 interface DirectoryIteratorInterface
 {

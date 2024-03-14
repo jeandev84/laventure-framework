@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Generator\Stub;
@@ -17,7 +18,6 @@ use Laventure\Component\Filesystem\File\Reader\Contract\FileReaderInterface;
 */
 class StubGenerator implements StubGeneratorInterface
 {
-
     /**
      * @var array
     */
@@ -71,7 +71,7 @@ class StubGenerator implements StubGeneratorInterface
     public function generate(): string
     {
         if (!$this->getStubPath()) {
-             throw new FileException("Empty stub path.");
+            throw new FileException("Empty stub path.");
         }
 
         $searched = array_keys($this->patterns);

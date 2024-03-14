@@ -395,9 +395,9 @@ class Migrator implements MigratorInterface
     */
     public function up(MigrationInterface $migration): bool
     {
-         $migration->up($this->schema);
+        $migration->up($this->schema);
 
-         return $this->save($migration);
+        return $this->save($migration);
     }
 
 

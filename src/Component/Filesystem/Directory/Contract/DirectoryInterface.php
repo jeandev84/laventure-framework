@@ -15,7 +15,7 @@ use SplFileInfo;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Config\Directory\Writer
+ * @package  Laventure\Component\Common\Directory\Writer
  */
 interface DirectoryInterface extends ScannerInterface
 {

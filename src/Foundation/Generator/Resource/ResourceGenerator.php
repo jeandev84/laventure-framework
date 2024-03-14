@@ -77,9 +77,10 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
     */
     public function getClassName(): string
     {
-        return sprintf('%s%s',
-       parent::getClassName(),
-               static::CONTROLLER_SUFFIX
+        return sprintf(
+            '%s%s',
+            parent::getClassName(),
+            static::CONTROLLER_SUFFIX
         );
     }
 

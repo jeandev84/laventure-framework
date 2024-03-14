@@ -13,7 +13,7 @@ use Laventure\Component\Filesystem\File\Base64\Contract\Base64FileInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Config\File\Base64\Traits
+ * @package  Laventure\Component\Common\File\Base64\Traits
  */
 trait HasBase64Trait
 {

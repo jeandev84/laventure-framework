@@ -11,7 +11,7 @@ namespace Laventure\Component\Filesystem\File\Base64\Utils\Encoder;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Config\File\Base64FileFile\Utils\Encoder
+ * @package  Laventure\Component\Common\File\Base64FileFile\Utils\Encoder
  */
 class Base64Encoder
 {

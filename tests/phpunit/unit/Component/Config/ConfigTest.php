@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  PHPUnitTest\Component\Config
+ * @package  PHPUnitTest\Component\Common
  */
 class ConfigTest extends TestCase
 {

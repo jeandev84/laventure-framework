@@ -15,7 +15,7 @@ use RecursiveIteratorIterator;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Config\Directory\Recursive
+ * @package  Laventure\Component\Common\Directory\Recursive
 */
 class RecursionDirectory implements HasDirectoryInterface
 {

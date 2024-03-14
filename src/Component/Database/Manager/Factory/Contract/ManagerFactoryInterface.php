@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Manager\Factory\Contract;
-
 
 use Laventure\Component\Database\Manager\Contract\ManagerInterface;
 
@@ -17,7 +17,6 @@ use Laventure\Component\Database\Manager\Contract\ManagerInterface;
 */
 interface ManagerFactoryInterface
 {
-
     /**
      * Create manager
      *

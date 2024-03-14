@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Manager\Factory;
@@ -20,13 +21,12 @@ use Laventure\Component\Database\ORM\Persistence\Manager\EntityManager;
 */
 class EntityManagerFactory implements EntityManagerFactoryInterface
 {
-
     /**
      * @inheritDoc
     */
     public function createEntityManager(Configuration $config): EntityManagerInterface
     {
-         return new EntityManager($config);
+        return new EntityManager($config);
     }
 
 

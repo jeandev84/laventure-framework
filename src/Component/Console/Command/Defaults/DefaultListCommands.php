@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Console\Command\Defaults;
@@ -8,7 +9,6 @@ use Laventure\Component\Console\Command\Contract\CommandInterface;
 use Laventure\Component\Console\Command\Contract\ListCommandInterface;
 use Laventure\Component\Console\Input\InputInterface;
 use Laventure\Component\Console\Output\OutputInterface;
-
 
 /**
  * DefaultListCommand

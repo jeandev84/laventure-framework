@@ -19,26 +19,25 @@ use Laventure\Foundation\Generator\Migration\Exception\MigrationGeneratorExcepti
 */
 abstract class MigrationFileGenerator extends ClassGenerator implements MigrationFileGeneratorInterface
 {
-    
     /**
-     * @var string 
+     * @var string
     */
     protected string $tableName = '';
-    
-    
-    
+
+
+
     /**
      * @inheritDoc
     */
     public function withTableName(string $tableName): static
     {
         $this->tableName = $tableName;
-        
+
         return $this;
     }
-    
-    
-    
+
+
+
 
     /**
      * @inheritDoc
@@ -47,7 +46,7 @@ abstract class MigrationFileGenerator extends ClassGenerator implements Migratio
     {
         if (!$this->tableName) {
             throw new MigrationGeneratorException(
-        "No table specified for generator ". get_called_class()
+                "No table specified for generator ". get_called_class()
             );
         }
 

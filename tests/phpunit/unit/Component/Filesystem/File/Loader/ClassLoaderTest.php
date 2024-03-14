@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  PHPUnitTest\Component\Config\File\Loader
+ * @package  PHPUnitTest\Component\Common\File\Loader
  */
 class ClassLoaderTest extends TestCase
 {

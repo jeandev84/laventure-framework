@@ -1,10 +1,12 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Loader\FilesDirectory;
 
 use Laventure\Component\Config\ConfigInterface;
 use Laventure\Component\Filesystem\File\Collection\FileCollection;
+use Laventure\Component\Filesystem\File\Collection\FileCollectionInterface;
 use Laventure\Component\Filesystem\Filesystem;
 use Laventure\Contract\Loader\LoaderInterface;
 
@@ -19,7 +21,7 @@ use Laventure\Contract\Loader\LoaderInterface;
  *
  * @package  Laventure\Foundation\Loader\FilesDirectory
 */
-abstract class FilesDirectoryLoader implements LoaderInterface
+abstract class FilesDirectoryLoader implements FilesDirectoryLoaderInterface
 {
     /**
      * @var Filesystem
@@ -44,7 +46,11 @@ abstract class FilesDirectoryLoader implements LoaderInterface
      * @param Filesystem $filesystem
      * @param ConfigInterface $config
     */
-    public function __construct(Filesystem $filesystem, ConfigInterface $config) {
+    public function __construct(
+        Filesystem $filesystem,
+        ConfigInterface $config
+    )
+    {
         $this->filesystem = $filesystem;
         $this->config     = $config;
     }
@@ -54,16 +60,16 @@ abstract class FilesDirectoryLoader implements LoaderInterface
 
 
     /**
-     * Collection file mapped
-     *
-     * @return FileCollection
+     * @inheritDoc
     */
-    public function getFileCollection(): FileCollection
+    public function getFiles(): FileCollectionInterface
     {
         return $this->filesystem->directoryFiles(
             $this->getDirectory()
         );
     }
+
+
 
 
 
@@ -74,13 +80,13 @@ abstract class FilesDirectoryLoader implements LoaderInterface
     public function load(): array
     {
         $controllers = [];
-        $collection = $this->getFileCollection();
+        $collection = $this->getFiles();
         $paths = array_keys($collection->getPaths());
 
         foreach ($paths as $path) {
             $classname     = $this->resolvePath($path);
             if (class_exists($classname)) {
-                $controllers[] =  $classname;
+                $controllers[] = $classname;
             }
         }
 
@@ -117,19 +123,10 @@ abstract class FilesDirectoryLoader implements LoaderInterface
 
 
     /**
-     * Namespace
-     *
-     * @return string
-     */
-    abstract public function getPrefix(): string;
-
-
-
-
-
-
-    /**
-     * @return string
+     * @return ConfigInterface
     */
-    abstract public function getDirectory(): string;
+    public function config(): ConfigInterface
+    {
+        return $this->config;
+    }
 }

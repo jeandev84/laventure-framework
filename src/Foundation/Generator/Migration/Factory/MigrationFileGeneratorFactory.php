@@ -1,15 +1,16 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Generator\Migration\Factory;
 
-use Laventure\Component\Config\ConfigInterface;
-use Laventure\Foundation\Database\ORM\Enum\OrmType;
-use Laventure\Foundation\Database\ORM\OrmCurrentNameDetector;
-use Laventure\Foundation\Generator\Migration\Model\ModelMigrationGenerator;
+use Laventure\Component\Database\Manager\Contract\ManagerInterface;
+use Laventure\Component\Database\ORM\Enum\OrmType;
+use Laventure\Foundation\Database\ORM\OrmCurrentName;
 use Laventure\Foundation\Generator\Migration\Exception\MigrationGeneratorException;
-use Laventure\Foundation\Generator\Migration\MigrationFileGeneratorInterface;
 use Laventure\Foundation\Generator\Migration\Mapper\MapperMigrationGenerator;
+use Laventure\Foundation\Generator\Migration\MigrationFileGeneratorInterface;
+use Laventure\Foundation\Generator\Migration\Model\ModelMigrationGenerator;
 use Psr\Container\ContainerInterface;
 
 /**
@@ -23,7 +24,6 @@ use Psr\Container\ContainerInterface;
  */
 class MigrationFileGeneratorFactory implements MigrationFileGeneratorFactoryInterface
 {
-
     /**
      * @var array
     */
@@ -32,13 +32,12 @@ class MigrationFileGeneratorFactory implements MigrationFileGeneratorFactoryInte
 
     /**
      * @param ContainerInterface $app
-     * @param OrmCurrentNameDetector $ormCurrentNameDetector
+     * @param ManagerInterface $manager
     */
     public function __construct(
         protected ContainerInterface $app,
-        protected OrmCurrentNameDetector $ormCurrentNameDetector
-    )
-    {
+        protected ManagerInterface $manager
+    ) {
     }
 
 
@@ -48,15 +47,15 @@ class MigrationFileGeneratorFactory implements MigrationFileGeneratorFactoryInte
     */
     public function createGenerator(string $type): MigrationFileGeneratorInterface
     {
-          if (isset($this->generators[$type])) {
-              return $this->generators[$type];
-          }
+        if (isset($this->generators[$type])) {
+            return $this->generators[$type];
+        }
 
-          return $this->generators[$type] = match($type) {
-              OrmType::Mapper => $this->app->get(MapperMigrationGenerator::class),
-              OrmType::Model => $this->app->get(ModelMigrationGenerator::class),
-              default => new MigrationGeneratorException("Unavailable migration generator type ($type)")
-          };
+        return $this->generators[$type] = match($type) {
+            OrmType::Mapper => $this->app->get(MapperMigrationGenerator::class),
+            OrmType::Model => $this->app->get(ModelMigrationGenerator::class),
+            default => new MigrationGeneratorException("Unavailable migration generator type ($type)")
+        };
     }
 
 
@@ -69,7 +68,7 @@ class MigrationFileGeneratorFactory implements MigrationFileGeneratorFactoryInte
     */
     public function create(string $type = null): MigrationFileGeneratorInterface
     {
-        return $this->createGenerator($type ?: $this->getDefaultType());
+        return $this->createGenerator($type ?: $this->currentOrm());
     }
 
 
@@ -79,8 +78,10 @@ class MigrationFileGeneratorFactory implements MigrationFileGeneratorFactoryInte
     /**
      * @return string
     */
-    private function getDefaultType(): string
+    private function currentOrm(): string
     {
-        return $this->ormCurrentNameDetector->getTypeName();
+        return $this->manager->getConfiguration()
+                             ->orm()
+                             ->current();
     }
 }

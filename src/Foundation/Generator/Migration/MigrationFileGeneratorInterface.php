@@ -17,19 +17,18 @@ use Laventure\Foundation\Generator\Class\ClassGeneratorInterface;
  */
 interface MigrationFileGeneratorInterface extends ClassGeneratorInterface
 {
-
-      /**
-       * @param string $tableName
-       * @return $this
-      */
-      public function withTableName(string $tableName): static;
-
+    /**
+     * @param string $tableName
+     * @return $this
+    */
+    public function withTableName(string $tableName): static;
 
 
 
 
-      /**
-       * @return string
-      */
-      public function getTableName(): string;
+
+    /**
+     * @return string
+    */
+    public function getTableName(): string;
 }

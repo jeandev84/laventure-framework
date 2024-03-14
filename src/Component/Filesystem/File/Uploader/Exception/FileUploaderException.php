@@ -11,7 +11,7 @@ namespace Laventure\Component\Filesystem\File\Uploader\Exception;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Config\File\Uploader\Exception
+ * @package  Laventure\Component\Common\File\Uploader\Exception
  */
 class FileUploaderException extends \RuntimeException
 {

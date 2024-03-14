@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Manager\Factory;
-
 
 use Laventure\Component\Database\ORM\Persistence\Manager\Config\Configuration;
 use Laventure\Component\Database\ORM\Persistence\Manager\Contract\EntityManagerInterface;
@@ -18,12 +18,11 @@ use Laventure\Component\Database\ORM\Persistence\Manager\Contract\EntityManagerI
  */
 interface EntityManagerFactoryInterface
 {
-
-     /**
-      * @param Configuration $config
-      * @return EntityManagerInterface
-     */
-     public function createEntityManager(
-         Configuration $config
-     ): EntityManagerInterface;
+    /**
+     * @param Configuration $config
+     * @return EntityManagerInterface
+    */
+    public function createEntityManager(
+        Configuration $config
+    ): EntityManagerInterface;
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Manager\Config;
 
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
+use Laventure\Component\Database\Manager\Config\ORM\OrmConfigurationInterface;
 use Laventure\Contract\Parameter\ParameterInterface;
 
 /**
@@ -14,7 +15,7 @@ use Laventure\Contract\Parameter\ParameterInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Manager\Config
+ * @package  Laventure\Component\Database\Manager\Common
 */
 interface ManagerConfigurationInterface extends ParameterInterface
 {
@@ -50,4 +51,17 @@ interface ManagerConfigurationInterface extends ParameterInterface
      * @return array
     */
     public function connections(): array;
+
+
+
+
+
+
+
+
+
+    /**
+     * @return OrmConfigurationInterface
+    */
+    public function orm(): OrmConfigurationInterface;
 }

@@ -7,6 +7,8 @@ namespace Laventure\Component\Database\Manager\Config;
 use Laventure\Component\Database\Configuration\Configuration;
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Connection\Name\ConnectionName;
+use Laventure\Component\Database\Manager\Config\ORM\OrmConfiguration;
+use Laventure\Component\Database\Manager\Config\ORM\OrmConfigurationInterface;
 use Laventure\Utils\Parameter\Parameter;
 
 /**
@@ -52,5 +54,17 @@ class ManagerConfiguration extends Parameter implements ManagerConfigurationInte
     public function connections(): array
     {
         return $this->required('connections');
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function orm(): OrmConfigurationInterface
+    {
+        return new OrmConfiguration($this->required('orm'));
     }
 }

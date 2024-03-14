@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  PHPUnitTest\Component\Templating\Template\Engine\Config
+ * @package  PHPUnitTest\Component\Templating\Template\Engine\Common
 */
 class TemplateEngineConfigTest extends TestCase
 {

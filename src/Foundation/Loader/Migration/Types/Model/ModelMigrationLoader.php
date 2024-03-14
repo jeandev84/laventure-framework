@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Foundation\Loader\Migration;
+namespace Laventure\Foundation\Loader\Migration\Types\Model;
 
 use Laventure\Foundation\Loader\FilesDirectory\FilesDirectoryLoader;
 
 /**
- * MigrationDirectoryLoader
+ * ModelMigrationLoader
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -14,7 +14,7 @@ use Laventure\Foundation\Loader\FilesDirectory\FilesDirectoryLoader;
  *
  * @package  Laventure\Foundation\Loader\Migration
  */
-class MigrationDirectoryLoader extends FilesDirectoryLoader
+class ModelMigrationLoader extends FilesDirectoryLoader implements ModelMigrationLoaderInterface
 {
 
     /**
@@ -22,7 +22,7 @@ class MigrationDirectoryLoader extends FilesDirectoryLoader
     */
     public function getPrefix(): string
     {
-
+        return $this->config['database.orm.model.prefix'];
     }
 
 
@@ -32,6 +32,6 @@ class MigrationDirectoryLoader extends FilesDirectoryLoader
     */
     public function getDirectory(): string
     {
-
+        return $this->config['database.orm.model.migrations.dir'];
     }
 }

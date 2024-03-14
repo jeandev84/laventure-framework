@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Console\Commands\Database\Migration;
@@ -43,8 +44,7 @@ class MakeMigrationCommand extends Command
     */
     public function __construct(
         protected MigrationFileGeneratorFactory $migrationFileGeneratorFactory
-    )
-    {
+    ) {
         parent::__construct($this->name);
     }
 

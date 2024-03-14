@@ -40,16 +40,16 @@ abstract class Resource implements ResourceInterface
     protected string $controller;
 
 
-    
-    
-    
+
+
+
     /**
-     * @var string 
+     * @var string
     */
     protected string $prefix = '';
-    
-    
-    
+
+
+
 
     /**
      * @var RouteFactory
@@ -256,18 +256,18 @@ abstract class Resource implements ResourceInterface
         return get_object_vars($this);
     }
 
-    
 
 
 
-    
+
+
     /**
      * @inheritDoc
     */
     public function withPrefix(string $prefix): static
     {
         $this->prefix = strtolower($prefix);
-        
+
         return $this;
     }
 }

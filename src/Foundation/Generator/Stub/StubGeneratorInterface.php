@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Generator\Stub;
@@ -16,7 +17,6 @@ use Laventure\Contract\Generator\GeneratorInterface;
 */
 interface StubGeneratorInterface extends GeneratorInterface
 {
-
     /**
      * @param array $patterns
      * @return $this

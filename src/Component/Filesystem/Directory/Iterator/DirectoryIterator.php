@@ -18,7 +18,7 @@ use RecursiveIteratorIterator;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Config\Directory\Iterator
+ * @package  Laventure\Component\Common\Directory\Iterator
  */
 class DirectoryIterator extends FilterIterator
 {

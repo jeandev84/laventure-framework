@@ -14,7 +14,7 @@ use Laventure\Contract\Reader\ReaderInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Config\Directory\Writer\Writer
+ * @package  Laventure\Component\Common\Directory\Writer\Writer
  */
 interface DirectoryReaderInterface extends ReaderInterface, HasDirectoryInterface
 {

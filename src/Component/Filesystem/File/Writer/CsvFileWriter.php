@@ -13,7 +13,7 @@ use Laventure\Contract\Writer\WriterInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Config\File\Writer
+ * @package  Laventure\Component\Common\File\Writer
  */
 class CsvFileWriter implements WriterInterface
 {

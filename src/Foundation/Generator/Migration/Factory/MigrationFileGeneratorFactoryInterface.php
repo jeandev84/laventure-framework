@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Generator\Migration\Factory;
-
 
 use Laventure\Foundation\Generator\Migration\MigrationFileGeneratorInterface;
 
@@ -17,12 +17,11 @@ use Laventure\Foundation\Generator\Migration\MigrationFileGeneratorInterface;
  */
 interface MigrationFileGeneratorFactoryInterface
 {
-
-       /**
-        * @param string $type
-        * @return MigrationFileGeneratorInterface
-       */
-       public function createGenerator(
-           string $type
-       ): MigrationFileGeneratorInterface;
+    /**
+     * @param string $type
+     * @return MigrationFileGeneratorInterface
+    */
+    public function createGenerator(
+        string $type
+    ): MigrationFileGeneratorInterface;
 }

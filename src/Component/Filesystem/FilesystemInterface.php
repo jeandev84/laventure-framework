@@ -6,6 +6,7 @@ namespace Laventure\Component\Filesystem;
 
 use Laventure\Component\Filesystem\Directory\Contract\DirectoryInterface;
 use Laventure\Component\Filesystem\File\Collection\FileCollection;
+use Laventure\Component\Filesystem\File\Collection\FileCollectionInterface;
 use Laventure\Component\Filesystem\File\Contract\FileInterface;
 use Laventure\Component\Filesystem\File\File;
 use Laventure\Component\Filesystem\File\Locator\FileLocator;
@@ -20,7 +21,7 @@ use Laventure\Component\Filesystem\Stream\Stream;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Config
+ * @package  Laventure\Component\Common
  */
 interface FilesystemInterface
 {
@@ -109,9 +110,9 @@ interface FilesystemInterface
 
     /**
      * @param string $pattern
-     * @return FileCollection
+     * @return FileCollectionInterface
     */
-    public function collection(string $pattern): FileCollection;
+    public function files(string $pattern): FileCollectionInterface;
 
 
 
@@ -120,9 +121,9 @@ interface FilesystemInterface
     /**
      * @param string $directory
      * @param string $extension
-     * @return FileCollection
+     * @return FileCollectionInterface
     */
-    public function directoryFiles(string $directory, string $extension = 'php'): FileCollection;
+    public function directoryFiles(string $directory, string $extension = 'php'): FileCollectionInterface;
 
 
 

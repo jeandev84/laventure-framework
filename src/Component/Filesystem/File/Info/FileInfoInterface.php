@@ -11,7 +11,7 @@ namespace Laventure\Component\Filesystem\File\Info;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Config\File\Info
+ * @package  Laventure\Component\Common\File\Info
 */
 interface FileInfoInterface
 {

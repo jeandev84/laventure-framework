@@ -11,7 +11,7 @@ namespace Laventure\Component\Filesystem\File\Collection;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Config\File\ObjectCollection
+ * @package  Laventure\Component\Common\File\ObjectCollection
 */
 interface FileCollectionInterface
 {

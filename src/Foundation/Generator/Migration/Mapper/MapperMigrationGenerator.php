@@ -21,8 +21,6 @@ use Laventure\Foundation\Generator\Migration\MigrationFileGenerator;
  */
 class MapperMigrationGenerator extends MigrationFileGenerator
 {
-
-
     /**
      * @param Application $app
      * @param FilesystemInterface $filesystem
@@ -32,8 +30,7 @@ class MapperMigrationGenerator extends MigrationFileGenerator
         Application $app,
         FilesystemInterface $filesystem,
         ConfigInterface $config
-    )
-    {
+    ) {
         parent::__construct($app, $filesystem, $config);
         $this->withClassName(sprintf('Version%s', date('YmdHis')));
     }
@@ -68,6 +65,6 @@ class MapperMigrationGenerator extends MigrationFileGenerator
     */
     public function getStubPath(): string
     {
-         return __DIR__.'/stub/migration.stub';
+        return __DIR__.'/stub/migration.stub';
     }
 }

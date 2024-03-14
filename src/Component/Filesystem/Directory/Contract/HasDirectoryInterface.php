@@ -11,7 +11,7 @@ namespace Laventure\Component\Filesystem\Directory\Contract;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Config\Directory\Writer
+ * @package  Laventure\Component\Common\Directory\Writer
  */
 interface HasDirectoryInterface
 {

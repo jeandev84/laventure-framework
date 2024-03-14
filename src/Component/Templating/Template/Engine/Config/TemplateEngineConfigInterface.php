@@ -17,7 +17,7 @@ use Laventure\Component\Templating\Template\Reader\TemplateReaderInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Templating\Template\Engine\Config
+ * @package  Laventure\Component\Templating\Template\Engine\Common
 */
 interface TemplateEngineConfigInterface
 {

@@ -8,7 +8,7 @@ use Laventure\Component\Filesystem\File\Collection\FileCollection;
 use Laventure\Foundation\Loader\FilesDirectory\FilesDirectoryLoader;
 
 /**
- * ControllerDirectoryLoader
+ * Laventure\Foundation\Loader\Controller
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -16,15 +16,14 @@ use Laventure\Foundation\Loader\FilesDirectory\FilesDirectoryLoader;
  *
  * @package  Laventure\Foundation\Loader\Controller
 */
-class ControllerDirectoryLoader extends FilesDirectoryLoader
+class ControllerLoader extends FilesDirectoryLoader
 {
-
     /**
      * @inheritDoc
     */
     public function getPrefix(): string
     {
-       return $this->config['routes.controllers.prefix'];
+        return $this->config['routes.controllers.prefix'];
     }
 
 

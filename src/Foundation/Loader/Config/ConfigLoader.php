@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Loader\Config;
@@ -16,7 +17,7 @@ use Laventure\Contract\Loader\LoaderInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Foundation\Loader\Config
+ * @package  Laventure\Foundation\Loader\Common
 */
 class ConfigLoader extends FileLoader
 {
@@ -43,7 +44,7 @@ class ConfigLoader extends FileLoader
     */
     public function getCollection(): FileCollection
     {
-        return $this->filesystem->collection($this->file);
+        return $this->filesystem->files($this->file);
     }
 
 

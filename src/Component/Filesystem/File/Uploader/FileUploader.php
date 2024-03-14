@@ -14,7 +14,7 @@ use Laventure\Component\Filesystem\File\Uploader\Exception\FileUploaderException
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Config\File\Uploader
+ * @package  Laventure\Component\Common\File\Uploader
  */
 class FileUploader extends AbstractFileUploader
 {

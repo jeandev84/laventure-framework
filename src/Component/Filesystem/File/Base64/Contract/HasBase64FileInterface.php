@@ -11,7 +11,7 @@ namespace Laventure\Component\Filesystem\File\Base64\Contract;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Config\File\Base64\Writer
+ * @package  Laventure\Component\Common\File\Base64\Writer
  */
 interface HasBase64FileInterface
 {
