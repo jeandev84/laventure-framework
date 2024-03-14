@@ -7,6 +7,7 @@ namespace Laventure\Foundation\Console\Commands\Database\Migration;
 use Laventure\Component\Console\Command\Command;
 use Laventure\Component\Console\Input\InputInterface;
 use Laventure\Component\Console\Output\OutputInterface;
+use Laventure\Component\Database\Schema\Migrator\MigratorInterface;
 
 /**
  * MigrationRefreshCommand
@@ -38,10 +39,26 @@ class MigrationRefreshCommand extends Command
 
 
     /**
+     * @param MigratorInterface $migrator
+     */
+    public function __construct(protected MigratorInterface $migrator)
+    {
+        parent::__construct($this->name);
+    }
+
+
+
+    /**
      * @inheritDoc
-    */
+     */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
+        if ($this->migrator->refresh()) {
+            $output->writeln("Rollback migrations.");
+        } else {
+            $output->info("All migrations already removed.");
+        }
+
         return Command::SUCCESS;
     }
 
@@ -51,7 +68,7 @@ class MigrationRefreshCommand extends Command
 
     /**
      * @return string[]
-    */
+     */
     public function getUsage(): array
     {
         return ["$this->name [options]"];

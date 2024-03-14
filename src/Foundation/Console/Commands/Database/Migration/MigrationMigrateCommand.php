@@ -43,9 +43,7 @@ class MigrationMigrateCommand extends Command
     /**
      * @param MigratorInterface $migrator
     */
-    public function __construct(
-        protected MigratorInterface $migrator
-    )
+    public function __construct(protected MigratorInterface $migrator)
     {
         parent::__construct($this->name);
     }
@@ -57,7 +55,17 @@ class MigrationMigrateCommand extends Command
     */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        dd($this->migrator->getMigrations());
+        if ($migrations = $this->migrator->migrate()) {
+            $output->writeln("Migrated");
+            /*
+            foreach ($migrations as $migration) {
+                $output->writeln("Migration {$migration->getName()} successfully applied.");
+            }
+            */
+
+        } else {
+            $output->info("All migrations already applied.");
+        }
 
         return Command::SUCCESS;
     }

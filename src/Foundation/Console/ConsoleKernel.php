@@ -15,7 +15,7 @@ use Laventure\Foundation\Console\Commands\Command\MakeCommand;
 use Laventure\Foundation\Console\Commands\Controller\MakeControllerCommand;
 use Laventure\Foundation\Console\Commands\Database\DatabaseCreateCommand;
 use Laventure\Foundation\Console\Commands\Database\DatabaseDropCommand;
-use Laventure\Foundation\Console\Commands\Database\Migration\MakeMigrationCommand;
+use Laventure\Foundation\Console\Commands\Database\Migration\MigrationMakeCommand;
 use Laventure\Foundation\Console\Commands\Database\Migration\MigrationInstallCommand;
 use Laventure\Foundation\Console\Commands\Database\Migration\MigrationMigrateCommand;
 use Laventure\Foundation\Console\Commands\Database\Migration\MigrationRefreshCommand;
@@ -68,7 +68,7 @@ class ConsoleKernel implements ConsoleKernelInterface
         MakeControllerCommand::class,
         MakeEntityCommand::class,
         MakeResourceCommand::class,
-        MakeMigrationCommand::class,
+        MigrationMakeCommand::class,
         // database commands
         DatabaseCreateCommand::class,
         DatabaseDropCommand::class,

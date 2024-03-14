@@ -172,6 +172,7 @@ class Migrator implements MigratorInterface
 
 
     /**
+     * @return MigrationInterface[]
      * @inheritDoc
     */
     public function migrate(): bool
@@ -182,7 +183,7 @@ class Migrator implements MigratorInterface
             $this->up($migration);
         }
 
-        return $this->migrated();
+        return true;
     }
 
 

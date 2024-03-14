@@ -11,7 +11,7 @@ use Laventure\Foundation\Generator\Migration\Factory\MigrationFileGeneratorFacto
 use Laventure\Foundation\Generator\Migration\MigrationFileGeneratorInterface;
 
 /**
- * MakeMigrationCommand
+ * MigrationMakeCommand
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -19,7 +19,7 @@ use Laventure\Foundation\Generator\Migration\MigrationFileGeneratorInterface;
  *
  * @package  Laventure\Foundation\Console\Commands\Database\Schema\Migration
 */
-class MakeMigrationCommand extends Command
+class MigrationMakeCommand extends Command
 {
     /**
      * @var string
