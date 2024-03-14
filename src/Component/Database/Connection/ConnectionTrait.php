@@ -113,6 +113,20 @@ trait ConnectionTrait
 
 
 
+    /**
+     * Returns database name
+     *
+     * @return string
+    */
+    public function getDatabaseName(): string
+    {
+        return $this->config->getDatabase();
+    }
+
+
+
+
+
 
 
     /**

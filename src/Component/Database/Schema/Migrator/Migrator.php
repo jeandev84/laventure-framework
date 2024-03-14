@@ -145,6 +145,18 @@ class Migrator implements MigratorInterface
 
 
 
+    /**
+     * @inheritDoc
+    */
+    public function installed(): bool
+    {
+        return $this->schema->exists($this->table);
+    }
+
+
+
+
+
 
 
 
@@ -156,20 +168,25 @@ class Migrator implements MigratorInterface
         $this->install();
 
         foreach ($this->getNewMigrations() as $migration) {
-
-            $migration->up($this->schema);
-            $qb = $this->connection->createQueryBuilder();
-            $qb->insert($this->table)
-                ->values([
-                    'version'     => $migration->getName(),
-                    'executed_at' => date('Y-m-d H:i:s')
-                ])
-                ->getQuery()
-                ->execute();
+            $this->up($migration);
         }
 
+        return $this->migrated();
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function migrated(): bool
+    {
         return empty($this->getNewMigrations());
     }
+
 
 
 
@@ -180,9 +197,7 @@ class Migrator implements MigratorInterface
     */
     public function rollback(): mixed
     {
-        foreach ($this->getMigrations() as $migration) {
-            $migration->down($this->schema);
-        }
+        $this->down();
 
         return $this->schema->truncate($this->table);
     }
@@ -206,6 +221,19 @@ class Migrator implements MigratorInterface
 
 
 
+    /**
+     * @inheritDoc
+    */
+    public function removed(): bool
+    {
+
+    }
+
+
+
+
+
+
 
     /**
      * @inheritDoc
@@ -216,6 +244,21 @@ class Migrator implements MigratorInterface
 
         return $this->migrate();
     }
+
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function refreshed(): bool
+    {
+
+    }
+
 
 
 
@@ -237,7 +280,7 @@ class Migrator implements MigratorInterface
      * @param string $name
      * @return bool
     */
-    public function migrated(string $name): bool
+    public function isOldMigration(string $name): bool
     {
         return in_array($name, $this->getOldMigrations());
     }
@@ -253,7 +296,7 @@ class Migrator implements MigratorInterface
     public function getNewMigrations(): array
     {
         $func = function (MigrationInterface $migration) {
-            return !$this->migrated($migration->getName());
+            return !$this->isOldMigration($migration->getName());
         };
 
         return array_filter($this->getMigrations(), $func);
@@ -296,7 +339,7 @@ class Migrator implements MigratorInterface
 
 
     /**
-     * @return SchemaInterface
+     * @inheritDoc
     */
     public function getSchema(): SchemaInterface
     {
@@ -308,10 +351,67 @@ class Migrator implements MigratorInterface
 
 
     /**
-     * @return ConnectionInterface
+     * @inheritDoc
     */
     public function getConnection(): ConnectionInterface
     {
         return $this->connection;
+    }
+
+
+
+
+
+
+    /**
+     * Update version table information and create current table schema
+     *
+     * @param MigrationInterface $migration
+     * @return bool
+    */
+    public function up(MigrationInterface $migration): bool
+    {
+         $migration->up($this->schema);
+
+         return $this->save($migration);
+    }
+
+
+
+
+
+
+
+    /**
+     * Rollback information version table and drop current schema
+     *
+     * @return void
+    */
+    public function down(): void
+    {
+        foreach ($this->getMigrations() as $migration) {
+            $migration->down($this->schema);
+        }
+    }
+
+
+
+
+
+    /**
+     * @param MigrationInterface $migration
+     * @return bool
+    */
+    public function save(MigrationInterface $migration): bool
+    {
+        $qb = $this->connection->createQueryBuilder();
+
+        return $qb->insert($this->table)
+                  ->values([
+                    'version'     => $migration->getName(),
+                    'executed_at' => date('Y-m-d H:i:s')
+                  ])
+                  ->getQuery()
+                  ->execute();
     }
 }

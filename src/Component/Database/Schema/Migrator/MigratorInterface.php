@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Migrator;
 
+use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Schema\Migration\MigrationInterface;
+use Laventure\Component\Database\Schema\SchemaInterface;
 
 /**
  * MigratorInterface
@@ -28,6 +30,16 @@ interface MigratorInterface
 
 
 
+    /**
+     * Determine if migration table installed
+     *
+     * @return bool
+    */
+    public function installed(): bool;
+
+
+
+
 
 
     /**
@@ -37,6 +49,17 @@ interface MigratorInterface
     */
     public function migrate(): mixed;
 
+
+
+
+
+
+    /**
+     * Determine if all versions migrated
+     *
+     * @return bool
+    */
+    public function migrated(): bool;
 
 
 
@@ -70,12 +93,32 @@ interface MigratorInterface
 
 
     /**
+     * Determine if all tables removed
+     *
+     * @return bool
+    */
+    public function removed(): bool;
+
+
+
+
+    /**
      * Refresh Migrations
      *
      * @return mixed
     */
     public function refresh(): mixed;
 
+
+
+
+
+    /**
+     * Determine if table
+     *
+     * @return bool
+    */
+    public function refreshed(): bool;
 
 
 
@@ -139,4 +182,30 @@ interface MigratorInterface
      * @return string
     */
     public function getTable(): string;
+
+
+
+
+
+
+
+    /**
+     * Returns the connection
+     *
+     * @return ConnectionInterface
+    */
+    public function getConnection(): ConnectionInterface;
+
+
+
+
+
+
+
+    /**
+     * Returns table schema
+     *
+     * @return SchemaInterface
+    */
+    public function getSchema(): SchemaInterface;
 }

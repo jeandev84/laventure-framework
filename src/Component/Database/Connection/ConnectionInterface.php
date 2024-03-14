@@ -229,4 +229,15 @@ interface ConnectionInterface extends TransactionInterface
      * @return DatabaseInterface
     */
     public function getDatabase(): DatabaseInterface;
+
+
+
+
+
+    /**
+     * Returns database name
+     *
+     * @return string
+    */
+    public function getDatabaseName(): string;
 }
