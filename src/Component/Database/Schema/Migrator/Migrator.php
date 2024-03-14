@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Migrator;
@@ -108,12 +107,8 @@ class Migrator implements MigratorInterface
 
 
 
-
-
-
     /**
-     * @param MigrationInterface $migration
-     * @return $this
+     * @inheritDoc
     */
     public function addMigration(MigrationInterface $migration): static
     {
@@ -128,9 +123,7 @@ class Migrator implements MigratorInterface
 
 
     /**
-     * @param MigrationInterface[] $migrations
-     *
-     * @return $this
+     * @inheritDoc
     */
     public function addMigrations(array $migrations): static
     {

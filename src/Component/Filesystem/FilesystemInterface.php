@@ -112,7 +112,7 @@ interface FilesystemInterface
      * @param string $pattern
      * @return FileCollectionInterface
     */
-    public function files(string $pattern): FileCollectionInterface;
+    public function collection(string $pattern): FileCollectionInterface;
 
 
 
@@ -123,7 +123,7 @@ interface FilesystemInterface
      * @param string $extension
      * @return FileCollectionInterface
     */
-    public function directoryFiles(string $directory, string $extension = 'php'): FileCollectionInterface;
+    public function collectionFilesFromDirectory(string $directory, string $extension = 'php'): FileCollectionInterface;
 
 
 

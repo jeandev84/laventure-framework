@@ -23,7 +23,7 @@ use Laventure\Foundation\Loader\Controller\ControllerLoader;
  *
  * @package  Laventure\Foundation\Providers
  */
-class RouterServiceProvider extends ServiceProvider implements BootableServiceProvider
+class RouterServiceProvider extends ServiceProvider
 {
     /**
      * @var array
@@ -39,18 +39,6 @@ class RouterServiceProvider extends ServiceProvider implements BootableServicePr
 
 
 
-    /**
-     * @inheritDoc
-    */
-    public function boot(): void
-    {
-        $this->app->singleton(ControllerLoader::class, function (Filesystem $fs, Config $config) {
-            return new ControllerLoader($fs, $config);
-        });
-
-    }
-
-
 
 
 
@@ -59,21 +47,13 @@ class RouterServiceProvider extends ServiceProvider implements BootableServicePr
     */
     public function register(): void
     {
-        $this->app->singleton(RouterInterface::class, function (Config $config) {
+        $this->app->singleton(RouterInterface::class, function (
+            ControllerLoader $controllerLoader
+        ) {
+            $config = $controllerLoader->getConfig();
             $router = new Router($config['routes.controllers.prefix']);
-            $router->addControllers($this->loadControllers());
+            $router->addControllers($controllerLoader->load());
             return $router;
         });
-    }
-
-
-
-
-    /**
-     * @return string[]
-    */
-    private function loadControllers(): array
-    {
-        return $this->app[ControllerLoader::class]->load();
     }
 }

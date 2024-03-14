@@ -1,10 +1,8 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Generator\Controller;
 
-use Laventure\Component\Filesystem\File\File;
 use Laventure\Foundation\Generator\Class\ClassGenerator;
 
 /**
@@ -40,6 +38,8 @@ class ControllerGenerator extends ClassGenerator implements ControllerGeneratorI
     {
         return $this->trimPath($this->config['routes.controllers.dir']);
     }
+
+
 
 
 

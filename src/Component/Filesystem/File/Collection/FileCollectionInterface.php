@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Filesystem\File\Collection;
 
+use Laventure\Component\Filesystem\File\Contract\FileInterface;
+
 /**
  * FileCollectionInterface
  *
@@ -16,7 +18,14 @@ namespace Laventure\Component\Filesystem\File\Collection;
 interface FileCollectionInterface
 {
     /**
+     * @return FileInterface[]
+    */
+    public function getFiles(): array;
+
+
+
+    /**
      * @return array
     */
-    public function getFiles(): mixed;
+    public function getPaths(): array;
 }

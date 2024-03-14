@@ -22,7 +22,7 @@ class ModelMigrationLoader extends FilesDirectoryLoader implements ModelMigratio
     */
     public function getPrefix(): string
     {
-        return $this->config['database.orm.model.prefix'];
+        return $this->config['database.orm.model.migrations.prefix'];
     }
 
 

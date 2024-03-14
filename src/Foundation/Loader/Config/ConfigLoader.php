@@ -44,7 +44,7 @@ class ConfigLoader extends FileLoader
     */
     public function getCollection(): FileCollection
     {
-        return $this->filesystem->files($this->file);
+        return $this->filesystem->collection($this->file);
     }
 
 

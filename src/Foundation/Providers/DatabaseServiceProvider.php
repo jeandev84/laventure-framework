@@ -103,8 +103,13 @@ class DatabaseServiceProvider extends ServiceProvider
                 $registry->setManager($em);
                 return $registry;
             },
-            MigratorInterface::class => function (ManagerInterface $manager) {
-                return $manager->migration();
+            MigratorInterface::class => function (
+                ManagerInterface $manager,
+                MigrationLoaderInterface $migrationLoader
+            ) {
+                $migrator = $manager->migration();
+                $migrator->addMigrations($migrationLoader->load());
+                return $migrator;
             }
         ]);
     }

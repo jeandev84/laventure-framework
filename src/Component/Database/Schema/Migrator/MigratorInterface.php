@@ -1,10 +1,10 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Migrator;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
+use Laventure\Component\Database\Schema\Migration\Collection\MigrationCollectionInterface;
 use Laventure\Component\Database\Schema\Migration\MigrationInterface;
 use Laventure\Component\Database\Schema\SchemaInterface;
 
@@ -17,7 +17,7 @@ use Laventure\Component\Database\Schema\SchemaInterface;
  *
  * @package  Laventure\Component\Database\Migrator
 */
-interface MigratorInterface
+interface MigratorInterface extends MigrationCollectionInterface
 {
     /**
      * Create a migration version table
@@ -120,17 +120,6 @@ interface MigratorInterface
     */
     public function refreshed(): bool;
 
-
-
-
-
-
-    /**
-     * Get all Migrations
-     *
-     * @return MigrationInterface[]
-    */
-    public function getMigrations(): array;
 
 
 

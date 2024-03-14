@@ -184,7 +184,7 @@ class Filesystem implements FilesystemInterface
     /**
      * @inheritDoc
     */
-    public function files(string $pattern): FileCollectionInterface
+    public function collection(string $pattern): FileCollectionInterface
     {
         $files = $this->fileFactory->createFromArray(
             $this->resources($pattern)
@@ -200,7 +200,10 @@ class Filesystem implements FilesystemInterface
     /**
      * @inheritDoc
     */
-    public function directoryFiles(string $directory, string $extension = 'php'): FileCollectionInterface
+    public function collectionFilesFromDirectory(
+        string $directory,
+        string $extension = 'php'
+    ): FileCollectionInterface
     {
         $files = $this->dir($directory)->getFiles($extension);
 

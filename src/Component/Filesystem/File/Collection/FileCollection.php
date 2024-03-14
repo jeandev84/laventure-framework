@@ -46,7 +46,7 @@ class FileCollection implements FileCollectionInterface
     */
     public function addFile(File $file): File
     {
-        $this->paths[$file->getPath()] = $file;
+        $this->paths[] = $file->getPath();
         return $this->files[] = $file;
     }
 
@@ -85,9 +85,13 @@ class FileCollection implements FileCollectionInterface
 
 
 
+
+
+
+
     /**
-     * @return array
-     */
+     * @inheritDoc
+    */
     public function getPaths(): array
     {
         return $this->paths;

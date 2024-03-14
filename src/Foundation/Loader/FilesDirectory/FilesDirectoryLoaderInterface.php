@@ -24,7 +24,7 @@ interface FilesDirectoryLoaderInterface extends LoaderInterface
      *
      * @return FileCollectionInterface
     */
-    public function getFiles(): FileCollectionInterface;
+    public function getCollection(): FileCollectionInterface;
 
 
 

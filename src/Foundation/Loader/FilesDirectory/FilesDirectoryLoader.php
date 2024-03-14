@@ -7,6 +7,7 @@ namespace Laventure\Foundation\Loader\FilesDirectory;
 use Laventure\Component\Config\ConfigInterface;
 use Laventure\Component\Filesystem\File\Collection\FileCollection;
 use Laventure\Component\Filesystem\File\Collection\FileCollectionInterface;
+use Laventure\Component\Filesystem\File\Convertor\FileToClassConvertor;
 use Laventure\Component\Filesystem\Filesystem;
 use Laventure\Contract\Loader\LoaderInterface;
 
@@ -62,13 +63,24 @@ abstract class FilesDirectoryLoader implements FilesDirectoryLoaderInterface
     /**
      * @inheritDoc
     */
-    public function getFiles(): FileCollectionInterface
+    public function getCollection(): FileCollectionInterface
     {
-        return $this->filesystem->directoryFiles(
+        return $this->filesystem->collectionFilesFromDirectory(
             $this->getDirectory()
         );
     }
 
+
+
+
+
+    /**
+     * @return ConfigInterface
+    */
+    public function getConfig(): ConfigInterface
+    {
+        return $this->config;
+    }
 
 
 
@@ -79,54 +91,13 @@ abstract class FilesDirectoryLoader implements FilesDirectoryLoaderInterface
     */
     public function load(): array
     {
-        $controllers = [];
-        $collection = $this->getFiles();
-        $paths = array_keys($collection->getPaths());
+        $convertor = new FileToClassConvertor(
+            $this->filesystem->getRoot(),
+            $this->getDirectory(),
+            $this->getPrefix(),
+            $this->getCollection()->getPaths()
+        );
 
-        foreach ($paths as $path) {
-            $classname     = $this->resolvePath($path);
-            if (class_exists($classname)) {
-                $controllers[] = $classname;
-            }
-        }
-
-        return $controllers;
-    }
-
-
-
-
-
-
-
-
-    /**
-     * @param string $path
-     * @return string
-    */
-    private function resolvePath(string $path): string
-    {
-        $namespace = $this->getPrefix();
-        $search    = [$this->getDirectory(), '/'];
-        $replaces  = [$namespace, "\\"];
-        $basePath  = $this->filesystem->getRoot();
-        $path      = str_replace($basePath, '', $path);
-        $path      = ltrim($path, '/');
-        $info      = pathinfo($path);
-        $dirname   = str_replace($search, $replaces, $info['dirname']);
-        $filename = $info['filename'];
-        return "$dirname\\$filename";
-    }
-
-
-
-
-
-    /**
-     * @return ConfigInterface
-    */
-    public function config(): ConfigInterface
-    {
-        return $this->config;
+        return $convertor->convert();
     }
 }

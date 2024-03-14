@@ -21,7 +21,7 @@ class MapperMigrationLoader extends FilesDirectoryLoader implements MapperMigrat
     */
     public function getPrefix(): string
     {
-        return $this->config['database.orm.mapper.prefix'];
+        return $this->config['database.orm.mapper.migrations.prefix'];
     }
 
 
