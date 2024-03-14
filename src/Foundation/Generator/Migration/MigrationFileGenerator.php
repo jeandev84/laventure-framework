@@ -45,7 +45,6 @@ abstract class MigrationFileGenerator extends ClassGenerator implements Migratio
     */
     public function getTableName(): string
     {
-        dd($this->tableName);
         if (!$this->tableName) {
             throw new MigrationGeneratorException(
         "No table specified for generator ". get_called_class()
@@ -53,5 +52,21 @@ abstract class MigrationFileGenerator extends ClassGenerator implements Migratio
         }
 
         return $this->tableName;
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+     * @throws MigrationGeneratorException
+    */
+    public function getContent(): string
+    {
+        return $this->generateStub([
+            "DummyNamespace" => $this->getNamespace(),
+            "DummyClassName" => $this->getClassName(),
+            "DummyTableName" => $this->getTableName()
+        ]);
     }
 }

@@ -75,22 +75,6 @@ class MapperMigrationGenerator extends MigrationFileGenerator
 
 
 
-    /**
-     * @inheritDoc
-     * @throws MigrationGeneratorException
-    */
-    public function getContent(): string
-    {
-        return $this->generateStub([
-            "DummyNamespace" => $this->getNamespace(),
-            "DummyClassName" => $this->getClassName(),
-            "DummyTableName" => $this->getTableName()
-        ]);
-    }
-
-
-
-
 
     /**
      * @inheritDoc
