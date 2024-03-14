@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Manager\Factory;
+namespace Laventure\Component\Database\Manager\Factory\Contract;
 
+use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Manager\Contract\DatabaseManagerInterface;
 
 /**
@@ -18,7 +19,10 @@ use Laventure\Component\Database\Manager\Contract\DatabaseManagerInterface;
 interface DatabaseManagerFactoryInterface
 {
     /**
+     * Create database manager
+     *
+     * @param ConnectionInterface[] $connections
      * @return DatabaseManagerInterface
     */
-    public function createDatabaseManager(): DatabaseManagerInterface;
+    public function createManager(array $connections = []): DatabaseManagerInterface;
 }
