@@ -314,13 +314,12 @@ class Migrator implements MigratorInterface
             return [];
         }
 
-        $qb = $this->connection->createQueryBuilder();
-
-        return $qb->select('version')
-                  ->from($this->table)
-                  ->getQuery()
-                  ->fetch()
-                  ->columns();
+        return $this->connection->createQueryBuilder()
+                    ->select('version')
+                    ->from($this->table)
+                    ->getQuery()
+                    ->fetch()
+                    ->columns();
     }
 
 

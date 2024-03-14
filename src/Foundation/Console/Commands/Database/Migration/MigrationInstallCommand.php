@@ -41,9 +41,7 @@ class MigrationInstallCommand extends Command
     /**
      * @param MigratorInterface $migrator
     */
-    public function __construct(
-       protected MigratorInterface $migrator
-    )
+    public function __construct(protected MigratorInterface $migrator)
     {
         parent::__construct($this->name);
     }
