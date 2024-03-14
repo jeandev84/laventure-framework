@@ -70,21 +70,4 @@ class MapperMigrationGenerator extends MigrationFileGenerator
     {
          return __DIR__.'/stub/migration.stub';
     }
-
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function generate(): bool
-    {
-        dump($this->getTargetPath());
-        dd($this->getContent());
-
-
-        return parent::generate();
-    }
 }
