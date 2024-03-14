@@ -10,7 +10,7 @@ class Version202302281534 extends Migration
 {
     /**
      * @inheritDoc
-   */
+    */
     public function up(SchemaInterface $schema): void
     {
         $schema->create('cart', function (Blueprint $table) {

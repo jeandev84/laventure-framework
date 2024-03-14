@@ -53,6 +53,24 @@ class Migrator implements MigratorInterface
 
 
     /**
+     * Reference column of version table
+     *
+     * @var string
+    */
+    protected string $referenceColumn = 'version';
+
+
+
+
+    /**
+     * @var string
+    */
+    protected string $executedColumn  = 'executed_at';
+
+
+
+
+    /**
      * Collect Migrations
      *
      * @var MigrationInterface[]
@@ -135,8 +153,8 @@ class Migrator implements MigratorInterface
     {
         $func = function (Blueprint $table) {
             $table->id();
-            $table->string('version');
-            $table->datetime('executed_at');
+            $table->string($this->referenceColumn);
+            $table->datetime($this->executedColumn);
         };
 
         return $this->schema->create($this->table, $func);
@@ -167,7 +185,7 @@ class Migrator implements MigratorInterface
     {
         $this->install();
 
-        foreach ($this->getNewMigrations() as $migration) {
+        foreach ($this->getMigrationsToApply() as $migration) {
             $this->up($migration);
         }
 
@@ -184,8 +202,10 @@ class Migrator implements MigratorInterface
     */
     public function migrated(): bool
     {
-        return empty($this->getNewMigrations());
+        return empty($this->getMigrationsToApply());
     }
+
+
 
 
 
@@ -217,6 +237,8 @@ class Migrator implements MigratorInterface
 
         return $this->schema->drop($this->table);
     }
+
+
 
 
 
@@ -280,9 +302,9 @@ class Migrator implements MigratorInterface
      * @param string $name
      * @return bool
     */
-    public function isOldMigration(string $name): bool
+    public function isApplied(string $name): bool
     {
-        return in_array($name, $this->getOldMigrations());
+        return in_array($name, $this->getAppliedMigrations());
     }
 
 
@@ -293,10 +315,10 @@ class Migrator implements MigratorInterface
     /**
      * @inheritDoc
     */
-    public function getNewMigrations(): array
+    public function getMigrationsToApply(): array
     {
         $func = function (MigrationInterface $migration) {
-            return !$this->isOldMigration($migration->getName());
+            return !$this->isApplied($migration->getName());
         };
 
         return array_filter($this->getMigrations(), $func);
@@ -305,17 +327,20 @@ class Migrator implements MigratorInterface
 
 
 
+
+
     /**
      * @inheritDoc
     */
-    public function getOldMigrations(): array
+    public function getAppliedMigrations(): array
     {
-        if (! $this->schema->exists($this->table)) {
+        if (! $this->installed()) {
             return [];
         }
 
-        return $this->connection->createQueryBuilder()
-                    ->select('version')
+        return $this->connection
+                    ->createQueryBuilder()
+                    ->select($this->referenceColumn)
                     ->from($this->table)
                     ->getQuery()
                     ->fetch()
@@ -412,5 +437,17 @@ class Migrator implements MigratorInterface
                   ])
                   ->getQuery()
                   ->execute();
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getStatus(): mixed
+    {
+        return null;
     }
 }

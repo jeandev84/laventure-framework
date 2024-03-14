@@ -143,7 +143,7 @@ interface MigratorInterface
      *
      * @return MigrationInterface[]
     */
-    public function getNewMigrations(): array;
+    public function getMigrationsToApply(): array;
 
 
 
@@ -157,7 +157,7 @@ interface MigratorInterface
      *
      * @return string[]
     */
-    public function getOldMigrations(): array;
+    public function getAppliedMigrations(): array;
 
 
 
@@ -183,6 +183,15 @@ interface MigratorInterface
     */
     public function getTable(): string;
 
+
+
+
+
+
+    /**
+     * @return mixed
+    */
+    public function getStatus(): mixed;
 
 
 

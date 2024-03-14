@@ -29,7 +29,7 @@ class MigrationResetCommand extends Command
 
     /**
      * @var array
-     */
+    */
     protected array $description = [
         "Drop all table and remove the version table."
     ];
