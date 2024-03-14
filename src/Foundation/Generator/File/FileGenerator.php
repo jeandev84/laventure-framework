@@ -6,9 +6,9 @@ namespace Laventure\Foundation\Generator\File;
 
 use Laventure\Component\Config\ConfigInterface;
 use Laventure\Component\Filesystem\File\File;
-use Laventure\Component\Filesystem\File\Generator\FileGeneratorInterface;
 use Laventure\Component\Filesystem\Filesystem;
 use Laventure\Component\Filesystem\FilesystemInterface;
+use Laventure\Component\Filesystem\Generator\File\FileGeneratorInterface;
 use Laventure\Foundation\Application;
 
 /**

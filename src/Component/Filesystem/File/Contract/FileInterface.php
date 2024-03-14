@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Filesystem\File\Contract;
 
+use Laventure\Component\Filesystem\File\Info\FileInfo;
+
 /**
  * FileInterface
  *
@@ -90,6 +92,9 @@ interface FileInterface
     public function readAsArray(): array;
 
 
+
+
+
     /**
      * Write content into file
      *
@@ -146,6 +151,8 @@ interface FileInterface
 
 
 
+
+
     /**
      * @param string $content
      * @return mixed
@@ -181,10 +188,13 @@ interface FileInterface
 
 
 
+
+
     /**
-     * @return mixed
+     * @return FileInfo
     */
-    public function info(): mixed;
+    public function info(): FileInfo;
+
 
 
 
