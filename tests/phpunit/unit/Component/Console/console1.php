@@ -5,9 +5,9 @@ use Laventure\Component\Console\Console;
 use Laventure\Component\Console\Input\Types\Argv\ConsoleInputArgv;
 use Laventure\Component\Console\Output\ConsoleOutput;
 use Laventure\Component\Database\Configuration\Configuration;
-use Laventure\Component\Database\Manager\Manager;
 use Laventure\Component\Database\ORM\Persistence\Manager\Definition;
 use Laventure\Component\Database\ORM\Persistence\Manager\EntityManager;
+use Laventure\Foundation\Database\Manager\Manager;
 use PHPUnitTest\App\Commands\HelloCommand;
 use PHPUnitTest\App\Commands\Migration\MigrateCommand;
 

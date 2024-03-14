@@ -6,7 +6,6 @@ namespace Laventure\Component\Database\Manager\Factory;
 
 use Laventure\Component\Database\Manager\Contract\DatabaseManagerInterface;
 use Laventure\Component\Database\Manager\DatabaseManager;
-use Laventure\Component\Database\Manager\Factory\Contract\DatabaseManagerFactoryInterface;
 
 /**
  * DatabaseManagerFactory

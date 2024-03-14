@@ -1,7 +1,7 @@
 <?php
 
 use Laventure\Component\Database\Configuration\Configuration;
-use Laventure\Component\Database\Manager\Manager;
+use Laventure\Foundation\Database\Manager\Manager;
 use PHPUnitTest\App\Service\Migration\MigrationStack;
 
 

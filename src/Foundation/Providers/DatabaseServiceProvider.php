@@ -6,28 +6,23 @@ namespace Laventure\Foundation\Providers;
 
 use Laventure\Component\Config\Config;
 use Laventure\Component\Config\ConfigInterface;
-use Laventure\Component\Container\Service\Provider\Contract\BootableServiceProvider;
 use Laventure\Component\Container\Service\Provider\ServiceProvider;
 use Laventure\Component\Database\Connection\ConnectionInterface;
-use Laventure\Component\Database\Manager\Config\ManagerConfigurationInterface;
-use Laventure\Component\Database\Manager\Contract\ManagerInterface;
-use Laventure\Component\Database\Manager\Factory\Contract\ManagerFactoryInterface;
-use Laventure\Component\Database\Manager\Factory\ManagerFactory;
-use Laventure\Component\Database\Manager\Manager;
 use Laventure\Component\Database\ORM\Persistence\Manager\Contract\EntityManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Manager\Contract\ObjectManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Manager\EntityManager;
 use Laventure\Component\Database\ORM\Persistence\Manager\Factory\EntityManagerFactory;
-use Laventure\Component\Database\ORM\Persistence\Manager\Factory\EntityManagerFactoryInterface;
 use Laventure\Component\Database\ORM\Persistence\Manager\Registry\ManagerRegistry;
 use Laventure\Component\Database\ORM\Persistence\Manager\Registry\ManagerRegistryInterface;
 use Laventure\Component\Database\Schema\Migrator\Migrator;
 use Laventure\Component\Database\Schema\Migrator\MigratorInterface;
+use Laventure\Foundation\Database\Manager\Config\ManagerConfigurationInterface;
+use Laventure\Foundation\Database\Manager\Factory\ManagerFactory;
+use Laventure\Foundation\Database\Manager\Manager;
+use Laventure\Foundation\Database\Manager\ManagerInterface;
 use Laventure\Foundation\Loader\Migration\Factory\MigrationLoaderFactory;
-use Laventure\Foundation\Loader\Migration\Factory\MigrationLoaderFactoryInterface;
 use Laventure\Foundation\Loader\Migration\MigrationDirectoryLoader;
 use Laventure\Foundation\Loader\Migration\MigrationLoaderInterface;
-use Laventure\Foundation\Loader\Migration\Types\Model\ModelMigrationLoader;
 
 /**
  * DatabaseServiceProvider

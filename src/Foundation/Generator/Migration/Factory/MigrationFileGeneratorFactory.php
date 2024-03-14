@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Laventure\Foundation\Generator\Migration\Factory;
 
-use Laventure\Component\Database\Manager\Contract\ManagerInterface;
 use Laventure\Component\Database\ORM\Enum\OrmType;
+use Laventure\Foundation\Database\Manager\ManagerInterface;
 use Laventure\Foundation\Database\ORM\OrmCurrentName;
 use Laventure\Foundation\Generator\Migration\Exception\MigrationGeneratorException;
 use Laventure\Foundation\Generator\Migration\Mapper\MapperMigrationGenerator;

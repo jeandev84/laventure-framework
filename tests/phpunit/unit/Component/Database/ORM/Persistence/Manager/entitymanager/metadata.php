@@ -1,13 +1,10 @@
 <?php
 
 use Laventure\Component\Database\Configuration\Configuration;
-use Laventure\Component\Database\Manager\Manager;
 use Laventure\Component\Database\ORM\Persistence\Manager\Definition;
 use Laventure\Component\Database\ORM\Persistence\Manager\EntityManager;
-use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\ClassMetadata;
-use PHPUnitTest\App\Entity\Book;
+use Laventure\Foundation\Database\Manager\Manager;
 use PHPUnitTest\App\Entity\User;
-use PHPUnitTest\App\Service\Hash\EncryptedPassword;
 
 
 require_once __DIR__.'/vendor/autoload.php';

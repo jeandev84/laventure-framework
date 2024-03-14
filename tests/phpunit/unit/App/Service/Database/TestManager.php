@@ -4,9 +4,8 @@ declare(strict_types=1);
 namespace PHPUnitTest\App\Service\Database;
 
 use Laventure\Component\Database\Configuration\Configuration;
-use Laventure\Component\Database\Manager\Manager;
+use Laventure\Foundation\Database\Manager\Manager;
 use PDO;
-use function Symfony\Component\String\s;
 
 /**
  * TestManager
