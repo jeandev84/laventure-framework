@@ -63,7 +63,7 @@ class EntityRepositoryGenerator extends ClassGenerator implements EntityReposito
     /**
      * @inheritDoc
     */
-    public function getBaseNamespace(): string
+    public function getNamespace(): string
     {
         return $this->config['database.orm.mapper.repository.prefix'];
     }
@@ -158,15 +158,12 @@ class EntityRepositoryGenerator extends ClassGenerator implements EntityReposito
     }
 
 
-
-
-
     /**
-     * @return string
-     * @throws EntityRepositoryGeneratorException
+     * @inheritDoc
      * @throws ReflectionException
-    */
-    public function getClassFullName(): string
+     * @throws EntityRepositoryGeneratorException
+     */
+    public function getClassFullName(string $suffix = ''): string
     {
         $classname = $this->getEntity()->getName();
 

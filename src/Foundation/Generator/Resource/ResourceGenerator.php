@@ -53,8 +53,8 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
         protected EntityGenerator $entityGenerator
     ) {
         parent::__construct($app, $filesystem, $config);
-        $this->withClassSuffix(static::CONTROLLER_SUFFIX);
     }
+
 
 
 
@@ -66,20 +66,9 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
     public function withResource($resource): static
     {
         $this->entityGenerator->withClassName($resource);
-
         return $this->withController($resource);
     }
 
-
-
-
-    /**
-     * @return $this
-    */
-    public function removeClassSuffix(): static
-    {
-        return $this->withClassSuffix('');
-    }
 
 
 
@@ -91,8 +80,6 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
     */
     public function getResourceName(): string
     {
-        $this->removeClassSuffix();
-
         $resourceName = strtolower($this->getClassName());
 
         if (!$resourceName) {
@@ -145,9 +132,7 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
     */
     public function generateEntity(): bool
     {
-        dd($this->entityGenerator->getClassFullName());
-
-        if (!$this->entityGenerator->generated()) {
+        if ($this->entityGenerator->generated()) {
             return true;
         }
 
@@ -164,11 +149,12 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
      */
     public function generateStubMethods(): string
     {
-        $methodStubs = [];
+        $methodStubs    = [];
+        $resourceRoutes = $this->getResourceRoutes();
 
-        dd($this->getResourceRoutes());
+        dd($resourceRoutes);
 
-        foreach ($this->getResourceRoutes() as $action => $route) {
+        foreach ($resourceRoutes as $action => $route) {
             $methodStubs[] = $this->generateStubMethod($action, $route);
         }
 
@@ -187,7 +173,7 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
        $routes = [];
        foreach ($this->getResource()->getRoutes() as $route) {
            $action = $route->getActionName();
-           $route->action([$this->getControllerName(), $action]);
+           $route->action([$this->generateControllerName(), $action]);
            $routes[$action] = $route;
        }
        return $routes;
@@ -215,34 +201,6 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
         ]);
     }
 
-
-
-    /**
-     * @return string
-    */
-    public function getBaseNamespace(): string
-    {
-        $namespace = parent::getBaseNamespace();
-
-        if ($prefix = $this->getResourcePrefix()) {
-            $namespace = sprintf('%s\\%s', $namespace, $prefix);
-        }
-
-        return $namespace;
-    }
-
-
-
-
-
-
-    /**
-     * @return string
-    */
-    public function getResourceType(): string
-    {
-        return $this->getResource()->getType();
-    }
 
 
 

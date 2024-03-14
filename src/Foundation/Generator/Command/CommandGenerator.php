@@ -103,7 +103,7 @@ class CommandGenerator extends ClassGenerator implements CommandGeneratorInterfa
     /**
      * @inheritDoc
     */
-    public function getBaseNamespace(): string
+    public function getNamespace(): string
     {
         return $this->config['console.commands.prefix'];
     }

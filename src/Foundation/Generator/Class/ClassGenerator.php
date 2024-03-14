@@ -91,18 +91,6 @@ abstract class ClassGenerator extends FileGenerator implements ClassGeneratorInt
 
 
 
-    /**
-     * @param string $suffix
-     * @return $this
-    */
-    public function withClassSuffix(string $suffix): static
-    {
-        $this->suffix = $suffix;
-
-        return $this;
-    }
-
-
 
 
     /**
@@ -164,53 +152,20 @@ abstract class ClassGenerator extends FileGenerator implements ClassGeneratorInt
 
 
 
+
     /**
      * @inheritDoc
     */
-    public function generateFullClassName(string $suffix = ''): string
-    {
-        $className = $this->getClassName();
-
-        if ($module = $this->getModule()) {
-            $className = "$module\\$className";
-        }
-
-        return sprintf('%s%s', $className, $suffix);
-    }
-
-
-
-
-
-
-    /**
-     *  Returns namespace with module
-     *  (e.g, if exists module Api\Books namespace will be App\Http\Api\Books)
-     *  (e.g, if exists module Api namespace wille be App\Http\Api)
-     *
-     * @inheritDoc
-    */
-    public function getNamespace(): string
-    {
-        $namespace = $this->getBaseNamespace();
-        $module    = $this->getModule();
-
-        return $module ? "$namespace\\$module" : $namespace;
-    }
-
-
-
-
-    /**
-     * Returns entity full name
-     *
-     * @return string
-    */
-    public function getClassFullName(): string
+    public function getClassFullName(string $suffix = ''): string
     {
         $classname = $this->getClassName();
 
-        return sprintf("%s\\%s", $this->getNamespace(), $classname);
+        if ($module = $this->getModule()) {
+            $classname = "$module\\$classname";
+        }
+
+
+        return sprintf("%s\\%s%s", $this->getNamespace(), $classname, $suffix);
     }
 
 
@@ -233,11 +188,10 @@ abstract class ClassGenerator extends FileGenerator implements ClassGeneratorInt
 
 
 
-
     /**
      * @inheritDoc
      * @throws ClassGeneratorException
-     */
+    */
     public function getContent(): string
     {
         return $this->generateStub([

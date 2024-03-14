@@ -73,7 +73,7 @@ class EntityGenerator extends ClassGenerator implements EntityGeneratorInterface
     /**
      * @inheritDoc
     */
-    public function getBaseNamespace(): string
+    public function getNamespace(): string
     {
         return $this->config['database.orm.mapper.entity.prefix'];
     }

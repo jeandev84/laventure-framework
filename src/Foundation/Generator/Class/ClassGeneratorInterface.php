@@ -28,11 +28,17 @@ interface ClassGeneratorInterface extends FileGeneratorInterface
 
 
 
+
+
+
+
     /**
-     * Returns class namespace
+     *  Returns class namespace
+     *
+     *  (e.g, App\Http\Api\Books)
      *
      * @return string
-    */
+     */
     public function getNamespace(): string;
 
 
@@ -57,7 +63,7 @@ interface ClassGeneratorInterface extends FileGeneratorInterface
      * @param string $suffix
      * @return string
     */
-    public function generateFullClassName(string $suffix = ''): string;
+    public function getClassFullName(string $suffix = ''): string;
 
 
 
@@ -69,17 +75,6 @@ interface ClassGeneratorInterface extends FileGeneratorInterface
      */
     public function getMethods(): array;
 
-
-
-
-
-
-    /**
-     * Returns base namespace
-     *
-     * @return string
-    */
-    public function getBaseNamespace(): string;
 
 
 

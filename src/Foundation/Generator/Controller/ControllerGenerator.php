@@ -41,19 +41,6 @@ class ControllerGenerator extends ClassGenerator implements ControllerGeneratorI
     /**
      * @inheritDoc
     */
-    public function getControllerName(): string
-    {
-        return $this->withClassSuffix(self::CONTROLLER_SUFFIX)
-                    ->getClassFullName();
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
     public function getBaseDir(): string
     {
         return $this->trimPath($this->config['routes.controllers.dir']);
@@ -65,7 +52,7 @@ class ControllerGenerator extends ClassGenerator implements ControllerGeneratorI
     /**
      * @inheritDoc
     */
-    public function getBaseNamespace(): string
+    public function getNamespace(): string
     {
         return $this->config['routes.controllers.prefix'];
     }
@@ -92,5 +79,17 @@ class ControllerGenerator extends ClassGenerator implements ControllerGeneratorI
     public function getMethodStubPath(): string
     {
         return __DIR__.'/stub/action/default.stub';
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function generateControllerName(): string
+    {
+        return $this->getClassFullName(static::CONTROLLER_SUFFIX);
     }
 }

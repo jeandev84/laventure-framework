@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Foundation\Generator\Resource\Types\Api;
 
+use Laventure\Component\Routing\Route\Resource\Enums\ResourceType;
 use Laventure\Component\Routing\Route\Resource\Resource;
 use Laventure\Component\Routing\Route\Resource\Types\ApiResource;
 use Laventure\Component\Routing\Route\Route;
@@ -30,7 +31,22 @@ class ApiResourceGenerator extends ResourceGenerator
     {
         return new ApiResource(
             $this->getResourceName(),
-            $this->getClassName()
+            $this->generateControllerName()
+        );
+    }
+
+
+
+
+    /**
+     * @return string
+    */
+    public function getNamespace(): string
+    {
+        return sprintf(
+     '%s\\%s',
+            parent::getNamespace(),
+            ucfirst(ResourceType::API)
         );
     }
 
