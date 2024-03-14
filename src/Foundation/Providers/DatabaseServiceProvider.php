@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Laventure\Foundation\Providers;
 
 use Laventure\Component\Config\Config;
+use Laventure\Component\Container\Service\Provider\Contract\BootableServiceProvider;
 use Laventure\Component\Container\Service\Provider\ServiceProvider;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Manager\Contract\ManagerInterface;
@@ -12,6 +13,7 @@ use Laventure\Component\Database\ORM\Persistence\Manager\Contract\EntityManagerI
 use Laventure\Component\Database\ORM\Persistence\Manager\Contract\ObjectManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Manager\Definition;
 use Laventure\Component\Database\ORM\Persistence\Manager\EntityManager;
+use Laventure\Component\Database\ORM\Persistence\Manager\Factory\EntityManagerFactory;
 use Laventure\Component\Database\ORM\Persistence\Manager\Registry\ManagerRegistry;
 use Laventure\Component\Database\ORM\Persistence\Manager\Registry\ManagerRegistryInterface;
 use Laventure\Component\Database\Schema\Migrator\MigratorInterface;
@@ -25,7 +27,7 @@ use Laventure\Component\Database\Schema\Migrator\MigratorInterface;
  *
  * @package  Laventure\Foundation\Providers
 */
-class DatabaseServiceProvider extends ServiceProvider
+class DatabaseServiceProvider extends ServiceProvider implements BootableServiceProvider
 {
     /**
      * @var array|array[]
@@ -48,6 +50,16 @@ class DatabaseServiceProvider extends ServiceProvider
 
 
 
+    /**
+     * @inheritDoc
+    */
+    public function boot(): void
+    {
+
+    }
+
+
+
 
     /**
      * @inheritDoc
@@ -65,8 +77,8 @@ class DatabaseServiceProvider extends ServiceProvider
                 return $manager->connection();
             },
             EntityManagerInterface::class => function (ConnectionInterface $connection) {
-                $config = new Definition($connection);
-                return new EntityManager($config);
+                $entityManagerFactory = new EntityManagerFactory();
+                return $entityManagerFactory->createFromConnection($connection);
             },
             ManagerRegistryInterface::class => function (EntityManagerInterface $em) {
                 $registry = new ManagerRegistry();
