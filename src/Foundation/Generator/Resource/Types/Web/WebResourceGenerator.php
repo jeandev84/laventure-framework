@@ -28,7 +28,7 @@ class WebResourceGenerator extends ResourceGenerator implements WebResourceGener
     {
         return new WebResource(
             $this->getResourceName(),
-            $this->generateControllerName()
+            $this->getControllerName()
         );
     }
 

@@ -77,6 +77,23 @@ abstract class ClassGenerator extends FileGenerator implements ClassGeneratorInt
 
 
     /**
+     * @param string $suffix
+     * @return $this
+    */
+    public function withClassSuffix(string $suffix): static
+    {
+        $this->suffix = $suffix;
+
+        return $this;
+    }
+
+
+
+
+
+
+
+    /**
      * @param array $methods
      * @return $this
     */
@@ -138,13 +155,7 @@ abstract class ClassGenerator extends FileGenerator implements ClassGeneratorInt
     */
     public function getClassName(): string
     {
-        $classname = $this->getLastElementOfArray($this->classNames);
-
-        if ($this->suffix) {
-            $classname = sprintf('%s%s', $classname, $this->suffix);
-        }
-
-        return $classname;
+        return $this->getLastElementOfArray($this->classNames);
     }
 
 

@@ -31,6 +31,9 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
 {
 
 
+    const CONTROLLER_SUFFIX = 'Controller';
+
+
     /**
      * @var string|null
     */
@@ -110,6 +113,21 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
 
 
     /**
+     * @return string
+    */
+    public function getClassName(): string
+    {
+        return sprintf(
+    '%s%s',
+   parent::getClassName(),
+           self::CONTROLLER_SUFFIX
+        );
+    }
+
+
+
+
+    /**
      * @inheritDoc
      * @throws EntityGeneratorException
     */
@@ -142,6 +160,17 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
 
 
 
+    /**
+     * @return string
+    */
+    public function getControllerName(): string
+    {
+        return $this->getClassFullName(static::CONTROLLER_SUFFIX);
+    }
+
+
+
+
 
 
     /**
@@ -151,8 +180,6 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
     {
         $methodStubs    = [];
         $resourceRoutes = $this->getResourceRoutes();
-
-        dd($resourceRoutes);
 
         foreach ($resourceRoutes as $action => $route) {
             $methodStubs[] = $this->generateStubMethod($action, $route);
@@ -173,7 +200,7 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
        $routes = [];
        foreach ($this->getResource()->getRoutes() as $route) {
            $action = $route->getActionName();
-           $route->action([$this->generateControllerName(), $action]);
+           $route->action([$this->getControllerName(), $action]);
            $routes[$action] = $route;
        }
        return $routes;

@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Generator\Resource\Types\Api;
@@ -7,7 +6,6 @@ namespace Laventure\Foundation\Generator\Resource\Types\Api;
 use Laventure\Component\Routing\Route\Resource\Enums\ResourceType;
 use Laventure\Component\Routing\Route\Resource\Resource;
 use Laventure\Component\Routing\Route\Resource\Types\ApiResource;
-use Laventure\Component\Routing\Route\Route;
 use Laventure\Foundation\Generator\Resource\Exception\ResourceGeneratorException;
 use Laventure\Foundation\Generator\Resource\ResourceGenerator;
 
@@ -31,7 +29,7 @@ class ApiResourceGenerator extends ResourceGenerator
     {
         return new ApiResource(
             $this->getResourceName(),
-            $this->generateControllerName()
+            $this->getControllerName()
         );
     }
 
