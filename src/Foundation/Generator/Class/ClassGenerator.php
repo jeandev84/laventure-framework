@@ -154,7 +154,6 @@ abstract class ClassGenerator extends FileGenerator implements ClassGeneratorInt
             $classname = "$module\\$classname";
         }
 
-
         return sprintf("%s\\%s", $this->getNamespace(), $classname);
     }
 
