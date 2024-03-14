@@ -47,13 +47,11 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
      * @param Application $app
      * @param FilesystemInterface $filesystem
      * @param ConfigInterface $config
-     * @param EntityGenerator $entityGenerator
     */
     public function __construct(
         Application $app,
         FilesystemInterface $filesystem,
-        ConfigInterface $config,
-        protected EntityGenerator $entityGenerator
+        ConfigInterface $config
     ) {
         parent::__construct($app, $filesystem, $config);
     }
@@ -68,7 +66,6 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
     */
     public function withResource($resource): static
     {
-        $this->entityGenerator->withClassName($resource);
         return $this->withController($resource);
     }
 
@@ -80,10 +77,9 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
     */
     public function getClassName(): string
     {
-        return sprintf(
-            '%s%s',
-            parent::getClassName(),
-            static::CONTROLLER_SUFFIX
+        return sprintf('%s%s',
+       parent::getClassName(),
+               static::CONTROLLER_SUFFIX
         );
     }
 
@@ -111,20 +107,6 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
 
 
 
-
-
-    /**
-     * @inheritDoc
-     * @throws EntityGeneratorException
-    */
-    public function generate(): bool
-    {
-        if ($status = $this->generateEntity()) {
-            $status = parent::generate();
-        }
-
-        return $status;
-    }
 
 
 
