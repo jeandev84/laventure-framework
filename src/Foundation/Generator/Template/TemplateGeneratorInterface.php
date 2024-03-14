@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Foundation\Generator\Template;
 
-use Laventure\Component\Filesystem\Generator\File\FileGeneratorInterface;
+use Laventure\Component\Filesystem\File\Generator\FileGeneratorInterface;
 
 /**
  * TemplateGeneratorInterface

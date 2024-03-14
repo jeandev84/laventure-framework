@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Filesystem\Generator\Stub;
+namespace Laventure\Foundation\Generator\Stub;
 
 use Laventure\Contract\Generator\GeneratorInterface;
 
@@ -12,24 +12,23 @@ use Laventure\Contract\Generator\GeneratorInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Filesystem\Generator\Stub
+ * @package  Laventure\Foundation\Generator\Stub
 */
 interface StubGeneratorInterface extends GeneratorInterface
 {
-
-
-    /**
-     * @param string $stubPath
-     * @return $this
-    */
-    public function withStubPath(string $stubPath): static;
-
-
-
 
     /**
      * @param array $patterns
      * @return $this
     */
     public function withPatterns(array $patterns): static;
+
+
+
+
+
+    /**
+     * @return string
+    */
+    public function getStubPath(): string;
 }

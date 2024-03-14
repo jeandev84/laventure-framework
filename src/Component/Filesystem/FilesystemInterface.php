@@ -6,6 +6,7 @@ namespace Laventure\Component\Filesystem;
 
 use Laventure\Component\Filesystem\Directory\Contract\DirectoryInterface;
 use Laventure\Component\Filesystem\File\Collection\FileCollection;
+use Laventure\Component\Filesystem\File\Contract\FileInterface;
 use Laventure\Component\Filesystem\File\File;
 use Laventure\Component\Filesystem\File\Locator\FileLocator;
 use Laventure\Component\Filesystem\File\Locator\FileLocatorInterface;
@@ -73,9 +74,9 @@ interface FilesystemInterface
 
     /**
      * @param string $filename
-     * @return File
+     * @return FileInterface
     */
-    public function file(string $filename): File;
+    public function file(string $filename): FileInterface;
 
 
 

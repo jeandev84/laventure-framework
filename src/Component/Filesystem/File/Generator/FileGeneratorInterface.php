@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Filesystem\Generator\File;
+namespace Laventure\Component\Filesystem\File\Generator;
 
 use Laventure\Contract\Generator\GeneratorInterface;
 
@@ -12,7 +12,7 @@ use Laventure\Contract\Generator\GeneratorInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Filesystem\Generator\File
+ * @package  Laventure\Component\Filesystem\Generator
 */
 interface FileGeneratorInterface extends GeneratorInterface
 {

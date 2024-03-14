@@ -7,6 +7,7 @@ namespace Laventure\Component\Filesystem;
 use Laventure\Component\Filesystem\Directory\Directory;
 use Laventure\Component\Filesystem\Directory\Factory\DirectoryFactory;
 use Laventure\Component\Filesystem\File\Collection\FileCollection;
+use Laventure\Component\Filesystem\File\Contract\FileInterface;
 use Laventure\Component\Filesystem\File\Factory\FileCollectionFactory;
 use Laventure\Component\Filesystem\File\Factory\FileFactory;
 use Laventure\Component\Filesystem\File\File;
@@ -125,7 +126,7 @@ class Filesystem implements FilesystemInterface
     /**
      * @inheritDoc
     */
-    public function file(string $filename): File
+    public function file(string $filename): FileInterface
     {
         return $this->fileFactory->create(
             $this->locate($filename)
