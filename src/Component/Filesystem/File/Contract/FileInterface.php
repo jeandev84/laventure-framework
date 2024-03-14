@@ -14,7 +14,7 @@ use Laventure\Component\Filesystem\File\Info\FileInfo;
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
  * @package  Laventure\Component\Config\File\Writer
- */
+*/
 interface FileInterface
 {
     /**

@@ -11,7 +11,7 @@ namespace Laventure\Component\Database\ORM\ActiveRecord;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\ORM\ActiveRecord
+ * @package  Laventure\Component\Database\ORM\Model
  */
 interface ActiveRecordInterface
 {

@@ -11,6 +11,7 @@ use Laventure\Foundation\Generator\Resource\Exception\ResourceGeneratorException
 use Laventure\Foundation\Generator\Resource\ResourceGeneratorInterface;
 use Laventure\Foundation\Generator\Resource\Types\Api\ApiResourceGenerator;
 use Laventure\Foundation\Generator\Resource\Types\Web\WebResourceGenerator;
+use Psr\Container\ContainerInterface;
 
 /**
  * ResourceGeneratorFactory
@@ -31,10 +32,10 @@ class ResourceGeneratorFactory implements ResourceGeneratorFactoryInterface
 
 
     /**
-     * @param Application $app
+     * @param ContainerInterface $app
     */
     public function __construct(
-        protected Application $app
+        protected ContainerInterface $app
     ) {
     }
 

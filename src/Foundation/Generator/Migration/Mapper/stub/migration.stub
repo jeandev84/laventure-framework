@@ -1,0 +1,44 @@
+<?php
+declare(strict_types=1);
+
+namespace DummyNamespace;
+
+use Laventure\Component\Database\Schema\Migration\Migration;
+use Laventure\Component\Database\Schema\SchemaInterface;
+
+/**
+ * DummyClassName
+ *
+ * @author Jean-Claude <jeanyao@ymail.com>
+ *
+ * @package  DummyNamespace
+*/
+class DummyClassName extends Migration
+{
+
+    /**
+     * @inheritDoc
+    */
+    public function up(SchemaInterface $schema): void
+    {
+         /*
+           $schema->create('DummyTableName', function (Blueprint $table) {
+               $table->increments('id');
+               // ...
+           });
+         */
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function down(SchemaInterface $schema): void
+    {
+         /*
+           $schema->dropIfExists('DummyTableName');
+         */
+    }
+}

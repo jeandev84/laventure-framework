@@ -6,6 +6,7 @@ namespace Laventure\Foundation\Generator\Migration;
 
 use Laventure\Foundation\Generator\Class\ClassGenerator;
 use Laventure\Foundation\Generator\Class\ClassGeneratorInterface;
+use Laventure\Foundation\Generator\Migration\Exception\MigrationGeneratorException;
 
 /**
  * MigrationFileGenerator
@@ -16,34 +17,41 @@ use Laventure\Foundation\Generator\Class\ClassGeneratorInterface;
  *
  * @package  Laventure\Foundation\Generator\Migration
 */
-abstract class MigrationFileGenerator extends ClassGenerator implements ClassGeneratorInterface
+abstract class MigrationFileGenerator extends ClassGenerator implements MigrationFileGeneratorInterface
 {
+    
+    /**
+     * @var string 
+    */
+    protected string $tableName = '';
+    
+    
+    
     /**
      * @inheritDoc
     */
-    public function getBaseNamespace(): string
+    public function withTableName(string $tableName): static
     {
-
+        $this->tableName = $tableName;
+        
+        return $this;
     }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function getStubPath(): string
-    {
-
-    }
-
-
+    
+    
+    
 
     /**
      * @inheritDoc
     */
-    public function getBaseDir(): string
+    public function getTableName(): string
     {
+        dd($this->tableName);
+        if (!$this->tableName) {
+            throw new MigrationGeneratorException(
+        "No table specified for generator ". get_called_class()
+            );
+        }
 
+        return $this->tableName;
     }
 }
