@@ -42,4 +42,14 @@ class WebResourceGenerator extends ResourceGenerator implements WebResourceGener
     {
         return false;
     }
+
+
+
+    /**
+     * @return string
+    */
+    public function getMethodStubPath(): string
+    {
+        return __DIR__.'/stub/action.stub';
+    }
 }

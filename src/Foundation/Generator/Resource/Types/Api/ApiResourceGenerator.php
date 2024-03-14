@@ -68,7 +68,7 @@ class ApiResourceGenerator extends ResourceGenerator
 
 
     /**
-     * @return string
+     * @inheritDoc
     */
     public function getMethodStubPath(): string
     {

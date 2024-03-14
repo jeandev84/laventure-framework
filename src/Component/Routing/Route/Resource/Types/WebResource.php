@@ -42,8 +42,9 @@ class WebResource extends Resource
         return [
             $this->route(['GET|HEAD'], '', 'index', 'index'),
             $this->route(['GET'], '/{id}', 'show', 'show'),
-            $this->route(['GET'], '', 'create', 'create'),
-            $this->route(['POST'], '', 'store', 'store'),
+            $this->route(['GET'], '/create', 'create', 'create'),
+            $this->route(['POST'], '/store', 'store', 'store'),
+            $this->route(['GET'], '/{id}/edit', 'edit', 'edit'),
             $this->route(['PUT|PATCH'], '/{id}', 'update', 'update'),
             $this->route(['DELETE'], '/{id}', 'destroy', 'destroy')
         ];
