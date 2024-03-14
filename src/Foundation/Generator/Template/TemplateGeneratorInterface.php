@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Generator\Template;
-
 
 use Laventure\Component\Filesystem\File\Generator\FileGeneratorInterface;
 
@@ -17,5 +17,4 @@ use Laventure\Component\Filesystem\File\Generator\FileGeneratorInterface;
  */
 interface TemplateGeneratorInterface extends FileGeneratorInterface
 {
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Generator\Migration\Persistence;
@@ -16,5 +17,4 @@ use Laventure\Foundation\Generator\Migration\MigrationFileGenerator;
  */
 class PersistenceMigrationGenerator extends MigrationFileGenerator
 {
-
 }

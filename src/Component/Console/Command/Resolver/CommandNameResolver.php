@@ -15,7 +15,6 @@ namespace Laventure\Component\Console\Command\Resolver;
  */
 class CommandNameResolver
 {
-
     /**
      * @var string|null
     */
@@ -33,10 +32,11 @@ class CommandNameResolver
     /**
      * @param string|null $name
     */
-    public function __construct(string $name = null) {
-          if ($name) {
-              $this->withName($name);
-          }
+    public function __construct(string $name = null)
+    {
+        if ($name) {
+            $this->withName($name);
+        }
     }
 
 

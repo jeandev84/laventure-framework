@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Generator\Template;
@@ -16,7 +17,6 @@ use Laventure\Foundation\Generator\File\FileGenerator;
  */
 class TemplateGenerator extends FileGenerator implements TemplateGeneratorInterface
 {
-
     /**
      * @inheritDoc
     */

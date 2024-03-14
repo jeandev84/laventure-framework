@@ -163,7 +163,7 @@ class EntityRepositoryGenerator extends ClassGenerator implements EntityReposito
      * @throws ReflectionException
      * @throws EntityRepositoryGeneratorException
      */
-    public function getClassFullName(string $suffix = ''): string
+    public function getClassFullName(): string
     {
         $classname = $this->getEntity()->getName();
 

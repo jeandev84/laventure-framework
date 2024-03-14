@@ -183,7 +183,7 @@ abstract class Command implements CommandInterface
     */
     public function getNameAsArray(): array
     {
-         return $this->getCommandNameResolver()->loadNameAsArray();
+        return $this->getCommandNameResolver()->loadNameAsArray();
     }
 
 

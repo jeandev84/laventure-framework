@@ -41,8 +41,7 @@ class CommandGenerator extends ClassGenerator implements CommandGeneratorInterfa
         FilesystemInterface $filesystem,
         ConfigInterface $config,
         protected CommandNameResolver $commandNameResolver
-    )
-    {
+    ) {
         parent::__construct($app, $filesystem, $config);
     }
 

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Generator\Migration;
@@ -17,7 +18,6 @@ use Laventure\Foundation\Generator\Class\ClassGeneratorInterface;
 */
 abstract class MigrationFileGenerator extends ClassGenerator implements ClassGeneratorInterface
 {
-
     /**
      * @inheritDoc
     */

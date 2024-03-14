@@ -82,16 +82,16 @@ class MakeResourceCommand extends Command
         $resourceGenerator = $this->createResourceGenerator();
 
         if ($input->hasOption(ResourceType::API)) {
-             $resourceGenerator = $this->createResourceGenerator(ResourceType::API);
+            $resourceGenerator = $this->createResourceGenerator(ResourceType::API);
         }
 
         $resourceGenerator->withResource($resourceEntity);
         $generatorType = $resourceGenerator->getResource()->getType();
 
         if (!$resourceGenerator->generated()) {
-             if ($resourceGenerator->generate()) {
-                 $output->success("[$generatorType] resource [$resourceEntity] created successfully.");
-             }
+            if ($resourceGenerator->generate()) {
+                $output->success("[$generatorType] resource [$resourceEntity] created successfully.");
+            }
         } else {
             $output->info("[$generatorType] resource [$resourceEntity] already created!");
             return Command::INFO;

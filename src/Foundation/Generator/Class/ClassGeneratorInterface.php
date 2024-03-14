@@ -60,10 +60,9 @@ interface ClassGeneratorInterface extends FileGeneratorInterface
     /**
      * Returns full class name
      *
-     * @param string $suffix
      * @return string
     */
-    public function getClassFullName(string $suffix = ''): string;
+    public function getClassFullName(): string;
 
 
 

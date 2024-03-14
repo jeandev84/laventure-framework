@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Generator\Resource;
@@ -29,9 +30,7 @@ use Laventure\Foundation\Generator\Resource\Exception\ResourceGeneratorException
 */
 abstract class ResourceGenerator extends ControllerGenerator implements ResourceGeneratorInterface
 {
-
-
-    const CONTROLLER_SUFFIX = 'Controller';
+    public const CONTROLLER_SUFFIX = 'Controller';
 
 
     /**
@@ -75,6 +74,21 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
 
 
 
+    /**
+     * @return string
+    */
+    public function getClassName(): string
+    {
+        return sprintf(
+            '%s%s',
+            parent::getClassName(),
+            static::CONTROLLER_SUFFIX
+        );
+    }
+
+
+
+
 
 
     /**
@@ -83,12 +97,12 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
     */
     public function getResourceName(): string
     {
-        $resourceName = strtolower($this->getClassName());
+        $resourceName = strtolower(parent::getClassName());
 
         if (!$resourceName) {
-             throw new ResourceGeneratorException(
+            throw new ResourceGeneratorException(
                 "Empty resource name inside ". get_called_class()
-             );
+            );
         }
 
         return $resourceName;
@@ -105,22 +119,6 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
     {
         return ucfirst(
             $this->getResource()->getPrefix()
-        );
-    }
-
-
-
-
-
-    /**
-     * @return string
-    */
-    public function getClassName(): string
-    {
-        return sprintf(
-    '%s%s',
-   parent::getClassName(),
-           self::CONTROLLER_SUFFIX
         );
     }
 
@@ -165,7 +163,7 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
     */
     public function getControllerName(): string
     {
-        return $this->getClassFullName(static::CONTROLLER_SUFFIX);
+        return $this->getClassFullName();
     }
 
 
@@ -197,13 +195,13 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
     */
     public function getResourceRoutes(): array
     {
-       $routes = [];
-       foreach ($this->getResource()->getRoutes() as $route) {
-           $action = $route->getActionName();
-           $route->action([$this->getControllerName(), $action]);
-           $routes[$action] = $route;
-       }
-       return $routes;
+        $routes = [];
+        foreach ($this->getResource()->getRoutes() as $route) {
+            $action = $route->getActionName();
+            $route->action([$this->getControllerName(), $action]);
+            $routes[$action] = $route;
+        }
+        return $routes;
     }
 
 

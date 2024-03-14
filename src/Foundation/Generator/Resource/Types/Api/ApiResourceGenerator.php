@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Generator\Resource\Types\Api;
@@ -20,7 +21,6 @@ use Laventure\Foundation\Generator\Resource\ResourceGenerator;
 */
 class ApiResourceGenerator extends ResourceGenerator
 {
-
     /**
      * @inheritDoc
      * @throws ResourceGeneratorException
@@ -42,7 +42,7 @@ class ApiResourceGenerator extends ResourceGenerator
     public function getNamespace(): string
     {
         return sprintf(
-     '%s\\%s',
+            '%s\\%s',
             parent::getNamespace(),
             ucfirst(ResourceType::API)
         );

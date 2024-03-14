@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Generator\Resource\Factory;
-
 
 use Laventure\Foundation\Generator\Resource\ResourceGeneratorInterface;
 
@@ -17,12 +17,11 @@ use Laventure\Foundation\Generator\Resource\ResourceGeneratorInterface;
  */
 interface ResourceGeneratorFactoryInterface
 {
-
-       /**
-        * @param string $type
-        * @return ResourceGeneratorInterface
-       */
-       public function createResourceGenerator(
-           string $type
-       ): ResourceGeneratorInterface;
+    /**
+     * @param string $type
+     * @return ResourceGeneratorInterface
+    */
+    public function createResourceGenerator(
+        string $type
+    ): ResourceGeneratorInterface;
 }

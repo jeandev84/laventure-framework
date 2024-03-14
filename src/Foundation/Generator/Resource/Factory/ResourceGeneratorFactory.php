@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Generator\Resource\Factory;
@@ -22,8 +23,6 @@ use Laventure\Foundation\Generator\Resource\Types\Web\WebResourceGenerator;
  */
 class ResourceGeneratorFactory implements ResourceGeneratorFactoryInterface
 {
-
-
     /**
      * @var ResourceGeneratorInterface[]
     */
@@ -36,8 +35,7 @@ class ResourceGeneratorFactory implements ResourceGeneratorFactoryInterface
     */
     public function __construct(
         protected Application $app
-    )
-    {
+    ) {
     }
 
 

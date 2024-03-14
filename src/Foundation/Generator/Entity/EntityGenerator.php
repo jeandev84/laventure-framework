@@ -124,12 +124,12 @@ class EntityGenerator extends ClassGenerator implements EntityGeneratorInterface
     public function generate(): bool
     {
         if (empty($this->getClassName())) {
-             throw new EntityGeneratorException(
-         "Empty class name given from (". get_called_class() . ")",
-                 [
-                     'context' => "Actually has full name ". $this->getClassFullName()
-                 ]
-             );
+            throw new EntityGeneratorException(
+                "Empty class name given from (". get_called_class() . ")",
+                [
+                    'context' => "Actually has full name ". $this->getClassFullName()
+                ]
+            );
         }
 
         if($status = parent::generate()) {

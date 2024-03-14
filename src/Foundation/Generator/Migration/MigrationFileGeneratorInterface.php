@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Generator\Migration;
-
 
 use Laventure\Foundation\Generator\Class\ClassGeneratorInterface;
 
@@ -17,5 +17,4 @@ use Laventure\Foundation\Generator\Class\ClassGeneratorInterface;
  */
 interface MigrationFileGeneratorInterface extends ClassGeneratorInterface
 {
-
 }

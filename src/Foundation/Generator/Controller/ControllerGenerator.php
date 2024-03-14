@@ -18,7 +18,6 @@ use Laventure\Foundation\Generator\Class\ClassGenerator;
 */
 class ControllerGenerator extends ClassGenerator implements ControllerGeneratorInterface
 {
-
     /**
      * @param string $controller
      * @param array $actions
