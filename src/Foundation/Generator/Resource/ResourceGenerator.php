@@ -8,6 +8,7 @@ use Laventure\Component\Config\ConfigInterface;
 use Laventure\Component\Console\Input\Option\Exceptions\RequiredOptionException;
 use Laventure\Component\Filesystem\FilesystemInterface;
 use Laventure\Component\Routing\Route\Resource\Contract\ResourceInterface;
+use Laventure\Component\Routing\Route\Resource\Enums\ResourceType;
 use Laventure\Component\Routing\Route\Resource\Resource;
 use Laventure\Component\Routing\Route\Route;
 use Laventure\Component\Routing\Route\RouteInterface;
@@ -113,19 +114,6 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
 
 
     /**
-     * @return string
-    */
-    public function getResourcePrefix(): string
-    {
-        return ucfirst(
-            $this->getResource()->getPrefix()
-        );
-    }
-
-
-
-
-    /**
      * @inheritDoc
      * @throws EntityGeneratorException
     */
@@ -179,6 +167,8 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
         $methodStubs    = [];
         $resourceRoutes = $this->getResourceRoutes();
 
+        dd($resourceRoutes);
+
         foreach ($resourceRoutes as $action => $route) {
             $methodStubs[] = $this->generateStubMethod($action, $route);
         }
@@ -196,7 +186,11 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
     public function getResourceRoutes(): array
     {
         $routes = [];
-        foreach ($this->getResource()->getRoutes() as $route) {
+        $resourceRoutes = $this->getResource()
+                               ->withPrefix($this->getModule())
+                               ->getRoutes();
+
+        foreach ($resourceRoutes as $route) {
             $action = $route->getActionName();
             $route->action([$this->getControllerName(), $action]);
             $routes[$action] = $route;
@@ -226,6 +220,52 @@ abstract class ResourceGenerator extends ControllerGenerator implements Resource
         ]);
     }
 
+
+
+
+
+
+
+    /**
+     * @return string
+    */
+    public function getBaseDir(): string
+    {
+        return join(DIRECTORY_SEPARATOR, [
+            parent::getBaseDir(),
+            $this->getPrefix()
+        ]);
+    }
+
+
+
+
+
+    /**
+     * @return string
+    */
+    public function getNamespace(): string
+    {
+        $namespace = parent::getNamespace();
+
+        if ($prefix = $this->getPrefix()) {
+            $namespace = "$namespace\\$prefix";
+        }
+
+        return $namespace;
+    }
+
+
+
+
+
+    /**
+     * @return string
+    */
+    public function getPrefix(): string
+    {
+        return '';
+    }
 
 
 

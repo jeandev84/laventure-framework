@@ -33,7 +33,6 @@ class ControllerGenerator extends ClassGenerator implements ControllerGeneratorI
 
 
 
-
     /**
      * @inheritDoc
     */

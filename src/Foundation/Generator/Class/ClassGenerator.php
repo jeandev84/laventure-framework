@@ -108,7 +108,7 @@ abstract class ClassGenerator extends FileGenerator implements ClassGeneratorInt
     */
     public function getModule(): string
     {
-        return $this->module;
+        return trim($this->module, "\\/");
     }
 
 
@@ -163,6 +163,22 @@ abstract class ClassGenerator extends FileGenerator implements ClassGeneratorInt
 
 
     /**
+     * @return string
+    */
+    public function getNamespaceWithModule(): string
+    {
+        $namespace = $this->getNamespace();
+        $module    = $this->getModule();
+
+        return $module ? "$namespace\\$module" : $namespace;
+    }
+
+
+
+
+
+
+    /**
      * @inheritDoc
      */
     public function getTargetPath(): string
@@ -185,7 +201,7 @@ abstract class ClassGenerator extends FileGenerator implements ClassGeneratorInt
     public function getContent(): string
     {
         return $this->generateStub([
-            "DummyNamespace" => $this->getNamespace(),
+            "DummyNamespace" => $this->getNamespaceWithModule(),
             "DummyClassName" => $this->getClassName(),
             "DummyActions"   => $this->generateStubMethods()
         ]);

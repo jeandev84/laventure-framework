@@ -55,7 +55,7 @@ class ApiResource extends Resource
     /**
      * @return string
     */
-    public function prefixed(): string
+    public function prefixedPath(): string
     {
         return strtolower($this->type);
     }

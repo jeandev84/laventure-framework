@@ -40,7 +40,16 @@ abstract class Resource implements ResourceInterface
     protected string $controller;
 
 
-
+    
+    
+    
+    /**
+     * @var string 
+    */
+    protected string $prefix = '';
+    
+    
+    
 
     /**
      * @var RouteFactory
@@ -135,9 +144,14 @@ abstract class Resource implements ResourceInterface
     {
         $path = $this->name;
 
-        if ($prefixed = $this->prefixed()) {
+        if ($this->prefix) {
+            $path = "$this->prefix/$path";
+        }
+
+        if ($prefixed = $this->prefixedPath()) {
             $path = "$prefixed/$path";
         }
+
 
         if ($suffix) {
             $path .= "/";
@@ -176,8 +190,12 @@ abstract class Resource implements ResourceInterface
     {
         $name = sprintf('%s.%s', $this->name, $name);
 
-        if ($prefixed = $this->prefixed()) {
-            return "{$prefixed}.{$name}";
+        if ($this->prefix) {
+            $name = sprintf('%s.%s', $this->prefix, $name);
+        }
+
+        if ($prefixed = $this->prefixedPath()) {
+            return sprintf('%s.%s', $prefixed, $name);
         }
 
         return $name;
@@ -212,7 +230,7 @@ abstract class Resource implements ResourceInterface
     */
     public function getPrefix(): string
     {
-        return '';
+        return $this->prefix;
     }
 
 
@@ -222,7 +240,7 @@ abstract class Resource implements ResourceInterface
     /**
      * @return string
     */
-    public function prefixed(): string
+    public function prefixedPath(): string
     {
         return '';
     }
@@ -236,5 +254,20 @@ abstract class Resource implements ResourceInterface
     public function toArray(): array
     {
         return get_object_vars($this);
+    }
+
+    
+
+
+
+    
+    /**
+     * @inheritDoc
+    */
+    public function withPrefix(string $prefix): static
+    {
+        $this->prefix = strtolower($prefix);
+        
+        return $this;
     }
 }

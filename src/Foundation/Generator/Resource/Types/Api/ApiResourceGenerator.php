@@ -36,33 +36,17 @@ class ApiResourceGenerator extends ResourceGenerator
 
 
 
-    /**
-     * @return string
-    */
-    public function getNamespace(): string
-    {
-        return sprintf(
-            '%s\\%s',
-            parent::getNamespace(),
-            ucfirst(ResourceType::API)
-        );
-    }
-
-
-
-
 
 
     /**
      * @return string
     */
-    public function getBaseDir(): string
+    public function getPrefix(): string
     {
-        return join(DIRECTORY_SEPARATOR, [
-            parent::getBaseDir(),
-            $this->getResourcePrefix()
-        ]);
+        return ucfirst(ResourceType::API);
     }
+
+
 
 
 

@@ -29,6 +29,8 @@ interface ResourceInterface
 
 
 
+
+
     /**
      * Returns storage controller
      *
@@ -46,6 +48,16 @@ interface ResourceInterface
     */
     public function getType(): string;
 
+
+
+
+
+
+    /**
+     * @param string $prefix
+     * @return $this
+    */
+    public function withPrefix(string $prefix): static;
 
 
 

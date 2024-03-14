@@ -35,6 +35,9 @@ class WebResourceGenerator extends ResourceGenerator implements WebResourceGener
 
 
 
+
+
+
     /**
      * @inheritDoc
     */
