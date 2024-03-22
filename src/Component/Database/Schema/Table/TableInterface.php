@@ -550,30 +550,15 @@ interface TableInterface
 
 
 
-
-    /**
-     * Add column
-     *
-     * @param ColumnInterface $column
-     * @return ColumnInterface
-    */
-    public function add(ColumnInterface $column): ColumnInterface;
-
-
-
-
-
-
-
     /**
      * Add column
      *
      * @param string $name
      * @param string $type
-     * @param string $constraints
-     * @return ColumnInterface
-     */
-    public function addColumn(string $name, string $type, string $constraints = ''): ColumnInterface;
+     * @param array $parameters
+     * @return $this
+    */
+    public function addColumn(string $name, string $type, array $parameters = []): static;
 
 
 
@@ -585,9 +570,9 @@ interface TableInterface
      *
      * @param string $name
      * @param string $to
-     * @return mixed
+     * @return $this
     */
-    public function renameColumn(string $name, string $to): mixed;
+    public function renameColumn(string $name, string $to): static;
 
 
 
@@ -602,6 +587,9 @@ interface TableInterface
      * @return $this
     */
     public function dropColumn(string $name): static;
+
+
+
 
 
 

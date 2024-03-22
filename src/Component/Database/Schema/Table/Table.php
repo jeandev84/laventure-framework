@@ -84,9 +84,9 @@ abstract class Table implements TableInterface
     /**
      * @inheritDoc
     */
-    public function addColumn(string $name, string $type, string $constraints = ''): ColumnInterface
+    public function addColumn(string $name, string $type, array $parameters = []): static
     {
-        return $this->add($this->column($name, $type, $constraints));
+        return $this->add($this->column($name, $type, ''));
     }
 
 
@@ -170,9 +170,11 @@ abstract class Table implements TableInterface
     /**
      * @inheritdoc
     */
-    public function add(ColumnInterface $column): ColumnInterface
+    public function add(ColumnInterface $column): static
     {
-        return $this->columns[$column->getName()] = $column;
+        $this->columns[$column->getName()] = $column;
+        
+        return $this;
     }
 
 
@@ -583,18 +585,16 @@ abstract class Table implements TableInterface
     abstract public function create(): bool;
 
 
-
-
-
-
-
+    
+    
+    
     /**
-     * Create new instance of table column
+     * Create new column
      *
      * @param string $name
      * @param string $type
-     * @param string $constraints
+     * @param array $parameters
      * @return ColumnInterface
     */
-    abstract public function column(string $name, string $type = '', string $constraints = ''): ColumnInterface;
+    abstract public function column(string $name, string $type, array $parameters = []): ColumnInterface;
 }

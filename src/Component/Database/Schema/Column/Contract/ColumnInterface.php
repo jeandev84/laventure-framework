@@ -72,6 +72,8 @@ interface ColumnInterface extends HasConstraintInterface, HasOptionInterface, St
 
 
 
+
+
     /**
      * Define column as primary
      *
