@@ -77,4 +77,14 @@ class NullQueryResult implements QueryResultInterface
     {
         return 0;
     }
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function first(): mixed
+    {
+        return null;
+    }
 }

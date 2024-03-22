@@ -102,4 +102,16 @@ class QueryResult implements QueryResultInterface
     {
         return $this->statement->rowCount();
     }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function first(): mixed
+    {
+        return $this->all()[0] ?? null;
+    }
 }

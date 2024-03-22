@@ -38,6 +38,21 @@ interface QueryResultInterface
 
 
 
+
+    /**
+     * Returns first result
+     *
+     * @return mixed
+    */
+    public function first(): mixed;
+
+
+
+
+
+
+
+
     /**
      * Fetch result as array
      *
