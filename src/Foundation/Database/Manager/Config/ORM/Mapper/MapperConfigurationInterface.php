@@ -21,7 +21,6 @@ use Laventure\Foundation\Database\Manager\Config\ORM\Mapper\Repository\EntityRep
  */
 interface MapperConfigurationInterface extends ParameterInterface
 {
-
     /**
      * @return EntityConfigurationInterface
     */

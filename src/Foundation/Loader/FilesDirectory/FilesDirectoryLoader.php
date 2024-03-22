@@ -50,8 +50,7 @@ abstract class FilesDirectoryLoader implements FilesDirectoryLoaderInterface
     public function __construct(
         Filesystem $filesystem,
         ConfigInterface $config
-    )
-    {
+    ) {
         $this->filesystem = $filesystem;
         $this->config     = $config;
     }

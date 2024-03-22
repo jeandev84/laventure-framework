@@ -4,7 +4,6 @@ use Laventure\Component\Database\Configuration\Configuration;
 use Laventure\Foundation\Database\Manager\Manager;
 use PHPUnitTest\App\Service\Migration\MigrationStack;
 
-
 require_once __DIR__.'/vendor/autoload.php';
 
 

@@ -14,7 +14,7 @@ use Throwable;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Schema\Table\Exceptions
+ * @package  Laventure\Component\Database\Schema\Table\Exception
  */
 class NotFoundTableException extends TableException
 {

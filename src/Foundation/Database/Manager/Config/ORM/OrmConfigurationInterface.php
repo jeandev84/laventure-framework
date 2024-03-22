@@ -19,7 +19,6 @@ use Laventure\Foundation\Database\Manager\Config\ORM\Model\ModelConfigurationInt
  */
 interface OrmConfigurationInterface extends CommonConfigurationInterface
 {
-
     /**
      * Returns name of current ORM
      *

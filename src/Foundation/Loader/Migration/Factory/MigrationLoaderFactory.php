@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Loader\Migration\Factory;
@@ -21,15 +22,12 @@ use Psr\Container\ContainerInterface;
 */
 class MigrationLoaderFactory implements MigrationLoaderFactoryInterface
 {
-
-
     /**
      * @param ContainerInterface $app
     */
     public function __construct(
         protected ContainerInterface $app
-    )
-    {
+    ) {
     }
 
 
@@ -39,10 +37,10 @@ class MigrationLoaderFactory implements MigrationLoaderFactoryInterface
     */
     public function createMigrationLoader(string $type): MigrationLoaderInterface
     {
-         return match ($type) {
-             OrmType::Mapper => $this->app->get(MapperMigrationLoader::class),
-             OrmType::Model  => $this->app->get(ModelMigrationLoader::class),
-             default         => new MigrationLoaderException("Unavailable migration loader given type ($type)")
-         };
+        return match ($type) {
+            OrmType::Mapper => $this->app->get(MapperMigrationLoader::class),
+            OrmType::Model  => $this->app->get(ModelMigrationLoader::class),
+            default         => new MigrationLoaderException("Unavailable migration loader given type ($type)")
+        };
     }
 }

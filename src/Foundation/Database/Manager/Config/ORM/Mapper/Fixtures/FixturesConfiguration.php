@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Database\Manager\Config\ORM\Mapper\Fixtures;
@@ -16,7 +17,6 @@ use Laventure\Utils\Parameter\Parameter;
 */
 class FixturesConfiguration extends Parameter implements FixturesConfigurationInterface
 {
-
     /**
      * @inheritDoc
      */

@@ -41,6 +41,21 @@ interface DatabaseInterface
 
 
 
+
+
+    /**
+     * Returns table names of database
+     *
+     * @return array
+    */
+    public function getTables(): array;
+
+
+
+
+
+
+
     /**
      * Create database
      *
@@ -66,6 +81,7 @@ interface DatabaseInterface
 
 
 
+
     /**
      * Drop database
      *
@@ -79,13 +95,32 @@ interface DatabaseInterface
 
 
 
+    /**
+     * Full back up of an existing SQL database
+     *
+     * @param string $filepath
+     * @return mixed
+    */
+    public function dump(string $filepath): mixed;
+
+
+
+
+
+
+
 
     /**
-     * Returns table names of database
+     * Back up only the parts of the database
+     * that have changed since the last full database backup
      *
-     * @return array
+     * @param string $filepath
+     * @return mixed
     */
-    public function getTables(): array;
+    public function dumpDiff(string $filepath): mixed;
+
+
+
 
 
 
@@ -98,6 +133,8 @@ interface DatabaseInterface
      * @return bool
     */
     public function exists(): bool;
+
+
 
 
 

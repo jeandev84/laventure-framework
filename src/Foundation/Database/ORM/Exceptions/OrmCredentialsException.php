@@ -13,7 +13,7 @@ use Laventure\Exceptions\BaseException;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Foundation\Database\ORM\Exceptions
+ * @package  Laventure\Foundation\Database\ORM\Exception
  */
 class OrmCredentialsException extends BaseException
 {

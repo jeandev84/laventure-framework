@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Database\Manager\Config\Common;
-
 
 use Laventure\Contract\Parameter\ParameterInterface;
 

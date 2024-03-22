@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PHPUnitTest\App\Service\Database;
@@ -45,12 +46,12 @@ class TestManager
     */
     public static function make($connection = null): Manager
     {
-       if (! static::$instance) {
-           $manager = new Manager();
-           $manager->open($connection ?: 'mysql', new Configuration(self::$config));
-           static::$instance = $manager;
-       }
+        if (! static::$instance) {
+            $manager = new Manager();
+            $manager->open($connection ?: 'mysql', new Configuration(self::$config));
+            static::$instance = $manager;
+        }
 
-       return static::$instance;
+        return static::$instance;
     }
 }

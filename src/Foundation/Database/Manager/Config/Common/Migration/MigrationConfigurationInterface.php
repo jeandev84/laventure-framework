@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Database\Manager\Config\Common\Migration;
-
 
 use Laventure\Foundation\Database\Manager\Config\Common\CommonConfigurationInterface;
 
@@ -17,8 +17,8 @@ use Laventure\Foundation\Database\Manager\Config\Common\CommonConfigurationInter
  */
 interface MigrationConfigurationInterface extends CommonConfigurationInterface
 {
-      /**
-       * @return string
-      */
-      public function version(): string;
+    /**
+     * @return string
+    */
+    public function version(): string;
 }
