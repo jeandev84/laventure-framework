@@ -41,7 +41,7 @@ class MysqlColumnFactory implements ColumnFactoryInterface
         return $this->createColumn($info->getField(), $info->getType())
                     ->comments($info->getComment())
                     ->collation($info->getCollation())
-                    ->withOptions([
+                    ->options([
                       'key'        => $info->getKey(),
                       'default'    => $info->getDefault(),
                       'privileges' => $info->getPrivileges()

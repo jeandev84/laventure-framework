@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Column\Contract;
@@ -18,17 +17,8 @@ use Stringable;
  *
  * @package  Laventure\Component\Database\Schema\Column\Contract
 */
-interface ColumnInterface extends HasOptionInterface, Stringable
+interface ColumnInterface extends Stringable
 {
-    /**
-     * Add constraints nullable
-     *
-     * @return $this
-    */
-    public function nullable(): static;
-
-
-
 
 
 
@@ -45,6 +35,7 @@ interface ColumnInterface extends HasOptionInterface, Stringable
 
 
 
+
     /**
      * Add comments
      *
@@ -52,7 +43,6 @@ interface ColumnInterface extends HasOptionInterface, Stringable
      * @return $this
     */
     public function comments(string $comments): static;
-
 
 
 
@@ -77,6 +67,52 @@ interface ColumnInterface extends HasOptionInterface, Stringable
 
 
 
+    /**
+     * Set options
+     *
+     * @param array $options
+     * @return $this
+    */
+    public function options(array $options): static;
+
+
+
+
+
+
+
+
+
+    /**
+     * @param $id
+     * @param $value
+     * @return $this
+    */
+    public function option($id, $value): static;
+
+
+
+
+
+
+
+
+
+
+    /**
+     * Add constraints nullable
+     *
+     * @return $this
+    */
+    public function nullable(): static;
+
+
+
+
+
+
+
+
 
     /**
      * Define column as primary
@@ -84,6 +120,8 @@ interface ColumnInterface extends HasOptionInterface, Stringable
      * @return $this
     */
     public function primary(): static;
+
+
 
 
 
@@ -139,7 +177,7 @@ interface ColumnInterface extends HasOptionInterface, Stringable
      * @param string $constraints
      * @return $this
     */
-    public function constraint(string $constraints): static;
+    public function constraints(string $constraints): static;
 
 
 
@@ -165,7 +203,7 @@ interface ColumnInterface extends HasOptionInterface, Stringable
 
 
     /**
-     * Returns type of column
+     * Returns data type of column
      *
      * @return string
     */
@@ -177,13 +215,25 @@ interface ColumnInterface extends HasOptionInterface, Stringable
 
 
 
-
     /**
-     * Returns constraints
+     * Returns SIGNED or UNSIGNED
      *
      * @return string
     */
-    public function getConstraints(): string;
+    public function getSign(): string;
+
+
+
+
+
+
+
+    /**
+     * Returns constraints like NOT NULL, PRIMARY KEY, UNIQUE ...
+     *
+     * @return string
+    */
+    public function getConstraint(): string;
 
 
 
@@ -239,17 +289,10 @@ interface ColumnInterface extends HasOptionInterface, Stringable
 
 
 
-
     /**
-     * Determine if column is primary key
-     *
-     * @return bool
+     * @return array
     */
-    public function isPrimary(): bool;
-
-
-
-
+    public function getOptions(): array;
 
 
 
@@ -257,24 +300,9 @@ interface ColumnInterface extends HasOptionInterface, Stringable
 
 
     /**
-     * Determine if column is signed or not
-     *
-     * @return bool
+     * @param $key
+     * @param $default
+     * @return mixed
     */
-    public function isSigned(): bool;
-
-
-
-
-
-
-
-
-
-    /**
-     * Determine if column is unique
-     *
-     * @return bool
-    */
-    public function isUnique(): bool;
+    public function getOption($key, $default = null): mixed;
 }

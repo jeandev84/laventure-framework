@@ -6,6 +6,7 @@ namespace Laventure\Component\Database\Schema\Table;
 use Laventure\Component\Database\Query\Builder\SQL\DQL\Select\SelectBuilderInterface;
 use Laventure\Component\Database\Query\QueryInterface;
 use Laventure\Component\Database\Schema\Column\Contract\ColumnInterface;
+use Laventure\Component\Database\Schema\Constraints\ConstraintInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\IndexInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\UniqueKeyInterface;
@@ -21,6 +22,62 @@ use Laventure\Component\Database\Schema\Constraints\Contract\UniqueKeyInterface;
 */
 interface TableInterface
 {
+
+
+
+    /**
+     * Returns table name
+     *
+     * @return string
+    */
+    public function getName(): string;
+
+
+
+
+
+
+
+
+
+    /**
+     * Returns schema name
+     *
+     * @return string
+    */
+    public function getSchemaName(): string;
+
+
+
+
+
+
+
+
+    /**
+     * @param string $schemaName
+     * @return $this
+    */
+    public function withSchemaName(string $schemaName): static;
+
+
+
+
+
+
+
+
+    /**
+     * @param string $entity
+     * @return $this
+    */
+    public function addColumnsFromEntity(string $entity): static;
+
+
+
+
+
+
 
 
     /**
@@ -91,6 +148,7 @@ interface TableInterface
 
 
 
+
     /**
      * Determine if given column name exists
      *
@@ -98,21 +156,6 @@ interface TableInterface
      * @return bool
     */
     public function hasColumn(string $name): bool;
-
-
-
-
-
-
-
-
-
-
-    /**
-     * @param string $name
-     * @return ColumnInterface
-    */
-    public function getColumn(string $name): ColumnInterface;
 
 
 
@@ -138,13 +181,60 @@ interface TableInterface
 
 
 
+
+    /**
+     * Add timestamp created_at, updated_at columns
+     *
+     * @return $this
+    */
+    public function addTimestamps(): static;
+
+
+
+
+
+
+
+
+    /**
+     * Add soft deletes timestamp like deleted_at
+     *
+     * @return $this
+    */
+    public function addSoftDeletes(): static;
+
+
+
+
+
+
+
+
+
+    /**
+     * @param string $key
+     * @param string $constraint
+     * @return $this
+    */
+    public function addConstraint(string $key, string $constraint): static;
+
+
+
+
+
+
+
+
+
     /**
      * Add primary keys
      *
      * @param array $primaryKeys
      * @return $this
     */
-    public function addPrimaryKeys(array $primaryKeys): static;
+    public function addPrimaryKey(array $primaryKeys): static;
+
+
 
 
 
@@ -166,6 +256,9 @@ interface TableInterface
 
 
 
+
+
+
     /**
      * Drop primary key
      *
@@ -173,8 +266,6 @@ interface TableInterface
      * @return $this
     */
     public function dropPrimaryKey(string $primaryKey): static;
-
-
 
 
 
@@ -203,6 +294,7 @@ interface TableInterface
      * @return array
     */
     public function getPrimaryKeys(): array;
+
 
 
 
@@ -292,8 +384,8 @@ interface TableInterface
      *
      * @param array $indexes
      * @return $this
-     */
-    public function addIndexes(array $indexes): static;
+    */
+    public function addIndex(array $indexes): static;
 
 
 
@@ -339,9 +431,12 @@ interface TableInterface
     /**
      * Returns indexes items
      *
-     * @return IndexInterface[]
+     * @return array
     */
     public function getIndexes(): array;
+
+
+
 
 
 
@@ -379,6 +474,7 @@ interface TableInterface
 
 
 
+
     /**
      * @param string $uniqueKey
      * @return UniqueKeyInterface
@@ -404,6 +500,22 @@ interface TableInterface
 
 
 
+
+
+    /**
+     * Returns all constraints of table
+     *
+     * @return ConstraintInterface[]
+    */
+    public function getConstraints(): array;
+
+
+
+
+
+
+
+
     /**
      * Set identifier name
      *
@@ -411,6 +523,8 @@ interface TableInterface
      * @return $this
     */
     public function setIdentifier(string $identifier): static;
+
+
 
 
 
@@ -464,34 +578,6 @@ interface TableInterface
 
 
     /**
-     * @param $columns
-     * @return SelectBuilderInterface
-    */
-    public function select($columns = null): SelectBuilderInterface;
-
-
-
-
-
-
-
-
-
-    /**
-     * @param $id
-     * @return mixed
-    */
-    public function read($id): mixed;
-
-
-
-
-
-
-
-
-
-    /**
      * Insert data to the table
      *
      * @param array $attributes
@@ -510,11 +596,11 @@ interface TableInterface
     /**
      * Set data to update
      *
-     * @param $column
-     * @param $value
+     * @param string $column
+     * @param mixed $value
      * @return $this
     */
-    public function set($column, $value): static;
+    public function set(string $column, mixed $value): static;
 
 
 
@@ -641,25 +727,11 @@ interface TableInterface
 
 
     /**
-     * Drop table if exist
-     *
-     * @return mixed
-    */
-    public function drop(): mixed;
-
-
-
-
-
-
-
-
-    /**
      * Drop table if exists
      *
      * @return mixed
     */
-    public function dropIfExists(): mixed;
+    public function drop(): mixed;
 
 
 
@@ -700,6 +772,8 @@ interface TableInterface
 
 
 
+
+
     /**
      * Add incremental column
      *
@@ -707,6 +781,10 @@ interface TableInterface
      * @return $this
      */
     public function increments(string $name): static;
+
+
+
+
 
 
 
@@ -948,8 +1026,10 @@ interface TableInterface
      * @param int $scale
      *
      * @return ColumnInterface
-     */
+    */
     public function double(string $name, int $precision, int $scale): ColumnInterface;
+
+
 
 
 
@@ -964,8 +1044,12 @@ interface TableInterface
      * @param string $name
      * @param array $values
      * @return ColumnInterface
-     */
+    */
     public function enum(string $name, array $values): ColumnInterface;
+
+
+
+
 
 
 
@@ -977,7 +1061,7 @@ interface TableInterface
      *
      * @param string $name
      * @return ColumnInterface
-     */
+    */
     public function float(string $name): ColumnInterface;
 
 
@@ -1070,6 +1154,11 @@ interface TableInterface
      * @return ColumnInterface
     */
     public function morphs(string $name): ColumnInterface;
+
+
+
+
+
 
 
 

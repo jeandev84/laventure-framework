@@ -137,7 +137,7 @@ class ForeignKey extends Constraint implements ForeignKeyInterface
     protected function format(): string
     {
         $foreign[] = sprintf(
-            'FOREIGN KEY (%s) REFERENCES %s (%s)',
+     'FOREIGN KEY (%s) REFERENCES %s (%s)',
             $this->column,
             $this->table,
             $this->references
