@@ -1,10 +1,9 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Drivers\Mysql\Schema\Table\Column;
 
-use Laventure\Component\Database\Schema\Column\Column;
+use Laventure\Component\Database\Schema\Column\AbstractColumn;
 
 /**
  * MysqlColumn
@@ -15,14 +14,26 @@ use Laventure\Component\Database\Schema\Column\Column;
  *
  * @package  Laventure\Component\Database\Schema\Column\Drivers\Mysql
  */
-class MysqlColumn extends Column
+class MysqlColumn extends AbstractColumn
 {
     /**
-     * @inheritDoc
+     * @return $this
     */
     public function increment(): static
     {
-        return $this->type("AUTO_INCREMENT");
+        return $this->withIncrement("AUTO_INCREMENT");
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function signed(): static
+    {
+        return $this->withSign('SIGNED');
     }
 
 
@@ -31,8 +42,8 @@ class MysqlColumn extends Column
     /**
      * @inheritDoc
     */
-    public function modify(): static
+    public function unsigned(): static
     {
-        return $this->name("MODIFY COLUMN $this->name");
+        return $this->withSign('UNSIGNED');
     }
 }

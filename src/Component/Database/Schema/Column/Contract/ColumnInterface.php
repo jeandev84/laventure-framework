@@ -23,6 +23,34 @@ interface ColumnInterface extends Stringable
 
 
     /**
+     * Set column type
+     *
+     * @param string $type
+     * @return $this
+    */
+    public function type(string $type): static;
+
+
+
+
+
+
+
+    /**
+     * Add constraints
+     *
+     * @param string $constraints
+     * @return $this
+    */
+    public function constraints(string $constraints): static;
+
+
+
+
+
+
+
+    /**
      * Set column default value
      *
      * @param $value
@@ -68,7 +96,7 @@ interface ColumnInterface extends Stringable
 
 
     /**
-     * Set options
+     * Set column options
      *
      * @param array $options
      * @return $this
@@ -84,6 +112,8 @@ interface ColumnInterface extends Stringable
 
 
     /**
+     * Set column option
+     *
      * @param $id
      * @param $value
      * @return $this
@@ -92,6 +122,17 @@ interface ColumnInterface extends Stringable
 
 
 
+
+
+
+
+
+    /**
+     * Increment column
+     *
+     * @return $this
+    */
+    public function increment(): static;
 
 
 
@@ -120,7 +161,6 @@ interface ColumnInterface extends Stringable
      * @return $this
     */
     public function primary(): static;
-
 
 
 
@@ -173,11 +213,55 @@ interface ColumnInterface extends Stringable
 
 
 
+
     /**
-     * @param string $constraints
+     * Add new column expression
+     *
      * @return $this
     */
-    public function constraints(string $constraints): static;
+    public function add(): static;
+
+
+
+
+
+
+
+
+    /**
+     * Modify column expression
+     *
+     * @return $this
+    */
+    public function modify(): static;
+
+
+
+
+
+
+
+    /**
+     * Rename column expression
+     *
+     * @param string $to
+     * @return $this
+    */
+    public function rename(string $to): static;
+
+
+
+
+
+
+
+
+    /**
+     * Drop column expression
+     *
+     * @return $this
+    */
+    public function drop(): static;
 
 
 
@@ -215,12 +299,15 @@ interface ColumnInterface extends Stringable
 
 
 
+
     /**
      * Returns SIGNED or UNSIGNED
      *
      * @return string
     */
     public function getSign(): string;
+
+
 
 
 
@@ -293,6 +380,8 @@ interface ColumnInterface extends Stringable
      * @return array
     */
     public function getOptions(): array;
+
+
 
 
 

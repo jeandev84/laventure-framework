@@ -10,22 +10,19 @@ use Laventure\Component\Database\Schema\Constraints\Types\Keys\Primary\PrimaryKe
 use Laventure\Component\Database\Schema\Constraints\Types\Keys\Unique\UniqueKey;
 use Laventure\Component\Database\Schema\Constraints\Types\NotNull;
 use Laventure\Component\Database\Schema\Constraints\Types\Nullable;
-use Laventure\Traits\Options\HasOptionsTrait;
 
 
 /**
- * Column
+ * AbstractColumn
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Schema\Table\Column
+ * @package  Laventure\Component\Database\Schema\Column
 */
-class Column implements ColumnInterface
+abstract class AbstractColumn implements ColumnInterface
 {
-
-
     /**
      * Column name
      *
@@ -49,13 +46,10 @@ class Column implements ColumnInterface
 
 
 
-
     /**
-     * Column type sign
-     *
      * @var string
     */
-    protected string $sign = '';
+    protected string $sql = '';
 
 
 
@@ -73,36 +67,17 @@ class Column implements ColumnInterface
 
 
 
-
-    /**
-     * Column comments
-     *
-     * @var string
-    */
-    protected string $comments = '';
-
-
-
-
-
-
-    /**
-     * Column collation
-     *
-     * @var string
-    */
-    protected string $collation = '';
-
-
-
-
-
     /**
      * Column options
      *
      * @var array
     */
-    protected array $options = [];
+    protected array $options = [
+        'increment' => null,
+        'sign'      => '',
+        'comments'  => '',
+        'collation' => ''
+    ];
 
 
 
@@ -112,10 +87,13 @@ class Column implements ColumnInterface
     /**
      * @param string $name
      * @param string $type
+     * @param array $options
     */
-    public function __construct(string $name, string $type = '')
+    public function __construct(string $name, string $type = '', array $options = [])
     {
-          $this->name($name)->type($type);
+        $this->name($name)
+            ->type($type)
+            ->options($options);
     }
 
 
@@ -129,9 +107,9 @@ class Column implements ColumnInterface
     */
     public function name(string $name): static
     {
-         $this->name = $name;
+        $this->name = $name;
 
-         return $this;
+        return $this;
     }
 
 
@@ -139,8 +117,7 @@ class Column implements ColumnInterface
 
 
     /**
-     * @param string $type
-     * @return $this
+     * @inheritDoc
     */
     public function type(string $type): static
     {
@@ -160,11 +137,10 @@ class Column implements ColumnInterface
     */
     public function constraints(string $constraints): static
     {
-         $this->constraints[] = $constraints;
+        $this->constraints[] = $constraints;
 
-         return $this;
+        return $this;
     }
-
 
 
 
@@ -173,7 +149,7 @@ class Column implements ColumnInterface
 
     /**
      * @inheritDoc
-    */
+     */
     public function primary(): static
     {
         return $this->constraint(new PrimaryKey());
@@ -187,7 +163,7 @@ class Column implements ColumnInterface
 
     /**
      * @inheritDoc
-    */
+     */
     public function unique(): static
     {
         return $this->constraint(new UniqueKey());
@@ -201,7 +177,7 @@ class Column implements ColumnInterface
 
     /**
      * @inheritDoc
-    */
+     */
     public function default($value): static
     {
         return $this->constraint(
@@ -231,36 +207,6 @@ class Column implements ColumnInterface
 
 
     /**
-     * @inheritDoc
-    */
-    public function signed(): static
-    {
-        return $this->sign('SIGNED');
-    }
-
-
-
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function unsigned(): static
-    {
-        return $this->sign('UNSIGNED');
-    }
-
-
-
-
-
-
-
-
-    /**
      * @param ConstraintInterface $constraint
      * @return $this
     */
@@ -274,34 +220,12 @@ class Column implements ColumnInterface
 
 
 
-
-    /**
-     * @param $sign
-     * @return $this
-    */
-    public function sign($sign): static
-    {
-        $this->sign = $sign;
-
-        return $this;
-    }
-
-
-
-
-
-
-
-
-
     /**
      * @inheritDoc
     */
     public function comments(string $comments): static
     {
-        $this->comments = $comments;
-
-        return $this;
+        return $this->options(compact('comments'));
     }
 
 
@@ -313,12 +237,10 @@ class Column implements ColumnInterface
 
     /**
      * @inheritDoc
-    */
+     */
     public function collation(string $collation): static
     {
-        $this->collation = $collation;
-
-        return $this;
+        return $this->options(compact('collation'));
     }
 
 
@@ -330,7 +252,7 @@ class Column implements ColumnInterface
 
     /**
      * @inheritDoc
-    */
+     */
     public function options(array $options): static
     {
         $this->options = array_merge(
@@ -349,12 +271,69 @@ class Column implements ColumnInterface
 
     /**
      * @inheritDoc
-    */
+     */
     public function option($id, $value): static
     {
         return $this->options([$id => $value]);
     }
 
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function add(): static
+    {
+        return $this->withSQL(
+            sprintf('ADD COLUMN %s', $this->readAsString())
+        );
+    }
+
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function modify(): static
+    {
+        return $this->withSQL(
+            sprintf('MODIFY COLUMN %s', $this->readAsString())
+        );
+    }
+
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function rename(string $to): static
+    {
+        return $this->withSQL("RENAME COLUMN $this->name TO $to");
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function drop(): static
+    {
+        return $this->withSQL("DROP COLUMN $this->name");
+    }
 
 
 
@@ -398,7 +377,7 @@ class Column implements ColumnInterface
     */
     public function getSign(): string
     {
-        return $this->sign;
+        return $this->getOption('sign');
     }
 
 
@@ -408,7 +387,7 @@ class Column implements ColumnInterface
 
     /**
      * @inheritDoc
-    */
+     */
     public function getConstraint(): string
     {
         if (empty($this->constraints)) {
@@ -426,10 +405,10 @@ class Column implements ColumnInterface
 
     /**
      * @inheritDoc
-    */
+     */
     public function getComments(): string
     {
-         return $this->comments;
+        return $this->getOption('comments');
     }
 
 
@@ -440,14 +419,11 @@ class Column implements ColumnInterface
 
     /**
      * @inheritDoc
-    */
+     */
     public function getCollation(): string
     {
-        return $this->collation;
+        return $this->getOption('collation');
     }
-
-
-
 
 
 
@@ -460,7 +436,7 @@ class Column implements ColumnInterface
     */
     public function getOptions(): array
     {
-         return $this->options;
+        return $this->options;
     }
 
 
@@ -470,7 +446,7 @@ class Column implements ColumnInterface
 
     /**
      * @inheritDoc
-    */
+     */
     public function getOption($key, $default = null): mixed
     {
         return $this->options[$key] ?? $default;
@@ -489,15 +465,85 @@ class Column implements ColumnInterface
     */
     public function getSQL(): string
     {
-        return join(' ', array_filter([
-            $this->getName(),
-            $this->getType(),
-            $this->getSign(),
-            $this->getConstraint()
-        ]));
+        if ($this->sql) {
+            return $this->sql;
+        }
+
+        return $this->__toString();
     }
 
 
+
+
+
+
+    /**
+     * @param string $sql
+     * @return $this
+    */
+    public function withSQL(string $sql): static
+    {
+        $this->sql = $sql;
+
+        return $this;
+    }
+
+
+
+
+
+
+    /**
+     * @param $sign
+     * @return $this
+    */
+    public function withSign($sign): static
+    {
+        return $this->options(compact('sign'));
+    }
+
+
+
+
+
+    /**
+     * @param $increment
+     * @return $this
+    */
+    public function withIncrement($increment): static
+    {
+        return $this->options(compact('increment'));
+    }
+
+
+
+
+
+    /**
+     * @return string|null
+    */
+    public function getIncrement(): ?string
+    {
+        return $this->getOption('increment');
+    }
+
+
+
+
+
+
+    /**
+     * Criteria after data type definition
+     *
+     * @return string
+    */
+    protected function getTypeCriteria(): string
+    {
+        return join(' ', [
+            $this->getSign(),
+            $this->getIncrement()
+        ]);
+    }
 
 
 
@@ -509,6 +555,24 @@ class Column implements ColumnInterface
     */
     public function __toString(): string
     {
-        return $this->getSQL();
+        return $this->readAsString();
+    }
+
+
+
+
+
+
+    /**
+     * @return string
+    */
+    protected function readAsString(): string
+    {
+        return join(' ', array_filter([
+            $this->getName(),
+            $this->getType(),
+            $this->getTypeCriteria(),
+            $this->getConstraint()
+        ]));
     }
 }

@@ -843,6 +843,8 @@ interface TableInterface
 
 
 
+
+
     /**
      * Add column type big integer
      *
