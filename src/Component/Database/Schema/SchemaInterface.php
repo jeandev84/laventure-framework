@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema;
@@ -52,27 +51,16 @@ interface SchemaInterface
 
 
     /**
-     * Drop schema
+     * Drop table
      *
      * @param string $table
      *
      * @return mixed
-     */
+    */
     public function drop(string $table): mixed;
 
 
 
-
-
-
-    /**
-     * Drop schema if exists
-     *
-     * @param string $table
-     *
-     * @return mixed
-     */
-    public function dropIfExists(string $table): mixed;
 
 
 
@@ -84,22 +72,10 @@ interface SchemaInterface
      * @param string $table
      *
      * @return mixed
-     */
+    */
     public function truncate(string $table): mixed;
 
 
-
-
-
-
-    /**
-     * Truncate table cascade
-     *
-     * @param string $table
-     *
-     * @return mixed
-    */
-    public function truncateCascade(string $table): mixed;
 
 
 
@@ -138,21 +114,6 @@ interface SchemaInterface
 
 
 
-    /**
-     * Determine if columns exists in given table
-     *
-     * @param string $table
-     *
-     * @param string $column
-     *
-     * @return bool
-    */
-    public function hasColumn(string $table, string $column): bool;
-
-
-
-
-
 
     /**
      * @param string $sql
@@ -160,6 +121,8 @@ interface SchemaInterface
      * @return mixed
     */
     public function exec(string $sql): mixed;
+
+
 
 
 
@@ -214,4 +177,20 @@ interface SchemaInterface
      * @return TableInterface
     */
     public function table(string $name): TableInterface;
+
+
+
+
+
+
+
+
+
+
+    /**
+     * Dump schema
+     *
+     * @return mixed
+    */
+    public function dump(): mixed;
 }

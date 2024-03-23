@@ -1,13 +1,10 @@
 <?php
-
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Schema\Constraints\Types;
+namespace Laventure\Component\Database\Schema\Constraints\Types\Keys\Unique;
 
-use Laventure\Component\Database\Schema\Column\Traits\HasColumnTrait;
-use Laventure\Component\Database\Schema\Constraints\Constraint;
 use Laventure\Component\Database\Schema\Constraints\ConstraintHasColumns;
-use Laventure\Component\Database\Schema\Constraints\Contract\UniqueInterface;
+use Laventure\Component\Database\Schema\Constraints\Contract\UniqueKeyInterface;
 
 /**
  * Unique
@@ -16,9 +13,9 @@ use Laventure\Component\Database\Schema\Constraints\Contract\UniqueInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Schema\Constraints\Drivers
+ * @package  Laventure\Component\Database\Schema\Constraints\Types\Keys\Unique
 */
-class Unique extends ConstraintHasColumns implements UniqueInterface
+class UniqueKey extends ConstraintHasColumns implements UniqueKeyInterface
 {
     /**
      * @param array $columns

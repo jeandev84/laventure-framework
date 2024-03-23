@@ -18,7 +18,7 @@ use Stringable;
  *
  * @package  Laventure\Component\Database\Schema\Column\Contract
 */
-interface ColumnInterface extends HasConstraintInterface, HasOptionInterface, Stringable
+interface ColumnInterface extends HasOptionInterface, Stringable
 {
     /**
      * Add constraints nullable
@@ -74,12 +74,17 @@ interface ColumnInterface extends HasConstraintInterface, HasOptionInterface, St
 
 
 
+
+
+
+
     /**
      * Define column as primary
      *
      * @return $this
     */
     public function primary(): static;
+
 
 
 
@@ -96,14 +101,6 @@ interface ColumnInterface extends HasConstraintInterface, HasOptionInterface, St
 
 
 
-    /**
-     * Incremental column
-     *
-     * @return $this
-    */
-    public function increment(): static;
-
-
 
 
 
@@ -113,6 +110,10 @@ interface ColumnInterface extends HasConstraintInterface, HasOptionInterface, St
      * @return $this
     */
     public function signed(): static;
+
+
+
+
 
 
 
@@ -131,95 +132,17 @@ interface ColumnInterface extends HasConstraintInterface, HasOptionInterface, St
 
 
 
+
+
+
     /**
-     * @param $constraints
+     * @param string $constraints
      * @return $this
     */
-    public function constraint($constraints): static;
+    public function constraint(string $constraints): static;
 
 
 
-
-
-
-    /**
-     * Add constraint
-     * @param ConstraintInterface $constraint
-     * @return $this
-    */
-    public function withConstraint(ConstraintInterface $constraint): static;
-
-
-
-
-
-    /**
-     * set constraints
-     *
-     * @param ConstraintInterface[] $constraints
-     * @return $this
-    */
-    public function withConstraints(array $constraints): static;
-
-
-
-
-
-    /**
-     * Determine type of constraint defined
-     *
-     * @param string $name
-     * @return bool
-    */
-    public function hasConstraint(string $name): bool;
-
-
-
-
-
-
-    /**
-     * Add columns
-     *
-     * @return static
-    */
-    public function add(): static;
-
-
-
-
-
-
-
-    /**
-     * Change columns
-     *
-     * @return $this
-    */
-    public function modify(): static;
-
-
-
-
-
-
-    /**
-     * Rename column
-     *
-     * @param string $to
-     * @return $this
-    */
-    public function rename(string $to): static;
-
-
-
-
-
-
-    /**
-     * @return $this
-    */
-    public function drop(): static;
 
 
 
@@ -232,6 +155,8 @@ interface ColumnInterface extends HasConstraintInterface, HasOptionInterface, St
      * @return string
     */
     public function getName(): string;
+
+
 
 
 
@@ -252,38 +177,16 @@ interface ColumnInterface extends HasConstraintInterface, HasOptionInterface, St
 
 
 
-    /**
-     * Determine if column is primary key
-     *
-     * @return bool
-    */
-    public function isPrimary(): bool;
-
-
-
-
-
-
 
     /**
-     * Determine if column is signed or not
+     * Returns constraints
      *
-     * @return bool
+     * @return string
     */
-    public function isSigned(): bool;
+    public function getConstraints(): string;
 
 
 
-
-
-
-
-    /**
-     * Returns constraints of column
-     *
-     * @return ConstraintInterface[]
-    */
-    public function getConstraints(): array;
 
 
 
@@ -304,6 +207,9 @@ interface ColumnInterface extends HasConstraintInterface, HasOptionInterface, St
 
 
 
+
+
+
     /**
      * Returns table encoding characters
      *
@@ -315,10 +221,60 @@ interface ColumnInterface extends HasConstraintInterface, HasOptionInterface, St
 
 
 
+
+
+
+
+
     /**
      * Returns expression out
      *
      * @return string
     */
     public function getSQL(): string;
+
+
+
+
+
+
+
+
+    /**
+     * Determine if column is primary key
+     *
+     * @return bool
+    */
+    public function isPrimary(): bool;
+
+
+
+
+
+
+
+
+
+
+    /**
+     * Determine if column is signed or not
+     *
+     * @return bool
+    */
+    public function isSigned(): bool;
+
+
+
+
+
+
+
+
+
+    /**
+     * Determine if column is unique
+     *
+     * @return bool
+    */
+    public function isUnique(): bool;
 }
