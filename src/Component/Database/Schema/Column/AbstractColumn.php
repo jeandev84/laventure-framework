@@ -440,9 +440,13 @@ abstract class AbstractColumn implements ColumnInterface
 
     /**
      * @inheritDoc
-     */
+    */
     public function getConstraint(): string
     {
+        if (empty($this->constraints)) {
+            $this->notNull();
+        }
+
         return join(' ', $this->constraints);
     }
 

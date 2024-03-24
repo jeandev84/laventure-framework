@@ -21,7 +21,7 @@ class ColumnOptions implements ColumnOptionInterface
     /**
      * @var array
     */
-    protected array $arguments = [];
+    protected array $params = [];
 
 
 
@@ -136,7 +136,7 @@ class ColumnOptions implements ColumnOptionInterface
     */
     public function length(int $length): static
     {
-       return $this->arguments(compact('length'));
+       return $this->params(compact('length'));
     }
 
 
@@ -146,11 +146,11 @@ class ColumnOptions implements ColumnOptionInterface
     /**
      * @inheritDoc
     */
-    public function arguments(array $arguments): static
+    public function params(array $params): static
     {
-        $this->arguments = array_merge(
-            $this->arguments,
-            $arguments
+        $this->params = array_merge(
+            $this->params,
+            $params
         );
 
         return $this;
@@ -162,9 +162,9 @@ class ColumnOptions implements ColumnOptionInterface
     /**
      * @inheritDoc
     */
-    public function getArguments(): array
+    public function getParams(): array
     {
-        return $this->arguments;
+        return $this->params;
     }
 
 
@@ -195,7 +195,7 @@ class ColumnOptions implements ColumnOptionInterface
     public function callMethod(string $method): static
     {
         if (method_exists($this->column, $method)) {
-            call_user_func_array([$this->column, $method], $this->getArguments());
+            call_user_func_array([$this->column, $method], $this->getParams());
         }
         
         return $this;

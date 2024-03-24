@@ -108,7 +108,7 @@ abstract class Table implements TableInterface
     /**
      * @inheritDoc
     */
-    public function addColumn(string $name, ColumnType $type, callable $options): static
+    public function addColumn(string $name, ColumnType $type, callable $options = null): static
     {
         $column = $this->createColumn($name, $type, $options);
 
@@ -200,8 +200,11 @@ abstract class Table implements TableInterface
     */
     public function addTimestamps(): static
     {
+        return $this->addColumn('created_at', ColumnType::Datetime, function (ColumnOptions $column) {
+             return $column->notNull();
+        });
 
-        return $this->addColumn('created_at');
+
         /*
         return $this->addCreateTableSQL(
             $this->column('created_at')->datetime()->notNull()->getSQL()
@@ -669,15 +672,15 @@ abstract class Table implements TableInterface
 
     /**
      * @param ColumnInterface $column
-     * @param callable $options
+     * @param callable|null $options
      * @return ColumnOptionInterface
-     */
+    */
     private function parseColumnOptions(
         ColumnInterface $column,
-        callable $options
+        callable $options = null
     ): ColumnOptionInterface {
         $option = new ColumnOptions($column);
-        $option->call($options);
+        $option->call($options ?: $this->defaultOptions());
         return $option;
     }
 
@@ -688,17 +691,31 @@ abstract class Table implements TableInterface
     /**
      * @param string $name
      * @param ColumnType $type
-     * @param callable $options
+     * @param callable|null $options
      * @return ColumnInterface
-     */
+    */
     private function createColumn(
         string $name,
         ColumnType $type,
-        callable $options
+        callable $options = null
     ): ColumnInterface {
 
         return $this->parseColumnOptions($this->column($name), $options)
                     ->callMethod($type->value)
                     ->getColumn();
+    }
+
+
+
+
+
+    /**
+     * @return callable
+    */
+    private function defaultOptions(): callable
+    {
+        return function (ColumnOptions $options) {
+            return $options->getColumn();
+        };
     }
 }

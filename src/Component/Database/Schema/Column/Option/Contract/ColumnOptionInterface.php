@@ -75,6 +75,40 @@ interface ColumnOptionInterface
 
 
 
+    /**
+     * @param int $precision
+     * @return $this
+    */
+    public function precision(int $precision): static;
+
+
+
+
+
+
+
+    /**
+     * @param int $scale
+     * @return $this
+    */
+    public function scale(int $scale): static;
+
+
+
+
+
+
+
+    /**
+     * @param array $values
+     * @return $this
+    */
+    public function values(array $values): static;
+
+
+
+
+
 
     /**
      * @return $this
@@ -89,10 +123,10 @@ interface ColumnOptionInterface
     /**
      * Set function arguments
      *
-     * @param array $arguments
+     * @param array $params
      * @return $this
     */
-    public function arguments(array $arguments): static;
+    public function params(array $params): static;
 
 
 
@@ -133,7 +167,7 @@ interface ColumnOptionInterface
      *
      * @return array
     */
-    public function getArguments(): array;
+    public function getParams(): array;
 
 
 

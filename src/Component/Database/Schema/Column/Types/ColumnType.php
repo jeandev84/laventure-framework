@@ -18,7 +18,7 @@ enum ColumnType: string
     case String         = 'string';
     case Text           = 'text';
     case BigInteger     = 'bigInteger';
-    case Small          = 'smallInteger';
+    case SmallInteger   = 'smallInteger';
     case Binary         = 'binary';
     case Boolean        = 'boolean';
     case Decimal        = 'decimal';

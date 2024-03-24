@@ -61,15 +61,16 @@ interface TableInterface
 
 
 
+
     /**
      * Add new column
      *
      * @param string $name
      * @param ColumnType $type
-     * @param callable $options
+     * @param callable|null $options
      * @return $this
     */
-    public function addColumn(string $name, ColumnType $type, callable $options): static;
+    public function addColumn(string $name, ColumnType $type, callable $options = null): static;
 
 
 
@@ -144,6 +145,9 @@ interface TableInterface
 
 
 
+
+
+
     /**
      * Returns column
      *
@@ -151,6 +155,9 @@ interface TableInterface
      * @return ColumnInterface
     */
     public function getColumn(string $name): ColumnInterface;
+
+
+
 
 
 
@@ -632,6 +639,8 @@ interface TableInterface
 
 
 
+
+
     /**
      * Returns generated SQL
      *
@@ -644,10 +653,17 @@ interface TableInterface
 
 
 
+
+
+
+
     /**
      * @return TableSQlBuilderInterface
     */
     public function expr(): TableSQlBuilderInterface;
+
+
+
 
 
 
@@ -667,12 +683,17 @@ interface TableInterface
 
 
 
+
+
     /**
      * Create a new table
      *
      * @return mixed
     */
     public function create(): mixed;
+
+
+
 
 
 
@@ -799,6 +820,378 @@ interface TableInterface
      * @return array
     */
     public function list(): array;
+
+
+
+
+
+
+
+
+    /**
+     * Increment column
+     *
+     * @return $this
+    */
+    public function increments(string $name): static;
+
+
+
+
+
+
+
+    /**
+     * Add big increment
+     *
+     * @param string $name
+     * @return $this
+    */
+    public function bigIncrements(string $name): static;
+
+
+
+
+
+
+    /**
+     * Add integer
+     *
+     * @param string $name
+     * @param int $length
+     * @return $this
+    */
+    public function integer(string $name, int $length = 11): static;
+
+
+
+
+
+
+
+
+    /**
+     * Add column type small integer
+     *
+     * @param string $name
+     * @return $this
+    */
+    public function smallInteger(string $name): static;
+
+
+
+
+
+
+
+    /**
+     * Add column type big integer
+     *
+     * @param string $name
+     * @return $this
+    */
+    public function bigInteger(string $name): static;
+
+
+
+
+
+
+
+
+
+    /**
+     * Add column type big integer
+     *
+     * @param string $name
+     * @return $this
+    */
+    public function mediumInteger(string $name): static;
+
+
+
+
+
+
+    /**
+     * Add column type tiny integer
+     *
+     * @param string $name
+     * @return $this
+    */
+    public function tinyInteger(string $name): static;
+
+
+
+
+
+
+
+    /**
+     * Add column type string
+     *
+     * @param string $name
+     * @param int $length
+     * @param callable|null $options
+     * @return $this
+    */
+    public function string(string $name, int $length = 255, callable $options = null): static;
+
+
+
+
+
+
+
+
+    /**
+     * Add column type char
+     *
+     * @param string $name
+     * @param $value
+     * @return $this
+    */
+    public function char(string $name, $value): static;
+
+
+
+
+
+
+
+    /**
+     * Add column type boolean
+     *
+     * @param string $name
+     * @return $this
+    */
+    public function boolean(string $name): static;
+
+
+
+
+
+
+
+
+
+    /**
+     * Add column type datetime
+     *
+     * @param string $name
+     * @param bool $nullable
+     * @return $this
+    */
+    public function datetime(string $name, bool $nullable = false): static;
+
+
+
+
+
+
+
+    /**
+     * Add column type time
+     *
+     * @param string $name
+     * @return $this
+    */
+    public function time(string $name): static;
+
+
+
+
+
+
+
+    /**
+     * Add column type timestamp
+     *
+     * @param string $name
+     * @return $this
+    */
+    public function timestamp(string $name): static;
+
+
+
+
+
+
+
+    /**
+     * Add column type binary
+     *
+     * @param string $name
+     * @return $this
+    */
+    public function binary(string $name): static;
+
+
+
+
+
+
+
+    /**
+     * Add column type date
+     *
+     * @param string $name
+     * @return $this
+    */
+    public function date(string $name): static;
+
+
+
+
+
+
+
+    /**
+     * Add column type decimal
+     *
+     * @param string $name
+     * @param int $precision
+     * @param int $scale
+     * @return $this
+    */
+    public function decimal(string $name, int $precision, int $scale): static;
+
+
+
+
+
+
+
+
+
+
+    /**
+     * Add column type double
+     *
+     *
+     * @param string $name
+     * @param int $precision
+     * @param int $scale
+     * @return $this
+    */
+    public function double(string $name, int $precision, int $scale): static;
+
+
+
+
+
+
+
+
+
+    /**
+     * Add column type enum
+     *
+     * @param string $name
+     * @param array $values
+     * @return $this
+    */
+    public function enum(string $name, array $values): static;
+
+
+
+
+
+
+
+
+    /**
+     * Add column type float
+     *
+     * @param string $name
+     * @return $this
+     */
+    public function float(string $name): static;
+
+
+
+
+
+
+
+    /**
+     * Add column type json
+     *
+     * @param string $name
+     * @return $this
+    */
+    public function json(string $name): static;
+
+
+
+
+
+
+    /**
+     * Add column type text
+     *
+     * @param string $name
+     * @return $this
+    */
+    public function text(string $name): static;
+
+
+
+
+
+
+
+
+    /**
+     * Add column type long text
+     *
+     * @param string $name
+     * @return $this
+    */
+    public function longText(string $name): static;
+
+
+
+
+
+
+
+    /**
+     * Add column type medium text
+     *
+     * @param string $name
+     * @return $this
+    */
+    public function mediumText(string $name): static;
+
+
+
+
+
+
+
+    /**
+     * Add column type tiny text
+     *
+     * @param string $name
+     * @return  $this
+    */
+    public function tinyText(string $name): static;
+
+
+
+
+
+
+
+
+    /**
+     * Add column type morphs
+     *
+     * @param string $name
+     * @return $this
+    */
+    public function morphs(string $name): static;
 
 
 

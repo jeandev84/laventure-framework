@@ -48,7 +48,7 @@ interface ColumnInterface extends Stringable
     /**
      * Add big increment
      *
-     * @return ColumnInterface
+     * @return $this
      */
     public function bigIncrements(): static;
 
@@ -126,7 +126,7 @@ interface ColumnInterface extends Stringable
     /**
      * Add column type string
      * @param int $length
-     * @return ColumnInterface
+     * @return $this
      */
     public function string(int $length = 255): static;
 
@@ -165,7 +165,7 @@ interface ColumnInterface extends Stringable
     /**
      * Add column type datetime
      *
-     * @return ColumnInterface
+     * @return $this
      */
     public function datetime(): static;
 
@@ -326,7 +326,7 @@ interface ColumnInterface extends Stringable
     /**
      * Add column type long text
      *
-     * @return ColumnInterface
+     * @return $this
      */
     public function longText(): static;
 
