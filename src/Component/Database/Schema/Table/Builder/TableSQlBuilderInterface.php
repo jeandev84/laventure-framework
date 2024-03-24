@@ -1,7 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Table\Builder;
+
+use Laventure\Component\Database\Schema\Table\Builder\Contract\CreateTableSQLBuilderInterface;
+use Laventure\Component\Database\Schema\Table\Builder\Contract\UpdateTableSQLBuilderInterface;
 
 /**
  * TableSQlBuilderInterface
@@ -19,7 +23,29 @@ interface TableSQlBuilderInterface
      *
      * @return string
     */
-    public function createTableSQL(): string;
+    public function createTable(): string;
+
+
+
+
+
+
+    /**
+     * @return CreateTableSQLBuilderInterface
+    */
+    public function create(): CreateTableSQLBuilderInterface;
+
+
+
+
+
+
+    /**
+     * @return UpdateTableSQLBuilderInterface
+    */
+    public function update(): UpdateTableSQLBuilderInterface;
+
+
 
 
 
@@ -30,5 +56,5 @@ interface TableSQlBuilderInterface
      *
      * @return string
     */
-    public function updateTableSQL(): string;
+    public function updateTable(): string;
 }

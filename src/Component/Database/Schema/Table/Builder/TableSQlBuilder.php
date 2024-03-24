@@ -26,7 +26,35 @@ abstract class TableSQlBuilder implements TableSQlBuilderInterface
     public function __construct(
         protected TableInterface $table,
         protected TableCriteria $criteria
-    )
+    ) {
+    }
+
+
+
+
+
+    /**
+     * Returns table name
+     *
+     * @return string
+    */
+    protected function getTableName(): string
     {
+        return $this->table->getName();
+    }
+
+
+
+
+
+
+    /**
+     * Returns create table criteria
+     *
+     * @return string
+    */
+    protected function createTableCriteria(): string
+    {
+        return join(PHP_EOL, $this->criteria->create);
     }
 }

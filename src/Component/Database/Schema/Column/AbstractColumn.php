@@ -1,16 +1,20 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Column;
 
 use Laventure\Component\Database\Schema\Column\Contract\ColumnInterface;
+use Laventure\Component\Database\Schema\Column\Types\ColumnType;
 use Laventure\Component\Database\Schema\Constraints\ConstraintInterface;
 use Laventure\Component\Database\Schema\Constraints\Types\DefaultValue;
 use Laventure\Component\Database\Schema\Constraints\Types\Keys\Primary\PrimaryKey;
 use Laventure\Component\Database\Schema\Constraints\Types\Keys\Unique\UniqueKey;
 use Laventure\Component\Database\Schema\Constraints\Types\NotNull;
 use Laventure\Component\Database\Schema\Constraints\Types\Nullable;
-
+use PHPStan\BetterReflection\Reflection\Adapter\ReflectionClass;
+use ReflectionException;
+use ReflectionMethod;
 
 /**
  * AbstractColumn
@@ -37,9 +41,9 @@ abstract class AbstractColumn implements ColumnInterface
     /**
      * Column data type
      *
-     * @var string
+     * @var mixed
     */
-    protected string $type;
+    protected $type;
 
 
 
@@ -66,16 +70,14 @@ abstract class AbstractColumn implements ColumnInterface
 
 
 
+
+
     /**
      * Column options
      *
      * @var array
     */
     protected array $options = [
-        "primary"   => false,
-        "unique"    => false,
-        "nullable"  => false,
-        "default"   => null,
         "sign"      => "",
         "increment" => "",
         "collation" => "",
@@ -86,17 +88,12 @@ abstract class AbstractColumn implements ColumnInterface
 
 
 
-
     /**
      * @param string $name
-     * @param string $type
-     * @param array $options
     */
-    public function __construct(string $name, string $type = '', array $options = [])
+    public function __construct(string $name)
     {
-        $this->name($name)
-            ->type($type)
-            ->options($options);
+          $this->name($name);
     }
 
 
@@ -128,6 +125,45 @@ abstract class AbstractColumn implements ColumnInterface
 
         return $this;
     }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function string(int $length = 255): static
+    {
+        return $this->type("VARCHAR($length)")
+                    ->options(compact('length'));
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function boolean(): static
+    {
+        return $this->type("BOOLEAN");
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function text(): static
+    {
+        return $this->type("TEXT");
+    }
+
 
 
 
@@ -180,16 +216,25 @@ abstract class AbstractColumn implements ColumnInterface
 
     /**
      * @inheritDoc
-     */
+    */
     public function default($value): static
     {
-        return $this->constraint(new DefaultValue($value, [
-            $this->notNull()
-        ]));
+        return $this->constraint(new DefaultValue($value));
     }
 
 
 
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function notNull(): static
+    {
+        return $this->constraint(new NotNull());
+    }
 
 
 
@@ -240,7 +285,7 @@ abstract class AbstractColumn implements ColumnInterface
 
     /**
      * @inheritDoc
-     */
+    */
     public function collation(string $collation): static
     {
         return $this->options(compact('collation'));
@@ -258,12 +303,10 @@ abstract class AbstractColumn implements ColumnInterface
     */
     public function options(array $options): static
     {
-        foreach ($options as $name => $value) {
-            if (method_exists($this, $name)) {
-                call_user_func([$this, $name], $value);
-            }
-            $this->option($name, $value);
-        }
+        $this->options = array_merge(
+            $this->options,
+            $options
+        );
 
         return $this;
     }
@@ -292,9 +335,9 @@ abstract class AbstractColumn implements ColumnInterface
     */
     public function option($id, $value): static
     {
-       $this->options[$id] = $value;
+        $this->options[$id] = $value;
 
-       return $this;
+        return $this;
     }
 
 
@@ -306,11 +349,9 @@ abstract class AbstractColumn implements ColumnInterface
     /**
      * @inheritDoc
     */
-    public function add(): static
+    public function add(): string
     {
-        return $this->withSQL(
-            sprintf('ADD COLUMN %s', $this->readAsString())
-        );
+        return sprintf('ADD COLUMN %s', $this->getSQL());
     }
 
 
@@ -322,11 +363,9 @@ abstract class AbstractColumn implements ColumnInterface
     /**
      * @inheritDoc
     */
-    public function modify(): static
+    public function modify(): string
     {
-        return $this->withSQL(
-            sprintf('MODIFY COLUMN %s', $this->readAsString())
-        );
+        return sprintf('MODIFY COLUMN %s', $this->getSQL());
     }
 
 
@@ -338,9 +377,9 @@ abstract class AbstractColumn implements ColumnInterface
     /**
      * @inheritDoc
     */
-    public function rename(string $to): static
+    public function rename(string $to): string
     {
-        return $this->withSQL("RENAME COLUMN $this->name TO $to");
+        return "RENAME COLUMN $this->name TO $to";
     }
 
 
@@ -350,9 +389,9 @@ abstract class AbstractColumn implements ColumnInterface
     /**
      * @inheritDoc
     */
-    public function drop(): static
+    public function drop(): string
     {
-        return $this->withSQL("DROP COLUMN $this->name");
+        return "DROP COLUMN $this->name";
     }
 
 
@@ -410,10 +449,6 @@ abstract class AbstractColumn implements ColumnInterface
      */
     public function getConstraint(): string
     {
-        if (empty($this->constraints)) {
-           $this->constraints($this->notNull()->getSQL());
-        }
-
         return join(' ', $this->constraints);
     }
 
@@ -485,28 +520,15 @@ abstract class AbstractColumn implements ColumnInterface
     */
     public function getSQL(): string
     {
-        if ($this->sql) {
-            return $this->sql;
-        }
-
-        return $this->__toString();
+        return join(' ', array_filter([
+            $this->getName(),
+            $this->getType(),
+            $this->getSign(),
+            $this->getIncrement(),
+            $this->getConstraint()
+        ]));
     }
 
-
-
-
-
-
-    /**
-     * @param string $sql
-     * @return $this
-    */
-    public function withSQL(string $sql): static
-    {
-        $this->sql = $sql;
-
-        return $this;
-    }
 
 
 
@@ -557,38 +579,31 @@ abstract class AbstractColumn implements ColumnInterface
     */
     public function __toString(): string
     {
-        return $this->readAsString();
+        return $this->getSQL();
     }
 
 
 
 
-
-
     /**
-     * @return NotNull
+     * @param string|ColumnType $type
+     * @param array $options
+     * @return $this
+     * @throws ReflectionException
     */
-    protected function notNull(): NotNull
+    protected function parseType(string|ColumnType $type, array $options = []): static
     {
-        return new NotNull();
-    }
+        if ($type instanceof ColumnType) {
+            $method = $type->value;
+            $reflection = new ReflectionMethod($this, $method);
+            $parameters = $reflection->getParameters();
+            dump($parameters);
+            dd($reflection->getName());
+        } else {
+            $this->type($type);
+        }
 
 
-
-
-
-
-    /**
-     * @return string
-    */
-    protected function readAsString(): string
-    {
-        return join(' ', array_filter([
-            $this->getName(),
-            $this->getType(),
-            $this->getSign(),
-            $this->getIncrement(),
-            $this->getConstraint()
-        ]));
+        return $this;
     }
 }

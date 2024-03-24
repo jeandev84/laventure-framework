@@ -18,15 +18,10 @@ use Laventure\Component\Database\Schema\Column\Info\ColumnInfoInterface;
  */
 interface ColumnFactoryInterface
 {
+
     /**
      * @param string $name
-     * @param string $type
-     * @param array $options
      * @return ColumnInterface
     */
-    public function createColumn(
-        string $name,
-        string $type,
-        array $options = []
-    ): ColumnInterface;
+    public function createColumn(string $name): ColumnInterface;
 }

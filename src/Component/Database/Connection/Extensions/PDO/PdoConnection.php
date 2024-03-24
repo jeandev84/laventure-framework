@@ -133,10 +133,10 @@ abstract class PdoConnection implements PdoConnectionInterface
     }
 
 
-    
-    
-    
-    
+
+
+
+
     /**
      * @return SQLQueryBuilderInterface
     */
@@ -146,9 +146,9 @@ abstract class PdoConnection implements PdoConnectionInterface
     }
 
 
-    
-    
-    
+
+
+
     /**
      * @return SQLQueryBuilderFactoryInterface
     */

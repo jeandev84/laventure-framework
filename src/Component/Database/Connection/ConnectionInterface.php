@@ -137,9 +137,9 @@ interface ConnectionInterface extends TransactionInterface
 
 
 
-    
-    
-    
+
+
+
     /**
      * Create table
      *

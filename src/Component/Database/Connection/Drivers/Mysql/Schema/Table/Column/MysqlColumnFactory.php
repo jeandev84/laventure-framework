@@ -22,11 +22,7 @@ class MysqlColumnFactory implements ColumnFactoryInterface
     /**
      * @inheritDoc
     */
-    public function createColumn(
-        string $name,
-        string $type,
-        array $options = []
-    ): ColumnInterface {
-        return new MysqlColumn("`$name`", $type, $options);
+    public function createColumn(string $name): ColumnInterface {
+        return new MysqlColumn("`$name`");
     }
 }

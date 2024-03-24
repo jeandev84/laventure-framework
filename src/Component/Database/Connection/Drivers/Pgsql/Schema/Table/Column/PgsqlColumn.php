@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Drivers\Pgsql\Schema\Table\Column;
@@ -16,11 +17,10 @@ use Laventure\Component\Database\Schema\Column\AbstractColumn;
  */
 class PgsqlColumn extends AbstractColumn
 {
-
     /**
      * @inheritDoc
     */
-    public function increment(): static
+    public function increments(): static
     {
         return $this->type("SERIAL");
     }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Drivers\Mysql\Schema\Table;
@@ -16,14 +17,13 @@ use Laventure\Component\Database\Schema\Table\Builder\TableSQlBuilder;
 */
 class MysqlTableSQLBuilder extends TableSQlBuilder
 {
-
     /**
      * @inheritDoc
     */
-    public function createTableSQL(): string
+    public function createTable(): string
     {
-        $criteria  = join(PHP_EOL, $this->criteria->create);
-        $tableName = $this->table->getName();
+        $criteria  = $this->createTableCriteria();
+        $tableName = $this->getTableName();
 
         return join(PHP_EOL, [
             sprintf('CREATE TABLE IF NOT EXISTS `%s` (', $tableName), $criteria, ");"
@@ -33,10 +33,11 @@ class MysqlTableSQLBuilder extends TableSQlBuilder
 
 
 
+
     /**
      * @inheritDoc
     */
-    public function updateTableSQL(): string
+    public function updateTable(): string
     {
 
     }

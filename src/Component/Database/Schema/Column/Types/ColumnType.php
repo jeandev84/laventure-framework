@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Column\Types;
@@ -12,7 +13,30 @@ namespace Laventure\Component\Database\Schema\Column\Types;
  *
  * @package  Laventure\Component\Database\Schema\Column\Types
 */
-class ColumnType
+enum ColumnType: string
 {
+    case STRING         = 'string';
+    case TEXT           = 'text';
+    case BIGINT         = 'bigint';
+    case BINARY         = 'binary';
+    case BOOLEAN        = 'boolean';
+    case DECIMAL        = 'decimal';
+    case FLOAT          = 'float';
+    case GUID           = 'guid';
+    case INTEGER        = 'integer';
+    case JSON           = 'json';
+    case SMALLINT       = 'smallint';
+    case TIME_MUTABLE   = 'time';
 
+
+
+
+
+    /**
+     * @return array
+    */
+    public function toArray(): array
+    {
+        return [];
+    }
 }

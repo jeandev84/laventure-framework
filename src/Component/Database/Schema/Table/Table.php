@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Table;
@@ -6,12 +7,15 @@ namespace Laventure\Component\Database\Schema\Table;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Query\QueryInterface;
 use Laventure\Component\Database\Schema\Column\Contract\ColumnInterface;
+use Laventure\Component\Database\Schema\Column\Exception\NotFoundColumnException;
+use Laventure\Component\Database\Schema\Column\Option\ColumnOptions;
+use Laventure\Component\Database\Schema\Column\Option\Contract\ColumnOptionInterface;
+use Laventure\Component\Database\Schema\Column\Types\ColumnType;
 use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
 use Laventure\Component\Database\Schema\Table\Criteria\TableCriteria;
 use Laventure\Component\Database\Schema\Table\Criteria\TableCriteriaInterface;
 use ReflectionClass;
 use ReflectionException;
-
 
 /**
  * Table
@@ -24,7 +28,6 @@ use ReflectionException;
 */
 abstract class Table implements TableInterface
 {
-
     /**
      * @var TableCriteria
     */
@@ -40,8 +43,7 @@ abstract class Table implements TableInterface
     public function __construct(
         protected ConnectionInterface $connection,
         protected string $name
-    )
-    {
+    ) {
         $this->criteria = new TableCriteria();
     }
 
@@ -94,9 +96,9 @@ abstract class Table implements TableInterface
     */
     public function addColumnsFromEntity(string $entity): static
     {
-          $reflection = new ReflectionClass($entity);
+        $reflection = new ReflectionClass($entity);
 
-          return $this;
+        return $this;
     }
 
 
@@ -106,15 +108,13 @@ abstract class Table implements TableInterface
     /**
      * @inheritDoc
     */
-    public function addColumn(string $name, string $type, array $options = []): static
+    public function addColumn(string $name, ColumnType $type, callable $options): static
     {
-         $column = $this->createColumn($name, $type, $options);
+        $column = $this->createColumn($name, $type, $options);
 
-         if ($this->exists()) {
-             return $this->addUpdateSQL($column->add()->getSQL());
-         }
+        $this->criteria->columns[$name] = $column;
 
-         return $this->addCreateSQL($column->getSQL());
+        return $this->saveColumn($column);
     }
 
 
@@ -123,10 +123,11 @@ abstract class Table implements TableInterface
 
     /**
      * @inheritDoc
+     * @throws NotFoundColumnException
     */
     public function renameColumn(string $name, string $to): static
     {
-        return $this;
+        return $this->addUpdateTableSQL($this->getColumn($name)->rename($to));
     }
 
 
@@ -135,10 +136,13 @@ abstract class Table implements TableInterface
 
     /**
      * @inheritDoc
+     * @throws NotFoundColumnException
     */
-    public function modifyColumn(string $name, array $options = []): static
+    public function modifyColumn(string $name, callable $func): static
     {
-        return $this;
+        $column = $this->parseColumnOptions($this->getColumn($name), $func)->getColumn();
+
+        return $this->addUpdateTableSQL($column->modify());
     }
 
 
@@ -147,11 +151,15 @@ abstract class Table implements TableInterface
 
     /**
      * @inheritDoc
+     * @throws NotFoundColumnException
     */
     public function dropColumn(string $name): static
     {
-         return $this;
+        return $this->addUpdateTableSQL($this->getColumn($name)->drop());
     }
+
+
+
 
 
 
@@ -168,13 +176,35 @@ abstract class Table implements TableInterface
 
 
 
+    /**
+     * @inheritDoc
+    */
+    public function getColumn(string $name): ColumnInterface
+    {
+        if (!$this->hasColumn($name)) {
+            throw new NotFoundColumnException($name, [
+                'context' => get_called_class()
+            ]);
+        }
+
+        return $this->getColumns()[$name];
+    }
+
+
+
+
+
 
     /**
      * @inheritDoc
     */
     public function addTimestamps(): static
     {
-         return $this;
+        return $this->addCreateTableSQL(
+            $this->column('created_at')->datetime()->getSQL()
+        )->addCreateTableSQL(
+            $this->column('updated_at')->datetime()->getSQL()
+        );
     }
 
 
@@ -211,7 +241,12 @@ abstract class Table implements TableInterface
     */
     public function addPrimaryKey(array $primaryKeys): static
     {
+        $this->criteria->primary = array_merge(
+            $this->criteria->primary,
+            $primaryKeys
+        );
 
+        return $this;
     }
 
 
@@ -223,7 +258,7 @@ abstract class Table implements TableInterface
     */
     public function hasPrimaryKey(string $primaryKey): bool
     {
-
+        return array_key_exists($primaryKey, $this->getPrimaryKeys());
     }
 
 
@@ -252,12 +287,19 @@ abstract class Table implements TableInterface
 
 
 
+
+
+
     /**
      * @inheritDoc
     */
-    public function addForeignKey(string $foreignKey): ForeignKeyInterface
-    {
+    public function addForeignKey(
+        string $foreignKey,
+        callable $func
+    ): static {
+        $func($foreign = $this->foreignKey($foreignKey));
 
+        return $this->addCreateTableSQL($foreign->getSQL());
     }
 
 
@@ -294,7 +336,7 @@ abstract class Table implements TableInterface
     */
     public function addUniqueKey(array $uniqueKeys): static
     {
-       return $this;
+        return $this;
     }
 
 
@@ -308,7 +350,7 @@ abstract class Table implements TableInterface
     */
     public function exists(): bool
     {
-       return in_array($this->getName(), $this->list());
+        return in_array($this->getName(), $this->list());
     }
 
 
@@ -337,7 +379,7 @@ abstract class Table implements TableInterface
     */
     public function create(): bool
     {
-        $this->exec($this->createTableSQL());
+        $this->exec($this->getCreateTableSQL());
 
         return $this->exists();
     }
@@ -351,7 +393,7 @@ abstract class Table implements TableInterface
     */
     public function update(): mixed
     {
-        return $this->exec($this->updateTableSQL());
+        return $this->exec($this->getUpdateTableSQL());
     }
 
 
@@ -446,7 +488,7 @@ abstract class Table implements TableInterface
     */
     public function clear(): void
     {
-       $this->criteria->clear();
+        $this->criteria->clear();
     }
 
 
@@ -461,8 +503,8 @@ abstract class Table implements TableInterface
     public function getSQL(): string
     {
         return join(';', array_filter([
-            $this->createTableSQL(),
-            $this->updateTableSQL()
+            $this->getCreateTableSQL(),
+            $this->getUpdateTableSQL()
         ]));
     }
 
@@ -537,6 +579,8 @@ abstract class Table implements TableInterface
 
 
 
+
+
     /**
      * @inheritDoc
     */
@@ -544,6 +588,33 @@ abstract class Table implements TableInterface
     {
 
     }
+
+
+
+
+
+
+
+
+
+    /**
+     * @param ColumnInterface $column
+     * @return $this
+    */
+    public function saveColumn(ColumnInterface $column): static
+    {
+        $this->criteria->columns[$column->getName()] = $column;
+
+        if ($this->exists()) {
+            return $this->addUpdateTableSQL($column->add());
+        }
+
+        return $this->addCreateTableSQL($column->getSQL());
+    }
+
+
+
+
 
 
 
@@ -567,9 +638,9 @@ abstract class Table implements TableInterface
      *
      * @return string
     */
-    public function createTableSQL(): string
+    public function getCreateTableSQL(): string
     {
-        return $this->getBuilder()->createTableSQL();
+        return $this->getBuilder()->createTable();
     }
 
 
@@ -581,11 +652,16 @@ abstract class Table implements TableInterface
      * Returns update SQL
      *
      * @return string
-     */
-    public function updateTableSQL(): string
+    */
+    public function getUpdateTableSQL(): string
     {
-        return $this->getBuilder()->updateTableSQL();
+        return $this->getBuilder()->updateTable();
     }
+
+
+
+
+
 
 
 
@@ -594,7 +670,7 @@ abstract class Table implements TableInterface
      * @param string $sql
      * @return $this
      */
-    public function addCreateSQL(string $sql): static
+    public function addCreateTableSQL(string $sql): static
     {
         $this->criteria->create[] = $sql;
 
@@ -609,10 +685,50 @@ abstract class Table implements TableInterface
      * @param string $sql
      * @return $this
     */
-    public function addUpdateSQL(string $sql): static
+    public function addUpdateTableSQL(string $sql): static
     {
         $this->criteria->update[] = $sql;
 
         return $this;
+    }
+
+
+
+
+
+
+    /**
+     * @param ColumnInterface $column
+     * @param callable $options
+     * @return ColumnOptionInterface
+     */
+    private function parseColumnOptions(
+        ColumnInterface $column,
+        callable $options
+    ): ColumnOptionInterface {
+        $option = new ColumnOptions($column);
+        $option->call($options);
+        return $option;
+    }
+
+
+
+
+
+    /**
+     * @param string $name
+     * @param ColumnType $type
+     * @param callable $options
+     * @return ColumnInterface
+     */
+    private function createColumn(
+        string $name,
+        ColumnType $type,
+        callable $options
+    ): ColumnInterface {
+
+        return $this->parseColumnOptions($this->column($name), $options)
+                    ->callMethod($type->value)
+                    ->getColumn();
     }
 }

@@ -1,7 +1,17 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Table\Criteria;
+
+use Laventure\Component\Database\Schema\Column\Contract\ColumnInterface;
+use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
+use Laventure\Component\Database\Schema\Constraints\Contract\IndexInterface;
+use Laventure\Component\Database\Schema\Constraints\Contract\PrimaryKeyInterface;
+use Laventure\Component\Database\Schema\Constraints\Contract\UniqueKeyInterface;
+use Laventure\Component\Database\Schema\Constraints\Types\Index;
+use Laventure\Component\Database\Schema\Constraints\Types\Keys\Primary\PrimaryKey;
+use Laventure\Component\Database\Schema\Constraints\Types\Keys\Unique\UniqueKey;
 
 /**
  * TableCriteria
@@ -15,9 +25,52 @@ namespace Laventure\Component\Database\Schema\Table\Criteria;
 class TableCriteria implements TableCriteriaInterface
 {
     /**
-     * @var array
+     * @var ColumnInterface[]
     */
     public array $columns = [];
+
+
+
+
+    /**
+     * @var array
+    */
+    public array $primary = [];
+
+
+
+
+
+
+    /**
+     * @var array
+    */
+    public array $unique = [];
+
+
+
+
+
+
+
+
+    /**
+     * @var array
+    */
+    public array $index = [];
+
+
+
+
+
+
+
+    /**
+     * @var ForeignKeyInterface[]
+    */
+    public array $foreign = [];
+
+
 
 
 
@@ -30,12 +83,61 @@ class TableCriteria implements TableCriteriaInterface
 
 
 
+
     /**
      * @var array
     */
     public array $update = [];
 
 
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getPrimary(): PrimaryKeyInterface
+    {
+        return new PrimaryKey($this->primary);
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getIndex(): IndexInterface
+    {
+        return new Index($this->index);
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getUnique(): UniqueKeyInterface
+    {
+        return new UniqueKey($this->unique);
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getForeign(): array
+    {
+        return $this->foreign;
+    }
 
 
 
@@ -56,8 +158,12 @@ class TableCriteria implements TableCriteriaInterface
     */
     public function clear(): void
     {
+        $this->columns = [];
+        $this->primary = [];
+        $this->unique  = [];
+        $this->index   = [];
+        $this->foreign = [];
         $this->create  = [];
         $this->update  = [];
-        $this->columns = [];
     }
 }

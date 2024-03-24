@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Constraints\Types\Keys\Unique;
@@ -25,6 +26,8 @@ class UniqueKey extends ConstraintHasColumns implements UniqueKeyInterface
     {
         parent::__construct('unique', $key, $columns);
     }
+
+
 
 
     /**

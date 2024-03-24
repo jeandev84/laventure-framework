@@ -18,21 +18,15 @@ use Laventure\Component\Database\Schema\Constraints\Traits\HasConstraintTrait;
  *
  * @package  Laventure\Component\Database\Schema\Constraints\Drivers
 */
-class DefaultValue extends Constraint implements HasConstraintInterface
+class DefaultValue extends Constraint
 {
-    use HasConstraintTrait;
-
-
     /**
      * @param $value
-     * @param array $constraints
     */
-    public function __construct(protected $value, array $constraints = [])
+    public function __construct(protected $value)
     {
         parent::__construct('default');
-        $this->withConstraints($constraints);
     }
-
 
 
 
@@ -42,15 +36,6 @@ class DefaultValue extends Constraint implements HasConstraintInterface
     */
     public function getSQL(): string
     {
-        $sql = "DEFAULT $this->value";
-
-        if ($this->constraints) {
-            $sql = sprintf('DEFAULT "%s" %s',
-                $this->value,
-                $this->getConstraintsAsString()
-            );
-        }
-
-        return $sql;
+        return sprintf('DEFAULT "%s"', $this->value);
     }
 }

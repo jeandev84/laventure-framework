@@ -1,8 +1,13 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Table\Criteria;
 
+use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
+use Laventure\Component\Database\Schema\Constraints\Contract\IndexInterface;
+use Laventure\Component\Database\Schema\Constraints\Contract\PrimaryKeyInterface;
+use Laventure\Component\Database\Schema\Constraints\Contract\UniqueKeyInterface;
 
 /**
  * TableCriteriaInterface
@@ -16,9 +21,56 @@ namespace Laventure\Component\Database\Schema\Table\Criteria;
 interface TableCriteriaInterface
 {
     /**
+     * @return PrimaryKeyInterface
+    */
+    public function getPrimary(): PrimaryKeyInterface;
+
+
+
+
+
+
+    /**
+     * @return IndexInterface
+    */
+    public function getIndex(): IndexInterface;
+
+
+
+
+
+
+
+    /**
+     * @return UniqueKeyInterface
+    */
+    public function getUnique(): UniqueKeyInterface;
+
+
+
+
+
+
+
+    /**
+     * ForeignKeys
+     *
+     * @return ForeignKeyInterface[]
+    */
+    public function getForeign(): array;
+
+
+
+
+
+
+
+    /**
      * @return array
     */
     public function toArray(): array;
+
+
 
 
 

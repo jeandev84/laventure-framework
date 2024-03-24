@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Column\Contract;
@@ -19,9 +20,6 @@ use Stringable;
 */
 interface ColumnInterface extends Stringable
 {
-
-
-
     /**
      * Set column type
      *
@@ -31,6 +29,345 @@ interface ColumnInterface extends Stringable
     public function type(string $type): static;
 
 
+
+
+
+
+
+    /**
+     * Increment column
+     *
+     * @return $this
+     */
+    public function increments(): static;
+
+
+
+
+
+    /**
+     * Add big increment
+     *
+     * @return ColumnInterface
+     */
+    public function bigIncrements(): static;
+
+
+
+
+
+
+
+    /**
+     * Add integer
+     *
+     * @param int $length
+     * @return $this
+     */
+    public function integer(int $length = 11): static;
+
+
+
+
+
+
+    /**
+     * Add column type small integer
+     *
+     * @return $this
+     */
+    public function smallInteger(): static;
+
+
+
+
+
+
+
+    /**
+     * Add column type big integer
+     *
+     * @return $this
+     */
+    public function bigInteger(): static;
+
+
+
+
+
+
+
+    /**
+     * Add column type big integer
+     *
+     * @return $this
+     */
+    public function mediumInteger(): static;
+
+
+
+
+
+
+    /**
+     * Add column type tiny integer
+     *
+     * @return $this
+     */
+    public function tinyInteger(): static;
+
+
+
+
+
+
+
+
+    /**
+     * Add column type string
+     * @param int $length
+     * @return ColumnInterface
+     */
+    public function string(int $length = 255): static;
+
+
+
+
+
+
+
+    /**
+     * Add column type char
+     *
+     * @param $value
+     * @return $this
+     */
+    public function char($value): static;
+
+
+
+
+
+
+    /**
+     * Add column type boolean
+     *
+     * @return $this
+     */
+    public function boolean(): static;
+
+
+
+
+
+
+
+    /**
+     * Add column type datetime
+     *
+     * @return ColumnInterface
+     */
+    public function datetime(): static;
+
+
+
+
+
+
+
+
+
+    /**
+     * Add column type time
+     *
+     * @return $this
+     */
+    public function time(): static;
+
+
+
+
+
+
+
+    /**
+     * Add column type timestamp
+     *
+     * @return $this
+     */
+    public function timestamp(): static;
+
+
+
+
+
+
+
+    /**
+     * Add column type binary
+     *
+     * @return ColumnInterface
+     */
+    public function binary(): static;
+
+
+
+
+
+
+
+    /**
+     * Add column type date
+     *
+     * @return $this
+     */
+    public function date(): static;
+
+
+
+
+
+
+
+
+    /**
+     * Add column type decimal
+     *
+     * @param int $precision
+     *
+     * @param int $scale
+     *
+     * @return $this
+     */
+    public function decimal(int $precision, int $scale): static;
+
+
+
+
+
+
+
+
+
+    /**
+     * Add column type double
+     *
+     *
+     * @param int $precision
+     *
+     * @param int $scale
+     *
+     * @return $this
+     */
+    public function double(int $precision, int $scale): static;
+
+
+
+
+
+
+    /**
+     * Add column type enum
+     *
+     * @param array $values
+     * @return $this
+     */
+    public function enum(array $values): static;
+
+
+
+
+
+
+
+
+    /**
+     * Add column type float
+     *
+     * @return $this
+     */
+    public function float(): static;
+
+
+
+
+
+
+
+    /**
+     * Add column type json
+     *
+     * @return $this
+     */
+    public function json(): static;
+
+
+
+
+
+
+
+
+    /**
+     * Add column type text
+     *
+     * @return $this
+     */
+    public function text(): static;
+
+
+
+
+
+
+
+
+
+    /**
+     * Add column type long text
+     *
+     * @return ColumnInterface
+     */
+    public function longText(): static;
+
+
+
+
+
+
+
+    /**
+     * Add column type medium text
+     *
+     * @return $this
+     */
+    public function mediumText(): static;
+
+
+
+
+
+
+    /**
+     * Add column type tiny text
+     *
+     * @return  $this
+     */
+    public function tinyText(): static;
+
+
+
+
+
+
+
+
+    /**
+     * Add column type morphs
+     *
+     * @return $this
+     */
+    public function morphs(): static;
 
 
 
@@ -58,6 +395,18 @@ interface ColumnInterface extends Stringable
     */
     public function default($value): static;
 
+
+
+
+
+
+
+    /**
+     * Set constraint not null
+     *
+     * @return $this
+    */
+    public function notNull(): static;
 
 
 
@@ -144,19 +493,6 @@ interface ColumnInterface extends Stringable
 
 
     /**
-     * Increment column
-     *
-     * @return $this
-    */
-    public function increment(): static;
-
-
-
-
-
-
-
-    /**
      * Add constraints nullable
      *
      * @return $this
@@ -233,9 +569,9 @@ interface ColumnInterface extends Stringable
     /**
      * Add new column expression
      *
-     * @return $this
+     * @return string
     */
-    public function add(): static;
+    public function add(): string;
 
 
 
@@ -247,9 +583,9 @@ interface ColumnInterface extends Stringable
     /**
      * Modify column expression
      *
-     * @return $this
+     * @return string
     */
-    public function modify(): static;
+    public function modify(): string;
 
 
 
@@ -261,9 +597,9 @@ interface ColumnInterface extends Stringable
      * Rename column expression
      *
      * @param string $to
-     * @return $this
+     * @return string
     */
-    public function rename(string $to): static;
+    public function rename(string $to): string;
 
 
 
@@ -275,9 +611,9 @@ interface ColumnInterface extends Stringable
     /**
      * Drop column expression
      *
-     * @return $this
+     * @return string
     */
-    public function drop(): static;
+    public function drop(): string;
 
 
 

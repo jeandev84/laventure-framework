@@ -1,10 +1,12 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Table;
 
 use Laventure\Component\Database\Query\QueryInterface;
 use Laventure\Component\Database\Schema\Column\Contract\ColumnInterface;
+use Laventure\Component\Database\Schema\Column\Types\ColumnType;
 use Laventure\Component\Database\Schema\Constraints\ConstraintInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\IndexInterface;
@@ -23,9 +25,6 @@ use Laventure\Component\Database\Schema\Table\Criteria\TableCriteriaInterface;
 */
 interface TableInterface
 {
-
-
-
     /**
      * Returns table name
      *
@@ -50,22 +49,13 @@ interface TableInterface
 
 
 
-
-
     /**
      * Create column
      *
      * @param string $name
-     * @param string $type
-     * @param array $options
      * @return ColumnInterface
     */
-    public function createColumn(
-        string $name,
-        string $type,
-        array $options = []
-    ): ColumnInterface;
-
+    public function column(string $name): ColumnInterface;
 
 
 
@@ -75,11 +65,11 @@ interface TableInterface
      * Add new column
      *
      * @param string $name
-     * @param string $type
-     * @param array $options
-     * @return TableInterface
+     * @param ColumnType $type
+     * @param callable $options
+     * @return $this
     */
-    public function addColumn(string $name, string $type, array $options = []): static;
+    public function addColumn(string $name, ColumnType $type, callable $options): static;
 
 
 
@@ -104,14 +94,16 @@ interface TableInterface
 
 
 
+
+
     /**
      * Modify column
      *
      * @param string $name
-     * @param array $options
+     * @param callable $func
      * @return $this
-    */
-    public function modifyColumn(string $name, array $options = []): static;
+     */
+    public function modifyColumn(string $name, callable $func): static;
 
 
 
@@ -301,14 +293,29 @@ interface TableInterface
 
 
 
+    /**
+     * @param string $foreignKey
+     * @return ForeignKeyInterface
+    */
+    public function foreignKey(string $foreignKey): ForeignKeyInterface;
 
+
+    
+    
+    
+    
+    
     /**
      * Add foreign key
      *
      * @param string $foreignKey
-     * @return ForeignKeyInterface
+     * @param callable $func
+     * @return $this
     */
-    public function addForeignKey(string $foreignKey): ForeignKeyInterface;
+    public function addForeignKey(
+        string $foreignKey,
+        callable $func
+    ): static;
 
 
 
@@ -605,15 +612,15 @@ interface TableInterface
 
 
 
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
     /**
      * Dump table
-     * 
+     *
      * @return mixed
     */
     public function dump(): mixed;
@@ -658,7 +665,7 @@ interface TableInterface
 
 
 
-    
+
 
     /**
      * Create a new table
@@ -778,396 +785,6 @@ interface TableInterface
     public function truncateCascade(): mixed;
 
 
-
-
-
-
-
-
-    /**
-     * Add incremental column
-     *
-     * @param string $name
-     * @return $this
-     */
-    public function increments(string $name): static;
-
-
-
-
-
-
-
-
-
-    /**
-     * Add big increment
-     *
-     * @param string $name
-     * @return ColumnInterface
-     */
-    public function bigIncrements(string $name): ColumnInterface;
-
-
-
-
-
-
-
-    /**
-     * Add integer
-     *
-     * @param string $name
-     * @param int $length
-     * @return ColumnInterface
-     */
-    public function integer(string $name, int $length = 11): ColumnInterface;
-
-
-
-
-
-
-    /**
-     * Add column type small integer
-     *
-     * @param string $name
-     * @return ColumnInterface
-     */
-    public function smallInteger(string $name): ColumnInterface;
-
-
-
-
-
-
-
-    /**
-     * Add column type big integer
-     *
-     * @param string $name
-     *
-     * @return ColumnInterface
-     */
-    public function bigInteger(string $name): ColumnInterface;
-
-
-
-
-
-
-
-    /**
-     * Add column type big integer
-     *
-     * @param string $name
-     *
-     * @return ColumnInterface
-     */
-    public function mediumInteger(string $name): ColumnInterface;
-
-
-
-
-
-
-    /**
-     * Add column type tiny integer
-     *
-     * @param string $name
-     *
-     * @return ColumnInterface
-    */
-    public function tinyInteger(string $name): ColumnInterface;
-
-
-
-
-
-
-
-
-    /**
-     * Add column type string
-     *
-     * @param string $name
-     * @param int $length
-     * @return ColumnInterface
-     */
-    public function string(string $name, int $length = 255): ColumnInterface;
-
-
-
-
-
-
-
-    /**
-     * Add column type char
-     *
-     * @param string $name
-     * @param $value
-     * @return ColumnInterface
-     */
-    public function char(string $name, $value): ColumnInterface;
-
-
-
-
-
-
-    /**
-     * Add column type boolean
-     *
-     * @param string $name
-     *
-     * @return ColumnInterface
-     */
-    public function boolean(string $name): ColumnInterface;
-
-
-
-
-
-
-
-    /**
-     * Add column type datetime
-     *
-     * @param string $name
-     *
-     * @return ColumnInterface
-     */
-    public function datetime(string $name): ColumnInterface;
-
-
-
-
-
-
-
-
-
-    /**
-     * Add column type time
-     *
-     * @param string $name
-     *
-     * @return ColumnInterface
-     */
-    public function time(string $name): ColumnInterface;
-
-
-
-
-
-
-
-    /**
-     * Add column type timestamp
-     *
-     * @param string $name
-     *
-     * @return ColumnInterface
-     */
-    public function timestamp(string $name): ColumnInterface;
-
-
-
-
-
-
-
-    /**
-     * Add column type binary
-     *
-     * @param string $name
-     *
-     * @return ColumnInterface
-     */
-    public function binary(string $name): ColumnInterface;
-
-
-
-
-
-
-
-    /**
-     * Add column type date
-     *
-     * @param string $name
-     *
-     * @return ColumnInterface
-     */
-    public function date(string $name): ColumnInterface;
-
-
-
-
-
-
-
-
-    /**
-     * Add column type decimal
-     *
-     * @param string $name
-     *
-     * @param int $precision
-     *
-     * @param int $scale
-     *
-     * @return ColumnInterface
-    */
-    public function decimal(string $name, int $precision, int $scale): ColumnInterface;
-
-
-
-
-
-
-
-
-
-    /**
-     * Add column type double
-     *
-     * @param string $name
-     *
-     * @param int $precision
-     *
-     * @param int $scale
-     *
-     * @return ColumnInterface
-    */
-    public function double(string $name, int $precision, int $scale): ColumnInterface;
-
-
-
-
-
-
-
-
-
-
-    /**
-     * Add column type enum
-     *
-     * @param string $name
-     * @param array $values
-     * @return ColumnInterface
-    */
-    public function enum(string $name, array $values): ColumnInterface;
-
-
-
-
-
-
-
-
-
-
-    /**
-     * Add column type float
-     *
-     * @param string $name
-     * @return ColumnInterface
-    */
-    public function float(string $name): ColumnInterface;
-
-
-
-
-
-
-
-    /**
-     * Add column type json
-     *
-     * @param string $name
-     * @return ColumnInterface
-     */
-    public function json(string $name): ColumnInterface;
-
-
-
-
-
-
-
-
-    /**
-     * Add column type text
-     *
-     * @param string $name
-     *
-     * @return ColumnInterface
-    */
-    public function text(string $name): ColumnInterface;
-
-
-
-
-
-
-
-
-    /**
-     * Add column type long text
-     *
-     * @param string $name
-     *
-     * @return ColumnInterface
-    */
-    public function longText(string $name): ColumnInterface;
-
-
-
-
-
-
-
-    /**
-     * Add column type medium text
-     *
-     * @param string $name
-     *
-     * @return ColumnInterface
-    */
-    public function mediumText(string $name): ColumnInterface;
-
-
-
-
-
-
-    /**
-     * Add column type tiny text
-     *
-     * @param string $name
-     *
-     * @return ColumnInterface
-    */
-    public function tinyText(string $name): ColumnInterface;
-
-
-
-
-
-
-
-
-    /**
-     * Add column type morphs
-     *
-     * @param string $name
-     *
-     * @return ColumnInterface
-    */
-    public function morphs(string $name): ColumnInterface;
 
 
 

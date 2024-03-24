@@ -18,5 +18,4 @@ use Laventure\Component\Database\Schema\Table\Table;
 */
 class PgsqlTable extends Table
 {
-
 }
