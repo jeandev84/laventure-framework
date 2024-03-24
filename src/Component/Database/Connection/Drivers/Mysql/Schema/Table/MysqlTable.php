@@ -14,6 +14,8 @@ use Laventure\Component\Database\Schema\Constraints\Contract\IndexInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\UniqueKeyInterface;
 use Laventure\Component\Database\Schema\Constraints\Info\ConstraintInfo;
 use Laventure\Component\Database\Schema\Constraints\Types\Index;
+use Laventure\Component\Database\Schema\Table\Builder\TableSQlBuilderInterface;
+use Laventure\Component\Database\Schema\Table\Criteria\TableCriteriaInterface;
 use Laventure\Component\Database\Schema\Table\Table;
 
 /**
@@ -65,144 +67,178 @@ class MysqlTable extends Table
 
 
 
-    /**
-     * @inheritDoc
-    */
-    public function getCreateTableSQL(): string
-    {
-         $criteria  = join(PHP_EOL, $this->create);
-         $tableName = $this->getName();
-
-         return join(PHP_EOL, [
-             sprintf('CREATE TABLE IF NOT EXISTS `%s` (', $tableName), $criteria, ");"
-         ]);
-    }
-
-
-
 
     /**
      * @inheritDoc
     */
-    public function getUpdateTableSQL(): string
-    {
-        return '';
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-     */
     public function getColumn(string $name): ColumnInterface
     {
-        // TODO: Implement getColumn() method.
+
     }
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function getColumns(): array
     {
-        // TODO: Implement getColumns() method.
+
     }
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function getPrimaryKeys(): array
     {
-        // TODO: Implement getPrimaryKeys() method.
+
     }
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function getForeignKey(string $foreignKey): ForeignKeyInterface
     {
-        // TODO: Implement getForeignKey() method.
+
     }
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function getForeignKeys(): array
     {
-        // TODO: Implement getForeignKeys() method.
+
     }
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function dropForeignKeys(): static
     {
-        // TODO: Implement dropForeignKeys() method.
+
     }
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function hasIndex(string $index): bool
     {
-        // TODO: Implement hasIndex() method.
+
     }
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function getIndex(string $index): IndexInterface
     {
-        // TODO: Implement getIndex() method.
+
     }
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function getIndexes(): array
     {
-        // TODO: Implement getIndexes() method.
+
     }
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function hasUniqueKey(string $uniqueKey): bool
     {
-        // TODO: Implement hasUniqueKey() method.
+
     }
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function getUniqueKey(string $uniqueKey): UniqueKeyInterface
     {
-        // TODO: Implement getUniqueKey() method.
+
     }
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function getUniqueKeys(): array
     {
-        // TODO: Implement getUniqueKeys() method.
+
     }
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function getConstraints(): array
     {
-        // TODO: Implement getConstraints() method.
+
     }
+
+
+
 
     /**
      * @inheritDoc
     */
     public function dump(): mixed
     {
-        // TODO: Implement dump() method.
+
     }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getBuilder(): TableSQlBuilderInterface
+    {
+        return new MysqlTableSQLBuilder($this, $this->criteria);
+    }
+
+
+
 
 
 

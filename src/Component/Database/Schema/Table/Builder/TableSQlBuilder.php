@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Table\Builder;
 
+use Laventure\Component\Database\Schema\Table\Criteria\TableCriteria;
 use Laventure\Component\Database\Schema\Table\Table;
+use Laventure\Component\Database\Schema\Table\TableInterface;
 
 /**
  * TableSQlBuilder
@@ -15,34 +17,16 @@ use Laventure\Component\Database\Schema\Table\Table;
  *
  * @package  Laventure\Component\Database\Schema\Table\Criteria
 */
-class TableSQlBuilder implements TableSQlBuilderInterface
+abstract class TableSQlBuilder implements TableSQlBuilderInterface
 {
     /**
-     * @param Table $table
+     * @param TableInterface $table
+     * @param TableCriteria $criteria
     */
-    public function __construct(protected Table $table)
+    public function __construct(
+        protected TableInterface $table,
+        protected TableCriteria $criteria
+    )
     {
-    }
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function getCreateTableSQL(): string
-    {
-
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function getUpdateTableSQL(): string
-    {
-
     }
 }

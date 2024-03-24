@@ -8,6 +8,7 @@ use Laventure\Component\Database\Query\QueryInterface;
 use Laventure\Component\Database\Schema\Column\Contract\ColumnInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
 use Laventure\Component\Database\Schema\Table\Criteria\TableCriteria;
+use Laventure\Component\Database\Schema\Table\Criteria\TableCriteriaInterface;
 use ReflectionClass;
 use ReflectionException;
 
@@ -315,6 +316,9 @@ abstract class Table implements TableInterface
 
 
 
+
+
+
     /**
      * @inheritDoc
     */
@@ -545,6 +549,45 @@ abstract class Table implements TableInterface
 
 
 
+    /**
+     * @inheritDoc
+    */
+    public function getCriteria(): TableCriteriaInterface
+    {
+        return $this->criteria;
+    }
+
+
+
+
+
+
+    /**
+     * Returns create SQL
+     *
+     * @return string
+    */
+    public function getCreateTableSQL(): string
+    {
+        return $this->getBuilder()
+            ->getCreateTableSQL();
+    }
+
+
+
+
+
+
+    /**
+     * Returns update SQL
+     *
+     * @return string
+     */
+    public function getUpdateTableSQL(): string
+    {
+        return $this->getBuilder()
+            ->getUpdateTableSQL();
+    }
 
 
 
@@ -567,42 +610,11 @@ abstract class Table implements TableInterface
     /**
      * @param string $sql
      * @return $this
-     */
+    */
     public function addUpdateSQL(string $sql): static
     {
         $this->criteria->update[] = $sql;
 
         return $this;
-    }
-
-
-
-
-
-    /**
-     * Returns create SQL
-     *
-     * @return string
-    */
-    public function getCreateTableSQL(): string
-    {
-        return $this->getBuilder()
-                    ->getCreateTableSQL();
-    }
-
-
-
-
-
-
-    /**
-     * Returns update SQL
-     *
-     * @return string
-    */
-    public function getUpdateTableSQL(): string
-    {
-        return $this->getBuilder()
-                   ->getUpdateTableSQL();
     }
 }
