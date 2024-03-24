@@ -21,23 +21,12 @@ interface ColumnFactoryInterface
     /**
      * @param string $name
      * @param string $type
-     * @param string $constraints
+     * @param array $options
      * @return ColumnInterface
     */
     public function createColumn(
         string $name,
-        string $type = '',
-        string $constraints = ''
+        string $type,
+        array $options = []
     ): ColumnInterface;
-
-
-
-
-    /**
-     * Create column from info
-     *
-     * @param ColumnInfoInterface $info
-     * @return ColumnInterface
-    */
-    public function createColumnFromInfo(ColumnInfoInterface $info): ColumnInterface;
 }

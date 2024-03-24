@@ -39,34 +39,6 @@ interface TableInterface
 
 
 
-
-    /**
-     * Returns schema name
-     *
-     * @return string
-    */
-    public function getSchemaName(): string;
-
-
-
-
-
-
-
-
-    /**
-     * @param string $schemaName
-     * @return $this
-    */
-    public function withSchemaName(string $schemaName): static;
-
-
-
-
-
-
-
-
     /**
      * @param string $entity
      * @return $this
@@ -113,15 +85,14 @@ interface TableInterface
 
 
 
-
-
     /**
      * Modify column
      *
      * @param string $name
-     * @return ColumnInterface
+     * @param array $options
+     * @return $this
     */
-    public function modifyColumn(string $name): ColumnInterface;
+    public function modifyColumn(string $name, array $options = []): static;
 
 
 
@@ -162,12 +133,22 @@ interface TableInterface
 
 
 
+    /**
+     * Returns column
+     *
+     * @param string $name
+     * @return ColumnInterface
+    */
+    public function getColumn(string $name): ColumnInterface;
+
+
+
 
 
 
 
     /**
-     * Returns all columns
+     * Returns all available columns
      *
      * @return ColumnInterface[]
     */
@@ -450,7 +431,7 @@ interface TableInterface
      * @param array $uniqueKeys
      * @return $this
     */
-    public function addUniqueKeys(array $uniqueKeys): static;
+    public function addUniqueKey(array $uniqueKeys): static;
 
 
 
@@ -508,6 +489,7 @@ interface TableInterface
      * @return ConstraintInterface[]
     */
     public function getConstraints(): array;
+
 
 
 
@@ -664,7 +646,21 @@ interface TableInterface
 
 
 
-    
+
+
+
+
+
+    /**
+     * Returns generated SQL
+     *
+     * @return string
+    */
+    public function getSQL(): string;
+
+
+
+
     
     
 
@@ -771,9 +767,6 @@ interface TableInterface
 
 
 
-
-
-
     /**
      * Add incremental column
      *
@@ -830,6 +823,8 @@ interface TableInterface
 
 
 
+
+
     /**
      * Add column type big integer
      *
@@ -865,7 +860,7 @@ interface TableInterface
      * @param string $name
      *
      * @return ColumnInterface
-     */
+    */
     public function tinyInteger(string $name): ColumnInterface;
 
 

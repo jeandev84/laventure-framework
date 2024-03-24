@@ -123,4 +123,15 @@ interface ConfigurationInterface extends ParameterInterface
      * @return array
     */
     public function getOptions(): array;
+
+
+
+
+
+
+    /**
+     * @param $name
+     * @return string
+    */
+    public function prefixed($name): string;
 }

@@ -1,8 +1,7 @@
 <?php
-
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\ORM\Enum;
+namespace Laventure\Foundation\Database\ORM\Enum;
 
 /**
  * OrmType
@@ -11,7 +10,7 @@ namespace Laventure\Component\Database\ORM\Enum;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Foundation\Database\ORM
+ * @package  Laventure\Foundation\Database\ORM\Enum
  */
 enum OrmType
 {

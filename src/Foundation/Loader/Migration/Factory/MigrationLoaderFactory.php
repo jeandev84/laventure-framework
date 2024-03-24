@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Foundation\Loader\Migration\Factory;
 
-use Laventure\Component\Database\ORM\Enum\OrmType;
+use Laventure\Foundation\Database\ORM\Enum\OrmType;
 use Laventure\Foundation\Loader\Migration\Exception\MigrationLoaderException;
 use Laventure\Foundation\Loader\Migration\MigrationLoaderInterface;
 use Laventure\Foundation\Loader\Migration\Types\Mapper\MapperMigrationLoader;

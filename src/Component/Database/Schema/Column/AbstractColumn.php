@@ -66,17 +66,20 @@ abstract class AbstractColumn implements ColumnInterface
 
 
 
-
     /**
      * Column options
      *
      * @var array
     */
     protected array $options = [
-        'increment' => null,
-        'sign'      => '',
-        'comments'  => '',
-        'collation' => ''
+        "primary"   => false,
+        "unique"    => false,
+        "nullable"  => false,
+        "default"   => null,
+        "sign"      => "",
+        "increment" => "",
+        "collation" => "",
+        "comments"  => ""
     ];
 
 
@@ -149,7 +152,7 @@ abstract class AbstractColumn implements ColumnInterface
 
     /**
      * @inheritDoc
-     */
+    */
     public function primary(): static
     {
         return $this->constraint(new PrimaryKey());
@@ -180,9 +183,7 @@ abstract class AbstractColumn implements ColumnInterface
      */
     public function default($value): static
     {
-        return $this->constraint(
-            new DefaultValue($value, true)
-        );
+        return $this->constraint(new DefaultValue($value, true));
     }
 
 
@@ -252,13 +253,15 @@ abstract class AbstractColumn implements ColumnInterface
 
     /**
      * @inheritDoc
-     */
+    */
     public function options(array $options): static
     {
-        $this->options = array_merge(
-            $this->options,
-            $options
-        );
+        foreach ($options as $name => $value) {
+            if (method_exists($this, $name)) {
+                call_user_func([$this, $name], $value);
+            }
+            $this->option($name, $value);
+        }
 
         return $this;
     }
@@ -271,10 +274,12 @@ abstract class AbstractColumn implements ColumnInterface
 
     /**
      * @inheritDoc
-     */
+    */
     public function option($id, $value): static
     {
-        return $this->options([$id => $value]);
+       $this->options[$id] = $value;
+
+       return $this;
     }
 
 

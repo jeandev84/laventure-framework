@@ -124,4 +124,16 @@ class Configuration extends Parameter implements ConfigurationInterface
     {
         return $this->get('options', []);
     }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function prefixed($name): string
+    {
+        return sprintf('%s%s', $this->getPrefix(), $name);
+    }
 }
