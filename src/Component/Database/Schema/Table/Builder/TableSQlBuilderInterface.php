@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Table\Builder;
 
+use Laventure\Component\Database\Query\Builder\SQL\Contract\SQLInterface;
 use Laventure\Component\Database\Schema\Table\Builder\Contract\CreateTableSQLBuilderInterface;
 use Laventure\Component\Database\Schema\Table\Builder\Contract\UpdateTableSQLBuilderInterface;
 
@@ -16,18 +17,8 @@ use Laventure\Component\Database\Schema\Table\Builder\Contract\UpdateTableSQLBui
  *
  * @package  Laventure\Component\Database\Schema\Table\Criteria
 */
-interface TableSQlBuilderInterface
+interface TableSQlBuilderInterface extends SQLInterface
 {
-    /**
-     * Returns create criteria as string
-     *
-     * @return string
-    */
-    public function createTable(): string;
-
-
-
-
 
 
     /**
@@ -44,17 +35,4 @@ interface TableSQlBuilderInterface
      * @return UpdateTableSQLBuilderInterface
     */
     public function update(): UpdateTableSQLBuilderInterface;
-
-
-
-
-
-
-
-    /**
-     * Returns create sql
-     *
-     * @return string
-    */
-    public function updateTable(): string;
 }

@@ -127,7 +127,7 @@ abstract class Table implements TableInterface
     */
     public function renameColumn(string $name, string $to): static
     {
-        return $this->addUpdateTableSQL($this->getColumn($name)->rename($to));
+        return $this->addUpdateTable($this->getColumn($name)->rename($to));
     }
 
 
@@ -142,7 +142,7 @@ abstract class Table implements TableInterface
     {
         $column = $this->parseColumnOptions($this->getColumn($name), $func)->getColumn();
 
-        return $this->addUpdateTableSQL($column->modify());
+        return $this->addUpdateTable($column->modify());
     }
 
 
@@ -155,7 +155,7 @@ abstract class Table implements TableInterface
     */
     public function dropColumn(string $name): static
     {
-        return $this->addUpdateTableSQL($this->getColumn($name)->drop());
+        return $this->addUpdateTable($this->getColumn($name)->drop());
     }
 
 
@@ -303,7 +303,7 @@ abstract class Table implements TableInterface
     ): static {
         $func($foreign = $this->foreignKey($foreignKey));
 
-        return $this->addCreateTableSQL($foreign->getSQL());
+        return $this->addCreateTable($foreign->getSQL());
     }
 
 
@@ -383,7 +383,7 @@ abstract class Table implements TableInterface
     */
     public function create(): bool
     {
-        $this->exec($this->getCreateTableSQL());
+        $this->exec($this->expr()->create()->getSQL());
 
         return $this->exists();
     }
@@ -397,7 +397,7 @@ abstract class Table implements TableInterface
     */
     public function update(): mixed
     {
-        return $this->exec($this->getUpdateTableSQL());
+        return $this->exec($this->expr()->update()->getSQL());
     }
 
 
@@ -506,10 +506,7 @@ abstract class Table implements TableInterface
     */
     public function getSQL(): string
     {
-        return join(';', array_filter([
-            $this->getCreateTableSQL(),
-            $this->getUpdateTableSQL()
-        ]));
+        return $this->expr()->getSQL();
     }
 
 
@@ -610,10 +607,10 @@ abstract class Table implements TableInterface
         $this->criteria->columns[$column->getName()] = $column;
 
         if ($this->exists()) {
-            return $this->addUpdateTableSQL($column->add());
+            return $this->addUpdateTable($column->add());
         }
 
-        return $this->addCreateTableSQL($column->getSQL());
+        return $this->addCreateTable($column->getSQL());
     }
 
 
@@ -637,44 +634,13 @@ abstract class Table implements TableInterface
 
 
 
-    /**
-     * Returns create SQL
-     *
-     * @return string
-    */
-    public function getCreateTableSQL(): string
-    {
-        return $this->getBuilder()->createTable();
-    }
-
-
-
-
-
-
-    /**
-     * Returns update SQL
-     *
-     * @return string
-    */
-    public function getUpdateTableSQL(): string
-    {
-        return $this->getBuilder()->updateTable();
-    }
-
-
-
-
-
-
-
 
 
     /**
      * @param string $sql
      * @return $this
      */
-    public function addCreateTableSQL(string $sql): static
+    public function addCreateTable(string $sql): static
     {
         $this->criteria->create[] = $sql;
 
@@ -689,7 +655,7 @@ abstract class Table implements TableInterface
      * @param string $sql
      * @return $this
     */
-    public function addUpdateTableSQL(string $sql): static
+    public function addUpdateTable(string $sql): static
     {
         $this->criteria->update[] = $sql;
 

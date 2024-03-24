@@ -227,7 +227,7 @@ class MysqlTable extends Table
     /**
      * @inheritDoc
     */
-    public function getBuilder(): TableSQlBuilderInterface
+    public function expr(): TableSQlBuilderInterface
     {
         return new MysqlTableSQLBuilder($this, $this->criteria);
     }

@@ -647,7 +647,7 @@ interface TableInterface
     /**
      * @return TableSQlBuilderInterface
     */
-    public function getBuilder(): TableSQlBuilderInterface;
+    public function expr(): TableSQlBuilderInterface;
 
 
 
