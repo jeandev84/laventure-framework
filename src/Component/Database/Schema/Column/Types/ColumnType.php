@@ -15,18 +15,20 @@ namespace Laventure\Component\Database\Schema\Column\Types;
 */
 enum ColumnType: string
 {
-    case STRING         = 'string';
-    case TEXT           = 'text';
-    case BIGINT         = 'bigint';
-    case BINARY         = 'binary';
-    case BOOLEAN        = 'boolean';
-    case DECIMAL        = 'decimal';
-    case FLOAT          = 'float';
-    case GUID           = 'guid';
-    case INTEGER        = 'integer';
-    case JSON           = 'json';
-    case SMALLINT       = 'smallint';
-    case TIME_MUTABLE   = 'time';
+    case String         = 'string';
+    case Text           = 'text';
+    case BigInteger     = 'bigInteger';
+    case Small          = 'smallInteger';
+    case Binary         = 'binary';
+    case Boolean        = 'boolean';
+    case Decimal        = 'decimal';
+    case Float          = 'float';
+    case Guid           = 'guid';
+    case Integer        = 'integer';
+    case Json           = 'json';
+    case Datetime       = 'datetime';
+    case Timestamp      = 'timestamp';
+    case Time           = 'time';
 
 
 

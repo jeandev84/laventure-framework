@@ -200,11 +200,15 @@ abstract class Table implements TableInterface
     */
     public function addTimestamps(): static
     {
+
+        return $this->addColumn('created_at');
+        /*
         return $this->addCreateTableSQL(
-            $this->column('created_at')->datetime()->getSQL()
+            $this->column('created_at')->datetime()->notNull()->getSQL()
         )->addCreateTableSQL(
             $this->column('updated_at')->datetime()->getSQL()
         );
+        */
     }
 
 

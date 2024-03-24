@@ -43,7 +43,7 @@ abstract class AbstractColumn implements ColumnInterface
      *
      * @var mixed
     */
-    protected $type;
+    protected string $type = '';
 
 
 
