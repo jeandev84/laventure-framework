@@ -136,4 +136,16 @@ class Configuration extends Parameter implements ConfigurationInterface
     {
         return sprintf('%s%s', $this->getPrefix(), $name);
     }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getSchemaName(): string
+    {
+        return $this->required('schemaName');
+    }
 }

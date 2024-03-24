@@ -146,7 +146,7 @@ trait ConnectionTrait
     /**
      * @return void
     */
-    abstract public function makeSureIfIsAvailable(): void;
+    abstract protected function makeSureIfIsAvailable(): void;
 
 
 
@@ -159,7 +159,7 @@ trait ConnectionTrait
      * @param ConfigurationInterface $config
      * @return mixed
     */
-    abstract public function connectWithoutDatabase(ConfigurationInterface $config): mixed;
+    abstract protected function connectWithoutDatabase(ConfigurationInterface $config): mixed;
 
 
 
@@ -172,5 +172,5 @@ trait ConnectionTrait
      * @param ConfigurationInterface $config
      * @return $this
     */
-    abstract public function connectIfExistsDatabase(ConfigurationInterface $config): mixed;
+    abstract protected function connectIfExistsDatabase(ConfigurationInterface $config): mixed;
 }

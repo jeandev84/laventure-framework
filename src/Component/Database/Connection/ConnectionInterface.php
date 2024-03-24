@@ -137,19 +137,9 @@ interface ConnectionInterface extends TransactionInterface
 
 
 
-
-
-    /**
-     * Returns SQL Builder factory
-     *
-     * @return SQLQueryBuilderFactoryInterface
-    */
-    public function createSQLBuilderFactory(): SQLQueryBuilderFactoryInterface;
-
-
-
-
-
+    
+    
+    
     /**
      * Create table
      *

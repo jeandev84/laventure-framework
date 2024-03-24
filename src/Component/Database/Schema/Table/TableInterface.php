@@ -3,13 +3,14 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Table;
 
-use Laventure\Component\Database\Query\Builder\SQL\DQL\Select\SelectBuilderInterface;
 use Laventure\Component\Database\Query\QueryInterface;
 use Laventure\Component\Database\Schema\Column\Contract\ColumnInterface;
 use Laventure\Component\Database\Schema\Constraints\ConstraintInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\IndexInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\UniqueKeyInterface;
+use Laventure\Component\Database\Schema\Table\Builder\TableSQlBuilderInterface;
+use Laventure\Component\Database\Schema\Table\Criteria\TableCriteriaInterface;
 
 /**
  * TableInterface
@@ -46,6 +47,24 @@ interface TableInterface
     public function addColumnsFromEntity(string $entity): static;
 
 
+
+
+
+
+
+    /**
+     * Create column
+     *
+     * @param string $name
+     * @param string $type
+     * @param array $options
+     * @return ColumnInterface
+    */
+    public function createColumn(
+        string $name,
+        string $type,
+        array $options = []
+    ): ColumnInterface;
 
 
 
@@ -529,37 +548,6 @@ interface TableInterface
 
 
     /**
-     * Execute SQL
-     *
-     * @param string $sql
-     * @return bool|int
-    */
-    public function exec(string $sql): mixed;
-
-
-
-
-
-
-
-
-    /**
-     * Create statement
-     *
-     * @param string $sql
-     * @return QueryInterface
-    */
-    public function statement(string $sql): QueryInterface;
-
-
-
-
-
-
-
-
-
-    /**
      * Insert data to the table
      *
      * @param array $attributes
@@ -617,20 +605,6 @@ interface TableInterface
 
 
 
-
-
-
-
-
-
-    /**
-     * Returns list table names
-     *
-     * @return array
-    */
-    public function list(): array;
-
-
     
     
     
@@ -661,7 +635,29 @@ interface TableInterface
 
 
 
-    
+
+
+    /**
+     * @return TableSQlBuilderInterface
+    */
+    public function getBuilder(): TableSQlBuilderInterface;
+
+
+
+
+
+
+    /**
+     * Returns table criteria
+     *
+     * @return TableCriteriaInterface
+    */
+    public function getCriteria(): TableCriteriaInterface;
+
+
+
+
+
     
 
     /**
@@ -723,13 +719,34 @@ interface TableInterface
 
 
     /**
-     * Drop table if exists
+     * Drop table
      *
      * @return mixed
     */
     public function drop(): mixed;
 
 
+
+
+
+    /**
+     * Drop table if exists
+     *
+     * @return mixed
+    */
+    public function dropIfExists(): mixed;
+
+
+
+
+
+
+    /**
+     * Drop table cascade
+     *
+     * @return mixed
+    */
+    public function dropCascade(): mixed;
 
 
 
@@ -1156,6 +1173,15 @@ interface TableInterface
 
 
 
+
+
+
+    /**
+     * Returns all available tables
+     *
+     * @return array
+    */
+    public function list(): array;
 
 
 

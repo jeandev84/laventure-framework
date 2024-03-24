@@ -183,7 +183,9 @@ abstract class AbstractColumn implements ColumnInterface
      */
     public function default($value): static
     {
-        return $this->constraint(new DefaultValue($value, true));
+        return $this->constraint(new DefaultValue($value, [
+            $this->notNull()
+        ]));
     }
 
 
@@ -409,7 +411,7 @@ abstract class AbstractColumn implements ColumnInterface
     public function getConstraint(): string
     {
         if (empty($this->constraints)) {
-            $this->constraint(new NotNull());
+           $this->constraints($this->notNull()->getSQL());
         }
 
         return join(' ', $this->constraints);
@@ -528,7 +530,7 @@ abstract class AbstractColumn implements ColumnInterface
      * @param $increment
      * @return $this
     */
-    public function withIncrement($increment): static
+    public function whereIncrement($increment): static
     {
         return $this->options(compact('increment'));
     }
@@ -556,6 +558,19 @@ abstract class AbstractColumn implements ColumnInterface
     public function __toString(): string
     {
         return $this->readAsString();
+    }
+
+
+
+
+
+
+    /**
+     * @return NotNull
+    */
+    protected function notNull(): NotNull
+    {
+        return new NotNull();
     }
 
 

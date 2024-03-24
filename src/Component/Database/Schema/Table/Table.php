@@ -6,8 +6,10 @@ namespace Laventure\Component\Database\Schema\Table;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Query\QueryInterface;
 use Laventure\Component\Database\Schema\Column\Contract\ColumnInterface;
-use Laventure\Component\Database\Schema\Column\Option\ColumnOptions;
 use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
+use Laventure\Component\Database\Schema\Table\Criteria\TableCriteria;
+use ReflectionClass;
+use ReflectionException;
 
 
 /**
@@ -22,30 +24,10 @@ use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface
 abstract class Table implements TableInterface
 {
 
-
     /**
-     * @var array
+     * @var TableCriteria
     */
-    protected array $columns = [];
-
-
-
-
-    /**
-     * @var array
-    */
-    protected array $create = [];
-
-
-
-
-    /**
-     * @var array
-    */
-    protected array $update = [];
-
-
-
+    protected TableCriteria $criteria;
 
 
 
@@ -59,8 +41,35 @@ abstract class Table implements TableInterface
         protected string $name
     )
     {
+        $this->criteria = new TableCriteria();
     }
 
+
+
+
+
+
+    /**
+     * @param string $sql
+     * @return mixed
+    */
+    public function exec(string $sql): mixed
+    {
+        return $this->connection->executeQuery($sql);
+    }
+
+
+
+
+
+    /**
+     * @param string $sql
+     * @return QueryInterface
+    */
+    public function statement(string $sql): QueryInterface
+    {
+        return $this->connection->statement($sql);
+    }
 
 
 
@@ -80,11 +89,15 @@ abstract class Table implements TableInterface
 
     /**
      * @inheritDoc
+     * @throws ReflectionException
     */
     public function addColumnsFromEntity(string $entity): static
     {
+          $reflection = new ReflectionClass($entity);
 
+          return $this;
     }
+
 
 
 
@@ -97,10 +110,10 @@ abstract class Table implements TableInterface
          $column = $this->createColumn($name, $type, $options);
 
          if ($this->exists()) {
-             return $this->addSQLForUpdate($column->add()->getSQL());
+             return $this->addUpdateSQL($column->add()->getSQL());
          }
 
-         return $this->addSQLForCreate($column->getSQL());
+         return $this->addCreateSQL($column->getSQL());
     }
 
 
@@ -286,9 +299,179 @@ abstract class Table implements TableInterface
 
 
 
+
+
+
     /**
      * @inheritDoc
     */
+    public function exists(): bool
+    {
+       return in_array($this->getName(), $this->list());
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function rename(string $to): bool|int
+    {
+        return $this->exec("ALTER TABLE RENAME $this->name TO $to");
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function create(): bool
+    {
+        $this->exec($this->getCreateTableSQL());
+
+        return $this->exists();
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function update(): mixed
+    {
+        return $this->exec($this->getUpdateTableSQL());
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function drop(): mixed
+    {
+
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function truncate(): mixed
+    {
+        return $this->exec(
+            sprintf('TRUNCATE TABLE %s;', $this->getName())
+        );
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function truncateCascade(): mixed
+    {
+        return $this->exec(
+            sprintf('TRUNCATE TABLE CASCADE %s;', $this->getName())
+        );
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function dropIfExists(): mixed
+    {
+
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function dropCascade(): mixed
+    {
+        return $this->exec(
+            sprintf('DROP TABLE %s CASCADE', $this->getName())
+        );
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function list(): array
+    {
+        return $this->connection
+                    ->getDatabase()
+                    ->getTables();
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function clear(): void
+    {
+       $this->criteria->clear();
+    }
+
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getSQL(): string
+    {
+        return join(';', array_filter([
+            $this->getCreateTableSQL(),
+            $this->getUpdateTableSQL()
+        ]));
+    }
+
+
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+     */
     public function setIdentifier(string $identifier): static
     {
         return $this;
@@ -311,27 +494,6 @@ abstract class Table implements TableInterface
 
 
 
-    /**
-     * @inheritDoc
-    */
-    public function exec(string $sql): mixed
-    {
-
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function statement(string $sql): QueryInterface
-    {
-
-    }
-
-
-
 
 
     /**
@@ -339,7 +501,7 @@ abstract class Table implements TableInterface
     */
     public function insert(array $attributes): static
     {
-
+        return $this;
     }
 
 
@@ -351,7 +513,7 @@ abstract class Table implements TableInterface
     */
     public function set(string $column, mixed $value): static
     {
-
+        return $this;
     }
 
 
@@ -360,58 +522,13 @@ abstract class Table implements TableInterface
 
     /**
      * @inheritDoc
-    */
+     */
     public function delete($id): static
     {
-
+        return $this;
     }
 
 
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function exists(): bool
-    {
-       return in_array($this->getName(), $this->list());
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function list(): array
-    {
-        return $this->connection->getDatabase()->getTables();
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function rename(string $to): mixed
-    {
-
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function update(): mixed
-    {
-
-    }
 
 
 
@@ -427,51 +544,6 @@ abstract class Table implements TableInterface
 
 
 
-    /**
-     * @inheritDoc
-    */
-    public function drop(): mixed
-    {
-
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function truncateCascade(): mixed
-    {
-
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function clear(): void
-    {
-
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function getSQL(): string
-    {
-        return join(';', array_filter([
-            $this->getCreateSQL(),
-            $this->getUpdateSQL()
-        ]));
-    }
 
 
 
@@ -480,10 +552,10 @@ abstract class Table implements TableInterface
     /**
      * @param string $sql
      * @return $this
-    */
-    public function addSQLForCreate(string $sql): static
+     */
+    public function addCreateSQL(string $sql): static
     {
-        $this->create[] = $sql;
+        $this->criteria->create[] = $sql;
 
         return $this;
     }
@@ -495,30 +567,13 @@ abstract class Table implements TableInterface
     /**
      * @param string $sql
      * @return $this
-    */
-    public function addSQLForUpdate(string $sql): static
+     */
+    public function addUpdateSQL(string $sql): static
     {
-         $this->update[] = $sql;
+        $this->criteria->update[] = $sql;
 
-         return $this;
+        return $this;
     }
-
-
-    
-    
-    
-    /**
-     * @param string $name
-     * @param string $type
-     * @param array $options
-     * @return ColumnInterface
-    */
-    abstract public function createColumn(
-        string $name,
-        string $type,
-        array $options = []
-    ): ColumnInterface;
-
 
 
 
@@ -529,7 +584,11 @@ abstract class Table implements TableInterface
      *
      * @return string
     */
-    abstract public function getCreateSQL(): string;
+    public function getCreateTableSQL(): string
+    {
+        return $this->getBuilder()
+                    ->getCreateTableSQL();
+    }
 
 
 
@@ -541,5 +600,9 @@ abstract class Table implements TableInterface
      *
      * @return string
     */
-    abstract public function getUpdateSQL(): string;
+    public function getUpdateTableSQL(): string
+    {
+        return $this->getBuilder()
+                   ->getUpdateTableSQL();
+    }
 }

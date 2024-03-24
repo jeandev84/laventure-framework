@@ -21,7 +21,7 @@ class MysqlColumn extends AbstractColumn
     */
     public function increment(): static
     {
-        return $this->withIncrement("AUTO_INCREMENT");
+        return $this->whereIncrement("AUTO_INCREMENT");
     }
 
 

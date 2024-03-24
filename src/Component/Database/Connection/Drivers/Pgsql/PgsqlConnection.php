@@ -37,7 +37,7 @@ class PgsqlConnection extends PdoConnection
     */
     public function createQueryBuilder(): SQLQueryBuilderInterface
     {
-        return new PgsqlQueryBuilder($this->createSQLBuilderFactory());
+        return new PgsqlQueryBuilder($this->createPdoQueryBuilder());
     }
 
 

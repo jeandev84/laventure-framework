@@ -130,6 +130,20 @@ interface ConfigurationInterface extends ParameterInterface
 
 
     /**
+     * Returns schema name
+     *
+     * @return string
+    */
+    public function getSchemaName(): string;
+
+
+
+
+
+
+
+
+    /**
      * @param $name
      * @return string
     */

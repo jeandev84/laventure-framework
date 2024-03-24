@@ -68,15 +68,13 @@ class MysqlTable extends Table
     /**
      * @inheritDoc
     */
-    public function getCreateSQL(): string
+    public function getCreateTableSQL(): string
     {
          $criteria  = join(PHP_EOL, $this->create);
          $tableName = $this->getName();
 
          return join(PHP_EOL, [
-             sprintf('CREATE TABLE IF NOT EXISTS `%s` (', $tableName),
-             $criteria,
-             ");"
+             sprintf('CREATE TABLE IF NOT EXISTS `%s` (', $tableName), $criteria, ");"
          ]);
     }
 
@@ -86,7 +84,7 @@ class MysqlTable extends Table
     /**
      * @inheritDoc
     */
-    public function getUpdateSQL(): string
+    public function getUpdateTableSQL(): string
     {
         return '';
     }
@@ -200,27 +198,13 @@ class MysqlTable extends Table
 
     /**
      * @inheritDoc
-     */
+    */
     public function dump(): mixed
     {
         // TODO: Implement dump() method.
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function create(): mixed
-    {
-        // TODO: Implement create() method.
-    }
 
-    /**
-     * @inheritDoc
-     */
-    public function truncate(): mixed
-    {
-        // TODO: Implement truncate() method.
-    }
 
     /**
      * @inheritDoc

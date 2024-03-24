@@ -5,6 +5,7 @@ namespace Laventure\Component\Database\Schema;
 
 use Closure;
 use Laventure\Component\Database\Connection\ConnectionInterface;
+use Laventure\Component\Database\Query\QueryInterface;
 use Laventure\Component\Database\Schema\Table\TableInterface;
 
 /**
@@ -115,12 +116,30 @@ interface SchemaInterface
 
 
 
+
     /**
-     * @param string $sql
+     * Execute SQL
      *
-     * @return mixed
+     * @param string $sql
+     * @return bool|int
     */
     public function exec(string $sql): mixed;
+
+
+
+
+
+
+
+
+
+    /**
+     * Create statement
+     *
+     * @param string $sql
+     * @return QueryInterface
+    */
+    public function statement(string $sql): QueryInterface;
 
 
 

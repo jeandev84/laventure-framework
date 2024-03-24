@@ -38,7 +38,7 @@ class MysqlConnection extends PdoConnection
     */
     public function createQueryBuilder(): SQLQueryBuilderInterface
     {
-        return new MysqlQueryBuilder($this->createSQLBuilderFactory());
+        return new MysqlQueryBuilder($this->createPdoQueryBuilder());
     }
 
 

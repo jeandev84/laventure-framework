@@ -1,8 +1,8 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Table\Criteria;
+
 
 /**
  * TableCriteriaInterface
@@ -16,20 +16,16 @@ namespace Laventure\Component\Database\Schema\Table\Criteria;
 interface TableCriteriaInterface
 {
     /**
-     * Returns create criteria as string
-     *
-     * @return string
+     * @return array
     */
-    public function create(): string;
+    public function toArray(): array;
 
 
 
 
 
     /**
-     * Returns create criteria as string
-     *
-     * @return string
+     * @return void
     */
-    public function update(): string;
+    public function clear(): void;
 }

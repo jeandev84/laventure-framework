@@ -23,18 +23,14 @@ class DefaultValue extends Constraint implements HasConstraintInterface
     use HasConstraintTrait;
 
 
-
     /**
      * @param $value
-     * @param bool $notNull
+     * @param array $constraints
     */
-    public function __construct(protected $value, bool $notNull = false)
+    public function __construct(protected $value, array $constraints = [])
     {
-        if ($notNull === true) {
-            $this->withConstraint(new NotNull());
-        }
-
         parent::__construct('default');
+        $this->withConstraints($constraints);
     }
 
 
@@ -49,8 +45,7 @@ class DefaultValue extends Constraint implements HasConstraintInterface
         $sql = "DEFAULT $this->value";
 
         if ($this->constraints) {
-            $sql = sprintf(
-                'DEFAULT "%s"%s',
+            $sql = sprintf('DEFAULT "%s" %s',
                 $this->value,
                 $this->getConstraintsAsString()
             );

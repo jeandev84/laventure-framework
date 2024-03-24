@@ -1,10 +1,7 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Table\Criteria;
-
-use Laventure\Component\Database\Schema\Table\Table;
 
 /**
  * TableCriteria
@@ -18,53 +15,49 @@ use Laventure\Component\Database\Schema\Table\Table;
 class TableCriteria implements TableCriteriaInterface
 {
     /**
-     * @param Table $table
+     * @var array
     */
-    public function __construct(protected Table $table)
-    {
-    }
+    public array $columns = [];
+
+
+
+
+    /**
+     * @var array
+    */
+    public array $create = [];
+
+
+
+
+    /**
+     * @var array
+    */
+    public array $update = [];
+
+
+
 
 
 
     /**
      * @inheritDoc
     */
-    public function create(): string
+    public function toArray(): array
     {
-        return join(', ', array_filter([
-            join(', ', array_values($this->table->columns)),
-            join(', ', array_values($this->table->constraints))
-        ]));
+        return get_object_vars($this);
     }
+
 
 
 
     /**
      * @inheritDoc
     */
-    public function update(): string
+    public function clear(): void
     {
-        return join(', ', array_filter([
-            join(', ', $this->getNewColumns()),
-            join(', ', array_values($this->table->dropColumns)),
-            join(', ', array_values($this->table->renameColumns))
-        ]));
-    }
-
-
-
-
-    /**
-     * @return array
-    */
-    protected function getNewColumns(): array
-    {
-        $resolved = [];
-
-        foreach ($this->table->columns as $column) {
-            $resolved[] = $column->add()->getSQL();
-        }
-
-        return $resolved;
+        $this->create  = [];
+        $this->update  = [];
+        $this->columns = [];
     }
 }

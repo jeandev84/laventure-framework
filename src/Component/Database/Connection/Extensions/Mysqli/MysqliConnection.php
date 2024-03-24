@@ -305,7 +305,7 @@ class MysqliConnection implements MysqliConnectionInterface
     /**
      * @inheritDoc
     */
-    public function createSQLBuilderFactory(): SQLQueryBuilderFactoryInterface
+    public function getSQLBuilderFactory(): SQLQueryBuilderFactoryInterface
     {
         // TODO: Implement createSQLBuilderFactory() method.
     }
