@@ -20,7 +20,7 @@ class MysqlTableSQLBuilder extends TableSQlBuilder
     /**
      * @inheritDoc
     */
-    public function getCreateTableSQL(): string
+    public function createTableSQL(): string
     {
         $criteria  = join(PHP_EOL, $this->criteria->create);
         $tableName = $this->table->getName();
@@ -36,7 +36,7 @@ class MysqlTableSQLBuilder extends TableSQlBuilder
     /**
      * @inheritDoc
     */
-    public function getUpdateTableSQL(): string
+    public function updateTableSQL(): string
     {
 
     }

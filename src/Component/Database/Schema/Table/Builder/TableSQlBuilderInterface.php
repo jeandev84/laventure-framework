@@ -19,7 +19,7 @@ interface TableSQlBuilderInterface
      *
      * @return string
     */
-    public function getCreateTableSQL(): string;
+    public function createTableSQL(): string;
 
 
 
@@ -30,5 +30,5 @@ interface TableSQlBuilderInterface
      *
      * @return string
     */
-    public function getUpdateTableSQL(): string;
+    public function updateTableSQL(): string;
 }

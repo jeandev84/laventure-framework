@@ -337,7 +337,7 @@ abstract class Table implements TableInterface
     */
     public function create(): bool
     {
-        $this->exec($this->getCreateTableSQL());
+        $this->exec($this->createTableSQL());
 
         return $this->exists();
     }
@@ -351,7 +351,7 @@ abstract class Table implements TableInterface
     */
     public function update(): mixed
     {
-        return $this->exec($this->getUpdateTableSQL());
+        return $this->exec($this->updateTableSQL());
     }
 
 
@@ -461,8 +461,8 @@ abstract class Table implements TableInterface
     public function getSQL(): string
     {
         return join(';', array_filter([
-            $this->getCreateTableSQL(),
-            $this->getUpdateTableSQL()
+            $this->createTableSQL(),
+            $this->updateTableSQL()
         ]));
     }
 
@@ -567,10 +567,9 @@ abstract class Table implements TableInterface
      *
      * @return string
     */
-    public function getCreateTableSQL(): string
+    public function createTableSQL(): string
     {
-        return $this->getBuilder()
-            ->getCreateTableSQL();
+        return $this->getBuilder()->createTableSQL();
     }
 
 
@@ -583,10 +582,9 @@ abstract class Table implements TableInterface
      *
      * @return string
      */
-    public function getUpdateTableSQL(): string
+    public function updateTableSQL(): string
     {
-        return $this->getBuilder()
-            ->getUpdateTableSQL();
+        return $this->getBuilder()->updateTableSQL();
     }
 
 
