@@ -94,13 +94,13 @@ abstract class Table implements TableInterface
     */
     public function addColumn(string $name, string $type, array $options = []): static
     {
-         $column = $this->createColumn($name, $type);
+         $column = $this->createColumn($name, $type, $options);
 
          if ($this->exists()) {
-             return $this->addUpdateSQL($column->add()->getSQL());
+             return $this->addSQLForUpdate($column->add()->getSQL());
          }
 
-         return $this->addCreateSQL($column->getSQL());
+         return $this->addSQLForCreate($column->getSQL());
     }
 
 
@@ -209,7 +209,7 @@ abstract class Table implements TableInterface
     */
     public function hasPrimaryKey(string $primaryKey): bool
     {
-        // TODO: Implement hasPrimaryKey() method.
+
     }
 
 
@@ -221,7 +221,7 @@ abstract class Table implements TableInterface
     */
     public function dropPrimaryKey(string $primaryKey): static
     {
-        // TODO: Implement dropPrimaryKey() method.
+        return $this;
     }
 
 
@@ -232,7 +232,7 @@ abstract class Table implements TableInterface
     */
     public function dropPrimaryKeys(): static
     {
-        // TODO: Implement dropPrimaryKeys() method.
+        return $this;
     }
 
 
@@ -481,7 +481,7 @@ abstract class Table implements TableInterface
      * @param string $sql
      * @return $this
     */
-    public function addCreateSQL(string $sql): static
+    public function addSQLForCreate(string $sql): static
     {
         $this->create[] = $sql;
 
@@ -496,7 +496,7 @@ abstract class Table implements TableInterface
      * @param string $sql
      * @return $this
     */
-    public function addUpdateSQL(string $sql): static
+    public function addSQLForUpdate(string $sql): static
     {
          $this->update[] = $sql;
 

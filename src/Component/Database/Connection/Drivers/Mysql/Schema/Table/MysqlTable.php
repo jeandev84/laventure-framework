@@ -70,11 +70,14 @@ class MysqlTable extends Table
     */
     public function getCreateSQL(): string
     {
-         return sprintf(
-      'CREATE TABLE IF NOT EXISTS `%s` (%s);',
-             $this->getName(),
-             join(PHP_EOL, $this->create)
-         );
+         $criteria  = join(PHP_EOL, $this->create);
+         $tableName = $this->getName();
+
+         return join(PHP_EOL, [
+             sprintf('CREATE TABLE IF NOT EXISTS `%s` (', $tableName),
+             $criteria,
+             ");"
+         ]);
     }
 
 

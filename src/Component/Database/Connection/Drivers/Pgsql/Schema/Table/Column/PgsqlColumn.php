@@ -46,16 +46,4 @@ class PgsqlColumn extends AbstractColumn
     {
         return $this->withSign("CHECK($this->name < 0)");
     }
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    protected function getTypeCriteria(): string
-    {
-        return $this->getSign();
-    }
 }

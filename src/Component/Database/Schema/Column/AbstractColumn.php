@@ -271,6 +271,19 @@ abstract class AbstractColumn implements ColumnInterface
 
 
 
+    /**
+     * @inheritDoc
+    */
+    public function hasOption(string $name): bool
+    {
+        return array_key_exists($name, $this->options);
+    }
+
+
+
+
+
+
 
     /**
      * @inheritDoc
@@ -538,24 +551,6 @@ abstract class AbstractColumn implements ColumnInterface
 
 
     /**
-     * Criteria after data type definition
-     *
-     * @return string
-    */
-    protected function getTypeCriteria(): string
-    {
-        return join(' ', [
-            $this->getSign(),
-            $this->getIncrement()
-        ]);
-    }
-
-
-
-
-
-
-    /**
      * @inheritDoc
     */
     public function __toString(): string
@@ -576,7 +571,8 @@ abstract class AbstractColumn implements ColumnInterface
         return join(' ', array_filter([
             $this->getName(),
             $this->getType(),
-            $this->getTypeCriteria(),
+            $this->getSign(),
+            $this->getIncrement(),
             $this->getConstraint()
         ]));
     }

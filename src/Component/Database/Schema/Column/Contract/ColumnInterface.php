@@ -110,6 +110,22 @@ interface ColumnInterface extends Stringable
 
 
 
+    /**
+     * Determine if given name exists in options
+     *
+     * @param string $name
+     * @return bool
+    */
+    public function hasOption(string $name): bool;
+
+
+
+
+
+
+
+
+
 
     /**
      * Set column option
