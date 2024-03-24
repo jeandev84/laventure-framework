@@ -43,17 +43,8 @@ abstract class AbstractColumn implements ColumnInterface
      *
      * @var mixed
     */
-    protected string $type = '';
+    protected string $type;
 
-
-
-
-
-
-    /**
-     * @var string
-    */
-    protected string $sql = '';
 
 
 
@@ -88,12 +79,15 @@ abstract class AbstractColumn implements ColumnInterface
 
 
 
+
+
     /**
      * @param string $name
+     * @param string $type
     */
-    public function __construct(string $name)
+    public function __construct(string $name, string $type = '')
     {
-          $this->name($name);
+          $this->name($name)->type($type);
     }
 
 
