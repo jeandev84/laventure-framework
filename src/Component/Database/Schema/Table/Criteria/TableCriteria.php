@@ -27,7 +27,26 @@ class TableCriteria implements TableCriteriaInterface
     /**
      * @var ColumnInterface[]
     */
-    public array $columns = [];
+    public array $addColumn = [];
+
+
+
+
+
+    /**
+     * @var ColumnInterface[]
+    */
+    public array $renameColumn = [];
+
+
+
+
+
+    /**
+     * @var ColumnInterface[]
+    */
+    public array $modifyColumn = [];
+
 
 
 
@@ -84,11 +103,11 @@ class TableCriteria implements TableCriteriaInterface
 
 
 
+
     /**
      * @var array
     */
-    public array $update = [];
-
+    public array $update  = [];
 
 
 
@@ -158,12 +177,12 @@ class TableCriteria implements TableCriteriaInterface
     */
     public function clear(): void
     {
-        $this->columns = [];
+        $this->addColumn = [];
         $this->primary = [];
         $this->unique  = [];
         $this->index   = [];
         $this->foreign = [];
         $this->create  = [];
-        $this->update  = [];
+        $this->renameColumn  = [];
     }
 }

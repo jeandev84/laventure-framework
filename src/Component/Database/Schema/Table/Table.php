@@ -115,9 +115,15 @@ abstract class Table implements TableInterface
     {
         $column = $this->createColumn($name, $type, $options);
 
-        $this->criteria->columns[$name] = $column;
+        $this->criteria->addColumn[$name] = $column;
 
-        return $this->saveColumn($column);
+        if ($this->exists()) {
+            $this->criteria->update[$name] = $column->add();
+        } else {
+            $this->criteria->create[$name] = $column->getSQL();
+        }
+
+        return $this;
     }
 
 
@@ -130,7 +136,9 @@ abstract class Table implements TableInterface
     */
     public function renameColumn(string $name, string $to): static
     {
-        return $this->addUpdateTable($this->getColumn($name)->rename($to));
+        $this->criteria->renameColumn[$name] = $this->getColumn($name)->rename($to);
+
+        return $this;
     }
 
 
@@ -145,7 +153,9 @@ abstract class Table implements TableInterface
     {
         $column = $this->parseColumnOptions($this->getColumn($name), $func)->getColumn();
 
-        return $this->addUpdateTable($column->modify());
+        $this->criteria->renameColumn[$name] = $column->modify();
+
+        return $this;
     }
 
 
@@ -595,69 +605,12 @@ abstract class Table implements TableInterface
 
 
 
-
-    /**
-     * @param ColumnInterface $column
-     * @return $this
-    */
-    public function saveColumn(ColumnInterface $column): static
-    {
-        $this->criteria->columns[$column->getName()] = $column;
-
-        if ($this->exists()) {
-            return $this->addUpdateTable($column->add());
-        }
-
-        return $this->addCreateTable($column->getSQL());
-    }
-
-
-
-
-
-
-
-
-
     /**
      * @inheritDoc
     */
     public function getCriteria(): TableCriteriaInterface
     {
         return $this->criteria;
-    }
-
-
-
-
-
-
-
-
-    /**
-     * @param string $sql
-     * @return $this
-     */
-    public function addCreateTable(string $sql): static
-    {
-        $this->criteria->create[] = $sql;
-
-        return $this;
-    }
-
-
-
-
-
-    /**
-     * @param string $sql
-     * @return $this
-    */
-    public function addUpdateTable(string $sql): static
-    {
-        $this->criteria->update[] = $sql;
-
-        return $this;
     }
 
 
