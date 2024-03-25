@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Schema\Utils;
+namespace Laventure\Component\Database\Query\Utils;
 
 /**
  * QueryUtils
@@ -10,7 +10,7 @@ namespace Laventure\Component\Database\Schema\Utils;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Schema\Utils
+ * @package  Laventure\Component\Database\Query\Utils
 */
 class QueryUtils
 {
@@ -18,7 +18,7 @@ class QueryUtils
        * @param array $queries
        * @return QueryCollection
       */
-      public static function queries(array $queries): QueryCollection
+      public static function collection(array $queries): QueryCollection
       {
            return new QueryCollection($queries);
       }
@@ -33,6 +33,6 @@ class QueryUtils
       */
       public static function str(array $queries, string $separator = null): string
       {
-          return static::queries($queries)->separate($separator ?: ', ')->toString();
+          return static::collection($queries)->separate($separator ?: ', ')->toString();
       }
 }

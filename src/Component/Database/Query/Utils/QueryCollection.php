@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Schema\Utils;
+namespace Laventure\Component\Database\Query\Utils;
 
 /**
  * QueryCollection
@@ -10,7 +10,7 @@ namespace Laventure\Component\Database\Schema\Utils;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Schema\Utils
+ * @package  Laventure\Component\Database\Query\Utils
 */
 class QueryCollection
 {

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Table\Builder\Common;
 
+use Laventure\Component\Database\Query\Utils\QueryUtils;
 use Laventure\Component\Database\Schema\Column\Contract\ColumnInterface;
 use Laventure\Component\Database\Schema\Table\Builder\Contract\CreateTableSQLBuilderInterface;
 use Laventure\Component\Database\Schema\Table\TableInterface;
-use Laventure\Component\Database\Schema\Utils\QueryUtils;
 
 /**
  * CreateTableSQLBuilder
