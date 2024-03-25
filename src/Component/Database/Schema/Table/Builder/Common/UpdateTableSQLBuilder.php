@@ -30,7 +30,7 @@ abstract class UpdateTableSQLBuilder implements UpdateTableSQLBuilderInterface
     /**
      * @inheritDoc
      */
-    public function getTable(): string
+    public function getTableName(): string
     {
         return $this->table->getName();
     }

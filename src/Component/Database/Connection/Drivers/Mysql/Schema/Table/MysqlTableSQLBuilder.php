@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Connection\Drivers\Mysql\Schema\Table;
 
 use Laventure\Component\Database\Connection\Drivers\Mysql\Schema\Table\Builder\MysqlCreateTableSQLBuilder;
+use Laventure\Component\Database\Connection\Drivers\Mysql\Schema\Table\Builder\MysqlUpdateTableSQLBuilder;
 use Laventure\Component\Database\Schema\Table\Builder\Contract\CreateTableSQLBuilderInterface;
 use Laventure\Component\Database\Schema\Table\Builder\Contract\UpdateTableSQLBuilderInterface;
 use Laventure\Component\Database\Schema\Table\Builder\TableSQlBuilder;
@@ -36,18 +37,6 @@ class MysqlTableSQLBuilder extends TableSQlBuilder
     */
     public function update(): UpdateTableSQLBuilderInterface
     {
-
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-     */
-    public function __toString(): string
-    {
-        // TODO: Implement __toString() method.
+        return new MysqlUpdateTableSQLBuilder($this->table);
     }
 }

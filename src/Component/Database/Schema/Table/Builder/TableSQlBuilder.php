@@ -54,4 +54,15 @@ abstract class TableSQlBuilder implements TableSQlBuilderInterface
             $this->update()->getSQL()
         ]));
     }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function __toString(): string
+    {
+        return $this->getSQL();
+    }
 }

@@ -20,7 +20,7 @@ interface UpdateTableSQLBuilderInterface extends SQLInterface
     /**
      * @return string
     */
-    public function getTable(): string;
+    public function getTableName(): string;
 
 
 
