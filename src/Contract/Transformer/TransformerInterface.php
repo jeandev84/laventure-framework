@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Contract\Transformer;
-
 
 /**
  * TransformerInterface
@@ -15,11 +15,10 @@ namespace Laventure\Contract\Transformer;
  */
 interface TransformerInterface
 {
-
-     /**
-      * Transform something
-      *
-      * @return mixed
-     */
-     public function transform(): mixed;
+    /**
+     * Transform something
+     *
+     * @return mixed
+    */
+    public function transform(): mixed;
 }

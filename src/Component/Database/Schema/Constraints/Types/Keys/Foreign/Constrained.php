@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Schema\Constraints\Types\Keys\Foreign;
 
 use Laventure\Component\Database\Schema\Constraints\Contract\ConstrainedInterface;
+use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
 
 /**
  * Constrained
@@ -21,6 +22,17 @@ class Constrained implements ConstrainedInterface
      * @var array
     */
     protected array $constrained = [];
+
+
+
+
+    /**
+     * @param ForeignKeyInterface $foreignKey
+    */
+    public function __construct(protected ForeignKeyInterface $foreignKey)
+    {
+    }
+
 
 
 
@@ -64,11 +76,31 @@ class Constrained implements ConstrainedInterface
 
 
 
+
+    /**
+     *  Example: CONSTRAINT fk_products_user_id
+     *           FOREIGN KEY (user_id)
+     *           REFERENCES users (id)
+     *           ON DELETE cascade
+     *
+     * @inheritDoc
+    */
+    public function getSQL(): string
+    {
+        return join(' ', array_filter([
+            $this->foreignKey->getSQL(),
+            array_values($this->constrained)
+        ]));
+    }
+
+
+
+
     /**
      * @inheritDoc
     */
     public function __toString(): string
     {
-        return join(' ', array_values($this->constrained));
+        return $this->getSQL();
     }
 }

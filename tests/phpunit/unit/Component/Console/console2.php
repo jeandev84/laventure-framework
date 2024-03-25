@@ -10,7 +10,6 @@ use Laventure\Foundation\Database\Manager\Manager;
 use PHPUnitTest\App\Commands\HelloCommand;
 use PHPUnitTest\App\Commands\Migration\MigrateCommand;
 
-
 require_once __DIR__.'/vendor/autoload.php';
 
 
@@ -75,7 +74,3 @@ $output = new ConsoleOutput();
 $status = $console->run($input, $output);
 
 exit($status);
-
-
-
-

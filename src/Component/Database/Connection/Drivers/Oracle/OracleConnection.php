@@ -49,7 +49,7 @@ class OracleConnection extends PdoConnection
     */
     public function createQueryBuilder(): SQLQueryBuilderInterface
     {
-        return new OracleQueryBuilder($this->createSQLBuilderFactory());
+        return new OracleQueryBuilder($this->createPdoQueryBuilder());
     }
 
 

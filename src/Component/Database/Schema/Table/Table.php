@@ -7,19 +7,22 @@ namespace Laventure\Component\Database\Schema\Table;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Query\QueryInterface;
 use Laventure\Component\Database\Schema\Column\Contract\ColumnInterface;
-use Laventure\Component\Database\Schema\Constraints\ConstraintInterface;
+use Laventure\Component\Database\Schema\Column\Exception\ColumnAlreadyExistsException;
+use Laventure\Component\Database\Schema\Column\Exception\NotFoundColumnException;
+use Laventure\Component\Database\Schema\Column\Factory\ColumnFactoryInterface;
+use Laventure\Component\Database\Schema\Column\Option\ColumnOptions;
+use Laventure\Component\Database\Schema\Column\Option\Contract\ColumnOptionInterface;
+use Laventure\Component\Database\Schema\Column\Types\ColumnType;
 use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
-use Laventure\Component\Database\Schema\Constraints\Contract\IndexInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\PrimaryKeyInterface;
-use Laventure\Component\Database\Schema\Constraints\Contract\UniqueInterface;
-use Laventure\Component\Database\Schema\Constraints\Types\Index;
+use Laventure\Component\Database\Schema\Constraints\Contract\UniqueKeyInterface;
 use Laventure\Component\Database\Schema\Constraints\Types\Keys\Foreign\ForeignKey;
-use Laventure\Component\Database\Schema\Constraints\Types\Keys\Foreign\ForeignKeyGenerator;
-use Laventure\Component\Database\Schema\Constraints\Types\Keys\Primary\PrimaryKey;
-use Laventure\Component\Database\Schema\Constraints\Types\Unique;
 use Laventure\Component\Database\Schema\Table\Criteria\TableCriteria;
 use Laventure\Component\Database\Schema\Table\Criteria\TableCriteriaInterface;
-use RuntimeException;
+use Laventure\Component\Database\Schema\Table\Exception\TableException;
+use Laventure\Component\Database\Schema\Table\Expr\AlterTable;
+use ReflectionClass;
+use ReflectionException;
 
 /**
  * Table
@@ -32,35 +35,24 @@ use RuntimeException;
 */
 abstract class Table implements TableInterface
 {
-    /**
-     * @var ColumnInterface[]
-    */
-    public array $columns = [];
-
-
-
-    /**
-     * @var string[]
-    */
-    public array $renameColumns = [];
+    public const CREATED_AT = 'created_at';
+    public const UPDATED_AT = 'updated_at';
+    public const DELETED_AT = 'deleted_at';
 
 
 
 
     /**
-     * @var string[]
+     * @var string
     */
-    public array $dropColumns = [];
-
-
+    protected string $schemaName;
 
 
 
     /**
-     * @var ConstraintInterface[]
+     * @var TableCriteria
     */
-    public array $constraints = [];
-
+    protected TableCriteria $criteria;
 
 
 
@@ -68,279 +60,16 @@ abstract class Table implements TableInterface
     /**
      * @param ConnectionInterface $connection
      * @param string $name
-     * @param string $schemaName
     */
     public function __construct(
         protected ConnectionInterface $connection,
-        protected string $name,
-        protected string $schemaName = ''
+        protected string $name
     ) {
+        $this->criteria = new TableCriteria();
+        $this->schemaName = $this->connection
+                                 ->getConfiguration()
+                                 ->getSchemaName();
     }
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function addColumn(string $name, string $type, string $constraints = ''): ColumnInterface
-    {
-        return $this->add($this->column($name, $type, $constraints));
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function renameColumn(string $name, string $to): static
-    {
-        $this->renameColumns[$name] = $this->column($name)
-                                           ->rename($to)
-                                           ->getSQL();
-        return $this;
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function dropColumn(string $name): static
-    {
-        $this->dropColumns[$name] = $this->column($name)
-                                         ->drop()
-                                         ->getSQL();
-        return $this;
-    }
-
-
-
-
-
-
-    /**
-     * @inheritdoc
-    */
-    public function primary(array $columns): static
-    {
-        $this->addPrimaryKey(new PrimaryKey($columns));
-
-        return $this;
-    }
-
-
-
-
-
-
-    /**
-     * @inheritdoc
-    */
-    public function unique(array $columns): static
-    {
-        $this->addUnique(new Unique($columns));
-
-        return $this;
-    }
-
-
-
-
-    /**
-     * @inheritdoc
-    */
-    public function index(array $columns): static
-    {
-        $this->addIndex(new Index($columns));
-
-        return $this;
-    }
-
-
-
-
-
-
-    /**
-     * @inheritdoc
-    */
-    public function add(ColumnInterface $column): ColumnInterface
-    {
-        return $this->columns[$column->getName()] = $column;
-    }
-
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function addConstraint(ConstraintInterface $constraint): ConstraintInterface
-    {
-        return $this->constraints[] = $constraint;
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function addPrimaryKey(PrimaryKeyInterface $primaryKey): PrimaryKeyInterface
-    {
-        $this->addConstraint($primaryKey);
-
-        return $primaryKey;
-    }
-
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function addForeignKey(ForeignKeyInterface $foreignKey): ForeignKeyInterface
-    {
-        $this->addConstraint($foreignKey);
-
-        return $foreignKey;
-    }
-
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function addIndex(IndexInterface $index): IndexInterface
-    {
-        $this->addConstraint($index);
-
-        return $index;
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function addUnique(UniqueInterface $unique): UniqueInterface
-    {
-        $this->addConstraint($unique);
-
-        return $unique;
-    }
-
-
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function string(string $name, int $length = 255): ColumnInterface
-    {
-        return $this->addColumn($name, "VARCHAR($length)");
-    }
-
-
-
-
-
-    /**
-     * @inheritdoc
-    */
-    public function boolean(string $name): ColumnInterface
-    {
-        return $this->addColumn($name, 'BOOLEAN');
-    }
-
-
-
-
-
-
-    /**
-     * Support text to 65 kb
-     *
-     * @inheritdoc
-    */
-    public function text(string $name): ColumnInterface
-    {
-        return $this->addColumn($name, 'TEXT');
-    }
-
-
-
-
-
-    /**
-     * @inheritdoc
-    */
-    public function foreign(string $name): ForeignKeyInterface
-    {
-        return $this->addForeignKey(new ForeignKey($name));
-    }
-
-
-
-
-    /**
-     * @param string $column
-     * @return string
-    */
-    public function foreignKeyName(string $column): string
-    {
-        $key = new ForeignKeyGenerator($this->name, $column);
-
-        return $key->generate();
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-     */
-    public function hasColumn($name): bool
-    {
-        return in_array($name, $this->getColumnNames());
-    }
-
-
-
-
-
-
-    /**
-     * @inheritdoc
-    */
-    public function getColumnNames(): array
-    {
-        return array_filter($this->getColumns(), function (ColumnInterface $column) {
-            return $column->getName();
-        });
-    }
-
-
 
 
 
@@ -358,33 +87,9 @@ abstract class Table implements TableInterface
 
 
 
-
     /**
-     * @inheritDoc
-     */
-    public function exists(): bool
-    {
-        return in_array($this->getName(), $this->list());
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-     */
-    public function list(): array
-    {
-        return $this->connection->getDatabase()->getTables();
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
+     * @param string $sql
+     * @return mixed
     */
     public function exec(string $sql): mixed
     {
@@ -396,7 +101,8 @@ abstract class Table implements TableInterface
 
 
     /**
-     * @inheritDoc
+     * @param string $sql
+     * @return QueryInterface
     */
     public function statement(string $sql): QueryInterface
     {
@@ -409,13 +115,534 @@ abstract class Table implements TableInterface
 
 
 
+
+    /**
+     * @inheritDoc
+     * @throws ReflectionException
+    */
+    public function addColumnsFromEntity(string $entity): static
+    {
+        $reflection = new ReflectionClass($entity);
+
+        return $this;
+    }
+
+
+
+
+
+
     /**
      * @inheritDoc
     */
-    public function update(): bool
+    public function addNewColumn(ColumnInterface $column): static
+    {
+        $name = $column->getName();
+
+        if ($this->hasColumn($name)) {
+            throw new ColumnAlreadyExistsException(
+                $name,
+                ['context' => get_called_class()]
+            );
+        }
+
+        $this->criteria->newColumn[$name] = $column;
+
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function hasNewColumn(string $name): bool
+    {
+        return isset($this->criteria->newColumn[$name]);
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getNewColumns(): array
+    {
+        return $this->criteria->newColumn;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function addRenameColumn(string $newName, ColumnInterface $column): static
+    {
+        $this->criteria->renameColumn[$newName] = $column;
+
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function hasRenameColumn(string $name): bool
+    {
+        return isset($this->criteria->renameColumn[$name]);
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getRenameColumns(): array
+    {
+        return $this->criteria->renameColumn;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function addModifyColumn(ColumnInterface $column): static
+    {
+        $this->criteria->modifyColumn[$column->getName()] = $column;
+
+        return $this;
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function hasModifyColumn(string $name): bool
+    {
+        return isset($this->criteria->modifyColumn[$name]);
+    }
+
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getModifyColumns(): array
+    {
+        return $this->criteria->modifyColumn;
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function addDropColumn(ColumnInterface $column): static
+    {
+        $this->criteria->dropColumn[$column->getName()] = $column;
+
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function hasDropColumn(string $name): bool
+    {
+        return isset($this->criteria->dropColumn[$name]);
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getDropColumns(): array
+    {
+        return $this->criteria->dropColumn;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+     * @throws ColumnAlreadyExistsException
+    */
+    public function addColumn(string $name, string|ColumnType $type, callable $options = null): static
+    {
+        return $this->addNewColumn($this->createColumn($name, $type, $options));
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+     * @throws NotFoundColumnException
+    */
+    public function renameColumn(string $name, string $to): static
+    {
+        return $this->addRenameColumn($to, $this->getColumn($name));
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+     * @throws NotFoundColumnException
+    */
+    public function modifyColumn(string $name, callable $func): static
+    {
+        $column = $this->columnOptions($this->getColumn($name), $func)
+                       ->getColumn();
+
+
+        return $this->addModifyColumn($column);
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+     * @throws NotFoundColumnException
+    */
+    public function dropColumn(string $name): static
+    {
+        return $this->addDropColumn($this->getColumn($name));
+    }
+
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function hasColumn(string $name): bool
+    {
+        return array_key_exists($name, $this->criteria->columns);
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getColumn(string $name): ColumnInterface
+    {
+        if (!$this->hasColumn($name)) {
+            throw new NotFoundColumnException($name, [
+                'context' => get_called_class()
+            ]);
+        }
+
+        return $this->criteria->columns[$name];
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+     * @throws ColumnAlreadyExistsException
+    */
+    public function addDatetime(string $name, callable $options = null): static
+    {
+        return $this->addColumn($name, ColumnType::Datetime, $options);
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+     * @throws ColumnAlreadyExistsException
+    */
+    public function addNullableDatetime(string $name): static
+    {
+        return $this->addDatetime($name, function (ColumnOptionInterface $option) {
+            return $option->nullable();
+        });
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+     * @throws ColumnAlreadyExistsException
+    */
+    public function addTimestamps(): static
+    {
+        return $this->addDatetime(static::CREATED_AT)
+                    ->addDatetime(static::CREATED_AT);
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+     * @throws ColumnAlreadyExistsException
+    */
+    public function addNullableTimestamps(): static
+    {
+        return $this->addNullableDatetime(static::CREATED_AT)
+                    ->addNullableDatetime(static::UPDATED_AT);
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+     * @throws ColumnAlreadyExistsException
+    */
+    public function addSoftDeletes(): static
+    {
+        return $this->addNullableDatetime(static::DELETED_AT);
+    }
+
+
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function addPrimaryKey(array $primaryKeys): static
+    {
+        $this->criteria->primary = array_merge(
+            $this->criteria->primary,
+            $primaryKeys
+        );
+
+        return $this;
+    }
+
+
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function hasPrimaryKey(string $primaryKey): bool
+    {
+        return array_key_exists($primaryKey, $this->getPrimaryKeys());
+    }
+
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function foreignKey(string $foreignKey): ForeignKeyInterface
+    {
+        return new ForeignKey($foreignKey);
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function addForeignKey(string $foreignKey, callable $func): static
+    {
+        $func($foreign = $this->foreignKey($foreignKey));
+
+        $this->criteria->foreign[$foreignKey] = $foreign->getSQL();
+
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function hasForeignKey(string $foreignKey): bool
+    {
+
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function addIndex(array $indexes): static
+    {
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function addUniqueKey(array $uniqueKeys): static
+    {
+        $this->criteria->unique = array_merge(
+            $this->criteria->unique,
+            $uniqueKeys
+        );
+
+        return $this;
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function hasUniqueKey(string $uniqueKey): bool
+    {
+        return array_key_exists($uniqueKey, $this->getUniqueKeys());
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function rename(string $to): bool|int
+    {
+        return $this->exec("ALTER TABLE RENAME $this->name TO $to");
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function create(): bool
+    {
+        $this->exec($this->expr()->create()->getSQL());
+
+        return $this->exists();
+    }
+
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function update(): mixed
+    {
+        return $this->exec($this->expr()->update()->getSQL());
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function drop(): mixed
+    {
+
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function truncate(): mixed
     {
         return $this->exec(
-            sprintf('ALTER TABLE %s %s;', $this->name, $this->getCriteria()->update())
+            sprintf('TRUNCATE TABLE %s;', $this->getName())
         );
     }
 
@@ -426,12 +653,12 @@ abstract class Table implements TableInterface
 
     /**
      * @inheritDoc
-     */
-    public function drop(): mixed
+    */
+    public function truncateCascade(): mixed
     {
-        return $this->foreignKeyChecks(function () {
-            return $this->exec(sprintf('DROP TABLE %s CASCADE', $this->getName()));
-        });
+        return $this->exec(
+            sprintf('TRUNCATE TABLE CASCADE %s;', $this->getName())
+        );
     }
 
 
@@ -443,10 +670,78 @@ abstract class Table implements TableInterface
     */
     public function dropIfExists(): mixed
     {
-        return $this->foreignKeyChecks(function () {
-            return $this->exec(sprintf('DROP TABLE IF EXISTS %s CASCADE;', $this->getName()));
-        });
+
     }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function dropCascade(): mixed
+    {
+        return $this->exec(
+            sprintf('DROP TABLE %s CASCADE', $this->getName())
+        );
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function list(): array
+    {
+        return $this->connection->getDatabase()->getTables();
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function exists(): bool
+    {
+        return in_array($this->getName(), $this->list());
+    }
+
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function clear(): void
+    {
+        $this->criteria->clear();
+    }
+
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getSQL(): string
+    {
+        return $this->expr()->getSQL();
+    }
+
+
+
+
 
 
 
@@ -454,22 +749,10 @@ abstract class Table implements TableInterface
     /**
      * @inheritDoc
      */
-    public function truncate(): mixed
+    public function setIdentifier(string $identifier): static
     {
-        return $this->exec(sprintf('TRUNCATE TABLE %s;', $this->getName()));
+        return $this;
     }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function truncateCascade(): mixed
-    {
-        return $this->exec(sprintf('TRUNCATE TABLE CASCADE %s;', $this->getName()));
-    }
-
 
 
 
@@ -479,9 +762,9 @@ abstract class Table implements TableInterface
     /**
      * @inheritDoc
     */
-    public function hasPrimaryKey(string $key): bool
+    public function getIdentifier(): string
     {
-        return in_array($key, $this->getPrimaryKeys());
+
     }
 
 
@@ -493,20 +776,9 @@ abstract class Table implements TableInterface
     /**
      * @inheritDoc
     */
-    public function hasForeignKey(string $key): bool
+    public function insert(array $attributes): static
     {
-        return in_array($key, $this->getForeignKeys());
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function hasIndex(string $index): bool
-    {
-        return in_array($index, $this->getIndexes());
+        return $this;
     }
 
 
@@ -516,20 +788,9 @@ abstract class Table implements TableInterface
     /**
      * @inheritDoc
     */
-    public function hasUnique(string $name): bool
+    public function set(string $column, mixed $value): static
     {
-        return in_array($name, $this->getUniques());
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function hasConstraint(string $key): bool
-    {
-        return in_array($key, $this->getConstraints());
+        return $this;
     }
 
 
@@ -538,17 +799,29 @@ abstract class Table implements TableInterface
 
     /**
      * @inheritDoc
-    */
-    public function getSchemaName(): string
+     */
+    public function delete($id): static
     {
-        if (!$this->schemaName) {
-            throw new RuntimeException(
-                "Could not found schema name from : ". get_called_class()
-            );
-        }
-
-        return $this->schemaName;
+        return $this;
     }
+
+
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function save(): mixed
+    {
+
+    }
+
+
+
 
 
 
@@ -559,7 +832,55 @@ abstract class Table implements TableInterface
     */
     public function getCriteria(): TableCriteriaInterface
     {
-        return new TableCriteria($this);
+        return $this->criteria;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+     * @throws ColumnAlreadyExistsException
+    */
+    public function default($value): static
+    {
+        foreach ($this->criteria->newColumn as $column) {
+            $this->addNewColumn($column->default($value));
+        }
+
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+     * @throws ColumnAlreadyExistsException
+    */
+    public function unsigned(): static
+    {
+        foreach ($this->criteria->newColumn as $column) {
+            $this->addNewColumn($column->unsigned());
+        }
+
+        return $this;
+    }
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function bigIncrements(string $name): ColumnInterface
+    {
+        $column = $this->column($name)
+            ->bigInteger()
+            ->increments();
+
+        return $this->criteria->newColumn[$name] = $column;
     }
 
 
@@ -568,19 +889,310 @@ abstract class Table implements TableInterface
 
 
     /**
-     * @param callable $func
-     * @return mixed
-    */
-    abstract public function foreignKeyChecks(callable $func): mixed;
+     * @inheritDoc
+     */
+    public function integer(string $name, int $length = 11): ColumnInterface
+    {
+        $column = $this->column($name)->integer($length);
+
+        return $this->criteria->newColumn[$name] = $column;
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function smallInteger(string $name): ColumnInterface
+    {
+        $column = $this->column($name)->smallInteger();
+
+        return $this->criteria->newColumn[$name] = $column;
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function bigInteger(string $name): ColumnInterface
+    {
+        $column = $this->column($name)->bigInteger();
+
+        return $this->criteria->newColumn[$name] = $column;
+    }
 
 
 
 
 
     /**
-     * @inheritdoc
+     * @inheritDoc
+     */
+    public function mediumInteger(string $name): ColumnInterface
+    {
+        $column = $this->column($name)->mediumInteger();
+
+        return $this->criteria->newColumn[$name] = $column;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function tinyInteger(string $name): ColumnInterface
+    {
+        $column = $this->column($name)->tinyInteger();
+
+        return $this->criteria->newColumn[$name] = $column;
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function string(string $name, int $length = 255): ColumnInterface
+    {
+        return $this->column($name)->string($length);
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
     */
-    abstract public function create(): bool;
+    public function char(string $name, $value): ColumnInterface
+    {
+        return $this->column($name)->char($value);
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function boolean(string $name): ColumnInterface
+    {
+        return $this->column($name)->boolean();
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function datetime(string $name): ColumnInterface
+    {
+        return $this->column($name)->datetime();
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function time(string $name): ColumnInterface
+    {
+        return $this->column($name)->time();
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function timestamp(string $name): ColumnInterface
+    {
+        return $this->column($name)->timestamp();
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function binary(string $name): ColumnInterface
+    {
+        return $this->column($name)->binary();
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function date(string $name): ColumnInterface
+    {
+        return $this->column($name)->date();
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function decimal(string $name, int $precision, int $scale): ColumnInterface
+    {
+        return $this->column($name)->decimal($precision, $scale);
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function double(string $name, int $precision, int $scale): ColumnInterface
+    {
+        return $this->column($name)->double($precision, $scale);
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function enum(string $name, array $values): ColumnInterface
+    {
+        return $this->column($name)->enum($values);
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function float(string $name): ColumnInterface
+    {
+        return $this->column($name)->float();
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function json(string $name): ColumnInterface
+    {
+        return $this->column($name)->json();
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function text(string $name): ColumnInterface
+    {
+        return $this->column($name)->text();
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function longText(string $name): ColumnInterface
+    {
+        return $this->column($name)->longText();
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function mediumText(string $name): ColumnInterface
+    {
+        return $this->column($name)->mediumText();
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function tinyText(string $name): ColumnInterface
+    {
+        return $this->column($name)->tinyText();
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function morphs(string $name): ColumnInterface
+    {
+        return $this->column($name)->morphs();
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function alter(string $criteria): string
+    {
+        return strval(new AlterTable($this->getName(), $criteria));
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getPrimary(): PrimaryKeyInterface
+    {
+        return $this->criteria->getPrimary();
+    }
 
 
 
@@ -589,12 +1201,97 @@ abstract class Table implements TableInterface
 
 
     /**
-     * Create new instance of table column
+     * @inheritDoc
+    */
+    public function getUnique(): UniqueKeyInterface
+    {
+        return $this->criteria->getUnique();
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function column(string $name): ColumnInterface
+    {
+        return $this->getColumnFactory()->createColumn($name);
+    }
+
+
+
+
+
+
+
+    /**
+     * Parsing column options
      *
+     * @param ColumnInterface $column
+     * @param callable|null $options
+     * @return ColumnOptionInterface
+    */
+    private function columnOptions(
+        ColumnInterface $column,
+        callable $options = null
+    ): ColumnOptionInterface {
+        $option = new ColumnOptions($column);
+        $option->call($options ?: $this->defaultOptions());
+        return $option;
+    }
+
+
+
+
+
+    /**
      * @param string $name
-     * @param string $type
-     * @param string $constraints
+     * @param string|ColumnType $type
+     * @param callable|null $options
      * @return ColumnInterface
     */
-    abstract public function column(string $name, string $type = '', string $constraints = ''): ColumnInterface;
+    private function createColumn(
+        string $name,
+        string|ColumnType $type,
+        callable $options = null
+    ): ColumnInterface {
+
+        $option = $this->columnOptions($this->column($name), $options);
+
+        if ($type instanceof ColumnType) {
+            $option->callMethod($type->value);
+        } else {
+            $option->getColumn()->type($type);
+        }
+
+        return $option->getColumn();
+    }
+
+
+
+
+
+
+
+    /**
+     * @return callable
+    */
+    private function defaultOptions(): callable
+    {
+        return function (ColumnOptionInterface $options) {
+            return $options->getColumn();
+        };
+    }
+
+
+
+
+
+
+    /**
+     * @return ColumnFactoryInterface
+    */
+    abstract protected function getColumnFactory(): ColumnFactoryInterface;
 }

@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Database\Manager\Config\ORM\Mapper\Fixtures;
-
 
 use Laventure\Foundation\Database\Manager\Config\Common\CommonConfigurationInterface;
 
@@ -17,5 +17,4 @@ use Laventure\Foundation\Database\Manager\Config\Common\CommonConfigurationInter
  */
 interface FixturesConfigurationInterface extends CommonConfigurationInterface
 {
-
 }

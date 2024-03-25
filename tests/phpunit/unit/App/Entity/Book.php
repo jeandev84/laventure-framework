@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PHPUnitTest\App\Entity;
@@ -14,65 +15,63 @@ namespace PHPUnitTest\App\Entity;
 */
 class Book
 {
-
-     /**
-      * @var int|null
-     */
-     private ?int $id = null;
-
-
-     /**
-      * @var string|null
-     */
-     private ?string $title;
+    /**
+     * @var int|null
+    */
+    private ?int $id = null;
 
 
-
-     /**
-      * @var string|null
-     */
-     private ?string $description;
+    /**
+     * @var string|null
+    */
+    private ?string $title;
 
 
 
-
-     /**
-      * @var float|null
-     */
-     private ?float $price;
+    /**
+     * @var string|null
+    */
+    private ?string $description;
 
 
 
 
-     /**
-      * @var User|null
-     */
-     private ?User $user = null;
+    /**
+     * @var float|null
+    */
+    private ?float $price;
 
 
 
-     public function __construct(
-         string $title,
-         string $description,
-         float $price,
-         int $id = null
-     )
-     {
-         $this->title = $title;
-         $this->description = $description;
-         $this->price = $price;
-         $this->id  = $id;
-     }
+
+    /**
+     * @var User|null
+    */
+    private ?User $user = null;
+
+
+
+    public function __construct(
+        string $title,
+        string $description,
+        float $price,
+        int $id = null
+    ) {
+        $this->title = $title;
+        $this->description = $description;
+        $this->price = $price;
+        $this->id  = $id;
+    }
 
 
 
     /**
       * @return int|null
      */
-     public function getId(): ?int
-     {
-         return $this->id;
-     }
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
 
 
 

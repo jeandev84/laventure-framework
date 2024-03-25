@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Laventure\Component\Database;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
+use Laventure\Component\Database\Exception\DatabaseException;
+use Laventure\Component\Database\Exception\UnavailableDatabaseNameException;
 use Laventure\Component\Database\Query\QueryInterface;
 
 /**
@@ -39,21 +41,7 @@ abstract class Database implements DatabaseInterface
     public function __construct(ConnectionInterface $connection)
     {
         $this->connection = $connection;
-        $this->name       = $connection->configuration()->getDatabase();
-    }
-
-
-
-
-    /**
-     * @param string $name
-     * @return $this
-    */
-    public function name(string $name): static
-    {
-        $this->name = $name;
-
-        return $this;
+        $this->name       = $connection->getConfiguration()->getDatabase();
     }
 
 
@@ -61,16 +49,10 @@ abstract class Database implements DatabaseInterface
 
     /**
      * @inheritdoc
-     * @throws DatabaseException
+     * @return string
     */
     public function getName(): string
     {
-        if (!$this->name) {
-            throw new DatabaseException(
-                "Database name is not specified for ". get_called_class()
-            );
-        }
-
         return $this->name;
     }
 
@@ -102,6 +84,37 @@ abstract class Database implements DatabaseInterface
 
 
 
+
+    /**
+     * @inheritDoc
+     * @throws DatabaseException
+    */
+    public function dump(string $filepath): bool|int
+    {
+        return $this->exec(
+            sprintf("BACKUP DATABASE %s TO DISK = '%s'", $this->getName(), $filepath)
+        );
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+     * @throws DatabaseException
+    */
+    public function dumpDiff(string $filepath): bool|int
+    {
+        return $this->exec(
+            sprintf("BACKUP DATABASE %s TO DISK = '%s' WITH DIFFERENTIAL", $this->getName(), $filepath)
+        );
+    }
+
+
+
+
+
     /**
      * @param $key
      * @param $default
@@ -109,7 +122,7 @@ abstract class Database implements DatabaseInterface
     */
     public function config($key, $default = null): mixed
     {
-        return $this->connection->config($key, $default);
+        return $this->connection->getConfiguration()->get($key, $default);
     }
 
 
@@ -135,7 +148,7 @@ abstract class Database implements DatabaseInterface
     public function collation(): string
     {
         return $this->connection
-                    ->configuration()
+                    ->getConfiguration()
                     ->getCollation();
     }
 

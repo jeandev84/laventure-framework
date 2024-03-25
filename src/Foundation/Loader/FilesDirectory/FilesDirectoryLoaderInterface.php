@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Loader\FilesDirectory;
-
 
 use Laventure\Component\Filesystem\File\Collection\FileCollection;
 use Laventure\Component\Filesystem\File\Collection\FileCollectionInterface;

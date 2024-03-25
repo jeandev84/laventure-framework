@@ -22,29 +22,8 @@ class MysqlColumnFactory implements ColumnFactoryInterface
     /**
      * @inheritDoc
     */
-    public function createColumn(
-        string $name,
-        string $type = '',
-        string $constraints = ''
-    ): ColumnInterface {
-        return new MysqlColumn($name, $type, $constraints);
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function createColumnFromInfo(ColumnInfoInterface $info): ColumnInterface
+    public function createColumn(string $name): ColumnInterface
     {
-        return $this->createColumn($info->getField(), $info->getType())
-                    ->comments($info->getComment())
-                    ->collation($info->getCollation())
-                    ->withOptions([
-                      'key'        => $info->getKey(),
-                      'default'    => $info->getDefault(),
-                      'privileges' => $info->getPrivileges()
-                   ]);
+        return new MysqlColumn($name);
     }
 }

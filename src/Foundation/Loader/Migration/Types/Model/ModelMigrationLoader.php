@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Loader\Migration\Types\Model;
@@ -16,7 +17,6 @@ use Laventure\Foundation\Loader\Migration\Types\AbstractMigrationLoader;
  */
 class ModelMigrationLoader extends AbstractMigrationLoader implements ModelMigrationLoaderInterface
 {
-
     /**
      * @inheritDoc
     */

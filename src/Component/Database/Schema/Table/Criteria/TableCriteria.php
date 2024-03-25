@@ -4,7 +4,14 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Table\Criteria;
 
-use Laventure\Component\Database\Schema\Table\Table;
+use Laventure\Component\Database\Schema\Column\Contract\ColumnInterface;
+use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
+use Laventure\Component\Database\Schema\Constraints\Contract\IndexInterface;
+use Laventure\Component\Database\Schema\Constraints\Contract\PrimaryKeyInterface;
+use Laventure\Component\Database\Schema\Constraints\Contract\UniqueKeyInterface;
+use Laventure\Component\Database\Schema\Constraints\Types\Index;
+use Laventure\Component\Database\Schema\Constraints\Types\Keys\Primary\PrimaryKey;
+use Laventure\Component\Database\Schema\Constraints\Types\Keys\Unique\UniqueKey;
 
 /**
  * TableCriteria
@@ -18,53 +25,183 @@ use Laventure\Component\Database\Schema\Table\Table;
 class TableCriteria implements TableCriteriaInterface
 {
     /**
-     * @param Table $table
+     * Collect available columns
+     *
+     * @var array<string, ColumnInterface>
     */
-    public function __construct(protected Table $table)
-    {
-    }
+    public array $columns  = [];
+
+
+
+
+    /**
+     * Collect added columns
+     *
+     * @var array<string, ColumnInterface>
+    */
+    public array $newColumn = [];
+
+
+
+
+
+    /**
+     * Collect renamed columns
+     *
+     * @var array<string, ColumnInterface>
+    */
+    public array $renameColumn = [];
+
+
+
+
+
+    /**
+     * Collect modified columns
+     *
+     * @var array<string, ColumnInterface>
+    */
+    public array $modifyColumn = [];
+
+
+
+
+
+    /**
+     * Collect dropped columns
+     *
+     * @var array<string, ColumnInterface>
+    */
+    public array $dropColumn = [];
+
+
+
+
+
+
+
+    /**
+     * Collect primary keys
+     *
+     * @var string[]
+    */
+    public array $primary = [];
+
+
+
+
+
+
+    /**
+     * Collect unique keys
+     *
+     * @var string[]
+    */
+    public array $unique = [];
+
+
+
+
+
+
+
+
+    /**
+     * Collect indexes
+     *
+     * @var string[]
+    */
+    public array $index = [];
+
+
+
+
+
+
+
+    /**
+     * Collect foreign keys
+     *
+     * @var ForeignKeyInterface[]
+    */
+    public array $foreign = [];
+
+
+
+
 
 
 
     /**
      * @inheritDoc
     */
-    public function create(): string
+    public function getPrimary(): PrimaryKeyInterface
     {
-        return join(', ', array_filter([
-            join(', ', array_values($this->table->columns)),
-            join(', ', array_values($this->table->constraints))
-        ]));
+        return new PrimaryKey($this->primary);
     }
+
+
 
 
 
     /**
      * @inheritDoc
     */
-    public function update(): string
+    public function getIndex(): IndexInterface
     {
-        return join(', ', array_filter([
-            join(', ', $this->getNewColumns()),
-            join(', ', array_values($this->table->dropColumns)),
-            join(', ', array_values($this->table->renameColumns))
-        ]));
+        return new Index($this->index);
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getUnique(): UniqueKeyInterface
+    {
+        return new UniqueKey($this->unique);
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getForeign(): array
+    {
+        return $this->foreign;
     }
 
 
 
 
     /**
-     * @return array
+     * @inheritDoc
     */
-    protected function getNewColumns(): array
+    public function toArray(): array
     {
-        $resolved = [];
+        return get_object_vars($this);
+    }
 
-        foreach ($this->table->columns as $column) {
-            $resolved[] = $column->add()->getSQL();
-        }
 
-        return $resolved;
+
+
+    /**
+     * @inheritDoc
+    */
+    public function clear(): void
+    {
+        $this->columns       = [];
+        $this->newColumn     = [];
+        $this->renameColumn  = [];
+        $this->primary       = [];
+        $this->unique        = [];
+        $this->index         = [];
+        $this->foreign       = [];
     }
 }

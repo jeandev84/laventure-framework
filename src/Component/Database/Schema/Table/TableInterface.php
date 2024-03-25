@@ -6,11 +6,13 @@ namespace Laventure\Component\Database\Schema\Table;
 
 use Laventure\Component\Database\Query\QueryInterface;
 use Laventure\Component\Database\Schema\Column\Contract\ColumnInterface;
+use Laventure\Component\Database\Schema\Column\Types\ColumnType;
 use Laventure\Component\Database\Schema\Constraints\ConstraintInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\IndexInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\PrimaryKeyInterface;
-use Laventure\Component\Database\Schema\Constraints\Contract\UniqueInterface;
+use Laventure\Component\Database\Schema\Constraints\Contract\UniqueKeyInterface;
+use Laventure\Component\Database\Schema\Table\Builder\TableSQlBuilderInterface;
 use Laventure\Component\Database\Schema\Table\Criteria\TableCriteriaInterface;
 
 /**
@@ -25,51 +27,13 @@ use Laventure\Component\Database\Schema\Table\Criteria\TableCriteriaInterface;
 interface TableInterface
 {
     /**
-     * Create table
+     * Returns table name
      *
-     * @return mixed
+     * @return string
     */
-    public function create(): mixed;
+    public function getName(): string;
 
 
-
-    /**
-     * PgsqlUpdateBuilder table
-     *
-     * @return mixed
-    */
-    public function update(): mixed;
-
-
-
-
-    /**
-     * Drop table
-     *
-     * @return mixed
-    */
-    public function drop(): mixed;
-
-
-
-
-    /**
-     * Drop table if exist
-     *
-     * @return mixed
-    */
-    public function dropIfExists(): mixed;
-
-
-
-
-
-    /**
-     * Truncate table
-     *
-     * @return mixed
-    */
-    public function truncate(): mixed;
 
 
 
@@ -77,9 +41,761 @@ interface TableInterface
 
 
     /**
-     * @return mixed
+     * @param string $entity
+     * @return $this
     */
-    public function truncateCascade(): mixed;
+    public function addColumnsFromEntity(string $entity): static;
+
+
+
+
+
+    /**
+     * Create column
+     *
+     * @param string $name
+     * @return ColumnInterface
+    */
+    public function column(string $name): ColumnInterface;
+
+
+
+
+
+    /**
+     * Add new column
+     *
+     * @param ColumnInterface $column
+     * @return $this
+    */
+    public function addNewColumn(ColumnInterface $column): static;
+
+
+
+
+
+    /**
+     * @param string $name
+     * @return bool
+    */
+    public function hasNewColumn(string $name): bool;
+
+
+
+
+
+    /**
+     * Returns new columns
+     *
+     * @return ColumnInterface[]
+    */
+    public function getNewColumns(): array;
+
+
+
+
+
+    /**
+     * Add renamed column
+     *
+     * @param string $newName
+     * @param ColumnInterface $column
+     * @return $this
+    */
+    public function addRenameColumn(string $newName, ColumnInterface $column): static;
+
+
+
+
+
+
+    /**
+     * @param string $name
+     * @return bool
+    */
+    public function hasRenameColumn(string $name): bool;
+
+
+
+
+
+
+    /**
+     * Returns renamed columns
+     *
+     * @return ColumnInterface[]
+    */
+    public function getRenameColumns(): array;
+
+
+
+
+
+
+
+    /**
+     * Add modified column
+     *
+     * @param ColumnInterface $column
+     * @return $this
+    */
+    public function addModifyColumn(ColumnInterface $column): static;
+
+
+
+
+
+
+    /**
+     * @param string $name
+     * @return bool
+    */
+    public function hasModifyColumn(string $name): bool;
+
+
+
+
+
+
+    /**
+     * Returns modified columns
+     *
+     * @return array
+    */
+    public function getModifyColumns(): array;
+
+
+
+
+
+
+    /**
+     * @param ColumnInterface $column
+     * @return $this
+    */
+    public function addDropColumn(ColumnInterface $column): static;
+
+
+
+
+
+
+    /**
+     * @param string $name
+     * @return bool
+    */
+    public function hasDropColumn(string $name): bool;
+
+
+
+
+
+
+    /**
+     * Returns drop columns
+     *
+     * @return array
+    */
+    public function getDropColumns(): array;
+
+
+
+
+
+
+
+
+    /**
+     * Add new column
+     *
+     * @param string $name
+     * @param string|ColumnType $type
+     * @param callable|null $options
+     * @return $this
+    */
+    public function addColumn(string $name, string|ColumnType $type, callable $options = null): static;
+
+
+
+
+
+
+
+
+
+    /**
+     * Rename existent column
+     *
+     * @param string $name
+     * @param string $to
+     * @return $this
+    */
+    public function renameColumn(string $name, string $to): static;
+
+
+
+
+
+
+
+
+
+    /**
+     * Modify column
+     *
+     * @param string $name
+     * @param callable $func
+     * @return $this
+     */
+    public function modifyColumn(string $name, callable $func): static;
+
+
+
+
+
+
+
+
+
+    /**
+     * Drop column
+     *
+     * @param string $name
+     *
+     * @return $this
+    */
+    public function dropColumn(string $name): static;
+
+
+
+
+
+
+
+
+
+
+    /**
+     * Determine if given column name exists
+     *
+     * @param string $name
+     * @return bool
+    */
+    public function hasColumn(string $name): bool;
+
+
+
+
+
+
+
+
+
+    /**
+     * Returns column
+     *
+     * @param string $name
+     * @return ColumnInterface
+    */
+    public function getColumn(string $name): ColumnInterface;
+
+
+
+
+
+
+
+
+
+
+    /**
+     * Returns all available columns
+     *
+     * @return ColumnInterface[]
+    */
+    public function getColumns(): array;
+
+
+
+
+
+
+
+
+
+
+    /**
+     * Add columns type datetime
+     *
+     * @param string $name
+     * @param callable|null $options
+     * @return $this
+    */
+    public function addDatetime(string $name, callable $options = null): static;
+
+
+
+
+
+
+
+    /**
+     * Add columns type datetime
+     *
+     * @param string $name
+     * @return $this
+    */
+    public function addNullableDatetime(string $name): static;
+
+
+
+
+
+    /**
+     * Add timestamp created_at, updated_at columns
+     *
+     * @return $this
+    */
+    public function addTimestamps(): static;
+
+
+
+
+
+
+
+    /**
+     * Add nullable timestamp
+     *
+     * @return $this
+    */
+    public function addNullableTimestamps(): static;
+
+
+
+
+
+
+
+    /**
+     * Add soft deletes timestamp like deleted_at
+     *
+     * @return $this
+    */
+    public function addSoftDeletes(): static;
+
+
+
+
+
+
+
+
+
+    /**
+     * Add primary keys
+     *
+     * @param array $primaryKeys
+     * @return $this
+    */
+    public function addPrimaryKey(array $primaryKeys): static;
+
+
+
+
+
+
+
+
+
+    /**
+     * Determine if given key is primary key
+     *
+     * @param string $primaryKey
+     * @return bool
+    */
+    public function hasPrimaryKey(string $primaryKey): bool;
+
+
+
+
+
+
+
+
+
+
+    /**
+     * Drop primary key
+     *
+     * @param string $primaryKey
+     * @return $this
+    */
+    public function dropPrimaryKey(string $primaryKey): static;
+
+
+
+
+
+
+
+
+
+    /**
+     * Drop all primary keys
+     *
+     * @return $this
+    */
+    public function dropPrimaryKeys(): static;
+
+
+
+
+
+
+
+    /**
+     * Returns primary keys
+     *
+     * @return array
+    */
+    public function getPrimaryKeys(): array;
+
+
+
+
+
+
+
+
+    /**
+     * Returns primary keys builder
+     *
+     * @return PrimaryKeyInterface
+    */
+    public function getPrimary(): PrimaryKeyInterface;
+
+
+
+
+
+
+    /**
+     * @param string $foreignKey
+     * @return ForeignKeyInterface
+    */
+    public function foreignKey(string $foreignKey): ForeignKeyInterface;
+
+
+
+
+
+
+
+    /**
+     * Add foreign key
+     *
+     * @param string $foreignKey
+     * @param callable $func
+     * @return $this
+    */
+    public function addForeignKey(
+        string $foreignKey,
+        callable $func
+    ): static;
+
+
+
+
+
+
+
+
+
+    /**
+     * Determine if given key is foreign key
+     *
+     * @param string $foreignKey
+     * @return bool
+    */
+    public function hasForeignKey(string $foreignKey): bool;
+
+
+
+
+
+
+
+
+
+    /**
+     * Returns existent foreignKey
+     *
+     * @param string $foreignKey
+     * @return ForeignKeyInterface
+    */
+    public function getForeignKey(string $foreignKey): ForeignKeyInterface;
+
+
+
+
+
+
+
+
+    /**
+     * Returns all foreignKeys
+     *
+     * @return ForeignKeyInterface[]
+    */
+    public function getForeignKeys(): array;
+
+
+
+
+
+
+
+
+
+    /**
+     * Drop foreign keys
+     *
+     * @return $this
+    */
+    public function dropForeignKeys(): static;
+
+
+
+
+
+
+
+
+
+    /**
+     * Add indexes
+     *
+     * @param array $indexes
+     * @return $this
+    */
+    public function addIndex(array $indexes): static;
+
+
+
+
+
+
+
+
+
+    /**
+     * Determine if given index name exists
+     *
+     * @param string $index
+     * @return bool
+    */
+    public function hasIndex(string $index): bool;
+
+
+
+
+
+
+
+
+
+    /**
+     * Returns index
+     *
+     * @param string $index
+     * @return IndexInterface
+    */
+    public function getIndex(string $index): IndexInterface;
+
+
+
+
+
+
+
+
+
+
+    /**
+     * Returns indexes items
+     *
+     * @return array
+    */
+    public function getIndexes(): array;
+
+
+
+
+
+
+
+
+    /**
+     * Add unique keys
+     *
+     * @param array $uniqueKeys
+     * @return $this
+    */
+    public function addUniqueKey(array $uniqueKeys): static;
+
+
+
+
+
+
+
+
+    /**
+     * Determine if unique key exists
+     *
+     * @param string $uniqueKey
+     * @return bool
+    */
+    public function hasUniqueKey(string $uniqueKey): bool;
+
+
+
+
+
+
+
+
+
+    /**
+     * @param string $uniqueKey
+     * @return UniqueKeyInterface
+    */
+    public function getUniqueKey(string $uniqueKey): UniqueKeyInterface;
+
+
+
+
+
+
+
+    /**
+     * Returns unique keys
+     *
+     * @return UniqueKeyInterface[]
+    */
+    public function getUniqueKeys(): array;
+
+
+
+
+
+
+
+
+    /**
+     * Returns unique builder
+     *
+     * @return UniqueKeyInterface
+    */
+    public function getUnique(): UniqueKeyInterface;
+
+
+
+
+
+
+
+
+    /**
+     * Returns all constraints of table
+     *
+     * @return ConstraintInterface[]
+    */
+    public function getConstraints(): array;
+
+
+
+
+
+
+
+
+
+    /**
+     * Set identifier name
+     *
+     * @param string $identifier
+     * @return $this
+    */
+    public function setIdentifier(string $identifier): static;
+
+
+
+
+
+
+
+
+    /**
+     * Returns identifier name
+     *
+     * @return string
+    */
+    public function getIdentifier(): string;
+
+
+
+
+
+
+
+
+
+    /**
+     * Insert data to the table
+     *
+     * @param array $attributes
+     * @return $this
+    */
+    public function insert(array $attributes): static;
+
+
+
+
+
+
+
+
+
+    /**
+     * Set data to update
+     *
+     * @param string $column
+     * @param mixed $value
+     * @return $this
+    */
+    public function set(string $column, mixed $value): static;
+
+
+
+
+
+
+
+
+
+    /**
+     * Delete one record of table
+     *
+     * @param $id
+     * @return $this
+    */
+    public function delete($id): static;
+
+
+
+
 
 
 
@@ -98,8 +814,198 @@ interface TableInterface
 
 
 
+
+
     /**
-     * List tables
+     * Dump table
+     *
+     * @return mixed
+    */
+    public function dump(): mixed;
+
+
+
+
+
+
+
+
+
+    /**
+     * Returns generated SQL
+     *
+     * @return string
+    */
+    public function getSQL(): string;
+
+
+
+
+
+
+
+
+
+
+    /**
+     * @return TableSQlBuilderInterface
+    */
+    public function expr(): TableSQlBuilderInterface;
+
+
+
+
+
+
+
+
+
+    /**
+     * Returns table criteria
+     *
+     * @return TableCriteriaInterface
+    */
+    public function getCriteria(): TableCriteriaInterface;
+
+
+
+
+
+
+
+
+
+    /**
+     * Create a new table
+     *
+     * @return mixed
+    */
+    public function create(): mixed;
+
+
+
+
+
+
+
+
+
+
+    /**
+     * Rename table
+     *
+     * @param string $to  #new table name
+     * @return mixed
+    */
+    public function rename(string $to): mixed;
+
+
+
+
+
+
+
+
+    /**
+     * Update table
+     *
+     * @return mixed
+    */
+    public function update(): mixed;
+
+
+
+
+
+
+
+
+    /**
+     * Create or Update table
+     *
+     * @return mixed
+    */
+    public function save(): mixed;
+
+
+
+
+
+
+
+
+
+
+    /**
+     * Drop table
+     *
+     * @return mixed
+    */
+    public function drop(): mixed;
+
+
+
+
+
+    /**
+     * Drop table if exists
+     *
+     * @return mixed
+    */
+    public function dropIfExists(): mixed;
+
+
+
+
+
+
+    /**
+     * Drop table cascade
+     *
+     * @return mixed
+    */
+    public function dropCascade(): mixed;
+
+
+
+
+
+
+
+    /**
+     * Truncate table
+     *
+     * @return mixed
+    */
+    public function truncate(): mixed;
+
+
+
+
+
+
+
+
+
+
+    /**
+     * Truncate table cascade
+     *
+     * @return mixed
+    */
+    public function truncateCascade(): mixed;
+
+
+
+
+
+
+
+
+
+
+    /**
+     * Returns all available tables
      *
      * @return array
     */
@@ -107,30 +1013,6 @@ interface TableInterface
 
 
 
-
-
-
-
-    /**
-     * Returns table name
-     *
-     * @return string
-    */
-    public function getName(): string;
-
-
-
-
-
-
-
-    /**
-     * Add incremental column
-     *
-     * @param string $name
-     * @return $this
-    */
-    public function increments(string $name): static;
 
 
 
@@ -143,6 +1025,9 @@ interface TableInterface
      * @return ColumnInterface
     */
     public function bigIncrements(string $name): ColumnInterface;
+
+
+
 
 
 
@@ -164,6 +1049,7 @@ interface TableInterface
 
 
 
+
     /**
      * Add column type small integer
      *
@@ -176,11 +1062,13 @@ interface TableInterface
 
 
 
+
+
+
     /**
      * Add column type big integer
      *
      * @param string $name
-     *
      * @return ColumnInterface
     */
     public function bigInteger(string $name): ColumnInterface;
@@ -189,11 +1077,11 @@ interface TableInterface
 
 
 
+
     /**
      * Add column type big integer
      *
      * @param string $name
-     *
      * @return ColumnInterface
     */
     public function mediumInteger(string $name): ColumnInterface;
@@ -207,11 +1095,9 @@ interface TableInterface
      * Add column type tiny integer
      *
      * @param string $name
-     *
      * @return ColumnInterface
     */
     public function tinyInteger(string $name): ColumnInterface;
-
 
 
 
@@ -234,6 +1120,7 @@ interface TableInterface
 
 
 
+
     /**
      * Add column type char
      *
@@ -248,14 +1135,15 @@ interface TableInterface
 
 
 
+
     /**
      * Add column type boolean
      *
      * @param string $name
-     *
      * @return ColumnInterface
     */
     public function boolean(string $name): ColumnInterface;
+
 
 
 
@@ -267,12 +1155,9 @@ interface TableInterface
      * Add column type datetime
      *
      * @param string $name
-     *
      * @return ColumnInterface
     */
     public function datetime(string $name): ColumnInterface;
-
-
 
 
 
@@ -284,7 +1169,6 @@ interface TableInterface
      * Add column type time
      *
      * @param string $name
-     *
      * @return ColumnInterface
     */
     public function time(string $name): ColumnInterface;
@@ -299,7 +1183,6 @@ interface TableInterface
      * Add column type timestamp
      *
      * @param string $name
-     *
      * @return ColumnInterface
     */
     public function timestamp(string $name): ColumnInterface;
@@ -314,7 +1197,6 @@ interface TableInterface
      * Add column type binary
      *
      * @param string $name
-     *
      * @return ColumnInterface
     */
     public function binary(string $name): ColumnInterface;
@@ -329,11 +1211,9 @@ interface TableInterface
      * Add column type date
      *
      * @param string $name
-     *
      * @return ColumnInterface
     */
     public function date(string $name): ColumnInterface;
-
 
 
 
@@ -345,11 +1225,8 @@ interface TableInterface
      * Add column type decimal
      *
      * @param string $name
-     *
      * @param int $precision
-     *
      * @param int $scale
-     *
      * @return ColumnInterface
     */
     public function decimal(string $name, int $precision, int $scale): ColumnInterface;
@@ -362,18 +1239,18 @@ interface TableInterface
 
 
 
+
     /**
      * Add column type double
      *
+     *
      * @param string $name
-     *
      * @param int $precision
-     *
      * @param int $scale
-     *
      * @return ColumnInterface
     */
     public function double(string $name, int $precision, int $scale): ColumnInterface;
+
 
 
 
@@ -390,6 +1267,8 @@ interface TableInterface
      * @return ColumnInterface
     */
     public function enum(string $name, array $values): ColumnInterface;
+
+
 
 
 
@@ -423,16 +1302,15 @@ interface TableInterface
 
 
 
-
-
     /**
      * Add column type text
      *
      * @param string $name
-     *
      * @return ColumnInterface
     */
     public function text(string $name): ColumnInterface;
+
+
 
 
 
@@ -443,10 +1321,10 @@ interface TableInterface
      * Add column type long text
      *
      * @param string $name
-     *
      * @return ColumnInterface
     */
     public function longText(string $name): ColumnInterface;
+
 
 
 
@@ -457,10 +1335,10 @@ interface TableInterface
      * Add column type medium text
      *
      * @param string $name
-     *
      * @return ColumnInterface
     */
     public function mediumText(string $name): ColumnInterface;
+
 
 
 
@@ -471,10 +1349,11 @@ interface TableInterface
      * Add column type tiny text
      *
      * @param string $name
-     *
-     * @return ColumnInterface
+     * @return  ColumnInterface
     */
     public function tinyText(string $name): ColumnInterface;
+
+
 
 
 
@@ -485,7 +1364,6 @@ interface TableInterface
      * Add column type morphs
      *
      * @param string $name
-     *
      * @return ColumnInterface
     */
     public function morphs(string $name): ColumnInterface;
@@ -496,98 +1374,14 @@ interface TableInterface
 
 
 
-
     /**
-     * Add primary
+     * Add column type default
      *
-     * @param array $columns
-     * @return static
-    */
-    public function primary(array $columns): static;
-
-
-
-
-
-
-
-    /**
-     * Add unique
+     * @param $value
      *
-     * @param array $columns
-     * @return static
-    */
-    public function unique(array $columns): static;
-
-
-
-
-
-
-
-    /**
-     * Add indexes
-     *
-     * @param array $columns
-     * @return static
-    */
-    public function index(array $columns): static;
-
-
-
-
-    /**
-     * Add foreign key
-     *
-     * @param string $name
-     * @return ForeignKeyInterface
-    */
-    public function foreign(string $name): ForeignKeyInterface;
-
-
-
-
-
-
-
-
-    /**
-     * Add column
-     *
-     * @param ColumnInterface $column
-     * @return ColumnInterface
-    */
-    public function add(ColumnInterface $column): ColumnInterface;
-
-
-
-
-
-
-
-    /**
-     * Add column
-     *
-     * @param string $name
-     * @param string $type
-     * @param string $constraints
-     * @return ColumnInterface
-     */
-    public function addColumn(string $name, string $type, string $constraints = ''): ColumnInterface;
-
-
-
-
-
-
-    /**
-     * Rename column
-     *
-     * @param string $name
-     * @param string $to
      * @return mixed
     */
-    public function renameColumn(string $name, string $to): mixed;
+    public function default($value): static;
 
 
 
@@ -597,23 +1391,11 @@ interface TableInterface
 
 
     /**
-     * @param string $name
+     * Add column type timestamp
      *
      * @return $this
     */
-    public function dropColumn(string $name): static;
-
-
-
-
-
-
-    /**
-     * Returns table columns
-     *
-     * @return ColumnInterface[]
-    */
-    public function getColumns(): array;
+    public function unsigned(): static;
 
 
 
@@ -622,294 +1404,22 @@ interface TableInterface
 
 
     /**
-     * Determine if column exist in table
-     *
-     * @param $name
-     * @return bool
-    */
-    public function hasColumn($name): bool;
-
-
-
-
-
-
-    /**
-     * Returns column names
-     *
-     * @return array
-    */
-    public function getColumnNames(): array;
-
-
-
-
-
-    /**
-     * Add primary key
-     *
-     * @param PrimaryKeyInterface $primaryKey
-     * @return PrimaryKeyInterface
-    */
-    public function addPrimaryKey(PrimaryKeyInterface $primaryKey): PrimaryKeyInterface;
-
-
-
-
-
-
-    /**
-     * Determine if the given primary key exist
-     *
-     * @param string $key
-     * @return bool
-    */
-    public function hasPrimaryKey(string $key): bool;
-
-
-
-
-
-
-    /**
-     * Returns all primary keys
-     *
-     * @return array
-    */
-    public function getPrimaryKeys(): array;
-
-
-
-
-
-
-    /**
-     * Returns all system constraints
-     *
-     * @return array
-    */
-    public function listConstraints(): array;
-
-
-
-
-
-
-    /**
-     * Add foreign keys
-     *
-     * @param ForeignKeyInterface $foreignKey
-     * @return ForeignKeyInterface
-    */
-    public function addForeignKey(ForeignKeyInterface $foreignKey): ForeignKeyInterface;
-
-
-
-
-
-
-
-    /**
-     * Determine if the given foreign key exist
-     *
-     * @param string $key
-     * @return bool
-    */
-    public function hasForeignKey(string $key): bool;
-
-
-
-
-
-
-
-
-    /**
-     * Returns all foreign keys
-     *
-     * @return array
-    */
-    public function getForeignKeys(): array;
-
-
-
-
-
-
-
-    /**
-     * Drop foreignKeys
-     *
-     * @return mixed
-    */
-    public function dropForeignKeys(): mixed;
-
-
-
-
-
-
-
-    /**
-     * Add indexes
-     *
-     * @param IndexInterface $index
-     * @return IndexInterface
-    */
-    public function addIndex(IndexInterface $index): IndexInterface;
-
-
-
-
-
-
-
-    /**
-     * Determine if the given index exist
-     *
-     * @param string $index
-     * @return bool
-    */
-    public function hasIndex(string $index): bool;
-
-
-
-
-
-
-    /**
-     * Returns all indexes
-     *
-     * @return array
-    */
-    public function getIndexes(): array;
-
-
-
-
-
-
-
-
-    /**
-     * @param UniqueInterface $unique
-     * @return UniqueInterface
-    */
-    public function addUnique(UniqueInterface $unique): UniqueInterface;
-
-
-
-
-
-
-    /**
-     * Determine if has unique column
-     *
-     * @param string $name
-     * @return bool
-    */
-    public function hasUnique(string $name): bool;
-
-
-
-
-
-
-    /**
-     * Returns all uniques columns
-     *
-     * @return array
-    */
-    public function getUniques(): array;
-
-
-
-
-
-
-
-
-    /**
-     * Add constraint
-     *
-     * @param ConstraintInterface $constraint
-     * @return ConstraintInterface
-    */
-    public function addConstraint(ConstraintInterface $constraint): ConstraintInterface;
-
-
-
-
-
-
-    /**
-     * Determine if given constraint exist
-     *
-     * @param string $key
-     * @return bool
-    */
-    public function hasConstraint(string $key): bool;
-
-
-
-
-
-    /**
-     * Returns all constraints
-     *
-     * @param string|null $constraintType
-     * @return ConstraintInterface[]
-    */
-    public function getConstraints(string $constraintType = null): array;
-
-
-
-
-
-
-
-
-    /**
-     * Execute SQL
-     *
-     * @param string $sql
-     * @return mixed
-    */
-    public function exec(string $sql): mixed;
-
-
-
-
-
-
-
-    /**
-     * Create statement
-     *
-     * @param string $sql
-     * @return QueryInterface
-    */
-    public function statement(string $sql): QueryInterface;
-
-
-
-
-
-
-    /**
-     * @return TableCriteriaInterface
-    */
-    public function getCriteria(): TableCriteriaInterface;
-
-
-
-
-
-
-    /**
-     * Returns schema name
-     *
+     * @param string $criteria
      * @return string
     */
-    public function getSchemaName(): string;
+    public function alter(string $criteria): string;
+
+
+
+
+
+
+
+
+    /**
+     * Clear table
+     *
+     * @return void
+    */
+    public function clear(): void;
 }

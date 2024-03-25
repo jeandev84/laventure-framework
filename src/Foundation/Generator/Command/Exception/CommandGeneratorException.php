@@ -13,7 +13,7 @@ use Laventure\Exceptions\BaseException;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Foundation\Generator\Command\Exceptions
+ * @package  Laventure\Foundation\Generator\Command\Exception
 */
 class CommandGeneratorException extends BaseException
 {

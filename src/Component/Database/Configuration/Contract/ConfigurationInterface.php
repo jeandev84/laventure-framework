@@ -123,4 +123,29 @@ interface ConfigurationInterface extends ParameterInterface
      * @return array
     */
     public function getOptions(): array;
+
+
+
+
+
+
+    /**
+     * Returns schema name
+     *
+     * @return string
+    */
+    public function getSchemaName(): string;
+
+
+
+
+
+
+
+
+    /**
+     * @param $name
+     * @return string
+    */
+    public function prefixed($name): string;
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Filesystem\File\Convertor;
@@ -14,7 +15,6 @@ namespace Laventure\Component\Filesystem\File\Convertor;
  */
 class FileToClassConvertor implements FileToClassConvertorInterface
 {
-
     /**
      * @var array
     */
@@ -32,8 +32,7 @@ class FileToClassConvertor implements FileToClassConvertorInterface
         protected string $baseDirectory,
         protected string $baseNamespace,
         array            $files = []
-    )
-    {
+    ) {
         $this->withFiles($files);
     }
 

@@ -11,7 +11,7 @@ namespace Laventure\Exceptions;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Exceptions
+ * @package  Laventure\Exception
 */
 class NotFoundException extends BaseException
 {

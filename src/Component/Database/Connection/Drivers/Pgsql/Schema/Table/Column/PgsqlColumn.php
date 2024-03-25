@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Drivers\Pgsql\Schema\Table\Column;
 
-use Laventure\Component\Database\Schema\Column\Column;
+use Laventure\Component\Database\Schema\Column\AbstractColumn;
 
 /**
  * PgsqlColumn
@@ -15,21 +15,35 @@ use Laventure\Component\Database\Schema\Column\Column;
  *
  * @package  Laventure\Component\Database\Schema\Column\Drivers\Pgsql
  */
-class PgsqlColumn extends Column
+class PgsqlColumn extends AbstractColumn
 {
     /**
      * @inheritDoc
-     */
-    public function increment(): static
+    */
+    public function increments(): static
     {
-        // TODO: Implement increment() method.
+        return $this->type("SERIAL");
     }
+
+
+
 
     /**
      * @inheritDoc
-     */
-    public function modify(): static
+    */
+    public function signed(): static
     {
-        // TODO: Implement modify() method.
+        return $this->sign("CHECK($this->name > 0)");
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function unsigned(): static
+    {
+        return $this->sign("CHECK($this->name < 0)");
     }
 }

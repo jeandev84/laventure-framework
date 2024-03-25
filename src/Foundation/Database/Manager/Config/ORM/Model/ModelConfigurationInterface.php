@@ -18,8 +18,8 @@ use Laventure\Foundation\Database\Manager\Config\Common\Migration\MigrationConfi
  */
 interface ModelConfigurationInterface extends CommonConfigurationInterface
 {
-     /**
-      * @return MigrationConfigurationInterface
-     */
-     public function migrations(): MigrationConfigurationInterface;
+    /**
+     * @return MigrationConfigurationInterface
+    */
+    public function migrations(): MigrationConfigurationInterface;
 }

@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Migration\Collection;
-
 
 use Laventure\Component\Database\Schema\Migration\MigrationInterface;
 
@@ -17,7 +17,6 @@ use Laventure\Component\Database\Schema\Migration\MigrationInterface;
  */
 interface MigrationCollectionInterface
 {
-
     /**
      * Add migrations
      *

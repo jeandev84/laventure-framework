@@ -36,13 +36,27 @@ interface ConnectionInterface extends TransactionInterface
 
 
     /**
-     * Connect to the database
+     * Parse configuration
      *
      * @param ConfigurationInterface $config
+     * @return $this
+    */
+    public function config(ConfigurationInterface $config): static;
+
+
+
+
+
+
+
+    /**
+     * Connect to the database
      *
      * @return mixed
     */
-    public function connect(ConfigurationInterface $config): mixed;
+    public function connect(): static;
+
+
 
 
 
@@ -139,25 +153,14 @@ interface ConnectionInterface extends TransactionInterface
 
 
 
-    /**
-     * Returns SQL Builder factory
-     *
-     * @return SQLQueryBuilderFactoryInterface
-    */
-    public function createSQLBuilderFactory(): SQLQueryBuilderFactoryInterface;
-
-
-
-
 
     /**
      * Create table
      *
      * @param string $name
-     * @param string $schemaName
      * @return TableInterface
     */
-    public function table(string $name, string $schemaName = ''): TableInterface;
+    public function table(string $name): TableInterface;
 
 
 
@@ -202,21 +205,8 @@ interface ConnectionInterface extends TransactionInterface
      *
      * @return ConfigurationInterface
     */
-    public function configuration(): ConfigurationInterface;
+    public function getConfiguration(): ConfigurationInterface;
 
-
-
-
-
-
-    /**
-     * Returns value of given key
-     *
-     * @param $key
-     * @param $default
-     * @return mixed
-    */
-    public function config($key, $default = null): mixed;
 
 
 

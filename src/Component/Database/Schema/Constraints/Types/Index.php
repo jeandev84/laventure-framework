@@ -21,9 +21,10 @@ use Laventure\Component\Database\Schema\Constraints\Contract\IndexInterface;
 class Index extends ConstraintHasColumns implements IndexInterface
 {
     /**
-     * @param string|null $key
+     * @param array $columns
+     * @param string $key
     */
-    public function __construct(array $columns, string $key = null)
+    public function __construct(array $columns, string $key = '')
     {
         parent::__construct('index', $key, $columns);
     }
