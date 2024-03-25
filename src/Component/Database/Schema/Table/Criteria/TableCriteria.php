@@ -24,8 +24,6 @@ use Laventure\Component\Database\Schema\Constraints\Types\Keys\Unique\UniqueKey;
 */
 class TableCriteria implements TableCriteriaInterface
 {
-
-
     /**
      * Collect available columns
      *
@@ -75,6 +73,8 @@ class TableCriteria implements TableCriteriaInterface
      * @var array<string, ColumnInterface>
     */
     public array $dropColumn = [];
+
+
 
 
 
@@ -133,7 +133,7 @@ class TableCriteria implements TableCriteriaInterface
 
     /**
      * SQL for create table
-     * 
+     *
      * @var array
     */
     public array $create = [];
@@ -145,7 +145,7 @@ class TableCriteria implements TableCriteriaInterface
 
     /**
      * SQL for update table
-     * 
+     *
      * @var array
     */
     public array $update  = [];

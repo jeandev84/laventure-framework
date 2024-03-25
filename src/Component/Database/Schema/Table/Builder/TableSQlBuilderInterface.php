@@ -19,8 +19,6 @@ use Laventure\Component\Database\Schema\Table\Builder\Contract\UpdateTableSQLBui
 */
 interface TableSQlBuilderInterface extends SQLInterface
 {
-
-
     /**
      * @return CreateTableSQLBuilderInterface
     */

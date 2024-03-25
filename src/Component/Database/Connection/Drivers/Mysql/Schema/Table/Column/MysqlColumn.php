@@ -56,7 +56,7 @@ class MysqlColumn extends AbstractColumn
     */
     public function bigIncrements(): static
     {
-         return $this->bigInteger()->increments();
+        return $this->bigInteger()->increments();
     }
 
 
@@ -166,7 +166,7 @@ class MysqlColumn extends AbstractColumn
     */
     public function char($value): static
     {
-       return $this->type("CHAR($value)");
+        return $this->type("CHAR($value)");
     }
 
 
@@ -288,7 +288,7 @@ class MysqlColumn extends AbstractColumn
     */
     public function float(): static
     {
-       return $this->type('FLOAT');
+        return $this->type('FLOAT');
     }
 
 

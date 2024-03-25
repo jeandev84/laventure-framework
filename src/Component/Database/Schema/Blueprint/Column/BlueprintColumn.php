@@ -1,0 +1,130 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Laventure\Component\Database\Schema\Blueprint\Column;
+
+use Laventure\Component\Database\Schema\Column\Contract\ColumnInterface;
+use Laventure\Component\Database\Schema\Column\Option\Contract\ColumnOptionInterface;
+use Laventure\Component\Database\Schema\Table\TableInterface;
+
+
+/**
+ * BlueprintColumn
+ *
+ * @inheritDoc
+*/
+class BlueprintColumn implements BlueprintColumnInterface
+{
+
+
+    /**
+     * @param TableInterface $table
+     * @param ColumnInterface $column
+    */
+    public function __construct(
+        protected TableInterface $table,
+        protected ColumnInterface $column
+    )
+    {
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function primary(): static
+    {
+        $this->column->primary();
+
+        return $this;
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function unique(): static
+    {
+        $this->column->unique();
+
+        return $this;
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function signed(): static
+    {
+        $this->column->signed();
+
+        return $this;
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function unsigned(): static
+    {
+        $this->column->signed();
+
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function default($value): static
+    {
+        $this->column->default($value);
+
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function nullable(): static
+    {
+        $this->column->nullable();
+
+        return $this;
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function change(): static
+    {
+        $this->table->modifyColumn(
+            $this->column->getName(),
+            function (ColumnOptionInterface $option) {
+                return $option->getColumn();
+            }
+        );
+
+        return $this;
+    }
+}

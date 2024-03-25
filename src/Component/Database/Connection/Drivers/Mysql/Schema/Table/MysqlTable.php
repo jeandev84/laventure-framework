@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Drivers\Mysql\Schema\Table;
@@ -53,7 +54,8 @@ class MysqlTable extends Table
     /**
      * @inheritDoc
     */
-    public function column(string $name): ColumnInterface {
+    public function column(string $name): ColumnInterface
+    {
         return $this->columnFactory->createColumn($name);
     }
 
@@ -230,16 +232,16 @@ class MysqlTable extends Table
         return new MysqlTableSQLBuilder($this, $this->criteria);
     }
 
-    
-    
-    
-    
-    
+
+
+
+
+
     /**
      * @inheritDoc
     */
     public function foreignKey(string $foreignKey): ForeignKeyInterface
     {
-        
+
     }
 }

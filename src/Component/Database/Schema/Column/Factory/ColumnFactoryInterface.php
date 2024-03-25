@@ -18,7 +18,6 @@ use Laventure\Component\Database\Schema\Column\Info\ColumnInfoInterface;
  */
 interface ColumnFactoryInterface
 {
-
     /**
      * @param string $name
      * @return ColumnInterface

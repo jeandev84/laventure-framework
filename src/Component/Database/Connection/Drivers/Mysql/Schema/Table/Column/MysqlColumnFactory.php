@@ -22,7 +22,8 @@ class MysqlColumnFactory implements ColumnFactoryInterface
     /**
      * @inheritDoc
     */
-    public function createColumn(string $name): ColumnInterface {
+    public function createColumn(string $name): ColumnInterface
+    {
         return new MysqlColumn("`$name`");
     }
 }

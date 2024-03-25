@@ -43,6 +43,34 @@ interface ColumnOptionInterface
 
 
 
+
+    /**
+     * Set signed column
+     *
+     * @return $this
+    */
+    public function signed(): static;
+
+
+
+
+
+
+
+    /**
+     * Set unsigned column
+     *
+     * @return $this
+    */
+    public function unsigned(): static;
+
+
+
+
+
+
+
+
     /**
      * @return $this
     */
@@ -136,20 +164,20 @@ interface ColumnOptionInterface
 
     /**
      * Set options from callback
-     * 
+     *
      * @param callable $func
      * @return $this
     */
     public function call(callable $func): static;
 
-    
-    
-    
-    
+
+
+
+
 
     /**
      * Set options from method
-     * 
+     *
      * @param string $method
      * @return $this
     */
@@ -158,8 +186,8 @@ interface ColumnOptionInterface
 
 
 
-    
-    
+
+
 
 
     /**

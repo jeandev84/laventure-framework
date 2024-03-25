@@ -125,8 +125,71 @@ class ColumnOptions implements ColumnOptionInterface
 
         return $this;
     }
-    
-    
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function signed(): static
+    {
+        $this->column->signed();
+
+        return $this;
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function unsigned(): static
+    {
+        $this->column->unsigned();
+
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function precision(int $precision): static
+    {
+        return $this->params(compact('precision'));
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function scale(int $scale): static
+    {
+        return $this->params(compact('scale'));
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function values(array $values): static
+    {
+        return $this->params(compact('values'));
+    }
+
+
 
 
 
@@ -136,7 +199,7 @@ class ColumnOptions implements ColumnOptionInterface
     */
     public function length(int $length): static
     {
-       return $this->params(compact('length'));
+        return $this->params(compact('length'));
     }
 
 
@@ -183,9 +246,9 @@ class ColumnOptions implements ColumnOptionInterface
         return $this;
     }
 
-    
-    
-    
+
+
+
 
 
 
@@ -197,12 +260,12 @@ class ColumnOptions implements ColumnOptionInterface
         if (method_exists($this->column, $method)) {
             call_user_func_array([$this->column, $method], $this->getParams());
         }
-        
+
         return $this;
     }
 
 
-    
+
 
 
 

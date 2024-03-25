@@ -307,11 +307,11 @@ interface TableInterface
     public function foreignKey(string $foreignKey): ForeignKeyInterface;
 
 
-    
-    
-    
-    
-    
+
+
+
+
+
     /**
      * Add foreign key
      *
@@ -1205,6 +1205,34 @@ interface TableInterface
     */
     public function morphs(string $name): ColumnInterface;
 
+
+
+
+
+
+
+    /**
+     * Add column type default
+     *
+     * @param $value
+     *
+     * @return mixed
+    */
+    public function default($value): static;
+
+
+
+
+
+
+
+
+    /**
+     * Add column type timestamp
+     *
+     * @return $this
+    */
+    public function unsigned(): static;
 
 
 

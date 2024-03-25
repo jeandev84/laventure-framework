@@ -86,7 +86,7 @@ abstract class AbstractColumn implements ColumnInterface
     */
     public function __construct(string $name, string $type = '')
     {
-          $this->name($name)->type($type);
+        $this->name($name)->type($type);
     }
 
 

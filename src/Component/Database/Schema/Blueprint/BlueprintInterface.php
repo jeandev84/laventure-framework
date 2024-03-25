@@ -1,14 +1,18 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Blueprint;
 
-
-use Laventure\Component\Database\Schema\Column\Contract\ColumnInterface;
+use Laventure\Component\Database\Schema\Blueprint\Column\BlueprintColumnInterface;
+use Laventure\Component\Database\Schema\Column\Types\ColumnType;
+use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
 use Laventure\Component\Database\Schema\Table\TableInterface;
 
 /**
  * BlueprintInterface
+ *
+ * @comments That is the table decorator
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -18,16 +22,13 @@ use Laventure\Component\Database\Schema\Table\TableInterface;
  */
 interface BlueprintInterface
 {
-
-
-
     /**
      * Add incremental column
      *
      * @param string $name
-     * @return mixed
+     * @return BlueprintColumnInterface
     */
-    public function increments(string $name): mixed;
+    public function increments(string $name): BlueprintColumnInterface;
 
 
 
@@ -40,9 +41,9 @@ interface BlueprintInterface
      * Add big increment
      *
      * @param string $name
-     * @return mixed
+     * @return BlueprintColumnInterface
     */
-    public function bigIncrements(string $name): mixed;
+    public function bigIncrements(string $name): BlueprintColumnInterface;
 
 
 
@@ -55,9 +56,9 @@ interface BlueprintInterface
      *
      * @param string $name
      * @param int $length
-     * @return mixed
+     * @return BlueprintColumnInterface
     */
-    public function integer(string $name, int $length = 11): mixed;
+    public function integer(string $name, int $length = 11): BlueprintColumnInterface;
 
 
 
@@ -69,9 +70,9 @@ interface BlueprintInterface
      * Add column type small integer
      *
      * @param string $name
-     * @return mixed
+     * @return BlueprintColumnInterface
     */
-    public function smallInteger(string $name): mixed;
+    public function smallInteger(string $name): BlueprintColumnInterface;
 
 
 
@@ -84,9 +85,9 @@ interface BlueprintInterface
      *
      * @param string $name
      *
-     * @return mixed
+     * @return BlueprintColumnInterface
      */
-    public function bigInteger(string $name): mixed;
+    public function bigInteger(string $name): BlueprintColumnInterface;
 
 
 
@@ -99,9 +100,9 @@ interface BlueprintInterface
      *
      * @param string $name
      *
-     * @return mixed
+     * @return BlueprintColumnInterface
      */
-    public function mediumInteger(string $name): mixed;
+    public function mediumInteger(string $name): BlueprintColumnInterface;
 
 
 
@@ -114,9 +115,9 @@ interface BlueprintInterface
      *
      * @param string $name
      *
-     * @return mixed
+     * @return BlueprintColumnInterface
      */
-    public function tinyInteger(string $name): mixed;
+    public function tinyInteger(string $name): BlueprintColumnInterface;
 
 
 
@@ -130,9 +131,9 @@ interface BlueprintInterface
      *
      * @param string $name
      * @param int $length
-     * @return mixed
+     * @return BlueprintColumnInterface
      */
-    public function string(string $name, int $length = 255): mixed;
+    public function string(string $name, int $length = 255): BlueprintColumnInterface;
 
 
 
@@ -144,9 +145,9 @@ interface BlueprintInterface
      *
      * @param string $name
      * @param $value
-     * @return mixed
-     */
-    public function char(string $name, $value): mixed;
+     * @return BlueprintColumnInterface
+    */
+    public function char(string $name, $value): BlueprintColumnInterface;
 
 
 
@@ -158,9 +159,9 @@ interface BlueprintInterface
      *
      * @param string $name
      *
-     * @return mixed
+     * @return BlueprintColumnInterface
      */
-    public function boolean(string $name): mixed;
+    public function boolean(string $name): BlueprintColumnInterface;
 
 
 
@@ -173,9 +174,9 @@ interface BlueprintInterface
      *
      * @param string $name
      *
-     * @return mixed
+     * @return BlueprintColumnInterface
      */
-    public function datetime(string $name): mixed;
+    public function datetime(string $name): BlueprintColumnInterface;
 
 
 
@@ -190,9 +191,9 @@ interface BlueprintInterface
      *
      * @param string $name
      *
-     * @return mixed
+     * @return BlueprintColumnInterface
      */
-    public function time(string $name): mixed;
+    public function time(string $name): BlueprintColumnInterface;
 
 
 
@@ -205,9 +206,9 @@ interface BlueprintInterface
      *
      * @param string $name
      *
-     * @return mixed
-     */
-    public function timestamp(string $name): mixed;
+     * @return BlueprintColumnInterface
+    */
+    public function timestamp(string $name): BlueprintColumnInterface;
 
 
 
@@ -220,9 +221,9 @@ interface BlueprintInterface
      *
      * @param string $name
      *
-     * @return mixed
+     * @return BlueprintColumnInterface
     */
-    public function binary(string $name): mixed;
+    public function binary(string $name): BlueprintColumnInterface;
 
 
 
@@ -235,9 +236,9 @@ interface BlueprintInterface
      *
      * @param string $name
      *
-     * @return mixed
+     * @return BlueprintColumnInterface
     */
-    public function date(string $name): static;
+    public function date(string $name): BlueprintColumnInterface;
 
 
 
@@ -255,9 +256,9 @@ interface BlueprintInterface
      *
      * @param int $scale
      *
-     * @return mixed
+     * @return BlueprintColumnInterface
      */
-    public function decimal(string $name, int $precision, int $scale): mixed;
+    public function decimal(string $name, int $precision, int $scale): BlueprintColumnInterface;
 
 
 
@@ -276,9 +277,9 @@ interface BlueprintInterface
      *
      * @param int $scale
      *
-     * @return mixed
+     * @return BlueprintColumnInterface
      */
-    public function double(string $name, int $precision, int $scale): mixed;
+    public function double(string $name, int $precision, int $scale): BlueprintColumnInterface;
 
 
 
@@ -294,9 +295,9 @@ interface BlueprintInterface
      *
      * @param string $name
      * @param array $values
-     * @return mixed
+     * @return BlueprintColumnInterface
      */
-    public function enum(string $name, array $values): mixed;
+    public function enum(string $name, array $values): BlueprintColumnInterface;
 
 
 
@@ -311,9 +312,9 @@ interface BlueprintInterface
      * Add column type float
      *
      * @param string $name
-     * @return mixed
+     * @return BlueprintColumnInterface
      */
-    public function float(string $name): mixed;
+    public function float(string $name): BlueprintColumnInterface;
 
 
 
@@ -325,9 +326,9 @@ interface BlueprintInterface
      * Add column type json
      *
      * @param string $name
-     * @return mixed
+     * @return BlueprintColumnInterface
     */
-    public function json(string $name): mixed;
+    public function json(string $name): BlueprintColumnInterface;
 
 
 
@@ -341,9 +342,9 @@ interface BlueprintInterface
      *
      * @param string $name
      *
-     * @return mixed
+     * @return BlueprintColumnInterface
      */
-    public function text(string $name): mixed;
+    public function text(string $name): BlueprintColumnInterface;
 
 
 
@@ -357,9 +358,9 @@ interface BlueprintInterface
      *
      * @param string $name
      *
-     * @return mixed
+     * @return BlueprintColumnInterface
     */
-    public function longText(string $name): mixed;
+    public function longText(string $name): BlueprintColumnInterface;
 
 
 
@@ -372,9 +373,9 @@ interface BlueprintInterface
      *
      * @param string $name
      *
-     * @return mixed
+     * @return BlueprintColumnInterface
     */
-    public function mediumText(string $name): mixed;
+    public function mediumText(string $name): BlueprintColumnInterface;
 
 
 
@@ -386,9 +387,9 @@ interface BlueprintInterface
      *
      * @param string $name
      *
-     * @return mixed
-     */
-    public function tinyText(string $name): mixed;
+     * @return BlueprintColumnInterface
+    */
+    public function tinyText(string $name): BlueprintColumnInterface;
 
 
 
@@ -402,8 +403,272 @@ interface BlueprintInterface
      *
      * @param string $name
      *
+     * @return BlueprintColumnInterface
+    */
+    public function morphs(string $name): BlueprintColumnInterface;
+
+
+
+
+
+
+
+    /**
+     * Add column type default
+     *
+     * @param $value
+     *
      * @return mixed
     */
-    public function morphs(string $name): mixed;
+    public function default($value): static;
 
+
+
+
+
+
+
+
+    /**
+     * Add unsigned column
+     *
+     * @return $this
+    */
+    public function unsigned(): static;
+
+
+
+
+
+
+
+
+    /**
+     * @return $this
+    */
+    public function timestamps(): static;
+
+
+
+
+
+
+
+    /**
+     * @return $this
+    */
+    public function softDeletes(): static;
+
+
+
+
+
+
+
+
+    /**
+     * Add Nullable timestamps
+    */
+    public function nullableTimestamps(): static;
+
+
+
+
+
+
+
+    /**
+     * @return $this
+    */
+    public function rememberToken(): static;
+
+
+
+
+
+
+
+    /**
+     * @param array $columns
+     * @return static
+    */
+    public function primary(array $columns): static;
+
+
+
+
+
+
+    /**
+     * @param array $columns
+     * @return $this
+    */
+    public function unique(array $columns): static;
+
+
+
+
+
+
+
+    /**
+     * @param array$columns
+     * @return $this
+    */
+    public function index(array $columns): static;
+
+
+
+
+
+
+
+
+    /**
+     * @param string $name
+     * @return ForeignKeyInterface
+    */
+    public function foreign(string $name): ForeignKeyInterface;
+
+
+
+
+
+
+
+
+    /**
+     * @return ForeignKeyInterface
+    */
+    public function foreignId(): ForeignKeyInterface;
+
+
+
+
+
+
+
+
+    /**
+     * @param string $name
+     * @param string|ColumnType $type
+     * @param callable|null $options
+     * @return $this
+    */
+    public function addColumn(string $name, string|ColumnType $type, callable $options = null): static;
+
+
+
+
+
+
+
+
+    /**
+     * @param string $name
+     * @param callable|null $options
+     * @return $this
+    */
+    public function modifyColumn(string $name, callable $options = null): static;
+
+
+
+
+
+
+
+
+
+    /**
+     * @param string $name
+     * @param string $to
+     * @return $this
+    */
+    public function renameColumn(string $name, string $to): static;
+
+
+
+
+
+
+
+
+
+
+    /**
+     * @param string $name
+     * @return $this
+    */
+    public function dropColumn(string $name): static;
+
+
+
+
+
+
+
+
+    /**
+     * @return mixed
+    */
+    public function createTable(): mixed;
+
+
+
+
+
+
+
+    /**
+     * @return mixed
+    */
+    public function updateTable(): mixed;
+
+
+
+
+
+
+
+    /**
+     * @return mixed
+    */
+    public function dropTable(): mixed;
+
+
+
+
+
+
+    /**
+     * @return mixed
+    */
+    public function truncateTable(): mixed;
+
+
+
+
+
+
+
+
+
+    /**
+     * @return mixed
+    */
+    public function renameTable(): mixed;
+
+
+
+
+
+
+
+
+    /**
+     * Returns table
+     *
+     * @return TableInterface
+    */
+    public function getTable(): TableInterface;
 }
