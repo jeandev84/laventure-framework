@@ -61,6 +61,8 @@ class TableCriteria implements TableCriteriaInterface
 
 
     /**
+     * Collect primary keys
+     *
      * @var array
     */
     public array $primary = [];
@@ -71,6 +73,8 @@ class TableCriteria implements TableCriteriaInterface
 
 
     /**
+     * Collect unique keys
+     *
      * @var array
     */
     public array $unique = [];
@@ -83,6 +87,8 @@ class TableCriteria implements TableCriteriaInterface
 
 
     /**
+     * Collect indexes
+     *
      * @var array
     */
     public array $index = [];
@@ -94,6 +100,8 @@ class TableCriteria implements TableCriteriaInterface
 
 
     /**
+     * Collect foreign keys
+     *
      * @var ForeignKeyInterface[]
     */
     public array $foreign = [];
@@ -104,6 +112,8 @@ class TableCriteria implements TableCriteriaInterface
 
 
     /**
+     * SQL for create table
+     * 
      * @var array
     */
     public array $create = [];
@@ -114,6 +124,8 @@ class TableCriteria implements TableCriteriaInterface
 
 
     /**
+     * SQL for update table
+     * 
      * @var array
     */
     public array $update  = [];

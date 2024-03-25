@@ -106,6 +106,23 @@ abstract class Table implements TableInterface
 
 
 
+    /**
+     * @param ColumnInterface $column
+     * @return $this
+    */
+    public function saveColumn(ColumnInterface $column): static
+    {
+        if ($this->exists()) {
+            $this->criteria->update[] = $column->add();
+        } else {
+            $this->criteria->create[] = $column->getSQL();
+        }
+
+        return $this;
+    }
+
+
+
 
 
     /**
@@ -117,13 +134,7 @@ abstract class Table implements TableInterface
 
         $this->criteria->addColumn[$name] = $column;
 
-        if ($this->exists()) {
-            $this->criteria->update[] = $column->add();
-        } else {
-            $this->criteria->create[] = $column->getSQL();
-        }
-
-        return $this;
+        return $this->saveColumn($column);
     }
 
 
