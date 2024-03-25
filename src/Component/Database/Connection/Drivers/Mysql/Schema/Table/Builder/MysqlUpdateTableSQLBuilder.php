@@ -23,6 +23,8 @@ class MysqlUpdateTableSQLBuilder extends UpdateTableSQLBuilder
     */
     public function getSQL(): string
     {
-        return strval(new AlterTable($this->getTableName()));
+        return strval(new AlterTable($this->getTableName(), [
+            $this->getCriteria()
+        ]));
     }
 }

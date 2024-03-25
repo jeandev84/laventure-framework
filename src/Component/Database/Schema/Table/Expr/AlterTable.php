@@ -24,7 +24,7 @@ class AlterTable implements SQLInterface
     */
     public function __construct(
         protected string $table,
-        protected array $criteria = []
+        protected array $criteria
     ) {
     }
 
