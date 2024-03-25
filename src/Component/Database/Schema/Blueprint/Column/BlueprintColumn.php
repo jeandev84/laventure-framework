@@ -124,6 +124,8 @@ class BlueprintColumn implements BlueprintColumnInterface
 
 
 
+
+
     /**
      * @inheritDoc
     */
@@ -196,6 +198,17 @@ class BlueprintColumn implements BlueprintColumnInterface
     public function getName(): string
     {
         return $this->column->getName();
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function get(): ColumnInterface
+    {
+        return $this->column;
     }
 
 

@@ -184,6 +184,19 @@ interface BlueprintColumnInterface
 
 
 
+
+
+    /**
+     * @return ColumnInterface
+    */
+    public function get(): ColumnInterface;
+
+
+
+
+
+
+
     /**
      * Returns column as string
      *

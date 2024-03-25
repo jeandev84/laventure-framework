@@ -10,6 +10,7 @@ use Laventure\Component\Database\Schema\Column\Contract\ColumnInterface;
 use Laventure\Component\Database\Schema\Column\Option\Contract\ColumnOptionInterface;
 use Laventure\Component\Database\Schema\Column\Types\ColumnType;
 use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
+use Laventure\Component\Database\Schema\Table\Table;
 use Laventure\Component\Database\Schema\Table\TableInterface;
 
 /**
@@ -393,7 +394,8 @@ class Blueprint implements BlueprintInterface
     */
     public function timestamps(): static
     {
-        $this->table->addTimestamps();
+        $this->datetime(Table::CREATED_AT);
+        $this->datetime(Table::UPDATED_AT)->nullable();
 
         return $this;
     }
@@ -407,7 +409,7 @@ class Blueprint implements BlueprintInterface
     */
     public function softDeletes(): static
     {
-        $this->table->addSoftDeletes();
+        $this->datetime(Table::DELETED_AT);
 
         return $this;
     }
@@ -576,7 +578,7 @@ class Blueprint implements BlueprintInterface
     */
     public function createTable(): mixed
     {
-        #$this->preFlush();
+        $this->preFlush();
 
         dd($this->table->expr()->create()->getSQL());
 
@@ -701,7 +703,7 @@ class Blueprint implements BlueprintInterface
     {
          foreach ($this->columns as $column) {
              if ($column->needsToAdd()) {
-                 $column->add();
+                $this->table->addNewColumn($column->get());
              }
          }
     }
