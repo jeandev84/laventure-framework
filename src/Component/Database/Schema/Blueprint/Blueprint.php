@@ -682,7 +682,7 @@ class Blueprint implements BlueprintInterface
     private function preFlush(): void
     {
          foreach ($this->columns as $column) {
-             if (!$column->exists()) {
+             if ($column->needsToAdd()) {
                  $column->add();
              }
          }

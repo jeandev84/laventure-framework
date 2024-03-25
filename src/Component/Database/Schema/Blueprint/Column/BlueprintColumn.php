@@ -15,6 +15,8 @@ use Laventure\Component\Database\Schema\Table\TableInterface;
 */
 class BlueprintColumn implements BlueprintColumnInterface
 {
+    protected bool $added = false;
+
 
     /**
      * @param TableInterface $table
@@ -129,6 +131,8 @@ class BlueprintColumn implements BlueprintColumnInterface
     {
         $this->table->addNewColumn($this->column);
 
+        $this->added = true;
+
         return $this;
     }
 
@@ -171,6 +175,17 @@ class BlueprintColumn implements BlueprintColumnInterface
         return $this;
     }
 
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function needsToAdd(): bool
+    {
+        return !$this->exists() && !$this->added;
+    }
 
 
 
