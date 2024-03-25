@@ -51,6 +51,8 @@ abstract class CreateTableSQLBuilder implements CreateTableSQLBuilderInterface
              $criteria[] = sprintf('%s', $column->getSQL());
          }
 
+         $criteria[] = $this->table->getPrimary()->getSQL();
+
          return join(",", $criteria);
     }
 

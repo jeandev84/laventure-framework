@@ -13,6 +13,8 @@ use Laventure\Component\Database\Schema\Column\Option\ColumnOptions;
 use Laventure\Component\Database\Schema\Column\Option\Contract\ColumnOptionInterface;
 use Laventure\Component\Database\Schema\Column\Types\ColumnType;
 use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
+use Laventure\Component\Database\Schema\Constraints\Contract\PrimaryKeyInterface;
+use Laventure\Component\Database\Schema\Constraints\Contract\UniqueKeyInterface;
 use Laventure\Component\Database\Schema\Table\Criteria\TableCriteria;
 use Laventure\Component\Database\Schema\Table\Criteria\TableCriteriaInterface;
 use Laventure\Component\Database\Schema\Table\Exceptions\TableException;
@@ -482,6 +484,9 @@ abstract class Table implements TableInterface
 
 
 
+
+
+
     /**
      * @inheritDoc
     */
@@ -489,6 +494,10 @@ abstract class Table implements TableInterface
     {
         return $this;
     }
+
+
+
+
 
 
 
@@ -541,47 +550,13 @@ abstract class Table implements TableInterface
     */
     public function addUniqueKey(array $uniqueKeys): static
     {
+        $this->criteria->unique = array_merge(
+            $this->criteria->unique,
+            $uniqueKeys
+        );
+
         return $this;
     }
-
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function default($value): static
-    {
-
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function unsigned(): static
-    {
-
-    }
-
-
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function exists(): bool
-    {
-        return in_array($this->getName(), $this->list());
-    }
-
 
 
 
@@ -711,6 +686,19 @@ abstract class Table implements TableInterface
 
 
 
+    /**
+     * @inheritDoc
+    */
+    public function exists(): bool
+    {
+        return in_array($this->getName(), $this->list());
+    }
+
+
+
+
+
+
 
     /**
      * @inheritDoc
@@ -833,6 +821,36 @@ abstract class Table implements TableInterface
 
 
 
+
+    /**
+     * @inheritDoc
+     * @throws ColumnAlreadyExistsException
+    */
+    public function default($value): static
+    {
+        foreach ($this->criteria->newColumn as $column) {
+            $this->addNewColumn($column->default($value));
+        }
+
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+     * @throws ColumnAlreadyExistsException
+    */
+    public function unsigned(): static
+    {
+        foreach ($this->criteria->newColumn as $column) {
+            $this->addNewColumn($column->unsigned());
+        }
+
+        return $this;
+    }
 
 
 
@@ -1146,6 +1164,30 @@ abstract class Table implements TableInterface
     {
         return strval(new AlterTable($this->getName(), $criteria));
     }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getPrimary(): PrimaryKeyInterface
+    {
+        return $this->criteria->getPrimary();
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getUnique(): UniqueKeyInterface
+    {
+        return $this->criteria->getUnique();
+    }
+
 
 
 

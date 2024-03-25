@@ -9,6 +9,7 @@ use Laventure\Component\Database\Schema\Column\Types\ColumnType;
 use Laventure\Component\Database\Schema\Constraints\ConstraintInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\IndexInterface;
+use Laventure\Component\Database\Schema\Constraints\Contract\PrimaryKeyInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\UniqueKeyInterface;
 use Laventure\Component\Database\Schema\Table\Builder\TableSQlBuilderInterface;
 use Laventure\Component\Database\Schema\Table\Criteria\TableCriteriaInterface;
@@ -480,6 +481,19 @@ interface TableInterface
 
 
 
+
+    /**
+     * Returns primary keys builder
+     *
+     * @return PrimaryKeyInterface
+    */
+    public function getPrimary(): PrimaryKeyInterface;
+
+
+
+
+
+
     /**
      * @param string $foreignKey
      * @return ForeignKeyInterface
@@ -636,8 +650,6 @@ interface TableInterface
 
 
 
-
-
     /**
      * Add unique keys
      *
@@ -681,13 +693,26 @@ interface TableInterface
 
 
 
-
     /**
      * Returns unique keys
      *
      * @return UniqueKeyInterface[]
     */
     public function getUniqueKeys(): array;
+
+
+
+
+
+
+
+
+    /**
+     * Returns unique builder
+     *
+     * @return UniqueKeyInterface
+    */
+    public function getUnique(): UniqueKeyInterface;
 
 
 
