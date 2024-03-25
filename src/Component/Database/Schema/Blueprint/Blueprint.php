@@ -602,6 +602,8 @@ class Blueprint implements BlueprintInterface
 
 
 
+
+
     /**
      * @inheritDoc
     */
@@ -650,7 +652,6 @@ class Blueprint implements BlueprintInterface
             $column
         );
     }
-
 
 
 
