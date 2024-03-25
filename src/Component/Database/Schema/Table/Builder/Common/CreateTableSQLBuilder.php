@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Table\Builder\Common;
 
+use Laventure\Component\Database\Schema\Column\Contract\ColumnInterface;
 use Laventure\Component\Database\Schema\Table\Builder\Contract\CreateTableSQLBuilderInterface;
 use Laventure\Component\Database\Schema\Table\TableInterface;
 
@@ -45,17 +46,14 @@ abstract class CreateTableSQLBuilder implements CreateTableSQLBuilderInterface
     */
     public function getCriteria(): string
     {
-         $criteria = [];
-
-         foreach ($this->table->getNewColumns() as $column) {
-             $criteria[] = sprintf('%s', $column->getSQL());
-         }
-
+         $criteria   = $this->getNewColumnsSQL();
          $criteria[] = '';
-         $criteria[] = $this->table->getPrimary()->getSQL();
+         $criteria[] = $this->getPrimarySQL();
 
          return join(", ", array_filter($criteria));
     }
+
+
 
 
 
@@ -67,5 +65,31 @@ abstract class CreateTableSQLBuilder implements CreateTableSQLBuilderInterface
     public function __toString()
     {
         return $this->getSQL();
+    }
+
+
+
+
+
+    /**
+     * @return array
+    */
+    private function getNewColumnsSQL(): array
+    {
+        return array_map(function (ColumnInterface $column) {
+            return sprintf('%s', $column->getSQL());
+        }, $this->table->getNewColumns());
+    }
+
+
+
+
+
+    /**
+     * @return string
+    */
+    private function getPrimarySQL(): string
+    {
+        return $this->table->getPrimary()->getSQL();
     }
 }

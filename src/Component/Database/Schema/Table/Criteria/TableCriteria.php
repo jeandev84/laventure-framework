@@ -196,12 +196,12 @@ class TableCriteria implements TableCriteriaInterface
     */
     public function clear(): void
     {
-        $this->newColumn = [];
-        $this->primary = [];
-        $this->unique  = [];
-        $this->index   = [];
-        $this->foreign = [];
-        $this->create  = [];
+        $this->columns       = [];
+        $this->newColumn     = [];
         $this->renameColumn  = [];
+        $this->primary       = [];
+        $this->unique        = [];
+        $this->index         = [];
+        $this->foreign       = [];
     }
 }

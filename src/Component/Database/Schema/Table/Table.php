@@ -506,7 +506,7 @@ abstract class Table implements TableInterface
     {
         $func($foreign = $this->foreignKey($foreignKey));
 
-        $this->criteria->foreign[$foreignKey] = $foreign;
+        $this->criteria->foreign[$foreignKey] = $foreign->getSQL();
 
         return $this;
     }

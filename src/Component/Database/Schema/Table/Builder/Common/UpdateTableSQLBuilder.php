@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Table\Builder\Common;
 
+use Laventure\Component\Database\Schema\Column\Contract\ColumnInterface;
 use Laventure\Component\Database\Schema\Table\Builder\Contract\UpdateTableSQLBuilderInterface;
 use Laventure\Component\Database\Schema\Table\TableInterface;
 
@@ -43,11 +44,7 @@ abstract class UpdateTableSQLBuilder implements UpdateTableSQLBuilderInterface
     */
     public function getCriteria(): string
     {
-        $criteria = [];
-
-        foreach ($this->table->getNewColumns() as $column) {
-            $criteria[] = sprintf('%s', $column->add());
-        }
+        $criteria = $this->getNewColumnsSQL();
 
         return join(", ", $criteria);
     }
@@ -62,5 +59,19 @@ abstract class UpdateTableSQLBuilder implements UpdateTableSQLBuilderInterface
     public function __toString()
     {
         return $this->getSQL();
+    }
+
+
+
+
+
+    /**
+     * @return array
+    */
+    private function getNewColumnsSQL(): array
+    {
+        return array_map(function (ColumnInterface $column) {
+            return sprintf('%s', $column->add());
+        }, $this->table->getNewColumns());
     }
 }
