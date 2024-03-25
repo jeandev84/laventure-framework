@@ -35,6 +35,19 @@ class BlueprintColumn implements BlueprintColumnInterface
     /**
      * @inheritDoc
     */
+    public function increment(): static
+    {
+        $this->column->increments();
+
+        return $this;
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
     public function primary(): static
     {
         $this->column->primary();
@@ -199,18 +212,6 @@ class BlueprintColumn implements BlueprintColumnInterface
     {
         return $this->column->getName();
     }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function get(): ColumnInterface
-    {
-        return $this->column;
-    }
-
 
 
 

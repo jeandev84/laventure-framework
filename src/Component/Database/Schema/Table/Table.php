@@ -13,6 +13,7 @@ use Laventure\Component\Database\Schema\Column\Factory\ColumnFactoryInterface;
 use Laventure\Component\Database\Schema\Column\Option\ColumnOptions;
 use Laventure\Component\Database\Schema\Column\Option\Contract\ColumnOptionInterface;
 use Laventure\Component\Database\Schema\Column\Types\ColumnType;
+use Laventure\Component\Database\Schema\Column\Types\TimestampColumn;
 use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\PrimaryKeyInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\UniqueKeyInterface;
@@ -35,12 +36,6 @@ use ReflectionException;
 */
 abstract class Table implements TableInterface
 {
-    public const CREATED_AT = 'created_at';
-    public const UPDATED_AT = 'updated_at';
-    public const DELETED_AT = 'deleted_at';
-
-
-
 
     /**
      * @var string
@@ -423,8 +418,8 @@ abstract class Table implements TableInterface
     */
     public function addTimestamps(): static
     {
-        return $this->addDatetime(static::CREATED_AT)
-                    ->addDatetime(static::UPDATED_AT);
+        return $this->addDatetime(TimestampColumn::createdAt())
+                    ->addDatetime(TimestampColumn::deletedAt());
     }
 
 
@@ -438,8 +433,8 @@ abstract class Table implements TableInterface
     */
     public function addNullableTimestamps(): static
     {
-        return $this->addNullableDatetime(static::CREATED_AT)
-                    ->addNullableDatetime(static::UPDATED_AT);
+        return $this->addNullableDatetime(TimestampColumn::createdAt())
+                    ->addNullableDatetime(TimestampColumn::updatedAt());
     }
 
 
@@ -453,7 +448,7 @@ abstract class Table implements TableInterface
     */
     public function addSoftDeletes(): static
     {
-        return $this->addNullableDatetime(static::DELETED_AT);
+        return $this->addNullableDatetime(TimestampColumn::deletedAt());
     }
 
 

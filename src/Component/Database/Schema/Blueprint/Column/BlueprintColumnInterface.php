@@ -19,6 +19,16 @@ use Laventure\Component\Database\Schema\Column\Contract\ColumnInterface;
 */
 interface BlueprintColumnInterface
 {
+
+
+    /**
+     * @return $this
+    */
+    public function increment(): static;
+
+
+
+
     /**
      * Add primary constraint
      *
@@ -179,17 +189,6 @@ interface BlueprintColumnInterface
      * @return bool
     */
     public function needsToAdd(): bool;
-
-
-
-
-
-
-
-    /**
-     * @return ColumnInterface
-    */
-    public function get(): ColumnInterface;
 
 
 

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Schema\Blueprint;
 
 use Laventure\Component\Database\Schema\Blueprint\Column\BlueprintColumnInterface;
+use Laventure\Component\Database\Schema\Blueprint\Foreign\BlueprintForeignKeyInterface;
 use Laventure\Component\Database\Schema\Column\Types\ColumnType;
 use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
 use Laventure\Component\Database\Schema\Table\Builder\TableSQlBuilderInterface;
@@ -533,13 +534,11 @@ interface BlueprintInterface
 
 
 
-
     /**
      * @param string $name
-     * @param callable $func
-     * @return BlueprintInterface
+     * @return BlueprintForeignKeyInterface
     */
-    public function foreign(string $name, callable $func): static;
+    public function foreign(string $name): BlueprintForeignKeyInterface;
 
 
 
@@ -617,7 +616,7 @@ interface BlueprintInterface
     /**
      * @return mixed
     */
-    public function createTable(): mixed;
+    public function create(): mixed;
 
 
 
@@ -628,7 +627,7 @@ interface BlueprintInterface
     /**
      * @return mixed
     */
-    public function updateTable(): mixed;
+    public function update(): mixed;
 
 
 
@@ -639,7 +638,7 @@ interface BlueprintInterface
     /**
      * @return mixed
     */
-    public function dropTable(): mixed;
+    public function drop(): mixed;
 
 
 
@@ -649,7 +648,7 @@ interface BlueprintInterface
     /**
      * @return mixed
     */
-    public function truncateTable(): mixed;
+    public function truncate(): mixed;
 
 
 
@@ -661,7 +660,7 @@ interface BlueprintInterface
      * @param string $name
      * @return mixed
     */
-    public function renameTable(string $name): mixed;
+    public function rename(string $name): mixed;
 
 
 
