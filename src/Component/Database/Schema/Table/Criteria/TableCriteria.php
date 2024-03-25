@@ -39,7 +39,7 @@ class TableCriteria implements TableCriteriaInterface
      *
      * @var array<string, ColumnInterface>
     */
-    public array $addColumn = [];
+    public array $newColumn = [];
 
 
 
@@ -131,28 +131,6 @@ class TableCriteria implements TableCriteriaInterface
 
 
 
-    /**
-     * SQL for create table
-     *
-     * @var array
-    */
-    public array $create = [];
-
-
-
-
-
-
-    /**
-     * SQL for update table
-     *
-     * @var array
-    */
-    public array $update  = [];
-
-
-
-
 
     /**
      * @inheritDoc
@@ -218,7 +196,7 @@ class TableCriteria implements TableCriteriaInterface
     */
     public function clear(): void
     {
-        $this->addColumn = [];
+        $this->newColumn = [];
         $this->primary = [];
         $this->unique  = [];
         $this->index   = [];

@@ -34,6 +34,6 @@ class MysqlTableFactory implements TableFactoryInterface
     */
     public function createTable(string $name, string $schemaName = ''): TableInterface
     {
-        return new MysqlTable($this->connection, $name, $schemaName);
+        return new MysqlTable($this->connection, $name);
     }
 }

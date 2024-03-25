@@ -7,6 +7,7 @@ namespace Laventure\Component\Database\Schema\Table;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Query\QueryInterface;
 use Laventure\Component\Database\Schema\Column\Contract\ColumnInterface;
+use Laventure\Component\Database\Schema\Column\Exception\ColumnAlreadyExistsException;
 use Laventure\Component\Database\Schema\Column\Exception\NotFoundColumnException;
 use Laventure\Component\Database\Schema\Column\Option\ColumnOptions;
 use Laventure\Component\Database\Schema\Column\Option\Contract\ColumnOptionInterface;
@@ -14,6 +15,7 @@ use Laventure\Component\Database\Schema\Column\Types\ColumnType;
 use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
 use Laventure\Component\Database\Schema\Table\Criteria\TableCriteria;
 use Laventure\Component\Database\Schema\Table\Criteria\TableCriteriaInterface;
+use Laventure\Component\Database\Schema\Table\Exceptions\TableException;
 use ReflectionClass;
 use ReflectionException;
 
@@ -29,9 +31,9 @@ use ReflectionException;
 abstract class Table implements TableInterface
 {
 
-    const TS_CREATED_AT = 'created_at';
-    const TS_UPDATED_AT = 'updated_at';
-    const TS_DELETED_AT = 'deleted_at';
+    const CREATED_AT = 'created_at';
+    const UPDATED_AT = 'updated_at';
+    const DELETED_AT = 'deleted_at';
 
 
 
@@ -116,39 +118,33 @@ abstract class Table implements TableInterface
 
 
 
-
     /**
-     * @param string $name
-     * @param ColumnInterface $column
-     * @return $this
+     * @inheritDoc
     */
-    public function add(string $name, ColumnInterface $column): static
+    public function addNewColumn(ColumnInterface $column): static
     {
-        $this->criteria->addColumn[$name] = $column;
+        $name = $column->getName();
 
-        return $this->saveColumn($column);
-    }
-
-
-
-
-
-
-    /**
-     * @param ColumnInterface $column
-     * @return $this
-    */
-    public function saveColumn(ColumnInterface $column): static
-    {
-        if ($this->exists()) {
-            $this->criteria->update[] = $column->add();
-        } else {
-            $this->criteria->create[] = $column->getSQL();
+        if ($this->hasColumn($name)) {
+            throw new ColumnAlreadyExistsException($name, ['context' => get_called_class()]);
         }
+
+        $this->criteria->newColumn[$name] = $column;
 
         return $this;
     }
 
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function hasNewColumn(string $name): bool
+    {
+        return isset($this->criteria->newColumn[$name]);
+    }
 
 
 
@@ -158,13 +154,137 @@ abstract class Table implements TableInterface
     /**
      * @inheritDoc
     */
+    public function getNewColumns(): array
+    {
+        return $this->criteria->newColumn;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function addRenameColumn(string $newName, ColumnInterface $column): static
+    {
+        $this->criteria->renameColumn[$newName] = $column;
+
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function hasRenameColumn(string $name): bool
+    {
+        return isset($this->criteria->renameColumn[$name]);
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getRenameColumns(): array
+    {
+        return $this->criteria->renameColumn;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function addModifyColumn(ColumnInterface $column): static
+    {
+        $this->criteria->modifyColumn[$column->getName()] = $column;
+
+        return $this;
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function hasModifyColumn(string $name): bool
+    {
+         return isset($this->criteria->modifyColumn[$name]);
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getModifyColumns(): array
+    {
+        return $this->criteria->modifyColumn;
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function addDropColumn(ColumnInterface $column): static
+    {
+        $this->criteria->dropColumn[$column->getName()] = $column;
+
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function hasDropColumn(string $name): bool
+    {
+        return isset($this->criteria->dropColumn[$name]);
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getDropColumns(): array
+    {
+        return $this->criteria->dropColumn;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+     * @throws ColumnAlreadyExistsException
+    */
     public function addColumn(string $name, string|ColumnType $type, callable $options = null): static
     {
-        $column = $this->createColumn($name, $type, $options);
-
-        $this->criteria->addColumn[$name] = $column;
-
-        return $this->saveColumn($column);
+        return $this->addNewColumn($this->createColumn($name, $type, $options));
     }
 
 
@@ -177,11 +297,7 @@ abstract class Table implements TableInterface
     */
     public function renameColumn(string $name, string $to): static
     {
-        $column = $this->getColumn($name);
-        $this->criteria->renameColumn[$name] = $column;
-        $this->criteria->update[]            = $column->rename($to);
-
-        return $this;
+        return $this->addRenameColumn($to, $this->getColumn($name));
     }
 
 
@@ -197,10 +313,8 @@ abstract class Table implements TableInterface
         $column = $this->parseColumnOptions($this->getColumn($name), $func)
                        ->getColumn();
 
-        $this->criteria->modifyColumn[$name] = $column;
-        $this->criteria->update[]            = $column->modify();
 
-        return $this;
+        return $this->addModifyColumn($column);
     }
 
 
@@ -213,11 +327,7 @@ abstract class Table implements TableInterface
     */
     public function dropColumn(string $name): static
     {
-        $column = $this->getColumn($name);
-        $this->criteria->dropColumn[$name] = $column;
-        $this->criteria->update[]          = $column->drop();
-
-        return $this;
+        return $this->addDropColumn($this->getColumn($name));
     }
 
 
@@ -286,8 +396,8 @@ abstract class Table implements TableInterface
     */
     public function addTimestamps(): static
     {
-        return $this->addDatetime(static::TS_CREATED_AT)
-                    ->addDatetime(static::TS_CREATED_AT);
+        return $this->addDatetime(static::CREATED_AT)
+                    ->addDatetime(static::CREATED_AT);
     }
 
 
@@ -298,8 +408,8 @@ abstract class Table implements TableInterface
     */
     public function addNullableTimestamps(): static
     {
-        return $this->addNullableDatetime(static::TS_CREATED_AT)
-                     ->addNullableDatetime(static::TS_UPDATED_AT);
+        return $this->addNullableDatetime(static::CREATED_AT)
+                    ->addNullableDatetime(static::UPDATED_AT);
     }
 
 
@@ -310,9 +420,7 @@ abstract class Table implements TableInterface
     */
     public function addSoftDeletes(): static
     {
-        $this->addNullableDatetime(static::TS_DELETED_AT);
-
-        return $this;
+        return $this->addNullableDatetime(static::DELETED_AT);
     }
 
 
@@ -736,7 +844,7 @@ abstract class Table implements TableInterface
             ->bigInteger()
             ->increments();
 
-        return $this->criteria->addColumn[$name] = $column;
+        return $this->criteria->newColumn[$name] = $column;
     }
 
 
@@ -751,7 +859,7 @@ abstract class Table implements TableInterface
     {
         $column = $this->column($name)->integer($length);
 
-        return $this->criteria->addColumn[$name] = $column;
+        return $this->criteria->newColumn[$name] = $column;
     }
 
 
@@ -764,7 +872,7 @@ abstract class Table implements TableInterface
     {
         $column = $this->column($name)->smallInteger();
 
-        return $this->criteria->addColumn[$name] = $column;
+        return $this->criteria->newColumn[$name] = $column;
     }
 
 
@@ -777,7 +885,7 @@ abstract class Table implements TableInterface
     {
         $column = $this->column($name)->bigInteger();
 
-        return $this->criteria->addColumn[$name] = $column;
+        return $this->criteria->newColumn[$name] = $column;
     }
 
 
@@ -791,7 +899,7 @@ abstract class Table implements TableInterface
     {
         $column = $this->column($name)->mediumInteger();
 
-        return $this->criteria->addColumn[$name] = $column;
+        return $this->criteria->newColumn[$name] = $column;
     }
 
 
@@ -805,7 +913,7 @@ abstract class Table implements TableInterface
     {
         $column = $this->column($name)->tinyInteger();
 
-        return $this->criteria->addColumn[$name] = $column;
+        return $this->criteria->newColumn[$name] = $column;
     }
 
 

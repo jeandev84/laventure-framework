@@ -24,6 +24,6 @@ class MysqlColumnFactory implements ColumnFactoryInterface
     */
     public function createColumn(string $name): ColumnInterface
     {
-        return new MysqlColumn("`$name`");
+        return new MysqlColumn($name);
     }
 }

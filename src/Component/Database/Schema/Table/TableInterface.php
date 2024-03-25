@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Table;
@@ -56,6 +55,148 @@ interface TableInterface
      * @return ColumnInterface
     */
     public function column(string $name): ColumnInterface;
+
+
+
+
+
+    /**
+     * Add new column
+     *
+     * @param ColumnInterface $column
+     * @return $this
+    */
+    public function addNewColumn(ColumnInterface $column): static;
+
+
+
+
+
+    /**
+     * @param string $name
+     * @return bool
+    */
+    public function hasNewColumn(string $name): bool;
+
+
+
+
+
+    /**
+     * Returns new columns
+     *
+     * @return ColumnInterface[]
+    */
+    public function getNewColumns(): array;
+
+
+
+
+
+    /**
+     * Add renamed column
+     *
+     * @param string $newName
+     * @param ColumnInterface $column
+     * @return $this
+    */
+    public function addRenameColumn(string $newName, ColumnInterface $column): static;
+
+
+
+
+
+
+    /**
+     * @param string $name
+     * @return bool
+    */
+    public function hasRenameColumn(string $name): bool;
+
+
+
+
+
+
+    /**
+     * Returns renamed columns
+     *
+     * @return ColumnInterface[]
+    */
+    public function getRenameColumns(): array;
+
+
+
+
+
+
+
+    /**
+     * Add modified column
+     *
+     * @param ColumnInterface $column
+     * @return $this
+    */
+    public function addModifyColumn(ColumnInterface $column): static;
+
+
+
+
+
+
+    /**
+     * @param string $name
+     * @return bool
+    */
+    public function hasModifyColumn(string $name): bool;
+
+
+
+
+
+
+    /**
+     * Returns modified columns
+     *
+     * @return array
+    */
+    public function getModifyColumns(): array;
+
+
+
+
+
+
+    /**
+     * @param ColumnInterface $column
+     * @return $this
+    */
+    public function addDropColumn(ColumnInterface $column): static;
+
+
+
+
+
+
+    /**
+     * @param string $name
+     * @return bool
+    */
+    public function hasDropColumn(string $name): bool;
+
+
+
+
+
+
+    /**
+     * Returns drop columns
+     *
+     * @return array
+    */
+    public function getDropColumns(): array;
+
+
 
 
 

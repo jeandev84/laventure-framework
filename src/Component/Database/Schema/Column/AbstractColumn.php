@@ -138,9 +138,23 @@ abstract class AbstractColumn implements ColumnInterface
     */
     public function string(int $length = 255): static
     {
-        return $this->type("VARCHAR($length)")
-                    ->options(compact('length'));
+        return $this->type("VARCHAR($length)")->length($length);
     }
+
+
+
+
+
+
+    /**
+     * @param int $length
+     * @return $this
+    */
+    public function length(int $length): static
+    {
+        return $this->options(compact('length'));
+    }
+
 
 
 
@@ -626,7 +640,7 @@ abstract class AbstractColumn implements ColumnInterface
     public function getSQL(): string
     {
         return join(' ', array_filter([
-            $this->getName(),
+            $this->getResolvedName(),
             $this->getType(),
             $this->getTypeOptionString(),
             $this->getConstraint()
@@ -635,6 +649,16 @@ abstract class AbstractColumn implements ColumnInterface
 
 
 
+
+
+
+    /**
+     * @return string
+    */
+    public function getResolvedName(): string
+    {
+        return $this->getName();
+    }
 
 
 

@@ -17,6 +17,19 @@ use Laventure\Component\Database\Schema\Column\AbstractColumn;
 */
 class MysqlColumn extends AbstractColumn
 {
+
+    /**
+     * @param string $name
+     * @param string $type
+    */
+    public function __construct(string $name, string $type = '')
+    {
+        parent::__construct($name, $type);
+    }
+
+
+
+
     /**
      * @return $this
     */
@@ -373,5 +386,18 @@ class MysqlColumn extends AbstractColumn
     public function boolean(): static
     {
         return $this->type("BOOL");
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getResolvedName(): string
+    {
+        return sprintf('`%s`', $this->getName());
     }
 }
