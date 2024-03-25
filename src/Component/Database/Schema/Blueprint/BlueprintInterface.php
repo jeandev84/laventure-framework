@@ -550,51 +550,7 @@ interface BlueprintInterface
      * @return BlueprintInterface
     */
     public function foreignId(callable $func): static;
-
-
-
-
-
-
-
-
-    /**
-     * @param string $name
-     * @param string|ColumnType $type
-     * @param callable|null $options
-     * @return $this
-    */
-    public function addColumn(string $name, string|ColumnType $type, callable $options = null): static;
-
-
-
-
-
-
-
-
-    /**
-     * @param string $name
-     * @param string $to
-     * @return $this
-    */
-    public function renameColumn(string $name, string $to): static;
-
-
-
-
-
-
-
-
-
-
-    /**
-     * @param string $name
-     * @return $this
-    */
-    public function dropColumn(string $name): static;
-
+    
 
 
 

@@ -506,52 +506,7 @@ class Blueprint implements BlueprintInterface
     {
         return $this->foreign('id', $func);
     }
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function addColumn(string $name, ColumnType|string $type, callable $options = null): static
-    {
-        $this->table->addColumn($name, $type, $options);
-
-        return $this;
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function renameColumn(string $name, string $to): static
-    {
-        $this->table->renameColumn($name, $to);
-
-        return $this;
-    }
-
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function dropColumn(string $name): static
-    {
-        $this->table->dropColumn($name);
-
-        return $this;
-    }
-
-
-
+    
 
 
 
