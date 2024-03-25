@@ -203,8 +203,10 @@ abstract class Table implements TableInterface
     */
     public function addTimestamps(): static
     {
-        return $this->datetime('created_at')
-                    ->datetime('updated_at');
+        $this->datetime('created_at');
+        $this->datetime('updated_at');
+
+        return $this;
     }
 
 
