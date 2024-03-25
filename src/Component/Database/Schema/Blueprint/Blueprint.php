@@ -561,6 +561,8 @@ class Blueprint implements BlueprintInterface
     */
     public function createTable(): mixed
     {
+        $this->preFlush();
+
         return $this->table->create();
     }
 
@@ -573,6 +575,8 @@ class Blueprint implements BlueprintInterface
     */
     public function updateTable(): mixed
     {
+        $this->preFlush();
+
         return $this->table->update();
     }
 
@@ -665,5 +669,22 @@ class Blueprint implements BlueprintInterface
     private function add(ColumnInterface $column): BlueprintColumnInterface
     {
          return $this->columns[$column->getName()] = $this->column($column);
+    }
+
+
+
+
+
+
+    /**
+     * @return void
+    */
+    private function preFlush(): void
+    {
+         foreach ($this->columns as $column) {
+             if (!$column->exists()) {
+                 $column->add();
+             }
+         }
     }
 }

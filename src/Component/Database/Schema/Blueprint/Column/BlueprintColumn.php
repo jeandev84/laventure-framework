@@ -111,6 +111,16 @@ class BlueprintColumn implements BlueprintColumnInterface
 
 
 
+    /**
+     * @inheritDoc
+    */
+    public function exists(): bool
+    {
+        return $this->table->hasColumn($this->getName());
+    }
+
+
+
 
     /**
      * @inheritDoc

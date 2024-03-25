@@ -161,6 +161,19 @@ interface BlueprintColumnInterface
 
 
     /**
+     * Determine if column exist
+     *
+     * @return bool
+    */
+    public function exists(): bool;
+
+
+
+
+
+
+
+    /**
      * Returns column as string
      *
      * @return string
