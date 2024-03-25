@@ -201,7 +201,7 @@ abstract class Table implements TableInterface
     */
     public function hasColumn(string $name): bool
     {
-        return array_key_exists($name, $this->getColumns());
+        return array_key_exists($name, $this->criteria->columns);
     }
 
 
@@ -219,7 +219,7 @@ abstract class Table implements TableInterface
             ]);
         }
 
-        return $this->getColumns()[$name];
+        return $this->criteria->columns[$name];
     }
 
 

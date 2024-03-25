@@ -24,8 +24,22 @@ use Laventure\Component\Database\Schema\Constraints\Types\Keys\Unique\UniqueKey;
 */
 class TableCriteria implements TableCriteriaInterface
 {
+
+
     /**
-     * @var ColumnInterface[]
+     * Collect available columns
+     *
+     * @var array<string, ColumnInterface>
+    */
+    public array $columns  = [];
+
+
+
+
+    /**
+     * Collect added columns
+     *
+     * @var array<string, ColumnInterface>
     */
     public array $addColumn = [];
 
@@ -34,7 +48,9 @@ class TableCriteria implements TableCriteriaInterface
 
 
     /**
-     * @var ColumnInterface[]
+     * Collect renamed columns
+     *
+     * @var array<string, ColumnInterface>
     */
     public array $renameColumn = [];
 
@@ -43,7 +59,9 @@ class TableCriteria implements TableCriteriaInterface
 
 
     /**
-     * @var ColumnInterface[]
+     * Collect modified columns
+     *
+     * @var array<string, ColumnInterface>
     */
     public array $modifyColumn = [];
 
@@ -52,7 +70,9 @@ class TableCriteria implements TableCriteriaInterface
 
 
     /**
-     * @var ColumnInterface[]
+     * Collect dropped columns
+     *
+     * @var array<string, ColumnInterface>
     */
     public array $dropColumn = [];
 
@@ -63,7 +83,7 @@ class TableCriteria implements TableCriteriaInterface
     /**
      * Collect primary keys
      *
-     * @var array
+     * @var string[]
     */
     public array $primary = [];
 
@@ -75,7 +95,7 @@ class TableCriteria implements TableCriteriaInterface
     /**
      * Collect unique keys
      *
-     * @var array
+     * @var string[]
     */
     public array $unique = [];
 
@@ -89,7 +109,7 @@ class TableCriteria implements TableCriteriaInterface
     /**
      * Collect indexes
      *
-     * @var array
+     * @var string[]
     */
     public array $index = [];
 
