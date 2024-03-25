@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Blueprint;
 
+use Laventure\Component\Database\Schema\Blueprint\Column\BlueprintColumn;
 use Laventure\Component\Database\Schema\Blueprint\Column\BlueprintColumnInterface;
 use Laventure\Component\Database\Schema\Column\Types\ColumnType;
 use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
@@ -33,7 +34,7 @@ class Blueprint implements BlueprintInterface
     */
     public function increments(string $name): BlueprintColumnInterface
     {
-
+        return $this->bigIncrements($name)->primary();
     }
 
 
@@ -43,9 +44,25 @@ class Blueprint implements BlueprintInterface
     /**
      * @inheritDoc
     */
+    public function id(): static
+    {
+        $this->increments('id');
+
+        return $this;
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
     public function bigIncrements(string $name): BlueprintColumnInterface
     {
-
+        return new BlueprintColumn(
+            $this->table,
+            $this->table->bigIncrements($name)
+        );
     }
 
 

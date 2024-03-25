@@ -88,34 +88,6 @@ abstract class Table implements TableInterface
 
 
 
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function id(): static
-    {
-        return $this->increments('id');
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function increments(string $name): static
-    {
-        $this->bigIncrements($name)->primary();
-
-        return $this;
-    }
-
-
-
-
-
     /**
      * @inheritDoc
     */

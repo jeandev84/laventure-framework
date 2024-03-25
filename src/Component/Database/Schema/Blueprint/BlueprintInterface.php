@@ -414,6 +414,16 @@ interface BlueprintInterface
 
 
     /**
+     * Set incremental ID
+     *
+     * @return $this
+    */
+    public function id(): static;
+
+
+
+
+    /**
      * Add column type default
      *
      * @param $value

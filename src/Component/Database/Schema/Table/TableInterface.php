@@ -829,33 +829,6 @@ interface TableInterface
 
 
     /**
-     * Set incremental ID
-     *
-     * @return $this
-    */
-    public function id(): static;
-
-
-
-
-
-
-    /**
-     * Increment column
-     *
-     * @return $this
-    */
-    public function increments(string $name): static;
-
-
-
-
-
-
-
-
-
-    /**
      * Add big increment
      *
      * @param string $name
