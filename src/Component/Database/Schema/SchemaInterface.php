@@ -6,6 +6,7 @@ namespace Laventure\Component\Database\Schema;
 
 use Closure;
 use Laventure\Component\Database\Connection\ConnectionInterface;
+use Laventure\Component\Database\Query\QueryInterface;
 use Laventure\Component\Database\Schema\Table\TableInterface;
 
 /**
@@ -52,27 +53,16 @@ interface SchemaInterface
 
 
     /**
-     * Drop schema
+     * Drop table
      *
      * @param string $table
      *
      * @return mixed
-     */
+    */
     public function drop(string $table): mixed;
 
 
 
-
-
-
-    /**
-     * Drop schema if exists
-     *
-     * @param string $table
-     *
-     * @return mixed
-     */
-    public function dropIfExists(string $table): mixed;
 
 
 
@@ -84,22 +74,10 @@ interface SchemaInterface
      * @param string $table
      *
      * @return mixed
-     */
+    */
     public function truncate(string $table): mixed;
 
 
-
-
-
-
-    /**
-     * Truncate table cascade
-     *
-     * @param string $table
-     *
-     * @return mixed
-    */
-    public function truncateCascade(string $table): mixed;
 
 
 
@@ -138,28 +116,33 @@ interface SchemaInterface
 
 
 
-    /**
-     * Determine if columns exists in given table
-     *
-     * @param string $table
-     *
-     * @param string $column
-     *
-     * @return bool
-    */
-    public function hasColumn(string $table, string $column): bool;
-
-
-
-
 
 
     /**
+     * Execute SQL
+     *
      * @param string $sql
-     *
-     * @return mixed
+     * @return bool|int
     */
     public function exec(string $sql): mixed;
+
+
+
+
+
+
+
+
+
+    /**
+     * Create statement
+     *
+     * @param string $sql
+     * @return QueryInterface
+    */
+    public function statement(string $sql): QueryInterface;
+
+
 
 
 
@@ -214,4 +197,20 @@ interface SchemaInterface
      * @return TableInterface
     */
     public function table(string $name): TableInterface;
+
+
+
+
+
+
+
+
+
+
+    /**
+     * Dump schema
+     *
+     * @return mixed
+    */
+    public function dump(): mixed;
 }

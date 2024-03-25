@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Loader\Migration\Types\Mapper;
-
 
 use Laventure\Foundation\Loader\FilesDirectory\FilesDirectoryLoaderInterface;
 use Laventure\Foundation\Loader\Migration\MigrationLoaderInterface;
@@ -18,5 +18,4 @@ use Laventure\Foundation\Loader\Migration\MigrationLoaderInterface;
  */
 interface MapperMigrationLoaderInterface extends MigrationLoaderInterface
 {
-
 }

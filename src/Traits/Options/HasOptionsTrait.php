@@ -56,7 +56,7 @@ trait HasOptionsTrait
      * @param array $options
      * @return $this
     */
-    public function withOptions(array $options): static
+    public function options(array $options): static
     {
         $this->options = array_merge($this->options, $options);
 

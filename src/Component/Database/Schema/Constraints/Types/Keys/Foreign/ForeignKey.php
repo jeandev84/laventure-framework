@@ -20,12 +20,6 @@ use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface
 class ForeignKey extends Constraint implements ForeignKeyInterface
 {
     /**
-     * @var ConstrainedInterface
-    */
-    protected ConstrainedInterface $constrained;
-
-
-    /**
      * @var string
     */
     protected string $column;
@@ -36,39 +30,38 @@ class ForeignKey extends Constraint implements ForeignKeyInterface
     /**
      * @var string
     */
-    protected string $table;
+    protected string $referenceTable;
 
 
 
     /**
      * @var string
     */
-    protected string $references;
+    protected string $referenceColumn;
 
 
 
 
     /**
      * @param string $column (Example: user_id)
-     * @param string|null $key
+     * @param string $key
     */
-    public function __construct(string $column, ?string $key = null)
+    public function __construct(string $column, string $key = '')
     {
         parent::__construct('foreignKey', $key);
-        $this->column      = $column;
-        $this->constrained = new Constrained();
+        $this->column = $column;
     }
 
 
 
 
+
     /**
-     * @param string $column (Example: id)
-     * @return $this
+     * @inheritDoc
     */
-    public function references(string $column): static
+    public function references(string $referenceColumn): static
     {
-        $this->references = $column;
+        $this->referenceColumn = $referenceColumn;
 
         return $this;
     }
@@ -79,12 +72,11 @@ class ForeignKey extends Constraint implements ForeignKeyInterface
 
 
     /**
-     * @param string $table (Example: users)
-     * @return ConstrainedInterface
+     * @inheritDoc
     */
-    public function on(string $table): ConstrainedInterface
+    public function on(string $referenceTable): ConstrainedInterface
     {
-        $this->table = $table;
+        $this->referenceTable = $referenceTable;
 
         return $this->constrained();
     }
@@ -102,8 +94,11 @@ class ForeignKey extends Constraint implements ForeignKeyInterface
     */
     public function constrained(): ConstrainedInterface
     {
-        return $this->constrained;
+        return new Constrained($this);
     }
+
+
+
 
 
 
@@ -114,11 +109,15 @@ class ForeignKey extends Constraint implements ForeignKeyInterface
      * Example: CONSTRAINT fk_products_user_id
      *          FOREIGN KEY (user_id)
      *          REFERENCES users (id)
-     *          ON DELETE cascade
     */
     public function getSQL(): string
     {
-        $constraint = $this->format();
+        $constraint =  sprintf(
+            'FOREIGN KEY (%s) REFERENCES %s(%s)',
+            $this->column,
+            $this->referenceTable,
+            $this->referenceColumn
+        );
 
         if (!$this->key) {
             return $constraint;
@@ -136,13 +135,11 @@ class ForeignKey extends Constraint implements ForeignKeyInterface
     */
     protected function format(): string
     {
-        $foreign[] = sprintf(
+        return sprintf(
             'FOREIGN KEY (%s) REFERENCES %s (%s)',
             $this->column,
-            $this->table,
-            $this->references
+            $this->referenceTable,
+            $this->referenceColumn
         );
-        $foreign[] = $this->constrained;
-        return join(' ', array_filter($foreign));
     }
 }

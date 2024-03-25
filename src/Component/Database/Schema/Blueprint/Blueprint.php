@@ -4,23 +4,30 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Blueprint;
 
+use Laventure\Component\Database\Schema\Blueprint\Column\BlueprintColumn;
+use Laventure\Component\Database\Schema\Blueprint\Column\BlueprintColumnInterface;
 use Laventure\Component\Database\Schema\Column\Contract\ColumnInterface;
+use Laventure\Component\Database\Schema\Column\Option\Contract\ColumnOptionInterface;
+use Laventure\Component\Database\Schema\Column\Types\ColumnType;
 use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
-use Laventure\Component\Database\Schema\Table\Criteria\TableCriteriaInterface;
 use Laventure\Component\Database\Schema\Table\TableInterface;
 
 /**
- * Blueprint (Decorator TableInterface)
+ * Blueprint (Table decorator)
  *
- *
- * @author Jean-Claude <jeanyao@ymail.com>
- *
- * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
- *
- * @package  Laventure\Component\Database\Schema\Blueprint
+ * @inheritDoc
 */
-class Blueprint
+class Blueprint implements BlueprintInterface
 {
+
+    /**
+     * @var BlueprintColumnInterface[]
+    */
+    protected array $columns = [];
+
+
+
+
     /**
      * @param TableInterface $table
     */
@@ -33,30 +40,12 @@ class Blueprint
 
 
 
-
     /**
-     * @param string $name
-     * @param string $type
-     * @return ColumnInterface
+     * @inheritDoc
     */
-    public function addColumn(string $name, string $type): ColumnInterface
+    public function increments(string $name): BlueprintColumnInterface
     {
-        return $this->table->addColumn($name, $type);
-    }
-
-
-
-
-
-
-
-    /**
-     * @param string $name
-     * @return TableInterface
-    */
-    public function dropColumn(string $name): TableInterface
-    {
-        return $this->table->dropColumn($name);
+        return $this->bigIncrements($name)->primary();
     }
 
 
@@ -64,13 +53,24 @@ class Blueprint
 
 
     /**
-     * @param string $name
-     * @param string $to
-     * @return TableInterface
+     * @inheritDoc
     */
-    public function renameColumn(string $name, string $to): TableInterface
+    public function id(): static
     {
-        return $this->table->renameColumn($name, $to);
+        $this->increments('id');
+
+        return $this;
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function bigIncrements(string $name): BlueprintColumnInterface
+    {
+        return $this->add($this->table->bigIncrements($name));
     }
 
 
@@ -78,12 +78,11 @@ class Blueprint
 
 
     /**
-     * @param string $name
-     * @return TableInterface
+     * @inheritDoc
     */
-    public function increments(string $name): TableInterface
+    public function integer(string $name, int $length = 11): BlueprintColumnInterface
     {
-        return $this->table->increments($name);
+        return $this->add($this->table->integer($name, $length));
     }
 
 
@@ -91,26 +90,23 @@ class Blueprint
 
 
     /**
-     * @return TableInterface
+     * @inheritDoc
     */
-    public function id(): TableInterface
+    public function smallInteger(string $name): BlueprintColumnInterface
     {
-        return $this->increments('id');
+        return $this->add($this->table->smallInteger($name));
     }
 
 
 
 
 
-
     /**
-     * @param string $name
-     * @param int $length
-     * @return ColumnInterface
+     * @inheritDoc
     */
-    public function string(string $name, int $length = 255): ColumnInterface
+    public function bigInteger(string $name): BlueprintColumnInterface
     {
-        return $this->table->string($name, $length);
+        return $this->add($this->table->bigInteger($name));
     }
 
 
@@ -119,29 +115,256 @@ class Blueprint
 
 
     /**
-     * @param $name
-     * @return ColumnInterface
+     * @inheritDoc
     */
-    public function datetime($name): ColumnInterface
+    public function mediumInteger(string $name): BlueprintColumnInterface
     {
-        return $this->table->datetime($name);
+        return $this->add($this->table->mediumInteger($name));
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function tinyInteger(string $name): BlueprintColumnInterface
+    {
+        return $this->add($this->table->tinyInteger($name));
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function string(string $name, int $length = 255): BlueprintColumnInterface
+    {
+        return $this->add($this->table->string($name, $length));
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function char(string $name, $value): BlueprintColumnInterface
+    {
+        return $this->add($this->table->char($name, $value));
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function boolean(string $name): BlueprintColumnInterface
+    {
+        return $this->add($this->table->boolean($name));
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function datetime(string $name): BlueprintColumnInterface
+    {
+        return $this->add($this->table->datetime($name));
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function time(string $name): BlueprintColumnInterface
+    {
+        return $this->add($this->table->time($name));
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function timestamp(string $name): BlueprintColumnInterface
+    {
+        return $this->add($this->table->timestamp($name));
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function binary(string $name): BlueprintColumnInterface
+    {
+        return $this->add($this->table->binary($name));
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function date(string $name): BlueprintColumnInterface
+    {
+        return $this->add($this->table->date($name));
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function decimal(string $name, int $precision, int $scale): BlueprintColumnInterface
+    {
+        return $this->add($this->table->decimal($name, $precision, $scale));
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function double(string $name, int $precision, int $scale): BlueprintColumnInterface
+    {
+        return $this->add($this->table->double($name, $precision, $scale));
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function enum(string $name, array $values): BlueprintColumnInterface
+    {
+        return $this->add($this->table->enum($name, $values));
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function float(string $name): BlueprintColumnInterface
+    {
+        return $this->add($this->table->float($name));
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function json(string $name): BlueprintColumnInterface
+    {
+        return $this->add($this->table->json($name));
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function text(string $name): BlueprintColumnInterface
+    {
+        return $this->add($this->table->text($name));
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function longText(string $name): BlueprintColumnInterface
+    {
+        return $this->add($this->table->json($name));
     }
 
 
 
 
     /**
-     * Add column type default
-     *
-     * @param $value
-     *
-     * @return mixed
+     * @inheritDoc
+    */
+    public function mediumText(string $name): BlueprintColumnInterface
+    {
+        return $this->add($this->table->mediumText($name));
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function tinyText(string $name): BlueprintColumnInterface
+    {
+        return $this->add($this->table->tinyText($name));
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function morphs(string $name): BlueprintColumnInterface
+    {
+        return $this->add($this->table->morphs($name));
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
     */
     public function default($value): static
     {
-        foreach ($this->table->getColumns() as $column) {
-            $this->table->add($column->default($value));
-        }
+        $this->table->default($value);
 
         return $this;
     }
@@ -150,18 +373,12 @@ class Blueprint
 
 
 
-
-
     /**
-     * Add column type timestamp
-     *
-     * @return $this
+     * @inheritDoc
     */
     public function unsigned(): static
     {
-        foreach ($this->table->getColumns() as $column) {
-            $this->table->add($column->unsigned());
-        }
+        $this->table->unsigned();
 
         return $this;
     }
@@ -170,14 +387,13 @@ class Blueprint
 
 
 
+
     /**
-     * @return $this
+     * @inheritDoc
     */
     public function timestamps(): static
     {
-        $this->datetime('created_at');
-        $this->datetime('updated_at')->nullable();
-        ;
+        $this->table->addTimestamps();
 
         return $this;
     }
@@ -187,27 +403,11 @@ class Blueprint
 
 
     /**
-     * Add Nullable timestamps
-    */
-    public function nullableTimestamps(): static
-    {
-        $this->datetime('created_at')->nullable();
-        $this->datetime('updated_at')->nullable();
-
-        return $this;
-    }
-
-
-
-
-
-    /**
-     * @return $this
+     * @inheritDoc
     */
     public function softDeletes(): static
     {
-        $this->table->datetime('deleted_at')
-                    ->nullable();
+        $this->table->addSoftDeletes();
 
         return $this;
     }
@@ -216,9 +416,21 @@ class Blueprint
 
 
 
+    /**
+     * @inheritDoc
+    */
+    public function nullableTimestamps(): static
+    {
+        $this->table->addNullableTimestamps();
+
+        return $this;
+    }
+
+
+
 
     /**
-     * @return $this
+     * @inheritDoc
     */
     public function rememberToken(): static
     {
@@ -232,14 +444,12 @@ class Blueprint
 
 
 
-
     /**
-     * @param array $columns
-     * @return static
+     * @inheritDoc
     */
     public function primary(array $columns): static
     {
-        $this->table->primary($columns);
+        $this->table->addPrimaryKey($columns);
 
         return $this;
     }
@@ -247,14 +457,12 @@ class Blueprint
 
 
 
-
     /**
-     * @param array $columns
-     * @return $this
+     * @inheritDoc
     */
     public function unique(array $columns): static
     {
-        $this->table->unique($columns);
+        $this->table->addUniqueKey($columns);
 
         return $this;
     }
@@ -262,13 +470,67 @@ class Blueprint
 
 
 
+
     /**
-     * @param array$columns
-     * @return $this
+     * @inheritDoc
     */
     public function index(array $columns): static
     {
-        $this->table->index($columns);
+        $this->table->addIndex($columns);
+
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function foreign(string $name, callable $func): static
+    {
+        $this->table->addForeignKey($name, $func);
+
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function foreignId(callable $func): static
+    {
+        return $this->foreign('id', $func);
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function addColumn(string $name, ColumnType|string $type, callable $options = null): static
+    {
+        $this->table->addColumn($name, $type, $options);
+
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function renameColumn(string $name, string $to): static
+    {
+        $this->table->renameColumn($name, $to);
 
         return $this;
     }
@@ -279,207 +541,13 @@ class Blueprint
 
 
     /**
-     * @param string $name
-     * @return ForeignKeyInterface
+     * @inheritDoc
     */
-    public function foreign(string $name): ForeignKeyInterface
+    public function dropColumn(string $name): static
     {
-        return $this->table->foreign($name);
-    }
+        $this->table->dropColumn($name);
 
-
-
-
-
-    /**
-     * @return ForeignKeyInterface
-    */
-    public function foreignId(): ForeignKeyInterface
-    {
-        return $this->foreign('id');
-    }
-
-
-
-
-
-    /**
-     * @return mixed
-    */
-    public function dropIfExists(): bool
-    {
-        return $this->table->dropIfExists();
-    }
-
-
-
-
-
-    /**
-     * @return mixed
-    */
-    public function truncate(): bool
-    {
-        return $this->table->truncate();
-    }
-
-
-
-
-
-    /**
-     * @return bool
-    */
-    public function truncateCascade(): mixed
-    {
-        return $this->table->truncateCascade();
-    }
-
-
-
-
-    /**
-     * @return bool
-    */
-    public function existTable(): bool
-    {
-        return $this->table->exists();
-    }
-
-
-
-
-    /**
-     * @return array
-    */
-    public function getTables(): array
-    {
-        return $this->table->list();
-    }
-
-
-
-
-    /**
-     * @return string
-    */
-    public function getTableName(): string
-    {
-        return $this->table->getName();
-    }
-
-
-
-
-    /**
-     * @param string $name
-     * @return ColumnInterface
-    */
-    public function bigIncrements(string $name): ColumnInterface
-    {
-        return $this->table->bigIncrements($name);
-    }
-
-
-
-
-    /**
-     * @param string $name
-     * @param int $length
-     * @return ColumnInterface
-    */
-    public function integer(string $name, int $length = 11): ColumnInterface
-    {
-        return $this->table->integer($name, $length);
-    }
-
-
-
-
-
-    /**
-     * @param string $name
-     * @return ColumnInterface
-    */
-    public function smallInteger(string $name): ColumnInterface
-    {
-        return $this->table->smallInteger($name);
-    }
-
-
-
-
-    /**
-     * @param string $name
-     * @return ColumnInterface
-    */
-    public function bigInteger(string $name): ColumnInterface
-    {
-        return $this->table->bigInteger($name);
-    }
-
-
-
-
-
-    /**
-     * @param string $name
-     * @return ColumnInterface
-    */
-    public function mediumInteger(string $name): ColumnInterface
-    {
-        return $this->table->mediumInteger($name);
-    }
-
-
-
-
-
-    /**
-     * @param string $name
-     * @return ColumnInterface
-    */
-    public function tinyInteger(string $name): ColumnInterface
-    {
-        return $this->tinyInteger($name);
-    }
-
-
-
-
-    /**
-     * @param string $name
-     * @param $value
-     * @return ColumnInterface
-    */
-    public function char(string $name, $value): ColumnInterface
-    {
-        return $this->table->char($name, $value);
-    }
-
-
-
-
-
-    /**
-     * @param string $name
-     * @return ColumnInterface
-    */
-    public function boolean(string $name): ColumnInterface
-    {
-        return $this->table->boolean($name);
-    }
-
-
-
-
-    /**
-     * @param string $name
-     * @return ColumnInterface
-    */
-    public function time(string $name): ColumnInterface
-    {
-        return $this->table->time($name);
+        return $this;
     }
 
 
@@ -489,234 +557,12 @@ class Blueprint
 
 
     /**
-     * @param string $name
-     * @return ColumnInterface
+     * @inheritDoc
     */
-    public function timestamp(string $name): ColumnInterface
+    public function createTable(): mixed
     {
-        return $this->table->timestamp($name);
-    }
+        $this->preFlush();
 
-
-
-
-
-
-    /**
-     * @param string $name
-     * @return ColumnInterface
-    */
-    public function binary(string $name): ColumnInterface
-    {
-        return $this->table->binary($name);
-    }
-
-
-
-
-    /**
-     * @param string $name
-     * @return ColumnInterface
-    */
-    public function date(string $name): ColumnInterface
-    {
-        return $this->table->date($name);
-    }
-
-
-
-
-    /**
-     * @param string $name
-     * @param int $precision
-     * @param int $scale
-     * @return ColumnInterface
-    */
-    public function decimal(string $name, int $precision, int $scale): ColumnInterface
-    {
-        return $this->table->decimal($name, $precision, $scale);
-    }
-
-
-
-
-
-
-
-
-    /**
-     * @param string $name
-     * @param int $precision
-     * @param int $scale
-     * @return ColumnInterface
-    */
-    public function double(string $name, int $precision, int $scale): ColumnInterface
-    {
-        return $this->table->double($name, $precision, $scale);
-    }
-
-
-
-
-
-    /**
-     * @param string $name
-     * @param array $values
-     * @return ColumnInterface
-    */
-    public function enum(string $name, array $values): ColumnInterface
-    {
-        return $this->table->enum($name, $values);
-    }
-
-
-
-
-
-    /**
-     * @param string $name
-     * @return ColumnInterface
-    */
-    public function float(string $name): ColumnInterface
-    {
-        return $this->table->float($name);
-    }
-
-
-
-
-
-
-    /**
-     * @param string $name
-     * @return ColumnInterface
-    */
-    public function json(string $name): ColumnInterface
-    {
-        return $this->table->json($name);
-    }
-
-
-
-
-
-
-
-    /**
-     * @param string $name
-     * @return ColumnInterface
-    */
-    public function text(string $name): ColumnInterface
-    {
-        return $this->table->text($name);
-    }
-
-
-
-
-    /**
-     * @param string $name
-     * @return ColumnInterface
-    */
-    public function longText(string $name): ColumnInterface
-    {
-        return $this->table->longText($name);
-    }
-
-
-
-
-    /**
-     * @param string $name
-     * @return ColumnInterface
-    */
-    public function mediumText(string $name): ColumnInterface
-    {
-        return $this->table->mediumText($name);
-    }
-
-
-
-
-
-
-    /**
-     * @param string $name
-     * @return ColumnInterface
-    */
-    public function morphs(string $name): ColumnInterface
-    {
-        return $this->table->morphs($name);
-    }
-
-
-
-
-
-    /**
-     * @param string $sql
-     * @return mixed
-    */
-    public function exec(string $sql): bool
-    {
-        return $this->table->exec($sql);
-    }
-
-
-
-
-    /**
-     * @return array
-    */
-    public function getColumnsInfo(): array
-    {
-        return $this->table->getColumnsInfo();
-    }
-
-
-
-
-    /**
-     * @param string $name
-     * @return bool
-    */
-    public function hasColumn(string $name): bool
-    {
-        return $this->table->hasColumn($name);
-    }
-
-
-
-
-
-    /**
-     * @return ColumnInterface[]
-    */
-    public function getColumns(): array
-    {
-        return $this->table->getColumns();
-    }
-
-
-
-
-    /**
-     * @return TableCriteriaInterface
-    */
-    public function getCriteria(): TableCriteriaInterface
-    {
-        return $this->table->getCriteria();
-    }
-
-
-
-
-
-    /**
-     * @return bool
-    */
-    public function create(): bool
-    {
         return $this->table->create();
     }
 
@@ -724,11 +570,23 @@ class Blueprint
 
 
 
+    /**
+     * @inheritDoc
+    */
+    public function updateTable(): mixed
+    {
+        $this->preFlush();
+
+        return $this->table->update();
+    }
+
+
+
 
     /**
-     * @return bool
+     * @inheritDoc
     */
-    public function update(): bool
+    public function dropTable(): mixed
     {
         return $this->table->update();
     }
@@ -737,13 +595,12 @@ class Blueprint
 
 
 
-
     /**
-     * @return mixed
+     * @inheritDoc
     */
-    public function drop(): mixed
+    public function truncateTable(): mixed
     {
-        return $this->table->drop();
+        return $this->table->truncate();
     }
 
 
@@ -751,14 +608,83 @@ class Blueprint
 
 
 
+    /**
+     * @inheritDoc
+    */
+    public function renameTable($name): mixed
+    {
+        return $this->table->rename($name);
+    }
+
+
+
 
 
 
     /**
-     * @return TableInterface
+     * @inheritDoc
     */
-    public function getTable(): TableInterface
+    public function getColumns(): array
+    {
+        return $this->columns;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function table(): TableInterface
     {
         return $this->table;
+    }
+
+
+
+
+
+    /**
+     * @param ColumnInterface $column
+     * @return BlueprintColumnInterface
+    */
+    public function column(ColumnInterface $column): BlueprintColumnInterface
+    {
+        return new BlueprintColumn(
+            $this->table,
+            $column
+        );
+    }
+
+
+
+
+
+
+    /**
+     * @param ColumnInterface $column
+     * @return BlueprintColumnInterface
+    */
+    private function add(ColumnInterface $column): BlueprintColumnInterface
+    {
+         return $this->columns[$column->getName()] = $this->column($column);
+    }
+
+
+
+
+
+
+    /**
+     * @return void
+    */
+    private function preFlush(): void
+    {
+         foreach ($this->columns as $column) {
+             if (!$column->exists()) {
+                 $column->add();
+             }
+         }
     }
 }

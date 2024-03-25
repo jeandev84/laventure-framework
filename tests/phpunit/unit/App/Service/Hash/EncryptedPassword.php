@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PHPUnitTest\App\Service\Hash;
@@ -14,13 +15,12 @@ namespace PHPUnitTest\App\Service\Hash;
  */
 class EncryptedPassword
 {
-
-     /**
-      * @param string $plainPassword
-      * @return string
-     */
-     public static function encrypt(string $plainPassword): string
-     {
-         return password_hash($plainPassword, PASSWORD_DEFAULT);
-     }
+    /**
+     * @param string $plainPassword
+     * @return string
+    */
+    public static function encrypt(string $plainPassword): string
+    {
+        return password_hash($plainPassword, PASSWORD_DEFAULT);
+    }
 }

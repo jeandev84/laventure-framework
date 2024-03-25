@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Query\Builder\SQL;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
+use Laventure\Component\Database\Query\Builder\SQL\Contract\SQLInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Criteria\CriteriaInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionBuilderInterface;
 use Laventure\Component\Database\Query\QueryInterface;
@@ -19,19 +20,8 @@ use Stringable;
  *
  * @package  Laventure\Component\Database\Builder\SQL
 */
-interface SQLBuilderInterface extends Stringable
+interface SQLBuilderInterface extends SQLInterface
 {
-    /**
-     * @return string
-    */
-    public function getSQL(): string;
-
-
-
-
-
-
-
     /**
      * @param array $parameters
      * @return $this

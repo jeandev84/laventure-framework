@@ -33,13 +33,30 @@ trait ConnectionTrait
 
 
 
+
     /**
      * @param ConfigurationInterface $config
      * @return $this
+    */
+    public function config(ConfigurationInterface $config): static
+    {
+        $this->config = $config;
+
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @return $this
      * @throws DriverException
     */
-    public function connect(ConfigurationInterface $config): static
+    public function connect(): static
     {
+        $config = $this->getConfiguration();
+
         $this->makeSureIfIsAvailable();
 
         $this->connectWithoutDatabase($config);
@@ -100,7 +117,7 @@ trait ConnectionTrait
     /**
      * @return ConfigurationInterface
     */
-    public function configuration(): ConfigurationInterface
+    public function getConfiguration(): ConfigurationInterface
     {
         if (!$this->config) {
             $this->config = new NullConfiguration();
@@ -128,25 +145,10 @@ trait ConnectionTrait
 
 
 
-
-    /**
-     * @param $key
-     * @param $default
-     * @return mixed
-    */
-    public function config($key, $default = null): mixed
-    {
-        return $this->config->get($key, $default);
-    }
-
-
-
-
-
     /**
      * @return void
     */
-    abstract public function makeSureIfIsAvailable(): void;
+    abstract protected function makeSureIfIsAvailable(): void;
 
 
 
@@ -159,7 +161,7 @@ trait ConnectionTrait
      * @param ConfigurationInterface $config
      * @return mixed
     */
-    abstract public function connectWithoutDatabase(ConfigurationInterface $config): mixed;
+    abstract protected function connectWithoutDatabase(ConfigurationInterface $config): mixed;
 
 
 
@@ -172,5 +174,5 @@ trait ConnectionTrait
      * @param ConfigurationInterface $config
      * @return $this
     */
-    abstract public function connectIfExistsDatabase(ConfigurationInterface $config): mixed;
+    abstract protected function connectIfExistsDatabase(ConfigurationInterface $config): mixed;
 }

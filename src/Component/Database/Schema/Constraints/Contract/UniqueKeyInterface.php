@@ -16,6 +16,6 @@ use Laventure\Component\Database\Schema\Constraints\ConstraintInterface;
  *
  * @package  Laventure\Component\Database\Schema\Constraints\Contract
 */
-interface UniqueInterface extends HasColumnInterface, ConstraintInterface
+interface UniqueKeyInterface extends HasColumnInterface, ConstraintInterface
 {
 }

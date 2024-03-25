@@ -51,47 +51,6 @@ abstract class PdoConnection implements PdoConnectionInterface
 
 
 
-    /**
-     * @inheritdoc
-    */
-    public function makeSureIfIsAvailable(): void
-    {
-        if (!$this->isAvailable()) {
-            throw new DriverException("Unavailable driver {$this->getName()}");
-        }
-    }
-
-
-
-
-    /**
-     * @inheritdoc
-    */
-    public function connectWithoutDatabase(ConfigurationInterface $config): static
-    {
-        if (!$config->has('dsn')) {
-            $config['dsn'] = $this->makeDefaultDsn($config);
-        }
-
-        return $this->connectToPdo($config);
-    }
-
-
-
-
-
-
-    /**
-     * @inheritdoc
-    */
-    public function connectIfExistsDatabase(ConfigurationInterface $config): static
-    {
-        $config['dsn'] = $this->makeDsnIfDatabaseExists($config);
-
-        return $this->connectToPdo($config);
-    }
-
-
 
 
 
@@ -177,13 +136,13 @@ abstract class PdoConnection implements PdoConnectionInterface
 
 
 
+
     /**
-     * @inheritdoc
+     * @return SQLQueryBuilderInterface
     */
-    public function createQueryBuilder(): SQLQueryBuilderInterface
+    public function createPdoQueryBuilder(): SQLQueryBuilderInterface
     {
-        return $this->createSQLBuilderFactory()
-                    ->createBuilder();
+        return $this->createBuilderFactory()->createBuilder();
     }
 
 
@@ -191,9 +150,9 @@ abstract class PdoConnection implements PdoConnectionInterface
 
 
     /**
-     * @inheritdoc
+     * @return SQLQueryBuilderFactoryInterface
     */
-    public function createSQLBuilderFactory(): SQLQueryBuilderFactoryInterface
+    public function createBuilderFactory(): SQLQueryBuilderFactoryInterface
     {
         return new PdoSQLQueryBuilderFactory($this);
     }
@@ -461,5 +420,53 @@ abstract class PdoConnection implements PdoConnectionInterface
     protected function readDsnParams(string $dsn): array
     {
         return (new PdoDsnReader($dsn))->read();
+    }
+
+
+
+
+
+    /**
+     * @inheritdoc
+     */
+    protected function makeSureIfIsAvailable(): void
+    {
+        if (!$this->isAvailable()) {
+            throw new DriverException("Unavailable driver {$this->getName()}");
+        }
+    }
+
+
+
+
+
+
+    /**
+     * @inheritdoc
+     * @throws DriverException
+    */
+    protected function connectWithoutDatabase(ConfigurationInterface $config): static
+    {
+        if (!$config->has('dsn')) {
+            $config['dsn'] = $this->makeDefaultDsn($config);
+        }
+
+        return $this->connectToPdo($config);
+    }
+
+
+
+
+
+
+    /**
+     * @inheritdoc
+     * @throws DriverException
+    */
+    protected function connectIfExistsDatabase(ConfigurationInterface $config): static
+    {
+        $config['dsn'] = $this->makeDsnIfDatabaseExists($config);
+
+        return $this->connectToPdo($config);
     }
 }

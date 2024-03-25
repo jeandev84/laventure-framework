@@ -39,7 +39,7 @@ class SqliteConnection extends PdoConnection
     */
     public function createQueryBuilder(): SQLQueryBuilderInterface
     {
-        return new SqliteQueryBuilder($this->createSQLBuilderFactory());
+        return new SqliteQueryBuilder($this->createPdoQueryBuilder());
     }
 
 

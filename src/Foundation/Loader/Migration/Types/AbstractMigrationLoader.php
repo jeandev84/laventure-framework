@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Loader\Migration\Types;
@@ -23,40 +24,38 @@ use Psr\Container\NotFoundExceptionInterface;
  */
 abstract class AbstractMigrationLoader extends FilesDirectoryLoader implements MigrationLoaderInterface
 {
-
-       /**
-        * @param ContainerInterface $app
-        * @param Filesystem $filesystem
-        * @param ConfigInterface $config
-       */
-       public function __construct(
-           protected ContainerInterface $app,
-           Filesystem $filesystem,
-           ConfigInterface $config
-       )
-       {
-           parent::__construct($filesystem, $config);
-       }
+    /**
+     * @param ContainerInterface $app
+     * @param Filesystem $filesystem
+     * @param ConfigInterface $config
+    */
+    public function __construct(
+        protected ContainerInterface $app,
+        Filesystem $filesystem,
+        ConfigInterface $config
+    ) {
+        parent::__construct($filesystem, $config);
+    }
 
 
 
 
-       /**
-         * @return MigrationInterface[]
-         * @throws ContainerExceptionInterface
-         * @throws NotFoundExceptionInterface
-       */
-       public function loadMigrations(): array
-       {
-            $migrations = [];
+    /**
+      * @return MigrationInterface[]
+      * @throws ContainerExceptionInterface
+      * @throws NotFoundExceptionInterface
+    */
+    public function loadMigrations(): array
+    {
+        $migrations = [];
 
-            foreach ($this->load() as $migration) {
-                 $migration = $this->app->get($migration);
-                 if (!$migration instanceof MigrationInterface) {
-                     continue;
-                 }
-                 $migrations[] = $migration;
+        foreach ($this->load() as $migration) {
+            $migration = $this->app->get($migration);
+            if (!$migration instanceof MigrationInterface) {
+                continue;
             }
-            return $migrations;
-       }
+            $migrations[] = $migration;
+        }
+        return $migrations;
+    }
 }

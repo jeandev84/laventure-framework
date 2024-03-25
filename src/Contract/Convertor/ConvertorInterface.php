@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Contract\Convertor;
-
 
 /**
  * ConvertorInterface
@@ -15,10 +15,10 @@ namespace Laventure\Contract\Convertor;
 */
 interface ConvertorInterface
 {
-     /**
-      * Convert something
-      *
-      * @return mixed
-     */
-     public function convert(): mixed;
+    /**
+     * Convert something
+     *
+     * @return mixed
+    */
+    public function convert(): mixed;
 }

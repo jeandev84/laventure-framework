@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PHPUnitTest\App\Repository;
@@ -18,7 +19,6 @@ use PHPUnitTest\App\Entity\Book;
 */
 class BookEntityRepository extends ServiceEntityRepository
 {
-
     /**
      * @param EntityManagerInterface $em
     */

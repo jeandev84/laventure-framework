@@ -7,7 +7,6 @@ use Laventure\Foundation\Database\Manager\Manager;
 use PHPUnitTest\App\Entity\User;
 use PHPUnitTest\App\Repository\UserEntityRepository;
 
-
 require_once __DIR__.'/vendor/autoload.php';
 
 
@@ -65,6 +64,3 @@ if ($user) {
 
 
 dd($em->find(User::class, 3));
-
-
-

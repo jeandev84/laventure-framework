@@ -3,7 +3,6 @@
 use Laventure\Component\Database\Configuration\Configuration;
 use Laventure\Foundation\Database\Manager\Manager;
 
-
 require_once __DIR__.'/vendor/autoload.php';
 
 

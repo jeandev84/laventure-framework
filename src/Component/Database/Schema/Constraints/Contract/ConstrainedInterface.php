@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Constraints\Contract;
 
+use Laventure\Component\Database\Query\Builder\SQL\Contract\SQLInterface;
 use Stringable;
 
 /**
@@ -15,7 +16,7 @@ use Stringable;
  *
  * @package  Laventure\Component\Database\Schema\Constraints\Contract
  */
-interface ConstrainedInterface extends Stringable
+interface ConstrainedInterface extends SQLInterface
 {
     /**
      * @param string|null $value

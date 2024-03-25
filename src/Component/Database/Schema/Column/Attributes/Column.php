@@ -21,12 +21,26 @@ class Column
     /**
      * @param string $name
      * @param string $type
+     * @param int $length
      * @param array $options
     */
     public function __construct(
         public string $name,
         public string $type,
+        public int $length = 0,
         public array $options = []
     ) {
+    }
+
+
+
+
+
+    /**
+     * @return bool
+    */
+    public function hasLength(): bool
+    {
+        return $this->length > 0;
     }
 }

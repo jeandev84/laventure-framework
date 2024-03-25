@@ -203,8 +203,7 @@ class Filesystem implements FilesystemInterface
     public function collectionFilesFromDirectory(
         string $directory,
         string $extension = 'php'
-    ): FileCollectionInterface
-    {
+    ): FileCollectionInterface {
         $files = $this->dir($directory)->getFiles($extension);
 
         $files = $this->fileFactory->createFromArray($files);

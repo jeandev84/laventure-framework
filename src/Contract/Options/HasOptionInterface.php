@@ -21,7 +21,7 @@ interface HasOptionInterface
      * @param array $options
      * @return $this
     */
-    public function withOptions(array $options): static;
+    public function options(array $options): static;
 
 
 

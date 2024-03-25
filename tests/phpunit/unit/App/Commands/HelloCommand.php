@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PHPUnitTest\App\Commands;
@@ -18,7 +19,6 @@ use Laventure\Component\Console\Output\OutputInterface;
  */
 class HelloCommand extends Command
 {
-
     /**
      * @var string
     */
@@ -37,7 +37,7 @@ class HelloCommand extends Command
     */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-         $output->writeln("Hello! Friends.");
-         return Command::SUCCESS;
+        $output->writeln("Hello! Friends.");
+        return Command::SUCCESS;
     }
 }

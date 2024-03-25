@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Database\Manager\Config\ORM\Mapper\Migration;
@@ -17,7 +18,6 @@ use Laventure\Utils\Parameter\Parameter;
 */
 class MapperMigrationConfiguration extends Parameter implements MigrationConfigurationInterface
 {
-
     /**
      * @inheritDoc
      */

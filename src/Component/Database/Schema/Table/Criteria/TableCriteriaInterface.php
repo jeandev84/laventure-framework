@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Table\Criteria;
 
+use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
+use Laventure\Component\Database\Schema\Constraints\Contract\IndexInterface;
+use Laventure\Component\Database\Schema\Constraints\Contract\PrimaryKeyInterface;
+use Laventure\Component\Database\Schema\Constraints\Contract\UniqueKeyInterface;
+
 /**
  * TableCriteriaInterface
  *
@@ -16,20 +21,63 @@ namespace Laventure\Component\Database\Schema\Table\Criteria;
 interface TableCriteriaInterface
 {
     /**
-     * Returns create criteria as string
-     *
-     * @return string
+     * @return PrimaryKeyInterface
     */
-    public function create(): string;
+    public function getPrimary(): PrimaryKeyInterface;
+
 
 
 
 
 
     /**
-     * Returns create criteria as string
-     *
-     * @return string
+     * @return IndexInterface
     */
-    public function update(): string;
+    public function getIndex(): IndexInterface;
+
+
+
+
+
+
+
+    /**
+     * @return UniqueKeyInterface
+    */
+    public function getUnique(): UniqueKeyInterface;
+
+
+
+
+
+
+
+    /**
+     * ForeignKeys
+     *
+     * @return ForeignKeyInterface[]
+    */
+    public function getForeign(): array;
+
+
+
+
+
+
+
+    /**
+     * @return array
+    */
+    public function toArray(): array;
+
+
+
+
+
+
+
+    /**
+     * @return void
+    */
+    public function clear(): void;
 }

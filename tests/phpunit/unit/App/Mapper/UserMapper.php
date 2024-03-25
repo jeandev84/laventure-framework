@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PHPUnitTest\App\Mapper;
@@ -17,66 +18,64 @@ use PHPUnitTest\App\Entity\User;
 */
 class UserMapper
 {
-
-     /**
-      * @param EntityManagerInterface $em
-     */
-     public function __construct(
-         protected EntityManagerInterface $em
-     )
-     {
-     }
+    /**
+     * @param EntityManagerInterface $em
+    */
+    public function __construct(
+        protected EntityManagerInterface $em
+    ) {
+    }
 
 
 
 
 
-     /**
-      * @param int $id
-      * @return User|null
-     */
-     public function find(int $id): ?User
-     {
-         return $this->em->getDataMapper()
-                         ->find($this->getClassName(), $id);
-     }
+    /**
+     * @param int $id
+     * @return User|null
+    */
+    public function find(int $id): ?User
+    {
+        return $this->em->getDataMapper()
+                        ->find($this->getClassName(), $id);
+    }
 
 
 
 
-     /**
-      * @param User $user
-      * @return int
-     */
-     public function save(User $user): int
-     {
-         return $this->em->getDataMapper()
-                         ->save($user);
-     }
-
-
-
-
-
-     /**
-      * @param User $user
-      * @return bool
-     */
-     public function delete(User $user): bool
-     {
-         return $this->em->getDataMapper()
-                         ->delete($user);
-     }
+    /**
+     * @param User $user
+     * @return int
+    */
+    public function save(User $user): int
+    {
+        return $this->em->getDataMapper()
+                        ->save($user);
+    }
 
 
 
 
 
-     /**
-      * @return string
-     */
-     public function getClassName(): string
-     {
-         return User::class;
-     }
+    /**
+     * @param User $user
+     * @return bool
+    */
+    public function delete(User $user): bool
+    {
+        return $this->em->getDataMapper()
+                        ->delete($user);
+    }
+
+
+
+
+
+    /**
+     * @return string
+    */
+    public function getClassName(): string
+    {
+        return User::class;
+    }
 }

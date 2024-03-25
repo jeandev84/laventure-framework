@@ -10,8 +10,8 @@ use Laventure\Component\Database\ORM\Persistence\Mapper\Identity\IdentityMapperI
 use Laventure\Component\Database\ORM\Persistence\Mapping\Metadata\ClassMetadataInterface;
 use Laventure\Component\Database\ORM\Persistence\Query\Builder\QueryBuilderInterface;
 use Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\DQL\Select\Select;
-use Laventure\Component\Database\Schema\Table\Exceptions\NotFoundTableException;
-use Laventure\Component\Database\Schema\Table\Exceptions\TableException;
+use Laventure\Component\Database\Schema\Table\Exception\NotFoundTableException;
+use Laventure\Component\Database\Schema\Table\Exception\TableException;
 use Laventure\Component\Database\Schema\Table\TableInterface;
 
 /**

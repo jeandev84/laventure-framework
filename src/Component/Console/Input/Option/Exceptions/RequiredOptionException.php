@@ -13,7 +13,7 @@ use Laventure\Exceptions\BaseException;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Console\Input\Option\Exceptions
+ * @package  Laventure\Component\Console\Input\Option\Exception
  */
 class RequiredOptionException extends BaseException
 {

@@ -25,7 +25,6 @@ use Laventure\Foundation\Database\Manager\Config\ORM\Mapper\Repository\EntityRep
  */
 class MapperConfiguration extends Configuration implements MapperConfigurationInterface
 {
-
     /**
      * @inheritDoc
     */

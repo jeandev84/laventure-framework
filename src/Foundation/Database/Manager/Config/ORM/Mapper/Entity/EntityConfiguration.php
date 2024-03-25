@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Foundation\Database\Manager\Config\ORM\Mapper\Entity;
@@ -16,7 +17,6 @@ use Laventure\Utils\Parameter\Parameter;
  */
 class EntityConfiguration extends Parameter implements EntityConfigurationInterface
 {
-
     /**
      * @inheritDoc
      */

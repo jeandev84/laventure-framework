@@ -18,14 +18,369 @@ use Stringable;
  *
  * @package  Laventure\Component\Database\Schema\Column\Contract
 */
-interface ColumnInterface extends HasConstraintInterface, HasOptionInterface, Stringable
+interface ColumnInterface extends Stringable
 {
     /**
-     * Add constraints nullable
+     * Set column type
      *
+     * @param string $type
      * @return $this
     */
-    public function nullable(): static;
+    public function type(string $type): static;
+
+
+
+
+
+
+
+    /**
+     * Increment column
+     *
+     * @return $this
+     */
+    public function increments(): static;
+
+
+
+
+
+    /**
+     * Add big increment
+     *
+     * @return $this
+     */
+    public function bigIncrements(): static;
+
+
+
+
+
+
+
+    /**
+     * Add integer
+     *
+     * @param int $length
+     * @return $this
+     */
+    public function integer(int $length = 11): static;
+
+
+
+
+
+
+    /**
+     * Add column type small integer
+     *
+     * @return $this
+     */
+    public function smallInteger(): static;
+
+
+
+
+
+
+
+    /**
+     * Add column type big integer
+     *
+     * @return $this
+     */
+    public function bigInteger(): static;
+
+
+
+
+
+
+
+    /**
+     * Add column type big integer
+     *
+     * @return $this
+     */
+    public function mediumInteger(): static;
+
+
+
+
+
+
+    /**
+     * Add column type tiny integer
+     *
+     * @return $this
+     */
+    public function tinyInteger(): static;
+
+
+
+
+
+
+
+
+    /**
+     * Add column type string
+     * @param int $length
+     * @return $this
+     */
+    public function string(int $length = 255): static;
+
+
+
+
+
+
+
+    /**
+     * Add column type char
+     *
+     * @param $value
+     * @return $this
+     */
+    public function char($value): static;
+
+
+
+
+
+
+    /**
+     * Add column type boolean
+     *
+     * @return $this
+     */
+    public function boolean(): static;
+
+
+
+
+
+
+
+    /**
+     * Add column type datetime
+     *
+     * @return $this
+     */
+    public function datetime(): static;
+
+
+
+
+
+
+
+
+
+    /**
+     * Add column type time
+     *
+     * @return $this
+     */
+    public function time(): static;
+
+
+
+
+
+
+
+    /**
+     * Add column type timestamp
+     *
+     * @return $this
+     */
+    public function timestamp(): static;
+
+
+
+
+
+
+
+    /**
+     * Add column type binary
+     *
+     * @return ColumnInterface
+     */
+    public function binary(): static;
+
+
+
+
+
+
+
+    /**
+     * Add column type date
+     *
+     * @return $this
+     */
+    public function date(): static;
+
+
+
+
+
+
+
+
+    /**
+     * Add column type decimal
+     *
+     * @param int $precision
+     *
+     * @param int $scale
+     *
+     * @return $this
+     */
+    public function decimal(int $precision, int $scale): static;
+
+
+
+
+
+
+
+
+
+    /**
+     * Add column type double
+     *
+     *
+     * @param int $precision
+     *
+     * @param int $scale
+     *
+     * @return $this
+     */
+    public function double(int $precision, int $scale): static;
+
+
+
+
+
+
+    /**
+     * Add column type enum
+     *
+     * @param array $values
+     * @return $this
+     */
+    public function enum(array $values): static;
+
+
+
+
+
+
+
+
+    /**
+     * Add column type float
+     *
+     * @return $this
+     */
+    public function float(): static;
+
+
+
+
+
+
+
+    /**
+     * Add column type json
+     *
+     * @return $this
+     */
+    public function json(): static;
+
+
+
+
+
+
+
+
+    /**
+     * Add column type text
+     *
+     * @return $this
+     */
+    public function text(): static;
+
+
+
+
+
+
+
+
+
+    /**
+     * Add column type long text
+     *
+     * @return $this
+     */
+    public function longText(): static;
+
+
+
+
+
+
+
+    /**
+     * Add column type medium text
+     *
+     * @return $this
+     */
+    public function mediumText(): static;
+
+
+
+
+
+
+    /**
+     * Add column type tiny text
+     *
+     * @return  $this
+     */
+    public function tinyText(): static;
+
+
+
+
+
+
+
+
+    /**
+     * Add column type morphs
+     *
+     * @return $this
+     */
+    public function morphs(): static;
+
+
+
+
+
+    /**
+     * Add constraints
+     *
+     * @param string $constraints
+     * @return $this
+    */
+    public function constraints(string $constraints): static;
+
 
 
 
@@ -39,6 +394,29 @@ interface ColumnInterface extends HasConstraintInterface, HasOptionInterface, St
      * @return $this
     */
     public function default($value): static;
+
+
+
+
+
+
+
+    /**
+     * @param $sign
+     * @return $this
+    */
+    public function sign($sign): static;
+
+
+
+
+
+    /**
+     * Set constraint not null
+     *
+     * @return $this
+    */
+    public function notNull(): static;
 
 
 
@@ -60,7 +438,6 @@ interface ColumnInterface extends HasConstraintInterface, HasOptionInterface, St
 
 
 
-
     /**
      * Add collation
      *
@@ -68,6 +445,74 @@ interface ColumnInterface extends HasConstraintInterface, HasOptionInterface, St
      * @return $this
     */
     public function collation(string $collation): static;
+
+
+
+
+
+
+
+
+
+    /**
+     * Set column options
+     *
+     * @param array $options
+     * @return $this
+    */
+    public function options(array $options): static;
+
+
+
+
+
+
+
+
+    /**
+     * Determine if given name exists in options
+     *
+     * @param string $name
+     * @return bool
+    */
+    public function hasOption(string $name): bool;
+
+
+
+
+
+
+
+
+
+
+    /**
+     * Set column option
+     *
+     * @param $id
+     * @param $value
+     * @return $this
+    */
+    public function option($id, $value): static;
+
+
+
+
+
+
+
+
+    /**
+     * Add constraints nullable
+     *
+     * @return $this
+    */
+    public function nullable(): static;
+
+
+
+
+
 
 
 
@@ -85,6 +530,8 @@ interface ColumnInterface extends HasConstraintInterface, HasOptionInterface, St
 
 
 
+
+
     /**
      * @return $this
     */
@@ -92,14 +539,6 @@ interface ColumnInterface extends HasConstraintInterface, HasOptionInterface, St
 
 
 
-
-
-    /**
-     * Incremental column
-     *
-     * @return $this
-    */
-    public function increment(): static;
 
 
 
@@ -111,6 +550,10 @@ interface ColumnInterface extends HasConstraintInterface, HasOptionInterface, St
      * @return $this
     */
     public function signed(): static;
+
+
+
+
 
 
 
@@ -129,59 +572,30 @@ interface ColumnInterface extends HasConstraintInterface, HasOptionInterface, St
 
 
 
-    /**
-     * @param $constraints
-     * @return $this
-    */
-    public function constraint($constraints): static;
-
-
 
 
 
 
     /**
-     * Add constraint
-     * @param ConstraintInterface $constraint
-     * @return $this
-    */
-    public function withConstraint(ConstraintInterface $constraint): static;
-
-
-
-
-
-    /**
-     * set constraints
+     * Add new column expression
      *
-     * @param ConstraintInterface[] $constraints
-     * @return $this
+     * @return string
     */
-    public function withConstraints(array $constraints): static;
+    public function add(): string;
+
+
+
 
 
 
 
 
     /**
-     * Determine type of constraint defined
+     * Modify column expression
      *
-     * @param string $name
-     * @return bool
+     * @return string
     */
-    public function hasConstraint(string $name): bool;
-
-
-
-
-
-
-    /**
-     * Add columns
-     *
-     * @return static
-    */
-    public function add(): static;
+    public function modify(): string;
 
 
 
@@ -190,24 +604,14 @@ interface ColumnInterface extends HasConstraintInterface, HasOptionInterface, St
 
 
     /**
-     * Change columns
-     *
-     * @return $this
-    */
-    public function modify(): static;
-
-
-
-
-
-
-    /**
-     * Rename column
+     * Rename column expression
      *
      * @param string $to
-     * @return $this
+     * @return string
     */
-    public function rename(string $to): static;
+    public function rename(string $to): string;
+
+
 
 
 
@@ -215,9 +619,14 @@ interface ColumnInterface extends HasConstraintInterface, HasOptionInterface, St
 
 
     /**
-     * @return $this
+     * Drop column expression
+     *
+     * @return string
     */
-    public function drop(): static;
+    public function drop(): string;
+
+
+
 
 
 
@@ -237,8 +646,10 @@ interface ColumnInterface extends HasConstraintInterface, HasOptionInterface, St
 
 
 
+
+
     /**
-     * Returns type of column
+     * Returns data type of column
      *
      * @return string
     */
@@ -250,25 +661,15 @@ interface ColumnInterface extends HasConstraintInterface, HasOptionInterface, St
 
 
 
-    /**
-     * Determine if column is primary key
-     *
-     * @return bool
-    */
-    public function isPrimary(): bool;
-
-
-
-
-
-
 
     /**
-     * Determine if column is signed or not
+     * Returns SIGNED or UNSIGNED
      *
-     * @return bool
+     * @return string
     */
-    public function isSigned(): bool;
+    public function getSign(): string;
+
+
 
 
 
@@ -277,11 +678,14 @@ interface ColumnInterface extends HasConstraintInterface, HasOptionInterface, St
 
 
     /**
-     * Returns constraints of column
+     * Returns constraints like NOT NULL, PRIMARY KEY, UNIQUE ...
      *
-     * @return ConstraintInterface[]
+     * @return string
     */
-    public function getConstraints(): array;
+    public function getConstraint(): string;
+
+
+
 
 
 
@@ -302,6 +706,9 @@ interface ColumnInterface extends HasConstraintInterface, HasOptionInterface, St
 
 
 
+
+
+
     /**
      * Returns table encoding characters
      *
@@ -313,10 +720,65 @@ interface ColumnInterface extends HasConstraintInterface, HasOptionInterface, St
 
 
 
+
+
+
+
+
     /**
      * Returns expression out
      *
      * @return string
     */
     public function getSQL(): string;
+
+
+
+
+
+
+
+    /**
+     * @return array
+    */
+    public function getOptions(): array;
+
+
+
+
+
+
+
+
+    /**
+     * @param $key
+     * @param $default
+     * @return mixed
+    */
+    public function getOption($key, $default = null): mixed;
+
+
+
+
+
+
+    /**
+     * @return array
+    */
+    public function getTypeOptions(): array;
+
+
+
+
+
+
+
+
+
+
+    /**
+     * @param string $key
+     * @return string
+    */
+    public function getTypeOption(string $key): string;
 }
