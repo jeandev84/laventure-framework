@@ -17,7 +17,7 @@ use Laventure\Component\Database\Schema\Constraints\Contract\UniqueKeyInterface;
 use Laventure\Component\Database\Schema\Constraints\Types\Keys\Foreign\ForeignKey;
 use Laventure\Component\Database\Schema\Table\Criteria\TableCriteria;
 use Laventure\Component\Database\Schema\Table\Criteria\TableCriteriaInterface;
-use Laventure\Component\Database\Schema\Table\Exceptions\TableException;
+use Laventure\Component\Database\Schema\Table\Exception\TableException;
 use Laventure\Component\Database\Schema\Table\Expr\AlterTable;
 use ReflectionClass;
 use ReflectionException;

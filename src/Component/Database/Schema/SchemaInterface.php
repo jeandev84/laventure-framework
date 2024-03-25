@@ -20,6 +20,7 @@ use Laventure\Component\Database\Schema\Table\TableInterface;
  */
 interface SchemaInterface
 {
+
     /**
      * Create schema
      *
@@ -213,17 +214,4 @@ interface SchemaInterface
      * @return mixed
     */
     public function dump(): mixed;
-
-
-
-
-
-
-
-    /**
-     * Returns SQL
-     *
-     * @return string
-    */
-    public function dumpSQL(): string;
 }

@@ -5,7 +5,11 @@ namespace Laventure\Component\Database\Schema;
 
 use Closure;
 use Laventure\Component\Database\Connection\ConnectionInterface;
+use Laventure\Component\Database\Query\QueryInterface;
 use Laventure\Component\Database\Schema\Blueprint\Blueprint;
+use Laventure\Component\Database\Schema\Exception\SchemaException;
+use Laventure\Component\Database\Schema\Table\Exception\TableExistsException;
+use Laventure\Component\Database\Schema\Table\Exception\TableNotExistsException;
 use Laventure\Component\Database\Schema\Table\Factory\TableFactoryInterface;
 use Laventure\Component\Database\Schema\Table\TableInterface;
 
@@ -27,12 +31,6 @@ class Schema implements SchemaInterface
     protected ConnectionInterface $connection;
 
 
-
-
-    /**
-     * @var TableFactoryInterface
-    */
-    protected TableFactoryInterface $factory;
 
 
 
@@ -66,7 +64,7 @@ class Schema implements SchemaInterface
     public function create(string $table, Closure $closure): bool
     {
         if ($this->exists($table)) {
-            return false;
+            throw new TableExistsException($table);
         }
 
         $blueprint = new Blueprint($this->table($table));
@@ -86,7 +84,7 @@ class Schema implements SchemaInterface
     public function update(string $table, Closure $closure): bool
     {
         if (!$this->exists($table)) {
-            return false;
+            throw new TableNotExistsException($table);
         }
 
         $blueprint = new Blueprint($this->table($table));
@@ -180,6 +178,37 @@ class Schema implements SchemaInterface
     /**
      * @inheritDoc
     */
+    public function statement(string $sql): QueryInterface
+    {
+        return $this->connection->statement($sql);
+    }
+
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function dump(): static
+    {
+        foreach ($this->getTables() as $table) {
+            $this->table($table)->dump();
+        }
+
+        return $this;
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
     public function getTables(): array
     {
         return $this->connection
@@ -211,17 +240,5 @@ class Schema implements SchemaInterface
     public function getConnection(): ConnectionInterface
     {
         return $this->connection;
-    }
-
-
-
-
-
-    /**
-     * @return TableFactoryInterface
-    */
-    public function getFactory(): TableFactoryInterface
-    {
-        return $this->factory;
     }
 }

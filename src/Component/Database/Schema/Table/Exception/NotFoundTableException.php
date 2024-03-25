@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Schema\Table\Exceptions;
+namespace Laventure\Component\Database\Schema\Table\Exception;
 
 use Laventure\Exceptions\BaseException;
 use Throwable;
