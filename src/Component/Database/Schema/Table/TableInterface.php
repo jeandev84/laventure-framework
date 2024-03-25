@@ -66,11 +66,11 @@ interface TableInterface
      * Add new column
      *
      * @param string $name
-     * @param ColumnType $type
+     * @param string|ColumnType $type
      * @param callable|null $options
      * @return $this
     */
-    public function addColumn(string $name, ColumnType $type, callable $options = null): static;
+    public function addColumn(string $name, string|ColumnType $type, callable $options = null): static;
 
 
 
@@ -829,6 +829,18 @@ interface TableInterface
 
 
     /**
+     * Set incremental ID
+     *
+     * @return $this
+    */
+    public function id(): static;
+
+
+
+
+
+
+    /**
      * Increment column
      *
      * @return $this
@@ -841,13 +853,19 @@ interface TableInterface
 
 
 
+
+
     /**
      * Add big increment
      *
      * @param string $name
-     * @return $this
+     * @return ColumnInterface
     */
-    public function bigIncrements(string $name): static;
+    public function bigIncrements(string $name): ColumnInterface;
+
+
+
+
 
 
 
@@ -859,10 +877,9 @@ interface TableInterface
      *
      * @param string $name
      * @param int $length
-     * @return $this
+     * @return ColumnInterface
     */
-    public function integer(string $name, int $length = 11): static;
-
+    public function integer(string $name, int $length = 11): ColumnInterface;
 
 
 
@@ -874,24 +891,9 @@ interface TableInterface
      * Add column type small integer
      *
      * @param string $name
-     * @return $this
+     * @return ColumnInterface
     */
-    public function smallInteger(string $name): static;
-
-
-
-
-
-
-
-    /**
-     * Add column type big integer
-     *
-     * @param string $name
-     * @return $this
-    */
-    public function bigInteger(string $name): static;
-
+    public function smallInteger(string $name): ColumnInterface;
 
 
 
@@ -904,9 +906,22 @@ interface TableInterface
      * Add column type big integer
      *
      * @param string $name
-     * @return $this
+     * @return ColumnInterface
     */
-    public function mediumInteger(string $name): static;
+    public function bigInteger(string $name): ColumnInterface;
+
+
+
+
+
+
+    /**
+     * Add column type big integer
+     *
+     * @param string $name
+     * @return ColumnInterface
+    */
+    public function mediumInteger(string $name): ColumnInterface;
 
 
 
@@ -917,9 +932,9 @@ interface TableInterface
      * Add column type tiny integer
      *
      * @param string $name
-     * @return $this
+     * @return ColumnInterface
     */
-    public function tinyInteger(string $name): static;
+    public function tinyInteger(string $name): ColumnInterface;
 
 
 
@@ -932,10 +947,9 @@ interface TableInterface
      *
      * @param string $name
      * @param int $length
-     * @param callable|null $options
-     * @return $this
+     * @return ColumnInterface
     */
-    public function string(string $name, int $length = 255, callable $options = null): static;
+    public function string(string $name, int $length = 255): ColumnInterface;
 
 
 
@@ -949,9 +963,9 @@ interface TableInterface
      *
      * @param string $name
      * @param $value
-     * @return $this
+     * @return ColumnInterface
     */
-    public function char(string $name, $value): static;
+    public function char(string $name, $value): ColumnInterface;
 
 
 
@@ -963,10 +977,9 @@ interface TableInterface
      * Add column type boolean
      *
      * @param string $name
-     * @return $this
+     * @return ColumnInterface
     */
-    public function boolean(string $name): static;
-
+    public function boolean(string $name): ColumnInterface;
 
 
 
@@ -979,10 +992,9 @@ interface TableInterface
      * Add column type datetime
      *
      * @param string $name
-     * @param bool $nullable
-     * @return $this
+     * @return ColumnInterface
     */
-    public function datetime(string $name, bool $nullable = false): static;
+    public function datetime(string $name): ColumnInterface;
 
 
 
@@ -994,9 +1006,9 @@ interface TableInterface
      * Add column type time
      *
      * @param string $name
-     * @return $this
+     * @return ColumnInterface
     */
-    public function time(string $name): static;
+    public function time(string $name): ColumnInterface;
 
 
 
@@ -1008,9 +1020,9 @@ interface TableInterface
      * Add column type timestamp
      *
      * @param string $name
-     * @return $this
+     * @return ColumnInterface
     */
-    public function timestamp(string $name): static;
+    public function timestamp(string $name): ColumnInterface;
 
 
 
@@ -1022,9 +1034,9 @@ interface TableInterface
      * Add column type binary
      *
      * @param string $name
-     * @return $this
+     * @return ColumnInterface
     */
-    public function binary(string $name): static;
+    public function binary(string $name): ColumnInterface;
 
 
 
@@ -1036,9 +1048,9 @@ interface TableInterface
      * Add column type date
      *
      * @param string $name
-     * @return $this
+     * @return ColumnInterface
     */
-    public function date(string $name): static;
+    public function date(string $name): ColumnInterface;
 
 
 
@@ -1052,9 +1064,9 @@ interface TableInterface
      * @param string $name
      * @param int $precision
      * @param int $scale
-     * @return $this
+     * @return ColumnInterface
     */
-    public function decimal(string $name, int $precision, int $scale): static;
+    public function decimal(string $name, int $precision, int $scale): ColumnInterface;
 
 
 
@@ -1072,9 +1084,9 @@ interface TableInterface
      * @param string $name
      * @param int $precision
      * @param int $scale
-     * @return $this
+     * @return ColumnInterface
     */
-    public function double(string $name, int $precision, int $scale): static;
+    public function double(string $name, int $precision, int $scale): ColumnInterface;
 
 
 
@@ -1089,9 +1101,9 @@ interface TableInterface
      *
      * @param string $name
      * @param array $values
-     * @return $this
+     * @return ColumnInterface
     */
-    public function enum(string $name, array $values): static;
+    public function enum(string $name, array $values): ColumnInterface;
 
 
 
@@ -1104,9 +1116,9 @@ interface TableInterface
      * Add column type float
      *
      * @param string $name
-     * @return $this
-     */
-    public function float(string $name): static;
+     * @return ColumnInterface
+    */
+    public function float(string $name): ColumnInterface;
 
 
 
@@ -1118,9 +1130,9 @@ interface TableInterface
      * Add column type json
      *
      * @param string $name
-     * @return $this
+     * @return ColumnInterface
     */
-    public function json(string $name): static;
+    public function json(string $name): ColumnInterface;
 
 
 
@@ -1131,9 +1143,9 @@ interface TableInterface
      * Add column type text
      *
      * @param string $name
-     * @return $this
+     * @return ColumnInterface
     */
-    public function text(string $name): static;
+    public function text(string $name): ColumnInterface;
 
 
 
@@ -1146,9 +1158,9 @@ interface TableInterface
      * Add column type long text
      *
      * @param string $name
-     * @return $this
+     * @return ColumnInterface
     */
-    public function longText(string $name): static;
+    public function longText(string $name): ColumnInterface;
 
 
 
@@ -1160,9 +1172,9 @@ interface TableInterface
      * Add column type medium text
      *
      * @param string $name
-     * @return $this
+     * @return ColumnInterface
     */
-    public function mediumText(string $name): static;
+    public function mediumText(string $name): ColumnInterface;
 
 
 
@@ -1174,9 +1186,9 @@ interface TableInterface
      * Add column type tiny text
      *
      * @param string $name
-     * @return  $this
+     * @return  ColumnInterface
     */
-    public function tinyText(string $name): static;
+    public function tinyText(string $name): ColumnInterface;
 
 
 
@@ -1189,9 +1201,9 @@ interface TableInterface
      * Add column type morphs
      *
      * @param string $name
-     * @return $this
+     * @return ColumnInterface
     */
-    public function morphs(string $name): static;
+    public function morphs(string $name): ColumnInterface;
 
 
 

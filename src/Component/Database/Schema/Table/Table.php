@@ -105,10 +105,13 @@ abstract class Table implements TableInterface
 
 
 
+
+
+
     /**
      * @inheritDoc
     */
-    public function addColumn(string $name, ColumnType $type, callable $options = null): static
+    public function addColumn(string $name, string|ColumnType $type, callable $options = null): static
     {
         $column = $this->createColumn($name, $type, $options);
 
@@ -200,18 +203,8 @@ abstract class Table implements TableInterface
     */
     public function addTimestamps(): static
     {
-        return $this->addColumn('created_at', ColumnType::Datetime, function (ColumnOptions $column) {
-             return $column->notNull();
-        });
-
-
-        /*
-        return $this->addCreateTableSQL(
-            $this->column('created_at')->datetime()->notNull()->getSQL()
-        )->addCreateTableSQL(
-            $this->column('updated_at')->datetime()->getSQL()
-        );
-        */
+        return $this->datetime('created_at')
+                    ->datetime('updated_at');
     }
 
 
@@ -224,8 +217,10 @@ abstract class Table implements TableInterface
     */
     public function addSoftDeletes(): static
     {
-        return $this;
+        return $this->datetime('deleted_at', true);
     }
+
+
 
 
 
@@ -300,10 +295,8 @@ abstract class Table implements TableInterface
     /**
      * @inheritDoc
     */
-    public function addForeignKey(
-        string $foreignKey,
-        callable $func
-    ): static {
+    public function addForeignKey(string $foreignKey, callable $func): static {
+
         $func($foreign = $this->foreignKey($foreignKey));
 
         return $this->addCreateTable($foreign->getSQL());
@@ -690,19 +683,25 @@ abstract class Table implements TableInterface
 
     /**
      * @param string $name
-     * @param ColumnType $type
+     * @param string|ColumnType $type
      * @param callable|null $options
      * @return ColumnInterface
     */
     private function createColumn(
         string $name,
-        ColumnType $type,
+        string|ColumnType $type,
         callable $options = null
     ): ColumnInterface {
 
-        return $this->parseColumnOptions($this->column($name), $options)
-                    ->callMethod($type->value)
-                    ->getColumn();
+        $option = $this->parseColumnOptions($this->column($name), $options);
+
+        if ($type instanceof ColumnType) {
+            $option->callMethod($type->value);
+        } else {
+            $option->getColumn()->type($type);
+        }
+
+        return $option->getColumn();
     }
 
 

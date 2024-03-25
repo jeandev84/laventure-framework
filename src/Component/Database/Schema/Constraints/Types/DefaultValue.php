@@ -36,6 +36,6 @@ class DefaultValue extends Constraint
     */
     public function getSQL(): string
     {
-        return sprintf('DEFAULT "%s"', $this->value);
+        return sprintf('DEFAULT %s', $this->value);
     }
 }

@@ -12,7 +12,6 @@ use Laventure\Component\Database\Schema\Constraints\Types\Keys\Primary\PrimaryKe
 use Laventure\Component\Database\Schema\Constraints\Types\Keys\Unique\UniqueKey;
 use Laventure\Component\Database\Schema\Constraints\Types\NotNull;
 use Laventure\Component\Database\Schema\Constraints\Types\Nullable;
-use PHPStan\BetterReflection\Reflection\Adapter\ReflectionClass;
 use ReflectionException;
 use ReflectionMethod;
 
@@ -213,7 +212,9 @@ abstract class AbstractColumn implements ColumnInterface
     */
     public function default($value): static
     {
-        return $this->constraint(new DefaultValue($value));
+        return $this->constraint(
+            new DefaultValue(sprintf('"%s"', $value))
+        );
     }
 
 

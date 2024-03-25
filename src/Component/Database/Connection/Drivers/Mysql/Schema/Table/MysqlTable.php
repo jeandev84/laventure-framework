@@ -53,9 +53,7 @@ class MysqlTable extends Table
     /**
      * @inheritDoc
     */
-    public function column(
-        string $name
-    ): ColumnInterface {
+    public function column(string $name): ColumnInterface {
         return $this->columnFactory->createColumn($name);
     }
 
