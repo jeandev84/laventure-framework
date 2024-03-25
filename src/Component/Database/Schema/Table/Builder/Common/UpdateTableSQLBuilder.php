@@ -1,27 +1,25 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Table\Builder\Common;
 
-use Laventure\Component\Database\Schema\Table\Builder\Contract\CreateTableSQLBuilderInterface;
+use Laventure\Component\Database\Schema\Table\Builder\Contract\UpdateTableSQLBuilderInterface;
 use Laventure\Component\Database\Schema\Table\TableInterface;
 
 /**
- * CreateTableSQLBuilder
+ * UpdateTableSQLBuilder
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
  * @package  Laventure\Component\Database\Schema\Table\Builder\Common
-*/
-abstract class CreateTableSQLBuilder implements CreateTableSQLBuilderInterface
+ */
+abstract class UpdateTableSQLBuilder implements UpdateTableSQLBuilderInterface
 {
-
     /**
      * @param TableInterface $table
-    */
+     */
     public function __construct(protected TableInterface $table)
     {
     }
@@ -31,7 +29,7 @@ abstract class CreateTableSQLBuilder implements CreateTableSQLBuilderInterface
 
     /**
      * @inheritDoc
-    */
+     */
     public function getTable(): string
     {
         return $this->table->getName();
@@ -45,13 +43,13 @@ abstract class CreateTableSQLBuilder implements CreateTableSQLBuilderInterface
     */
     public function getCriteria(): string
     {
-         $criteria = [];
+        $criteria = [];
 
-         foreach ($this->table->getNewColumns() as $column) {
-             $criteria[] = sprintf('%s', $column->getSQL());
-         }
+        foreach ($this->table->getNewColumns() as $column) {
+            $criteria[] = sprintf('%s', $column->add());
+        }
 
-         return join(",". PHP_EOL, $criteria);
+        return join(", ". PHP_EOL, $criteria);
     }
 
 

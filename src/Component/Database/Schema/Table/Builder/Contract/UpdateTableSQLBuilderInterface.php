@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Table\Builder\Contract;
 
+use Laventure\Component\Database\Query\Builder\SQL\Contract\SQLInterface;
+
 /**
  * UpdateTableSQLBuilderInterface
  *
@@ -13,7 +15,7 @@ namespace Laventure\Component\Database\Schema\Table\Builder\Contract;
  *
  * @package  Laventure\Component\Database\Schema\Table\Builder\Contract
 */
-interface UpdateTableSQLBuilderInterface
+interface UpdateTableSQLBuilderInterface extends SQLInterface
 {
     /**
      * @return string
