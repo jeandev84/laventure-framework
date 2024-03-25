@@ -19,7 +19,7 @@ abstract class UpdateTableSQLBuilder implements UpdateTableSQLBuilderInterface
 {
     /**
      * @param TableInterface $table
-     */
+    */
     public function __construct(protected TableInterface $table)
     {
     }

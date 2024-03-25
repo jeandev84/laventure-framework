@@ -820,7 +820,6 @@ interface TableInterface
 
 
 
-
     /**
      * Returns generated SQL
      *
