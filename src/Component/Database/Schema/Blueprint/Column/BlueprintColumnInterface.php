@@ -174,6 +174,17 @@ interface BlueprintColumnInterface
 
 
     /**
+     * Determine if column must be to added
+     *
+     * @return bool
+    */
+    public function needsToAdd(): bool;
+
+
+
+
+
+    /**
      * Returns column as string
      *
      * @return string
