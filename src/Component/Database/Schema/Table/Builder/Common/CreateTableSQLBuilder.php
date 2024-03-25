@@ -51,7 +51,7 @@ abstract class CreateTableSQLBuilder implements CreateTableSQLBuilderInterface
              $criteria[] = sprintf('%s', $column->getSQL());
          }
 
-         return join(",". PHP_EOL, $criteria);
+         return join(",", $criteria);
     }
 
 

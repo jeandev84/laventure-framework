@@ -49,7 +49,7 @@ abstract class TableSQlBuilder implements TableSQlBuilderInterface
     */
     public function getSQL(): string
     {
-        return join(';', array_filter([
+        return join(';'. PHP_EOL, array_filter([
             $this->create()->getSQL(),
             $this->update()->getSQL()
         ]));

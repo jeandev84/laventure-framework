@@ -49,7 +49,7 @@ abstract class UpdateTableSQLBuilder implements UpdateTableSQLBuilderInterface
             $criteria[] = sprintf('%s', $column->add());
         }
 
-        return join(", ". PHP_EOL, $criteria);
+        return join(", ", $criteria);
     }
 
 

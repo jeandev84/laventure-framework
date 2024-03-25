@@ -20,11 +20,11 @@ class AlterTable implements SQLInterface
 {
     /**
      * @param string $table
-     * @param array $criteria
+     * @param string $criteria
     */
     public function __construct(
         protected string $table,
-        protected array $criteria
+        protected string $criteria
     ) {
     }
 
@@ -47,12 +47,6 @@ class AlterTable implements SQLInterface
     */
     public function getSQL(): string
     {
-        $alter[] = sprintf('ALTER TABLE %s', $this->table);
-
-        if ($this->criteria) {
-            $alter[] = join(PHP_EOL, $this->criteria);
-        }
-
-        return join(PHP_EOL, $alter);
+        return sprintf('ALTER TABLE %s %s', $this->table, $this->criteria);
     }
 }
