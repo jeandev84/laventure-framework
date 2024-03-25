@@ -19,11 +19,6 @@ use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface
 */
 class ForeignKey extends Constraint implements ForeignKeyInterface
 {
-    /**
-     * @var ConstrainedInterface
-    */
-    protected ConstrainedInterface $constrained;
-
 
     /**
      * @var string
@@ -55,8 +50,7 @@ class ForeignKey extends Constraint implements ForeignKeyInterface
     public function __construct(string $column, ?string $key = null)
     {
         parent::__construct('foreignKey', $key);
-        $this->column      = $column;
-        $this->constrained = new Constrained();
+        $this->column = $column;
     }
 
 
@@ -102,7 +96,7 @@ class ForeignKey extends Constraint implements ForeignKeyInterface
     */
     public function constrained(): ConstrainedInterface
     {
-        return $this->constrained;
+        return new Constrained();
     }
 
 
@@ -139,13 +133,11 @@ class ForeignKey extends Constraint implements ForeignKeyInterface
     */
     protected function format(): string
     {
-        $foreign[] = sprintf(
+        return sprintf(
             'FOREIGN KEY (%s) REFERENCES %s (%s)',
             $this->column,
             $this->table,
             $this->references
         );
-        $foreign[] = $this->constrained;
-        return join(' ', array_filter($foreign));
     }
 }

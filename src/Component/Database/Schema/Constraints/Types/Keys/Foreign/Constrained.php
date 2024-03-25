@@ -25,6 +25,18 @@ class Constrained implements ConstrainedInterface
 
 
 
+
+    /**
+     * @param string $constraints
+    */
+    public function __construct(protected string $constraints)
+    {
+    }
+
+
+
+
+
     /**
      * @inheritDoc
     */
@@ -64,11 +76,26 @@ class Constrained implements ConstrainedInterface
 
 
 
+
+    /**
+     * @inheritDoc
+    */
+    public function getSQL(): string
+    {
+        return join(' ', array_filter([
+            $this->constraints,
+            array_values($this->constrained)
+        ]));
+    }
+
+
+
+
     /**
      * @inheritDoc
     */
     public function __toString(): string
     {
-        return join(' ', array_values($this->constrained));
+        return $this->getSQL();
     }
 }
