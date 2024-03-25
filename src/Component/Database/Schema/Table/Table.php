@@ -16,6 +16,7 @@ use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface
 use Laventure\Component\Database\Schema\Table\Criteria\TableCriteria;
 use Laventure\Component\Database\Schema\Table\Criteria\TableCriteriaInterface;
 use Laventure\Component\Database\Schema\Table\Exceptions\TableException;
+use Laventure\Component\Database\Schema\Table\Expr\AlterTable;
 use ReflectionClass;
 use ReflectionException;
 
@@ -1135,6 +1136,16 @@ abstract class Table implements TableInterface
     }
 
 
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function alter(string $criteria): string
+    {
+        return strval(new AlterTable($this->getName(), $criteria));
+    }
 
 
 

@@ -1394,6 +1394,19 @@ interface TableInterface
 
 
     /**
+     * @param string $criteria
+     * @return string
+    */
+    public function alter(string $criteria): string;
+
+
+
+
+
+
+
+
+    /**
      * Clear table
      *
      * @return void
