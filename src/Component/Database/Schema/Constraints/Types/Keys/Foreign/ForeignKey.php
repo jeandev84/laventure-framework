@@ -96,7 +96,7 @@ class ForeignKey extends Constraint implements ForeignKeyInterface
     */
     public function constrained(): ConstrainedInterface
     {
-        return new Constrained();
+        return new Constrained($this);
     }
 
 
@@ -111,11 +111,15 @@ class ForeignKey extends Constraint implements ForeignKeyInterface
      * Example: CONSTRAINT fk_products_user_id
      *          FOREIGN KEY (user_id)
      *          REFERENCES users (id)
-     *          ON DELETE cascade
     */
     public function getSQL(): string
     {
-        $constraint = $this->format();
+        $constraint =  sprintf(
+      'FOREIGN KEY (%s) REFERENCES %s (%s)',
+             $this->column,
+             $this->table,
+             $this->references
+        );
 
         if (!$this->key) {
             return $constraint;
