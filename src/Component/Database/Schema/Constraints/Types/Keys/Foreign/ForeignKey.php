@@ -31,14 +31,14 @@ class ForeignKey extends Constraint implements ForeignKeyInterface
     /**
      * @var string
     */
-    protected string $table;
+    protected string $referenceTable;
 
 
 
     /**
      * @var string
     */
-    protected string $references;
+    protected string $referenceColumn;
 
 
 
@@ -56,13 +56,13 @@ class ForeignKey extends Constraint implements ForeignKeyInterface
 
 
 
+
     /**
-     * @param string $column (Example: id)
-     * @return $this
+     * @inheritDoc
     */
-    public function references(string $column): static
+    public function references(string $referenceColumn): static
     {
-        $this->references = $column;
+        $this->referenceColumn = $referenceColumn;
 
         return $this;
     }
@@ -73,12 +73,11 @@ class ForeignKey extends Constraint implements ForeignKeyInterface
 
 
     /**
-     * @param string $table (Example: users)
-     * @return ConstrainedInterface
+     * @inheritDoc
     */
-    public function on(string $table): ConstrainedInterface
+    public function on(string $referenceTable): ConstrainedInterface
     {
-        $this->table = $table;
+        $this->referenceTable = $referenceTable;
 
         return $this->constrained();
     }
@@ -116,8 +115,8 @@ class ForeignKey extends Constraint implements ForeignKeyInterface
     {
         $constraint =  sprintf('FOREIGN KEY (%s) REFERENCES %s(%s)',
              $this->column,
-             $this->table,
-             $this->references
+             $this->referenceTable,
+             $this->referenceColumn
         );
 
         if (!$this->key) {
@@ -139,8 +138,8 @@ class ForeignKey extends Constraint implements ForeignKeyInterface
         return sprintf(
             'FOREIGN KEY (%s) REFERENCES %s (%s)',
             $this->column,
-            $this->table,
-            $this->references
+            $this->referenceTable,
+            $this->referenceColumn
         );
     }
 }

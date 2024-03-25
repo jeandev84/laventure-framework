@@ -168,16 +168,6 @@ class MysqlTable extends Table
 
 
 
-    /**
-     * @inheritDoc
-    */
-    public function hasUniqueKey(string $uniqueKey): bool
-    {
-
-    }
-
-
-
 
     /**
      * @inheritDoc
@@ -195,7 +185,7 @@ class MysqlTable extends Table
     */
     public function getUniqueKeys(): array
     {
-
+        return [];
     }
 
 
@@ -206,7 +196,31 @@ class MysqlTable extends Table
     */
     public function getConstraints(): array
     {
+        return [];
+    }
 
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function dropPrimaryKey(string $primaryKey): static
+    {
+         return $this;
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function dropPrimaryKeys(): static
+    {
+        return $this;
     }
 
 
@@ -230,21 +244,5 @@ class MysqlTable extends Table
     public function expr(): TableSQlBuilderInterface
     {
         return new MysqlTableSQLBuilder($this);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function dropPrimaryKey(string $primaryKey): static
-    {
-        // TODO: Implement dropPrimaryKey() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function dropPrimaryKeys(): static
-    {
-        // TODO: Implement dropPrimaryKeys() method.
     }
 }

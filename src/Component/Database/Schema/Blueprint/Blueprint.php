@@ -478,9 +478,11 @@ class Blueprint implements BlueprintInterface
     /**
      * @inheritDoc
     */
-    public function foreign(string $name): ForeignKeyInterface
+    public function foreign(string $name, callable $func): static
     {
-        return $this->table->foreignKey($name);
+        $this->table->addForeignKey($name, $func);
+
+        return $this;
     }
 
 
@@ -490,9 +492,9 @@ class Blueprint implements BlueprintInterface
     /**
      * @inheritDoc
     */
-    public function foreignId(): ForeignKeyInterface
+    public function foreignId(callable $func): static
     {
-        return $this->foreign('id');
+        return $this->foreign('id', $func);
     }
 
 

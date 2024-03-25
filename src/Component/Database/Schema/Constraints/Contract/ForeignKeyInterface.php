@@ -18,20 +18,22 @@ use Laventure\Component\Database\Schema\Constraints\ConstraintInterface;
 interface ForeignKeyInterface extends ConstraintInterface
 {
     /**
-     * @param string $column
+     * @param string $referenceColumn (Example: id)
      * @return $this
     */
-    public function references(string $column): static;
+    public function references(string $referenceColumn): static;
 
 
 
 
 
     /**
-     * @param string $table
+     * param string $referenceTable (Example: users)
+     *
+     * @param string $referenceTable
      * @return ConstrainedInterface
     */
-    public function on(string $table): ConstrainedInterface;
+    public function on(string $referenceTable): ConstrainedInterface;
 
 
 

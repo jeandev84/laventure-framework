@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Table;
@@ -130,7 +129,10 @@ abstract class Table implements TableInterface
         $name = $column->getName();
 
         if ($this->hasColumn($name)) {
-            throw new ColumnAlreadyExistsException($name, ['context' => get_called_class()]);
+            throw new ColumnAlreadyExistsException(
+                $name,
+                ['context' => get_called_class()]
+            );
         }
 
         $this->criteria->newColumn[$name] = $column;
@@ -227,6 +229,9 @@ abstract class Table implements TableInterface
     {
          return isset($this->criteria->modifyColumn[$name]);
     }
+
+
+
 
 
 
@@ -446,17 +451,6 @@ abstract class Table implements TableInterface
 
 
 
-    /**
-     * @inheritDoc
-    */
-    public function addConstraint(string $key, string $constraint): static
-    {
-
-    }
-
-
-
-
 
     /**
      * @inheritDoc
@@ -470,6 +464,9 @@ abstract class Table implements TableInterface
 
         return $this;
     }
+
+
+
 
 
 
@@ -561,6 +558,17 @@ abstract class Table implements TableInterface
 
 
 
+    /**
+     * @inheritDoc
+    */
+    public function hasUniqueKey(string $uniqueKey): bool
+    {
+         return array_key_exists($uniqueKey, $this->getUniqueKeys());
+    }
+
+
+
+
 
 
     /**
@@ -585,6 +593,8 @@ abstract class Table implements TableInterface
 
         return $this->exists();
     }
+
+
 
 
 
@@ -675,9 +685,7 @@ abstract class Table implements TableInterface
     */
     public function list(): array
     {
-        return $this->connection
-                    ->getDatabase()
-                    ->getTables();
+        return $this->connection->getDatabase()->getTables();
     }
 
 

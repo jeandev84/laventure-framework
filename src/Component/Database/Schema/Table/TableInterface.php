@@ -392,21 +392,6 @@ interface TableInterface
 
 
     /**
-     * @param string $key
-     * @param string $constraint
-     * @return $this
-    */
-    public function addConstraint(string $key, string $constraint): static;
-
-
-
-
-
-
-
-
-
-    /**
      * Add primary keys
      *
      * @param array $primaryKeys

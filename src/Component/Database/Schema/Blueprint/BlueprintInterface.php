@@ -533,14 +533,12 @@ interface BlueprintInterface
 
 
 
-
     /**
      * @param string $name
-     * @return ForeignKeyInterface
+     * @param callable $func
+     * @return BlueprintInterface
     */
-    public function foreign(string $name): ForeignKeyInterface;
-
-
+    public function foreign(string $name, callable $func): static;
 
 
 
@@ -548,9 +546,10 @@ interface BlueprintInterface
 
 
     /**
-     * @return ForeignKeyInterface
+     * @param callable $func
+     * @return BlueprintInterface
     */
-    public function foreignId(): ForeignKeyInterface;
+    public function foreignId(callable $func): static;
 
 
 
