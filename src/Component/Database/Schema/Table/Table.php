@@ -118,9 +118,9 @@ abstract class Table implements TableInterface
         $this->criteria->addColumn[$name] = $column;
 
         if ($this->exists()) {
-            $this->criteria->update[$name] = $column->add();
+            $this->criteria->update[] = $column->add();
         } else {
-            $this->criteria->create[$name] = $column->getSQL();
+            $this->criteria->create[] = $column->getSQL();
         }
 
         return $this;
@@ -136,7 +136,9 @@ abstract class Table implements TableInterface
     */
     public function renameColumn(string $name, string $to): static
     {
-        $this->criteria->renameColumn[$name] = $this->getColumn($name)->rename($to);
+        $column = $this->getColumn($name);
+        $this->criteria->renameColumn[$name] = $column;
+        $this->criteria->update[]            = $column->rename($to);
 
         return $this;
     }
@@ -151,9 +153,11 @@ abstract class Table implements TableInterface
     */
     public function modifyColumn(string $name, callable $func): static
     {
-        $column = $this->parseColumnOptions($this->getColumn($name), $func)->getColumn();
+        $column = $this->parseColumnOptions($this->getColumn($name), $func)
+                       ->getColumn();
 
-        $this->criteria->renameColumn[$name] = $column->modify();
+        $this->criteria->modifyColumn[$name] = $column;
+        $this->criteria->update[]            = $column->modify();
 
         return $this;
     }
@@ -168,7 +172,11 @@ abstract class Table implements TableInterface
     */
     public function dropColumn(string $name): static
     {
-        return $this->addUpdateTable($this->getColumn($name)->drop());
+        $column = $this->getColumn($name);
+        $this->criteria->dropColumn[$name] = $column;
+        $this->criteria->update[]          = $column->drop();
+
+        return $this;
     }
 
 

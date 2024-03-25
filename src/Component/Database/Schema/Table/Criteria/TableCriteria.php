@@ -52,6 +52,15 @@ class TableCriteria implements TableCriteriaInterface
 
 
     /**
+     * @var ColumnInterface[]
+    */
+    public array $dropColumn = [];
+
+
+
+
+
+    /**
      * @var array
     */
     public array $primary = [];
