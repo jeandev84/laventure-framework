@@ -70,7 +70,7 @@ class Blueprint implements BlueprintInterface
     */
     public function bigIncrements(string $name): BlueprintColumnInterface
     {
-        return $this->column($this->table->bigIncrements($name));
+        return $this->add($this->table->bigIncrements($name));
     }
 
 
