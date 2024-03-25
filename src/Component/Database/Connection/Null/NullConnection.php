@@ -162,7 +162,7 @@ class NullConnection implements ConnectionInterface
         return new NullConfiguration();
     }
 
-    
+
 
 
     /**

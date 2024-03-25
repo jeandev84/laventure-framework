@@ -20,7 +20,6 @@ use Laventure\Component\Database\Schema\Table\TableInterface;
  */
 interface SchemaInterface
 {
-
     /**
      * Create schema
      *

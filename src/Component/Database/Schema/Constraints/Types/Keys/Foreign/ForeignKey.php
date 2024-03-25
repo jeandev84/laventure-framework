@@ -19,7 +19,6 @@ use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface
 */
 class ForeignKey extends Constraint implements ForeignKeyInterface
 {
-
     /**
      * @var string
     */
@@ -113,10 +112,11 @@ class ForeignKey extends Constraint implements ForeignKeyInterface
     */
     public function getSQL(): string
     {
-        $constraint =  sprintf('FOREIGN KEY (%s) REFERENCES %s(%s)',
-             $this->column,
-             $this->referenceTable,
-             $this->referenceColumn
+        $constraint =  sprintf(
+            'FOREIGN KEY (%s) REFERENCES %s(%s)',
+            $this->column,
+            $this->referenceTable,
+            $this->referenceColumn
         );
 
         if (!$this->key) {

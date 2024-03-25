@@ -20,14 +20,12 @@ use Laventure\Component\Database\Schema\Table\TableInterface;
 */
 abstract class CreateTableSQLBuilder implements CreateTableSQLBuilderInterface
 {
-
     /**
      * @param TableInterface $table
     */
     public function __construct(
         protected TableInterface $table
-    )
-    {
+    ) {
     }
 
 
@@ -49,11 +47,11 @@ abstract class CreateTableSQLBuilder implements CreateTableSQLBuilderInterface
     */
     public function getCriteria(): string
     {
-         return QueryUtils::str([
-             $this->getNewColumnsSQL(),
-             $this->getForeignSQL(),
-             $this->getPrimarySQL()
-         ]);
+        return QueryUtils::str([
+            $this->getNewColumnsSQL(),
+            $this->getForeignSQL(),
+            $this->getPrimarySQL()
+        ]);
     }
 
 

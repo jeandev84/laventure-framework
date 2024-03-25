@@ -22,7 +22,8 @@ abstract class TableSQlBuilder implements TableSQlBuilderInterface
     /**
      * @param TableInterface $table
     */
-    public function __construct(protected TableInterface $table) {
+    public function __construct(protected TableInterface $table)
+    {
     }
 
 

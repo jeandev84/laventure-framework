@@ -553,9 +553,9 @@ abstract class AbstractColumn implements ColumnInterface
     */
     public function withTypeOption($key, $value): static
     {
-         $this->typeOptions[$key] = $value;
+        $this->typeOptions[$key] = $value;
 
-         return $this;
+        return $this;
     }
 
 
@@ -569,11 +569,11 @@ abstract class AbstractColumn implements ColumnInterface
     */
     public function withTypeOptions(array $options): static
     {
-         foreach ($options as $key => $value) {
-             $this->withTypeOption($key, $value);
-         }
+        foreach ($options as $key => $value) {
+            $this->withTypeOption($key, $value);
+        }
 
-         return $this;
+        return $this;
     }
 
 

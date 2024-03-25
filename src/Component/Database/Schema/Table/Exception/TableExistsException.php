@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Table\Exception;
@@ -16,8 +17,8 @@ use Throwable;
  */
 class TableExistsException extends TableException
 {
-     public function __construct(string $table, array $data = [])
-     {
-         parent::__construct("Table '$table' already exists.", $data, 409);
-     }
+    public function __construct(string $table, array $data = [])
+    {
+        parent::__construct("Table '$table' already exists.", $data, 409);
+    }
 }

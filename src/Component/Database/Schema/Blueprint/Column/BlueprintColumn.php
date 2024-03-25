@@ -8,7 +8,6 @@ use Laventure\Component\Database\Schema\Column\Contract\ColumnInterface;
 use Laventure\Component\Database\Schema\Column\Option\Contract\ColumnOptionInterface;
 use Laventure\Component\Database\Schema\Table\TableInterface;
 
-
 /**
  * BlueprintColumn
  *
@@ -17,7 +16,6 @@ use Laventure\Component\Database\Schema\Table\TableInterface;
 class BlueprintColumn implements BlueprintColumnInterface
 {
 
-
     /**
      * @param TableInterface $table
      * @param ColumnInterface $column
@@ -25,8 +23,7 @@ class BlueprintColumn implements BlueprintColumnInterface
     public function __construct(
         protected TableInterface $table,
         protected ColumnInterface $column
-    )
-    {
+    ) {
     }
 
 
@@ -113,18 +110,79 @@ class BlueprintColumn implements BlueprintColumnInterface
 
 
 
+
+
+    /**
+     * @inheritDoc
+    */
+    public function add(): static
+    {
+        $this->table->addNewColumn($this->column);
+
+        return $this;
+    }
+
+
+
+
     /**
      * @inheritDoc
     */
     public function change(): static
     {
-        $this->table->modifyColumn(
-            $this->column->getName(),
-            function (ColumnOptionInterface $option) {
-                return $option->getColumn();
-            }
-        );
+        $this->table->addModifyColumn($this->column);
 
         return $this;
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function rename(string $to): static
+    {
+        $this->table->renameColumn($this->getName(), $to);
+
+        return $this;
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function drop(): static
+    {
+        $this->table->dropColumn($this->getName());
+
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getName(): string
+    {
+        return $this->column->getName();
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function toString(): string
+    {
+        return $this->column->getSQL();
     }
 }

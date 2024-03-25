@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema;
@@ -24,7 +25,6 @@ use Laventure\Component\Database\Schema\Table\TableInterface;
 */
 class Schema implements SchemaInterface
 {
-
     /**
      * @var ConnectionInterface
     */

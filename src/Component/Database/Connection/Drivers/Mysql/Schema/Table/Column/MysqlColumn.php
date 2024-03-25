@@ -17,7 +17,6 @@ use Laventure\Component\Database\Schema\Column\AbstractColumn;
 */
 class MysqlColumn extends AbstractColumn
 {
-
     /**
      * @param string $name
      * @param string $type

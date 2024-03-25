@@ -26,7 +26,7 @@ class MysqlTableSQLBuilder extends TableSQlBuilder
     */
     public function create(): CreateTableSQLBuilderInterface
     {
-         return new MysqlCreateTableSQLBuilder($this->table);
+        return new MysqlCreateTableSQLBuilder($this->table);
     }
 
 

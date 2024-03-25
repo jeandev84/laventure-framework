@@ -657,6 +657,15 @@ interface BlueprintInterface
 
 
 
+    /**
+     * Returns columns
+     *
+     * @return BlueprintColumnInterface[]
+    */
+    public function getColumns(): array;
+
+
+
 
 
 
@@ -665,5 +674,5 @@ interface BlueprintInterface
      *
      * @return TableInterface
     */
-    public function getTable(): TableInterface;
+    public function table(): TableInterface;
 }

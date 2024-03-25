@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Drivers\Mysql\Schema\Table\Builder;
@@ -17,7 +18,6 @@ use Laventure\Component\Database\Schema\Table\Expr\AlterTable;
 */
 class MysqlUpdateTableSQLBuilder extends UpdateTableSQLBuilder
 {
-
     /**
      * @inheritDoc
     */

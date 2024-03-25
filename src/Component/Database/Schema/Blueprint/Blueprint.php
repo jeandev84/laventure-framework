@@ -7,6 +7,7 @@ namespace Laventure\Component\Database\Schema\Blueprint;
 use Laventure\Component\Database\Schema\Blueprint\Column\BlueprintColumn;
 use Laventure\Component\Database\Schema\Blueprint\Column\BlueprintColumnInterface;
 use Laventure\Component\Database\Schema\Column\Contract\ColumnInterface;
+use Laventure\Component\Database\Schema\Column\Option\Contract\ColumnOptionInterface;
 use Laventure\Component\Database\Schema\Column\Types\ColumnType;
 use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
 use Laventure\Component\Database\Schema\Table\TableInterface;
@@ -18,6 +19,15 @@ use Laventure\Component\Database\Schema\Table\TableInterface;
 */
 class Blueprint implements BlueprintInterface
 {
+
+    /**
+     * @var BlueprintColumnInterface[]
+    */
+    protected array $columns = [];
+
+
+
+
     /**
      * @param TableInterface $table
     */
@@ -72,7 +82,7 @@ class Blueprint implements BlueprintInterface
     */
     public function integer(string $name, int $length = 11): BlueprintColumnInterface
     {
-        return $this->column($this->table->integer($name, $length));
+        return $this->add($this->table->integer($name, $length));
     }
 
 
@@ -84,7 +94,7 @@ class Blueprint implements BlueprintInterface
     */
     public function smallInteger(string $name): BlueprintColumnInterface
     {
-        return $this->column($this->table->smallInteger($name));
+        return $this->add($this->table->smallInteger($name));
     }
 
 
@@ -96,7 +106,7 @@ class Blueprint implements BlueprintInterface
     */
     public function bigInteger(string $name): BlueprintColumnInterface
     {
-        return $this->column($this->table->bigInteger($name));
+        return $this->add($this->table->bigInteger($name));
     }
 
 
@@ -109,7 +119,7 @@ class Blueprint implements BlueprintInterface
     */
     public function mediumInteger(string $name): BlueprintColumnInterface
     {
-        return $this->column($this->table->mediumInteger($name));
+        return $this->add($this->table->mediumInteger($name));
     }
 
 
@@ -122,7 +132,7 @@ class Blueprint implements BlueprintInterface
     */
     public function tinyInteger(string $name): BlueprintColumnInterface
     {
-        return $this->column($this->table->tinyInteger($name));
+        return $this->add($this->table->tinyInteger($name));
     }
 
 
@@ -135,7 +145,7 @@ class Blueprint implements BlueprintInterface
     */
     public function string(string $name, int $length = 255): BlueprintColumnInterface
     {
-        return $this->column($this->table->string($name, $length));
+        return $this->add($this->table->string($name, $length));
     }
 
 
@@ -147,7 +157,7 @@ class Blueprint implements BlueprintInterface
     */
     public function char(string $name, $value): BlueprintColumnInterface
     {
-        return $this->column($this->table->char($name, $value));
+        return $this->add($this->table->char($name, $value));
     }
 
 
@@ -160,7 +170,7 @@ class Blueprint implements BlueprintInterface
     */
     public function boolean(string $name): BlueprintColumnInterface
     {
-        return $this->column($this->table->boolean($name));
+        return $this->add($this->table->boolean($name));
     }
 
 
@@ -172,7 +182,7 @@ class Blueprint implements BlueprintInterface
     */
     public function datetime(string $name): BlueprintColumnInterface
     {
-        return $this->column($this->table->datetime($name));
+        return $this->add($this->table->datetime($name));
     }
 
 
@@ -184,7 +194,7 @@ class Blueprint implements BlueprintInterface
     */
     public function time(string $name): BlueprintColumnInterface
     {
-        return $this->column($this->table->time($name));
+        return $this->add($this->table->time($name));
     }
 
 
@@ -196,7 +206,7 @@ class Blueprint implements BlueprintInterface
     */
     public function timestamp(string $name): BlueprintColumnInterface
     {
-        return $this->column($this->table->timestamp($name));
+        return $this->add($this->table->timestamp($name));
     }
 
 
@@ -208,7 +218,7 @@ class Blueprint implements BlueprintInterface
     */
     public function binary(string $name): BlueprintColumnInterface
     {
-        return $this->column($this->table->binary($name));
+        return $this->add($this->table->binary($name));
     }
 
 
@@ -220,7 +230,7 @@ class Blueprint implements BlueprintInterface
     */
     public function date(string $name): BlueprintColumnInterface
     {
-        return $this->column($this->table->date($name));
+        return $this->add($this->table->date($name));
     }
 
 
@@ -233,7 +243,7 @@ class Blueprint implements BlueprintInterface
     */
     public function decimal(string $name, int $precision, int $scale): BlueprintColumnInterface
     {
-        return $this->column($this->table->decimal($name, $precision, $scale));
+        return $this->add($this->table->decimal($name, $precision, $scale));
     }
 
 
@@ -246,7 +256,7 @@ class Blueprint implements BlueprintInterface
     */
     public function double(string $name, int $precision, int $scale): BlueprintColumnInterface
     {
-        return $this->column($this->table->double($name, $precision, $scale));
+        return $this->add($this->table->double($name, $precision, $scale));
     }
 
 
@@ -258,7 +268,7 @@ class Blueprint implements BlueprintInterface
     */
     public function enum(string $name, array $values): BlueprintColumnInterface
     {
-        return $this->column($this->table->enum($name, $values));
+        return $this->add($this->table->enum($name, $values));
     }
 
 
@@ -270,7 +280,7 @@ class Blueprint implements BlueprintInterface
     */
     public function float(string $name): BlueprintColumnInterface
     {
-        return $this->column($this->table->float($name));
+        return $this->add($this->table->float($name));
     }
 
 
@@ -282,7 +292,7 @@ class Blueprint implements BlueprintInterface
     */
     public function json(string $name): BlueprintColumnInterface
     {
-        return $this->column($this->table->json($name));
+        return $this->add($this->table->json($name));
     }
 
 
@@ -294,7 +304,7 @@ class Blueprint implements BlueprintInterface
     */
     public function text(string $name): BlueprintColumnInterface
     {
-        return $this->column($this->table->text($name));
+        return $this->add($this->table->text($name));
     }
 
 
@@ -306,7 +316,7 @@ class Blueprint implements BlueprintInterface
     */
     public function longText(string $name): BlueprintColumnInterface
     {
-        return $this->column($this->table->json($name));
+        return $this->add($this->table->json($name));
     }
 
 
@@ -317,7 +327,7 @@ class Blueprint implements BlueprintInterface
     */
     public function mediumText(string $name): BlueprintColumnInterface
     {
-        return $this->column($this->table->mediumText($name));
+        return $this->add($this->table->mediumText($name));
     }
 
 
@@ -329,7 +339,7 @@ class Blueprint implements BlueprintInterface
     */
     public function tinyText(string $name): BlueprintColumnInterface
     {
-        return $this->column($this->table->tinyText($name));
+        return $this->add($this->table->tinyText($name));
     }
 
 
@@ -342,7 +352,7 @@ class Blueprint implements BlueprintInterface
     */
     public function morphs(string $name): BlueprintColumnInterface
     {
-        return $this->column($this->table->morphs($name));
+        return $this->add($this->table->morphs($name));
     }
 
 
@@ -452,9 +462,9 @@ class Blueprint implements BlueprintInterface
     */
     public function unique(array $columns): static
     {
-         $this->table->addUniqueKey($columns);
+        $this->table->addUniqueKey($columns);
 
-         return $this;
+        return $this;
     }
 
 
@@ -506,9 +516,9 @@ class Blueprint implements BlueprintInterface
     */
     public function addColumn(string $name, ColumnType|string $type, callable $options = null): static
     {
-         $this->table->addColumn($name, $type, $options);
+        $this->table->addColumn($name, $type, $options);
 
-         return $this;
+        return $this;
     }
 
 
@@ -604,10 +614,23 @@ class Blueprint implements BlueprintInterface
 
 
 
+
     /**
      * @inheritDoc
     */
-    public function getTable(): TableInterface
+    public function getColumns(): array
+    {
+        return $this->columns;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function table(): TableInterface
     {
         return $this->table;
     }
@@ -622,9 +645,24 @@ class Blueprint implements BlueprintInterface
     */
     public function column(ColumnInterface $column): BlueprintColumnInterface
     {
-         return new BlueprintColumn(
-             $this->table,
-             $column
-         );
+        return new BlueprintColumn(
+            $this->table,
+            $column
+        );
+    }
+
+
+
+
+
+
+
+    /**
+     * @param ColumnInterface $column
+     * @return BlueprintColumnInterface
+    */
+    private function add(ColumnInterface $column): BlueprintColumnInterface
+    {
+         return $this->columns[$column->getName()] = $this->column($column);
     }
 }

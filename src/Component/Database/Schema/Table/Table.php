@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Table;
@@ -34,10 +35,9 @@ use ReflectionException;
 */
 abstract class Table implements TableInterface
 {
-
-    const CREATED_AT = 'created_at';
-    const UPDATED_AT = 'updated_at';
-    const DELETED_AT = 'deleted_at';
+    public const CREATED_AT = 'created_at';
+    public const UPDATED_AT = 'updated_at';
+    public const DELETED_AT = 'deleted_at';
 
 
 
@@ -238,7 +238,7 @@ abstract class Table implements TableInterface
     */
     public function hasModifyColumn(string $name): bool
     {
-         return isset($this->criteria->modifyColumn[$name]);
+        return isset($this->criteria->modifyColumn[$name]);
     }
 
 
@@ -330,7 +330,7 @@ abstract class Table implements TableInterface
     */
     public function modifyColumn(string $name, callable $func): static
     {
-        $column = $this->parseColumnOptions($this->getColumn($name), $func)
+        $column = $this->columnOptions($this->getColumn($name), $func)
                        ->getColumn();
 
 
@@ -502,7 +502,7 @@ abstract class Table implements TableInterface
     */
     public function foreignKey(string $foreignKey): ForeignKeyInterface
     {
-         return new ForeignKey($foreignKey);
+        return new ForeignKey($foreignKey);
     }
 
 
@@ -574,7 +574,7 @@ abstract class Table implements TableInterface
     */
     public function hasUniqueKey(string $uniqueKey): bool
     {
-         return array_key_exists($uniqueKey, $this->getUniqueKeys());
+        return array_key_exists($uniqueKey, $this->getUniqueKeys());
     }
 
 
@@ -1224,21 +1224,16 @@ abstract class Table implements TableInterface
 
 
 
-    /**
-     * @return ColumnFactoryInterface
-    */
-    abstract public function getColumnFactory(): ColumnFactoryInterface;
-
-
-
 
 
     /**
+     * Parsing column options
+     *
      * @param ColumnInterface $column
      * @param callable|null $options
      * @return ColumnOptionInterface
     */
-    private function parseColumnOptions(
+    private function columnOptions(
         ColumnInterface $column,
         callable $options = null
     ): ColumnOptionInterface {
@@ -1263,7 +1258,7 @@ abstract class Table implements TableInterface
         callable $options = null
     ): ColumnInterface {
 
-        $option = $this->parseColumnOptions($this->column($name), $options);
+        $option = $this->columnOptions($this->column($name), $options);
 
         if ($type instanceof ColumnType) {
             $option->callMethod($type->value);
@@ -1289,4 +1284,14 @@ abstract class Table implements TableInterface
             return $options->getColumn();
         };
     }
+
+
+
+
+
+
+    /**
+     * @return ColumnFactoryInterface
+    */
+    abstract protected function getColumnFactory(): ColumnFactoryInterface;
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Utils;
@@ -14,25 +15,25 @@ namespace Laventure\Component\Database\Query\Utils;
 */
 class QueryUtils
 {
-      /**
-       * @param array $queries
-       * @return QueryCollection
-      */
-      public static function collection(array $queries): QueryCollection
-      {
-           return new QueryCollection($queries);
-      }
+    /**
+     * @param array $queries
+     * @return QueryCollection
+    */
+    public static function collection(array $queries): QueryCollection
+    {
+        return new QueryCollection($queries);
+    }
 
 
 
 
-      /**
-       * @param array $queries
-       * @param string|null $separator
-       * @return string
-      */
-      public static function str(array $queries, string $separator = null): string
-      {
-          return static::collection($queries)->separate($separator ?: ', ')->toString();
-      }
+    /**
+     * @param array $queries
+     * @param string|null $separator
+     * @return string
+    */
+    public static function str(array $queries, string $separator = null): string
+    {
+        return static::collection($queries)->separate($separator ?: ', ')->toString();
+    }
 }

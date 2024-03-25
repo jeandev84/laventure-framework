@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema\Blueprint\Column;
 
+use Laventure\Component\Database\Schema\Column\Contract\ColumnInterface;
+
 /**
  * BlueprintColumnInterface
  *
@@ -95,6 +97,15 @@ interface BlueprintColumnInterface
 
 
 
+    /**
+     * @return $this
+    */
+    public function add(): static;
+
+
+
+
+
 
 
     /**
@@ -103,4 +114,56 @@ interface BlueprintColumnInterface
      * @return $this
     */
     public function change(): static;
+
+
+
+
+
+
+    /**
+     * Rename column
+     *
+     * @param string $to
+     * @return $this
+    */
+    public function rename(string $to): static;
+
+
+
+
+
+
+    /**
+     * Drop column
+     *
+     * @return $this
+    */
+    public function drop(): static;
+
+
+
+
+
+
+
+
+
+    /**
+     * Returns column name
+     *
+     * @return string
+    */
+    public function getName(): string;
+
+
+
+
+
+
+    /**
+     * Returns column as string
+     *
+     * @return string
+    */
+    public function toString(): string;
 }

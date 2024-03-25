@@ -17,7 +17,6 @@ use Laventure\Component\Database\Query\Builder\SQL\Contract\SQLInterface;
 */
 interface CreateTableSQLBuilderInterface extends SQLInterface
 {
-
     /**
      * @return string
     */

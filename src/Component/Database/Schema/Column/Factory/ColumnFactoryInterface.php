@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Schema\Column\Factory;
 
 use Laventure\Component\Database\Schema\Column\Contract\ColumnInterface;
-use Laventure\Component\Database\Schema\Column\Info\ColumnInfoInterface;
 
 /**
  * ColumnFactoryInterface

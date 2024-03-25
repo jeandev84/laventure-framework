@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query\Utils;
@@ -14,61 +15,59 @@ namespace Laventure\Component\Database\Query\Utils;
 */
 class QueryCollection
 {
-
-      /**
-       * @var string
-      */
-      protected string $separator = '';
-
+    /**
+     * @var string
+    */
+    protected string $separator = '';
 
 
-      /**
-       * @param array $queries
-      */
-      public function __construct(
-          protected array $queries
-      )
-      {
-      }
+
+    /**
+     * @param array $queries
+    */
+    public function __construct(
+        protected array $queries
+    ) {
+    }
 
 
 
 
 
-      /**
-       * @param string $separator
-       * @return $this
-      */
-      public function separate(string $separator): static
-      {
-          $this->separator = $separator;
+    /**
+     * @param string $separator
+     * @return $this
+    */
+    public function separate(string $separator): static
+    {
+        $this->separator = $separator;
 
-          return $this;
-      }
+        return $this;
+    }
 
 
 
 
 
 
-      /**
-       * @return string
-      */
-      public function toString(): string
-      {
-          return join($this->separator, array_filter($this->queries));
-      }
+    /**
+     * @return string
+    */
+    public function toString(): string
+    {
+        return join($this->separator, array_filter($this->queries));
+    }
 
 
 
 
 
 
-      /**
-       * @return array
-      */
-      public function toArray(): array
-      {
-          return $this->queries;
-      }
+    /**
+     * @return array
+    */
+    public function toArray(): array
+    {
+        return $this->queries;
+    }
 }
