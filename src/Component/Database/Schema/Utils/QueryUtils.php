@@ -28,10 +28,11 @@ class QueryUtils
 
       /**
        * @param array $queries
+       * @param string|null $separator
        * @return string
       */
-      public static function str(array $queries): string
+      public static function str(array $queries, string $separator = null): string
       {
-          return static::queries($queries)->toString();
+          return static::queries($queries)->separate($separator ?: ', ')->toString();
       }
 }

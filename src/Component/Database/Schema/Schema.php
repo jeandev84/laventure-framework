@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Schema;
@@ -21,6 +20,15 @@ use Laventure\Component\Database\Schema\Table\TableInterface;
 */
 class Schema implements SchemaInterface
 {
+
+    /**
+     * @var string
+    */
+    protected string $schemaName;
+
+
+
+
     /**
      * @var ConnectionInterface
     */
@@ -36,23 +44,13 @@ class Schema implements SchemaInterface
 
 
 
-
-    /**
-     * @var string|null
-    */
-    protected ?string $name;
-
-
-
-
     /**
      * @param ConnectionInterface $connection
-     * @param string|null $name
     */
-    public function __construct(ConnectionInterface $connection, string $name = null)
+    public function __construct(ConnectionInterface $connection)
     {
         $this->connection = $connection;
-        $this->name       = $name;
+        $this->schemaName = $connection->getConfiguration()->getSchemaName();
     }
 
 
@@ -63,10 +61,7 @@ class Schema implements SchemaInterface
     */
     public function table(string $name): TableInterface
     {
-        return $this->connection->table(
-            $name,
-            $this->getName()
-        );
+        return $this->connection->table($name, $this->schemaName);
     }
 
 
@@ -87,7 +82,7 @@ class Schema implements SchemaInterface
 
         call_user_func($closure, $blueprint);
 
-        return $blueprint->create();
+        return $blueprint->createTable();
     }
 
 
@@ -107,7 +102,7 @@ class Schema implements SchemaInterface
 
         call_user_func($closure, $blueprint);
 
-        return $blueprint->update();
+        return $blueprint->updateTable();
     }
 
 
@@ -137,19 +132,6 @@ class Schema implements SchemaInterface
     /**
      * @inheritDoc
     */
-    public function dropIfExists(string $table): mixed
-    {
-        return $this->table($table)->dropIfExists();
-    }
-
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
     public function truncate(string $table): mixed
     {
         if (!$this->exists($table)) {
@@ -158,24 +140,6 @@ class Schema implements SchemaInterface
 
         return $this->table($table)->truncate();
     }
-
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function truncateCascade(string $table): mixed
-    {
-        if (!$this->exists($table)) {
-            return false;
-        }
-
-        return $this->table($table)->truncateCascade();
-    }
-
 
 
 
@@ -205,16 +169,6 @@ class Schema implements SchemaInterface
     }
 
 
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function hasColumn(string $table, string $column): bool
-    {
-        return $this->table($table)->hasColumn($column);
-    }
 
 
 
@@ -251,13 +205,7 @@ class Schema implements SchemaInterface
     */
     public function getName(): string
     {
-        if (!$this->name) {
-            $this->name = $this->connection
-                               ->configuration()
-                               ->getDatabase();
-        }
-
-        return $this->name;
+        return $this->schemaName;
     }
 
 

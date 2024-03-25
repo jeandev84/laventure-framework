@@ -6,6 +6,7 @@ namespace Laventure\Component\Database\Manager;
 
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Configuration\Exception\ConfigurationException;
+use Laventure\Component\Database\Configuration\Exception\NotFoundConfigurationException;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Connection\Exception\NotFoundConnectionException;
 use Laventure\Component\Database\Connection\Exception\UnavailableConnectionException;
@@ -230,8 +231,7 @@ class DatabaseManager implements DatabaseManagerInterface
     */
     public function open(string $name, ConfigurationInterface $config): static
     {
-        return $this->setConnectionName($name)
-                    ->setConfiguration($name, $config);
+        return $this->setConnectionName($name)->setConfiguration($name, $config);
     }
 
 
@@ -240,15 +240,13 @@ class DatabaseManager implements DatabaseManagerInterface
 
     /**
      * @inheritDoc
-     * @throws ConfigurationException
+     * @throws NotFoundConfigurationException
     */
     public function configuration(string $name): ConfigurationInterface
     {
         if (!$this->hasConfiguration($name)) {
-            throw new ConfigurationException(
-                "empty main for connection ($name)",
-                [],
-                409
+            throw new NotFoundConfigurationException(
+                ['context' => "Not found for connection named '$name'"]
             );
         }
 
@@ -259,12 +257,11 @@ class DatabaseManager implements DatabaseManagerInterface
 
 
 
-
     /**
      * @inheritDoc
      * @param string|null $name
      * @return ConnectionInterface
-     * @throws ConfigurationException
+     * @throws NotFoundConfigurationException
      * @throws NotFoundConnectionException
      * @throws UnavailableConnectionException
     */
@@ -290,7 +287,7 @@ class DatabaseManager implements DatabaseManagerInterface
     */
     public function connect(string $name, ConfigurationInterface $config): ConnectionInterface
     {
-        $this->connections[$name]->connect($config);
+        $this->connections[$name]->config($config)->connect();
 
         if (! $this->connections[$name]->connected()) {
             throw new UnavailableConnectionException($name);

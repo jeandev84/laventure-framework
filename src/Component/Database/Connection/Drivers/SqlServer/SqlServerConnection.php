@@ -158,7 +158,7 @@ class SqlServerConnection implements ConnectionInterface
     /**
      * @inheritDoc
     */
-    public function configuration(): ConfigurationInterface
+    public function getConfiguration(): ConfigurationInterface
     {
 
     }

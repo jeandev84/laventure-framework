@@ -213,4 +213,17 @@ interface SchemaInterface
      * @return mixed
     */
     public function dump(): mixed;
+
+
+
+
+
+
+
+    /**
+     * Returns SQL
+     *
+     * @return string
+    */
+    public function dumpSQL(): string;
 }

@@ -18,7 +18,7 @@ class QueryCollection
       /**
        * @var string
       */
-      protected string $separator = ', ';
+      protected string $separator = '';
 
 
 

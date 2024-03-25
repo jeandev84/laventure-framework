@@ -7,6 +7,7 @@ namespace Laventure\Component\Database\Schema\Table\Builder\Common;
 use Laventure\Component\Database\Schema\Column\Contract\ColumnInterface;
 use Laventure\Component\Database\Schema\Table\Builder\Contract\CreateTableSQLBuilderInterface;
 use Laventure\Component\Database\Schema\Table\TableInterface;
+use Laventure\Component\Database\Schema\Utils\QueryUtils;
 
 /**
  * CreateTableSQLBuilder
@@ -48,7 +49,7 @@ abstract class CreateTableSQLBuilder implements CreateTableSQLBuilderInterface
     */
     public function getCriteria(): string
     {
-         return $this->toStringQueries([
+         return QueryUtils::str([
              $this->getNewColumnsSQL(),
              $this->getForeignSQL(),
              $this->getPrimarySQL()
@@ -78,7 +79,7 @@ abstract class CreateTableSQLBuilder implements CreateTableSQLBuilderInterface
     */
     protected function getNewColumnsSQL(): string
     {
-        return $this->toStringQueries($this->getNewColumnQueries());
+        return QueryUtils::str($this->getNewColumnQueries());
     }
 
 
@@ -119,7 +120,7 @@ abstract class CreateTableSQLBuilder implements CreateTableSQLBuilderInterface
     */
     protected function getForeignSQL(): string
     {
-        return $this->toStringQueries($this->getForeignQueries());
+        return QueryUtils::str($this->getForeignQueries());
     }
 
 
@@ -134,19 +135,5 @@ abstract class CreateTableSQLBuilder implements CreateTableSQLBuilderInterface
         return array_values(
             $this->table->getCriteria()->getForeign()
         );
-    }
-
-
-
-
-
-    /**
-     * @param array $queries
-     * @param string|null $separator
-     * @return string
-    */
-    private function toStringQueries(array $queries, string $separator = null): string
-    {
-        return join($separator ?: ', ', array_filter($queries));
     }
 }

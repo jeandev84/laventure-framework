@@ -41,7 +41,7 @@ abstract class Database implements DatabaseInterface
     public function __construct(ConnectionInterface $connection)
     {
         $this->connection = $connection;
-        $this->name       = $connection->configuration()->getDatabase();
+        $this->name       = $connection->getConfiguration()->getDatabase();
     }
 
 
@@ -140,7 +140,7 @@ abstract class Database implements DatabaseInterface
     */
     public function config($key, $default = null): mixed
     {
-        return $this->connection->config($key, $default);
+        return $this->connection->getConfiguration()->get($key, $default);
     }
 
 
@@ -166,7 +166,7 @@ abstract class Database implements DatabaseInterface
     public function collation(): string
     {
         return $this->connection
-                    ->configuration()
+                    ->getConfiguration()
                     ->getCollation();
     }
 

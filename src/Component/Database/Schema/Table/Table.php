@@ -42,6 +42,13 @@ abstract class Table implements TableInterface
 
 
     /**
+     * @var string
+    */
+    protected string $schemaName;
+
+
+
+    /**
      * @var TableCriteria
     */
     protected TableCriteria $criteria;
@@ -58,6 +65,9 @@ abstract class Table implements TableInterface
         protected string $name
     ) {
         $this->criteria = new TableCriteria();
+        $this->schemaName = $this->connection
+                                 ->getConfiguration()
+                                 ->getSchemaName();
     }
 
 
