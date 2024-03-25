@@ -8,6 +8,7 @@ use Laventure\Component\Database\Query\QueryInterface;
 use Laventure\Component\Database\Schema\Column\Contract\ColumnInterface;
 use Laventure\Component\Database\Schema\Column\Exception\ColumnAlreadyExistsException;
 use Laventure\Component\Database\Schema\Column\Exception\NotFoundColumnException;
+use Laventure\Component\Database\Schema\Column\Factory\ColumnFactoryInterface;
 use Laventure\Component\Database\Schema\Column\Option\ColumnOptions;
 use Laventure\Component\Database\Schema\Column\Option\Contract\ColumnOptionInterface;
 use Laventure\Component\Database\Schema\Column\Types\ColumnType;
@@ -1196,6 +1197,9 @@ abstract class Table implements TableInterface
 
 
 
+
+
+
     /**
      * @inheritDoc
     */
@@ -1203,6 +1207,27 @@ abstract class Table implements TableInterface
     {
         return $this->criteria->getUnique();
     }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function column(string $name): ColumnInterface
+    {
+        return $this->getColumnFactory()->createColumn($name);
+    }
+
+
+
+
+
+    /**
+     * @return ColumnFactoryInterface
+    */
+    abstract public function getColumnFactory(): ColumnFactoryInterface;
 
 
 

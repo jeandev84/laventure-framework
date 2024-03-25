@@ -9,6 +9,7 @@ use Laventure\Component\Database\Connection\Drivers\Mysql\Schema\Table\Column\My
 use Laventure\Component\Database\Connection\Drivers\Mysql\Schema\Table\Column\MysqlColumnInfo;
 use Laventure\Component\Database\Query\Result\QueryResultInterface;
 use Laventure\Component\Database\Schema\Column\Contract\ColumnInterface;
+use Laventure\Component\Database\Schema\Column\Factory\ColumnFactoryInterface;
 use Laventure\Component\Database\Schema\Constraints\Constraint;
 use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\IndexInterface;
@@ -30,34 +31,15 @@ use Laventure\Component\Database\Schema\Table\Table;
 */
 class MysqlTable extends Table
 {
-    /**
-     * @var MysqlColumnFactory
-    */
-    protected MysqlColumnFactory $columnFactory;
-
 
     /**
      * @param ConnectionInterface $connection
      * @param string $name
     */
-    public function __construct(
-        ConnectionInterface $connection,
-        string $name
-    ) {
+    public function __construct(ConnectionInterface $connection, string $name) {
         parent::__construct($connection, $name);
-        $this->columnFactory = new MysqlColumnFactory();
     }
 
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function column(string $name): ColumnInterface
-    {
-        return $this->columnFactory->createColumn($name);
-    }
 
 
 
@@ -106,6 +88,8 @@ class MysqlTable extends Table
     {
 
     }
+
+
 
 
 
@@ -226,6 +210,8 @@ class MysqlTable extends Table
 
 
 
+
+
     /**
      * @inheritDoc
     */
@@ -244,5 +230,17 @@ class MysqlTable extends Table
     public function expr(): TableSQlBuilderInterface
     {
         return new MysqlTableSQLBuilder($this);
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getColumnFactory(): ColumnFactoryInterface
+    {
+        return new MysqlColumnFactory();
     }
 }
