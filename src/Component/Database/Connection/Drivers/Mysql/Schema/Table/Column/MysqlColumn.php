@@ -22,7 +22,7 @@ class MysqlColumn extends AbstractColumn
     */
     public function increments(): static
     {
-        return $this->withTypeIncrement("AUTO_INCREMENT");
+        return $this->increment("AUTO_INCREMENT");
     }
 
 

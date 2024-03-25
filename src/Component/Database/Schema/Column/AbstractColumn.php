@@ -610,7 +610,7 @@ abstract class AbstractColumn implements ColumnInterface
      * @param $increment
      * @return $this
     */
-    public function withTypeIncrement($increment): static
+    public function increment($increment): static
     {
         return $this->withTypeOptions(compact('increment'));
     }
