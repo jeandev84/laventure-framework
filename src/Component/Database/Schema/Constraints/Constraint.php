@@ -20,15 +20,20 @@ class Constraint implements ConstraintInterface
     use HasOptionsTrait;
 
 
+
     /**
      * @param string $type
-     * @param string|null $key
+     * @param string $key
     */
     public function __construct(
         protected string $type,
-        protected ?string $key = null
+        protected string $key = ''
     ) {
     }
+
+
+
+
 
 
     /**
@@ -57,7 +62,7 @@ class Constraint implements ConstraintInterface
     /**
      * @inheritDoc
     */
-    public function getKey(): ?string
+    public function getKey(): string
     {
         return $this->key;
     }

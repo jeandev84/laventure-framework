@@ -21,9 +21,10 @@ use Laventure\Component\Database\Schema\Constraints\Contract\PrimaryKeyInterface
 class PrimaryKey extends ConstraintHasColumns implements PrimaryKeyInterface
 {
     /**
-     * @param string|null $key
+     * @param array $columns
+     * @param string $key
     */
-    public function __construct(array $columns = [], string $key = null)
+    public function __construct(array $columns = [], string $key = '')
     {
         parent::__construct('primaryKey', $key, $columns);
     }

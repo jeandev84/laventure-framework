@@ -15,6 +15,7 @@ use Laventure\Component\Database\Schema\Column\Types\ColumnType;
 use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\PrimaryKeyInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\UniqueKeyInterface;
+use Laventure\Component\Database\Schema\Constraints\Types\Keys\Foreign\ForeignKey;
 use Laventure\Component\Database\Schema\Table\Criteria\TableCriteria;
 use Laventure\Component\Database\Schema\Table\Criteria\TableCriteriaInterface;
 use Laventure\Component\Database\Schema\Table\Exceptions\TableException;
@@ -368,8 +369,11 @@ abstract class Table implements TableInterface
 
 
 
+
+
     /**
      * @inheritDoc
+     * @throws ColumnAlreadyExistsException
     */
     public function addDatetime(string $name, callable $options = null): static
     {
@@ -380,8 +384,10 @@ abstract class Table implements TableInterface
 
 
 
+
     /**
      * @inheritDoc
+     * @throws ColumnAlreadyExistsException
     */
     public function addNullableDatetime(string $name): static
     {
@@ -394,8 +400,10 @@ abstract class Table implements TableInterface
 
 
 
+
     /**
      * @inheritDoc
+     * @throws ColumnAlreadyExistsException
     */
     public function addTimestamps(): static
     {
@@ -406,8 +414,11 @@ abstract class Table implements TableInterface
 
 
 
+
+
     /**
      * @inheritDoc
+     * @throws ColumnAlreadyExistsException
     */
     public function addNullableTimestamps(): static
     {
@@ -418,8 +429,11 @@ abstract class Table implements TableInterface
 
 
 
+
+
     /**
      * @inheritDoc
+     * @throws ColumnAlreadyExistsException
     */
     public function addSoftDeletes(): static
     {
@@ -473,32 +487,15 @@ abstract class Table implements TableInterface
 
 
 
-    /**
-     * @inheritDoc
-    */
-    public function dropPrimaryKey(string $primaryKey): static
-    {
-        return $this;
-    }
-
-
-
-
-
 
 
     /**
      * @inheritDoc
     */
-    public function dropPrimaryKeys(): static
+    public function foreignKey(string $foreignKey): ForeignKeyInterface
     {
-        return $this;
+         return new ForeignKey($foreignKey);
     }
-
-
-
-
-
 
 
 
@@ -510,10 +507,11 @@ abstract class Table implements TableInterface
     */
     public function addForeignKey(string $foreignKey, callable $func): static
     {
-
         $func($foreign = $this->foreignKey($foreignKey));
 
-        #return $this->addCreateTable($foreign->getSQL());
+        $this->criteria->foreign[$foreignKey] = $foreign;
+
+        return $this;
     }
 
 

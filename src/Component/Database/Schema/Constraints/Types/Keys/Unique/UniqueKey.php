@@ -20,9 +20,9 @@ class UniqueKey extends ConstraintHasColumns implements UniqueKeyInterface
 {
     /**
      * @param array $columns
-     * @param string|null $key
+     * @param string $key
     */
-    public function __construct(array $columns = [], string $key = null)
+    public function __construct(array $columns = [], string $key = '')
     {
         parent::__construct('unique', $key, $columns);
     }

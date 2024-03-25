@@ -45,9 +45,9 @@ class ForeignKey extends Constraint implements ForeignKeyInterface
 
     /**
      * @param string $column (Example: user_id)
-     * @param string|null $key
+     * @param string $key
     */
-    public function __construct(string $column, ?string $key = null)
+    public function __construct(string $column, string $key = '')
     {
         parent::__construct('foreignKey', $key);
         $this->column = $column;
@@ -114,8 +114,7 @@ class ForeignKey extends Constraint implements ForeignKeyInterface
     */
     public function getSQL(): string
     {
-        $constraint =  sprintf(
-      'FOREIGN KEY (%s) REFERENCES %s (%s)',
+        $constraint =  sprintf('FOREIGN KEY (%s) REFERENCES %s(%s)',
              $this->column,
              $this->table,
              $this->references

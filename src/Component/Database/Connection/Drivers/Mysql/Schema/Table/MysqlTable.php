@@ -229,19 +229,22 @@ class MysqlTable extends Table
     */
     public function expr(): TableSQlBuilderInterface
     {
-        return new MysqlTableSQLBuilder($this, $this->criteria);
+        return new MysqlTableSQLBuilder($this);
     }
-
-
-
-
-
 
     /**
      * @inheritDoc
-    */
-    public function foreignKey(string $foreignKey): ForeignKeyInterface
+     */
+    public function dropPrimaryKey(string $primaryKey): static
     {
+        // TODO: Implement dropPrimaryKey() method.
+    }
 
+    /**
+     * @inheritDoc
+     */
+    public function dropPrimaryKeys(): static
+    {
+        // TODO: Implement dropPrimaryKeys() method.
     }
 }
