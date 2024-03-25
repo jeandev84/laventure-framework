@@ -402,6 +402,16 @@ interface ColumnInterface extends Stringable
 
 
     /**
+     * @param $sign
+     * @return $this
+    */
+    public function sign($sign): static;
+
+
+
+
+
+    /**
      * Set constraint not null
      *
      * @return $this
@@ -746,4 +756,29 @@ interface ColumnInterface extends Stringable
      * @return mixed
     */
     public function getOption($key, $default = null): mixed;
+
+
+
+
+
+
+    /**
+     * @return array
+    */
+    public function getTypeOptions(): array;
+
+
+
+
+
+
+
+
+
+
+    /**
+     * @param string $key
+     * @return string
+    */
+    public function getTypeOption(string $key): string;
 }

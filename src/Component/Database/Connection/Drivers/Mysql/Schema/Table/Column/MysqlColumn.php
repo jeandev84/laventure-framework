@@ -22,7 +22,7 @@ class MysqlColumn extends AbstractColumn
     */
     public function increments(): static
     {
-        return $this->whereIncrement("AUTO_INCREMENT");
+        return $this->withTypeIncrement("AUTO_INCREMENT");
     }
 
 
@@ -34,7 +34,7 @@ class MysqlColumn extends AbstractColumn
     */
     public function signed(): static
     {
-        return $this->withSign('SIGNED');
+        return $this->sign('SIGNED');
     }
 
 
@@ -45,7 +45,7 @@ class MysqlColumn extends AbstractColumn
     */
     public function unsigned(): static
     {
-        return $this->withSign('UNSIGNED');
+        return $this->sign('UNSIGNED');
     }
 
 

@@ -33,7 +33,7 @@ class PgsqlColumn extends AbstractColumn
     */
     public function signed(): static
     {
-        return $this->withSign("CHECK($this->name > 0)");
+        return $this->sign("CHECK($this->name > 0)");
     }
 
 
@@ -44,6 +44,6 @@ class PgsqlColumn extends AbstractColumn
     */
     public function unsigned(): static
     {
-        return $this->withSign("CHECK($this->name < 0)");
+        return $this->sign("CHECK($this->name < 0)");
     }
 }

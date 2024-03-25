@@ -182,12 +182,51 @@ interface TableInterface
 
 
     /**
+     * Add columns type datetime
+     *
+     * @param string $name
+     * @param callable|null $options
+     * @return $this
+    */
+    public function addDatetime(string $name, callable $options = null): static;
+
+
+
+
+
+
+
+    /**
+     * Add columns type datetime
+     *
+     * @param string $name
+     * @return $this
+    */
+    public function addNullableDatetime(string $name): static;
+
+
+
+
+
+    /**
      * Add timestamp created_at, updated_at columns
      *
      * @return $this
     */
     public function addTimestamps(): static;
 
+
+
+
+
+
+
+    /**
+     * Add nullable timestamp
+     *
+     * @return $this
+    */
+    public function addNullableTimestamps(): static;
 
 
 

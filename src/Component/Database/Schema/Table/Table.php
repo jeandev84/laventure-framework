@@ -28,6 +28,14 @@ use ReflectionException;
 */
 abstract class Table implements TableInterface
 {
+
+    const TS_CREATED_AT = 'created_at';
+    const TS_UPDATED_AT = 'updated_at';
+    const TS_DELETED_AT = 'deleted_at';
+
+
+
+
     /**
      * @var TableCriteria
     */
@@ -83,326 +91,6 @@ abstract class Table implements TableInterface
     public function statement(string $sql): QueryInterface
     {
         return $this->connection->statement($sql);
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function bigIncrements(string $name): ColumnInterface
-    {
-        $column = $this->column($name)
-                       ->bigInteger()
-                       ->increments();
-
-        return $this->criteria->addColumn[$name] = $column;
-    }
-
-
-
-
-
-
-    /**
-     * @inheritDoc
-     */
-    public function integer(string $name, int $length = 11): ColumnInterface
-    {
-        $column = $this->column($name)->integer($length);
-
-        return $this->criteria->addColumn[$name] = $column;
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-     */
-    public function smallInteger(string $name): ColumnInterface
-    {
-        $column = $this->column($name)->smallInteger();
-
-        return $this->criteria->addColumn[$name] = $column;
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-     */
-    public function bigInteger(string $name): ColumnInterface
-    {
-        $column = $this->column($name)->bigInteger();
-
-        return $this->criteria->addColumn[$name] = $column;
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-     */
-    public function mediumInteger(string $name): ColumnInterface
-    {
-        $column = $this->column($name)->mediumInteger();
-
-        return $this->criteria->addColumn[$name] = $column;
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-     */
-    public function tinyInteger(string $name): ColumnInterface
-    {
-        $column = $this->column($name)->tinyInteger();
-
-        return $this->criteria->addColumn[$name] = $column;
-    }
-
-
-
-
-
-
-    /**
-     * @inheritDoc
-     */
-    public function string(string $name, int $length = 255): ColumnInterface
-    {
-        $column = $this->column($name)->string($length);
-
-        return $this->criteria->addColumn[$name] = $column;
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-     */
-    public function char(string $name, $value): ColumnInterface
-    {
-        $column = $this->column($name)->char($value);
-
-        return $this->criteria->addColumn[$name] = $column;
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-     */
-    public function boolean(string $name): ColumnInterface
-    {
-        $column = $this->column($name)->boolean();
-
-        return $this->criteria->addColumn[$name] = $column;
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-     */
-    public function datetime(string $name): ColumnInterface
-    {
-        $column = $this->column($name)->datetime();
-
-        return $this->criteria->addColumn[$name] = $column;
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-     */
-    public function time(string $name): ColumnInterface
-    {
-        $column = $this->column($name)->time();
-
-        return $this->criteria->addColumn[$name] = $column;
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-     */
-    public function timestamp(string $name): ColumnInterface
-    {
-        $column = $this->column($name)->timestamp();
-
-        return $this->criteria->addColumn[$name] = $column;
-    }
-
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function binary(string $name): ColumnInterface
-    {
-        $column = $this->column($name)->binary();
-
-        return $this->criteria->addColumn[$name] = $column;
-    }
-
-
-
-
-
-
-    /**
-     * @inheritDoc
-     */
-    public function date(string $name): ColumnInterface
-    {
-        $column = $this->column($name)->date();
-
-        return $this->criteria->addColumn[$name] = $column;
-    }
-
-
-
-
-
-
-    /**
-     * @inheritDoc
-     */
-    public function decimal(string $name, int $precision, int $scale): ColumnInterface
-    {
-        $column = $this->column($name)->decimal($precision, $scale);
-
-        return $this->criteria->addColumn[$name] = $column;
-    }
-
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function double(string $name, int $precision, int $scale): ColumnInterface
-    {
-        return $this->column($name)->double($precision, $scale);
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function enum(string $name, array $values): ColumnInterface
-    {
-        return $this->column($name)->enum($values);
-    }
-
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function float(string $name): ColumnInterface
-    {
-        return $this->column($name)->float();
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function json(string $name): ColumnInterface
-    {
-        return $this->column($name)->json();
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function text(string $name): ColumnInterface
-    {
-        return $this->column($name)->text();
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function longText(string $name): ColumnInterface
-    {
-        return $this->column($name)->longText();
-    }
-
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function mediumText(string $name): ColumnInterface
-    {
-        return $this->column($name)->mediumText();
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function tinyText(string $name): ColumnInterface
-    {
-        return $this->column($name)->tinyText();
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function morphs(string $name): ColumnInterface
-    {
-        return $this->column($name)->morphs();
     }
 
 
@@ -567,6 +255,30 @@ abstract class Table implements TableInterface
 
 
 
+    /**
+     * @inheritDoc
+    */
+    public function addDatetime(string $name, callable $options = null): static
+    {
+        return $this->addColumn($name, ColumnType::Datetime, $options);
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function addNullableDatetime(string $name): static
+    {
+        return $this->addDatetime($name, function (ColumnOptionInterface $option) {
+            return $option->nullable();
+        });
+    }
+
+
+
 
 
     /**
@@ -574,13 +286,21 @@ abstract class Table implements TableInterface
     */
     public function addTimestamps(): static
     {
-        $this->datetime('created_at');
-        $this->datetime('updated_at');
-
-        return $this;
+        return $this->addDatetime(static::TS_CREATED_AT)
+                    ->addDatetime(static::TS_CREATED_AT);
     }
 
 
+
+
+    /**
+     * @inheritDoc
+    */
+    public function addNullableTimestamps(): static
+    {
+        return $this->addNullableDatetime(static::TS_CREATED_AT)
+                     ->addNullableDatetime(static::TS_UPDATED_AT);
+    }
 
 
 
@@ -590,7 +310,7 @@ abstract class Table implements TableInterface
     */
     public function addSoftDeletes(): static
     {
-        $this->datetime('deleted_at')->nullable();
+        $this->addNullableDatetime(static::TS_DELETED_AT);
 
         return $this;
     }
@@ -713,6 +433,30 @@ abstract class Table implements TableInterface
     public function addUniqueKey(array $uniqueKeys): static
     {
         return $this;
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function default($value): static
+    {
+
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function unsigned(): static
+    {
+
     }
 
 
@@ -975,6 +719,311 @@ abstract class Table implements TableInterface
     public function getCriteria(): TableCriteriaInterface
     {
         return $this->criteria;
+    }
+
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function bigIncrements(string $name): ColumnInterface
+    {
+        $column = $this->column($name)
+            ->bigInteger()
+            ->increments();
+
+        return $this->criteria->addColumn[$name] = $column;
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function integer(string $name, int $length = 11): ColumnInterface
+    {
+        $column = $this->column($name)->integer($length);
+
+        return $this->criteria->addColumn[$name] = $column;
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function smallInteger(string $name): ColumnInterface
+    {
+        $column = $this->column($name)->smallInteger();
+
+        return $this->criteria->addColumn[$name] = $column;
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function bigInteger(string $name): ColumnInterface
+    {
+        $column = $this->column($name)->bigInteger();
+
+        return $this->criteria->addColumn[$name] = $column;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function mediumInteger(string $name): ColumnInterface
+    {
+        $column = $this->column($name)->mediumInteger();
+
+        return $this->criteria->addColumn[$name] = $column;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function tinyInteger(string $name): ColumnInterface
+    {
+        $column = $this->column($name)->tinyInteger();
+
+        return $this->criteria->addColumn[$name] = $column;
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function string(string $name, int $length = 255): ColumnInterface
+    {
+        return $this->column($name)->string($length);
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function char(string $name, $value): ColumnInterface
+    {
+        return $this->column($name)->char($value);
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function boolean(string $name): ColumnInterface
+    {
+        return $this->column($name)->boolean();
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function datetime(string $name): ColumnInterface
+    {
+        return $this->column($name)->datetime();
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function time(string $name): ColumnInterface
+    {
+        return $this->column($name)->time();
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function timestamp(string $name): ColumnInterface
+    {
+        return $this->column($name)->timestamp();
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function binary(string $name): ColumnInterface
+    {
+        return $this->column($name)->binary();
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function date(string $name): ColumnInterface
+    {
+        return $this->column($name)->date();
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function decimal(string $name, int $precision, int $scale): ColumnInterface
+    {
+        return $this->column($name)->decimal($precision, $scale);
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function double(string $name, int $precision, int $scale): ColumnInterface
+    {
+        return $this->column($name)->double($precision, $scale);
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function enum(string $name, array $values): ColumnInterface
+    {
+        return $this->column($name)->enum($values);
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function float(string $name): ColumnInterface
+    {
+        return $this->column($name)->float();
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function json(string $name): ColumnInterface
+    {
+        return $this->column($name)->json();
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function text(string $name): ColumnInterface
+    {
+        return $this->column($name)->text();
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function longText(string $name): ColumnInterface
+    {
+        return $this->column($name)->longText();
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function mediumText(string $name): ColumnInterface
+    {
+        return $this->column($name)->mediumText();
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function tinyText(string $name): ColumnInterface
+    {
+        return $this->column($name)->tinyText();
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function morphs(string $name): ColumnInterface
+    {
+        return $this->column($name)->morphs();
     }
 
 

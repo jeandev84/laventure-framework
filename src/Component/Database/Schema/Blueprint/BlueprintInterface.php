@@ -576,21 +576,6 @@ interface BlueprintInterface
 
     /**
      * @param string $name
-     * @param callable|null $options
-     * @return $this
-    */
-    public function modifyColumn(string $name, callable $options = null): static;
-
-
-
-
-
-
-
-
-
-    /**
-     * @param string $name
      * @param string $to
      * @return $this
     */
@@ -661,12 +646,13 @@ interface BlueprintInterface
 
 
 
-
-
     /**
+     * @param string $name
      * @return mixed
     */
-    public function renameTable(): mixed;
+    public function renameTable(string $name): mixed;
+
+
 
 
 

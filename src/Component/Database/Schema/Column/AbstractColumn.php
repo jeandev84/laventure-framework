@@ -48,6 +48,17 @@ abstract class AbstractColumn implements ColumnInterface
 
 
 
+    /**
+     * Type options
+     *
+     * @var array
+    */
+    protected array $typeOptions = [
+        "sign"      => "",
+        "increment" => ""
+    ];
+
+
 
 
     /**
@@ -68,8 +79,6 @@ abstract class AbstractColumn implements ColumnInterface
      * @var array
     */
     protected array $options = [
-        "sign"      => "",
-        "increment" => "",
         "collation" => "",
         "comments"  => ""
     ];
@@ -216,6 +225,20 @@ abstract class AbstractColumn implements ColumnInterface
             new DefaultValue(sprintf('"%s"', $value))
         );
     }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function sign($sign): static
+    {
+        return $this->withTypeOptions(compact('sign'));
+    }
+
 
 
 
@@ -424,14 +447,12 @@ abstract class AbstractColumn implements ColumnInterface
 
 
 
-
-
     /**
      * @inheritDoc
     */
     public function getSign(): string
     {
-        return $this->getOption('sign');
+        return $this->getTypeOption('sign');
     }
 
 
@@ -511,6 +532,91 @@ abstract class AbstractColumn implements ColumnInterface
 
 
 
+    /**
+     * @param $key
+     * @param $value
+     * @return $this
+    */
+    public function withTypeOption($key, $value): static
+    {
+         $this->typeOptions[$key] = $value;
+
+         return $this;
+    }
+
+
+
+
+
+
+    /**
+     * @param array $options
+     * @return $this
+    */
+    public function withTypeOptions(array $options): static
+    {
+         foreach ($options as $key => $value) {
+             $this->withTypeOption($key, $value);
+         }
+
+         return $this;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getTypeOptions(): array
+    {
+        return $this->typeOptions;
+    }
+
+
+
+
+
+    /**
+     * @return string
+    */
+    public function getTypeOptionString(): string
+    {
+        $typeOptions = array_values($this->typeOptions);
+
+        return join(' ', array_filter($typeOptions));
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getTypeOption(string $key): string
+    {
+        return $this->typeOptions[$key] ?? '';
+    }
+
+
+
+
+
+
+
+    /**
+     * @param $increment
+     * @return $this
+    */
+    public function withTypeIncrement($increment): static
+    {
+        return $this->withTypeOptions(compact('increment'));
+    }
+
+
+
 
 
 
@@ -522,51 +628,12 @@ abstract class AbstractColumn implements ColumnInterface
         return join(' ', array_filter([
             $this->getName(),
             $this->getType(),
-            $this->getSign(),
-            $this->getIncrement(),
+            $this->getTypeOptionString(),
             $this->getConstraint()
         ]));
     }
 
 
-
-
-
-
-
-    /**
-     * @param $sign
-     * @return $this
-    */
-    public function withSign($sign): static
-    {
-        return $this->options(compact('sign'));
-    }
-
-
-
-
-
-    /**
-     * @param $increment
-     * @return $this
-    */
-    public function whereIncrement($increment): static
-    {
-        return $this->options(compact('increment'));
-    }
-
-
-
-
-
-    /**
-     * @return string|null
-    */
-    public function getIncrement(): ?string
-    {
-        return $this->getOption('increment');
-    }
 
 
 
@@ -579,30 +646,5 @@ abstract class AbstractColumn implements ColumnInterface
     public function __toString(): string
     {
         return $this->getSQL();
-    }
-
-
-
-
-    /**
-     * @param string|ColumnType $type
-     * @param array $options
-     * @return $this
-     * @throws ReflectionException
-    */
-    protected function parseType(string|ColumnType $type, array $options = []): static
-    {
-        if ($type instanceof ColumnType) {
-            $method = $type->value;
-            $reflection = new ReflectionMethod($this, $method);
-            $parameters = $reflection->getParameters();
-            dump($parameters);
-            dd($reflection->getName());
-        } else {
-            $this->type($type);
-        }
-
-
-        return $this;
     }
 }

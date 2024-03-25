@@ -6,6 +6,7 @@ namespace Laventure\Component\Database\Schema\Blueprint;
 
 use Laventure\Component\Database\Schema\Blueprint\Column\BlueprintColumn;
 use Laventure\Component\Database\Schema\Blueprint\Column\BlueprintColumnInterface;
+use Laventure\Component\Database\Schema\Column\Contract\ColumnInterface;
 use Laventure\Component\Database\Schema\Column\Types\ColumnType;
 use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
 use Laventure\Component\Database\Schema\Table\TableInterface;
@@ -59,10 +60,7 @@ class Blueprint implements BlueprintInterface
     */
     public function bigIncrements(string $name): BlueprintColumnInterface
     {
-        return new BlueprintColumn(
-            $this->table,
-            $this->table->bigIncrements($name)
-        );
+        return $this->column($this->table->bigIncrements($name));
     }
 
 
@@ -71,353 +69,560 @@ class Blueprint implements BlueprintInterface
 
     /**
      * @inheritDoc
-     */
+    */
     public function integer(string $name, int $length = 11): BlueprintColumnInterface
     {
-        // TODO: Implement integer() method.
+        return $this->column($this->table->integer($name, $length));
     }
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function smallInteger(string $name): BlueprintColumnInterface
     {
-        // TODO: Implement smallInteger() method.
+        return $this->column($this->table->smallInteger($name));
     }
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function bigInteger(string $name): BlueprintColumnInterface
     {
-        // TODO: Implement bigInteger() method.
+        return $this->column($this->table->bigInteger($name));
     }
+
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function mediumInteger(string $name): BlueprintColumnInterface
     {
-        // TODO: Implement mediumInteger() method.
+        return $this->column($this->table->mediumInteger($name));
     }
+
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function tinyInteger(string $name): BlueprintColumnInterface
     {
-        // TODO: Implement tinyInteger() method.
+        return $this->column($this->table->tinyInteger($name));
     }
+
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function string(string $name, int $length = 255): BlueprintColumnInterface
     {
-        // TODO: Implement string() method.
+        return $this->column($this->table->string($name, $length));
     }
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function char(string $name, $value): BlueprintColumnInterface
     {
-        // TODO: Implement char() method.
+        return $this->column($this->table->char($name, $value));
     }
+
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function boolean(string $name): BlueprintColumnInterface
     {
-        // TODO: Implement boolean() method.
+        return $this->column($this->table->boolean($name));
     }
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function datetime(string $name): BlueprintColumnInterface
     {
-        // TODO: Implement datetime() method.
+        return $this->column($this->table->datetime($name));
     }
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function time(string $name): BlueprintColumnInterface
     {
-        // TODO: Implement time() method.
+        return $this->column($this->table->time($name));
     }
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function timestamp(string $name): BlueprintColumnInterface
     {
-        // TODO: Implement timestamp() method.
+        return $this->column($this->table->timestamp($name));
     }
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function binary(string $name): BlueprintColumnInterface
     {
-        // TODO: Implement binary() method.
+        return $this->column($this->table->binary($name));
     }
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function date(string $name): BlueprintColumnInterface
     {
-        // TODO: Implement date() method.
+        return $this->column($this->table->date($name));
     }
+
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function decimal(string $name, int $precision, int $scale): BlueprintColumnInterface
     {
-        // TODO: Implement decimal() method.
+        return $this->column($this->table->decimal($name, $precision, $scale));
     }
+
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function double(string $name, int $precision, int $scale): BlueprintColumnInterface
     {
-        // TODO: Implement double() method.
+        return $this->column($this->table->double($name, $precision, $scale));
     }
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function enum(string $name, array $values): BlueprintColumnInterface
     {
-        // TODO: Implement enum() method.
+        return $this->column($this->table->enum($name, $values));
     }
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function float(string $name): BlueprintColumnInterface
     {
-        // TODO: Implement float() method.
+        return $this->column($this->table->float($name));
     }
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function json(string $name): BlueprintColumnInterface
     {
-        // TODO: Implement json() method.
+        return $this->column($this->table->json($name));
     }
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function text(string $name): BlueprintColumnInterface
     {
-        // TODO: Implement text() method.
+        return $this->column($this->table->text($name));
     }
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function longText(string $name): BlueprintColumnInterface
     {
-        // TODO: Implement longText() method.
+        return $this->column($this->table->json($name));
     }
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function mediumText(string $name): BlueprintColumnInterface
     {
-        // TODO: Implement mediumText() method.
+        return $this->column($this->table->mediumText($name));
     }
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function tinyText(string $name): BlueprintColumnInterface
     {
-        // TODO: Implement tinyText() method.
+        return $this->column($this->table->tinyText($name));
     }
+
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function morphs(string $name): BlueprintColumnInterface
     {
-        // TODO: Implement morphs() method.
+        return $this->column($this->table->morphs($name));
     }
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function default($value): static
     {
-        // TODO: Implement default() method.
+        $this->table->default($value);
+
+        return $this;
     }
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function unsigned(): static
     {
-        // TODO: Implement unsigned() method.
+        $this->table->unsigned();
+
+        return $this;
     }
+
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function timestamps(): static
     {
-        // TODO: Implement timestamps() method.
+        $this->table->addTimestamps();
+
+        return $this;
     }
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function softDeletes(): static
     {
-        // TODO: Implement softDeletes() method.
+        $this->table->addSoftDeletes();
+
+        return $this;
     }
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function nullableTimestamps(): static
     {
-        // TODO: Implement nullableTimestamps() method.
+        $this->table->addNullableTimestamps();
+
+        return $this;
     }
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function rememberToken(): static
     {
-        // TODO: Implement rememberToken() method.
+        $this->string('remember_token', 100)
+             ->nullable();
+
+        return $this;
     }
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function primary(array $columns): static
     {
-        // TODO: Implement primary() method.
+        $this->table->addPrimaryKey($columns);
+
+        return $this;
     }
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function unique(array $columns): static
     {
-        // TODO: Implement unique() method.
+         $this->table->addUniqueKey($columns);
+
+         return $this;
     }
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function index(array $columns): static
     {
-        // TODO: Implement index() method.
+        $this->table->addIndex($columns);
+
+        return $this;
     }
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function foreign(string $name): ForeignKeyInterface
     {
-        // TODO: Implement foreign() method.
+        return $this->table->foreignKey($name);
     }
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function foreignId(): ForeignKeyInterface
     {
-        // TODO: Implement foreignId() method.
+        return $this->foreign('id');
     }
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function addColumn(string $name, ColumnType|string $type, callable $options = null): static
     {
-        // TODO: Implement addColumn() method.
+         $this->table->addColumn($name, $type, $options);
+
+         return $this;
     }
+
+
+
+
 
     /**
      * @inheritDoc
-     */
-    public function modifyColumn(string $name, callable $options = null): static
-    {
-        // TODO: Implement modifyColumn() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
+    */
     public function renameColumn(string $name, string $to): static
     {
-        // TODO: Implement renameColumn() method.
+        $this->table->renameColumn($name, $to);
+
+        return $this;
     }
+
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function dropColumn(string $name): static
     {
-        // TODO: Implement dropColumn() method.
+        $this->table->dropColumn($name);
+
+        return $this;
     }
+
+
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function createTable(): mixed
     {
-        // TODO: Implement createTable() method.
+        return $this->table->create();
     }
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function updateTable(): mixed
     {
-        // TODO: Implement updateTable() method.
+        return $this->table->update();
     }
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function dropTable(): mixed
     {
-        // TODO: Implement dropTable() method.
+        return $this->table->update();
     }
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function truncateTable(): mixed
     {
-        // TODO: Implement truncateTable() method.
+        return $this->table->truncate();
     }
+
+
+
 
     /**
      * @inheritDoc
-     */
-    public function renameTable(): mixed
+    */
+    public function renameTable($name): mixed
     {
-        // TODO: Implement renameTable() method.
+        return $this->table->rename($name);
     }
+
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function getTable(): TableInterface
     {
-        // TODO: Implement getTable() method.
+        return $this->table;
+    }
+
+
+
+
+
+    /**
+     * @param ColumnInterface $column
+     * @return BlueprintColumnInterface
+    */
+    public function column(ColumnInterface $column): BlueprintColumnInterface
+    {
+         return new BlueprintColumn(
+             $this->table,
+             $column
+         );
     }
 }
