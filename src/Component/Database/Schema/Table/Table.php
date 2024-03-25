@@ -708,12 +708,14 @@ abstract class Table implements TableInterface
 
 
 
+
+
     /**
      * @return callable
     */
     private function defaultOptions(): callable
     {
-        return function (ColumnOptions $options) {
+        return function (ColumnOptionInterface $options) {
             return $options->getColumn();
         };
     }
