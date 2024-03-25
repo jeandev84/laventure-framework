@@ -58,4 +58,17 @@ class QueryCollection
       {
           return join($this->separator, array_filter($this->queries));
       }
+
+
+
+
+
+
+      /**
+       * @return array
+      */
+      public function toArray(): array
+      {
+          return $this->queries;
+      }
 }

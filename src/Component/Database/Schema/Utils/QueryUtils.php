@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Schema\Utils;
 
 /**
- * QueryStringify
+ * QueryUtils
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
@@ -12,7 +12,7 @@ namespace Laventure\Component\Database\Schema\Utils;
  *
  * @package  Laventure\Component\Database\Schema\Utils
 */
-class QueryStringify
+class QueryUtils
 {
       /**
        * @param array $queries
@@ -21,5 +21,17 @@ class QueryStringify
       public static function queries(array $queries): QueryCollection
       {
            return new QueryCollection($queries);
+      }
+
+
+
+
+      /**
+       * @param array $queries
+       * @return string
+      */
+      public static function str(array $queries): string
+      {
+          return static::queries($queries)->toString();
       }
 }
