@@ -16,22 +16,17 @@ namespace Laventure\Component\Database\Schema\Table\Builder\Contract;
 interface UpdateTableSQLBuilderInterface
 {
     /**
-     * @param string $table
-     * @return $this
+     * @return string
     */
-    public function update(string $table): static;
-
+    public function getTable(): string;
 
 
 
 
     /**
-     * @param array $criteria
-     * @return $this
+     * @return string
     */
-    public function criteria(array $criteria): static;
-
-
+    public function getCriteria(): string;
 
 
 

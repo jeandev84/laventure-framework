@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Schema\Table\Builder\Common;
 
 use Laventure\Component\Database\Schema\Table\Builder\Contract\CreateTableSQLBuilderInterface;
+use Laventure\Component\Database\Schema\Table\TableInterface;
 
 /**
  * CreateTableSQLBuilder
@@ -15,14 +16,16 @@ use Laventure\Component\Database\Schema\Table\Builder\Contract\CreateTableSQLBui
  *
  * @package  Laventure\Component\Database\Schema\Table\Builder\Common
 */
-class CreateTableSQLBuilder implements CreateTableSQLBuilderInterface
+abstract class CreateTableSQLBuilder implements CreateTableSQLBuilderInterface
 {
-    /**
-     * @inheritDoc
-    */
-    public function create($table): static
-    {
 
+    /**
+     * @param TableInterface $table
+    */
+    public function __construct(
+        protected TableInterface $table
+    )
+    {
     }
 
 
@@ -31,11 +34,10 @@ class CreateTableSQLBuilder implements CreateTableSQLBuilderInterface
     /**
      * @inheritDoc
     */
-    public function criteria(array $criteria): static
+    public function getTable(): string
     {
-
+        return $this->table->getName();
     }
-
 
 
 
@@ -43,8 +45,14 @@ class CreateTableSQLBuilder implements CreateTableSQLBuilderInterface
     /**
      * @inheritDoc
     */
-    public function getSQL(): string
+    public function getCriteria(): string
     {
+         $criteria = [];
 
+         foreach ($this->table->getNewColumns() as $column) {
+             $criteria[] = sprintf('%s', $column->getSQL());
+         }
+
+         return join(",". PHP_EOL, $criteria);
     }
 }

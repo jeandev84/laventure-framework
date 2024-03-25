@@ -15,25 +15,19 @@ namespace Laventure\Component\Database\Schema\Table\Builder\Contract;
 */
 interface CreateTableSQLBuilderInterface
 {
+
     /**
-     * @param $table
-     * @return $this
+     * @return string
     */
-    public function create($table): static;
-
-
+    public function getTable(): string;
 
 
 
 
     /**
-     * @param array $criteria
-     * @return $this
+     * @return string
     */
-    public function criteria(array $criteria): static;
-
-
-
+    public function getCriteria(): string;
 
 
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Drivers\Mysql\Schema\Table;
 
+use Laventure\Component\Database\Connection\Drivers\Mysql\Schema\Table\Builder\MysqlCreateTableSQLBuilder;
 use Laventure\Component\Database\Schema\Table\Builder\Contract\CreateTableSQLBuilderInterface;
 use Laventure\Component\Database\Schema\Table\Builder\Contract\UpdateTableSQLBuilderInterface;
 use Laventure\Component\Database\Schema\Table\Builder\TableSQlBuilder;
@@ -19,43 +20,23 @@ use Laventure\Component\Database\Schema\Table\Builder\TableSQlBuilder;
 */
 class MysqlTableSQLBuilder extends TableSQlBuilder
 {
-
-    public function createTable(): string
-    {
-        $criteria  = $this->createTableCriteria();
-        $tableName = $this->getTableName();
-
-        return join(PHP_EOL, [
-            sprintf('CREATE TABLE IF NOT EXISTS `%s` (', $tableName), $criteria, ");"
-        ]);
-    }
-
-
-
     /**
      * @inheritDoc
-     */
-    public function getSQL(): string
-    {
-        // TODO: Implement getSQL() method.
-    }
-
-
-
-    /**
-     * @inheritDoc
-     */
+    */
     public function create(): CreateTableSQLBuilderInterface
     {
-        // TODO: Implement create() method.
+         return new MysqlCreateTableSQLBuilder($this->table);
     }
+
+
+
 
     /**
      * @inheritDoc
-     */
+    */
     public function update(): UpdateTableSQLBuilderInterface
     {
-        // TODO: Implement update() method.
+
     }
 
 

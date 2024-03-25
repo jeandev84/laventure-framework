@@ -21,12 +21,8 @@ abstract class TableSQlBuilder implements TableSQlBuilderInterface
 {
     /**
      * @param TableInterface $table
-     * @param TableCriteria $criteria
     */
-    public function __construct(
-        protected TableInterface $table,
-        protected TableCriteria $criteria
-    ) {
+    public function __construct(protected TableInterface $table) {
     }
 
 
@@ -38,7 +34,7 @@ abstract class TableSQlBuilder implements TableSQlBuilderInterface
      *
      * @return string
     */
-    protected function getTableName(): string
+    public function getTableName(): string
     {
         return $this->table->getName();
     }
@@ -49,12 +45,13 @@ abstract class TableSQlBuilder implements TableSQlBuilderInterface
 
 
     /**
-     * Returns create table criteria
-     *
-     * @return string
+     * @inheritDoc
     */
-    protected function createTableCriteria(): string
+    public function getSQL(): string
     {
-        return join(PHP_EOL, $this->criteria->create);
+        return join(';', array_filter([
+            $this->create()->getSQL(),
+            $this->update()->getSQL()
+        ]));
     }
 }
