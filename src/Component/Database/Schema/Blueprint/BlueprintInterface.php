@@ -7,6 +7,7 @@ namespace Laventure\Component\Database\Schema\Blueprint;
 use Laventure\Component\Database\Schema\Blueprint\Column\BlueprintColumnInterface;
 use Laventure\Component\Database\Schema\Column\Types\ColumnType;
 use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
+use Laventure\Component\Database\Schema\Table\Builder\TableSQlBuilderInterface;
 use Laventure\Component\Database\Schema\Table\TableInterface;
 
 /**
@@ -550,7 +551,62 @@ interface BlueprintInterface
      * @return BlueprintInterface
     */
     public function foreignId(callable $func): static;
-    
+
+
+
+
+
+
+
+    /**
+     * @param string $name
+     * @param string|ColumnType $type
+     * @param callable|null $options
+     * @return $this
+    */
+    public function addColumn(string $name, string|ColumnType $type, callable $options = null): static;
+
+
+
+
+
+
+
+    /**
+     * @param string $name
+     * @param string $to
+     * @return $this
+    */
+    public function renameColumn(string $name, string $to): static;
+
+
+
+
+
+
+
+    /**
+     * @param string $name
+     * @param callable $func
+     * @return $this
+    */
+    public function modifyColumn(string $name, callable $func): static;
+
+
+
+
+
+
+
+
+    /**
+     * @param string $name
+     * @return $this
+    */
+    public function dropColumn(string $name): static;
+
+
+
 
 
 
@@ -619,6 +675,7 @@ interface BlueprintInterface
      * @return BlueprintColumnInterface[]
     */
     public function getColumns(): array;
+
 
 
 

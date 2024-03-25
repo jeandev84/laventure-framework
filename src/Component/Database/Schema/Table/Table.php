@@ -424,7 +424,7 @@ abstract class Table implements TableInterface
     public function addTimestamps(): static
     {
         return $this->addDatetime(static::CREATED_AT)
-                    ->addDatetime(static::CREATED_AT);
+                    ->addDatetime(static::UPDATED_AT);
     }
 
 
