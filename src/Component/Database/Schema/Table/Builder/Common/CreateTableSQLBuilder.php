@@ -23,7 +23,9 @@ abstract class CreateTableSQLBuilder implements CreateTableSQLBuilderInterface
     /**
      * @param TableInterface $table
     */
-    public function __construct(protected TableInterface $table)
+    public function __construct(
+        protected TableInterface $table
+    )
     {
     }
 
@@ -46,11 +48,11 @@ abstract class CreateTableSQLBuilder implements CreateTableSQLBuilderInterface
     */
     public function getCriteria(): string
     {
-         $criteria   = $this->getNewColumnsSQL();
-         $criteria[] = '';
-         $criteria[] = $this->getPrimarySQL();
-
-         return join(", ", array_filter($criteria));
+         return $this->toStringQueries([
+             $this->getNewColumnsSQL(),
+             $this->getForeignSQL(),
+             $this->getPrimarySQL()
+         ]);
     }
 
 
@@ -72,9 +74,22 @@ abstract class CreateTableSQLBuilder implements CreateTableSQLBuilderInterface
 
 
     /**
+     * @return string
+    */
+    protected function getNewColumnsSQL(): string
+    {
+        return $this->toStringQueries($this->getNewColumnQueries());
+    }
+
+
+
+
+
+
+    /**
      * @return array
     */
-    private function getNewColumnsSQL(): array
+    protected function getNewColumnQueries(): array
     {
         return array_map(function (ColumnInterface $column) {
             return sprintf('%s', $column->getSQL());
@@ -85,11 +100,53 @@ abstract class CreateTableSQLBuilder implements CreateTableSQLBuilderInterface
 
 
 
+
     /**
      * @return string
     */
-    private function getPrimarySQL(): string
+    protected function getPrimarySQL(): string
     {
         return $this->table->getPrimary()->getSQL();
+    }
+
+
+
+
+
+
+    /**
+     * @return string
+    */
+    protected function getForeignSQL(): string
+    {
+        return $this->toStringQueries($this->getForeignQueries());
+    }
+
+
+
+
+
+    /**
+     * @return array
+    */
+    protected function getForeignQueries(): array
+    {
+        return array_values(
+            $this->table->getCriteria()->getForeign()
+        );
+    }
+
+
+
+
+
+    /**
+     * @param array $queries
+     * @param string|null $separator
+     * @return string
+    */
+    private function toStringQueries(array $queries, string $separator = null): string
+    {
+        return join($separator ?: ', ', array_filter($queries));
     }
 }
