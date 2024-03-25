@@ -165,15 +165,6 @@ class SqlServerConnection implements ConnectionInterface
 
 
 
-    /**
-     * @inheritDoc
-    */
-    public function config($key, $default = null): mixed
-    {
-
-    }
-
-
 
 
     /**
@@ -183,6 +174,8 @@ class SqlServerConnection implements ConnectionInterface
     {
 
     }
+
+
 
 
 

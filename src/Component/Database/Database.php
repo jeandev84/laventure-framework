@@ -48,29 +48,11 @@ abstract class Database implements DatabaseInterface
 
 
     /**
-     * @param string $name
-     * @return $this
-    */
-    public function name(string $name): static
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-
-
-
-    /**
      * @inheritdoc
-     * @throws DatabaseException
+     * @return string
     */
     public function getName(): string
     {
-        if (!$this->name) {
-            throw new UnavailableDatabaseNameException(get_called_class());
-        }
-
         return $this->name;
     }
 

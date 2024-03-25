@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laventure\Utils\Parameter;
 
 use Laventure\Contract\Parameter\ParameterInterface;
+use Laventure\Utils\Parameter\Exception\BlankParameterException;
 use RuntimeException;
 
 /**
@@ -343,13 +344,16 @@ class Parameter implements ParameterInterface
 
 
 
+
+
     /**
      * @inheritDoc
+     * @throws BlankParameterException
     */
     public function required($key): mixed
     {
         if ($this->isEmpty($key)) {
-            throw new RuntimeException("parameter $key is required.");
+            throw new BlankParameterException($key);
         }
 
         return $this->get($key);

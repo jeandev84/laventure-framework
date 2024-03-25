@@ -146,6 +146,6 @@ class Configuration extends Parameter implements ConfigurationInterface
     */
     public function getSchemaName(): string
     {
-        return $this->string('schemaName');
+        return $this->required('schemaName');
     }
 }

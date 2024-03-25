@@ -22,14 +22,6 @@ class Schema implements SchemaInterface
 {
 
     /**
-     * @var string
-    */
-    protected string $schemaName;
-
-
-
-
-    /**
      * @var ConnectionInterface
     */
     protected ConnectionInterface $connection;
@@ -50,7 +42,6 @@ class Schema implements SchemaInterface
     public function __construct(ConnectionInterface $connection)
     {
         $this->connection = $connection;
-        $this->schemaName = $connection->getConfiguration()->getSchemaName();
     }
 
 
@@ -61,7 +52,7 @@ class Schema implements SchemaInterface
     */
     public function table(string $name): TableInterface
     {
-        return $this->connection->table($name, $this->schemaName);
+        return $this->connection->table($name);
     }
 
 
@@ -205,7 +196,9 @@ class Schema implements SchemaInterface
     */
     public function getName(): string
     {
-        return $this->schemaName;
+        return $this->connection
+                    ->getConfiguration()
+                    ->getSchemaName();
     }
 
 

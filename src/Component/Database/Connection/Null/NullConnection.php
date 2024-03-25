@@ -162,17 +162,7 @@ class NullConnection implements ConnectionInterface
         return new NullConfiguration();
     }
 
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function config($key, $default = null): mixed
-    {
-        return null;
-    }
-
+    
 
 
     /**
