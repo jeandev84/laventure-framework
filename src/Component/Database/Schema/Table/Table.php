@@ -71,6 +71,18 @@ abstract class Table implements TableInterface
 
 
     /**
+     * @return string
+    */
+    public function getSchemaName(): string
+    {
+        return $this->schemaName;
+    }
+
+
+
+
+
+    /**
      * @inheritDoc
     */
     public function getName(): string
@@ -511,7 +523,7 @@ abstract class Table implements TableInterface
     */
     public function hasForeignKey(string $foreignKey): bool
     {
-
+         return array_key_exists($foreignKey, $this->getForeignKeys());
     }
 
 
@@ -639,7 +651,8 @@ abstract class Table implements TableInterface
     */
     public function drop(): mixed
     {
-        dd($this->getColumns());
+        #dd($this->getForeignKeys());
+        dd($this->getConstraints());
 
         return $this->exec(
             sprintf('DROP TABLE %s CASCADE', $this->getName())

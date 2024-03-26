@@ -27,6 +27,7 @@ use Laventure\Component\Database\Schema\Table\Table;
 */
 class MysqlTable extends Table
 {
+
     /**
      * @param ConnectionInterface $connection
      * @param string $name
@@ -72,11 +73,80 @@ class MysqlTable extends Table
     */
     public function getColumns(): array
     {
-        return array_map(function ($data) {
-            dump($data);
-            return $this->columnFromArray($data);
-        }, $this->fetchColumnsQuery()->all());
+        foreach ($this->fetchColumnsQuery()->all() as $data) {
+            $column = $this->columnFromArray($data);
+            $this->criteria->columns[$column->getName()] = $column;
+        }
+
+        return $this->criteria->columns;
     }
+
+
+
+
+
+    /**
+     * @param $type
+     * @return array
+    */
+    public function fetchConstraintsBy($type = null): array
+    {
+        $tableName = $this->constraintTableName();
+        $qb        = $this->connection->createQueryBuilder();
+
+        $criteria = [
+          "$tableName.TABLE_SCHEMA" => $this->getSchemaName(),
+          "$tableName.TABLE_NAME"   => $this->getName(),
+        ];
+
+        if ($type) {
+           $criteria["$tableName.CONSTRAINT_TYPE"] = $type;
+        }
+
+
+        return $qb->select()
+                  ->from($tableName)
+                  ->criteria($criteria)
+                  ->getQuery()
+                  ->fetch()
+                  ->all();
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getConstraints(): array
+    {
+        return $this->fetchConstraintsBy();
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function dropPrimaryKey(string $primaryKey): static
+    {
+        return $this;
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function dropPrimaryKeys(): static
+    {
+        return $this;
+    }
+
 
 
 
@@ -91,6 +161,16 @@ class MysqlTable extends Table
     }
 
 
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getPrimaryKey(string $primaryKey): PrimaryKeyInterface
+    {
+
+    }
 
 
 
@@ -118,13 +198,33 @@ class MysqlTable extends Table
 
 
 
+    /**
+     * @inheritDoc
+    */
+    public function dropForeignKey(string $foreignKey): static
+    {
+        if ($this->hasForeignKey($foreignKey)) {
+            $this->exec(
+                sprintf('ALTER TABLE %s DROP FOREIGN KEY %s', $this->getName(), $foreignKey)
+            );
+        }
+
+        return $this;
+    }
+
+
+
 
     /**
      * @inheritDoc
     */
     public function dropForeignKeys(): static
     {
+        foreach ($this->getForeignKeys() as $foreignKey){
+            $this->dropForeignKey($foreignKey->getKey());
+        }
 
+        return $this;
     }
 
 
@@ -187,41 +287,6 @@ class MysqlTable extends Table
 
 
 
-    /**
-     * @inheritDoc
-    */
-    public function getConstraints(): array
-    {
-        return [];
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function dropPrimaryKey(string $primaryKey): static
-    {
-        return $this;
-    }
-
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function dropPrimaryKeys(): static
-    {
-        return $this;
-    }
-
-
-
-
 
 
     /**
@@ -260,11 +325,12 @@ class MysqlTable extends Table
 
 
 
-    /**
-     * @inheritDoc
-    */
-    public function getPrimaryKey(string $primaryKey): PrimaryKeyInterface
-    {
 
+    /**
+     * @return string
+    */
+    private function constraintTableName(): string
+    {
+        return 'information_schema.table_constraints';
     }
 }

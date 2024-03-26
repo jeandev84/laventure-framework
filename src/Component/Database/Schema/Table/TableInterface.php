@@ -482,7 +482,6 @@ interface TableInterface
 
 
 
-
     /**
      * Add foreign key
      *
@@ -571,12 +570,21 @@ interface TableInterface
 
 
     /**
+     * @param string $foreignKey
+     * @return $this
+    */
+    public function dropForeignKey(string $foreignKey): static;
+
+
+
+
+
+    /**
      * Drop foreign keys
      *
      * @return $this
     */
     public function dropForeignKeys(): static;
-
 
 
 
