@@ -20,7 +20,7 @@ use Laventure\Component\Database\ORM\Persistence\Mapping\Service\ReflectionServi
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\ORM\Mapper\Manager\Event
+ * @package  Laventure\Component\Database\ORM\DataMapper\Manager\Event
 */
 class EventManager implements EventManagerInterface
 {

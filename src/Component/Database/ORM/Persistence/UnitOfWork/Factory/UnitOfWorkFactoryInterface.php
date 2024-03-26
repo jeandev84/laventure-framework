@@ -14,7 +14,7 @@ use Laventure\Component\Database\ORM\Persistence\UnitOfWork\UnitOfWorkInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\ORM\Mapper\UnitOfWork\Factory
+ * @package  Laventure\Component\Database\ORM\DataMapper\UnitOfWork\Factory
  */
 interface UnitOfWorkFactoryInterface
 {

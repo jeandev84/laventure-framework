@@ -14,7 +14,7 @@ use Laventure\Component\Database\Query\Result\QueryResultInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\ORM\Mapper\Query
+ * @package  Laventure\Component\Database\ORM\DataMapper\Query
  */
 interface QueryInterface
 {

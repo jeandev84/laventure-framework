@@ -16,7 +16,7 @@ use Laventure\Utils\Parameter\Parameter;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Manager\Config\ORM\Model
+ * @package  Laventure\Component\Database\Manager\Config\ORM\ActiveRecord
  */
 class ModelConfiguration extends Parameter implements ModelConfigurationInterface
 {

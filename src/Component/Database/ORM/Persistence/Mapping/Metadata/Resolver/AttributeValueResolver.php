@@ -17,7 +17,7 @@ use Laventure\Contract\Resolver\ResolverInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\ORM\Mapper\Mapping\Metadata\Resolver
+ * @package  Laventure\Component\Database\ORM\DataMapper\Mapping\Metadata\Resolver
 */
 class AttributeValueResolver implements ResolverInterface
 {

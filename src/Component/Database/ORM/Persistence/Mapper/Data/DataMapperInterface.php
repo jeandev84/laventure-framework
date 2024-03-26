@@ -13,7 +13,7 @@ use Laventure\Component\Database\ORM\Persistence\Mapper\Identity\IdentityMapperI
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\ORM\Mapper\Data
+ * @package  Laventure\Component\Database\ORM\DataMapper\Data
 */
 interface DataMapperInterface
 {

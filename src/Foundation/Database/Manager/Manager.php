@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Foundation\Database\Manager;
 
+use Laventure\Component\Database\Configuration\Configuration;
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Drivers\Mysql\MysqlConnection;
 use Laventure\Component\Database\Drivers\Oracle\OracleConnection;
@@ -39,7 +40,7 @@ class Manager extends DatabaseManager implements ManagerInterface
 
 
     /**
-     * Model configuration manager
+     * ActiveRecord configuration manager
      *
      * @var array
     */
@@ -86,7 +87,8 @@ class Manager extends DatabaseManager implements ManagerInterface
     */
     public function bootManager(): static
     {
-        return $this->open($this->getType(), $this->getCredentials());
+        return $this->setConnectionName($this->getConfiguration()->connection())
+                    ->setConfigurations();
     }
 
 
@@ -182,30 +184,26 @@ class Manager extends DatabaseManager implements ManagerInterface
 
 
 
-
     /**
-     * Returns connection credentials
-     *
-     * @return ConfigurationInterface
+     * @return array
     */
-    private function getCredentials(): ConfigurationInterface
+    public function getAllCredentials(): array
     {
-        return $this->getConfiguration()->credentials();
+        return $this->getConfiguration()->connections();
     }
 
 
 
 
-
-
-
     /**
-     * Returns type of connection
-     *
-     * @return string
+     * @return $this
     */
-    private function getType(): string
+    private function setConfigurations(): static
     {
-        return $this->getConfiguration()->connection();
+        foreach ($this->getAllCredentials() as $name => $credentials) {
+            $this->setConfiguration($name, new Configuration($credentials));
+        }
+
+        return $this;
     }
 }

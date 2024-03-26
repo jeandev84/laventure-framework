@@ -14,7 +14,7 @@ use Laventure\Component\Database\ORM\Persistence\PersistentInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\ORM\Mapper\Collection\Persistent
+ * @package  Laventure\Component\Database\ORM\DataMapper\Collection\Persistent
 */
 class PersistentCollection implements PersistentCollectionInterface
 {

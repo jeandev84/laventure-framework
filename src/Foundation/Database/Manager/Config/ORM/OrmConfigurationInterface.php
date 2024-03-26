@@ -30,7 +30,7 @@ interface OrmConfigurationInterface extends CommonConfigurationInterface
 
 
     /**
-     * Returns Mapper credentials
+     * Returns DataMapper credentials
      *
      * @return MapperConfigurationInterface
     */
@@ -42,7 +42,7 @@ interface OrmConfigurationInterface extends CommonConfigurationInterface
 
 
     /**
-     * Returns Model credentials
+     * Returns ActiveRecord credentials
      *
      * @return ModelConfigurationInterface
     */

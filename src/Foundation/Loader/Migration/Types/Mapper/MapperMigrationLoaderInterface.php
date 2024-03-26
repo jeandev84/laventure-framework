@@ -14,7 +14,7 @@ use Laventure\Foundation\Loader\Migration\MigrationLoaderInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Foundation\Loader\Migration\Mapper
+ * @package  Laventure\Foundation\Loader\Migration\DataMapper
  */
 interface MapperMigrationLoaderInterface extends MigrationLoaderInterface
 {

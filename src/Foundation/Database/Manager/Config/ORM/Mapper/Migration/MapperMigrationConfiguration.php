@@ -14,7 +14,7 @@ use Laventure\Utils\Parameter\Parameter;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Manager\Config\ORM\Mapper\Migration
+ * @package  Laventure\Component\Database\Manager\Config\ORM\DataMapper\Migration
 */
 class MapperMigrationConfiguration extends Parameter implements MigrationConfigurationInterface
 {
