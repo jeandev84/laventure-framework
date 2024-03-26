@@ -424,6 +424,34 @@ interface ColumnInterface extends Stringable
 
 
     /**
+     * Set default value option
+     *
+     * @param $value
+     * @return $this
+    */
+    public function defaultValue($value): static;
+
+
+
+
+
+
+
+    /**
+     * Add is null option
+     *
+     * @param $status
+     * @return $this
+    */
+    public function isNull($status): static;
+
+
+
+
+
+
+
+    /**
      * Add comments
      *
      * @param string $comments
@@ -449,6 +477,38 @@ interface ColumnInterface extends Stringable
 
 
 
+
+
+    /**
+     * @param string $privileges
+     * @return $this
+    */
+    public function privileges(string $privileges): static;
+
+
+
+
+
+
+    /**
+     * auto increment for example
+     *
+     * @param string $extra
+     * @return $this
+    */
+    public function extra(string $extra): static;
+
+
+
+
+
+
+
+    /**
+     * @param string $key
+     * @return $this
+    */
+    public function key(string $key): static;
 
 
 

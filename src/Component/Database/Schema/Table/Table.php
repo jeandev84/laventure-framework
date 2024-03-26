@@ -19,6 +19,8 @@ use Laventure\Component\Database\Schema\Constraints\Types\Foreign\ForeignKey;
 use Laventure\Component\Database\Schema\Table\Criteria\TableCriteria;
 use Laventure\Component\Database\Schema\Table\Criteria\TableCriteriaInterface;
 use Laventure\Component\Database\Schema\Table\Expr\AlterTable;
+use Laventure\Contract\Parameter\ParameterInterface;
+use Laventure\Utils\Parameter\Parameter;
 use ReflectionClass;
 use ReflectionException;
 
@@ -350,7 +352,7 @@ abstract class Table implements TableInterface
     */
     public function hasColumn(string $name): bool
     {
-        return array_key_exists($name, $this->criteria->columns);
+        return array_key_exists($name, $this->getColumns());
     }
 
 
@@ -368,7 +370,7 @@ abstract class Table implements TableInterface
             ]);
         }
 
-        return $this->criteria->columns[$name];
+        return $this->getColumns()[$name];
     }
 
 
@@ -637,6 +639,8 @@ abstract class Table implements TableInterface
     */
     public function drop(): mixed
     {
+        dd($this->getColumns());
+
         return $this->exec(
             sprintf('DROP TABLE %s CASCADE', $this->getName())
         );
@@ -1201,6 +1205,16 @@ abstract class Table implements TableInterface
 
 
 
+
+
+    /**
+     * @param array $data
+     * @return ParameterInterface
+    */
+    protected function param(array $data): ParameterInterface
+    {
+        return new Parameter($data);
+    }
 
 
 

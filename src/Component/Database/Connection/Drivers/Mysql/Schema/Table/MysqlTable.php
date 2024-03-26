@@ -6,6 +6,7 @@ namespace Laventure\Component\Database\Connection\Drivers\Mysql\Schema\Table;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Connection\Drivers\Mysql\Schema\Table\Column\MysqlColumnFactory;
+use Laventure\Component\Database\Query\Result\QueryResultInterface;
 use Laventure\Component\Database\Schema\Column\Contract\ColumnInterface;
 use Laventure\Component\Database\Schema\Column\Factory\ColumnFactoryInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
@@ -39,15 +40,29 @@ class MysqlTable extends Table
 
 
 
-
     /**
-     * @inheritDoc
+     * @return QueryResultInterface
     */
-    public function getColumn(string $name): ColumnInterface
+    public function fetchColumnsQuery(): QueryResultInterface
     {
-
+        return $this->statement(
+            sprintf('SHOW FULL COLUMNS FROM %s;', $this->name)
+        )->fetch();
     }
 
+
+
+
+
+    /**
+     * @param array $data
+     * @return ColumnInterface
+    */
+    public function columnFromArray(array $data): ColumnInterface
+    {
+         return $this->getColumnFactory()
+                     ->createFromParameter($this->param($data));
+    }
 
 
 
@@ -57,7 +72,10 @@ class MysqlTable extends Table
     */
     public function getColumns(): array
     {
-
+        return array_map(function ($data) {
+            dump($data);
+            return $this->columnFromArray($data);
+        }, $this->fetchColumnsQuery()->all());
     }
 
 
@@ -142,7 +160,6 @@ class MysqlTable extends Table
     {
 
     }
-
 
 
 
@@ -239,11 +256,15 @@ class MysqlTable extends Table
         return new MysqlColumnFactory();
     }
 
+
+
+
+
     /**
      * @inheritDoc
-     */
+    */
     public function getPrimaryKey(string $primaryKey): PrimaryKeyInterface
     {
-        // TODO: Implement getPrimaryKey() method.
+
     }
 }
