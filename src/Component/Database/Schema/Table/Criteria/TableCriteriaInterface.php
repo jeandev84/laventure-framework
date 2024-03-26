@@ -20,6 +20,20 @@ use Laventure\Component\Database\Schema\Constraints\Contract\UniqueKeyInterface;
  */
 interface TableCriteriaInterface
 {
+
+
+
+    /**
+     * Determine if has defined primary keys
+     *
+     * @return bool
+    */
+    public function hasPrimary(): bool;
+
+
+
+
+
     /**
      * @return PrimaryKeyInterface
     */
@@ -40,12 +54,10 @@ interface TableCriteriaInterface
 
 
 
-
     /**
      * @return UniqueKeyInterface
     */
     public function getUnique(): UniqueKeyInterface;
-
 
 
 

@@ -6,7 +6,11 @@ namespace Laventure\Component\Database\Schema\Table\Builder\Common;
 
 use Laventure\Component\Database\Query\Utils\QueryUtils;
 use Laventure\Component\Database\Schema\Column\Contract\ColumnInterface;
+use Laventure\Component\Database\Schema\Constraints\Contract\IndexInterface;
+use Laventure\Component\Database\Schema\Constraints\Contract\PrimaryKeyInterface;
+use Laventure\Component\Database\Schema\Constraints\Contract\UniqueKeyInterface;
 use Laventure\Component\Database\Schema\Table\Builder\Contract\CreateTableSQLBuilderInterface;
+use Laventure\Component\Database\Schema\Table\Criteria\TableCriteriaInterface;
 use Laventure\Component\Database\Schema\Table\TableInterface;
 
 /**
@@ -105,7 +109,10 @@ abstract class CreateTableSQLBuilder implements CreateTableSQLBuilderInterface
     */
     protected function getPrimarySQL(): string
     {
-        return $this->table->getPrimary()->getSQL();
+        return $this->table
+                    ->getCriteria()
+                    ->getPrimary()
+                    ->getSQL();
     }
 
 

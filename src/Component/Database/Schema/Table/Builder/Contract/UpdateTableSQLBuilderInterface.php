@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Schema\Table\Builder\Contract;
 
 use Laventure\Component\Database\Query\Builder\SQL\Contract\SQLInterface;
+use Laventure\Component\Database\Schema\Table\Constraint\TableConstraintInterface;
 
 /**
  * UpdateTableSQLBuilderInterface
