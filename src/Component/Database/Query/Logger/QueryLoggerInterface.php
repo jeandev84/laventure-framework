@@ -6,6 +6,8 @@ namespace Laventure\Component\Database\Query\Logger;
 
 use Laventure\Component\Database\Query\Logger\DTO\Contract\ExecutedQueryInterface;
 use Laventure\Component\Database\Query\Logger\DTO\Contract\FailedQueryInterface;
+use Laventure\Component\Database\Query\Logger\DTO\Contract\PreExecutionQueryInterface;
+use Laventure\Component\Database\Query\Logger\Status\QueryLoggerStatusInterface;
 use Throwable;
 
 /**
@@ -24,9 +26,26 @@ interface QueryLoggerInterface
      * Log current query
      *
      * @param string $query
-     * @return mixed
+     * @return $this
     */
-    public function logQuery(string $query): mixed;
+    public function logCurrentQuery(string $query): static;
+
+
+
+
+
+
+
+    /**
+     * Log query before execution
+     *
+     * @param PreExecutionQueryInterface $query
+     * @return $this
+    */
+    public function logQueryPreExecution(PreExecutionQueryInterface $query): static;
+
+
+
 
 
 
@@ -34,9 +53,9 @@ interface QueryLoggerInterface
 
     /**
      * @param ExecutedQueryInterface $query
-     * @return mixed
+     * @return $this
     */
-    public function logExecutedQuery(ExecutedQueryInterface $query): mixed;
+    public function logExecutedQuery(ExecutedQueryInterface $query): static;
 
 
 
@@ -46,9 +65,9 @@ interface QueryLoggerInterface
 
      /**
       * @param FailedQueryInterface $query
-      * @return mixed
+      * @return $this
      */
-     public function logFailedQuery(FailedQueryInterface $query): mixed;
+     public function logFailedQuery(FailedQueryInterface $query): static;
 
 
 
@@ -78,6 +97,19 @@ interface QueryLoggerInterface
 
 
 
+
+
+     /**
+      * @return array
+     */
+     public function getPreExecutionQueries(): array;
+
+
+
+
+
+
+
      /**
       * @return string
      */
@@ -88,8 +120,21 @@ interface QueryLoggerInterface
 
 
 
+
      /**
-      * @return bool
+      * @param QueryLoggerStatusInterface $status
+      * @return $this
      */
-     public function isLoggable(): bool;
+     public function setStatus(QueryLoggerStatusInterface $status): static;
+
+
+
+
+
+
+
+     /**
+      * @return QueryLoggerStatusInterface
+     */
+     public function getStatus(): QueryLoggerStatusInterface;
 }

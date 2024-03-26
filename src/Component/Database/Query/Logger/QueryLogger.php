@@ -5,6 +5,9 @@ namespace Laventure\Component\Database\Query\Logger;
 
 use Laventure\Component\Database\Query\Logger\DTO\Contract\ExecutedQueryInterface;
 use Laventure\Component\Database\Query\Logger\DTO\Contract\FailedQueryInterface;
+use Laventure\Component\Database\Query\Logger\DTO\Contract\PreExecutionQueryInterface;
+use Laventure\Component\Database\Query\Logger\Status\QueryLoggerStatus;
+use Laventure\Component\Database\Query\Logger\Status\QueryLoggerStatusInterface;
 
 /**
  * QueryLogger
@@ -27,9 +30,17 @@ class QueryLogger implements QueryLoggerInterface
 
 
     /**
-     * @var bool
+     * @var QueryLoggerStatusInterface
     */
-    protected bool $loggable = true;
+    protected QueryLoggerStatusInterface $status;
+
+
+
+
+    /**
+     * @var PreExecutionQueryInterface[]
+    */
+    protected array $preExecutionQueries = [];
 
 
 
@@ -49,14 +60,9 @@ class QueryLogger implements QueryLoggerInterface
 
 
 
-
-
-    /**
-     * @param string $query
-    */
-    public function __construct(string $query = '')
+    public function __construct()
     {
-         $this->logQuery($query);
+        $this->status = new QueryLoggerStatus();
     }
 
 
@@ -65,12 +71,12 @@ class QueryLogger implements QueryLoggerInterface
 
 
     /**
-     * @param bool $loggable
+     * @param QueryLoggerStatusInterface $status
      * @return $this
     */
-    public function loggable(bool $loggable): static
+    public function setStatus(QueryLoggerStatusInterface $status): static
     {
-        $this->loggable = $loggable;
+        $this->status = $status;
 
         return $this;
     }
@@ -79,15 +85,38 @@ class QueryLogger implements QueryLoggerInterface
 
 
 
+
+
     /**
      * @inheritDoc
     */
-    public function logQuery(string $query): static
+    public function logCurrentQuery(string $query): static
     {
-       $this->query = $query;
+        if ($this->getStatus()->isLoggable()) {
+            $this->query = $query;
+        }
 
-       return $this;
+        return $this;
     }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function logQueryPreExecution(PreExecutionQueryInterface $query): static
+    {
+         if ($this->getStatus()->isPreExecution()) {
+             $this->preExecutionQueries[] = $query;
+         }
+
+         return $this;
+    }
+
+
 
 
 
@@ -98,7 +127,7 @@ class QueryLogger implements QueryLoggerInterface
     */
     public function logExecutedQuery(ExecutedQueryInterface $query): static
     {
-        if ($this->isLoggable()) {
+        if ($this->getStatus()->isLoggable()) {
             $this->executedQueries[] = $query;
         }
 
@@ -114,7 +143,7 @@ class QueryLogger implements QueryLoggerInterface
     */
     public function logFailedQuery(FailedQueryInterface $query): static
     {
-        if (!$this->isLoggable()) {
+        if (!$this->getStatus()->isLoggable()) {
             throw $query->getError();
         }
 
@@ -162,13 +191,23 @@ class QueryLogger implements QueryLoggerInterface
 
 
 
+    /**
+     * @inheritDoc
+    */
+    public function getPreExecutionQueries(): array
+    {
+        return $this->preExecutionQueries;
+    }
+
+
+
 
 
     /**
      * @inheritDoc
     */
-    public function isLoggable(): bool
+    public function getStatus(): QueryLoggerStatusInterface
     {
-        return $this->loggable;
+
     }
 }

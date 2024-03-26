@@ -410,7 +410,7 @@ class Query implements QueryInterface
     */
     public function logQuery(string $query): static
     {
-        $this->logger->logQuery($query);
+        $this->logger->logCurrentQuery($query);
 
         return $this;
     }

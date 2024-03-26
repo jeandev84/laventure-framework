@@ -43,6 +43,7 @@ trait ConnectionTrait
 
 
 
+
     /**
      * @param QueryLoggerInterface $queryLogger
      * @return $this
@@ -169,6 +170,23 @@ trait ConnectionTrait
 
 
 
+    /**
+     * @param bool $status
+     * @return $this
+    */
+    public function withQueryLoggerStatus(bool $status): static
+    {
+        $this->queryLogger->withLoggableStatus($status);
+
+        return $this;
+    }
+
+
+
+    
+    
+    
+    
     /**
      * @return QueryLoggerInterface
     */
