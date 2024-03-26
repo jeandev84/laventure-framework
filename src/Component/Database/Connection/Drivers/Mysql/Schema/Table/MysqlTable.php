@@ -6,13 +6,17 @@ namespace Laventure\Component\Database\Connection\Drivers\Mysql\Schema\Table;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Connection\Drivers\Mysql\Schema\Table\Column\MysqlColumnFactory;
+use Laventure\Component\Database\Query\Result\QueryResultInterface;
 use Laventure\Component\Database\Schema\Column\Contract\ColumnInterface;
 use Laventure\Component\Database\Schema\Column\Factory\ColumnFactoryInterface;
+use Laventure\Component\Database\Schema\Constraints\Constraint;
+use Laventure\Component\Database\Schema\Constraints\ConstraintInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\IndexInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\PrimaryKeyInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\UniqueKeyInterface;
 use Laventure\Component\Database\Schema\Table\Builder\TableSQlBuilderInterface;
+use Laventure\Component\Database\Schema\Table\Exception\TableException;
 use Laventure\Component\Database\Schema\Table\Table;
 
 /**
@@ -26,6 +30,7 @@ use Laventure\Component\Database\Schema\Table\Table;
 */
 class MysqlTable extends Table
 {
+
     /**
      * @param ConnectionInterface $connection
      * @param string $name
@@ -39,15 +44,28 @@ class MysqlTable extends Table
 
 
 
-
     /**
-     * @inheritDoc
+     * @return QueryResultInterface
     */
-    public function getColumn(string $name): ColumnInterface
+    public function fetchColumnsQuery(): QueryResultInterface
     {
-
+        return $this->statement(
+            sprintf('SHOW FULL COLUMNS FROM %s;', $this->name)
+        )->fetch();
     }
 
+
+
+
+
+    /**
+     * @param array $data
+     * @return ColumnInterface
+    */
+    public function columnFromArray(array $data): ColumnInterface
+    {
+         return $this->getColumnFactory()->createFromParameter($this->param($data));
+    }
 
 
 
@@ -57,114 +75,72 @@ class MysqlTable extends Table
     */
     public function getColumns(): array
     {
+        foreach ($this->fetchColumnsQuery()->all() as $data) {
+            $column = $this->columnFromArray($data);
+            $this->criteria->columns[$column->getName()] = $column;
+        }
 
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function getPrimaryKeys(): array
-    {
-
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function getForeignKey(string $foreignKey): ForeignKeyInterface
-    {
-
-    }
-
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function getForeignKeys(): array
-    {
-
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function dropForeignKeys(): static
-    {
-
+        return $this->criteria->columns;
     }
 
 
 
 
     /**
-     * @inheritDoc
+     * @param $type
+     * @return array
     */
-    public function hasIndex(string $index): bool
+    public function fetchConstraintsByType($type): array
     {
+        $constraintColumn = $this->constraintTable(".CONSTRAINT_TYPE");
 
+        return $this->fetchConstraintsBy([
+            $constraintColumn => $type
+        ]);
     }
 
 
 
 
     /**
-     * @inheritDoc
+     * @param array $criteria
+     * @return array
     */
-    public function getIndex(string $index): IndexInterface
+    public function fetchConstraintsBy(array $criteria = []): array
     {
+        $qb               = $this->connection->createQueryBuilder();
+        $schemaColumn     = $this->constraintTable(".TABLE_SCHEMA");
+        $tableColumn      = $this->constraintTable(".TABLE_NAME");
 
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function getIndexes(): array
-    {
-
-    }
+        $criteria = array_merge([
+            $schemaColumn => $this->getSchemaName(),
+            $tableColumn  => $this->getName(),
+        ], $criteria);
 
 
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function getUniqueKey(string $uniqueKey): UniqueKeyInterface
-    {
-
+        return $qb->select()
+                  ->from($this->constraintTable())
+                  ->criteria($criteria)
+                  ->getQuery()
+                  ->fetch()
+                  ->all();
     }
 
 
 
 
     /**
-     * @inheritDoc
+     * @param array $data
+     * @return ConstraintInterface
     */
-    public function getUniqueKeys(): array
+    public function constraintFromArray(array $data): ConstraintInterface
     {
-        return [];
+          $param = $this->param($data);
+          $type  = $param->replace('CONSTRAINT_TYPE', ' ', '_');
+          $name  = $param->string('CONSTRAINT_NAME');
+
+          return (new Constraint($type, $name))
+                 ->options($param->all());
     }
 
 
@@ -175,8 +151,34 @@ class MysqlTable extends Table
     */
     public function getConstraints(): array
     {
-        return [];
+        foreach ($this->fetchConstraintsBy() as $data) {
+            $constraint = $this->constraintFromArray($data);
+            $this->criteria->constraint[$constraint->getName()] = $constraint;
+        }
+
+        return $this->criteria->constraint;
     }
+
+
+
+
+
+
+    /**
+     * @param string $type
+     * @return array
+    */
+    public function getConstraintsBy(string $type): array
+    {
+        $func = function (ConstraintInterface $constraint) use ($type) {
+             return ($constraint->getType() === $type);
+        };
+
+        return array_filter($this->getConstraints(), $func);
+    }
+
+
+
 
 
 
@@ -200,6 +202,212 @@ class MysqlTable extends Table
     public function dropPrimaryKeys(): static
     {
         return $this;
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getPrimaryKeys(): array
+    {
+        return $this->getConstraintsBy("PRIMARY_KEY");
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getPrimaryKey(string $primaryKey): PrimaryKeyInterface
+    {
+         if (!$this->hasPrimaryKey($primaryKey)) {
+             throw new TableException("Unavailable primary key '$primaryKey'");
+         }
+
+         return $this->getPrimaryKeys()[$primaryKey];
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getForeignKey(string $foreignKey): ForeignKeyInterface
+    {
+         if (!$this->hasForeignKey($foreignKey)) {
+               throw new TableException("Unavailable foreign key '$foreignKey'");
+         }
+
+         return $this->getForeignKeys()[$foreignKey];
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getForeignKeys(): array
+    {
+        return $this->getConstraintsBy("FOREIGN_KEY");
+    }
+
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function dropForeignKey(string $foreignKey): static
+    {
+        if ($this->hasForeignKey($foreignKey)) {
+            $this->exec(
+                sprintf('ALTER TABLE `%s` DROP FOREIGN KEY `%s`', $this->getName(), $foreignKey)
+            );
+            $this->dropIndex($foreignKey);
+        }
+
+        return $this;
+    }
+
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function dropForeignKeys(): static
+    {
+        foreach ($this->getForeignKeys() as $foreignKey){
+            $this->dropForeignKey($foreignKey->getName());
+        }
+
+        return $this;
+    }
+
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function hasIndex(string $index): bool
+    {
+        return array_key_exists($index, $this->getIndexes());
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getIndex(string $index): IndexInterface
+    {
+        if (!$this->hasIndex($index)) {
+            throw new TableException("Unavailable index '$index'");
+        }
+
+        return $this->getIndexes()[$index];
+    }
+
+
+
+
+
+    /**
+     * @return IndexInterface[]
+     * @inheritDoc
+    */
+    public function getIndexes(): array
+    {
+        return $this->getConstraints();
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function dropIndexes(): static
+    {
+         foreach ($this->getIndexes() as $index) {
+               $this->dropIndex($index->getName());
+         }
+
+         return $this;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function dropIndex(string $index): static
+    {
+        if ($this->hasIndex($index)) {
+            $this->exec(
+                sprintf('ALTER TABLE %s DROP INDEX %s', $this->getName(), $index)
+            );
+        }
+
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getUniqueKey(string $uniqueKey): UniqueKeyInterface
+    {
+        if (!$this->hasUniqueKey($uniqueKey)) {
+            throw new TableException("Unavailable unique key '$uniqueKey'");
+        }
+
+        return $this->getUniqueKeys()[$uniqueKey];
+    }
+
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getUniqueKeys(): array
+    {
+        return $this->getConstraintsBy("UNIQUE");
     }
 
 
@@ -239,11 +447,16 @@ class MysqlTable extends Table
         return new MysqlColumnFactory();
     }
 
+
+
+
+
     /**
-     * @inheritDoc
-     */
-    public function getPrimaryKey(string $primaryKey): PrimaryKeyInterface
+     * @param string $column
+     * @return string
+    */
+    private function constraintTable(string $column = ''): string
     {
-        // TODO: Implement getPrimaryKey() method.
+        return sprintf('information_schema.table_constraints%s', $column);
     }
 }

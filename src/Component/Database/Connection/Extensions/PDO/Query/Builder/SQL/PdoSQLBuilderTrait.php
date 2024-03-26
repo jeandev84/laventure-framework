@@ -37,8 +37,9 @@ trait PdoSQLBuilderTrait
     */
     public function whereIn($column, array $value): static
     {
-        $this->andWhere($this->expr()->in($column, ":$column"));
-        $this->setParameter($column, $value);
+        $bindParam  = $this->bindField($column);
+        $this->andWhere($this->expr()->in($column, ":$bindParam"));
+        $this->setParameter($bindParam, $value);
 
         return $this;
     }
@@ -51,9 +52,22 @@ trait PdoSQLBuilderTrait
     */
     public function whereEqualTo($column, $value): static
     {
-        $this->andWhere($this->expr()->eq($column, ":$column"));
-        $this->setParameter($column, $value);
+        $bindParam  = $this->bindField($column);
+        $this->andWhere($this->expr()->eq($column, ":$bindParam"));
+        $this->setParameter($bindParam, $value);
 
         return $this;
+    }
+
+
+
+
+    /**
+     * @param string $column
+     * @return string
+    */
+    public function bindField(string $column): string
+    {
+        return str_replace(['.', '-', ' '], ['_'], strtolower($column));
     }
 }
