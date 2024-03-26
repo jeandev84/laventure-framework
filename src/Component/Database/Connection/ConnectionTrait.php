@@ -6,7 +6,8 @@ namespace Laventure\Component\Database\Connection;
 
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Configuration\Null\NullConfiguration;
-use Laventure\Component\Database\Connection\Drivers\DriverException;
+use Laventure\Component\Database\Drivers\DriverException;
+use Laventure\Component\Database\Query\Logger\QueryLoggerInterface;
 
 /**
  * ConnectionTrait
@@ -29,6 +30,29 @@ trait ConnectionTrait
      * @var mixed
     */
     protected mixed $connection;
+
+
+
+
+    /**
+     * @var QueryLoggerInterface
+    */
+    protected QueryLoggerInterface $queryLogger;
+
+
+
+
+
+    /**
+     * @param QueryLoggerInterface $queryLogger
+     * @return $this
+    */
+    public function setQueryLogger(QueryLoggerInterface $queryLogger): static
+    {
+         $this->queryLogger = $queryLogger;
+
+         return $this;
+    }
 
 
 
@@ -141,6 +165,17 @@ trait ConnectionTrait
     }
 
 
+
+
+
+
+    /**
+     * @return QueryLoggerInterface
+    */
+    public function getQueryLogger(): QueryLoggerInterface
+    {
+        return $this->queryLogger;
+    }
 
 
 

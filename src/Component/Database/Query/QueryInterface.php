@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Query;
 
+use Laventure\Component\Database\Query\Logger\QueryLoggerInterface;
 use Laventure\Component\Database\Query\Result\QueryResultInterface;
 
 /**
@@ -237,4 +238,26 @@ interface QueryInterface
      * @return string
     */
     public function getSQL(): string;
+
+
+
+
+
+
+
+    /**
+     * @param QueryLoggerInterface $logger
+     * @return $this
+    */
+    public function setLogger(QueryLoggerInterface $logger): static;
+
+
+
+
+
+
+    /**
+     * @return QueryLoggerInterface
+    */
+    public function getLogger(): QueryLoggerInterface;
 }

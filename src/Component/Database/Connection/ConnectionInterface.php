@@ -9,6 +9,7 @@ use Laventure\Component\Database\Connection\Transaction\TransactionInterface;
 use Laventure\Component\Database\DatabaseInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Factory\SQLQueryBuilderFactoryInterface;
 use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
+use Laventure\Component\Database\Query\Logger\QueryLoggerInterface;
 use Laventure\Component\Database\Query\QueryInterface;
 use Laventure\Component\Database\Schema\Table\TableInterface;
 
@@ -230,4 +231,16 @@ interface ConnectionInterface extends TransactionInterface
      * @return string
     */
     public function getDatabaseName(): string;
+
+
+
+
+
+
+    /**
+     * Returns query logger
+     *
+     * @return QueryLoggerInterface
+    */
+    public function getQueryLogger(): QueryLoggerInterface;
 }

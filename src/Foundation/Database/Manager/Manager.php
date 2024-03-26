@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Laventure\Foundation\Database\Manager;
 
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
-use Laventure\Component\Database\Connection\Drivers\Mysql\MysqlConnection;
-use Laventure\Component\Database\Connection\Drivers\Oracle\OracleConnection;
-use Laventure\Component\Database\Connection\Drivers\Pgsql\PgsqlConnection;
-use Laventure\Component\Database\Connection\Drivers\Sqlite\SqliteConnection;
+use Laventure\Component\Database\Drivers\Mysql\MysqlConnection;
+use Laventure\Component\Database\Drivers\Oracle\OracleConnection;
+use Laventure\Component\Database\Drivers\Pgsql\PgsqlConnection;
+use Laventure\Component\Database\Drivers\Sqlite\SqliteConnection;
 use Laventure\Component\Database\Manager\DatabaseManager;
 use Laventure\Component\Database\Schema\Migrator\Migrator;
 use Laventure\Component\Database\Schema\Migrator\MigratorInterface;

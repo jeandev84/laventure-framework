@@ -6,6 +6,10 @@ namespace Laventure\Component\Database\Connection\Extensions\PDO\Query;
 
 use Laventure\Component\Database\Connection\Extensions\PDO\Query\Result\QueryResult;
 use Laventure\Component\Database\Query\Exception\QueryException;
+use Laventure\Component\Database\Query\Logger\DTO\Contract\ExecutedQueryInterface;
+use Laventure\Component\Database\Query\Logger\DTO\ExecutedQuery;
+use Laventure\Component\Database\Query\Logger\DTO\FailedQuery;
+use Laventure\Component\Database\Query\Logger\QueryLoggerInterface;
 use Laventure\Component\Database\Query\QueryInterface;
 use Laventure\Component\Database\Query\Result\QueryResultInterface;
 use PDO;
@@ -40,6 +44,15 @@ class Query implements QueryInterface
 
 
 
+
+    /**
+     * @var QueryLoggerInterface
+    */
+    protected QueryLoggerInterface $logger;
+
+
+
+
     /**
      * @var string
     */
@@ -64,18 +77,29 @@ class Query implements QueryInterface
     protected array $cache = [];
 
 
+    /**
+     * @var array
+    */
+    protected array $bindParams = [];
+
+
 
 
     /**
      * @var array
     */
-    protected array $log = [
-        'sql'          => '',
-        'bindParams'   => [],
-        'bindValues'   => [],
-        'bindColumns'  => [],
-        'main'       => []
-    ];
+    protected array $bindValues = [];
+
+
+
+
+
+    /**
+     * @var array
+    */
+    protected array $bindColumns = [];
+
+
 
 
 
@@ -94,10 +118,12 @@ class Query implements QueryInterface
 
     /**
      * @param PDO $pdo
+     * @param QueryLoggerInterface $logger
     */
-    public function __construct(PDO $pdo)
+    public function __construct(PDO $pdo, QueryLoggerInterface $logger)
     {
         $this->pdo       = $pdo;
+        $this->logger    = $logger;
         $this->statement = new PDOStatement();
     }
 
@@ -111,7 +137,7 @@ class Query implements QueryInterface
     {
         $this->statement = $this->pdo->prepare($sql);
 
-        return $this->log(compact('sql'));
+        return $this->logQuery($sql);
     }
 
 
@@ -124,7 +150,7 @@ class Query implements QueryInterface
     {
         $this->statement = $this->pdo->query($sql);
 
-        return $this->log(compact('sql'));
+        return $this->logQuery($sql);
     }
 
 
@@ -137,7 +163,7 @@ class Query implements QueryInterface
     {
         $this->statement->bindParam($param, $value, $type);
 
-        $this->log['bindParam'][] = compact('param', 'value', 'type');
+        $this->bindParams[$param] = compact('param', 'value', 'type');
 
         return $this;
     }
@@ -153,7 +179,7 @@ class Query implements QueryInterface
     {
         $this->statement->bindValue($param, $value, $type);
 
-        $this->log['bindValue'][] = compact('param', 'value', 'type');
+        $this->bindValues[$param] = compact('param', 'value', 'type');
 
         return $this;
     }
@@ -222,7 +248,7 @@ class Query implements QueryInterface
     {
         $this->statement->bindColumn($column, $value, $type);
 
-        $this->log['bindParam'][] = compact('column', 'value', 'type');
+        $this->bindColumns[$column] = compact('column', 'value', 'type');
 
         return $this;
     }
@@ -238,7 +264,7 @@ class Query implements QueryInterface
     {
         $this->parameters = array_merge($this->parameters, $parameters);
 
-        return $this->log(compact('parameters'));
+        return $this;
     }
 
 
@@ -290,10 +316,18 @@ class Query implements QueryInterface
     public function execute(): bool
     {
         try {
-            return $this->statement->execute($this->parameters);
+
+            if($status = $this->statement->execute($this->parameters)) {
+                $this->logExecutedQuery($this->statement->queryString);
+            }
+
+            return $status;
+
         } catch (PDOException $e) {
             $this->abort($e);
         }
+
+        return false;
     }
 
 
@@ -371,12 +405,49 @@ class Query implements QueryInterface
 
 
     /**
-     * @param array $log
+     * @param string $query
      * @return $this
     */
-    private function log(array $log): static
+    public function logQuery(string $query): static
     {
-        $this->log = array_merge($this->log, $log);
+        $this->logger->logQuery($query);
+
+        return $this;
+    }
+
+
+
+
+
+
+    /**
+     * @return $this
+    */
+    public function logExecutedQuery(string $query): static
+    {
+         $this->logger->logExecutedQuery(
+             $this->createExecutedQuery($query)
+         );
+
+         return $this;
+    }
+
+
+
+
+
+
+    /**
+     * @param Throwable $e
+     * @return $this
+    */
+    public function logFailedQuery(Throwable $e): static
+    {
+        $this->logger->logFailedQuery(
+            new FailedQuery($this->logger->getCurrentQuery(), $e, [
+                'context' => $this
+            ])
+        );
 
         return $this;
     }
@@ -389,14 +460,66 @@ class Query implements QueryInterface
     /**
      * @param Throwable $e
      * @return void
-     * @throws QueryException
     */
     private function abort(Throwable $e): void
     {
-        throw new QueryException(
-            "SQL: {$this->log['sql']} {$e->getMessage()}",
-            $this->log,
-            409
+        $message = sprintf(
+     'SQL: %s | Message: %s',
+            $this->logger->getCurrentQuery(),
+            $e->getMessage()
         );
+
+        $e = new QueryException($message, [
+            'context' => $this,
+            'code'    => $e->getCode()
+        ], 500);
+
+        $this->logFailedQuery($e);
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function setLogger(QueryLoggerInterface $logger): static
+    {
+        $this->logger = $logger;
+
+        return $this;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getLogger(): QueryLoggerInterface
+    {
+        return $this->logger;
+    }
+
+
+
+
+
+
+    /**
+     * @param string $sql
+     * @return ExecutedQueryInterface
+    */
+    public function createExecutedQuery(string $sql): ExecutedQueryInterface
+    {
+        $query = new ExecutedQuery($sql);
+        $query->parameters($this->parameters)
+              ->bindParams($this->bindParams)
+              ->bindValues($this->bindValues)
+              ->bindColumns($this->bindColumns);
+
+        return $query;
     }
 }
