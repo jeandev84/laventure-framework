@@ -27,7 +27,7 @@ class DummyClassName extends Migration
     {
          /*
            $schema->create('DummyTableName', function (Blueprint $table) {
-               $table->increments('id');
+               $table->id();
                // ...
            });
          */
@@ -42,7 +42,7 @@ class DummyClassName extends Migration
     public function down(SchemaInterface $schema): void
     {
          /*
-           $schema->dropIfExists('DummyTableName');
+           $schema->drop('DummyTableName');
          */
     }
 }

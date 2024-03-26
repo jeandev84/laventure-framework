@@ -9,9 +9,12 @@ use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface
 use Laventure\Component\Database\Schema\Constraints\Contract\IndexInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\PrimaryKeyInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\UniqueKeyInterface;
-use Laventure\Component\Database\Schema\Constraints\Types\Index;
-use Laventure\Component\Database\Schema\Constraints\Types\Keys\Primary\PrimaryKey;
-use Laventure\Component\Database\Schema\Constraints\Types\Keys\Unique\UniqueKey;
+use Laventure\Component\Database\Schema\Constraints\Types\Index\Index;
+use Laventure\Component\Database\Schema\Constraints\Types\Index\NullIndex;
+use Laventure\Component\Database\Schema\Constraints\Types\Primary\NullPrimaryKey;
+use Laventure\Component\Database\Schema\Constraints\Types\Primary\PrimaryKey;
+use Laventure\Component\Database\Schema\Constraints\Types\Unique\NullUniqueKey;
+use Laventure\Component\Database\Schema\Constraints\Types\Unique\UniqueKey;
 
 /**
  * TableCriteria
@@ -137,6 +140,10 @@ class TableCriteria implements TableCriteriaInterface
     */
     public function getPrimary(): PrimaryKeyInterface
     {
+        if (empty($this->primary)) {
+            return new NullPrimaryKey();
+        }
+
         return new PrimaryKey($this->primary);
     }
 
@@ -149,6 +156,10 @@ class TableCriteria implements TableCriteriaInterface
     */
     public function getIndex(): IndexInterface
     {
+        if (empty($this->index)) {
+            return new NullIndex([]);
+        }
+
         return new Index($this->index);
     }
 
@@ -162,6 +173,10 @@ class TableCriteria implements TableCriteriaInterface
     */
     public function getUnique(): UniqueKeyInterface
     {
+        if (empty($this->unique)) {
+            return new NullUniqueKey();
+        }
+
         return new UniqueKey($this->unique);
     }
 
@@ -176,6 +191,19 @@ class TableCriteria implements TableCriteriaInterface
     {
         return $this->foreign;
     }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function hasPrimary(): bool
+    {
+        return !empty($this->primary);
+    }
+
+
 
 
 

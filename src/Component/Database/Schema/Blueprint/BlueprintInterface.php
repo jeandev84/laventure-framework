@@ -6,7 +6,6 @@ namespace Laventure\Component\Database\Schema\Blueprint;
 
 use Laventure\Component\Database\Schema\Blueprint\Column\BlueprintColumnInterface;
 use Laventure\Component\Database\Schema\Column\Types\ColumnType;
-use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
 use Laventure\Component\Database\Schema\Table\TableInterface;
 
 /**
@@ -532,12 +531,17 @@ interface BlueprintInterface
 
 
 
-
     /**
+     * Example:
+     * 
+     *   $table->foreign('book_id', function (ForeignKeyInterface $column) {
+     *       return $column->references('id')->on('books')->onDelete();
+     *   });
+     *
      * @param string $name
      * @param callable $func
      * @return BlueprintInterface
-    */
+     */
     public function foreign(string $name, callable $func): static;
 
 
@@ -550,7 +554,6 @@ interface BlueprintInterface
      * @return BlueprintInterface
     */
     public function foreignId(callable $func): static;
-
 
 
 
@@ -572,7 +575,6 @@ interface BlueprintInterface
 
 
 
-
     /**
      * @param string $name
      * @param string $to
@@ -581,6 +583,17 @@ interface BlueprintInterface
     public function renameColumn(string $name, string $to): static;
 
 
+
+
+
+
+
+    /**
+     * @param string $name
+     * @param callable $func
+     * @return $this
+    */
+    public function modifyColumn(string $name, callable $func): static;
 
 
 
@@ -602,21 +615,12 @@ interface BlueprintInterface
 
 
 
-    /**
-     * @return mixed
-    */
-    public function createTable(): mixed;
-
-
-
-
-
 
 
     /**
      * @return mixed
     */
-    public function updateTable(): mixed;
+    public function create(): mixed;
 
 
 
@@ -627,7 +631,8 @@ interface BlueprintInterface
     /**
      * @return mixed
     */
-    public function dropTable(): mixed;
+    public function update(): mixed;
+
 
 
 
@@ -637,7 +642,17 @@ interface BlueprintInterface
     /**
      * @return mixed
     */
-    public function truncateTable(): mixed;
+    public function drop(): mixed;
+
+
+
+
+
+
+    /**
+     * @return mixed
+    */
+    public function truncate(): mixed;
 
 
 
@@ -649,7 +664,7 @@ interface BlueprintInterface
      * @param string $name
      * @return mixed
     */
-    public function renameTable(string $name): mixed;
+    public function rename(string $name): mixed;
 
 
 
@@ -663,6 +678,7 @@ interface BlueprintInterface
      * @return BlueprintColumnInterface[]
     */
     public function getColumns(): array;
+
 
 
 

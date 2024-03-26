@@ -10,6 +10,7 @@ use Laventure\Component\Database\Schema\Column\Contract\ColumnInterface;
 use Laventure\Component\Database\Schema\Column\Factory\ColumnFactoryInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\IndexInterface;
+use Laventure\Component\Database\Schema\Constraints\Contract\PrimaryKeyInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\UniqueKeyInterface;
 use Laventure\Component\Database\Schema\Table\Builder\TableSQlBuilderInterface;
 use Laventure\Component\Database\Schema\Table\Table;
@@ -236,5 +237,13 @@ class MysqlTable extends Table
     public function getColumnFactory(): ColumnFactoryInterface
     {
         return new MysqlColumnFactory();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getPrimaryKey(string $primaryKey): PrimaryKeyInterface
+    {
+        // TODO: Implement getPrimaryKey() method.
     }
 }

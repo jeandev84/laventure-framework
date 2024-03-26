@@ -71,7 +71,7 @@ class Schema implements SchemaInterface
 
         call_user_func($closure, $blueprint);
 
-        return $blueprint->createTable();
+        return $blueprint->create();
     }
 
 
@@ -91,7 +91,7 @@ class Schema implements SchemaInterface
 
         call_user_func($closure, $blueprint);
 
-        return $blueprint->updateTable();
+        return $blueprint->update();
     }
 
 

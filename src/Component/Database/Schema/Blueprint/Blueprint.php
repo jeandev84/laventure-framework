@@ -7,9 +7,8 @@ namespace Laventure\Component\Database\Schema\Blueprint;
 use Laventure\Component\Database\Schema\Blueprint\Column\BlueprintColumn;
 use Laventure\Component\Database\Schema\Blueprint\Column\BlueprintColumnInterface;
 use Laventure\Component\Database\Schema\Column\Contract\ColumnInterface;
-use Laventure\Component\Database\Schema\Column\Option\Contract\ColumnOptionInterface;
 use Laventure\Component\Database\Schema\Column\Types\ColumnType;
-use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
+use Laventure\Component\Database\Schema\Column\Types\TimestampColumn;
 use Laventure\Component\Database\Schema\Table\TableInterface;
 
 /**
@@ -393,7 +392,8 @@ class Blueprint implements BlueprintInterface
     */
     public function timestamps(): static
     {
-        $this->table->addTimestamps();
+        $this->datetime(TimestampColumn::createdAt());
+        $this->datetime(TimestampColumn::updatedAt())->nullable();
 
         return $this;
     }
@@ -407,7 +407,7 @@ class Blueprint implements BlueprintInterface
     */
     public function softDeletes(): static
     {
-        $this->table->addSoftDeletes();
+        $this->datetime(TimestampColumn::deletedAt());
 
         return $this;
     }
@@ -421,7 +421,8 @@ class Blueprint implements BlueprintInterface
     */
     public function nullableTimestamps(): static
     {
-        $this->table->addNullableTimestamps();
+        $this->datetime(TimestampColumn::createdAt())->nullable();
+        $this->datetime(TimestampColumn::updatedAt())->nullable();
 
         return $this;
     }
@@ -434,8 +435,7 @@ class Blueprint implements BlueprintInterface
     */
     public function rememberToken(): static
     {
-        $this->string('remember_token', 100)
-             ->nullable();
+        $this->string('remember_token', 100)->nullable();
 
         return $this;
     }
@@ -530,10 +530,27 @@ class Blueprint implements BlueprintInterface
     */
     public function renameColumn(string $name, string $to): static
     {
-        $this->table->renameColumn($name, $to);
+         $this->table->renameColumn($name, $to);
 
-        return $this;
+         return $this;
     }
+
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function modifyColumn(string $name, callable $func): static
+    {
+         $this->table->modifyColumn($name, $func);
+
+         return $this;
+    }
+
 
 
 
@@ -549,9 +566,7 @@ class Blueprint implements BlueprintInterface
 
         return $this;
     }
-
-
-
+    
 
 
 
@@ -559,9 +574,12 @@ class Blueprint implements BlueprintInterface
     /**
      * @inheritDoc
     */
-    public function createTable(): mixed
+    public function create(): mixed
     {
         $this->preFlush();
+
+        #dump('From : '. get_called_class());
+        #dd($this->table->expr()->create()->getSQL());
 
         return $this->table->create();
     }
@@ -573,7 +591,7 @@ class Blueprint implements BlueprintInterface
     /**
      * @inheritDoc
     */
-    public function updateTable(): mixed
+    public function update(): mixed
     {
         $this->preFlush();
 
@@ -586,7 +604,7 @@ class Blueprint implements BlueprintInterface
     /**
      * @inheritDoc
     */
-    public function dropTable(): mixed
+    public function drop(): mixed
     {
         return $this->table->update();
     }
@@ -598,7 +616,7 @@ class Blueprint implements BlueprintInterface
     /**
      * @inheritDoc
     */
-    public function truncateTable(): mixed
+    public function truncate(): mixed
     {
         return $this->table->truncate();
     }
@@ -611,7 +629,7 @@ class Blueprint implements BlueprintInterface
     /**
      * @inheritDoc
     */
-    public function renameTable($name): mixed
+    public function rename($name): mixed
     {
         return $this->table->rename($name);
     }
@@ -633,8 +651,9 @@ class Blueprint implements BlueprintInterface
 
 
 
+
     /**
-     * @inheritDoc
+     * @return TableInterface
     */
     public function table(): TableInterface
     {
@@ -651,10 +670,7 @@ class Blueprint implements BlueprintInterface
     */
     public function column(ColumnInterface $column): BlueprintColumnInterface
     {
-        return new BlueprintColumn(
-            $this->table,
-            $column
-        );
+        return new BlueprintColumn($this->table, $column);
     }
 
 
@@ -683,8 +699,22 @@ class Blueprint implements BlueprintInterface
     {
          foreach ($this->columns as $column) {
              if ($column->needsToAdd()) {
-                 $column->add();
+                 $this->columns[$column->getName()]->add();
              }
          }
     }
 }
+
+
+/*
+$table = new Blueprint($connection->table('users'));
+$table->id();
+$table->string('username', 150);
+$table->string('email', 180);
+$table->string('password', 230);
+$table->boolean('active')->default(0);
+$table->timestamps();
+$table->softDeletes();
+$table->primary(['id']);
+$table->unique(['email']);
+*/

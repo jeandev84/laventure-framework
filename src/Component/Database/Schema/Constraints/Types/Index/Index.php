@@ -1,11 +1,8 @@
 <?php
-
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Schema\Constraints\Types;
+namespace Laventure\Component\Database\Schema\Constraints\Types\Index;
 
-use Laventure\Component\Database\Schema\Column\Traits\HasColumnTrait;
-use Laventure\Component\Database\Schema\Constraints\Constraint;
 use Laventure\Component\Database\Schema\Constraints\ConstraintHasColumns;
 use Laventure\Component\Database\Schema\Constraints\Contract\IndexInterface;
 
