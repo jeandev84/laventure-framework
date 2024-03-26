@@ -5,10 +5,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Schema\Blueprint;
 
 use Laventure\Component\Database\Schema\Blueprint\Column\BlueprintColumnInterface;
-use Laventure\Component\Database\Schema\Blueprint\Foreign\BlueprintForeignKeyInterface;
 use Laventure\Component\Database\Schema\Column\Types\ColumnType;
-use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
-use Laventure\Component\Database\Schema\Table\Builder\TableSQlBuilderInterface;
 use Laventure\Component\Database\Schema\Table\TableInterface;
 
 /**
