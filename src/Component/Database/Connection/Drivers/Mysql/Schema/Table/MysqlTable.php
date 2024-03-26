@@ -91,21 +91,11 @@ class MysqlTable extends Table
     */
     public function fetchConstraintsBy($type = null): array
     {
-        $tableName = $this->constraintTableName();
-        $qb        = $this->connection->createQueryBuilder();
-
-        $criteria = [
-          "$tableName.TABLE_SCHEMA" => $this->getSchemaName(),
-          "$tableName.TABLE_NAME"   => $this->getName(),
-        ];
-
-        if ($type) {
-           $criteria["$tableName.CONSTRAINT_TYPE"] = $type;
-        }
-
+        $qb       = $this->connection->createQueryBuilder();
+        $criteria = $this->constraintCriteriaBy($type);
 
         return $qb->select()
-                  ->from($tableName)
+                  ->from($this->constraintTable())
                   ->criteria($criteria)
                   ->getQuery()
                   ->fetch()
@@ -120,7 +110,7 @@ class MysqlTable extends Table
     */
     public function getConstraints(): array
     {
-        return $this->fetchConstraintsBy();
+
     }
 
 
@@ -325,12 +315,38 @@ class MysqlTable extends Table
 
 
 
-
     /**
+     * @param string $column
      * @return string
     */
-    private function constraintTableName(): string
+    private function constraintTable(string $column = ''): string
     {
-        return 'information_schema.table_constraints';
+        return sprintf('information_schema.table_constraints%s', $column);
+    }
+
+
+
+
+
+    /**
+     * @param $type
+     * @return array
+    */
+    private function constraintCriteriaBy($type = null): array
+    {
+        $schemaColumn         = $this->constraintTable(".TABLE_SCHEMA");
+        $tableColumn          = $this->constraintTable(".TABLE_NAME");
+        $constraintTypeColumn = $this->constraintTable(".CONSTRAINT_TYPE");
+
+        $criteria = [
+            $schemaColumn => $this->getSchemaName(),
+            $tableColumn  => $this->getName(),
+        ];
+
+        if ($type) {
+            $criteria[$constraintTypeColumn] = $type;
+        }
+
+        return $criteria;
     }
 }
