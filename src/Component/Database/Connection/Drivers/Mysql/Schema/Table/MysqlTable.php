@@ -92,7 +92,7 @@ class MysqlTable extends Table
     */
     public function fetchConstraintsByType($type): array
     {
-        $constraintColumn = $this->getConstraintTable(".CONSTRAINT_TYPE");
+        $constraintColumn = $this->constraintTable(".CONSTRAINT_TYPE");
 
         return $this->fetchConstraintsBy([
             $constraintColumn => $type
@@ -109,8 +109,8 @@ class MysqlTable extends Table
     public function fetchConstraintsBy(array $criteria = []): array
     {
         $qb               = $this->connection->createQueryBuilder();
-        $schemaColumn     = $this->getConstraintTable(".TABLE_SCHEMA");
-        $tableColumn      = $this->getConstraintTable(".TABLE_NAME");
+        $schemaColumn     = $this->constraintTable(".TABLE_SCHEMA");
+        $tableColumn      = $this->constraintTable(".TABLE_NAME");
 
         $criteria = array_merge([
             $schemaColumn => $this->getSchemaName(),
@@ -119,7 +119,7 @@ class MysqlTable extends Table
 
 
         return $qb->select()
-                  ->from($this->getConstraintTable())
+                  ->from($this->constraintTable())
                   ->criteria($criteria)
                   ->getQuery()
                   ->fetch()
@@ -276,7 +276,7 @@ class MysqlTable extends Table
     {
         if ($this->hasForeignKey($foreignKey)) {
             $this->exec(
-                sprintf('ALTER TABLE %s DROP FOREIGN KEY %s', $this->getName(), $foreignKey)
+                sprintf('ALTER TABLE `%s` DROP FOREIGN KEY `%s`', $this->getName(), $foreignKey)
             );
             $this->dropIndex($foreignKey);
         }
@@ -455,7 +455,7 @@ class MysqlTable extends Table
      * @param string $column
      * @return string
     */
-    private function getConstraintTable(string $column = ''): string
+    private function constraintTable(string $column = ''): string
     {
         return sprintf('information_schema.table_constraints%s', $column);
     }

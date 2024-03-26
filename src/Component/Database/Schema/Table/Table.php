@@ -651,9 +651,6 @@ abstract class Table implements TableInterface
     */
     public function drop(): mixed
     {
-        #dd($this->getForeignKeys());
-        #dd($this->getConstraints());
-
         $this->dropForeignKeys();
 
         return $this->exec(
