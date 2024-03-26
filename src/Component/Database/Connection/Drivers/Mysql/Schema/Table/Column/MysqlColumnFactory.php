@@ -52,12 +52,12 @@ class MysqlColumnFactory implements ColumnFactoryInterface
 
         return $this->createColumn($columnName)
                     ->type($parameter->string('Type'))
-                    ->defaultValue($parameter->get('Default'))
-                    ->isNull($parameter->toLower('Null'))
-                    ->comments($parameter->string('Comments'))
-                    ->privileges($parameter->string('Privileges'))
                     ->collation($parameter->string('Collation'))
+                    ->isNull($parameter->toLower('Null'))
                     ->key($parameter->string('Key'))
-                    ->extra($parameter->string('Extra'));
+                    ->defaultValue($parameter->get('Default'))
+                    ->extra($parameter->string('Extra'))
+                    ->privileges($parameter->string('Privileges'))
+                    ->comments($parameter->string('Comments'));
     }
 }
