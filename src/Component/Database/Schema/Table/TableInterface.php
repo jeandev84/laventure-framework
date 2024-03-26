@@ -50,8 +50,10 @@ interface TableInterface
 
 
 
+
+
     /**
-     * Create column
+     * Returns new instance of column
      *
      * @param string $name
      * @return ColumnInterface
@@ -244,10 +246,10 @@ interface TableInterface
      * Modify column
      *
      * @param string $name
-     * @param callable $func
+     * @param callable $options
      * @return $this
      */
-    public function modifyColumn(string $name, callable $func): static;
+    public function modifyColumn(string $name, callable $options): static;
 
 
 
@@ -406,6 +408,18 @@ interface TableInterface
 
 
 
+    /**
+     * @param string $primaryKey
+     * @return PrimaryKeyInterface
+    */
+    public function getPrimaryKey(string $primaryKey): PrimaryKeyInterface;
+
+
+
+
+
+
+
 
 
     /**
@@ -415,7 +429,6 @@ interface TableInterface
      * @return bool
     */
     public function hasPrimaryKey(string $primaryKey): bool;
-
 
 
 
@@ -468,41 +481,22 @@ interface TableInterface
 
 
 
-    /**
-     * Returns primary keys builder
-     *
-     * @return PrimaryKeyInterface
-    */
-    public function getPrimary(): PrimaryKeyInterface;
-
-
-
-
-
-
-    /**
-     * @param string $foreignKey
-     * @return ForeignKeyInterface
-    */
-    public function foreignKey(string $foreignKey): ForeignKeyInterface;
-
-
-
-
-
 
 
     /**
      * Add foreign key
      *
+     * Example:
+     *
+     *  $table->addForeignKey('book_id', function (ForeignKeyInterface $column) {
+     *      return $column->references('id')->on('books')->onDelete();
+     *  });
+     *
      * @param string $foreignKey
-     * @param callable $func
+     * @param callable $options
      * @return $this
     */
-    public function addForeignKey(
-        string $foreignKey,
-        callable $func
-    ): static;
+    public function addForeignKey(string $foreignKey, callable $options): static;
 
 
 
@@ -535,6 +529,24 @@ interface TableInterface
      * @return ForeignKeyInterface
     */
     public function getForeignKey(string $foreignKey): ForeignKeyInterface;
+
+
+
+
+
+
+
+    /**
+     * Returns new instance of foreignKey
+     *
+     * Example:
+     *  $table->foreign('user_id')->references('id')->on('users')->onDelete()->onUpdate();
+     *
+     * @param string $foreignKey
+     * @return ForeignKeyInterface
+    */
+    public function foreignKey(string $foreignKey): ForeignKeyInterface;
+
 
 
 
@@ -685,20 +697,6 @@ interface TableInterface
      * @return UniqueKeyInterface[]
     */
     public function getUniqueKeys(): array;
-
-
-
-
-
-
-
-
-    /**
-     * Returns unique builder
-     *
-     * @return UniqueKeyInterface
-    */
-    public function getUnique(): UniqueKeyInterface;
 
 
 

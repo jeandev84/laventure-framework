@@ -9,9 +9,9 @@ use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface
 use Laventure\Component\Database\Schema\Constraints\Contract\IndexInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\PrimaryKeyInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\UniqueKeyInterface;
-use Laventure\Component\Database\Schema\Constraints\Types\Index;
-use Laventure\Component\Database\Schema\Constraints\Types\Keys\Primary\PrimaryKey;
-use Laventure\Component\Database\Schema\Constraints\Types\Keys\Unique\UniqueKey;
+use Laventure\Component\Database\Schema\Constraints\Types\Index\Index;
+use Laventure\Component\Database\Schema\Constraints\Types\Primary\PrimaryKey;
+use Laventure\Component\Database\Schema\Constraints\Types\Unique\UniqueKey;
 
 /**
  * TableCriteria
@@ -176,6 +176,19 @@ class TableCriteria implements TableCriteriaInterface
     {
         return $this->foreign;
     }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function hasPrimary(): bool
+    {
+        return !empty($this->primary);
+    }
+
+
 
 
 

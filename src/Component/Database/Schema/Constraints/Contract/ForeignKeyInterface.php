@@ -17,6 +17,18 @@ use Laventure\Component\Database\Schema\Constraints\ConstraintInterface;
  */
 interface ForeignKeyInterface extends ConstraintInterface
 {
+
+
+    /**
+     * Returns foreign column name
+     *
+     * @return string
+    */
+    public function getColumn(): string;
+
+
+
+
     /**
      * @param string $referenceColumn (Example: id)
      * @return $this

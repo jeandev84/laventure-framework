@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Schema\Constraints\Types\Keys\Foreign;
+namespace Laventure\Component\Database\Schema\Constraints\Types\Foreign;
 
 use Laventure\Component\Database\Schema\Constraints\Constraint;
 use Laventure\Component\Database\Schema\Constraints\Contract\ConstrainedInterface;
@@ -50,6 +50,17 @@ class ForeignKey extends Constraint implements ForeignKeyInterface
     {
         parent::__construct('foreignKey', $key);
         $this->column = $column;
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getColumn(): string
+    {
+        return $this->column;
     }
 
 
@@ -114,9 +125,9 @@ class ForeignKey extends Constraint implements ForeignKeyInterface
     {
         $constraint =  sprintf(
             'FOREIGN KEY (%s) REFERENCES %s(%s)',
-            $this->column,
-            $this->referenceTable,
-            $this->referenceColumn
+                   $this->column,
+                   $this->referenceTable,
+                   $this->referenceColumn
         );
 
         if (!$this->key) {
@@ -124,22 +135,5 @@ class ForeignKey extends Constraint implements ForeignKeyInterface
         }
 
         return sprintf('%s %s', parent::getSQL(), $constraint);
-    }
-
-
-
-
-
-    /**
-     * @return string
-    */
-    protected function format(): string
-    {
-        return sprintf(
-            'FOREIGN KEY (%s) REFERENCES %s (%s)',
-            $this->column,
-            $this->referenceTable,
-            $this->referenceColumn
-        );
     }
 }

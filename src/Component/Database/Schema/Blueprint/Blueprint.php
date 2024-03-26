@@ -493,9 +493,11 @@ class Blueprint implements BlueprintInterface
     /**
      * @inheritDoc
     */
-    public function foreign(string $name): BlueprintForeignKeyInterface
+    public function foreign(string $name, callable $func): static
     {
-         return new BlueprintForeignKey();
+        $this->table->addForeignKey($name, $func);
+
+        return $this;
     }
 
 
@@ -581,7 +583,7 @@ class Blueprint implements BlueprintInterface
     {
         $this->preFlush();
 
-        dump('From : '. get_called_class());
+        #dump('From : '. get_called_class());
         dd($this->table->expr()->create()->getSQL());
 
         return $this->table->create();
@@ -707,3 +709,17 @@ class Blueprint implements BlueprintInterface
          }
     }
 }
+
+
+/*
+$table = new Blueprint($connection->table('users'));
+$table->id();
+$table->string('username', 150);
+$table->string('email', 180);
+$table->string('password', 230);
+$table->boolean('active')->default(0);
+$table->timestamps();
+$table->softDeletes();
+$table->primary(['id']);
+$table->unique(['email']);
+*/

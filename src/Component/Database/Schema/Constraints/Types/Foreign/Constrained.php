@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Schema\Constraints\Types\Keys\Foreign;
+namespace Laventure\Component\Database\Schema\Constraints\Types\Foreign;
 
 use Laventure\Component\Database\Schema\Constraints\Contract\ConstrainedInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;

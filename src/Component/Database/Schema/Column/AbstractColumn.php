@@ -5,15 +5,12 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Schema\Column;
 
 use Laventure\Component\Database\Schema\Column\Contract\ColumnInterface;
-use Laventure\Component\Database\Schema\Column\Types\ColumnType;
 use Laventure\Component\Database\Schema\Constraints\ConstraintInterface;
 use Laventure\Component\Database\Schema\Constraints\Types\DefaultValue;
-use Laventure\Component\Database\Schema\Constraints\Types\Keys\Primary\PrimaryKey;
-use Laventure\Component\Database\Schema\Constraints\Types\Keys\Unique\UniqueKey;
 use Laventure\Component\Database\Schema\Constraints\Types\NotNull;
 use Laventure\Component\Database\Schema\Constraints\Types\Nullable;
-use ReflectionException;
-use ReflectionMethod;
+use Laventure\Component\Database\Schema\Constraints\Types\Primary\PrimaryKey;
+use Laventure\Component\Database\Schema\Constraints\Types\Unique\UniqueKey;
 
 /**
  * AbstractColumn

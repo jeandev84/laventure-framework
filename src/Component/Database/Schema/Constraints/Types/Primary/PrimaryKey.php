@@ -2,10 +2,8 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Schema\Constraints\Types\Keys\Primary;
+namespace Laventure\Component\Database\Schema\Constraints\Types\Primary;
 
-use Laventure\Component\Database\Schema\Column\Traits\HasColumnTrait;
-use Laventure\Component\Database\Schema\Constraints\Constraint;
 use Laventure\Component\Database\Schema\Constraints\ConstraintHasColumns;
 use Laventure\Component\Database\Schema\Constraints\Contract\PrimaryKeyInterface;
 

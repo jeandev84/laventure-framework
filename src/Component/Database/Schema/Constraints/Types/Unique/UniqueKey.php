@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Schema\Constraints\Types\Keys\Unique;
+namespace Laventure\Component\Database\Schema\Constraints\Types\Unique;
 
 use Laventure\Component\Database\Schema\Constraints\ConstraintHasColumns;
 use Laventure\Component\Database\Schema\Constraints\Contract\UniqueKeyInterface;
@@ -14,7 +14,7 @@ use Laventure\Component\Database\Schema\Constraints\Contract\UniqueKeyInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Schema\Constraints\Types\Keys\Unique
+ * @package  Laventure\Component\Database\Schema\Constraints\Types\Unique
 */
 class UniqueKey extends ConstraintHasColumns implements UniqueKeyInterface
 {

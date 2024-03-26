@@ -535,10 +535,17 @@ interface BlueprintInterface
 
 
     /**
+     * Example:
+     * 
+     *   $table->foreign('book_id', function (ForeignKeyInterface $column) {
+     *       return $column->references('id')->on('books')->onDelete();
+     *   });
+     *
      * @param string $name
-     * @return BlueprintForeignKeyInterface
-    */
-    public function foreign(string $name): BlueprintForeignKeyInterface;
+     * @param callable $func
+     * @return BlueprintInterface
+     */
+    public function foreign(string $name, callable $func): static;
 
 
 

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Schema\Table\Builder;
 
 use Laventure\Component\Database\Schema\Table\Criteria\TableCriteria;
+use Laventure\Component\Database\Schema\Table\Criteria\TableCriteriaInterface;
 use Laventure\Component\Database\Schema\Table\Table;
 use Laventure\Component\Database\Schema\Table\TableInterface;
 
@@ -22,7 +23,9 @@ abstract class TableSQlBuilder implements TableSQlBuilderInterface
     /**
      * @param TableInterface $table
     */
-    public function __construct(protected TableInterface $table)
+    public function __construct(
+        protected TableInterface $table
+    )
     {
     }
 

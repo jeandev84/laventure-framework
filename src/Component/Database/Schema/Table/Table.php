@@ -15,12 +15,9 @@ use Laventure\Component\Database\Schema\Column\Option\Contract\ColumnOptionInter
 use Laventure\Component\Database\Schema\Column\Types\ColumnType;
 use Laventure\Component\Database\Schema\Column\Types\TimestampColumn;
 use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
-use Laventure\Component\Database\Schema\Constraints\Contract\PrimaryKeyInterface;
-use Laventure\Component\Database\Schema\Constraints\Contract\UniqueKeyInterface;
-use Laventure\Component\Database\Schema\Constraints\Types\Keys\Foreign\ForeignKey;
+use Laventure\Component\Database\Schema\Constraints\Types\Foreign\ForeignKey;
 use Laventure\Component\Database\Schema\Table\Criteria\TableCriteria;
 use Laventure\Component\Database\Schema\Table\Criteria\TableCriteriaInterface;
-use Laventure\Component\Database\Schema\Table\Exception\TableException;
 use Laventure\Component\Database\Schema\Table\Expr\AlterTable;
 use ReflectionClass;
 use ReflectionException;
@@ -135,8 +132,7 @@ abstract class Table implements TableInterface
         $name = $column->getName();
 
         if ($this->hasColumn($name)) {
-            throw new ColumnAlreadyExistsException(
-                $name,
+            throw new ColumnAlreadyExistsException($name,
                 ['context' => get_called_class()]
             );
         }
@@ -299,7 +295,7 @@ abstract class Table implements TableInterface
     */
     public function addColumn(string $name, string|ColumnType $type, callable $options = null): static
     {
-        return $this->addNewColumn($this->createColumn($name, $type, $options));
+        return $this->addNewColumn($this->column($name, $type, $options));
     }
 
 
@@ -323,13 +319,11 @@ abstract class Table implements TableInterface
      * @inheritDoc
      * @throws NotFoundColumnException
     */
-    public function modifyColumn(string $name, callable $func): static
+    public function modifyColumn(string $name, callable $options): static
     {
-        $column = $this->columnOptions($this->getColumn($name), $func)
-                       ->getColumn();
-
-
-        return $this->addModifyColumn($column);
+        return $this->addModifyColumn(
+            $this->parseColumnOptions($this->getColumn($name), $options)->getColumn()
+        );
     }
 
 
@@ -492,25 +486,14 @@ abstract class Table implements TableInterface
 
 
 
-    /**
-     * @inheritDoc
-    */
-    public function foreignKey(string $foreignKey): ForeignKeyInterface
-    {
-        return new ForeignKey($foreignKey);
-    }
-
-
-
-
 
 
     /**
      * @inheritDoc
     */
-    public function addForeignKey(string $foreignKey, callable $func): static
+    public function addForeignKey(string $foreignKey, callable $options): static
     {
-        $func($foreign = $this->foreignKey($foreignKey));
+        $options($foreign = $this->foreignKey($foreignKey));
 
         $this->criteria->foreign[$foreignKey] = $foreign->getSQL();
 
@@ -866,6 +849,11 @@ abstract class Table implements TableInterface
 
 
 
+
+
+
+
+
     /**
      * @inheritDoc
      */
@@ -1181,29 +1169,6 @@ abstract class Table implements TableInterface
 
 
 
-    /**
-     * @inheritDoc
-    */
-    public function getPrimary(): PrimaryKeyInterface
-    {
-        return $this->criteria->getPrimary();
-    }
-
-
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function getUnique(): UniqueKeyInterface
-    {
-        return $this->criteria->getUnique();
-    }
-
-
 
 
 
@@ -1219,6 +1184,19 @@ abstract class Table implements TableInterface
 
 
 
+    /**
+     * @inheritDoc
+    */
+    public function foreignKey(string $foreignKey): ForeignKeyInterface
+    {
+        return new ForeignKey($foreignKey);
+    }
+
+
+
+
+
+
 
 
     /**
@@ -1228,7 +1206,7 @@ abstract class Table implements TableInterface
      * @param callable|null $options
      * @return ColumnOptionInterface
     */
-    private function columnOptions(
+    private function parseColumnOptions(
         ColumnInterface $column,
         callable $options = null
     ): ColumnOptionInterface {
@@ -1253,7 +1231,7 @@ abstract class Table implements TableInterface
         callable $options = null
     ): ColumnInterface {
 
-        $option = $this->columnOptions($this->column($name), $options);
+        $option = $this->parseColumnOptions($this->column($name), $options);
 
         if ($type instanceof ColumnType) {
             $option->callMethod($type->value);
@@ -1290,3 +1268,28 @@ abstract class Table implements TableInterface
     */
     abstract protected function getColumnFactory(): ColumnFactoryInterface;
 }
+
+
+/*
+$table = $connection->table('users')
+->addColumn('id', ColumnType::BigInteger,  function (ColumnOptions $column) {
+    return $column->increment();
+})
+->addColumn('username', ColumnType::String, function (ColumnOptions $column) {
+    return $column->length(150);
+})
+->addColumn('email', ColumnType::String, function (ColumnOptions $column) {
+    return $column->length(180);
+})
+->addColumn('password', ColumnType::String)
+->addColumn('active', ColumnType::Boolean)
+->addTimestamps()
+->addSoftDeletes()
+->addForeignKey('book_id', function (ForeignKeyInterface $foreignKey) {
+    return $foreignKey->references('id')->on('books')->onDelete();
+})
+->addPrimaryKey(['id'])
+->addUniqueKey(['email']);
+
+dump($table->expr()->create()->getSQL());
+*/
