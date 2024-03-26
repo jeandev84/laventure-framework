@@ -86,18 +86,40 @@ class MysqlTable extends Table
 
 
 
-
     /**
      * @param $type
      * @return array
     */
-    public function fetchConstraintsBy($type = null): array
+    public function fetchConstraintsByType($type): array
     {
-        $qb       = $this->connection->createQueryBuilder();
-        $criteria = $this->constraintCriteriaBy($type);
+        $constraintColumn = $this->getConstraintTable(".CONSTRAINT_TYPE");
+
+        return $this->fetchConstraintsBy([
+            $constraintColumn => $type
+        ]);
+    }
+
+
+
+
+    /**
+     * @param array $criteria
+     * @return array
+    */
+    public function fetchConstraintsBy(array $criteria = []): array
+    {
+        $qb               = $this->connection->createQueryBuilder();
+        $schemaColumn     = $this->getConstraintTable(".TABLE_SCHEMA");
+        $tableColumn      = $this->getConstraintTable(".TABLE_NAME");
+
+        $criteria = array_merge([
+            $schemaColumn => $this->getSchemaName(),
+            $tableColumn  => $this->getName(),
+        ], $criteria);
+
 
         return $qb->select()
-                  ->from($this->constraintTable())
+                  ->from($this->getConstraintTable())
                   ->criteria($criteria)
                   ->getQuery()
                   ->fetch()
@@ -433,34 +455,8 @@ class MysqlTable extends Table
      * @param string $column
      * @return string
     */
-    private function constraintTable(string $column = ''): string
+    private function getConstraintTable(string $column = ''): string
     {
         return sprintf('information_schema.table_constraints%s', $column);
-    }
-
-
-
-
-
-    /**
-     * @param $type
-     * @return array
-    */
-    private function constraintCriteriaBy($type = null): array
-    {
-        $schemaColumn     = $this->constraintTable(".TABLE_SCHEMA");
-        $tableColumn      = $this->constraintTable(".TABLE_NAME");
-        $constraintColumn = $this->constraintTable(".CONSTRAINT_TYPE");
-
-        $criteria = [
-            $schemaColumn => $this->getSchemaName(),
-            $tableColumn  => $this->getName(),
-        ];
-
-        if ($type) {
-            $criteria[$constraintColumn] = $type;
-        }
-
-        return $criteria;
     }
 }
