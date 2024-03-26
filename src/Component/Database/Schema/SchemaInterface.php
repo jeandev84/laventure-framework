@@ -66,18 +66,6 @@ interface SchemaInterface
 
 
 
-    /**
-     * Drop table if exists
-     *
-     * @param string $table
-     * @return mixed
-    */
-    public function dropIfExists(string $table): mixed;
-
-
-
-
-
 
 
     /**

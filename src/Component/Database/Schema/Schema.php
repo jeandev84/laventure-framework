@@ -108,21 +108,11 @@ class Schema implements SchemaInterface
             return false;
         }
 
-        return $this->table($table)->drop();
+        return $this->table($table)
+                    ->dropForeignKeys()
+                    ->drop();
     }
 
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function dropIfExists(string $table): mixed
-    {
-        return $this->table($table)->dropIfExists();
-    }
 
 
 
