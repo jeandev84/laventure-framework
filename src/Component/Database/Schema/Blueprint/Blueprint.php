@@ -578,10 +578,15 @@ class Blueprint implements BlueprintInterface
     {
         $this->preFlush();
 
-        #dump('From : '. get_called_class());
-        #dd($this->table->expr()->create()->getSQL());
+        try {
+            dump($this->table->expr()->create()->getSQL());
+            return $this->table->create();
 
-        return $this->table->create();
+        } catch (\Throwable $e) {
+            #dump('From : '. get_called_class());
+            dump($e->getMessage());
+            dd($this->table->expr()->create()->getSQL());
+        }
     }
 
 
@@ -595,7 +600,15 @@ class Blueprint implements BlueprintInterface
     {
         $this->preFlush();
 
-        return $this->table->update();
+        try {
+
+            return $this->table->update();
+
+        } catch (\Throwable $e) {
+            #dump('From : '. get_called_class());
+            dump($e->getMessage());
+            dd($this->table->expr()->update()->getSQL());
+        }
     }
 
 
@@ -715,6 +728,6 @@ $table->string('password', 230);
 $table->boolean('active')->default(0);
 $table->timestamps();
 $table->softDeletes();
-$table->primary(['id']);
+#$table->primary(['id']);
 $table->unique(['email']);
 */
