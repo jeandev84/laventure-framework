@@ -390,6 +390,10 @@ class Migrator implements MigratorInterface
     */
     public function up(MigrationInterface $migration): bool
     {
+        if (!$this->installed()) {
+            return false;
+        }
+
         $migration->up($this->schema);
 
         return $this->save($migration);

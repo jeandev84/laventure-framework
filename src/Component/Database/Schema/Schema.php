@@ -64,7 +64,7 @@ class Schema implements SchemaInterface
     public function create(string $table, Closure $closure): bool
     {
         if ($this->exists($table)) {
-            throw new TableExistsException($table);
+            return false;
         }
 
         $blueprint = new Blueprint($this->table($table));
@@ -84,7 +84,7 @@ class Schema implements SchemaInterface
     public function update(string $table, Closure $closure): bool
     {
         if (!$this->exists($table)) {
-            throw new TableNotExistsException($table);
+            return false;
         }
 
         $blueprint = new Blueprint($this->table($table));
@@ -112,6 +112,17 @@ class Schema implements SchemaInterface
     }
 
 
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function dropIfExists(string $table): mixed
+    {
+        return $this->table($table)->dropIfExists();
+    }
 
 
 
