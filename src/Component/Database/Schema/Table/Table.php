@@ -601,17 +601,6 @@ abstract class Table implements TableInterface
 
 
 
-    /**
-     * @inheritDoc
-    */
-    public function drop(): mixed
-    {
-
-    }
-
-
-
-
 
 
     /**
@@ -646,9 +635,26 @@ abstract class Table implements TableInterface
     /**
      * @inheritDoc
     */
+    public function drop(): mixed
+    {
+        return $this->exec(
+            sprintf('DROP TABLE %s CASCADE', $this->getName())
+        );
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
     public function dropIfExists(): mixed
     {
-
+        return $this->exec(
+            sprintf('DROP TABLE IF EXISTS %s CASCADE;', $this->getName())
+        );
     }
 
 

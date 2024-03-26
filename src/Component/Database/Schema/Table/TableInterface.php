@@ -945,6 +945,7 @@ interface TableInterface
 
 
 
+
     /**
      * Drop table if exists
      *

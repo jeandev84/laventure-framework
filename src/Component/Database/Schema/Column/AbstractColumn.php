@@ -650,11 +650,11 @@ abstract class AbstractColumn implements ColumnInterface
 
 
     /**
-     * @return string
+     * @inheritDoc
     */
-    public function getResolvedName(): string
+    public function __toString(): string
     {
-        return $this->getName();
+        return $this->getSQL();
     }
 
 
@@ -662,10 +662,10 @@ abstract class AbstractColumn implements ColumnInterface
 
 
     /**
-     * @inheritDoc
+     * @return string
     */
-    public function __toString(): string
+    protected function getResolvedName(): string
     {
-        return $this->getSQL();
+        return $this->getName();
     }
 }

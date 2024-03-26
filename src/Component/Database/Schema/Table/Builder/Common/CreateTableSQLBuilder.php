@@ -54,7 +54,8 @@ abstract class CreateTableSQLBuilder implements CreateTableSQLBuilderInterface
         return QueryUtils::str([
             $this->getNewColumnsSQL(),
             $this->getForeignSQL(),
-            $this->getPrimarySQL()
+            $this->getPrimarySQL(),
+            $this->getUniqueSQL()
         ]);
     }
 
@@ -116,6 +117,19 @@ abstract class CreateTableSQLBuilder implements CreateTableSQLBuilderInterface
     }
 
 
+
+
+
+    /**
+     * @return string
+    */
+    protected function getUniqueSQL(): string
+    {
+        return $this->table
+                    ->getCriteria()
+                    ->getUnique()
+                    ->getSQL();
+    }
 
 
 
