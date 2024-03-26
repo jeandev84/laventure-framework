@@ -34,5 +34,16 @@ interface ConstraintInterface extends HasOptionInterface, SQLInterface
      *
      * @return string|null
     */
-    public function getKey(): ?string;
+    public function getName(): ?string;
+
+
+
+
+
+
+    /**
+     * @param string $name
+     * @return $this
+    */
+    public function name(string $name): static;
 }

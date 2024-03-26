@@ -268,11 +268,11 @@ class Parameter implements ParameterInterface
 
     /**
      * @param $id
-     * @param string $search
-     * @param string $replace
+     * @param $search
+     * @param $replace
      * @return array|mixed|string|string[]
      */
-    public function replace($id, string $search, string $replace): mixed
+    public function replace($id, $search, $replace): mixed
     {
         return str_replace($search, $replace, $this->get($id));
     }

@@ -610,6 +610,31 @@ interface TableInterface
 
 
     /**
+     * Drop indexes
+     *
+     * @return $this
+    */
+    public function dropIndexes(): static;
+
+
+
+
+
+
+    /**
+     * @param string $index
+     * @return $this
+    */
+    public function dropIndex(string $index): static;
+
+
+
+
+
+
+
+
+    /**
      * Determine if given index name exists
      *
      * @param string $index

@@ -9,11 +9,14 @@ use Laventure\Component\Database\Connection\Drivers\Mysql\Schema\Table\Column\My
 use Laventure\Component\Database\Query\Result\QueryResultInterface;
 use Laventure\Component\Database\Schema\Column\Contract\ColumnInterface;
 use Laventure\Component\Database\Schema\Column\Factory\ColumnFactoryInterface;
+use Laventure\Component\Database\Schema\Constraints\Constraint;
+use Laventure\Component\Database\Schema\Constraints\ConstraintInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\ForeignKeyInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\IndexInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\PrimaryKeyInterface;
 use Laventure\Component\Database\Schema\Constraints\Contract\UniqueKeyInterface;
 use Laventure\Component\Database\Schema\Table\Builder\TableSQlBuilderInterface;
+use Laventure\Component\Database\Schema\Table\Exception\TableException;
 use Laventure\Component\Database\Schema\Table\Table;
 
 /**
@@ -61,8 +64,7 @@ class MysqlTable extends Table
     */
     public function columnFromArray(array $data): ColumnInterface
     {
-         return $this->getColumnFactory()
-                     ->createFromParameter($this->param($data));
+         return $this->getColumnFactory()->createFromParameter($this->param($data));
     }
 
 
@@ -106,12 +108,55 @@ class MysqlTable extends Table
 
 
     /**
+     * @param array $data
+     * @return ConstraintInterface
+    */
+    public function constraintFromArray(array $data): ConstraintInterface
+    {
+          $param = $this->param($data);
+          $type  = $param->replace('CONSTRAINT_TYPE', ' ', '_');
+          $name  = $param->string('CONSTRAINT_NAME');
+
+          return (new Constraint($type, $name))
+                 ->options($param->all());
+    }
+
+
+
+
+    /**
      * @inheritDoc
     */
     public function getConstraints(): array
     {
+        foreach ($this->fetchConstraintsBy() as $data) {
+            $constraint = $this->constraintFromArray($data);
+            $this->criteria->constraint[$constraint->getName()] = $constraint;
+        }
 
+        return $this->criteria->constraint;
     }
+
+
+
+
+
+
+    /**
+     * @param string $type
+     * @return array
+    */
+    public function getConstraintsBy(string $type): array
+    {
+        $func = function (ConstraintInterface $constraint) use ($type) {
+             return ($constraint->getType() === $type);
+        };
+
+        return array_filter($this->getConstraints(), $func);
+    }
+
+
+
 
 
 
@@ -147,7 +192,7 @@ class MysqlTable extends Table
     */
     public function getPrimaryKeys(): array
     {
-
+        return $this->getConstraintsBy("PRIMARY_KEY");
     }
 
 
@@ -159,8 +204,15 @@ class MysqlTable extends Table
     */
     public function getPrimaryKey(string $primaryKey): PrimaryKeyInterface
     {
+         if (!$this->hasPrimaryKey($primaryKey)) {
+             throw new TableException("Unavailable primary key '$primaryKey'");
+         }
 
+         return $this->getPrimaryKeys()[$primaryKey];
     }
+
+
+
 
 
 
@@ -169,7 +221,11 @@ class MysqlTable extends Table
     */
     public function getForeignKey(string $foreignKey): ForeignKeyInterface
     {
+         if (!$this->hasForeignKey($foreignKey)) {
+               throw new TableException("Unavailable foreign key '$foreignKey'");
+         }
 
+         return $this->getForeignKeys()[$foreignKey];
     }
 
 
@@ -182,8 +238,11 @@ class MysqlTable extends Table
     */
     public function getForeignKeys(): array
     {
-
+        return $this->getConstraintsBy("FOREIGN_KEY");
     }
+
+
+
 
 
 
@@ -197,10 +256,14 @@ class MysqlTable extends Table
             $this->exec(
                 sprintf('ALTER TABLE %s DROP FOREIGN KEY %s', $this->getName(), $foreignKey)
             );
+            $this->dropIndex($foreignKey);
         }
 
         return $this;
     }
+
+
+
 
 
 
@@ -211,11 +274,14 @@ class MysqlTable extends Table
     public function dropForeignKeys(): static
     {
         foreach ($this->getForeignKeys() as $foreignKey){
-            $this->dropForeignKey($foreignKey->getKey());
+            $this->dropForeignKey($foreignKey->getName());
         }
 
         return $this;
     }
+
+
+
 
 
 
@@ -225,8 +291,10 @@ class MysqlTable extends Table
     */
     public function hasIndex(string $index): bool
     {
-
+        return array_key_exists($index, $this->getIndexes());
     }
+
+
 
 
 
@@ -236,7 +304,24 @@ class MysqlTable extends Table
     */
     public function getIndex(string $index): IndexInterface
     {
+        if (!$this->hasIndex($index)) {
+            throw new TableException("Unavailable index '$index'");
+        }
 
+        return $this->getIndexes()[$index];
+    }
+
+
+
+
+
+    /**
+     * @return IndexInterface[]
+     * @inheritDoc
+    */
+    public function getIndexes(): array
+    {
+        return $this->getConstraints();
     }
 
 
@@ -246,9 +331,31 @@ class MysqlTable extends Table
     /**
      * @inheritDoc
     */
-    public function getIndexes(): array
+    public function dropIndexes(): static
     {
+         foreach ($this->getIndexes() as $index) {
+               $this->dropIndex($index->getName());
+         }
 
+         return $this;
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function dropIndex(string $index): static
+    {
+        if ($this->hasIndex($index)) {
+            $this->exec(
+                sprintf('ALTER TABLE %s DROP INDEX %s', $this->getName(), $index)
+            );
+        }
+
+        return $this;
     }
 
 
@@ -260,8 +367,15 @@ class MysqlTable extends Table
     */
     public function getUniqueKey(string $uniqueKey): UniqueKeyInterface
     {
+        if (!$this->hasUniqueKey($uniqueKey)) {
+            throw new TableException("Unavailable unique key '$uniqueKey'");
+        }
 
+        return $this->getUniqueKeys()[$uniqueKey];
     }
+
+
+
 
 
 
@@ -271,7 +385,7 @@ class MysqlTable extends Table
     */
     public function getUniqueKeys(): array
     {
-        return [];
+        return $this->getConstraintsBy("UNIQUE");
     }
 
 
@@ -334,9 +448,9 @@ class MysqlTable extends Table
     */
     private function constraintCriteriaBy($type = null): array
     {
-        $schemaColumn         = $this->constraintTable(".TABLE_SCHEMA");
-        $tableColumn          = $this->constraintTable(".TABLE_NAME");
-        $constraintTypeColumn = $this->constraintTable(".CONSTRAINT_TYPE");
+        $schemaColumn     = $this->constraintTable(".TABLE_SCHEMA");
+        $tableColumn      = $this->constraintTable(".TABLE_NAME");
+        $constraintColumn = $this->constraintTable(".CONSTRAINT_TYPE");
 
         $criteria = [
             $schemaColumn => $this->getSchemaName(),
@@ -344,7 +458,7 @@ class MysqlTable extends Table
         ];
 
         if ($type) {
-            $criteria[$constraintTypeColumn] = $type;
+            $criteria[$constraintColumn] = $type;
         }
 
         return $criteria;
