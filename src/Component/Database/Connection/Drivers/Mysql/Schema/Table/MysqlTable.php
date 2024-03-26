@@ -43,15 +43,18 @@ class MysqlTable extends Table
 
 
 
-
     /**
-     * @return QueryResultInterface
+     * @return array
     */
-    public function fetchColumnsQuery(): QueryResultInterface
+    public function fetchColumns(): array
     {
+        if (!$this->exists()) {
+            return [];
+        }
+
         return $this->statement(
             sprintf('SHOW FULL COLUMNS FROM %s;', $this->name)
-        )->fetch();
+        )->fetch()->all();
     }
 
 
@@ -75,7 +78,7 @@ class MysqlTable extends Table
     */
     public function getColumns(): array
     {
-        foreach ($this->fetchColumnsQuery()->all() as $data) {
+        foreach ($this->fetchColumns() as $data) {
             $column = $this->columnFromArray($data);
             $this->criteria->columns[$column->getName()] = $column;
         }
