@@ -651,8 +651,6 @@ abstract class Table implements TableInterface
     */
     public function drop(): mixed
     {
-        $this->dropForeignKeys();
-
         return $this->exec(
             sprintf('DROP TABLE %s CASCADE', $this->getName())
         );
