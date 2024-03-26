@@ -316,13 +316,7 @@ class Query implements QueryInterface
     public function execute(): bool
     {
         try {
-
-            if($status = $this->statement->execute($this->parameters)) {
-                $this->logExecutedQuery($this->statement->queryString);
-            }
-
-            return $status;
-
+            return $this->executeQueryWithParams();
         } catch (PDOException $e) {
             $this->abort($e);
         }
@@ -333,16 +327,31 @@ class Query implements QueryInterface
 
 
 
+
+
+
     /**
      * @inheritDoc
-     */
+    */
     public function exec(string $sql): int|false
     {
+        $this->logger->logCurrentQuery($sql);
+
         try {
-            return $this->pdo->exec($sql);
+
+            $status = $this->pdo->exec($sql);
+
+            if ($status !== false) {
+                $this->logExecutedQuery($sql);
+            }
+
+            return $status;
+
         } catch (PDOException $e) {
             $this->abort($e);
         }
+
+        return false;
     }
 
 
@@ -457,27 +466,6 @@ class Query implements QueryInterface
 
 
 
-    /**
-     * @param Throwable $e
-     * @return void
-    */
-    private function abort(Throwable $e): void
-    {
-        $message = sprintf(
-     'SQL: %s | Message: %s',
-            $this->logger->getCurrentQuery(),
-            $e->getMessage()
-        );
-
-        $e = new QueryException($message, [
-            'context' => $this,
-            'code'    => $e->getCode()
-        ], 500);
-
-        $this->logFailedQuery($e);
-    }
-
-
 
 
 
@@ -521,5 +509,46 @@ class Query implements QueryInterface
               ->bindColumns($this->bindColumns);
 
         return $query;
+    }
+
+
+
+
+
+
+    /**
+     * @param Throwable $e
+     * @return void
+     */
+    private function abort(Throwable $e): void
+    {
+        $message = sprintf(
+            'SQL: %s | Message: %s',
+            $this->logger->getCurrentQuery(),
+            $e->getMessage()
+        );
+
+        $e = new QueryException($message, [
+            'context' => $this,
+            'code'    => $e->getCode()
+        ], 500);
+
+        $this->logFailedQuery($e);
+    }
+
+
+
+
+
+    /**
+     * @return bool
+    */
+    private function executeQueryWithParams(): bool
+    {
+        if($status = $this->statement->execute($this->parameters)) {
+            $this->logExecutedQuery($this->statement->queryString);
+        }
+
+        return $status;
     }
 }
