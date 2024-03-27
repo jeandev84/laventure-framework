@@ -46,7 +46,7 @@ class PdoDsnBuilder implements PdoDsnBuilderInterface
 
     /**
      * @inheritDoc
-     */
+    */
     public function getDriver(): string
     {
         return $this->driver;

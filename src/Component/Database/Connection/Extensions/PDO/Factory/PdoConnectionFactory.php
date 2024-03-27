@@ -73,25 +73,4 @@ class PdoConnectionFactory implements PdoConnectionFactoryInterface
             $config->getOptions()
         );
     }
-
-
-
-
-
-
-    /**
-     * @param ConfigurationInterface $config
-     * @return string
-    */
-    private function makePdoDsn(ConfigurationInterface $config): string
-    {
-        return PdoDsnBuilder::create($config['driver'], [
-            [
-                'host'     => $config->getHost(),
-                'port'     => $config->getPort(),
-                'dbname'   => $config->getDatabase(),
-                'charset'  => $config->getCharset()
-            ]
-        ]);
-    }
 }

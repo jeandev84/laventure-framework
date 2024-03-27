@@ -9,6 +9,7 @@ use Laventure\Component\Database\Connection\Factory\ConnectionFactoryInterface;
 use Laventure\Component\Database\Drivers\DriverException;
 use Laventure\Component\Database\Query\Logger\QueryLogger;
 use Laventure\Component\Database\Query\Logger\QueryLoggerInterface;
+use Laventure\Component\Database\Query\QueryInterface;
 
 /**
  * Connection
@@ -94,9 +95,76 @@ abstract class Connection implements ConnectionInterface
     */
     public function connect(): static
     {
-        return $this->connectionProcess();
+         return $this->connectionProcess();
     }
 
+
+
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function disconnect(): void
+    {
+        $this->connection = null;
+    }
+
+
+
+
+
+    /**
+     * @inheritdoc
+    */
+    public function purge(): void
+    {
+        $this->config(new NullConfiguration())->disconnect();
+    }
+
+
+
+
+
+
+    /**
+     * @inheritdoc
+     */
+    public function disconnected(): bool
+    {
+        return is_null($this->connection);
+    }
+
+
+
+
+
+
+
+
+    /**
+     * @param string $sql
+     * @return QueryInterface
+    */
+    public function statement(string $sql): QueryInterface
+    {
+        return $this->createQuery()->prepare($sql);
+    }
+
+
+
+
+
+
+
+    /**
+     * @inheritdoc
+     */
+    public function executeQuery(string $sql): mixed
+    {
+        return $this->createQuery()->exec($sql);
+    }
 
 
 

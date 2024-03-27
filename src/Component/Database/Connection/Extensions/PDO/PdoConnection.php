@@ -14,6 +14,7 @@ use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnection
 use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnectionFactoryInterface;
 use Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\Factory\PdoSQLQueryBuilderFactory;
 use Laventure\Component\Database\Connection\Extensions\PDO\Query\Query;
+use Laventure\Component\Database\Connection\Factory\ConnectionFactoryInterface;
 use Laventure\Component\Database\Drivers\DriverException;
 use Laventure\Component\Database\Query\Builder\SQL\Factory\SQLQueryBuilderFactoryInterface;
 use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
@@ -34,22 +35,14 @@ use RuntimeException;
 abstract class PdoConnection extends Connection implements PdoConnectionInterface
 {
 
-    /**
-     * @var PdoConnectionFactoryInterface
-    */
-    protected PdoConnectionFactoryInterface $factory;
-
-
 
     /**
      * @param PdoConnectionFactoryInterface|null $factory
-     */
+    */
     public function __construct(PdoConnectionFactoryInterface $factory = null)
     {
-        $this->factory = $factory ?: new PdoConnectionFactory();
+        parent::__construct($factory ?: new PdoConnectionFactory());
     }
-
-
 
 
 
@@ -64,8 +57,7 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
             throw new RuntimeException("No DSN specified for making connection.");
         }
 
-        return $this->withConnection($this->makePdo($config))
-                    ->withConfiguration($config);
+        return $this->setConnection($this->makePdo($config))->config($config);
     }
 
 
@@ -86,50 +78,13 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
 
 
 
-    /**
-     * @inheritdoc
-    */
-    public function disconnect(): void
-    {
-        $this->connection = null;
-    }
-
-
-
-
-
-    /**
-     * @inheritdoc
-    */
-    public function purge(): void
-    {
-        $this->withConfiguration(new NullConfiguration())->disconnect();
-    }
-
-
-
-
-
-
-    /**
-     * @inheritdoc
-    */
-    public function disconnected(): bool
-    {
-        return is_null($this->connection);
-    }
-
-
-
-
-
 
     /**
      * @inheritdoc
     */
     public function createQuery(): QueryInterface
     {
-        return new Query($this->getConnection());
+        return new Query($this->getConnection(), $this->queryLogger);
     }
 
 
@@ -159,30 +114,6 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
 
 
 
-
-
-    /**
-     * @param string $sql
-     * @return QueryInterface
-     */
-    public function statement(string $sql): QueryInterface
-    {
-        return $this->createQuery()->prepare($sql);
-    }
-
-
-
-
-
-
-
-    /**
-     * @inheritdoc
-    */
-    public function executeQuery(string $sql): mixed
-    {
-        return $this->createQuery()->exec($sql);
-    }
 
 
 
@@ -370,10 +301,11 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
 
 
 
+
+
     /**
      * @param ConfigurationInterface $config
      * @return string
-     * @throws DriverException
     */
     protected function makeDsnIfDatabaseExists(ConfigurationInterface $config): string
     {
@@ -388,18 +320,14 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
 
 
 
+
     /**
      * @param string $driver
      * @param array $params
      * @return string
-     * @throws DriverException
     */
-    protected function makePdoDsn(string $driver, array $params): string
+    public function makePdoDsn(string $driver, array $params): string
     {
-        if (!$this->hasAvailableDriver($driver)) {
-            throw new DriverException("unavailable driver $driver. Please try to install it.");
-        }
-
         return PdoDsnBuilder::create($driver, $params);
     }
 
@@ -408,22 +336,9 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
 
 
     /**
-     * @param string $dsn
-     * @return array
-    */
-    protected function readDsnParams(string $dsn): array
-    {
-        return (new PdoDsnReader($dsn))->read();
-    }
-
-
-
-
-
-    /**
      * @inheritdoc
-     */
-    protected function makeSureIfIsAvailable(): void
+    */
+    protected function makeSureIsAvailable(): void
     {
         if (!$this->isAvailable()) {
             throw new DriverException("Unavailable driver {$this->getName()}");
