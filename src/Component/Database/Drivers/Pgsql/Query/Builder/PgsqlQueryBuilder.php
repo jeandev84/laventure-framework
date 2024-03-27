@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Drivers\Pgsql;
+namespace Laventure\Component\Database\Drivers\Pgsql\Query\Builder;
 
 use Laventure\Component\Database\Drivers\Pgsql\Query\Builder\SQL\Commands\DML\PgsqlDeleteBuilder;
 use Laventure\Component\Database\Drivers\Pgsql\Query\Builder\SQL\Commands\DML\PgsqlInsertBuilder;

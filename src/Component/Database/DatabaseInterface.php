@@ -17,6 +17,9 @@ use Laventure\Component\Database\Connection\ConnectionInterface;
 */
 interface DatabaseInterface
 {
+
+
+
     /**
      * Returns name of database
      *
@@ -133,19 +136,4 @@ interface DatabaseInterface
      * @return bool
     */
     public function exists(): bool;
-
-
-
-
-
-
-
-
-
-    /**
-     * List all databases
-     *
-     * @return array
-    */
-    public function list(): array;
 }

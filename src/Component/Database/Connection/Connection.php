@@ -3,9 +3,12 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection;
 
+use Laventure\Component\Database\Collection\Contract\DatabaseCollectionInterface;
+use Laventure\Component\Database\Collection\DatabaseCollection;
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Configuration\Null\NullConfiguration;
 use Laventure\Component\Database\Connection\Factory\ConnectionFactoryInterface;
+use Laventure\Component\Database\DatabaseInterface;
 use Laventure\Component\Database\Drivers\DriverException;
 use Laventure\Component\Database\Query\Logger\QueryLogger;
 use Laventure\Component\Database\Query\Logger\QueryLoggerInterface;
@@ -54,9 +57,7 @@ abstract class Connection implements ConnectionInterface
     protected QueryLoggerInterface $queryLogger;
 
 
-    
-    
-    
+
     
     
     /**
@@ -192,7 +193,7 @@ abstract class Connection implements ConnectionInterface
 
 
     /**
-     * @return mixed
+     * @inheritDoc
     */
     public function getConnection(): mixed
     {
@@ -205,13 +206,15 @@ abstract class Connection implements ConnectionInterface
     
     
     /**
-     * @return ConfigurationInterface
+     * @inheritDoc
     */
     public function getConfiguration(): ConfigurationInterface
     {
         return $this->config;
     }
-    
+
+
+
     
     
 
@@ -260,6 +263,17 @@ abstract class Connection implements ConnectionInterface
 
 
 
+    /**
+     * @inheritDoc
+    */
+    public function getDatabaseCollection(): DatabaseCollectionInterface
+    {
+        return new DatabaseCollection();
+    }
+
+
+
+
 
     /**
      * @return $this
@@ -285,7 +299,7 @@ abstract class Connection implements ConnectionInterface
      *
      * @return void
     */
-    abstract protected function makeSureIsAvailable(): void;
+    abstract public function makeSureIsAvailable(): void;
 
 
 
@@ -296,7 +310,7 @@ abstract class Connection implements ConnectionInterface
      *
      * @return $this
     */
-    abstract protected function connectWithoutDatabase(): static;
+    abstract public function connectWithoutDatabase(): static;
 
 
 
@@ -307,5 +321,5 @@ abstract class Connection implements ConnectionInterface
      * PdoConnection to the database if exists
      * @return $this
     */
-    abstract protected function connectIfDatabaseExists(): static;
+    abstract public function connectIfDatabaseExists(): static;
 }
