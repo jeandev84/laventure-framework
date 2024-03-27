@@ -52,6 +52,7 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
 
 
 
+
     /**
      * @return $this
     */
@@ -63,7 +64,7 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
             throw new RuntimeException("No DSN specified for making connection.");
         }
 
-        return $this->setConnection($this->makePdo($config))->config($config);
+        return $this->setConnection($this->makePdo($config))->parse($config);
     }
 
 
@@ -305,5 +306,17 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
     public function getPdoDsnBuilderFactory(): PdoDsnBuilderFactoryInterface
     {
         return new PdoDsnBuilderFactory();
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function config($id, $default = null): mixed
+    {
+        return $this->getConfiguration()->get($id, $default);
     }
 }

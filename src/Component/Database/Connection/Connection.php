@@ -79,7 +79,7 @@ abstract class Connection implements ConnectionInterface
      * @param ConfigurationInterface $config
      * @return $this
     */
-    public function config(ConfigurationInterface $config): static
+    public function parse(ConfigurationInterface $config): static
     {
         $this->config = $config;
 
@@ -121,7 +121,7 @@ abstract class Connection implements ConnectionInterface
     */
     public function purge(): void
     {
-        $this->config(new NullConfiguration())->disconnect();
+        $this->parse(new NullConfiguration())->disconnect();
     }
 
 

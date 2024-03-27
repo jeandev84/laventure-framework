@@ -287,7 +287,7 @@ class DatabaseManager implements DatabaseManagerInterface
     */
     public function connect(string $name, ConfigurationInterface $config): ConnectionInterface
     {
-        $this->connections[$name]->config($config)->connect();
+        $this->connections[$name]->parse($config)->connect();
 
         if (! $this->connections[$name]->connected()) {
             throw new UnavailableConnectionException($name);

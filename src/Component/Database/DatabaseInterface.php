@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database;
 
+use Laventure\Component\Database\Backup\DatabaseBackupInterface;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 
 /**
@@ -101,27 +102,9 @@ interface DatabaseInterface
     /**
      * Full back up of an existing SQL database
      *
-     * @param string $filepath
      * @return mixed
     */
-    public function dump(string $filepath): mixed;
-
-
-
-
-
-
-
-
-    /**
-     * Back up only the parts of the database
-     * that have changed since the last full database backup
-     *
-     * @param string $filepath
-     * @return mixed
-    */
-    public function dumpDiff(string $filepath): mixed;
-
+    public function dump(): DatabaseBackupInterface;
 
 
 
