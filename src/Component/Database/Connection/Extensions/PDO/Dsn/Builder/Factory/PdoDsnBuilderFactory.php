@@ -27,7 +27,10 @@ class PdoDsnBuilderFactory implements PdoDsnBuilderFactoryInterface
          return new PdoDsnBuilder(
              $config->required('driver'),
              [
-
+                 'host'     => $config->getHost(),
+                 'port'     => $config->getPort(),
+                 'dbname'   => $config->getDatabase(),
+                 'charset'  => $config->getCharset()
              ]
          );
     }

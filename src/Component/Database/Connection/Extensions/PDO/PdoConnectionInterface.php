@@ -6,6 +6,7 @@ namespace Laventure\Component\Database\Connection\Extensions\PDO;
 
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Connection\ConnectionInterface;
+use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\Builder\Factory\PdoDsnBuilderFactoryInterface;
 use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\Builder\PdoDsnBuilderInterface;
 use PDO;
 
@@ -64,4 +65,14 @@ interface PdoConnectionInterface extends ConnectionInterface
      * @return PdoDsnBuilderInterface
     */
     public function getDsnBuilder(): PdoDsnBuilderInterface;
+
+
+
+
+
+
+    /**
+     * @return PdoDsnBuilderFactoryInterface
+    */
+    public function getPdoDsnBuilderFactory(): PdoDsnBuilderFactoryInterface;
 }

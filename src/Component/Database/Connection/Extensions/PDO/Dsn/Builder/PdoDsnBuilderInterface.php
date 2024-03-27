@@ -81,7 +81,7 @@ interface PdoDsnBuilderInterface extends BuilderInterface, Stringable
      *
      * @return string
     */
-    public function getDefaultDsn(): string;
+    public function buildDefault(): string;
 
 
 
@@ -94,5 +94,5 @@ interface PdoDsnBuilderInterface extends BuilderInterface, Stringable
      *
      * @return string
     */
-    public function getIfDatabaseExists(): string;
+    public function buildIfDatabaseExists(): string;
 }

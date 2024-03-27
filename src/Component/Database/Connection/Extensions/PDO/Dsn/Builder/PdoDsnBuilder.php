@@ -82,6 +82,54 @@ class PdoDsnBuilder implements PdoDsnBuilderInterface
 
 
 
+
+
+    /**
+     * @inheritDoc
+    */
+    public function withoutParams(array $params): static
+    {
+        foreach ($params as $param) {
+            $this->withoutParam($param);
+        }
+
+        return $this;
+    }
+
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function buildDefault(): string
+    {
+        $this->withoutParam('dbname');
+
+        return $this->build();
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function buildIfDatabaseExists(): string
+    {
+        return $this->build();
+    }
+
+
+
+
+
+
+
     /**
      * @inheritDoc
     */
@@ -100,7 +148,9 @@ class PdoDsnBuilder implements PdoDsnBuilderInterface
     */
     public function build(): string
     {
-        $config = http_build_query($this->params, '', ';');
+        $config = http_build_query(
+            $this->params, '', ';'
+        );
 
         return urldecode("$this->driver:$config");
     }

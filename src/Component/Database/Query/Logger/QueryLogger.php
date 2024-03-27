@@ -208,6 +208,6 @@ class QueryLogger implements QueryLoggerInterface
     */
     public function getStatus(): QueryLoggerStatusInterface
     {
-
+        return $this->status;
     }
 }

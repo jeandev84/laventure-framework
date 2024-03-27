@@ -269,11 +269,10 @@ abstract class Connection implements ConnectionInterface
          $config = $this->getConfiguration();
 
          $this->makeSureIsAvailable();
-
-         $this->connectWithoutDatabase($config);
+         $this->connectWithoutDatabase();
 
          if ($this->getDatabase()->exists()) {
-            $this->connectIfDatabaseExists($config);
+            $this->connectIfDatabaseExists();
          }
 
          return $this;
@@ -294,14 +293,12 @@ abstract class Connection implements ConnectionInterface
 
 
 
-
     /**
      * connect without database
      *
-     * @param ConfigurationInterface $config
      * @return $this
     */
-    abstract protected function connectWithoutDatabase(ConfigurationInterface $config): static;
+    abstract protected function connectWithoutDatabase(): static;
 
 
 
@@ -310,9 +307,7 @@ abstract class Connection implements ConnectionInterface
 
     /**
      * PdoConnection to the database if exists
-     *
-     * @param ConfigurationInterface $config
      * @return $this
     */
-    abstract protected function connectIfDatabaseExists(ConfigurationInterface $config): static;
+    abstract protected function connectIfDatabaseExists(): static;
 }
