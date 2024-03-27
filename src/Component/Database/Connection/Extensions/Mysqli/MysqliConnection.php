@@ -188,7 +188,7 @@ class MysqliConnection implements MysqliConnectionInterface
     /**
      * @inheritDoc
     */
-    public function beginTransaction(): bool
+    public function begin(): bool
     {
         return false;
     }
@@ -199,7 +199,7 @@ class MysqliConnection implements MysqliConnectionInterface
     /**
      * @inheritDoc
     */
-    public function hasActiveTransaction(): bool
+    public function hasActive(): bool
     {
         return false;
     }

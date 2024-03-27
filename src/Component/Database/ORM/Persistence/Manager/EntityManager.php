@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\ORM\Persistence\Manager;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
+use Laventure\Component\Database\Connection\Transaction\Contract\TransactionInterface;
 use Laventure\Component\Database\ORM\Persistence\Manager\Config\Configuration;
 use Laventure\Component\Database\ORM\Persistence\Manager\Contract\EntityManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Manager\Event\EventManagerInterface;
@@ -91,6 +92,14 @@ class EntityManager implements EntityManagerInterface
 
 
     /**
+     * @var TransactionInterface
+    */
+    protected TransactionInterface $transaction;
+
+
+
+
+    /**
      * @var ObjectRepositoryInterface[]
     */
     protected array $repositories = [];
@@ -126,6 +135,7 @@ class EntityManager implements EntityManagerInterface
         $this->metadataFactory   = $config->getClassMetadataFactory();
         $this->repositoryFactory = $config->getRepositoryFactory();
         $this->unitOfWork        = $config->getUnitOfWorkFactory()->createUnitOfWork($this);
+        $this->transaction       = $this->connection->createTransaction();
     }
 
 
@@ -379,7 +389,7 @@ class EntityManager implements EntityManagerInterface
     {
         $this->abortIfIsClosed();
 
-        return $this->connection->beginTransaction();
+        return $this->transaction->begin();
     }
 
 
@@ -394,7 +404,7 @@ class EntityManager implements EntityManagerInterface
     {
         $this->abortIfIsClosed();
 
-        return $this->connection->commit();
+        return $this->transaction->commit();
     }
 
 
@@ -409,7 +419,7 @@ class EntityManager implements EntityManagerInterface
     {
         $this->abortIfIsClosed();
 
-        return $this->connection->rollback();
+        return $this->transaction->rollback();
     }
 
 

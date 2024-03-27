@@ -5,12 +5,10 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Connection;
 
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
-use Laventure\Component\Database\Connection\Transaction\TransactionInterface;
+use Laventure\Component\Database\Connection\Transaction\Contract\TransactionInterface;
 use Laventure\Component\Database\DatabaseInterface;
-use Laventure\Component\Database\Query\Builder\SQL\Factory\SQLQueryBuilderFactoryInterface;
 use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
 use Laventure\Component\Database\Query\Logger\QueryLoggerInterface;
-use Laventure\Component\Database\Query\Logger\Status\QueryLoggerStatusInterface;
 use Laventure\Component\Database\Query\QueryInterface;
 use Laventure\Component\Database\Schema\Table\TableInterface;
 
@@ -23,7 +21,7 @@ use Laventure\Component\Database\Schema\Table\TableInterface;
  *
  * @package  Laventure\Component\Database\PdoConnection
 */
-interface ConnectionInterface extends TransactionInterface
+interface ConnectionInterface
 {
     /**
      * Returns the name of connection
@@ -155,6 +153,20 @@ interface ConnectionInterface extends TransactionInterface
 
 
 
+    /**
+     * Returns instance of Transaction
+     *
+     * @return TransactionInterface
+    */
+    public function createTransaction(): TransactionInterface;
+
+
+
+
+
+
+
+
 
     /**
      * Create table
@@ -188,6 +200,8 @@ interface ConnectionInterface extends TransactionInterface
 
 
 
+
+
     /**
      * Execute query
      *
@@ -196,6 +210,10 @@ interface ConnectionInterface extends TransactionInterface
      * @return int|bool
     */
     public function executeQuery(string $sql): mixed;
+
+
+
+
 
 
 

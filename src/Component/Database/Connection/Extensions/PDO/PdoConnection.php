@@ -17,7 +17,9 @@ use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnection
 use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnectionFactoryInterface;
 use Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\Factory\PdoSQLQueryBuilderFactory;
 use Laventure\Component\Database\Connection\Extensions\PDO\Query\Query;
+use Laventure\Component\Database\Connection\Extensions\PDO\Transaction\Transaction;
 use Laventure\Component\Database\Connection\Factory\ConnectionFactoryInterface;
+use Laventure\Component\Database\Connection\Transaction\Contract\TransactionInterface;
 use Laventure\Component\Database\Drivers\DriverException;
 use Laventure\Component\Database\Query\Builder\SQL\Factory\SQLQueryBuilderFactoryInterface;
 use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
@@ -57,7 +59,7 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
     {
         $config = $this->getConfiguration();
 
-        if (!$this->hasDsnParameter()) {
+        if (!$this->hasPdoDsn()) {
             throw new RuntimeException("No DSN specified for making connection.");
         }
 
@@ -76,6 +78,8 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
     {
         return $this->connection instanceof PDO;
     }
+
+
 
 
 
@@ -121,82 +125,13 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
 
 
 
-
-
     /**
-     * @inheritdoc
+     * @inheritDoc
     */
-    public function beginTransaction(): bool
+    public function createTransaction(): TransactionInterface
     {
-        return $this->getConnection()->beginTransaction();
+       return new Transaction($this);
     }
-
-
-
-
-
-
-    /**
-     * @inheritdoc
-    */
-    public function hasActiveTransaction(): bool
-    {
-        return $this->getConnection()->inTransaction();
-    }
-
-
-
-
-
-    /**
-     * @inheritdoc
-    */
-    public function commit(): bool
-    {
-        return $this->getConnection()->commit();
-    }
-
-
-
-
-
-
-
-    /**
-     * @inheritdoc
-    */
-    public function rollback(): bool
-    {
-        return $this->getConnection()->rollBack();
-    }
-
-
-
-
-
-
-
-    /**
-     * @inheritdoc
-    */
-    public function transaction(callable $func): bool
-    {
-        try {
-
-            $this->beginTransaction();
-            $func($this);
-            return $this->commit();
-
-        } catch (PDOException $e) {
-
-            if ($this->hasActiveTransaction()) {
-                $this->rollBack();
-            }
-
-            throw new PDOException($e->getMessage(), $e->getCode());
-        }
-    }
-
 
 
 
@@ -268,81 +203,13 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
 
 
 
-    /**
-     * @inheritDoc
-     */
-    public function enableTransaction(): void {}
-
-
-
 
     /**
-     * @inheritDoc
-     */
-    public function disableTransaction(): void {}
-
-
-
-
-
-
-    /**
-     * @param ConfigurationInterface $config
-     * @return string
-    */
-    protected function makeDefaultDsn(ConfigurationInterface $config): string
-    {
-        return $this->makePdoDsn($config->required('driver'), [
-            'host'     => $config->getHost(),
-            'port'     => $config->getPort(),
-            'charset'  => $config->getCharset()
-        ]);
-    }
-
-
-
-
-
-
-
-    /**
-     * @param ConfigurationInterface $config
-     * @return string
-    */
-    protected function makeDsnIfDatabaseExists(ConfigurationInterface $config): string
-    {
-        return $this->makePdoDsn($config->required('driver'), [
-            'host'     => $config->getHost(),
-            'port'     => $config->getPort(),
-            'dbname'   => $config->getDatabase(),
-            'charset'  => $config->getCharset()
-        ]);
-    }
-
-
-
-
-
-    /**
-     * @param string $driver
-     * @param array $params
-     * @return string
-    */
-    public function makePdoDsn(string $driver, array $params): string
-    {
-        return PdoDsnBuilder::create($driver, $params);
-    }
-
-
-
-
-
-
-
-    /**
+     * Determine if has dsn parameter
+     *
      * @return bool
     */
-    public function hasDsnParameter(): bool
+    public function hasPdoDsn(): bool
     {
         return $this->config->has('dsn');
     }
@@ -368,8 +235,9 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
 
 
 
+
     /**
-     * @inheritdoc
+     * @inheritDoc
     */
     protected function makeSureIsAvailable(): void
     {
@@ -382,8 +250,6 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
 
 
 
-
-
     /**
      * @inheritdoc
      * @param ConfigurationInterface $config
@@ -391,7 +257,7 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
     */
     protected function connectWithoutDatabase(): static
     {
-        if (!$this->hasDsnParameter()) {
+        if (!$this->hasPdoDsn()) {
             $this->setPdoDsn($this->getDsnBuilder()->buildDefault());
         }
 

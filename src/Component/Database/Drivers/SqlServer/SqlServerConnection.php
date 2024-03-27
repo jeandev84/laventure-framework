@@ -192,7 +192,7 @@ class SqlServerConnection implements ConnectionInterface
     /**
      * @inheritDoc
     */
-    public function beginTransaction(): bool
+    public function begin(): bool
     {
 
     }
@@ -202,7 +202,7 @@ class SqlServerConnection implements ConnectionInterface
     /**
      * @inheritDoc
     */
-    public function hasActiveTransaction(): bool
+    public function hasActive(): bool
     {
 
     }
