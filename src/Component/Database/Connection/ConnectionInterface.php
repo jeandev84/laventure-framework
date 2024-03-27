@@ -160,7 +160,7 @@ interface ConnectionInterface
      *
      * @return TransactionInterface
     */
-    public function createTransaction(): TransactionInterface;
+    public function transaction(): TransactionInterface;
 
 
 

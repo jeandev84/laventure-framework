@@ -119,6 +119,8 @@ class HttpKernel implements HttpKernelInterface
     */
     private function exceptionResponse(Throwable $e): Response
     {
+        dump('From: '. get_called_class());
+        dd($e->getTraceAsString());
         return new Response($e->getMessage());
     }
 

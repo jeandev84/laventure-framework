@@ -334,7 +334,7 @@ abstract class AbstractColumn implements ColumnInterface
     /**
      * @inheritDoc
     */
-    public function isNull($status): static
+    public function null($status): static
     {
         return $this->option('null', $status);
     }

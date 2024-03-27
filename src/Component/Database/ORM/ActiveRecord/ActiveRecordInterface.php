@@ -1,8 +1,11 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\ActiveRecord;
+
+
+use Laventure\Component\Database\ORM\ActiveRecord\Entity\ActiveRecordEntityInterface;
+use Laventure\Component\Database\ORM\ActiveRecord\Repository\ActiveRecordRepositoryInterface;
 
 /**
  * ActiveRecordInterface
@@ -13,54 +16,7 @@ namespace Laventure\Component\Database\ORM\ActiveRecord;
  *
  * @package  Laventure\Component\Database\ORM\ActiveRecord
  */
-interface ActiveRecordInterface
+interface ActiveRecordInterface extends ActiveRecordEntityInterface, ActiveRecordRepositoryInterface
 {
-    /**
-     * Returns one record by identifier given value
-     *
-     * @param int $id
-     *
-     * @return mixed
-    */
-    public static function find(int $id): mixed;
 
-
-
-
-
-
-
-    /**
-     * Returns all records
-     *
-     * @return array
-    */
-    public static function all(): array;
-
-
-
-
-
-
-
-    /**
-     *
-     * @return bool
-    */
-    public function delete(): bool;
-
-
-
-
-
-
-
-
-
-    /**
-     * PgsqlUpdateBuilder or PgsqlInsertBuilder records
-     *
-     * @return int
-    */
-    public function save(): int;
 }
