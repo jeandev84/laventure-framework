@@ -34,6 +34,16 @@ interface PdoConnectionInterface extends ConnectionInterface
 
 
     /**
+     * Returns PDO connection
+     *
+     * @return PDO
+    */
+    public function getConnection(): PDO;
+
+
+
+
+    /**
      * Determine if the given name driver is available
      *
      * @param string $driver
@@ -65,6 +75,10 @@ interface PdoConnectionInterface extends ConnectionInterface
      * @return PdoDsnBuilderInterface
     */
     public function getDsnBuilder(): PdoDsnBuilderInterface;
+
+
+
+
 
 
 

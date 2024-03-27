@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Connection\Transaction;
+namespace Laventure\Component\Database\Connection\Transaction\Contract;
 
-use Closure;
+use Laventure\Component\Database\Query\QueryInterface;
 
 /**
  * TransactionInterface
@@ -13,7 +13,7 @@ use Closure;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\PdoConnection\Transaction
+ * @package  Laventure\Component\Database\Connection\Transaction\Contract
  */
 interface TransactionInterface
 {
@@ -23,7 +23,7 @@ interface TransactionInterface
      *
      * @return bool
     */
-    public function beginTransaction(): bool;
+    public function begin(): bool;
 
 
 
@@ -33,7 +33,7 @@ interface TransactionInterface
     /**
      * @return bool
     */
-    public function hasActiveTransaction(): bool;
+    public function hasActive(): bool;
 
 
 
@@ -62,12 +62,12 @@ interface TransactionInterface
 
 
 
+
+
+
     /**
-     * Transaction
-     *
      * @param callable $func
-     *
      * @return mixed
     */
-    public function transaction(callable $func): mixed;
+    public function transact(callable $func): mixed;
 }

@@ -17,7 +17,9 @@ use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnection
 use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnectionFactoryInterface;
 use Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\Factory\PdoSQLQueryBuilderFactory;
 use Laventure\Component\Database\Connection\Extensions\PDO\Query\Query;
+use Laventure\Component\Database\Connection\Extensions\PDO\Transaction\Transaction;
 use Laventure\Component\Database\Connection\Factory\ConnectionFactoryInterface;
+use Laventure\Component\Database\Connection\Transaction\Contract\TransactionInterface;
 use Laventure\Component\Database\Drivers\DriverException;
 use Laventure\Component\Database\Query\Builder\SQL\Factory\SQLQueryBuilderFactoryInterface;
 use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
@@ -83,6 +85,8 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
 
 
 
+
+
     /**
      * @inheritdoc
     */
@@ -121,82 +125,13 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
 
 
 
-
-
     /**
-     * @inheritdoc
+     * @inheritDoc
     */
-    public function beginTransaction(): bool
+    public function createTransaction(): TransactionInterface
     {
-        return $this->getConnection()->beginTransaction();
+       return new Transaction($this);
     }
-
-
-
-
-
-
-    /**
-     * @inheritdoc
-    */
-    public function hasActiveTransaction(): bool
-    {
-        return $this->getConnection()->inTransaction();
-    }
-
-
-
-
-
-    /**
-     * @inheritdoc
-    */
-    public function commit(): bool
-    {
-        return $this->getConnection()->commit();
-    }
-
-
-
-
-
-
-
-    /**
-     * @inheritdoc
-    */
-    public function rollback(): bool
-    {
-        return $this->getConnection()->rollBack();
-    }
-
-
-
-
-
-
-
-    /**
-     * @inheritdoc
-    */
-    public function transaction(callable $func): bool
-    {
-        try {
-
-            $this->beginTransaction();
-            $func($this);
-            return $this->commit();
-
-        } catch (PDOException $e) {
-
-            if ($this->hasActiveTransaction()) {
-                $this->rollBack();
-            }
-
-            throw new PDOException($e->getMessage(), $e->getCode());
-        }
-    }
-
 
 
 
