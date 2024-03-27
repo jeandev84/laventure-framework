@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Drivers\Mysql;
+namespace Laventure\Component\Database\Drivers\Sqlite\Query\Builder;
 
-use Laventure\Component\Database\Drivers\Mysql\Query\Builder\SQL\Commands\DML\MysqlDeleteBuilder;
-use Laventure\Component\Database\Drivers\Mysql\Query\Builder\SQL\Commands\DML\MysqlInsertBuilder;
-use Laventure\Component\Database\Drivers\Mysql\Query\Builder\SQL\Commands\DML\MysqlUpdateBuilder;
-use Laventure\Component\Database\Drivers\Mysql\Query\Builder\SQL\Commands\DQL\MysqlSelectBuilder;
+use Laventure\Component\Database\Drivers\Sqlite\Query\Builder\SQL\Commands\DML\SqliteDeleteBuilder;
+use Laventure\Component\Database\Drivers\Sqlite\Query\Builder\SQL\Commands\DML\SqliteInsertBuilder;
+use Laventure\Component\Database\Drivers\Sqlite\Query\Builder\SQL\Commands\DML\SqliteUpdateBuilder;
+use Laventure\Component\Database\Drivers\Sqlite\Query\Builder\SQL\Commands\DQL\SqliteSelectBuilder;
 use Laventure\Component\Database\Query\Builder\SQL\Common\AbstractSQLQueryBuilder;
 use Laventure\Component\Database\Query\Builder\SQL\DML\Delete\DeleteBuilderInterface;
 use Laventure\Component\Database\Query\Builder\SQL\DML\Insert\InsertBuilderInterface;
@@ -15,35 +15,33 @@ use Laventure\Component\Database\Query\Builder\SQL\DML\Update\UpdateBuilderInter
 use Laventure\Component\Database\Query\Builder\SQL\DQL\Select\SelectBuilderInterface;
 
 /**
- * MysqlQueryBuilder
- * Decorator SQL query builder
+ * SqliteQueryBuilder
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\PdoConnection\Drivers\Mysql
+ * @package  Laventure\Component\Database\PdoConnection\Drivers\Sqlite
 */
-class MysqlQueryBuilder extends AbstractSQLQueryBuilder
+class SqliteQueryBuilder extends AbstractSQLQueryBuilder
 {
     /**
      * @inheritDoc
-    */
+     */
     public function select(string $selects = null): SelectBuilderInterface
     {
-        return new MysqlSelectBuilder($this->builder->select($selects));
+        return new SqliteSelectBuilder($this->builder->select($selects));
     }
 
 
 
 
-
     /**
      * @inheritDoc
-    */
+     */
     public function insert(string $table): InsertBuilderInterface
     {
-        return new MysqlInsertBuilder($this->builder->insert($table));
+        return new SqliteInsertBuilder($this->builder->insert($table));
     }
 
 
@@ -54,7 +52,7 @@ class MysqlQueryBuilder extends AbstractSQLQueryBuilder
     */
     public function update(string $table): UpdateBuilderInterface
     {
-        return new MysqlUpdateBuilder($this->builder->update($table));
+        return new SqliteUpdateBuilder($this->builder->update($table));
     }
 
 
@@ -65,6 +63,6 @@ class MysqlQueryBuilder extends AbstractSQLQueryBuilder
     */
     public function delete(string $table): DeleteBuilderInterface
     {
-        return new MysqlDeleteBuilder($this->builder->delete($table));
+        return new SqliteDeleteBuilder($this->builder->delete($table));
     }
 }

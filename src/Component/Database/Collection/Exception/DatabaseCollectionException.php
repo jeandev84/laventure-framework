@@ -1,20 +1,20 @@
 <?php
-
 declare(strict_types=1);
 
-namespace Laventure\Component\Database;
+namespace Laventure\Component\Database\Collection\Exception;
 
 use Laventure\Exceptions\BaseException;
 
 /**
- * DatabaseException
+ * DatabaseCollectionException
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database
+ * @package  Laventure\Component\Database\Collection\Exception
  */
-class DatabaseException extends BaseException
+class DatabaseCollectionException extends BaseException
 {
+
 }

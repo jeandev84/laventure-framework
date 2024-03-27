@@ -239,7 +239,7 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
     /**
      * @inheritDoc
     */
-    protected function makeSureIsAvailable(): void
+    public function makeSureIsAvailable(): void
     {
         if (!$this->isAvailable()) {
             throw new DriverException("Unavailable driver {$this->getName()}");
@@ -255,7 +255,7 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
      * @param ConfigurationInterface $config
      * @return PdoConnection
     */
-    protected function connectWithoutDatabase(): static
+    public function connectWithoutDatabase(): static
     {
         if (!$this->hasPdoDsn()) {
             $this->setPdoDsn($this->getDsnBuilder()->buildDefault());
@@ -274,7 +274,7 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
      * @param ConfigurationInterface $config
      * @return PdoConnection
     */
-    protected function connectIfDatabaseExists(): static
+    public function connectIfDatabaseExists(): static
     {
         $this->setPdoDsn($this->getDsnBuilder()->buildIfDatabaseExists());
 

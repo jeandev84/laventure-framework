@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection;
 
+use Laventure\Component\Database\Collection\Contract\DatabaseCollectionInterface;
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Connection\Transaction\Contract\TransactionInterface;
 use Laventure\Component\Database\DatabaseInterface;
+use Laventure\Component\Database\Factory\DatabaseFactoryInterface;
 use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
 use Laventure\Component\Database\Query\Logger\QueryLoggerInterface;
 use Laventure\Component\Database\Query\QueryInterface;
@@ -244,12 +246,68 @@ interface ConnectionInterface
 
 
 
+
+
+    /**
+     * Returns database factory
+     *
+     * @return DatabaseFactoryInterface
+    */
+    public function getDatabaseFactory(): DatabaseFactoryInterface;
+
+
+
+
+
+    /**
+     * Returns all databases
+     *
+     * @return DatabaseCollectionInterface
+    */
+    public function getDatabaseCollection(): DatabaseCollectionInterface;
+
+
+
+
+
+
+
+
+
+    /**
+     * @return DatabaseInterface[]
+    */
+    public function getDatabases(): array;
+
+
+
+
+
+
+
+
+
     /**
      * Returns database name
      *
      * @return string
     */
     public function getDatabaseName(): string;
+
+
+
+
+
+
+
+
+    /**
+     * Returns database names from database
+     *
+     * @return array
+    */
+    public function getDatabaseNames(): array;
+
 
 
 

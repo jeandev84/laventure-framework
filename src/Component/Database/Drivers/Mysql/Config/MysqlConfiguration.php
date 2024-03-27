@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Drivers\Mysql;
+namespace Laventure\Component\Database\Drivers\Mysql\Config;
+
+use Laventure\Component\Database\Configuration\Configuration;
 
 /**
  * MysqlConfiguration
@@ -13,6 +15,6 @@ namespace Laventure\Component\Database\Drivers\Mysql;
  *
  * @package  Laventure\Component\Database\PdoConnection\Drivers\Mysql
 */
-class MysqlConfiguration
+class MysqlConfiguration extends Configuration
 {
 }

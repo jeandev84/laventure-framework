@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Drivers\Sqlite;
+namespace Laventure\Component\Database\Drivers\Sqlite\Config;
+
+use Laventure\Component\Database\Configuration\Configuration;
 
 /**
  * SqliteConfiguration
@@ -13,6 +15,6 @@ namespace Laventure\Component\Database\Drivers\Sqlite;
  *
  * @package  Laventure\Component\Database\PdoConnection\Drivers\Sqlite
 */
-class SqliteConfiguration
+class SqliteConfiguration extends Configuration
 {
 }

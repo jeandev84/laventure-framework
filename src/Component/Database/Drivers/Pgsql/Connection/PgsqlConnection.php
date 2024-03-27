@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Drivers\Pgsql;
+namespace Laventure\Component\Database\Drivers\Pgsql\Connection;
 
 use Laventure\Component\Database\Connection\Extensions\PDO\PdoConnection;
 use Laventure\Component\Database\DatabaseInterface;
 use Laventure\Component\Database\Drivers\DriverName;
+use Laventure\Component\Database\Drivers\Pgsql\PgsqlDatabase;
+use Laventure\Component\Database\Drivers\Pgsql\Query\Builder\PgsqlQueryBuilder;
 use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
 use Laventure\Component\Database\Schema\Table\TableInterface;
 
