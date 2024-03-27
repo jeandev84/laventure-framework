@@ -7,6 +7,7 @@ use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Configuration\Null\NullConfiguration;
 use Laventure\Component\Database\Connection\Factory\ConnectionFactoryInterface;
 use Laventure\Component\Database\Drivers\DriverException;
+use Laventure\Component\Database\Query\Logger\QueryLogger;
 use Laventure\Component\Database\Query\Logger\QueryLoggerInterface;
 
 /**
@@ -62,8 +63,9 @@ abstract class Connection implements ConnectionInterface
     */
     public function __construct(ConnectionFactoryInterface $factory)
     {
-        $this->factory = $factory;
-        $this->config  = new NullConfiguration();
+        $this->factory     = $factory;
+        $this->config      = new NullConfiguration();
+        $this->queryLogger = new QueryLogger();
     }
 
 
