@@ -71,7 +71,7 @@ class MysqlConnection extends PdoConnection
     /**
      * @return void
     */
-    public function activateTransaction(): void
+    public function enableTransaction(): void
     {
         $this->executeQuery('SET autocommit = 1');
     }

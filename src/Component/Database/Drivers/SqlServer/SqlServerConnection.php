@@ -182,7 +182,7 @@ class SqlServerConnection implements ConnectionInterface
     /**
      * @inheritDoc
     */
-    public function activateTransaction(): void
+    public function enableTransaction(): void
     {
 
     }

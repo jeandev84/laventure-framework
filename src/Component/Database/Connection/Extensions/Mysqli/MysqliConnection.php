@@ -177,7 +177,7 @@ class MysqliConnection implements MysqliConnectionInterface
     /**
      * @inheritDoc
     */
-    public function activateTransaction(): void
+    public function enableTransaction(): void
     {
         $this->executeQuery('SET autocommit = 1');
     }

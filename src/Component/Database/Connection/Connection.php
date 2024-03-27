@@ -1,24 +1,24 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection;
 
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Configuration\Null\NullConfiguration;
+use Laventure\Component\Database\Connection\Factory\ConnectionFactoryInterface;
 use Laventure\Component\Database\Drivers\DriverException;
 use Laventure\Component\Database\Query\Logger\QueryLoggerInterface;
 
 /**
- * ConnectionTrait
+ * Connection
  *
  * @author Jean-Claude <jeanyao@ymail.com>
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
  * @package  Laventure\Component\Database\Connection
- */
-trait ConnectionTrait
+*/
+abstract class Connection implements ConnectionInterface
 {
     /**
      * @var ConfigurationInterface
@@ -26,6 +26,18 @@ trait ConnectionTrait
     protected $config;
 
 
+    
+    
+    
+    
+    /**
+     * @var ConnectionFactoryInterface
+    */
+    protected $factory;
+
+
+    
+    
     /**
      * @var mixed
     */
@@ -40,24 +52,24 @@ trait ConnectionTrait
     protected QueryLoggerInterface $queryLogger;
 
 
-
-
-
-
+    
+    
+    
+    
+    
     /**
-     * @param QueryLoggerInterface $queryLogger
-     * @return $this
+     * @param ConnectionFactoryInterface $factory
     */
-    public function setQueryLogger(QueryLoggerInterface $queryLogger): static
+    public function __construct(ConnectionFactoryInterface $factory)
     {
-         $this->queryLogger = $queryLogger;
-
-         return $this;
+        $this->factory = $factory;
+        $this->config  = new NullConfiguration();
     }
 
 
 
 
+    
 
     /**
      * @param ConfigurationInterface $config
@@ -71,27 +83,20 @@ trait ConnectionTrait
     }
 
 
-
-
-
+    
+    
+    
+    
     /**
      * @return $this
-     * @throws DriverException
     */
     public function connect(): static
     {
-        $config = $this->getConfiguration();
-
-        $this->makeSureIfIsAvailable();
-
-        $this->connectWithoutDatabase($config);
-
-        if ($this->getDatabase()->exists()) {
-            $this->connectIfExistsDatabase($config);
-        }
-
-        return $this;
+        return $this->connectionProcess();
     }
+
+
+
 
 
 
@@ -103,12 +108,15 @@ trait ConnectionTrait
      *
      * @return $this
     */
-    public function withConnection(mixed $connection): static
+    public function setConnection(mixed $connection): static
     {
         $this->connection = $connection;
 
         return $this;
     }
+
+
+
 
 
 
@@ -122,15 +130,29 @@ trait ConnectionTrait
     }
 
 
+    
+    
+    
+    
+    /**
+     * @return ConfigurationInterface
+    */
+    public function getConfiguration(): ConfigurationInterface
+    {
+        return $this->config;
+    }
+    
+    
+    
 
 
     /**
-     * @param ConfigurationInterface $config
+     * @param QueryLoggerInterface $queryLogger
      * @return $this
     */
-    public function withConfiguration(ConfigurationInterface $config): static
+    public function setQueryLogger(QueryLoggerInterface $queryLogger): static
     {
-        $this->config = $config;
+        $this->queryLogger = $queryLogger;
 
         return $this;
     }
@@ -139,17 +161,16 @@ trait ConnectionTrait
 
 
 
-    /**
-     * @return ConfigurationInterface
-    */
-    public function getConfiguration(): ConfigurationInterface
-    {
-        if (!$this->config) {
-            $this->config = new NullConfiguration();
-        }
 
-        return $this->config;
+
+    /**
+     * @return QueryLoggerInterface
+    */
+    public function getQueryLogger(): QueryLoggerInterface
+    {
+        return $this->queryLogger;
     }
+
 
 
 
@@ -167,25 +188,37 @@ trait ConnectionTrait
 
 
 
-    
-    
-    
-    
+
+
+
     /**
-     * @return QueryLoggerInterface
+     * @return $this
     */
-    public function getQueryLogger(): QueryLoggerInterface
+    private function connectionProcess(): static
     {
-        return $this->queryLogger;
+         $config = $this->getConfiguration();
+
+         $this->makeSureIsAvailable();
+
+         $this->connectWithoutDatabase($config);
+
+         if ($this->getDatabase()->exists()) {
+            $this->connectIfDatabaseExists($config);
+         }
+
+         return $this;
     }
 
 
 
 
+
     /**
+     * Determine if connection is available
+     *
      * @return void
     */
-    abstract protected function makeSureIfIsAvailable(): void;
+    abstract protected function makeSureIsAvailable(): void;
 
 
 
@@ -196,9 +229,9 @@ trait ConnectionTrait
      * connect without database
      *
      * @param ConfigurationInterface $config
-     * @return mixed
+     * @return $this
     */
-    abstract protected function connectWithoutDatabase(ConfigurationInterface $config): mixed;
+    abstract protected function connectWithoutDatabase(ConfigurationInterface $config): static;
 
 
 
@@ -211,5 +244,5 @@ trait ConnectionTrait
      * @param ConfigurationInterface $config
      * @return $this
     */
-    abstract protected function connectIfExistsDatabase(ConfigurationInterface $config): mixed;
+    abstract protected function connectIfDatabaseExists(ConfigurationInterface $config): static;
 }

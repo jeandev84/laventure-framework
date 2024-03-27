@@ -6,6 +6,7 @@ namespace Laventure\Component\Database\Connection\Extensions\PDO;
 
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Configuration\Null\NullConfiguration;
+use Laventure\Component\Database\Connection\Connection;
 use Laventure\Component\Database\Connection\ConnectionTrait;
 use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\Builder\PdoDsnBuilder;
 use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\Reader\PdoDsnReader;
@@ -30,9 +31,8 @@ use RuntimeException;
  *
  * @package  Laventure\Component\Database\PdoConnection\Extensions\PDO
 */
-abstract class PdoConnection implements PdoConnectionInterface
+abstract class PdoConnection extends Connection implements PdoConnectionInterface
 {
-    use ConnectionTrait;
 
     /**
      * @var PdoConnectionFactoryInterface
@@ -336,10 +336,7 @@ abstract class PdoConnection implements PdoConnectionInterface
     /**
      * @inheritDoc
      */
-    public function activateTransaction(): void
-    {
-
-    }
+    public function enableTransaction(): void {}
 
 
 
@@ -347,10 +344,7 @@ abstract class PdoConnection implements PdoConnectionInterface
     /**
      * @inheritDoc
      */
-    public function disableTransaction(): void
-    {
-
-    }
+    public function disableTransaction(): void {}
 
 
 
@@ -463,7 +457,7 @@ abstract class PdoConnection implements PdoConnectionInterface
      * @inheritdoc
      * @throws DriverException
     */
-    protected function connectIfExistsDatabase(ConfigurationInterface $config): static
+    protected function connectIfDatabaseExists(ConfigurationInterface $config): static
     {
         $config['dsn'] = $this->makeDsnIfDatabaseExists($config);
 

@@ -71,7 +71,7 @@ class OracleConnection extends PdoConnection
     /**
      * @inheritDoc
     */
-    public function activateTransaction(): void
+    public function enableTransaction(): void
     {
 
     }
