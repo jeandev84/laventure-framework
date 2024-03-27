@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Connection\Transaction;
+namespace Laventure\Component\Database\Connection\Transaction\Factory;
+
+use Laventure\Component\Database\Connection\Transaction\Contract\TransactionInterface;
 
 /**
  * TransactionFactoryInterface
