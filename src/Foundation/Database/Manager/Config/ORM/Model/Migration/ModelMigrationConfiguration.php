@@ -14,7 +14,7 @@ use Laventure\Utils\Parameter\Parameter;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Manager\Config\ORM\Model\Migration
+ * @package  Laventure\Component\Database\Manager\Config\ORM\ActiveRecord\Migration
  */
 class ModelMigrationConfiguration extends Parameter implements MigrationConfigurationInterface
 {

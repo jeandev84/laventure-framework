@@ -14,7 +14,7 @@ use Laventure\Foundation\Loader\Migration\Types\AbstractMigrationLoader;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Foundation\Loader\Migration\Mapper
+ * @package  Laventure\Foundation\Loader\Migration\DataMapper
 */
 class MapperMigrationLoader extends AbstractMigrationLoader implements MapperMigrationLoaderInterface
 {

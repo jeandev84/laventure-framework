@@ -130,7 +130,7 @@ class ForeignKey extends Constraint implements ForeignKeyInterface
                    $this->referenceColumn
         );
 
-        if (!$this->key) {
+        if (!$this->name) {
             return $constraint;
         }
 

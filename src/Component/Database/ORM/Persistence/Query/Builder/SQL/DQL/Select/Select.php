@@ -17,7 +17,7 @@ use Laventure\Component\Database\Query\Builder\SQL\DQL\Select\SelectBuilderInter
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\ORM\Mapper\Query\Builder\SQL\DQL
+ * @package  Laventure\Component\Database\ORM\DataMapper\Query\Builder\SQL\DQL
 */
 class Select extends BuilderHasConditions
 {

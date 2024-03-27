@@ -6,14 +6,19 @@ namespace Laventure\Component\Database\Connection\Extensions\PDO;
 
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Configuration\Null\NullConfiguration;
+use Laventure\Component\Database\Connection\Connection;
 use Laventure\Component\Database\Connection\ConnectionTrait;
-use Laventure\Component\Database\Connection\Drivers\DriverException;
+use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\Builder\Factory\PdoDsnBuilderFactory;
+use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\Builder\Factory\PdoDsnBuilderFactoryInterface;
 use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\Builder\PdoDsnBuilder;
+use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\Builder\PdoDsnBuilderInterface;
 use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\Reader\PdoDsnReader;
 use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnectionFactory;
 use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnectionFactoryInterface;
 use Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\Factory\PdoSQLQueryBuilderFactory;
 use Laventure\Component\Database\Connection\Extensions\PDO\Query\Query;
+use Laventure\Component\Database\Connection\Factory\ConnectionFactoryInterface;
+use Laventure\Component\Database\Drivers\DriverException;
 use Laventure\Component\Database\Query\Builder\SQL\Factory\SQLQueryBuilderFactoryInterface;
 use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
 use Laventure\Component\Database\Query\QueryInterface;
@@ -30,42 +35,33 @@ use RuntimeException;
  *
  * @package  Laventure\Component\Database\PdoConnection\Extensions\PDO
 */
-abstract class PdoConnection implements PdoConnectionInterface
+abstract class PdoConnection extends Connection implements PdoConnectionInterface
 {
-    use ConnectionTrait;
-
-    /**
-     * @var PdoConnectionFactoryInterface
-    */
-    protected PdoConnectionFactoryInterface $factory;
-
-
 
     /**
      * @param PdoConnectionFactoryInterface|null $factory
-     */
+    */
     public function __construct(PdoConnectionFactoryInterface $factory = null)
     {
-        $this->factory = $factory ?: new PdoConnectionFactory();
+        parent::__construct($factory ?: new PdoConnectionFactory());
     }
 
 
 
 
 
-
     /**
-     * @param ConfigurationInterface $config
      * @return $this
     */
-    public function connectToPdo(ConfigurationInterface $config): static
+    public function connectToPdo(): static
     {
-        if (!$config->has('dsn')) {
+        $config = $this->getConfiguration();
+
+        if (!$this->hasDsnParameter()) {
             throw new RuntimeException("No DSN specified for making connection.");
         }
 
-        return $this->withConnection($this->makePdo($config))
-                    ->withConfiguration($config);
+        return $this->setConnection($this->makePdo($config))->config($config);
     }
 
 
@@ -86,50 +82,13 @@ abstract class PdoConnection implements PdoConnectionInterface
 
 
 
-    /**
-     * @inheritdoc
-    */
-    public function disconnect(): void
-    {
-        $this->connection = null;
-    }
-
-
-
-
-
-    /**
-     * @inheritdoc
-    */
-    public function purge(): void
-    {
-        $this->withConfiguration(new NullConfiguration())->disconnect();
-    }
-
-
-
-
-
-
-    /**
-     * @inheritdoc
-    */
-    public function disconnected(): bool
-    {
-        return is_null($this->connection);
-    }
-
-
-
-
-
 
     /**
      * @inheritdoc
     */
     public function createQuery(): QueryInterface
     {
-        return new Query($this->getConnection());
+        return new Query($this->getConnection(), $this->queryLogger);
     }
 
 
@@ -159,30 +118,6 @@ abstract class PdoConnection implements PdoConnectionInterface
 
 
 
-
-
-    /**
-     * @param string $sql
-     * @return QueryInterface
-     */
-    public function statement(string $sql): QueryInterface
-    {
-        return $this->createQuery()->prepare($sql);
-    }
-
-
-
-
-
-
-
-    /**
-     * @inheritdoc
-    */
-    public function executeQuery(string $sql): mixed
-    {
-        return $this->createQuery()->exec($sql);
-    }
 
 
 
@@ -336,10 +271,7 @@ abstract class PdoConnection implements PdoConnectionInterface
     /**
      * @inheritDoc
      */
-    public function activateTransaction(): void
-    {
-
-    }
+    public function enableTransaction(): void {}
 
 
 
@@ -347,11 +279,7 @@ abstract class PdoConnection implements PdoConnectionInterface
     /**
      * @inheritDoc
      */
-    public function disableTransaction(): void
-    {
-
-    }
-
+    public function disableTransaction(): void {}
 
 
 
@@ -361,7 +289,6 @@ abstract class PdoConnection implements PdoConnectionInterface
     /**
      * @param ConfigurationInterface $config
      * @return string
-     * @throws DriverException
     */
     protected function makeDefaultDsn(ConfigurationInterface $config): string
     {
@@ -376,10 +303,11 @@ abstract class PdoConnection implements PdoConnectionInterface
 
 
 
+
+
     /**
      * @param ConfigurationInterface $config
      * @return string
-     * @throws DriverException
     */
     protected function makeDsnIfDatabaseExists(ConfigurationInterface $config): string
     {
@@ -394,18 +322,14 @@ abstract class PdoConnection implements PdoConnectionInterface
 
 
 
+
     /**
      * @param string $driver
      * @param array $params
      * @return string
-     * @throws DriverException
     */
-    protected function makePdoDsn(string $driver, array $params): string
+    public function makePdoDsn(string $driver, array $params): string
     {
-        if (!$this->hasAvailableDriver($driver)) {
-            throw new DriverException("unavailable driver $driver. Please try to install it.");
-        }
-
         return PdoDsnBuilder::create($driver, $params);
     }
 
@@ -413,14 +337,32 @@ abstract class PdoConnection implements PdoConnectionInterface
 
 
 
+
+
+    /**
+     * @return bool
+    */
+    public function hasDsnParameter(): bool
+    {
+        return $this->config->has('dsn');
+    }
+
+
+
+
+
+
     /**
      * @param string $dsn
-     * @return array
+     * @return $this
     */
-    protected function readDsnParams(string $dsn): array
+    public function setPdoDsn(string $dsn): static
     {
-        return (new PdoDsnReader($dsn))->read();
+         $this->config->add(compact('dsn'));
+
+         return $this;
     }
+
 
 
 
@@ -428,8 +370,8 @@ abstract class PdoConnection implements PdoConnectionInterface
 
     /**
      * @inheritdoc
-     */
-    protected function makeSureIfIsAvailable(): void
+    */
+    protected function makeSureIsAvailable(): void
     {
         if (!$this->isAvailable()) {
             throw new DriverException("Unavailable driver {$this->getName()}");
@@ -441,17 +383,19 @@ abstract class PdoConnection implements PdoConnectionInterface
 
 
 
+
     /**
      * @inheritdoc
-     * @throws DriverException
+     * @param ConfigurationInterface $config
+     * @return PdoConnection
     */
-    protected function connectWithoutDatabase(ConfigurationInterface $config): static
+    protected function connectWithoutDatabase(): static
     {
-        if (!$config->has('dsn')) {
-            $config['dsn'] = $this->makeDefaultDsn($config);
+        if (!$this->hasDsnParameter()) {
+            $this->setPdoDsn($this->getDsnBuilder()->buildDefault());
         }
 
-        return $this->connectToPdo($config);
+        return $this->connectToPdo();
     }
 
 
@@ -461,12 +405,39 @@ abstract class PdoConnection implements PdoConnectionInterface
 
     /**
      * @inheritdoc
-     * @throws DriverException
+     * @param ConfigurationInterface $config
+     * @return PdoConnection
     */
-    protected function connectIfExistsDatabase(ConfigurationInterface $config): static
+    protected function connectIfDatabaseExists(): static
     {
-        $config['dsn'] = $this->makeDsnIfDatabaseExists($config);
+        $this->setPdoDsn($this->getDsnBuilder()->buildIfDatabaseExists());
 
-        return $this->connectToPdo($config);
+        return $this->connectToPdo();
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getDsnBuilder(): PdoDsnBuilderInterface
+    {
+        return $this->getPdoDsnBuilderFactory()->create($this->getConfiguration());
+    }
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getPdoDsnBuilderFactory(): PdoDsnBuilderFactoryInterface
+    {
+        return new PdoDsnBuilderFactory();
     }
 }

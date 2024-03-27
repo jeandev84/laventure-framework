@@ -23,11 +23,11 @@ class Constraint implements ConstraintInterface
 
     /**
      * @param string $type
-     * @param string $key
+     * @param string $name
     */
     public function __construct(
         protected string $type,
-        protected string $key = ''
+        protected string $name = ''
     ) {
     }
 
@@ -50,6 +50,19 @@ class Constraint implements ConstraintInterface
 
 
 
+    /**
+     * @inheritDoc
+    */
+    public function name(string $name): static
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+
+
+
 
     /**
      * @inheritDoc
@@ -61,13 +74,17 @@ class Constraint implements ConstraintInterface
 
 
 
+
+
+
     /**
      * @inheritDoc
     */
-    public function getKey(): string
+    public function getName(): string
     {
-        return $this->key;
+        return $this->name;
     }
+
 
 
 
@@ -78,11 +95,11 @@ class Constraint implements ConstraintInterface
     */
     public function getSQL(): string
     {
-        if (!$this->key) {
+        if (!$this->name) {
             return '';
         }
 
-        return sprintf('CONSTRAINT %s', $this->key);
+        return sprintf('CONSTRAINT %s', $this->name);
     }
 
 

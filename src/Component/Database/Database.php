@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Laventure\Component\Database;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
-use Laventure\Component\Database\Exception\DatabaseException;
-use Laventure\Component\Database\Exception\UnavailableDatabaseNameException;
 use Laventure\Component\Database\Query\QueryInterface;
 
 /**
@@ -26,14 +24,6 @@ abstract class Database implements DatabaseInterface
     protected ConnectionInterface $connection;
 
 
-    /**
-     * @var string
-    */
-    protected string $name;
-
-
-
-
 
     /**
      * @param ConnectionInterface $connection
@@ -41,7 +31,6 @@ abstract class Database implements DatabaseInterface
     public function __construct(ConnectionInterface $connection)
     {
         $this->connection = $connection;
-        $this->name       = $connection->getConfiguration()->getDatabase();
     }
 
 
@@ -53,7 +42,7 @@ abstract class Database implements DatabaseInterface
     */
     public function getName(): string
     {
-        return $this->name;
+        return $this->connection->getDatabaseName();
     }
 
 

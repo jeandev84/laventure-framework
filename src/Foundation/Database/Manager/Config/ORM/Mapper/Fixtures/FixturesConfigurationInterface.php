@@ -13,7 +13,7 @@ use Laventure\Foundation\Database\Manager\Config\Common\CommonConfigurationInter
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Manager\Config\ORM\Mapper\Fixtures
+ * @package  Laventure\Component\Database\Manager\Config\ORM\DataMapper\Fixtures
  */
 interface FixturesConfigurationInterface extends CommonConfigurationInterface
 {

@@ -282,6 +282,68 @@ abstract class AbstractColumn implements ColumnInterface
 
 
 
+    /**
+     * @inheritDoc
+    */
+    public function privileges(string $privileges): static
+    {
+        return $this->options(compact('privileges'));
+    }
+
+
+
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function extra(string $extra): static
+    {
+        return $this->options(compact('extra'));
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function key(string $key): static
+    {
+        return $this->options(compact('key'));
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function defaultValue($value): static
+    {
+        return $this->option('default', $value);
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function isNull($status): static
+    {
+        return $this->option('null', $status);
+    }
+
+
+
+
+
+
 
     /**
      * @param ConstraintInterface $constraint
@@ -532,7 +594,7 @@ abstract class AbstractColumn implements ColumnInterface
 
     /**
      * @inheritDoc
-     */
+    */
     public function getOption($key, $default = null): mixed
     {
         return $this->options[$key] ?? $default;

@@ -33,19 +33,6 @@ interface ManagerConfigurationInterface extends ParameterInterface
 
 
     /**
-     * Returns credentials current connection
-     *
-     * @return ConfigurationInterface
-    */
-    public function credentials(): ConfigurationInterface;
-
-
-
-
-
-
-
-    /**
      * Returns all connections credentials
      *
      * @return array

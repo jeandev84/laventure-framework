@@ -20,7 +20,7 @@ interface TransactionInterface
     /**
      * @return void
     */
-    public function activateTransaction(): void;
+    public function enableTransaction(): void;
 
 
 

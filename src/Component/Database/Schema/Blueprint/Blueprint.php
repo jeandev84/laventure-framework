@@ -579,6 +579,7 @@ class Blueprint implements BlueprintInterface
         $this->preFlush();
 
         try {
+
             #dump($this->table->expr()->create()->getSQL());
             return $this->table->create();
 

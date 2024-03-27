@@ -16,7 +16,7 @@ use Serializable;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\ORM\Mapper\ObjectCollection
+ * @package  Laventure\Component\Database\ORM\DataMapper\ObjectCollection
 */
 interface CollectionInterface extends Countable, Iterator, Serializable, ArrayAccess
 {

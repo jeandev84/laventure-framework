@@ -14,7 +14,7 @@ use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionBuilderInterfa
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\ORM\Mapper\Query\Builder\SQL
+ * @package  Laventure\Component\Database\ORM\DataMapper\Query\Builder\SQL
 */
 interface BuilderInterface
 {
