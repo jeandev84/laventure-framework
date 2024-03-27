@@ -14,7 +14,7 @@ use Throwable;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\ORM\Mapper\Mapping\Metadata\Exception
+ * @package  Laventure\Component\Database\ORM\DataMapper\Mapping\Metadata\Exception
  */
 class NotFoundClassFieldException extends BaseException
 {

@@ -13,7 +13,7 @@ use Laventure\Exceptions\BaseException;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\ORM\Mapper\Manager\Exception
+ * @package  Laventure\Component\Database\ORM\DataMapper\Manager\Exception
 */
 class ObjectManagerException extends BaseException
 {

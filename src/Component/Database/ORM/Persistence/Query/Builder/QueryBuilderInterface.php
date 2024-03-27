@@ -16,7 +16,7 @@ use Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL\DQL\Select\Se
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\ORM\Mapper\Query\Builder
+ * @package  Laventure\Component\Database\ORM\DataMapper\Query\Builder
 */
 interface QueryBuilderInterface
 {

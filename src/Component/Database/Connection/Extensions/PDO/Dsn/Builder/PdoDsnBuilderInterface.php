@@ -26,11 +26,14 @@ interface PdoDsnBuilderInterface extends BuilderInterface, Stringable
 
 
 
+
+
     /**
      * @param array $params
      * @return $this
-    +*/
-    public function withParams(array $params): static;
+    */
+    public function withoutParams(array $params): static;
+
 
 
 
@@ -48,8 +51,48 @@ interface PdoDsnBuilderInterface extends BuilderInterface, Stringable
 
 
 
+
+    /**
+     * @param array $params
+     * @return $this
+    +*/
+    public function withParams(array $params): static;
+
+
+
+
+
+
+
+
     /**
      * @return array
     */
     public function getParams(): array;
+
+
+
+
+
+
+
+    /**
+     * Build dsn if database exist
+     *
+     * @return string
+    */
+    public function buildDefault(): string;
+
+
+
+
+
+
+
+    /**
+     * Build dsn with existent database
+     *
+     * @return string
+    */
+    public function buildIfDatabaseExists(): string;
 }

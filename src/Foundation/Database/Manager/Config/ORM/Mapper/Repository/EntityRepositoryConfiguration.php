@@ -13,7 +13,7 @@ use Laventure\Utils\Parameter\Parameter;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Manager\Config\ORM\Mapper\Repository
+ * @package  Laventure\Component\Database\Manager\Config\ORM\DataMapper\Repository
  */
 class EntityRepositoryConfiguration extends Parameter implements EntityRepositoryConfigurationInterface
 {

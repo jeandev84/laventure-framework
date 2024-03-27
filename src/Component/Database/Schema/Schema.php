@@ -109,7 +109,6 @@ class Schema implements SchemaInterface
         }
 
         return $this->table($table)
-                    ->dropForeignKeys()
                     ->drop();
     }
 

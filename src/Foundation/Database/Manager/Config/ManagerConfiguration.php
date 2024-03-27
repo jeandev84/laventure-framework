@@ -8,6 +8,7 @@ use Laventure\Component\Database\Configuration\Configuration;
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Foundation\Database\Manager\Config\ORM\OrmConfiguration;
 use Laventure\Foundation\Database\Manager\Config\ORM\OrmConfigurationInterface;
+use Laventure\Utils\Parameter\Exception\BlankParameterException;
 use Laventure\Utils\Parameter\Parameter;
 
 /**
@@ -21,6 +22,17 @@ use Laventure\Utils\Parameter\Parameter;
 */
 class ManagerConfiguration extends Parameter implements ManagerConfigurationInterface
 {
+
+    /**
+     * @param array $params
+    */
+    public function __construct(array $params = [])
+    {
+        parent::__construct($params);
+    }
+
+
+
     /**
      * @inheritdoc
     */
@@ -35,20 +47,7 @@ class ManagerConfiguration extends Parameter implements ManagerConfigurationInte
 
     /**
      * @inheritdoc
-    */
-    public function credentials(): ConfigurationInterface
-    {
-        return new Configuration(
-            $this->connections()[$this->connection()]
-        );
-    }
-
-
-
-
-
-    /**
-     * @inheritdoc
+     * @throws BlankParameterException
     */
     public function connections(): array
     {

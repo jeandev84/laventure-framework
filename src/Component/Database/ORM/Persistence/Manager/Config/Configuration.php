@@ -18,7 +18,7 @@ use Laventure\Component\Database\ORM\Persistence\UnitOfWork\Factory\UnitOfWorkFa
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\ORM\Mapper\Manager\Common
+ * @package  Laventure\Component\Database\ORM\DataMapper\Manager\Common
 */
 abstract class Configuration
 {

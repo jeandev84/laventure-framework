@@ -14,7 +14,7 @@ use Laventure\Foundation\Database\Manager\Config\Common\Migration\MigrationConfi
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\Manager\Config\ORM\Model
+ * @package  Laventure\Component\Database\Manager\Config\ORM\ActiveRecord
  */
 interface ModelConfigurationInterface extends CommonConfigurationInterface
 {

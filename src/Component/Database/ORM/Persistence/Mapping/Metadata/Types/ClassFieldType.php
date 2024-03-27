@@ -14,7 +14,7 @@ use Laventure\Component\Database\ORM\Persistence\Collection\CollectionInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\ORM\Mapper\Mapping\Metadata
+ * @package  Laventure\Component\Database\ORM\DataMapper\Mapping\Metadata
 */
 class ClassFieldType implements ClassFieldTypeInterface
 {

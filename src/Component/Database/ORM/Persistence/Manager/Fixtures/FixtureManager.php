@@ -13,7 +13,7 @@ use Laventure\Component\Database\ORM\Persistence\Manager\Contract\EntityManagerI
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Database\ORM\Mapper\Manager\Fixtures
+ * @package  Laventure\Component\Database\ORM\DataMapper\Manager\Fixtures
 */
 class FixtureManager implements FixtureManagerInterface
 {
