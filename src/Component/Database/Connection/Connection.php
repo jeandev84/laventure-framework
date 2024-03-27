@@ -266,8 +266,6 @@ abstract class Connection implements ConnectionInterface
     */
     private function connectionProcess(): static
     {
-         $config = $this->getConfiguration();
-
          $this->makeSureIsAvailable();
          $this->connectWithoutDatabase();
 

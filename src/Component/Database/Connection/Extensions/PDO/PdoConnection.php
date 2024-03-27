@@ -57,7 +57,7 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
     {
         $config = $this->getConfiguration();
 
-        if (!$this->hasDsnParameter()) {
+        if (!$this->hasPdoDsn()) {
             throw new RuntimeException("No DSN specified for making connection.");
         }
 
@@ -268,81 +268,13 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
 
 
 
-    /**
-     * @inheritDoc
-     */
-    public function enableTransaction(): void {}
-
-
-
 
     /**
-     * @inheritDoc
-     */
-    public function disableTransaction(): void {}
-
-
-
-
-
-
-    /**
-     * @param ConfigurationInterface $config
-     * @return string
-    */
-    protected function makeDefaultDsn(ConfigurationInterface $config): string
-    {
-        return $this->makePdoDsn($config->required('driver'), [
-            'host'     => $config->getHost(),
-            'port'     => $config->getPort(),
-            'charset'  => $config->getCharset()
-        ]);
-    }
-
-
-
-
-
-
-
-    /**
-     * @param ConfigurationInterface $config
-     * @return string
-    */
-    protected function makeDsnIfDatabaseExists(ConfigurationInterface $config): string
-    {
-        return $this->makePdoDsn($config->required('driver'), [
-            'host'     => $config->getHost(),
-            'port'     => $config->getPort(),
-            'dbname'   => $config->getDatabase(),
-            'charset'  => $config->getCharset()
-        ]);
-    }
-
-
-
-
-
-    /**
-     * @param string $driver
-     * @param array $params
-     * @return string
-    */
-    public function makePdoDsn(string $driver, array $params): string
-    {
-        return PdoDsnBuilder::create($driver, $params);
-    }
-
-
-
-
-
-
-
-    /**
+     * Determine if has dsn parameter
+     *
      * @return bool
     */
-    public function hasDsnParameter(): bool
+    public function hasPdoDsn(): bool
     {
         return $this->config->has('dsn');
     }
@@ -368,8 +300,9 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
 
 
 
+
     /**
-     * @inheritdoc
+     * @inheritDoc
     */
     protected function makeSureIsAvailable(): void
     {
@@ -382,8 +315,6 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
 
 
 
-
-
     /**
      * @inheritdoc
      * @param ConfigurationInterface $config
@@ -391,7 +322,7 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
     */
     protected function connectWithoutDatabase(): static
     {
-        if (!$this->hasDsnParameter()) {
+        if (!$this->hasPdoDsn()) {
             $this->setPdoDsn($this->getDsnBuilder()->buildDefault());
         }
 

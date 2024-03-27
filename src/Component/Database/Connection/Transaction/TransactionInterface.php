@@ -17,13 +17,6 @@ use Closure;
  */
 interface TransactionInterface
 {
-    /**
-     * @return void
-    */
-    public function enableTransaction(): void;
-
-
-
 
     /**
      * Begin a transaction query
@@ -77,14 +70,4 @@ interface TransactionInterface
      * @return mixed
     */
     public function transaction(callable $func): mixed;
-
-
-
-
-
-
-    /**
-     * @return void
-     */
-    public function disableTransaction(): void;
 }
