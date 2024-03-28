@@ -625,17 +625,17 @@ class QueryBuilder implements QueryBuilderInterface
 
     /**
      * @param WhereInterface $builder
-     * @return WhereInterface
+     * @return QueryBuilder
     */
-    private function parseWheres(WhereInterface $builder): WhereInterface
+    private function parseWheres(WhereInterface $builder): static
     {
         foreach ($this->wheres as $method => $params) {
             foreach ($params as $arguments) {
-               $builder = $this->call($builder, $method, $arguments);
+               $this->call($builder, $method, $arguments);
             }
         }
 
-        return $builder;
+        return $this;
     }
 
 
