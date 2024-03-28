@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace PHPUnitTest\App\ActiveRecord;
 
+use Laventure\Component\Database\ORM\ActiveRecord\Contract\Timestamps\TimestampsInterface;
+use Laventure\Component\Database\ORM\ActiveRecord\Traits\Timestamps;
 use Laventure\Foundation\Database\ORM\Model\Model;
 
 /**
@@ -14,8 +16,11 @@ use Laventure\Foundation\Database\ORM\Model\Model;
  *
  * @package  App\ORM\ActiveRecord
 */
-class User extends Model
+class User extends Model implements TimestampsInterface
 {
+
+     use Timestamps;
+
      /**
       * @var string
      */

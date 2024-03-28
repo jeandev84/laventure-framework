@@ -368,7 +368,13 @@ class QueryBuilder implements QueryBuilderInterface
     */
     public function create(array $attributes): int
     {
-        return 0;
+        $query = $this->insertQuery($attributes);
+
+        if (!$query->execute()) {
+            return 0;
+        }
+
+        return $query->lastInsertId();
     }
 
 
@@ -572,6 +578,20 @@ class QueryBuilder implements QueryBuilderInterface
                      ->map($this->getClassName());
     }
 
+
+
+
+
+    /**
+     * @param array $attributes
+     * @return QueryInterface
+    */
+    private function insertQuery(array $attributes): QueryInterface
+    {
+        return $this->builder->insert($this->getTableName())
+                             ->values($attributes)
+                             ->getQuery();
+    }
 
 
 
