@@ -29,6 +29,7 @@ interface ActiveRecordRepositoryInterface
 
 
 
+
     /**
      * Returns one record by identifier given value
      *
@@ -59,8 +60,9 @@ interface ActiveRecordRepositoryInterface
 
 
     /**
-     * @param array $attributes
+     * Create a new records and returns the last insert id
      *
+     * @param array $attributes
      * @return int
     */
     public static function create(array $attributes): int;
@@ -73,6 +75,8 @@ interface ActiveRecordRepositoryInterface
 
 
     /**
+     * Update record and returns id
+     *
      * @param array $attributes
      *
      * @return int

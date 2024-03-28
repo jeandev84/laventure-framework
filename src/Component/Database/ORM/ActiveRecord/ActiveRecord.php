@@ -7,6 +7,7 @@ namespace Laventure\Component\Database\ORM\ActiveRecord;
 
 use Laventure\Component\Database\ORM\ActiveRecord\Contract\ActiveRecordInterface;
 use Laventure\Component\Database\ORM\ActiveRecord\Exception\ActiveRecordException;
+use Laventure\Component\Database\ORM\ActiveRecord\Exception\UpdateRecordException;
 use Laventure\Component\Database\ORM\ActiveRecord\Query\QueryBuilder;
 use Laventure\Component\Database\ORM\ActiveRecord\Query\QueryBuilderInterface;
 use Laventure\Utils\Convertor\CamelCase\CamelCaseConvertorTrait;
@@ -440,7 +441,14 @@ abstract class ActiveRecord implements ActiveRecordInterface
     */
     public function update(array $attributes): int
     {
-        return static::query()->criteria($this->criteria())->update($attributes);
+        $status = static::query()->criteria($this->criteria())
+                                 ->update($attributes);
+
+        if (!$status) {
+            throw new UpdateRecordException($this);
+        }
+
+        return $this->getId();
     }
 
 

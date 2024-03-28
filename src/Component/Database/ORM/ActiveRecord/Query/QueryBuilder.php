@@ -395,12 +395,14 @@ class QueryBuilder implements QueryBuilderInterface
 
 
 
+
     /**
      * @inheritDoc
+     * @throws NotFoundTableNameException
     */
-    public function update(array $attributes): int
+    public function update(array $attributes): bool
     {
-
+        return $this->updateQuery($attributes)->execute();
     }
 
 
@@ -602,7 +604,10 @@ class QueryBuilder implements QueryBuilderInterface
     public function addCriteria(array $criteria): static
     {
         foreach ($criteria as $column => $value) {
-            $this->wheres[self::criteria][] = [$column => $value];
+            $this->wheres[self::criteria] = array_merge(
+                $this->wheres[self::criteria],
+                [$column => $value]
+            );
         }
 
         return $this;
@@ -611,9 +616,11 @@ class QueryBuilder implements QueryBuilderInterface
 
 
 
+
     /**
      * @param ActiveRecordInterface $model
      * @return void
+     * @throws NotFoundTableNameException
     */
     private function bootModel(ActiveRecordInterface $model): void
     {
@@ -628,17 +635,21 @@ class QueryBuilder implements QueryBuilderInterface
 
     /**
      * @param WhereInterface $builder
-     * @return QueryBuilder
+     * @return WhereInterface
     */
-    private function parseWheres(WhereInterface $builder): static
+    private function parseWheres(WhereInterface $builder): WhereInterface
     {
-        foreach ($this->wheres as $method => $params) {
-            foreach ($params as $arguments) {
-               $this->call($builder, $method, $arguments);
+        foreach ($this->wheres as $method => $conditions) {
+            if (in_array($method, [self::andWhere, self::orWhere])) {
+                foreach ($conditions as $condition) {
+                    $this->call($builder, $method, $condition);
+                }
+            } else {
+                $this->call($builder, $method, $conditions);
             }
         }
 
-        return $this;
+        return $builder;
     }
 
 
@@ -654,7 +665,7 @@ class QueryBuilder implements QueryBuilderInterface
     private function call(object $object, string $method, $arguments): object
     {
         if (is_callable([$object, $method])) {
-            return call_user_func_array([$object, $method], (array)$arguments);
+            return call_user_func_array([$object, $method], [$arguments]);
         }
 
         return $object;
@@ -683,7 +694,8 @@ class QueryBuilder implements QueryBuilderInterface
     /**
      * @param array $attributes
      * @return QueryInterface
-     */
+     * @throws NotFoundTableNameException
+    */
     private function insertQuery(array $attributes): QueryInterface
     {
         $attributes = $this->resolveInsertAttributes($attributes);
@@ -692,6 +704,28 @@ class QueryBuilder implements QueryBuilderInterface
                              ->values($attributes)
                              ->getQuery();
     }
+
+
+
+
+    /**
+     * @param array $attributes
+     * @return QueryInterface
+     * @throws NotFoundTableNameException
+    */
+    private function updateQuery(array $attributes): QueryInterface
+    {
+         $query = $this->builder->update($this->getTableName());
+
+         foreach ($attributes as $column => $value) {
+             $query->set($column, $value);
+         }
+
+         $this->parseWheres($query);
+
+         return $query->setParameters($this->parameters)->getQuery();
+    }
+
 
 
 
