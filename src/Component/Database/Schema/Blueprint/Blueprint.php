@@ -407,7 +407,8 @@ class Blueprint implements BlueprintInterface
     */
     public function softDeletes(): static
     {
-        $this->datetime(TimestampColumn::deletedAt());
+        $this->datetime(TimestampColumn::deletedAt())
+             ->nullable();
 
         return $this;
     }

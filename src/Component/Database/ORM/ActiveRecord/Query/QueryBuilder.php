@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\ORM\ActiveRecord\Query;
 
 use Laventure\Component\Database\ORM\ActiveRecord\Contract\ActiveRecordInterface;
+use Laventure\Component\Database\ORM\ActiveRecord\Contract\Timestamps\TimestampsInterface;
+use Laventure\Component\Database\Query\Builder\SQL\Conditions\Where\WhereInterface;
 use Laventure\Component\Database\Query\Builder\SQL\SQLBuilder;
 use Laventure\Component\Database\Query\QueryInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Conditions\ConditionType;
@@ -22,6 +24,10 @@ use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
 */
 class QueryBuilder implements QueryBuilderInterface
 {
+
+    const andWhere = 'andWhere';
+    const orWhere  = 'orWhere';
+    const criteria = 'criteria';
 
 
     /**
@@ -47,27 +53,12 @@ class QueryBuilder implements QueryBuilderInterface
 
 
     /**
-     * @var array|string[]
-     */
-    private array $operators = [
-        '=',
-        '>',
-        '>=',
-        '<',
-        '>=',
-        'like',
-        'in'
-    ];
-
-
-
-
-    /**
      * @var array
     */
     protected array $wheres = [
-        ConditionType::AND => [],
-        ConditionType::OR  => []
+        self::andWhere => [],
+        self::orWhere  => [],
+        self::criteria => []
     ];
 
 
@@ -115,6 +106,16 @@ class QueryBuilder implements QueryBuilderInterface
     }
 
 
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getPrimaryKey(): string
+    {
+        return $this->model->getPrimaryKey();
+    }
 
 
 
@@ -318,9 +319,9 @@ class QueryBuilder implements QueryBuilderInterface
     /**
      * @inheritDoc
     */
-    public function where(string $column, $value, string $operator = "="): static
+    public function where(string $condition): static
     {
-        return $this->andWhere($column, $value, $operator);
+        return $this->andWhere($condition);
     }
 
 
@@ -330,9 +331,9 @@ class QueryBuilder implements QueryBuilderInterface
     /**
      * @inheritDoc
     */
-    public function andWhere(string $column, $value, string $operator = "="): static
+    public function andWhere(string $condition): static
     {
-        return $this->criteria($column, $value, $operator, ConditionType::AND);
+        return $this->addCondition($condition, self::andWhere);
     }
 
 
@@ -342,9 +343,9 @@ class QueryBuilder implements QueryBuilderInterface
     /**
      * @inheritDoc
     */
-    public function orWhere(string $column, $value, string $operator = "="): static
+    public function orWhere(string $condition): static
     {
-        return $this->criteria($column, $value, $operator, ConditionType::OR);
+        return $this->addCondition($condition, self::orWhere);
     }
 
 
@@ -354,22 +355,11 @@ class QueryBuilder implements QueryBuilderInterface
     /**
      * @inheritDoc
     */
-    public function whereLike(string $column, string $expression): static
+    public function criteria(array $criteria): static
     {
-        return $this->where($column, $expression, 'like');
+        return $this->addCriteria($criteria);
     }
 
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function whereIn(string $column, array $data): static
-    {
-        return $this->where($column, $data, 'in');
-    }
 
 
 
@@ -379,7 +369,13 @@ class QueryBuilder implements QueryBuilderInterface
     */
     public function create(array $attributes): int
     {
-        return 0;
+        $query = $this->insertQuery($attributes);
+
+        if (!$query->execute()) {
+            return 0;
+        }
+
+        return $query->lastInsertId();
     }
 
 
@@ -511,10 +507,10 @@ class QueryBuilder implements QueryBuilderInterface
     /**
      * @inheritDoc
     */
-    public function params(array $parameters): static
+    public function setParameters(array $parameters): static
     {
          foreach ($parameters as $id => $value) {
-             $this->param($id, $value);
+             $this->setParameter($id, $value);
          }
 
          return $this;
@@ -527,7 +523,7 @@ class QueryBuilder implements QueryBuilderInterface
     /**
      * @inheritDoc
     */
-    public function param($id, $value): static
+    public function setParameter($id, $value): static
     {
         $this->parameters[$id] = $value;
 
@@ -538,66 +534,164 @@ class QueryBuilder implements QueryBuilderInterface
 
 
 
+
+
     /**
-     * @return QueryInterface
+     * @inheritDoc
     */
-    private function selectQuery(): QueryInterface
+    public function find($id): mixed
     {
-         return $this->select
-                     ->setParameters($this->parameters)
-                     ->getQuery()
-                     ->map($this->getClassName());
+        return $this->select
+                    ->criteria([$this->getPrimaryKey() => $id])
+                    ->getQuery()
+                    ->map($this->getClassName())
+                    ->fetch()
+                    ->one();
     }
 
 
 
 
 
-
-
     /**
-     * @param SQLBuilder $builder
-     * @return SQLBuilder
+     * @inheritDoc
     */
-    private function parseWheres(SQLBuilder $builder): SQLBuilder
+    public function all(): array
     {
-
+        return $this->select()->get();
     }
 
 
 
 
 
-
     /**
-     * @param string $column
-     * @param $value
-     * @param string $operator
+     * @param string $condition
      * @param string $type
      * @return $this
     */
-    private function criteria(string $column, $value, string $operator, string $type): static
+    private function addCondition(string $condition, string $type): static
     {
-        $this->wheres[$type][$column] = sprintf('%s %s %s', $column, $operator, $value);
+        $this->wheres[$type][] = $condition;
 
         return $this;
     }
 
 
+
+
+
+    /**
+     * @param array $criteria
+     * @return $this
+    */
+    public function addCriteria(array $criteria): static
+    {
+        foreach ($criteria as $column => $value) {
+            $this->wheres[self::criteria][] = [$column => $value];
+        }
+
+        return $this;
+    }
 
 
 
 
     /**
      * @param ActiveRecordInterface $model
-     * @return $this
+     * @return void
     */
-    private function bootModel(ActiveRecordInterface $model): static
+    private function bootModel(ActiveRecordInterface $model): void
     {
         $this->model   = $model;
         $this->builder = $model->getConnection()->createQueryBuilder();
         $this->select  = $this->builder->select()->from($this->getTableName());
+    }
+
+
+
+
+
+    /**
+     * @param WhereInterface $builder
+     * @return QueryBuilder
+    */
+    private function parseWheres(WhereInterface $builder): static
+    {
+        foreach ($this->wheres as $method => $params) {
+            foreach ($params as $arguments) {
+               $this->call($builder, $method, $arguments);
+            }
+        }
 
         return $this;
+    }
+
+
+
+
+
+    /**
+     * @param object $object
+     * @param string $method
+     * @param $arguments
+     * @return object
+    */
+    private function call(object $object, string $method, $arguments): object
+    {
+        if (is_callable([$object, $method])) {
+            return call_user_func_array([$object, $method], (array)$arguments);
+        }
+
+        return $object;
+    }
+
+
+
+
+    /**
+     * @return QueryInterface
+     */
+    private function selectQuery(): QueryInterface
+    {
+        $this->parseWheres($this->select);
+
+        return $this->select
+            ->setParameters($this->parameters)
+            ->getQuery()
+            ->map($this->getClassName());
+    }
+
+
+
+
+
+    /**
+     * @param array $attributes
+     * @return QueryInterface
+     */
+    private function insertQuery(array $attributes): QueryInterface
+    {
+        $attributes = $this->resolveInsertAttributes($attributes);
+
+        return $this->builder->insert($this->getTableName())
+                             ->values($attributes)
+                             ->getQuery();
+    }
+
+
+
+
+    /**
+     * @param array $attributes
+     * @return array
+    */
+    private function resolveInsertAttributes(array $attributes): array
+    {
+        if ($this->model instanceof TimestampsInterface) {
+            return $this->model->mergeTimestamps($attributes);
+        }
+
+        return $attributes;
     }
 }

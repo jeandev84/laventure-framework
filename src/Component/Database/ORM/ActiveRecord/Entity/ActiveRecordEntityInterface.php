@@ -177,4 +177,17 @@ interface ActiveRecordEntityInterface extends JsonSerializable, ArrayAccess
      * @return string
     */
     public function getTableName(): string;
+
+
+
+
+
+
+
+    /**
+     * Returns primary key name
+     *
+     * @return string
+    */
+    public function getPrimaryKey(): string;
 }
