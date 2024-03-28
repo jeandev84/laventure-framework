@@ -297,6 +297,18 @@ abstract class Table implements TableInterface
 
     /**
      * @inheritDoc
+    */
+    public function getColumnNames(): array
+    {
+        return array_keys($this->getColumns());
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
      * @throws ColumnAlreadyExistsException
     */
     public function addColumn(string $name, string|ColumnType $type, callable $options = null): static

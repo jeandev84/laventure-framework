@@ -4,8 +4,10 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\ORM\ActiveRecord\Contract;
 
 
+use Laventure\Component\Database\ORM\ActiveRecord\Contract\Timestamps\TimestampsInterface;
 use Laventure\Component\Database\ORM\ActiveRecord\Entity\ActiveRecordEntityInterface;
 use Laventure\Component\Database\ORM\ActiveRecord\Repository\ActiveRecordRepositoryInterface;
+
 
 /**
  * ActiveRecordInterface
@@ -16,7 +18,8 @@ use Laventure\Component\Database\ORM\ActiveRecord\Repository\ActiveRecordReposit
  *
  * @package  Laventure\Component\Database\ORM\ActiveRecord
  */
-interface ActiveRecordInterface extends ActiveRecordEntityInterface, ActiveRecordRepositoryInterface
+interface ActiveRecordInterface
+extends ActiveRecordEntityInterface, ActiveRecordRepositoryInterface
 {
 
 }

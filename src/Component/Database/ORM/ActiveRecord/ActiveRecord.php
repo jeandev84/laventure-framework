@@ -7,8 +7,11 @@ namespace Laventure\Component\Database\ORM\ActiveRecord;
 
 use Laventure\Component\Database\ORM\ActiveRecord\Contract\ActiveRecordInterface;
 use Laventure\Component\Database\ORM\ActiveRecord\Exception\ActiveRecordException;
+use Laventure\Component\Database\ORM\ActiveRecord\Exception\UpdateRecordException;
 use Laventure\Component\Database\ORM\ActiveRecord\Query\QueryBuilder;
 use Laventure\Component\Database\ORM\ActiveRecord\Query\QueryBuilderInterface;
+use Laventure\Component\Database\ORM\ActiveRecord\Traits\Timestamps;
+use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionBuilderInterface;
 use Laventure\Utils\Convertor\CamelCase\CamelCaseConvertorTrait;
 
 
@@ -22,12 +25,15 @@ use Laventure\Utils\Convertor\CamelCase\CamelCaseConvertorTrait;
  * @package  Laventure\Component\Database\ORM\ActiveRecord
  *
  * @method static QueryBuilder select(string ...$columns)
- * @method static QueryBuilder where(string $column, $value, string $operator = "=")
+ * @method static QueryBuilder where(string $condition)
  * @method static QueryBuilder orderBy(string $column, string $direction = null)
+ * @method static QueryBuilder paginate(int $page, int $limit)
 */
 abstract class ActiveRecord implements ActiveRecordInterface
 {
     use CamelCaseConvertorTrait;
+
+    use Timestamps;
 
 
     /**
@@ -70,8 +76,8 @@ abstract class ActiveRecord implements ActiveRecordInterface
 
     /**
      * @var array
-     */
-    public $save = [];
+    */
+    protected $save = [];
 
 
 
@@ -181,7 +187,7 @@ abstract class ActiveRecord implements ActiveRecordInterface
     {
         array_map(function (string $column) {
             $this->removeAttribute($column);
-        }, $this->getAttributeNames());
+        }, $this->getColumns());
 
         return $this;
     }
@@ -201,13 +207,18 @@ abstract class ActiveRecord implements ActiveRecordInterface
 
 
 
+
+
     /**
      * @inheritDoc
-     */
+    */
     public function getAttributesToSave(): array
     {
-        return [];
+         $columns = $this->keep($this->getColumns());
+
+         return $this->guard($columns);
     }
+
 
 
 
@@ -224,9 +235,11 @@ abstract class ActiveRecord implements ActiveRecordInterface
 
 
 
+
+
     /**
      * @inheritDoc
-     */
+    */
     public function getHiddenAttributes(): array
     {
         return $this->hidden;
@@ -238,7 +251,7 @@ abstract class ActiveRecord implements ActiveRecordInterface
 
     /**
      * @inheritDoc
-     */
+    */
     public function getId(): int
     {
         return $this->getAttribute($this->primaryKey, 0);
@@ -262,9 +275,11 @@ abstract class ActiveRecord implements ActiveRecordInterface
     /**
      * @return array
     */
-    public function getAttributeNames(): array
+    public function getColumns(): array
     {
-        return array_keys($this->attributes);
+        return $this->getConnection()
+                    ->table($this->getTableName())
+                    ->getColumnNames();
     }
 
 
@@ -317,7 +332,7 @@ abstract class ActiveRecord implements ActiveRecordInterface
     /**
      * @param $field
      * @return mixed
-     */
+    */
     public function __get($field)
     {
         return $this->getAttribute($field);
@@ -394,6 +409,17 @@ abstract class ActiveRecord implements ActiveRecordInterface
 
 
 
+    /**
+     * @inheritDoc
+    */
+    public function fill(array $attributes): static
+    {
+        $this->setAttributes($attributes);
+
+        return $this;
+    }
+
+
 
 
     /**
@@ -410,7 +436,7 @@ abstract class ActiveRecord implements ActiveRecordInterface
 
     /**
      * @inheritDoc
-     */
+    */
     public static function all(): array
     {
         return self::query()->all();
@@ -423,7 +449,7 @@ abstract class ActiveRecord implements ActiveRecordInterface
 
     /**
      * @inheritDoc
-     */
+    */
     public static function create(array $attributes): int
     {
         return static::query()->create($attributes);
@@ -440,7 +466,15 @@ abstract class ActiveRecord implements ActiveRecordInterface
     */
     public function update(array $attributes): int
     {
-        return static::query()->criteria($this->criteria())->update($attributes);
+        $status = static::query()->criteria($this->criteria())->update($attributes);
+
+        if (!$status) {
+            throw new UpdateRecordException($this);
+        }
+
+        $this->setAttributes($attributes);
+
+        return $this->getId();
     }
 
 
@@ -464,8 +498,26 @@ abstract class ActiveRecord implements ActiveRecordInterface
     */
     public function save(): int
     {
+        $attributes = $this->getAttributesToSave();
 
+        if ($this->getId()) {
+            return $this->update($attributes);
+        } else {
+            return self::create($attributes);
+        }
     }
+
+
+
+
+    /**
+     * @return ExpressionBuilderInterface
+    */
+    public function expr(): ExpressionBuilderInterface
+    {
+        return static::query()->expr();
+    }
+
 
 
 
@@ -479,6 +531,9 @@ abstract class ActiveRecord implements ActiveRecordInterface
     {
         return new QueryBuilder(self::model());
     }
+
+
+
 
 
 
@@ -525,5 +580,52 @@ abstract class ActiveRecord implements ActiveRecordInterface
     private function criteria(): array
     {
         return [$this->getPrimaryKey() => $this->getId()];
+    }
+
+
+
+
+
+    /**
+     * @param array $columns
+     * @return array
+    */
+    private function keep(array $columns): array
+    {
+        $attributes = [];
+
+        foreach ($columns as $column) {
+            if (!empty($this->save)) {
+                if (in_array($column, $this->save)) {
+                    $attributes[$column] = $this->getAttribute($column);
+                }
+            } else {
+                $attributes[$column] = $this->getAttribute($column);
+            }
+        }
+
+        return $attributes;
+    }
+
+
+
+
+
+
+    /**
+     * @param array $columns
+     * @return array
+    */
+    private function guard(array $columns): array
+    {
+        if (!empty($this->guard)) {
+            foreach ($this->guard as $guarded) {
+                if (isset($columns[$guarded])) {
+                    unset($columns[$guarded]);
+                }
+            }
+        }
+
+        return $columns;
     }
 }

@@ -50,6 +50,23 @@ class Model extends ActiveRecord
 
 
     /**
+     * @param string $table
+     * @return $this
+    */
+    public function table(string $table): static
+    {
+        $this->table = $table;
+
+        return $this;
+    }
+
+
+
+
+
+
+
+    /**
      * @inheritDoc
      * @return ConnectionInterface
      * @throws ManagerException

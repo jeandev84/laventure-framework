@@ -16,13 +16,30 @@ use Laventure\Foundation\Database\ORM\Model\Model;
  *
  * @package  App\ORM\ActiveRecord
 */
-class User extends Model implements TimestampsInterface
+class User extends Model
 {
-
-     use Timestamps;
 
      /**
       * @var string
      */
      protected $table = 'users';
+
+
+
+     /**
+      * @var bool
+     */
+     protected $timestamp = true;
+
+
+
+     /**
+      * @var string[]
+     */
+     protected $save  = [
+         'username',
+         'email',
+         'password',
+         'active'
+     ];
 }

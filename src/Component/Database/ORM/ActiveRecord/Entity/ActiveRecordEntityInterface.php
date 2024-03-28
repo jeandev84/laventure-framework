@@ -6,6 +6,7 @@ namespace Laventure\Component\Database\ORM\ActiveRecord\Entity;
 
 use ArrayAccess;
 use JsonSerializable;
+use Laventure\Component\Database\ORM\ActiveRecord\Contract\Timestamps\TimestampsInterface;
 
 /**
  * ActiveRecordEntityInterface
@@ -16,7 +17,7 @@ use JsonSerializable;
  *
  * @package  Laventure\Component\Database\ORM\ActiveRecord\Entity
 */
-interface ActiveRecordEntityInterface extends JsonSerializable, ArrayAccess
+interface ActiveRecordEntityInterface extends TimestampsInterface, JsonSerializable, ArrayAccess
 {
 
     /**
@@ -190,4 +191,17 @@ interface ActiveRecordEntityInterface extends JsonSerializable, ArrayAccess
      * @return string
     */
     public function getPrimaryKey(): string;
+
+
+
+
+
+
+    /**
+     * Set attributes
+     *
+     * @param array $attributes
+     * @return $this
+    */
+    public function fill(array $attributes): static;
 }
