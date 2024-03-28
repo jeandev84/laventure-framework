@@ -176,7 +176,7 @@ abstract class ActiveRecord implements ActiveRecordInterface
 
     /**
      * @inheritDoc
-     */
+    */
     public function removeAttributes(): static
     {
         array_map(function (string $column) {
@@ -284,9 +284,12 @@ abstract class ActiveRecord implements ActiveRecordInterface
 
 
 
+
+
+
     /**
      * @inheritDoc
-     */
+    */
     public function getTableName(): string
     {
         return $this->table;
@@ -300,7 +303,7 @@ abstract class ActiveRecord implements ActiveRecordInterface
     /**
      * @param $field
      * @param $value
-     */
+    */
     public function __set($field, $value)
     {
         $this->setAttribute($field, $value);
@@ -423,8 +426,10 @@ abstract class ActiveRecord implements ActiveRecordInterface
      */
     public static function create(array $attributes): int
     {
-
+        return static::query()->create($attributes);
     }
+
+
 
 
 
@@ -432,18 +437,31 @@ abstract class ActiveRecord implements ActiveRecordInterface
 
     /**
      * @inheritDoc
-     */
+    */
     public function update(array $attributes): int
     {
-
+       return static::query()->criteria($this->criteria())->update($attributes);
     }
+
 
 
 
 
     /**
      * @inheritDoc
-     */
+    */
+    public function delete(): bool
+    {
+        return static::query()->criteria($this->criteria())->delete();
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
     public function save(): int
     {
 
@@ -459,7 +477,7 @@ abstract class ActiveRecord implements ActiveRecordInterface
     */
     public static function query(): QueryBuilderInterface
     {
-        return new QueryBuilder(self::getInstance());
+        return new QueryBuilder(self::model());
     }
 
 
@@ -488,12 +506,24 @@ abstract class ActiveRecord implements ActiveRecordInterface
     /**
      * @return static
     */
-    private static function getInstance(): static
+    private static function model(): static
     {
         if (!self::$instance) {
             self::$instance = new static();
         }
 
         return self::$instance;
+    }
+
+
+
+
+
+    /**
+     * @return array<string, int>
+    */
+    private function criteria(): array
+    {
+        return [$this->getPrimaryKey() => $this->getId()];
     }
 }

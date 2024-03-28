@@ -85,6 +85,17 @@ interface ActiveRecordRepositoryInterface
 
 
 
+    /**
+     * Delete one record by current id
+     *
+     * @return bool
+    */
+    public function delete(): bool;
+
+
+
+
+
 
 
     /**
