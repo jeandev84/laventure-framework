@@ -21,4 +21,14 @@ interface TimestampsInterface
      * @return string[]
     */
     public function getTimestamps(): array;
+
+
+
+
+
+    /**
+     * @param array $attributes
+     * @return array
+    */
+    public function mergeTimestamps(array $attributes): array;
 }

@@ -29,6 +29,7 @@ trait Timestamps
     */
     public function getTimestamps(): array
     {
+
         if (empty($this->timestamps)) {
            $this->timestamps = [
                TimestampColumn::createdAt(),
@@ -36,10 +37,24 @@ trait Timestamps
            ];
         }
 
+        $timestamps = [];
+
         foreach ($this->timestamps as $column) {
-            $this->timestamps[$column] = date('Y-m-d H:i:s');
+            $timestamps[$column] = date('Y-m-d H:i:s');
         }
 
-        return $this->timestamps;
+        return $timestamps;
+    }
+
+
+
+
+    /**
+     * @param array $attributes
+     * @return array
+    */
+    public function mergeTimestamps(array $attributes): array
+    {
+        return array_merge($attributes, $this->getTimestamps());
     }
 }

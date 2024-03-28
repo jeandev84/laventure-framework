@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\ORM\ActiveRecord\Query;
 
 use Laventure\Component\Database\ORM\ActiveRecord\Contract\ActiveRecordInterface;
+use Laventure\Component\Database\ORM\ActiveRecord\Contract\Timestamps\TimestampsInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Conditions\Where\WhereInterface;
 use Laventure\Component\Database\Query\Builder\SQL\SQLBuilder;
 use Laventure\Component\Database\Query\QueryInterface;
@@ -564,38 +565,6 @@ class QueryBuilder implements QueryBuilderInterface
 
 
 
-
-    /**
-     * @return QueryInterface
-    */
-    private function selectQuery(): QueryInterface
-    {
-         $this->parseWheres($this->select);
-
-         return $this->select
-                     ->setParameters($this->parameters)
-                     ->getQuery()
-                     ->map($this->getClassName());
-    }
-
-
-
-
-
-    /**
-     * @param array $attributes
-     * @return QueryInterface
-    */
-    private function insertQuery(array $attributes): QueryInterface
-    {
-        return $this->builder->insert($this->getTableName())
-                             ->values($attributes)
-                             ->getQuery();
-    }
-
-
-
-
     /**
      * @param string $condition
      * @param string $type
@@ -675,5 +644,54 @@ class QueryBuilder implements QueryBuilderInterface
         }
 
         return $object;
+    }
+
+
+
+
+    /**
+     * @return QueryInterface
+     */
+    private function selectQuery(): QueryInterface
+    {
+        $this->parseWheres($this->select);
+
+        return $this->select
+            ->setParameters($this->parameters)
+            ->getQuery()
+            ->map($this->getClassName());
+    }
+
+
+
+
+
+    /**
+     * @param array $attributes
+     * @return QueryInterface
+     */
+    private function insertQuery(array $attributes): QueryInterface
+    {
+        $attributes = $this->resolveInsertAttributes($attributes);
+
+        return $this->builder->insert($this->getTableName())
+                             ->values($attributes)
+                             ->getQuery();
+    }
+
+
+
+
+    /**
+     * @param array $attributes
+     * @return array
+    */
+    private function resolveInsertAttributes(array $attributes): array
+    {
+        if ($this->model instanceof TimestampsInterface) {
+            return $this->model->mergeTimestamps($attributes);
+        }
+
+        return $attributes;
     }
 }

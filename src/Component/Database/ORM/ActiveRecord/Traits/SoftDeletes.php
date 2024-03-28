@@ -28,14 +28,17 @@ trait SoftDeletes
       */
       public function getSoftDeleteTimestamps(): array
       {
-        if (empty($this->softDeletes)) {
-            $this->softDeletes = [TimestampColumn::deletedAt()];
-        }
 
-        foreach ($this->softDeletes as $column) {
-            $this->softDeletes[$column] = date('Y-m-d H:i:s');
-        }
+          if (empty($this->softDeletes)) {
+             $this->softDeletes = [TimestampColumn::deletedAt()];
+          }
 
-        return $this->softDeletes;
+          $softDeletes = [];
+
+          foreach ($this->softDeletes as $column) {
+              $softDeletes[$column] = date('Y-m-d H:i:s');
+          }
+
+          return $softDeletes;
      }
 }
