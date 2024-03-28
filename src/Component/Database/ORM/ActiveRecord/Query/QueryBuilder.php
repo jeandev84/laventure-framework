@@ -408,12 +408,16 @@ class QueryBuilder implements QueryBuilderInterface
 
 
 
+
+
+
     /**
      * @inheritDoc
+     * @throws NotFoundTableNameException
     */
     public function delete(): bool
     {
-
+         return $this->deleteQuery()->execute();
     }
 
 
@@ -725,6 +729,26 @@ class QueryBuilder implements QueryBuilderInterface
 
          return $query->setParameters($this->parameters)->getQuery();
     }
+
+
+
+
+
+
+    /**
+     * @return QueryInterface
+     * @throws NotFoundTableNameException
+    */
+    private function deleteQuery(): QueryInterface
+    {
+         $query = $this->builder->delete($this->getTableName());
+
+         $this->parseWheres($query);
+
+         return $query->setParameters($this->parameters)->getQuery();
+    }
+
+
 
 
 

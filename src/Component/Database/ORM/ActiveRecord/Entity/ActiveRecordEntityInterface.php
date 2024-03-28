@@ -190,4 +190,17 @@ interface ActiveRecordEntityInterface extends JsonSerializable, ArrayAccess
      * @return string
     */
     public function getPrimaryKey(): string;
+
+
+
+
+
+
+    /**
+     * Set attributes
+     *
+     * @param array $attributes
+     * @return $this
+    */
+    public function fill(array $attributes): static;
 }

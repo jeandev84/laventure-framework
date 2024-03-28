@@ -225,9 +225,11 @@ abstract class ActiveRecord implements ActiveRecordInterface
 
 
 
+
+
     /**
      * @inheritDoc
-     */
+    */
     public function getHiddenAttributes(): array
     {
         return $this->hidden;
@@ -239,7 +241,7 @@ abstract class ActiveRecord implements ActiveRecordInterface
 
     /**
      * @inheritDoc
-     */
+    */
     public function getId(): int
     {
         return $this->getAttribute($this->primaryKey, 0);
@@ -318,7 +320,7 @@ abstract class ActiveRecord implements ActiveRecordInterface
     /**
      * @param $field
      * @return mixed
-     */
+    */
     public function __get($field)
     {
         return $this->getAttribute($field);
@@ -395,6 +397,17 @@ abstract class ActiveRecord implements ActiveRecordInterface
 
 
 
+    /**
+     * @inheritDoc
+    */
+    public function fill(array $attributes): static
+    {
+        $this->setAttributes($attributes);
+
+        return $this;
+    }
+
+
 
 
     /**
@@ -411,7 +424,7 @@ abstract class ActiveRecord implements ActiveRecordInterface
 
     /**
      * @inheritDoc
-     */
+    */
     public static function all(): array
     {
         return self::query()->all();
@@ -424,7 +437,7 @@ abstract class ActiveRecord implements ActiveRecordInterface
 
     /**
      * @inheritDoc
-     */
+    */
     public static function create(array $attributes): int
     {
         return static::query()->create($attributes);
@@ -441,12 +454,13 @@ abstract class ActiveRecord implements ActiveRecordInterface
     */
     public function update(array $attributes): int
     {
-        $status = static::query()->criteria($this->criteria())
-                                 ->update($attributes);
+        $status = static::query()->criteria($this->criteria())->update($attributes);
 
         if (!$status) {
             throw new UpdateRecordException($this);
         }
+
+        $this->setAttributes($attributes);
 
         return $this->getId();
     }
