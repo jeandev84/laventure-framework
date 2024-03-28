@@ -20,7 +20,7 @@ trait Timestamps
     /**
      * @var bool
     */
-    protected $timestamp = false;
+    protected $timestamps = true;
 
 
 
@@ -31,7 +31,7 @@ trait Timestamps
     */
     public function hasTimestamps(): bool
     {
-        return $this->timestamp;
+        return $this->timestamps;
     }
 
 

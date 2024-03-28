@@ -26,10 +26,7 @@ class User extends Model
 
 
 
-     /**
-      * @var bool
-     */
-     protected $timestamp = true;
+     /* protected $timestamps = false; */
 
 
 

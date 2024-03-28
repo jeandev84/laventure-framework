@@ -17,7 +17,7 @@ use Laventure\Component\Database\ORM\ActiveRecord\Contract\Timestamps\Timestamps
  *
  * @package  Laventure\Component\Database\ORM\ActiveRecord\Entity
 */
-interface ActiveRecordEntityInterface extends TimestampsInterface, JsonSerializable, ArrayAccess
+interface ActiveRecordEntityInterface extends JsonSerializable, ArrayAccess
 {
 
     /**

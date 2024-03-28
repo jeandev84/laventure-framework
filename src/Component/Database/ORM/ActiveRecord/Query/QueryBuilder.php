@@ -528,10 +528,10 @@ class QueryBuilder implements QueryBuilderInterface
     /**
      * @inheritDoc
     */
-    public function setParameters(array $parameters): static
+    public function params(array $parameters): static
     {
          foreach ($parameters as $id => $value) {
-             $this->setParameter($id, $value);
+             $this->param($id, $value);
          }
 
          return $this;
@@ -544,7 +544,7 @@ class QueryBuilder implements QueryBuilderInterface
     /**
      * @inheritDoc
     */
-    public function setParameter($id, $value): static
+    public function param($id, $value): static
     {
         $this->parameters[$id] = $value;
 
@@ -703,7 +703,7 @@ class QueryBuilder implements QueryBuilderInterface
     */
     private function insertQuery(array $attributes): QueryInterface
     {
-        if ($this->model->hasTimestamps()) {
+        if ($this->hasTimestamps()) {
             $attributes = $this->mergeTimestamps($attributes);
         }
 
@@ -722,11 +722,17 @@ class QueryBuilder implements QueryBuilderInterface
     */
     private function updateQuery(array $attributes): QueryInterface
     {
-         $query = $this->builder->update($this->getTableName());
+         $query     = $this->builder->update($this->getTableName());
+         $updatedAt = $this->model->getUpdatedAt();
+
+         if ($this->hasTimestamps()) {
+              $attributes[$updatedAt] = date('Y-m-d H:i:s');
+         }
 
          foreach ($attributes as $column => $value) {
              $query->set($column, $value);
          }
+
 
          $this->parseWheres($query);
 
@@ -753,6 +759,16 @@ class QueryBuilder implements QueryBuilderInterface
 
 
 
+
+
+
+    /**
+     * @return bool
+    */
+    private function hasTimestamps(): bool
+    {
+        return $this->model->hasTimestamps();
+    }
 
 
 
