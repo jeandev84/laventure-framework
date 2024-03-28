@@ -333,6 +333,13 @@ interface TableInterface
 
 
 
+    /**
+     * @return array
+    */
+    public function getColumnNames(): array;
+
+
+
 
 
 

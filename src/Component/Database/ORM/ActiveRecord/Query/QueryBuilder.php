@@ -5,6 +5,8 @@ namespace Laventure\Component\Database\ORM\ActiveRecord\Query;
 
 use Laventure\Component\Database\ORM\ActiveRecord\Contract\ActiveRecordInterface;
 use Laventure\Component\Database\ORM\ActiveRecord\Contract\Timestamps\TimestampsInterface;
+use Laventure\Component\Database\ORM\ActiveRecord\Exception\ActiveRecordException;
+use Laventure\Component\Database\ORM\ActiveRecord\Exception\NotFoundTableNameException;
 use Laventure\Component\Database\Query\Builder\SQL\Conditions\Where\WhereInterface;
 use Laventure\Component\Database\Query\Builder\SQL\SQLBuilder;
 use Laventure\Component\Database\Query\QueryInterface;
@@ -70,11 +72,12 @@ class QueryBuilder implements QueryBuilderInterface
     protected array $parameters = [];
 
 
-
-
-
+    
+    
+    
     /**
      * @param ActiveRecordInterface $model
+     * @throws NotFoundTableNameException
     */
     public function __construct(ActiveRecordInterface $model)
     {
@@ -91,7 +94,13 @@ class QueryBuilder implements QueryBuilderInterface
     */
     public function getClassName(): string
     {
-        return $this->model->getClassName();
+        $modelName = $this->model->getClassName();
+
+        if (!$modelName) {
+            $modelName = get_class($this->model);
+        }
+
+        return $modelName;
     }
 
 
@@ -102,7 +111,13 @@ class QueryBuilder implements QueryBuilderInterface
     */
     public function getTableName(): string
     {
-        return $this->model->getTableName();
+        if(!$tableName = $this->model->getTableName()) {
+            throw new NotFoundTableNameException($this->getClassName(), [
+                'context' => get_class()
+            ]);
+        }
+
+        return $tableName;
     }
 
 
@@ -381,23 +396,29 @@ class QueryBuilder implements QueryBuilderInterface
 
 
 
+
     /**
      * @inheritDoc
+     * @throws NotFoundTableNameException
     */
-    public function update(array $attributes): int
+    public function update(array $attributes): bool
     {
-
+        return $this->updateQuery($attributes)->execute();
     }
 
 
 
 
+
+
+
     /**
      * @inheritDoc
+     * @throws NotFoundTableNameException
     */
     public function delete(): bool
     {
-
+         return $this->deleteQuery()->execute();
     }
 
 
@@ -588,7 +609,10 @@ class QueryBuilder implements QueryBuilderInterface
     public function addCriteria(array $criteria): static
     {
         foreach ($criteria as $column => $value) {
-            $this->wheres[self::criteria][] = [$column => $value];
+            $this->wheres[self::criteria] = array_merge(
+                $this->wheres[self::criteria],
+                [$column => $value]
+            );
         }
 
         return $this;
@@ -597,9 +621,11 @@ class QueryBuilder implements QueryBuilderInterface
 
 
 
+
     /**
      * @param ActiveRecordInterface $model
      * @return void
+     * @throws NotFoundTableNameException
     */
     private function bootModel(ActiveRecordInterface $model): void
     {
@@ -614,17 +640,21 @@ class QueryBuilder implements QueryBuilderInterface
 
     /**
      * @param WhereInterface $builder
-     * @return QueryBuilder
+     * @return WhereInterface
     */
-    private function parseWheres(WhereInterface $builder): static
+    private function parseWheres(WhereInterface $builder): WhereInterface
     {
-        foreach ($this->wheres as $method => $params) {
-            foreach ($params as $arguments) {
-               $this->call($builder, $method, $arguments);
+        foreach ($this->wheres as $method => $conditions) {
+            if (in_array($method, [self::andWhere, self::orWhere])) {
+                foreach ($conditions as $condition) {
+                    $this->call($builder, $method, $condition);
+                }
+            } else {
+                $this->call($builder, $method, $conditions);
             }
         }
 
-        return $this;
+        return $builder;
     }
 
 
@@ -640,7 +670,7 @@ class QueryBuilder implements QueryBuilderInterface
     private function call(object $object, string $method, $arguments): object
     {
         if (is_callable([$object, $method])) {
-            return call_user_func_array([$object, $method], (array)$arguments);
+            return call_user_func_array([$object, $method], [$arguments]);
         }
 
         return $object;
@@ -657,9 +687,9 @@ class QueryBuilder implements QueryBuilderInterface
         $this->parseWheres($this->select);
 
         return $this->select
-            ->setParameters($this->parameters)
-            ->getQuery()
-            ->map($this->getClassName());
+                    ->setParameters($this->parameters)
+                    ->getQuery()
+                    ->map($this->getClassName());
     }
 
 
@@ -669,10 +699,13 @@ class QueryBuilder implements QueryBuilderInterface
     /**
      * @param array $attributes
      * @return QueryInterface
-     */
+     * @throws NotFoundTableNameException
+    */
     private function insertQuery(array $attributes): QueryInterface
     {
-        $attributes = $this->resolveInsertAttributes($attributes);
+        if ($this->model->hasTimestamps()) {
+            $attributes = $this->mergeTimestamps($attributes);
+        }
 
         return $this->builder->insert($this->getTableName())
                              ->values($attributes)
@@ -684,14 +717,52 @@ class QueryBuilder implements QueryBuilderInterface
 
     /**
      * @param array $attributes
+     * @return QueryInterface
+     * @throws NotFoundTableNameException
+    */
+    private function updateQuery(array $attributes): QueryInterface
+    {
+         $query = $this->builder->update($this->getTableName());
+
+         foreach ($attributes as $column => $value) {
+             $query->set($column, $value);
+         }
+
+         $this->parseWheres($query);
+
+         return $query->setParameters($this->parameters)->getQuery();
+    }
+
+
+
+
+
+
+    /**
+     * @return QueryInterface
+     * @throws NotFoundTableNameException
+    */
+    private function deleteQuery(): QueryInterface
+    {
+         $query = $this->builder->delete($this->getTableName());
+
+         $this->parseWheres($query);
+
+         return $query->setParameters($this->parameters)->getQuery();
+    }
+
+
+
+
+
+
+
+    /**
+     * @param array $attributes
      * @return array
     */
-    private function resolveInsertAttributes(array $attributes): array
+    private function mergeTimestamps(array $attributes): array
     {
-        if ($this->model instanceof TimestampsInterface) {
-            return $this->model->mergeTimestamps($attributes);
-        }
-
-        return $attributes;
+        return array_merge($attributes, $this->model->getTimestamps());
     }
 }

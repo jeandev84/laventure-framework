@@ -44,6 +44,8 @@ interface QueryBuilderInterface
 
 
 
+
+
     /**
      * @return ExpressionBuilderInterface
     */
@@ -316,9 +318,9 @@ interface QueryBuilderInterface
     /**
      * @param array $attributes
      *
-     * @return int
+     * @return bool
     */
-    public function update(array $attributes): int;
+    public function update(array $attributes): bool;
 
 
 

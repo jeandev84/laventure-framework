@@ -27,8 +27,29 @@ interface TimestampsInterface
 
 
     /**
-     * @param array $attributes
-     * @return array
+     * @return bool
     */
-    public function mergeTimestamps(array $attributes): array;
+    public function hasTimestamps(): bool;
+
+
+
+
+
+    /**
+     * Returns column name created at
+     *
+     * @return string
+    */
+    public function getCreatedAt(): string;
+
+
+
+
+
+    /**
+     * Returns column name updated at
+     *
+     * @return string
+    */
+    public function getUpdatedAt(): string;
 }
