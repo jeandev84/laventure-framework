@@ -19,7 +19,7 @@ use Laventure\Component\Database\ORM\ActiveRecord\Repository\ActiveRecordReposit
  * @package  Laventure\Component\Database\ORM\ActiveRecord
  */
 interface ActiveRecordInterface
-extends ActiveRecordEntityInterface, ActiveRecordRepositoryInterface
+extends ActiveRecordEntityInterface, TimestampsInterface, ActiveRecordRepositoryInterface
 {
 
 }

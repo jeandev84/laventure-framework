@@ -279,7 +279,7 @@ interface QueryBuilderInterface
      * @param array $parameters
      * @return $this
     */
-    public function setParameters(array $parameters): static;
+    public function params(array $parameters): static;
 
 
 
@@ -291,7 +291,7 @@ interface QueryBuilderInterface
      * @param $value
      * @return $this
     */
-    public function setParameter($id, $value): static;
+    public function param($id, $value): static;
 
 
 
