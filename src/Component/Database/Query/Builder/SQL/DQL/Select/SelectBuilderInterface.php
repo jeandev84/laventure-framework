@@ -281,4 +281,15 @@ interface SelectBuilderInterface extends SQLBuilderHasConditionInterface
      * @return $this
     */
     public function offset($offset): static;
+
+
+
+
+
+
+//    /**
+//     * @param int $page
+//     * @return array
+//    */
+//    public function paginate(int $page): array;
 }

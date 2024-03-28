@@ -6,6 +6,7 @@ namespace Laventure\Component\Database\ORM\ActiveRecord\Repository;
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Manager\Contract\DatabaseManagerInterface;
+use Laventure\Component\Database\ORM\ActiveRecord\Exception\ActiveRecordException;
 use Laventure\Component\Database\ORM\ActiveRecord\Query\QueryBuilderInterface;
 
 /**
@@ -16,7 +17,7 @@ use Laventure\Component\Database\ORM\ActiveRecord\Query\QueryBuilderInterface;
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
  * @package  Laventure\Component\Database\ORM\ActiveRecord\Repository
- */
+*/
 interface ActiveRecordRepositoryInterface
 {
 
@@ -84,6 +85,17 @@ interface ActiveRecordRepositoryInterface
 
 
 
+    /**
+     * Delete one record by current id
+     *
+     * @return bool
+    */
+    public function delete(): bool;
+
+
+
+
+
 
 
     /**
@@ -98,8 +110,26 @@ interface ActiveRecordRepositoryInterface
 
 
 
+
+
+
+
     /**
      * @return ConnectionInterface
     */
     public function getConnection(): ConnectionInterface;
+
+
+
+
+
+
+
+    /**
+     * @param string $name
+     * @param array $arguments
+     * @return void
+     * @throws ActiveRecordException
+    */
+    public static function __callStatic(string $name, array $arguments);
 }
