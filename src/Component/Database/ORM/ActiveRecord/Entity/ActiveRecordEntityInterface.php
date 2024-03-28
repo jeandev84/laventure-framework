@@ -6,6 +6,7 @@ namespace Laventure\Component\Database\ORM\ActiveRecord\Entity;
 
 use ArrayAccess;
 use JsonSerializable;
+use Laventure\Component\Database\ORM\ActiveRecord\Contract\Timestamps\TimestampsInterface;
 
 /**
  * ActiveRecordEntityInterface
@@ -16,7 +17,7 @@ use JsonSerializable;
  *
  * @package  Laventure\Component\Database\ORM\ActiveRecord\Entity
 */
-interface ActiveRecordEntityInterface extends JsonSerializable, ArrayAccess
+interface ActiveRecordEntityInterface extends TimestampsInterface, JsonSerializable, ArrayAccess
 {
 
     /**

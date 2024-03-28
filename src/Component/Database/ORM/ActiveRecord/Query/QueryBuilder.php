@@ -658,6 +658,11 @@ class QueryBuilder implements QueryBuilderInterface
     }
 
 
+
+
+
+
+
     /**
      * @param object $object
      * @param string $method
@@ -678,7 +683,7 @@ class QueryBuilder implements QueryBuilderInterface
 
     /**
      * @return QueryInterface
-     */
+    */
     private function selectQuery(): QueryInterface
     {
         $this->parseWheres($this->select);

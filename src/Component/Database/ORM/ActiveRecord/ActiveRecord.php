@@ -11,6 +11,7 @@ use Laventure\Component\Database\ORM\ActiveRecord\Exception\UpdateRecordExceptio
 use Laventure\Component\Database\ORM\ActiveRecord\Query\QueryBuilder;
 use Laventure\Component\Database\ORM\ActiveRecord\Query\QueryBuilderInterface;
 use Laventure\Component\Database\ORM\ActiveRecord\Traits\Timestamps;
+use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionBuilderInterface;
 use Laventure\Utils\Convertor\CamelCase\CamelCaseConvertorTrait;
 
 
@@ -509,6 +510,18 @@ abstract class ActiveRecord implements ActiveRecordInterface
 
 
 
+    /**
+     * @return ExpressionBuilderInterface
+    */
+    public function expr(): ExpressionBuilderInterface
+    {
+        return static::query()->expr();
+    }
+
+
+
+
+
 
 
     /**
@@ -518,6 +531,9 @@ abstract class ActiveRecord implements ActiveRecordInterface
     {
         return new QueryBuilder(self::model());
     }
+
+
+
 
 
 
