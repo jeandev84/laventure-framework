@@ -15,6 +15,28 @@ namespace Laventure\Component\Database\ORM\ActiveRecord\Contract\Timestamps;
  */
 interface SoftDeletesInterface
 {
+
+
+    /**
+     * @return bool
+    */
+    public function hasSoftDeletes(): bool;
+
+
+
+
+
+    /**
+     * Returns deleted at column
+     *
+     * @return string
+    */
+    public function getDeletedAt(): string;
+
+
+
+
+
     /**
      * Returns soft delete timestamps
      *

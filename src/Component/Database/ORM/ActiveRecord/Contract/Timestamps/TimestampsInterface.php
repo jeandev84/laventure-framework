@@ -52,15 +52,4 @@ interface TimestampsInterface
      * @return string
     */
     public function getUpdatedAt(): string;
-
-
-
-
-
-
-    /**
-     * @param array $attributes
-     * @return array
-    */
-    public function mergeTimestamps(array $attributes): array;
 }

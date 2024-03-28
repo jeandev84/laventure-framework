@@ -704,7 +704,7 @@ class QueryBuilder implements QueryBuilderInterface
     private function insertQuery(array $attributes): QueryInterface
     {
         if ($this->model->hasTimestamps()) {
-            $attributes = $this->model->mergeTimestamps($attributes);
+            $attributes = $this->mergeTimestamps($attributes);
         }
 
         return $this->builder->insert($this->getTableName())
@@ -749,5 +749,20 @@ class QueryBuilder implements QueryBuilderInterface
          $this->parseWheres($query);
 
          return $query->setParameters($this->parameters)->getQuery();
+    }
+
+
+
+
+
+
+
+    /**
+     * @param array $attributes
+     * @return array
+    */
+    private function mergeTimestamps(array $attributes): array
+    {
+        return array_merge($attributes, $this->model->getTimestamps());
     }
 }

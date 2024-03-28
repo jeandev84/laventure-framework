@@ -81,18 +81,6 @@ trait Timestamps
 
 
 
-    /**
-     * @param array $attributes
-     * @return array
-    */
-    public function mergeTimestamps(array $attributes): array
-    {
-        return array_merge($attributes, $this->getTimestamps());
-    }
-
-
-
-
 
     /**
      * @return array
