@@ -5,6 +5,8 @@ namespace Laventure\Component\Database\ORM\ActiveRecord\Query;
 
 use Laventure\Component\Database\ORM\ActiveRecord\Contract\ActiveRecordInterface;
 use Laventure\Component\Database\ORM\ActiveRecord\Contract\Timestamps\TimestampsInterface;
+use Laventure\Component\Database\ORM\ActiveRecord\Exception\ActiveRecordException;
+use Laventure\Component\Database\ORM\ActiveRecord\Exception\NotFoundTableNameException;
 use Laventure\Component\Database\Query\Builder\SQL\Conditions\Where\WhereInterface;
 use Laventure\Component\Database\Query\Builder\SQL\SQLBuilder;
 use Laventure\Component\Database\Query\QueryInterface;
@@ -91,7 +93,13 @@ class QueryBuilder implements QueryBuilderInterface
     */
     public function getClassName(): string
     {
-        return $this->model->getClassName();
+        $modelName = $this->model->getClassName();
+
+        if (!$modelName) {
+            $modelName = get_class($this->model);
+        }
+
+        return $modelName;
     }
 
 
@@ -102,7 +110,13 @@ class QueryBuilder implements QueryBuilderInterface
     */
     public function getTableName(): string
     {
-        return $this->model->getTableName();
+        if(!$tableName = $this->model->getTableName()) {
+            throw new NotFoundTableNameException($this->getClassName(), [
+                'context' => get_class()
+            ]);
+        }
+
+        return $tableName;
     }
 
 
@@ -657,9 +671,9 @@ class QueryBuilder implements QueryBuilderInterface
         $this->parseWheres($this->select);
 
         return $this->select
-            ->setParameters($this->parameters)
-            ->getQuery()
-            ->map($this->getClassName());
+                    ->setParameters($this->parameters)
+                    ->getQuery()
+                    ->map($this->getClassName());
     }
 
 
