@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\Drivers\Oracle;
+namespace Laventure\Component\Database\Drivers\Oracle\Config;
 
 /**
  * OracleConfiguration

@@ -3,13 +3,10 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection;
 
-use Laventure\Component\Database\Collection\Contract\DatabaseCollectionInterface;
-use Laventure\Component\Database\Collection\DatabaseCollection;
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Configuration\Null\NullConfiguration;
 use Laventure\Component\Database\Connection\Factory\ConnectionFactoryInterface;
 use Laventure\Component\Database\DatabaseInterface;
-use Laventure\Component\Database\Drivers\DriverException;
 use Laventure\Component\Database\Query\Logger\QueryLogger;
 use Laventure\Component\Database\Query\Logger\QueryLoggerInterface;
 use Laventure\Component\Database\Query\QueryInterface;
@@ -28,7 +25,7 @@ abstract class Connection implements ConnectionInterface
     /**
      * @var ConfigurationInterface
     */
-    protected $config;
+    protected ConfigurationInterface $config;
 
 
     
@@ -79,7 +76,7 @@ abstract class Connection implements ConnectionInterface
      * @param ConfigurationInterface $config
      * @return $this
     */
-    public function config(ConfigurationInterface $config): static
+    public function parse(ConfigurationInterface $config): static
     {
         $this->config = $config;
 
@@ -121,7 +118,7 @@ abstract class Connection implements ConnectionInterface
     */
     public function purge(): void
     {
-        $this->config(new NullConfiguration())->disconnect();
+        $this->parse(new NullConfiguration())->disconnect();
     }
 
 
@@ -263,12 +260,25 @@ abstract class Connection implements ConnectionInterface
 
 
 
+
+    /**
+     * @return DatabaseInterface
+    */
+    public function getDatabase(): DatabaseInterface
+    {
+        return $this->getDatabaseFactory()->createDatabase($this->getDatabaseName());
+    }
+
+
+
+
+
     /**
      * @inheritDoc
     */
-    public function getDatabaseCollection(): DatabaseCollectionInterface
+    public function getDatabases(): array
     {
-        return new DatabaseCollection();
+        return $this->getDatabaseFactory()->createDatabases($this->getDatabaseNames());
     }
 
 

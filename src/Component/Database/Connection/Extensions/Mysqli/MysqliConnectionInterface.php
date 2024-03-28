@@ -24,4 +24,10 @@ interface MysqliConnectionInterface extends ConnectionInterface
      * @return mysqli
     */
     public function makeMysqli(ConfigurationInterface $config): mysqli;
+
+
+
+
+
+    public function getConnection(): mysqli;
 }

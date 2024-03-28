@@ -75,6 +75,15 @@ interface PdoDsnBuilderInterface extends BuilderInterface, Stringable
 
 
 
+    /**
+     * @param $key
+     * @return string
+    */
+    public function getParam($key): string;
+
+
+
+
 
     /**
      * Build dsn if database exist

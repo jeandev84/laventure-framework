@@ -43,7 +43,7 @@ interface ConnectionInterface
      * @param ConfigurationInterface $config
      * @return $this
     */
-    public function config(ConfigurationInterface $config): static;
+    public function parse(ConfigurationInterface $config): static;
 
 
 
@@ -160,7 +160,7 @@ interface ConnectionInterface
      *
      * @return TransactionInterface
     */
-    public function createTransaction(): TransactionInterface;
+    public function transaction(): TransactionInterface;
 
 
 
@@ -218,6 +218,17 @@ interface ConnectionInterface
 
 
 
+    /**
+     * @param $id
+     * @param $default
+     * @return mixed
+    */
+    public function config($id, $default = null): mixed;
+
+
+
+
+
 
 
 
@@ -228,6 +239,7 @@ interface ConnectionInterface
      * @return ConfigurationInterface
     */
     public function getConfiguration(): ConfigurationInterface;
+
 
 
 
@@ -254,6 +266,9 @@ interface ConnectionInterface
      * @return DatabaseFactoryInterface
     */
     public function getDatabaseFactory(): DatabaseFactoryInterface;
+
+
+
 
 
 

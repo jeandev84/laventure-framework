@@ -25,11 +25,16 @@ class Insert extends Builder
     protected $builder;
 
 
+
+
     /**
      * @param EntityManagerInterface $em
      * @param InsertBuilderInterface $builder
     */
-    public function __construct(EntityManagerInterface $em, InsertBuilderInterface $builder)
+    public function __construct(
+        EntityManagerInterface $em,
+        InsertBuilderInterface $builder
+    )
     {
         parent::__construct($em, $builder);
     }

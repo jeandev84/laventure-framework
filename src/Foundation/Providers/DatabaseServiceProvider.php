@@ -85,7 +85,7 @@ class DatabaseServiceProvider extends ServiceProvider
                 );
             },
             ManagerConfigurationInterface::class => function (ManagerInterface $manager) {
-                return $manager->getConfiguration();
+                return $manager->config();
             },
             ConnectionInterface::class => function (ManagerInterface $manager) {
                 return $manager->connection();

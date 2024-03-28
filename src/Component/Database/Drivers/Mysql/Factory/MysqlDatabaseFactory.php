@@ -6,7 +6,7 @@ namespace Laventure\Component\Database\Drivers\Mysql\Factory;
 use Laventure\Component\Database\DatabaseInterface;
 use Laventure\Component\Database\Drivers\Mysql\Connection\MysqlConnection;
 use Laventure\Component\Database\Drivers\Mysql\MysqlDatabase;
-use Laventure\Component\Database\Factory\DatabaseFactoryInterface;
+use Laventure\Component\Database\Factory\DatabaseFactory;
 
 /**
  * MysqlDatabaseFactory
@@ -17,7 +17,7 @@ use Laventure\Component\Database\Factory\DatabaseFactoryInterface;
  *
  * @package  Laventure\Component\Database\Drivers\Mysql\Factory
 */
-class MysqlDatabaseFactory implements DatabaseFactoryInterface
+class MysqlDatabaseFactory extends DatabaseFactory
 {
 
     /**
@@ -38,19 +38,5 @@ class MysqlDatabaseFactory implements DatabaseFactoryInterface
     public function createDatabase(string $name): DatabaseInterface
     {
         return new MysqlDatabase($this->connection, $name);
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function createDatabases(array $names): array
-    {
-        return array_map(function (string $name) {
-            return $this->createDatabase($name);
-        }, $names);
     }
 }

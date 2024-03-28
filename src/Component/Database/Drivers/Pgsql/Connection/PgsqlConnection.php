@@ -1,14 +1,16 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Laventure\Component\Database\Drivers\Pgsql\Connection;
 
+use Laventure\Component\Database\Collection\Contract\DatabaseCollectionInterface;
 use Laventure\Component\Database\Connection\Extensions\PDO\PdoConnection;
-use Laventure\Component\Database\DatabaseInterface;
 use Laventure\Component\Database\Drivers\DriverName;
-use Laventure\Component\Database\Drivers\Pgsql\PgsqlDatabase;
+use Laventure\Component\Database\Drivers\Pgsql\Collection\PgsqlDatabaseCollection;
+use Laventure\Component\Database\Drivers\Pgsql\Factory\PgsqlDatabaseFactory;
 use Laventure\Component\Database\Drivers\Pgsql\Query\Builder\PgsqlQueryBuilder;
+use Laventure\Component\Database\Drivers\Pgsql\Schema\Table\PgsqlTable;
+use Laventure\Component\Database\Factory\DatabaseFactoryInterface;
 use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
 use Laventure\Component\Database\Schema\Table\TableInterface;
 
@@ -45,12 +47,37 @@ class PgsqlConnection extends PdoConnection
 
 
 
+
     /**
      * @inheritDoc
     */
-    public function getDatabase(): DatabaseInterface
+    public function table(string $name): TableInterface
     {
-        return new PgsqlDatabase($this);
+        return new PgsqlTable($this, $name);
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getDatabaseFactory(): DatabaseFactoryInterface
+    {
+        return new PgsqlDatabaseFactory($this);
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function getDatabaseNames(): array
+    {
+        return [];
     }
 
 
@@ -59,29 +86,8 @@ class PgsqlConnection extends PdoConnection
     /**
      * @inheritDoc
     */
-    public function enableTransaction(): void
+    public function getDatabaseCollection(): DatabaseCollectionInterface
     {
-
-    }
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function disableTransaction(): void
-    {
-
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function table(string $name, string $schemaName = ''): TableInterface
-    {
-        // TODO: Implement createTable() method.
+        return new PgsqlDatabaseCollection($this->getDatabases());
     }
 }

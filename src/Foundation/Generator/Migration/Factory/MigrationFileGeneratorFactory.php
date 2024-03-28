@@ -80,7 +80,7 @@ class MigrationFileGeneratorFactory implements MigrationFileGeneratorFactoryInte
     */
     private function currentOrm(): string
     {
-        return $this->manager->getConfiguration()
+        return $this->manager->config()
                              ->orm()
                              ->current();
     }

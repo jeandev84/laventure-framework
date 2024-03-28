@@ -63,20 +63,6 @@ class MysqlDatabase extends Database
 
 
 
-    /**
-     * @inheritDoc
-    */
-    public function list(): array
-    {
-        return $this->connection
-                    ->statement("SHOW DATABASES;")
-                    ->fetch()
-                    ->columns();
-    }
-
-
-
-
 
     /**
      * @return string

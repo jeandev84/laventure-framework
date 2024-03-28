@@ -46,7 +46,6 @@ interface ManagerConfigurationInterface extends ParameterInterface
 
 
 
-
     /**
      * @return OrmConfigurationInterface
     */

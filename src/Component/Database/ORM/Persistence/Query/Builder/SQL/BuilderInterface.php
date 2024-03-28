@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\ORM\Persistence\Query\Builder\SQL;
 
+use Laventure\Component\Database\ORM\Persistence\Manager\Contract\EntityManagerInterface;
 use Laventure\Component\Database\ORM\Persistence\Query\QueryInterface;
 use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionBuilderInterface;
 
@@ -124,4 +125,24 @@ interface BuilderInterface
      * @return ExpressionBuilderInterface
     */
     public function expr(): ExpressionBuilderInterface;
+
+
+
+
+
+
+    /**
+     * @return EntityManagerInterface
+    */
+    public function getManager(): EntityManagerInterface;
+
+
+
+
+
+
+    /**
+     * @return string
+    */
+    public function getMappedClass(): string;
 }

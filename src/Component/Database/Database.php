@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database;
 
+use Laventure\Component\Database\Backup\DatabaseBackup;
+use Laventure\Component\Database\Backup\DatabaseBackupInterface;
 use Laventure\Component\Database\Connection\ConnectionInterface;
 use Laventure\Component\Database\Exception\DatabaseException;
 use Laventure\Component\Database\Query\QueryInterface;
@@ -96,22 +98,11 @@ abstract class Database implements DatabaseInterface
      * @param string $filepath
      * @return bool|int
     */
-    public function dump(string $filepath): bool|int
+    public function dump(): DatabaseBackupInterface
     {
-        return $this->exec(sprintf("BACKUP DATABASE %s TO DISK = '%s'", $this->getName(), $filepath));
+        return new DatabaseBackup($this->connection, $this->getName());
     }
 
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function dumpDiff(string $filepath): bool|int
-    {
-        return $this->exec(sprintf("BACKUP DATABASE %s TO DISK = '%s' WITH DIFFERENTIAL", $this->getName(), $filepath));
-    }
 
 
 
@@ -124,7 +115,7 @@ abstract class Database implements DatabaseInterface
     */
     public function config($key, $default = null): mixed
     {
-        return $this->connection->getConfiguration()->get($key, $default);
+        return $this->connection->config($key, $default);
     }
 
 
@@ -136,7 +127,9 @@ abstract class Database implements DatabaseInterface
     */
     public function charset(): string
     {
-        return $this->config('charset', 'utf8');
+        return $this->connection
+                    ->getConfiguration()
+                    ->getCharset();
     }
 
 
