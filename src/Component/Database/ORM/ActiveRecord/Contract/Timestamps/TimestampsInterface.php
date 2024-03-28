@@ -27,6 +27,38 @@ interface TimestampsInterface
 
 
     /**
+     * @return bool
+    */
+    public function hasTimestamps(): bool;
+
+
+
+
+
+    /**
+     * Returns column name created at
+     *
+     * @return string
+    */
+    public function getCreatedAt(): string;
+
+
+
+
+
+    /**
+     * Returns column name updated at
+     *
+     * @return string
+    */
+    public function getUpdatedAt(): string;
+
+
+
+
+
+
+    /**
      * @param array $attributes
      * @return array
     */

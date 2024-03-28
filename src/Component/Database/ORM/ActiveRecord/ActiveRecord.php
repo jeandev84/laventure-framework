@@ -10,6 +10,7 @@ use Laventure\Component\Database\ORM\ActiveRecord\Exception\ActiveRecordExceptio
 use Laventure\Component\Database\ORM\ActiveRecord\Exception\UpdateRecordException;
 use Laventure\Component\Database\ORM\ActiveRecord\Query\QueryBuilder;
 use Laventure\Component\Database\ORM\ActiveRecord\Query\QueryBuilderInterface;
+use Laventure\Component\Database\ORM\ActiveRecord\Traits\Timestamps;
 use Laventure\Utils\Convertor\CamelCase\CamelCaseConvertorTrait;
 
 
@@ -23,12 +24,15 @@ use Laventure\Utils\Convertor\CamelCase\CamelCaseConvertorTrait;
  * @package  Laventure\Component\Database\ORM\ActiveRecord
  *
  * @method static QueryBuilder select(string ...$columns)
- * @method static QueryBuilder where(string $column, $value, string $operator = "=")
+ * @method static QueryBuilder where(string $condition)
  * @method static QueryBuilder orderBy(string $column, string $direction = null)
+ * @method static QueryBuilder paginate(int $page, int $limit)
 */
 abstract class ActiveRecord implements ActiveRecordInterface
 {
     use CamelCaseConvertorTrait;
+
+    use Timestamps;
 
 
     /**
@@ -71,8 +75,8 @@ abstract class ActiveRecord implements ActiveRecordInterface
 
     /**
      * @var array
-     */
-    public $save = [];
+    */
+    protected $save = [];
 
 
 
@@ -487,9 +491,9 @@ abstract class ActiveRecord implements ActiveRecordInterface
 
 
 
+
     /**
      * @inheritDoc
-     * @throws UpdateRecordException
     */
     public function save(): int
     {

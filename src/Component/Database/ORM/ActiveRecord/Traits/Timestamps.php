@@ -16,10 +16,50 @@ use Laventure\Component\Database\Schema\Column\Types\TimestampColumn;
  */
 trait Timestamps
 {
+
     /**
-     * @var array
+     * @var bool
     */
-    protected $timestamps = [];
+    protected $timestamp = false;
+
+
+
+
+
+    /**
+     * @return bool
+    */
+    public function hasTimestamps(): bool
+    {
+        return $this->timestamp;
+    }
+
+
+
+
+    /**
+     * Returns column name created at
+     *
+     * @return string
+    */
+    public function getCreatedAt(): string
+    {
+        return TimestampColumn::createdAt();
+    }
+
+
+
+
+
+    /**
+     * Returns column name updated at
+     *
+     * @return string
+    */
+    public function getUpdatedAt(): string
+    {
+        return TimestampColumn::updatedAt();
+    }
 
 
 
@@ -29,17 +69,9 @@ trait Timestamps
     */
     public function getTimestamps(): array
     {
-
-        if (empty($this->timestamps)) {
-           $this->timestamps = [
-               TimestampColumn::createdAt(),
-               TimestampColumn::updatedAt()
-           ];
-        }
-
         $timestamps = [];
 
-        foreach ($this->timestamps as $column) {
+        foreach ($this->getTimestampColumns() as $column) {
             $timestamps[$column] = date('Y-m-d H:i:s');
         }
 
@@ -56,5 +88,20 @@ trait Timestamps
     public function mergeTimestamps(array $attributes): array
     {
         return array_merge($attributes, $this->getTimestamps());
+    }
+
+
+
+
+
+    /**
+     * @return array
+    */
+    private function getTimestampColumns(): array
+    {
+        return [
+            $this->getCreatedAt(),
+            $this->getUpdatedAt()
+        ];
     }
 }
