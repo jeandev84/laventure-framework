@@ -36,6 +36,15 @@ interface QueryBuilderInterface
 
 
     /**
+     * @return string
+    */
+    public function getPrimaryKey(): string;
+
+
+
+
+
+    /**
      * @return ExpressionBuilderInterface
     */
     public function expr(): ExpressionBuilderInterface;
@@ -222,38 +231,11 @@ interface QueryBuilderInterface
 
 
 
-
-
     /**
-     * @param string $column
-     *
-     * @param $value
-     *
-     * @param string $operator
-     *
+     * @param string $condition
      * @return static
     */
-    public function where(string $column, $value, string $operator = "="): static;
-
-
-
-
-
-
-
-
-    /**
-     * @param string $column
-     *
-     * @param $value
-     *
-     * @param string $operator
-     *
-     * @return $this
-    */
-    public function andWhere(string $column, $value, string $operator = "="): static;
-
-
+    public function where(string $condition): static;
 
 
 
@@ -261,46 +243,30 @@ interface QueryBuilderInterface
 
 
     /**
-     * @param string $column
-     *
-     * @param $value
-     *
-     * @param string $operator
-     *
+     * @param string $condition
      * @return $this
     */
-    public function orWhere(string $column, $value, string $operator = "="): static;
-
-
-
+    public function andWhere(string $condition): static;
 
 
 
 
 
     /**
-     * @param string $column
-     *
-     * @param string $expression
-     *
+     * @param string $condition
      * @return $this
     */
-    public function whereLike(string $column, string $expression): static;
-
-
+    public function orWhere(string $condition): static;
 
 
 
 
 
     /**
-     * @param string $column
-     *
-     * @param array $data
-     *
+     * @param array $criteria
      * @return $this
     */
-    public function whereIn(string $column, array $data): static;
+    public function criteria(array $criteria): static;
 
 
 
@@ -311,7 +277,7 @@ interface QueryBuilderInterface
      * @param array $parameters
      * @return $this
     */
-    public function params(array $parameters): static;
+    public function setParameters(array $parameters): static;
 
 
 
@@ -323,7 +289,7 @@ interface QueryBuilderInterface
      * @param $value
      * @return $this
     */
-    public function param($id, $value): static;
+    public function setParameter($id, $value): static;
 
 
 
@@ -458,4 +424,29 @@ interface QueryBuilderInterface
      * @return array
     */
     public function paginate(int $page, int $limit): array;
+
+
+
+
+
+
+
+    /**
+     * @param $id
+     * @return mixed
+    */
+    public function find($id): mixed;
+
+
+
+
+
+
+
+    /**
+     * Find all
+     *
+     * @return array
+    */
+    public function all(): array;
 }

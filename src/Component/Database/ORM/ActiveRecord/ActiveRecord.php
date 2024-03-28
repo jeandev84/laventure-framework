@@ -181,7 +181,7 @@ abstract class ActiveRecord implements ActiveRecordInterface
     {
         array_map(function (string $column) {
             $this->removeAttribute($column);
-        }, $this->getColumns());
+        }, $this->getAttributeNames());
 
         return $this;
     }
@@ -247,11 +247,22 @@ abstract class ActiveRecord implements ActiveRecordInterface
 
 
 
+    /**
+     * @inheritDoc
+    */
+    public function getPrimaryKey(): string
+    {
+        return $this->primaryKey;
+    }
+
+
+
+
 
     /**
      * @return array
-     */
-    public function getColumns(): array
+    */
+    public function getAttributeNames(): array
     {
         return array_keys($this->attributes);
     }
@@ -384,11 +395,12 @@ abstract class ActiveRecord implements ActiveRecordInterface
 
     /**
      * @inheritDoc
-     */
+    */
     public static function find($id): mixed
     {
-
+        return static::query()->find($id);
     }
+
 
 
 
@@ -398,7 +410,7 @@ abstract class ActiveRecord implements ActiveRecordInterface
      */
     public static function all(): array
     {
-        return self::query()->select()->get();
+        return self::query()->all();
     }
 
 
@@ -455,20 +467,17 @@ abstract class ActiveRecord implements ActiveRecordInterface
 
 
     /**
-     * @param string $name
-     * @param array $arguments
-     * @return void
-     * @throws ActiveRecordException
-     */
+     * @inheritDoc
+    */
     public static function __callStatic(string $name, array $arguments)
     {
-        $queryBuilder = static::query();
+        $query = static::query();
 
-        if (!method_exists($queryBuilder, $name)) {
+        if (!method_exists($query, $name)) {
             throw new ActiveRecordException("Could not call method '$name' statically.");
         }
 
-        return call_user_func_array([$queryBuilder, $name], $arguments);
+        return call_user_func_array([$query, $name], $arguments);
     }
 
 
