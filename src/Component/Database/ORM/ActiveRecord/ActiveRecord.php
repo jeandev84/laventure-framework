@@ -20,11 +20,14 @@ use Laventure\Utils\Convertor\CamelCase\CamelCaseConvertorTrait;
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
  * @package  Laventure\Component\Database\ORM\ActiveRecord
+ *
+ * @method static QueryBuilder select(string ...$columns)
+ * @method static QueryBuilder where(string $column, $value, string $operator = "=")
+ * @method static QueryBuilder orderBy(string $column, string $direction = null)
 */
 abstract class ActiveRecord implements ActiveRecordInterface
 {
     use CamelCaseConvertorTrait;
-
 
 
     /**
@@ -467,6 +470,8 @@ abstract class ActiveRecord implements ActiveRecordInterface
 
         return call_user_func_array([$queryBuilder, $name], $arguments);
     }
+
+
 
 
 
