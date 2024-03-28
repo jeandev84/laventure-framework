@@ -5,6 +5,7 @@ namespace Laventure\Component\Database\ORM\ActiveRecord\Query;
 
 
 use Laventure\Component\Database\Connection\ConnectionInterface;
+use Laventure\Component\Database\Query\Builder\SQL\Expr\ExpressionBuilderInterface;
 
 /**
  * QueryBuilderInterface
@@ -35,10 +36,19 @@ interface QueryBuilderInterface
 
 
     /**
-     * @param $columns
+     * @return ExpressionBuilderInterface
+    */
+    public function expr(): ExpressionBuilderInterface;
+
+
+
+
+
+    /**
+     * @param string ...$columns
      * @return $this
     */
-    public function select($columns = null): static;
+    public function select(string ...$columns): static;
 
 
 
@@ -211,6 +221,9 @@ interface QueryBuilderInterface
 
 
 
+
+
+
     /**
      * @param string $column
      *
@@ -294,30 +307,52 @@ interface QueryBuilderInterface
 
 
 
+    /**
+     * @param array $parameters
+     * @return $this
+    */
+    public function params(array $parameters): static;
+
+
+
+
+
+
+    /**
+     * @param $id
+     * @param $value
+     * @return $this
+    */
+    public function param($id, $value): static;
+
+
+
+
+
 
 
     /**
      * Returns last inserted id
      *
+     * @param array $attributes
+     *
+     * @return int
+    */
+    public function create(array $attributes): int;
+
+
+
+
+
+
+
+
+    /**
      * @param array $attributes
      *
-     * @return mixed
+     * @return int
     */
-    public function create(array $attributes): mixed;
-
-
-
-
-
-
-
-
-    /**
-     * @param array $attributes
-     *
-     * @return false|int
-    */
-    public function update(array $attributes): mixed;
+    public function update(array $attributes): int;
 
 
 
@@ -328,9 +363,9 @@ interface QueryBuilderInterface
 
 
     /**
-     * @return mixed
+     * @return bool
     */
-    public function delete(): mixed;
+    public function delete(): bool;
 
 
 

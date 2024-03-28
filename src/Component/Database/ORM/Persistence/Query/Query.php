@@ -89,7 +89,7 @@ class Query implements QueryInterface
         }
 
 
-        return $this->collectResults(
+        return $this->mapResults(
             $statement->map($this->getMappedClass())
                       ->fetch()
                       ->all($fetchMode)
@@ -106,7 +106,7 @@ class Query implements QueryInterface
     */
     public function fetchAll(): array
     {
-        return $this->collectResults(
+        return $this->mapResults(
             $this->fetch()->all()
         );
     }
@@ -119,7 +119,7 @@ class Query implements QueryInterface
     */
     public function fetchOne(): mixed
     {
-        return $this->collectResult(
+        return $this->mapResult(
             $this->fetch()->one()
         );
     }
@@ -179,10 +179,10 @@ class Query implements QueryInterface
      * @param array $objects
      * @return array
     */
-    private function collectResults(array $objects): array
+    private function mapResults(array $objects): array
     {
         foreach ($objects as $object) {
-            $this->collectResult($object);
+            $this->mapResult($object);
         }
 
         return $objects;
@@ -196,7 +196,7 @@ class Query implements QueryInterface
      * @param $object
      * @return mixed
     */
-    private function collectResult($object): mixed
+    private function mapResult($object): mixed
     {
         if (is_object($object)) {
             $this->em->persist($object);

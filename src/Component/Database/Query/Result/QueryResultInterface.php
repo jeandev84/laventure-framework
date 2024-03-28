@@ -49,6 +49,21 @@ interface QueryResultInterface
 
 
 
+
+
+    /**
+     * Fetch first result
+     *
+     * @return mixed
+    */
+    public function first(): mixed;
+
+
+
+
+
+
+
     /**
      * Fetch column
      *

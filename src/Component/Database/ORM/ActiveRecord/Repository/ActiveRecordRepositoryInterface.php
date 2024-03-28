@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\ORM\ActiveRecord\Repository;
 
 
+use Laventure\Component\Database\Connection\ConnectionInterface;
+use Laventure\Component\Database\Manager\Contract\DatabaseManagerInterface;
 use Laventure\Component\Database\ORM\ActiveRecord\Query\QueryBuilderInterface;
 
 /**
@@ -26,49 +28,6 @@ interface ActiveRecordRepositoryInterface
 
 
 
-
-
-
-    /**
-     * @param $columns
-     * @return QueryBuilderInterface
-    */
-    public static function select($columns = null): QueryBuilderInterface;
-
-
-
-
-
-
-    /**
-     * @param string $column
-     * @param $value
-     * @param string $operator
-     * @return QueryBuilderInterface
-    */
-    public static function where(string $column, $value, string $operator = "="): QueryBuilderInterface;
-
-
-
-
-
-
-
-
-    /**
-     * @param string $column
-     * @param string|null $direction
-     * @return QueryBuilderInterface
-    */
-    public static function orderBy(string $column, string $direction = null): QueryBuilderInterface;
-
-
-
-
-
-
-
-
     /**
      * Returns one record by identifier given value
      *
@@ -77,7 +36,6 @@ interface ActiveRecordRepositoryInterface
      * @return mixed
     */
     public static function find(int $id): mixed;
-
 
 
 
@@ -128,11 +86,20 @@ interface ActiveRecordRepositoryInterface
 
 
 
-
     /**
      * Save record
      *
      * @return int
     */
     public function save(): int;
+
+
+
+
+
+
+    /**
+     * @return ConnectionInterface
+    */
+    public function getConnection(): ConnectionInterface;
 }

@@ -153,4 +153,28 @@ interface ActiveRecordEntityInterface extends JsonSerializable, ArrayAccess
      * @return int
     */
     public function getId(): int;
+
+
+
+
+
+
+    /**
+     * Returns class name
+     *
+     * @return string
+    */
+    public function getClassName(): string;
+
+
+
+
+
+
+    /**
+     * Returns table name
+     *
+     * @return string
+    */
+    public function getTableName(): string;
 }

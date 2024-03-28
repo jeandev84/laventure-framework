@@ -15,10 +15,10 @@ use Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\Factory
 use Laventure\Component\Database\Connection\Extensions\PDO\Query\Query;
 use Laventure\Component\Database\Connection\Extensions\PDO\Transaction\Transaction;
 use Laventure\Component\Database\Connection\Transaction\Contract\TransactionInterface;
+use Laventure\Component\Database\Drivers\DriverException;
 use Laventure\Component\Database\Query\Builder\SQL\Factory\SQLQueryBuilderFactoryInterface;
 use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
 use Laventure\Component\Database\Query\QueryInterface;
-use Laventure\Foundation\Database\Drivers\DriverException;
 use PDO;
 use RuntimeException;
 

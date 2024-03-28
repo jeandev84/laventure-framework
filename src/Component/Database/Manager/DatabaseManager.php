@@ -27,9 +27,9 @@ class DatabaseManager implements DatabaseManagerInterface
     /**
      * Default connection driver
      *
-     * @var string|null
+     * @var string
     */
-    protected ?string $connection;
+    protected string $connection = '';
 
 
 
@@ -139,7 +139,7 @@ class DatabaseManager implements DatabaseManagerInterface
     */
     public function hasConfiguration(string $name): bool
     {
-        return !empty($this->config[$name]);
+        return isset($this->config[$name]);
     }
 
 
@@ -327,6 +327,6 @@ class DatabaseManager implements DatabaseManagerInterface
         $this->config      = [];
         $this->connections = [];
         $this->connected   = [];
-        $this->connection  = null;
+        $this->connection  = '';
     }
 }
