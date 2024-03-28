@@ -85,7 +85,7 @@ abstract class ActiveRecord implements ActiveRecordInterface
     /**
      * @var array
      */
-    protected $guarded = ['id'];
+    protected $guard = ['id'];
 
 
 
@@ -228,7 +228,7 @@ abstract class ActiveRecord implements ActiveRecordInterface
      */
     public function getGuardedAttributes(): array
     {
-        return $this->guarded;
+        return $this->guard;
     }
 
 
@@ -602,8 +602,8 @@ abstract class ActiveRecord implements ActiveRecordInterface
     */
     private function guard(array $columns): array
     {
-        if (!empty($this->guarded)) {
-            foreach ($this->guarded as $guarded) {
+        if (!empty($this->guard)) {
+            foreach ($this->guard as $guarded) {
                 if (isset($columns[$guarded])) {
                     unset($columns[$guarded]);
                 }

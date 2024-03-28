@@ -647,7 +647,7 @@ class QueryBuilder implements QueryBuilderInterface
         foreach ($this->wheres as $method => $conditions) {
             if (in_array($method, [self::andWhere, self::orWhere])) {
                 foreach ($conditions as $condition) {
-                    $this->call($builder, $method, $condition);
+                    $this->call($builder, $method, [$condition]);
                 }
             } else {
                 $this->call($builder, $method, $conditions);
@@ -658,19 +658,16 @@ class QueryBuilder implements QueryBuilderInterface
     }
 
 
-
-
-
     /**
      * @param object $object
      * @param string $method
-     * @param $arguments
+     * @param array $arguments
      * @return object
     */
-    private function call(object $object, string $method, $arguments): object
+    private function call(object $object, string $method, array $arguments): object
     {
         if (is_callable([$object, $method])) {
-            return call_user_func_array([$object, $method], [$arguments]);
+            return call_user_func_array([$object, $method], $arguments);
         }
 
         return $object;
