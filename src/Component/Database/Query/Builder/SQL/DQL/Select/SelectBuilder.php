@@ -320,6 +320,23 @@ class SelectBuilder extends SQLBuilder implements SelectBuilderInterface
 
 
 
+//    /**
+//     * @inheritDoc
+//    */
+//    public function paginate(int $page): array
+//    {
+//        if (!$this->criteria->limit) {
+//             $this->limit(5);
+//        }
+//
+//        $this->offset($this->criteria->offset);
+//
+//        return $this->getQuery()->fetch()->all();
+//    }
+
+
+
+
 
 
     /**

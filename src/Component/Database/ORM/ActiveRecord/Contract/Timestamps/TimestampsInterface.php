@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Laventure\Component\Database\ORM\ActiveRecord\Contract;
+namespace Laventure\Component\Database\ORM\ActiveRecord\Contract\Timestamps;
 
 
 /**
