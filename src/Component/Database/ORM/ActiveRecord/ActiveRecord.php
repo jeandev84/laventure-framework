@@ -81,7 +81,7 @@ abstract class ActiveRecord implements ActiveRecordInterface
     /**
      * @var array
      */
-    protected $guard = ['id'];
+    protected $guarded = ['id'];
 
 
 
@@ -182,7 +182,7 @@ abstract class ActiveRecord implements ActiveRecordInterface
     {
         array_map(function (string $column) {
             $this->removeAttribute($column);
-        }, $this->getAttributeNames());
+        }, $this->getColumns());
 
         return $this;
     }
@@ -202,13 +202,18 @@ abstract class ActiveRecord implements ActiveRecordInterface
 
 
 
+
+
     /**
      * @inheritDoc
-     */
+    */
     public function getAttributesToSave(): array
     {
-        return [];
+         $columns = $this->keep($this->getColumns());
+
+         return $this->guard($columns);
     }
+
 
 
 
@@ -219,7 +224,7 @@ abstract class ActiveRecord implements ActiveRecordInterface
      */
     public function getGuardedAttributes(): array
     {
-        return $this->guard;
+        return $this->guarded;
     }
 
 
@@ -265,9 +270,11 @@ abstract class ActiveRecord implements ActiveRecordInterface
     /**
      * @return array
     */
-    public function getAttributeNames(): array
+    public function getColumns(): array
     {
-        return array_keys($this->attributes);
+        return $this->getConnection()
+                    ->table($this->getTableName())
+                    ->getColumnNames();
     }
 
 
@@ -480,13 +487,19 @@ abstract class ActiveRecord implements ActiveRecordInterface
 
 
 
-
     /**
      * @inheritDoc
+     * @throws UpdateRecordException
     */
     public function save(): int
     {
+        $attributes = $this->getAttributesToSave();
 
+        if ($this->getId()) {
+            return $this->update($attributes);
+        } else {
+            return self::create($attributes);
+        }
     }
 
 
@@ -547,5 +560,52 @@ abstract class ActiveRecord implements ActiveRecordInterface
     private function criteria(): array
     {
         return [$this->getPrimaryKey() => $this->getId()];
+    }
+
+
+
+
+
+    /**
+     * @param array $columns
+     * @return array
+    */
+    private function keep(array $columns): array
+    {
+        $attributes = [];
+
+        foreach ($columns as $column) {
+            if (!empty($this->save)) {
+                if (in_array($column, $this->save)) {
+                    $attributes[$column] = $this->getAttribute($column);
+                }
+            } else {
+                $attributes[$column] = $this->getAttribute($column);
+            }
+        }
+
+        return $attributes;
+    }
+
+
+
+
+
+
+    /**
+     * @param array $columns
+     * @return array
+    */
+    private function guard(array $columns): array
+    {
+        if (!empty($this->guarded)) {
+            foreach ($this->guarded as $guarded) {
+                if (isset($columns[$guarded])) {
+                    unset($columns[$guarded]);
+                }
+            }
+        }
+
+        return $columns;
     }
 }

@@ -72,11 +72,12 @@ class QueryBuilder implements QueryBuilderInterface
     protected array $parameters = [];
 
 
-
-
-
+    
+    
+    
     /**
      * @param ActiveRecordInterface $model
+     * @throws NotFoundTableNameException
     */
     public function __construct(ActiveRecordInterface $model)
     {
