@@ -440,7 +440,7 @@ abstract class ActiveRecord implements ActiveRecordInterface
     */
     public function update(array $attributes): int
     {
-       return static::query()->criteria($this->criteria())->update($attributes);
+        return static::query()->criteria($this->criteria())->update($attributes);
     }
 
 
