@@ -38,6 +38,17 @@ interface TableInterface
 
 
 
+    /**
+     * Returns schema table
+     *
+     * @return string
+    */
+    public function getSchemaName(): string;
+
+
+
+
+
 
 
     /**

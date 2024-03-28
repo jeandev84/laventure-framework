@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection;
 
+use Laventure\Component\Database\Collection\Contract\DatabaseCollectionInterface;
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Connection\Transaction\Contract\TransactionInterface;
 use Laventure\Component\Database\DatabaseInterface;
+use Laventure\Component\Database\Factory\DatabaseFactoryInterface;
 use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
 use Laventure\Component\Database\Query\Logger\QueryLoggerInterface;
 use Laventure\Component\Database\Query\QueryInterface;
@@ -41,7 +43,7 @@ interface ConnectionInterface
      * @param ConfigurationInterface $config
      * @return $this
     */
-    public function config(ConfigurationInterface $config): static;
+    public function parse(ConfigurationInterface $config): static;
 
 
 
@@ -158,7 +160,7 @@ interface ConnectionInterface
      *
      * @return TransactionInterface
     */
-    public function createTransaction(): TransactionInterface;
+    public function transaction(): TransactionInterface;
 
 
 
@@ -216,6 +218,17 @@ interface ConnectionInterface
 
 
 
+    /**
+     * @param $id
+     * @param $default
+     * @return mixed
+    */
+    public function config($id, $default = null): mixed;
+
+
+
+
+
 
 
 
@@ -226,6 +239,7 @@ interface ConnectionInterface
      * @return ConfigurationInterface
     */
     public function getConfiguration(): ConfigurationInterface;
+
 
 
 
@@ -244,12 +258,71 @@ interface ConnectionInterface
 
 
 
+
+
+    /**
+     * Returns database factory
+     *
+     * @return DatabaseFactoryInterface
+    */
+    public function getDatabaseFactory(): DatabaseFactoryInterface;
+
+
+
+
+
+
+
+
+    /**
+     * Returns all databases
+     *
+     * @return DatabaseCollectionInterface
+    */
+    public function getDatabaseCollection(): DatabaseCollectionInterface;
+
+
+
+
+
+
+
+
+
+    /**
+     * @return DatabaseInterface[]
+    */
+    public function getDatabases(): array;
+
+
+
+
+
+
+
+
+
     /**
      * Returns database name
      *
      * @return string
     */
     public function getDatabaseName(): string;
+
+
+
+
+
+
+
+
+    /**
+     * Returns database names from database
+     *
+     * @return array
+    */
+    public function getDatabaseNames(): array;
+
 
 
 

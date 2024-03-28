@@ -24,6 +24,6 @@ class NotFoundConfigurationException extends BaseException
     */
     public function __construct(array $data = [], ?Throwable $previous = null)
     {
-        parent::__construct("Not found configurations", $data, 404, $previous);
+        parent::__construct("Not found credentials", $data, 404, $previous);
     }
 }

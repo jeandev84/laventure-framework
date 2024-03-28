@@ -135,7 +135,7 @@ class EntityManager implements EntityManagerInterface
         $this->metadataFactory   = $config->getClassMetadataFactory();
         $this->repositoryFactory = $config->getRepositoryFactory();
         $this->unitOfWork        = $config->getUnitOfWorkFactory()->createUnitOfWork($this);
-        $this->transaction       = $this->connection->createTransaction();
+        $this->transaction       = $this->connection->transaction();
     }
 
 

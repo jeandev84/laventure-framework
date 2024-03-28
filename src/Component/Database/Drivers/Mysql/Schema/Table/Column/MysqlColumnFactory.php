@@ -48,12 +48,10 @@ class MysqlColumnFactory implements ColumnFactoryInterface
     */
     public function createFromParameter(ParameterInterface $parameter): ColumnInterface
     {
-        $columnName = $parameter->string('Field');
-
-        return $this->createColumn($columnName)
+        return $this->createColumn($parameter->string('Field'))
                     ->type($parameter->string('Type'))
                     ->collation($parameter->string('Collation'))
-                    ->isNull($parameter->toLower('Null'))
+                    ->null($parameter->toLower('Null'))
                     ->key($parameter->string('Key'))
                     ->defaultValue($parameter->get('Default'))
                     ->extra($parameter->string('Extra'))

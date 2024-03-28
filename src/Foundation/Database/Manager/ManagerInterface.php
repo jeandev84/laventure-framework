@@ -94,5 +94,5 @@ interface ManagerInterface extends DatabaseManagerInterface
      *
      * @return ManagerConfigurationInterface
     */
-    public function getConfiguration(): ManagerConfigurationInterface;
+    public function config(): ManagerConfigurationInterface;
 }

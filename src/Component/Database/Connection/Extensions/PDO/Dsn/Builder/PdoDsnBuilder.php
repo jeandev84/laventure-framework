@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Extensions\PDO\Dsn\Builder;
 
+use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
+
 /**
  * PdoDsnBuilder
  *
@@ -141,6 +143,17 @@ class PdoDsnBuilder implements PdoDsnBuilderInterface
 
 
 
+    /**
+     * @inheritDoc
+    */
+    public function getParam($key): string
+    {
+        return $this->params[$key] ?? '';
+    }
+
+
+
+
 
 
     /**
@@ -154,23 +167,6 @@ class PdoDsnBuilder implements PdoDsnBuilderInterface
 
         return urldecode("$this->driver:$config");
     }
-
-
-
-
-
-
-    /**
-     * @param string $driver
-     * @param array $params
-     * @return static
-    */
-    public static function create(string $driver, array $params): string
-    {
-        return strval(new self($driver, $params));
-    }
-
-
 
 
 

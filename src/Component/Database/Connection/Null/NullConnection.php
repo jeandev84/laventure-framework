@@ -4,15 +4,20 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database\Connection\Null;
 
+use Laventure\Component\Database\Collection\Contract\DatabaseCollectionInterface;
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
 use Laventure\Component\Database\Configuration\Null\NullConfiguration;
 use Laventure\Component\Database\Connection\ConnectionInterface;
+use Laventure\Component\Database\Connection\Transaction\Contract\TransactionInterface;
 use Laventure\Component\Database\DatabaseInterface;
+use Laventure\Component\Database\Factory\DatabaseFactoryInterface;
 use Laventure\Component\Database\Null\NullDatabase;
 use Laventure\Component\Database\Query\Builder\SQL\Null\NullSQLQueryBuilder;
 use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
+use Laventure\Component\Database\Query\Logger\QueryLoggerInterface;
 use Laventure\Component\Database\Query\Null\NullQuery;
 use Laventure\Component\Database\Query\QueryInterface;
+use Laventure\Component\Database\Schema\Table\TableInterface;
 
 /**
  * NullConnection
@@ -33,15 +38,6 @@ class NullConnection implements ConnectionInterface
         return '';
     }
 
-
-
-    /**
-     * @inheritDoc
-    */
-    public function connect(ConfigurationInterface $config): void
-    {
-
-    }
 
 
 
@@ -176,88 +172,84 @@ class NullConnection implements ConnectionInterface
 
 
 
-    /**
-     * @inheritDoc
-    */
-    public function begin(): bool
-    {
-        return false;
-    }
-
-
-
 
     /**
      * @inheritDoc
-    */
-    public function hasActive(): bool
-    {
-        return false;
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function commit(): bool
-    {
-        return false;
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function rollback(): bool
-    {
-        return false;
-    }
-
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function transaction(callable $func): mixed
-    {
-        return null;
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function enableTransaction(): void
+     */
+    public function parse(ConfigurationInterface $config): static
     {
 
     }
 
-
-
     /**
      * @inheritDoc
-    */
-    public function transactionIf(callable $func, bool $condition = false): mixed
+     */
+    public function connect(): static
     {
-        return null;
+        // TODO: Implement connect() method.
     }
 
-
-
+    /**
+     * @inheritDoc
+     */
+    public function transaction(): TransactionInterface
+    {
+        // TODO: Implement createTransaction() method.
+    }
 
     /**
      * @inheritDoc
-    */
-    public function disableTransaction(): void
+     */
+    public function table(string $name): TableInterface
     {
+        // TODO: Implement table() method.
+    }
 
+    /**
+     * @inheritDoc
+     */
+    public function config($id, $default = null): mixed
+    {
+        // TODO: Implement config() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getDatabaseFactory(): DatabaseFactoryInterface
+    {
+        // TODO: Implement getDatabaseFactory() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getDatabaseCollection(): DatabaseCollectionInterface
+    {
+        // TODO: Implement getDatabaseCollection() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getDatabases(): array
+    {
+        // TODO: Implement getDatabases() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getDatabaseNames(): array
+    {
+        // TODO: Implement getDatabaseNames() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getQueryLogger(): QueryLoggerInterface
+    {
+        // TODO: Implement getQueryLogger() method.
     }
 }

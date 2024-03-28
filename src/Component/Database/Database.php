@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Database;
 
+use Laventure\Component\Database\Backup\DatabaseBackup;
+use Laventure\Component\Database\Backup\DatabaseBackupInterface;
 use Laventure\Component\Database\Connection\ConnectionInterface;
+use Laventure\Component\Database\Exception\DatabaseException;
 use Laventure\Component\Database\Query\QueryInterface;
 
 /**
@@ -25,13 +28,26 @@ abstract class Database implements DatabaseInterface
 
 
 
+
+
+    /**
+     * @var string
+    */
+    protected string $name;
+
+
+
+
     /**
      * @param ConnectionInterface $connection
+     * @param string $name
     */
-    public function __construct(ConnectionInterface $connection)
+    public function __construct(ConnectionInterface $connection, string $name)
     {
         $this->connection = $connection;
+        $this->name       = $name;
     }
+
 
 
 
@@ -42,7 +58,7 @@ abstract class Database implements DatabaseInterface
     */
     public function getName(): string
     {
-        return $this->connection->getDatabaseName();
+        return $this->name;
     }
 
 
@@ -61,14 +77,17 @@ abstract class Database implements DatabaseInterface
 
 
 
+
     /**
      * @inheritdoc
-     * @throws DatabaseException
     */
     public function exists(): bool
     {
-        return in_array($this->getName(), $this->list());
+        return $this->connection
+                    ->getDatabaseCollection()
+                    ->has($this->getName());
     }
+
 
 
 
@@ -76,29 +95,14 @@ abstract class Database implements DatabaseInterface
 
     /**
      * @inheritDoc
-     * @throws DatabaseException
+     * @param string $filepath
+     * @return bool|int
     */
-    public function dump(string $filepath): bool|int
+    public function dump(): DatabaseBackupInterface
     {
-        return $this->exec(
-            sprintf("BACKUP DATABASE %s TO DISK = '%s'", $this->getName(), $filepath)
-        );
+        return new DatabaseBackup($this->connection, $this->getName());
     }
 
-
-
-
-
-    /**
-     * @inheritDoc
-     * @throws DatabaseException
-    */
-    public function dumpDiff(string $filepath): bool|int
-    {
-        return $this->exec(
-            sprintf("BACKUP DATABASE %s TO DISK = '%s' WITH DIFFERENTIAL", $this->getName(), $filepath)
-        );
-    }
 
 
 
@@ -111,7 +115,7 @@ abstract class Database implements DatabaseInterface
     */
     public function config($key, $default = null): mixed
     {
-        return $this->connection->getConfiguration()->get($key, $default);
+        return $this->connection->config($key, $default);
     }
 
 
@@ -123,7 +127,9 @@ abstract class Database implements DatabaseInterface
     */
     public function charset(): string
     {
-        return $this->config('charset', 'utf8');
+        return $this->connection
+                    ->getConfiguration()
+                    ->getCharset();
     }
 
 

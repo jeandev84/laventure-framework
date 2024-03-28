@@ -5,27 +5,21 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Connection\Extensions\PDO;
 
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
-use Laventure\Component\Database\Configuration\Null\NullConfiguration;
 use Laventure\Component\Database\Connection\Connection;
-use Laventure\Component\Database\Connection\ConnectionTrait;
 use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\Builder\Factory\PdoDsnBuilderFactory;
 use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\Builder\Factory\PdoDsnBuilderFactoryInterface;
-use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\Builder\PdoDsnBuilder;
 use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\Builder\PdoDsnBuilderInterface;
-use Laventure\Component\Database\Connection\Extensions\PDO\Dsn\Reader\PdoDsnReader;
 use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnectionFactory;
 use Laventure\Component\Database\Connection\Extensions\PDO\Factory\PdoConnectionFactoryInterface;
 use Laventure\Component\Database\Connection\Extensions\PDO\Query\Builder\Factory\PdoSQLQueryBuilderFactory;
 use Laventure\Component\Database\Connection\Extensions\PDO\Query\Query;
 use Laventure\Component\Database\Connection\Extensions\PDO\Transaction\Transaction;
-use Laventure\Component\Database\Connection\Factory\ConnectionFactoryInterface;
 use Laventure\Component\Database\Connection\Transaction\Contract\TransactionInterface;
 use Laventure\Component\Database\Drivers\DriverException;
 use Laventure\Component\Database\Query\Builder\SQL\Factory\SQLQueryBuilderFactoryInterface;
 use Laventure\Component\Database\Query\Builder\SQL\SQLQueryBuilderInterface;
 use Laventure\Component\Database\Query\QueryInterface;
 use PDO;
-use PDOException;
 use RuntimeException;
 
 /**
@@ -52,6 +46,7 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
 
 
 
+
     /**
      * @return $this
     */
@@ -63,7 +58,7 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
             throw new RuntimeException("No DSN specified for making connection.");
         }
 
-        return $this->setConnection($this->makePdo($config))->config($config);
+        return $this->setConnection($this->makePdo($config))->parse($config);
     }
 
 
@@ -128,7 +123,7 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
     /**
      * @inheritDoc
     */
-    public function createTransaction(): TransactionInterface
+    public function transaction(): TransactionInterface
     {
        return new Transaction($this);
     }
@@ -239,7 +234,7 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
     /**
      * @inheritDoc
     */
-    protected function makeSureIsAvailable(): void
+    public function makeSureIsAvailable(): void
     {
         if (!$this->isAvailable()) {
             throw new DriverException("Unavailable driver {$this->getName()}");
@@ -255,7 +250,7 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
      * @param ConfigurationInterface $config
      * @return PdoConnection
     */
-    protected function connectWithoutDatabase(): static
+    public function connectWithoutDatabase(): static
     {
         if (!$this->hasPdoDsn()) {
             $this->setPdoDsn($this->getDsnBuilder()->buildDefault());
@@ -274,7 +269,7 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
      * @param ConfigurationInterface $config
      * @return PdoConnection
     */
-    protected function connectIfDatabaseExists(): static
+    public function connectIfDatabaseExists(): static
     {
         $this->setPdoDsn($this->getDsnBuilder()->buildIfDatabaseExists());
 
@@ -305,5 +300,17 @@ abstract class PdoConnection extends Connection implements PdoConnectionInterfac
     public function getPdoDsnBuilderFactory(): PdoDsnBuilderFactoryInterface
     {
         return new PdoDsnBuilderFactory();
+    }
+
+
+
+
+
+    /**
+     * @inheritDoc
+    */
+    public function config($id, $default = null): mixed
+    {
+        return $this->getConfiguration()->get($id, $default);
     }
 }

@@ -6,10 +6,10 @@ namespace Laventure\Foundation\Database\Manager;
 
 use Laventure\Component\Database\Configuration\Configuration;
 use Laventure\Component\Database\Configuration\Contract\ConfigurationInterface;
-use Laventure\Component\Database\Drivers\Mysql\MysqlConnection;
-use Laventure\Component\Database\Drivers\Oracle\OracleConnection;
-use Laventure\Component\Database\Drivers\Pgsql\PgsqlConnection;
-use Laventure\Component\Database\Drivers\Sqlite\SqliteConnection;
+use Laventure\Component\Database\Drivers\Mysql\Connection\MysqlConnection;
+use Laventure\Component\Database\Drivers\Oracle\Connection\OracleConnection;
+use Laventure\Component\Database\Drivers\Pgsql\Connection\PgsqlConnection;
+use Laventure\Component\Database\Drivers\Sqlite\Connection\SqliteConnection;
 use Laventure\Component\Database\Manager\DatabaseManager;
 use Laventure\Component\Database\Schema\Migrator\Migrator;
 use Laventure\Component\Database\Schema\Migrator\MigratorInterface;
@@ -18,6 +18,7 @@ use Laventure\Component\Database\Schema\SchemaInterface;
 use Laventure\Component\Database\Schema\Table\TableInterface;
 use Laventure\Foundation\Database\Manager\Config\ManagerConfiguration;
 use Laventure\Foundation\Database\Manager\Config\ManagerConfigurationInterface;
+use Laventure\Foundation\Database\Manager\Exception\ManagerException;
 
 /**
  * Manager
@@ -83,12 +84,30 @@ class Manager extends DatabaseManager implements ManagerInterface
 
 
     /**
+     * @inheritDoc
+     */
+    public function open(string $name, ConfigurationInterface $config): static
+    {
+        parent::open($name, $config);
+
+        static::$instance = $this;
+
+        return $this;
+    }
+
+
+
+
+    /**
      * @inheritdoc
     */
     public function bootManager(): static
     {
-        return $this->setConnectionName($this->getConfiguration()->connection())
-                    ->setConfigurations();
+        $this->bootConfigurations();
+
+        $connection = $this->config()->connection();
+
+        return $this->open($connection, $this->configuration($connection));
     }
 
 
@@ -134,11 +153,10 @@ class Manager extends DatabaseManager implements ManagerInterface
 
 
 
-
     /**
      * @inheritdoc
     */
-    public function getConfiguration(): ManagerConfigurationInterface
+    public function config(): ManagerConfigurationInterface
     {
         return new ManagerConfiguration($this->credentials);
     }
@@ -147,15 +165,16 @@ class Manager extends DatabaseManager implements ManagerInterface
 
 
 
-
-
     /**
      * @return static
+     * @throws ManagerException
     */
     public static function getInstance(): static
     {
         if (!static::$instance) {
-            static::$instance = new self();
+            throw new ManagerException("Manager not open or booted.", [
+                'details' => "No called method open() or bootManager()"
+            ]);
         }
 
         return static::$instance;
@@ -185,22 +204,13 @@ class Manager extends DatabaseManager implements ManagerInterface
 
 
     /**
-     * @return array
-    */
-    public function getAllCredentials(): array
-    {
-        return $this->getConfiguration()->connections();
-    }
-
-
-
-
-    /**
      * @return $this
     */
-    private function setConfigurations(): static
+    private function bootConfigurations(): static
     {
-        foreach ($this->getAllCredentials() as $name => $credentials) {
+        $connections = $this->config()->connections();
+
+        foreach ($connections as $name => $credentials) {
             $this->setConfiguration($name, new Configuration($credentials));
         }
 

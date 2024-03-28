@@ -27,9 +27,9 @@ class DatabaseManager implements DatabaseManagerInterface
     /**
      * Default connection driver
      *
-     * @var string|null
+     * @var string
     */
-    protected ?string $connection;
+    protected string $connection = '';
 
 
 
@@ -139,7 +139,7 @@ class DatabaseManager implements DatabaseManagerInterface
     */
     public function hasConfiguration(string $name): bool
     {
-        return !empty($this->config[$name]);
+        return isset($this->config[$name]);
     }
 
 
@@ -287,7 +287,7 @@ class DatabaseManager implements DatabaseManagerInterface
     */
     public function connect(string $name, ConfigurationInterface $config): ConnectionInterface
     {
-        $this->connections[$name]->config($config)->connect();
+        $this->connections[$name]->parse($config)->connect();
 
         if (! $this->connections[$name]->connected()) {
             throw new UnavailableConnectionException($name);
@@ -327,6 +327,6 @@ class DatabaseManager implements DatabaseManagerInterface
         $this->config      = [];
         $this->connections = [];
         $this->connected   = [];
-        $this->connection  = null;
+        $this->connection  = '';
     }
 }

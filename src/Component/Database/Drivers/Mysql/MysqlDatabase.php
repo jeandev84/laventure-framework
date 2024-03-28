@@ -23,9 +23,9 @@ class MysqlDatabase extends Database
     public function create(): bool
     {
         $this->exec(
-            "CREATE DATABASE IF NOT EXISTS {$this->getName()}",
-            "DEFAULT CHARACTER SET {$this->charset()}",
-            "DEFAULT COLLATE {$this->collation()};"
+        "CREATE DATABASE IF NOT EXISTS {$this->getName()}",
+             "DEFAULT CHARACTER SET {$this->charset()}",
+             "DEFAULT COLLATE {$this->collation()};"
         );
 
         $this->exec("SET default_storage_engine = {$this->engine()};");
@@ -56,20 +56,6 @@ class MysqlDatabase extends Database
     {
         return $this->connection
                     ->statement("SHOW FULL TABLES FROM {$this->getName()};")
-                    ->fetch()
-                    ->columns();
-    }
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function list(): array
-    {
-        return $this->connection
-                    ->statement("SHOW DATABASES;")
                     ->fetch()
                     ->columns();
     }

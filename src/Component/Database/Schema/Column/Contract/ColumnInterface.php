@@ -443,7 +443,7 @@ interface ColumnInterface extends Stringable
      * @param $status
      * @return $this
     */
-    public function isNull($status): static;
+    public function null($status): static;
 
 
 
