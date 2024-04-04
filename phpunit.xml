@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit colors="true" bootstrap="vendor/autoload.php">
+    <testsuites>
+        <testsuite name="PHP Unit Tests">
+            <directory>tests/phpunit/unit</directory>
+        </testsuite>
+        <testsuite name="PHP Unit Functional Tests">
+            <directory>tests/phpunit/functional</directory>
+        </testsuite>
+    </testsuites>
+    <php>
+        <const name="SRC" value="./src" />
+    </php>
+</phpunit>

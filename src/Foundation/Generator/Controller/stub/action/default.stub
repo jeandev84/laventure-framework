@@ -1,0 +1,10 @@
+
+
+        /**
+         * @param Request $request
+         * @return Response
+        */
+        public function DummyActionName(Request $request): Response
+        {
+              return new Response("DummyClassName::DummyActionName");
+        }
