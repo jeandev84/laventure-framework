@@ -6,8 +6,6 @@ namespace Laventure\Component\Database\Schema\Blueprint;
 
 use Laventure\Component\Database\Schema\Blueprint\Column\BlueprintColumn;
 use Laventure\Component\Database\Schema\Blueprint\Column\BlueprintColumnInterface;
-use Laventure\Component\Database\Schema\Blueprint\Foreign\BlueprintForeignKey;
-use Laventure\Component\Database\Schema\Blueprint\Foreign\BlueprintForeignKeyInterface;
 use Laventure\Component\Database\Schema\Column\Contract\ColumnInterface;
 use Laventure\Component\Database\Schema\Column\Types\ColumnType;
 use Laventure\Component\Database\Schema\Column\Types\TimestampColumn;

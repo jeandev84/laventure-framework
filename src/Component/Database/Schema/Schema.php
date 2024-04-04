@@ -168,7 +168,7 @@ class Schema implements SchemaInterface
     */
     public function exec(string $sql): bool
     {
-        return $this->connection->executeQuery($sql);
+        return $this->connection->exec($sql);
     }
 
 

@@ -34,7 +34,7 @@ class MysqlTransaction extends Transaction implements SwitchableTransactionInter
     */
     public function autocommit($value): static
     {
-        $this->pdo->executeQuery("SET autocommit = $value");
+        $this->pdo->exec("SET autocommit = $value");
 
         return $this;
     }

@@ -997,23 +997,13 @@ interface TableInterface
 
 
     /**
-     * Drop table
+     * Drop table if  exists
      *
      * @return mixed
     */
     public function drop(): mixed;
 
 
-
-
-
-
-    /**
-     * Drop table if exists
-     *
-     * @return mixed
-    */
-    public function dropIfExists(): mixed;
 
 
 

@@ -34,7 +34,7 @@ class DatabaseBackup implements DatabaseBackupInterface
     */
     public function backupTo(string $filepath): static
     {
-        $this->connection->executeQuery(
+        $this->connection->exec(
             sprintf("BACKUP DATABASE %s TO DISK = '%s'", $this->database, $filepath)
         );
 
@@ -49,7 +49,7 @@ class DatabaseBackup implements DatabaseBackupInterface
     */
     public function backupDiff(string $filepath): static
     {
-        $this->connection->executeQuery(
+        $this->connection->exec(
             sprintf("BACKUP DATABASE %s TO DISK = '%s' WITH DIFFERENTIAL", $this->database, $filepath)
         );
 

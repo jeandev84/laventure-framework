@@ -87,7 +87,7 @@ abstract class Table implements TableInterface
     */
     public function exec(string $sql): mixed
     {
-        return $this->connection->executeQuery($sql);
+        return $this->connection->exec($sql);
     }
 
 
@@ -579,7 +579,9 @@ abstract class Table implements TableInterface
     */
     public function rename(string $to): bool|int
     {
-        return $this->exec("ALTER TABLE RENAME $this->name TO $to");
+        return $this->exec(sql:
+            sprintf("ALTER TABLE RENAME %s TO %s", $this->getName(), $to)
+        );
     }
 
 
@@ -657,19 +659,6 @@ abstract class Table implements TableInterface
     }
 
 
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function dropIfExists(): mixed
-    {
-        return $this->exec(
-            sprintf('DROP TABLE IF EXISTS %s CASCADE;', $this->getName())
-        );
-    }
 
 
 

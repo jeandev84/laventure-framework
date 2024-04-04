@@ -331,25 +331,14 @@ class MysqlTable extends Table
     public function drop(): bool|int
     {
         return $this->checkForeignKeys(function () {
-            return parent::drop();
+            return $this->exec(
+                sprintf('DROP TABLE IF EXISTS %s CASCADE;', $this->getName())
+            );
         });
     }
 
 
 
-
-
-
-
-    /**
-     * @inheritDoc
-    */
-    public function dropIfExists(): bool|int
-    {
-        return $this->checkForeignKeys(function () {
-            return parent::dropIfExists();
-        });
-    }
 
 
 

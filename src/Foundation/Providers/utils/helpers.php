@@ -96,7 +96,7 @@ if(! function_exists('env')) {
      * @param null $default
      * @return array|string|null
      */
-    function env($key, $default = null)
+    function env($key, $default = null): array|string|null
     {
         $value = getenv($key);
 

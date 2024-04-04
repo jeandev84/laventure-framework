@@ -212,7 +212,7 @@ interface ConnectionInterface
      *
      * @return int|bool
     */
-    public function executeQuery(string $sql): int|bool;
+    public function exec(string $sql): int|bool;
 
 
 

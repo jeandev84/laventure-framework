@@ -146,7 +146,7 @@ class SqlServerConnection implements ConnectionInterface
     /**
      * @inheritDoc
     */
-    public function executeQuery(string $sql): mixed
+    public function exec(string $sql): mixed
     {
 
     }

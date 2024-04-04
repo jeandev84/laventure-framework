@@ -160,7 +160,7 @@ abstract class Connection implements ConnectionInterface
     /**
      * @inheritdoc
      */
-    public function executeQuery(string $sql): int|bool
+    public function exec(string $sql): int|bool
     {
         return $this->createQuery()->executeQuery($sql);
     }
