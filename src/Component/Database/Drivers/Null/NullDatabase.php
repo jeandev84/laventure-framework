@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace Laventure\Component\Database\Drivers\Null;
 
 use Laventure\Component\Database\Backup\DatabaseBackupInterface;
-use Laventure\Component\Database\Connection\ConnectionInterface;
-use Laventure\Component\Database\Connection\Null\NullConnection;
 use Laventure\Component\Database\Database;
-use Laventure\Component\Database\DatabaseInterface;
+
 
 /**
  * NullDatabase

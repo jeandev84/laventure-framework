@@ -30,8 +30,7 @@ composer require laventure/framework
 
 ### Analyse code
 - https://phpstan.org/user-guide/getting-started
-```bash 
-composer require --dev phpstan/phpstan
+```bash
 ./vendor/bin/phpstan analyse src tests
 ```
 
