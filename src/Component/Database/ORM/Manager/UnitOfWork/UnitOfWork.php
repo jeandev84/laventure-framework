@@ -142,7 +142,7 @@ class UnitOfWork implements UnitOfWorkInterface
     /**
      * @inheritdoc
     */
-    public function registerObject(object $object, $state): static
+    public function registerObjectState(object $object, $state): static
     {
         $this->storage->attach($object, $state);
 
@@ -176,9 +176,9 @@ class UnitOfWork implements UnitOfWorkInterface
     {
         // add states
         if ($this->isNew($object)) {
-            $this->registerNew($object);
+            $this->registerNewState($object);
         } else {
-            $this->registerManaged($object);
+            $this->registerManagedState($object);
         }
 
         return $this;
@@ -191,9 +191,9 @@ class UnitOfWork implements UnitOfWorkInterface
     /**
      * @inheritDoc
      */
-    public function registerNew(object $object): static
+    public function registerNewState(object $object): static
     {
-        return $this->registerObject($object, self::STATE_NEW);
+        return $this->registerObjectState($object, self::STATE_NEW);
     }
 
 
@@ -203,9 +203,9 @@ class UnitOfWork implements UnitOfWorkInterface
     /**
      * @inheritDoc
      */
-    public function registerManaged(object $object): static
+    public function registerManagedState(object $object): static
     {
-        return $this->registerObject($object, self::STATE_MANAGED);
+        return $this->registerObjectState($object, self::STATE_MANAGED);
     }
 
 
@@ -215,9 +215,9 @@ class UnitOfWork implements UnitOfWorkInterface
     /**
      * @inheritDoc
     */
-    public function registerDetached(object $object): static
+    public function registerDetachedState(object $object): static
     {
-        return $this->registerObject($object, self::STATE_DETACHED);
+        return $this->registerObjectState($object, self::STATE_DETACHED);
     }
 
 
@@ -228,13 +228,13 @@ class UnitOfWork implements UnitOfWorkInterface
     /**
      * @inheritDoc
     */
-    public function registerRemoved(object $object): static
+    public function registerRemovedState(object $object): static
     {
         // subscribe persist event
         $this->eventManager->subscribeRemoveEvents();
 
         // add state
-        return $this->registerObject($object, self::STATE_REMOVED);
+        return $this->registerObjectState($object, self::STATE_REMOVED);
     }
 
 
@@ -281,7 +281,7 @@ class UnitOfWork implements UnitOfWorkInterface
     */
     public function remove(object $object): static
     {
-        return $this->registerRemoved($object);
+        return $this->registerRemovedState($object);
     }
 
 

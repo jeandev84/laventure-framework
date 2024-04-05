@@ -27,7 +27,7 @@ interface UnitOfWorkInterface
      * @param $state
      * @return mixed
     */
-    public function registerObject(object $object, $state): mixed;
+    public function registerObjectState(object $object, $state): mixed;
 
 
 
@@ -39,7 +39,7 @@ interface UnitOfWorkInterface
      * @param object $object
      * @return $this
     */
-    public function registerNew(object $object): static;
+    public function registerNewState(object $object): static;
 
 
 
@@ -52,7 +52,7 @@ interface UnitOfWorkInterface
      * @param object $object
      * @return $this
     */
-    public function registerManaged(object $object): static;
+    public function registerManagedState(object $object): static;
 
 
 
@@ -65,7 +65,7 @@ interface UnitOfWorkInterface
      * @param object $object
      * @return $this
     */
-    public function registerDetached(object $object): static;
+    public function registerDetachedState(object $object): static;
 
 
 
@@ -79,7 +79,7 @@ interface UnitOfWorkInterface
      * @param object $object
      * @return $this
     */
-    public function registerRemoved(object $object): static;
+    public function registerRemovedState(object $object): static;
 
 
 
@@ -262,6 +262,8 @@ interface UnitOfWorkInterface
 
 
 
+
+
     /**
      * Returns storage
      *
@@ -281,6 +283,9 @@ interface UnitOfWorkInterface
      * @return PersistentInterface
     */
     public function getPersistent($class): PersistentInterface;
+
+
+
 
 
 

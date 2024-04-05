@@ -180,11 +180,11 @@ abstract class Connection implements ConnectionInterface
 
 
     /**
-     * @param mixed $connection
+     * @param $connection
      *
      * @return $this
     */
-    public function setConnection(mixed $connection): static
+    public function setConnection($connection): static
     {
         $this->connection = $connection;
 
