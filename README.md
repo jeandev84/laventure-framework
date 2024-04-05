@@ -60,7 +60,7 @@ composer require laventure/framework
 * [1.10. Event](docs/components/event)
 * [1.11. Debug](docs/components/debug)
 * [1.12. Templating](docs/components/templating)
-* [1.13. Debug](docs/components/console)
+* [1.13. Console](docs/components/console)
 
 
 
