@@ -28,4 +28,12 @@ class MaxLength implements ValidationRuleInterface
     {
 
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getName(): string
+    {
+        // TODO: Implement getName() method.
+    }
 }

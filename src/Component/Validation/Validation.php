@@ -210,7 +210,9 @@ class Validation implements ValidationInterface
              foreach ($rules as $rule) {
                  $validator = $rule->getValidator();
                  if (!$validator->validate($this->getValue($field))) {
-                     $this->addError(new ValidationError($field, $validator->message($field)));
+                     $this->addError(
+                         new ValidationError($field, $validator->message($field))
+                     );
                  }
              }
          }

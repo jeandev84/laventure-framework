@@ -3,6 +3,10 @@ declare(strict_types=1);
 
 namespace Laventure\Component\Validation\Rules;
 
+use Attribute;
+use Laventure\Component\Validation\Rules\Contract\ValidationRuleInterface;
+use Laventure\Component\Validation\Validators\Contract\ValidatorInterface;
+
 /**
  * NotNull
  *
@@ -12,7 +16,23 @@ namespace Laventure\Component\Validation\Rules;
  *
  * @package  Laventure\Component\Validation\Rules
  */
-class NotNull
+#[Attribute]
+class NotNull implements ValidationRuleInterface
 {
 
+    /**
+     * @inheritDoc
+     */
+    public function getValidator(): ValidatorInterface
+    {
+        // TODO: Implement getValidator() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getName(): string
+    {
+        // TODO: Implement getName() method.
+    }
 }
