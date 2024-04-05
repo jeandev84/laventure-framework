@@ -18,5 +18,4 @@ use Laventure\Component\Database\Drivers\DriverName;
 */
 interface MysqlConnectionInterface extends ConnectionInterface
 {
-    public const NAME = DriverName::Mysql;
 }

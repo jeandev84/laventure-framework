@@ -24,7 +24,7 @@ interface DatabaseManagerInterface
      * @param string $connection
      * @return $this
      */
-    public function setConnectionName(string $connection): static;
+    public function setName(string $connection): static;
 
 
 
@@ -37,7 +37,7 @@ interface DatabaseManagerInterface
      *
      * @return string
      */
-    public function getConnectionName(): string;
+    public function getName(): string;
 
 
 

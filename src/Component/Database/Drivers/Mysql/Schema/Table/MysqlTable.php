@@ -311,8 +311,7 @@ class MysqlTable extends Table
 
 
     /**
-     * @param callable $func
-     * @return $this
+     * @inheritDoc
     */
     public function checkForeignKeys(callable $func): mixed
     {

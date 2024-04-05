@@ -94,7 +94,14 @@ abstract class Connection implements ConnectionInterface
     */
     public function connect(): static
     {
-        return $this->connectionProcess();
+        $this->makeSureIsAvailable();
+        $this->connectWithoutDatabase();
+
+        if ($this->getDatabase()->exists()) {
+            $this->connectIfDatabaseExists();
+        }
+
+        return $this;
     }
 
 
@@ -282,24 +289,6 @@ abstract class Connection implements ConnectionInterface
         return $this->getDatabaseFactory()->createDatabases($this->getDatabaseNames());
     }
 
-
-
-
-
-    /**
-     * @return $this
-    */
-    private function connectionProcess(): static
-    {
-        $this->makeSureIsAvailable();
-        $this->connectWithoutDatabase();
-
-        if ($this->getDatabase()->exists()) {
-            $this->connectIfDatabaseExists();
-        }
-
-        return $this;
-    }
 
 
 

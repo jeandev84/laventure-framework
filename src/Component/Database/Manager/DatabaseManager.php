@@ -74,7 +74,7 @@ class DatabaseManager implements DatabaseManagerInterface
     /**
      * @inheritdoc
     */
-    public function setConnectionName(string $connection): static
+    public function setName(string $connection): static
     {
         $this->connection = $connection;
 
@@ -90,7 +90,7 @@ class DatabaseManager implements DatabaseManagerInterface
     /**
      * @inheritdoc
     */
-    public function getConnectionName(): string
+    public function getName(): string
     {
         return $this->connection;
     }
@@ -231,7 +231,7 @@ class DatabaseManager implements DatabaseManagerInterface
     */
     public function open(string $name, ConfigurationInterface $config): static
     {
-        return $this->setConnectionName($name)->setConfiguration($name, $config);
+        return $this->setName($name)->setConfiguration($name, $config);
     }
 
 
@@ -267,7 +267,7 @@ class DatabaseManager implements DatabaseManagerInterface
     */
     public function connection(string $name = null): ConnectionInterface
     {
-        $name   = $name ?: $this->getConnectionName();
+        $name   = $name ?: $this->getName();
         $config = $this->configuration($name);
 
         if (!$this->hasConnection($name)) {
@@ -293,7 +293,7 @@ class DatabaseManager implements DatabaseManagerInterface
             throw new UnavailableConnectionException($name);
         }
 
-        $this->setConnectionName($name);
+        $this->setName($name);
 
         return $this->connected[$name] = $this->connections[$name];
     }

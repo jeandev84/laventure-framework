@@ -995,6 +995,22 @@ interface TableInterface
 
 
 
+    /**
+     * Check foreign keys
+     *
+     * @param callable $func
+     * @return $this
+    */
+    public function checkForeignKeys(callable $func): mixed;
+
+
+
+
+
+
+
+
+
 
     /**
      * Drop table if  exists
