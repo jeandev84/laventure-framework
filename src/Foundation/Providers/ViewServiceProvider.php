@@ -51,7 +51,7 @@ class ViewServiceProvider extends ServiceProvider implements BootableServiceProv
 
             $config    = new TemplateEngineConfig();
             $viewPath  = $this->app['basePath'] . '/resources/views';
-            $cachePath = $this->app['basePath'] . '/storage/cache/views';
+            $cachePath = $this->app['basePath'] . '/storage/caching/views';
 
             $config->withTemplateFactory(new TemplateFactory($viewPath))
                    ->withReader(new TemplateReader())

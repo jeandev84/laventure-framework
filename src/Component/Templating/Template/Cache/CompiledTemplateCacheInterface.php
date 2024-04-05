@@ -13,12 +13,12 @@ use Laventure\Component\Templating\Template\Compiler\CompiledTemplateInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Templating\Template\Cache
+ * @package  Laventure\Component\Templating\Template\Caching
  */
 interface CompiledTemplateCacheInterface
 {
     /**
-     * Cache compiled template
+     * Caching compiled template
      *
      * @param CompiledTemplateInterface $compiledTemplate
      *

@@ -13,12 +13,12 @@ use Laventure\Component\Templating\Template\Contract\TemplateInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Templating\Template\Cache
+ * @package  Laventure\Component\Templating\Template\Caching
 */
 interface TemplateCacheInterface
 {
     /**
-     * Cache template
+     * Caching template
      *
      * @param TemplateInterface $template
      * @return CachedTemplateInterface

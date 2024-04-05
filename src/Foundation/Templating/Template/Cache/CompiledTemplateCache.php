@@ -20,7 +20,7 @@ use Laventure\Component\Templating\Template\Compiler\CompiledTemplateInterface;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Foundation\Templating\Template\Cache
+ * @package  Laventure\Foundation\Templating\Template\Caching
  */
 class CompiledTemplateCache implements CompiledTemplateCacheInterface
 {

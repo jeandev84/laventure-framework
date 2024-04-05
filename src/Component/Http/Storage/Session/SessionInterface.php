@@ -163,7 +163,7 @@ interface SessionInterface extends StorageInterface, SaveInterface
 
 
     /**
-     * session cache manager
+     * session caching manager
      *
      * @return SessionCacheInterface
     */

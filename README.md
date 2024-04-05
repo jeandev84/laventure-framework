@@ -48,20 +48,19 @@ composer require laventure/framework
 **[1. Introduction](docs/introduction)**
 
 **[2. Components](docs/components)**
-* [1.1. Container](docs/components/container)
-* [1.2. Routing](docs/components/routing)
-* [1.3. HTTP](docs/components/http)
-* [1.4. Cache](docs/components/cache)
-* [1.5. Console](docs/components/console)
-* [1.6. Database](docs/components/database)
-* [1.7. Event](docs/components/event)
-* [1.8. Templating](docs/components/templating)
-* [1.9. Validation](docs/components/validation)
-* [1.10. Config](docs/components/config)
-* [1.11. Database](docs/components/database)
-* [1.12. Console](docs/components/console)
-* [1.13. Filesystem](docs/components/filesystem)
-* [1.14. Debug](docs/components/debug)
+* [1.1. Filesystem](docs/components/filesystem)
+* [1.2. Config](docs/components/config)
+* [1.3. Container](docs/components/container)
+* [1.4. Routing](docs/components/routing)
+* [1.5. HTTP](docs/components/http)
+* [1.6. Validation](docs/components/validation)
+* [1.7. Database](docs/components/database)
+* [1.8. Caching](docs/components/caching)
+* [1.9. Security](docs/components/security)
+* [1.10. Event](docs/components/event)
+* [1.11. Debug](docs/components/debug)
+* [1.12. Templating](docs/components/templating)
+* [1.13. Debug](docs/components/console)
 
 
 

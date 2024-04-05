@@ -11,7 +11,7 @@ namespace Laventure\Component\Templating\Template\Cache\Exception;
  *
  * @license https://github.com/jeandev84/laventure-framework/blob/master/LICENSE
  *
- * @package  Laventure\Component\Templating\Template\Cache\Exception
+ * @package  Laventure\Component\Templating\Template\Caching\Exception
  */
 class TemplateCacheException extends \Exception
 {
